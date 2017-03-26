@@ -22,7 +22,22 @@ let button ::txt="default" ::width=500 ::height=50 children updater => state ini
 };
 
 /**
- * Another approach
+ * Closer to reality 
+ */
+type state = {
+  clickCount: int
+};
+
+let myComponent ::colorAttr children {previous, updater} => {
+  let state = previous.state |? {clickCount: 0};
+  {
+    state,
+    rendered: <box color=(state.clickCount > 1 ? 0xFF0000 : colorAttr) onClick=(updater handleClick) />
+  }
+};
+
+/**
+ * Most realistic approach
  */
 let myComponent ::colorAttr children => {
   initialState: fun () => {
