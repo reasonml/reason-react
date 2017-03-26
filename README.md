@@ -9,20 +9,9 @@ Scope
 - Not UI related
 - A reactive tree that changes over time
 
-Example of bindings
+What we want to get working
 ---
-```reason
-/**
- * Dreaming!
- */
-let button ::txt="default" ::width=500 ::height=50 children ::state=initialState updater => {
-  let handleChild e => {
-    ..state,
-    clickCount: state.clickCount + 1
-  };
-  <box onClick=(updater handleClick)> (string_of_int state.clickCount) </box>
-};
-```
+See [example.re](example.re)
 
 License
 ---
