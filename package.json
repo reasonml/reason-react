@@ -1,6 +1,7 @@
 {
   "name": "ror",
   "description": "Here be dragons",
+  "license": "MIT",
   "dependencies": {
   },
   "devDependencies": {    
