@@ -13,6 +13,10 @@ What we want to get working
 ---
 See [example.re](example.re)
 
+Contributions
+---
+Contributions are very welcome.
+
 License
 ---
 MIT
