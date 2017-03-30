@@ -28,4 +28,4 @@ let create ::prop => component.create (state);
 
 /* G */
 let component = React.Component.make ();
-let reduce ::prop => component.next (state, <blah />);
+let reduce ::prop state => component.next (state, <blah />);
