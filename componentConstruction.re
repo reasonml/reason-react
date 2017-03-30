@@ -21,3 +21,7 @@ let create ::prop => component.create (state);
 /* E */
 let component = React.component ();
 let create ::prop => component.create (state);
+
+/* F - Iwan suggestion */
+let component = React.Component.create ();
+let create ::prop => component.create (state);
