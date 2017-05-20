@@ -1,6 +1,6 @@
 {
-  "name": "ror",
-  "description": "Here be dragons",
+  "name": "React on Reason",
+  "description": "Reason React bindings to ReactJS with demonstration of safe API implementation.",
   "license": "MIT",
   "dependencies": {
   },
