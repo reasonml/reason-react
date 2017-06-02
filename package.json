@@ -1,29 +1,25 @@
 {
-  "name": "React on Reason",
-  "description": "Reason React bindings to ReactJS with demonstration of safe API implementation.",
-  "private": true,
-  "version": "0.0.0",
+  "name": "reason-react",
+  "version": "1.0.0",
   "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "bsb -make-world && webpack",
-    "clean": "bsb -clean-world",
-    "buildone": "bsb -make-world",
-    "buildopencanary": "bsb -make-world && osascript ./node_modules/.bin/openLocalCanary.osa /src/simple/index.nobuild.html file://`pwd`/src/simple/index.nobuild.html",
-    "buildopen": "bsb -make-world && osascript ./node_modules/.bin/openLocal.osa /src/simple/index.nobuild.html file://`pwd`/src/simple/index.nobuild.html"
+    "test": "exit 0",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world"
   },
   "keywords": [],
   "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "director": "^1.2.0",
-    "react-dom": "^15.4.2",
-    "react": "^15.4.2"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reasonml/reason-react.git"
   },
   "devDependencies": {
-    "bs-platform": "https://github.com/bloomberg/bucklescript.git",
-    "file-driven-development": "https://github.com/jordwalke/file-driven-development.git#d8960cf36349fa2d5f7e52dac5ca09b53e689860",
-    "webpack": "^1.14.0"
+    "bs-platform": "^1.6.0"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0"
   }
 }
-
