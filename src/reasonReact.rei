@@ -65,11 +65,19 @@
  * - Create a more formal description of the Reason React API.
  * - Document benefits of the ability to have plain integers/strings as state types.
  */
-type jsReactClass = ReactRe.reactClass;
+type reactClass;
 
-type reactElement = ReactRe.reactElement;
+type reactElement;
 
-type reactRef = ReactRe.reactRef;
+type reactRef;
+
+external nullElement : reactElement = "null" [@@bs.val];
+
+external stringToElement : string => reactElement = "%identity";
+
+external arrayToElement : array reactElement => reactElement = "%identity";
+
+external refToJsObj : reactRef => Js.t {..} = "%identity";
 
 type update 'state =
   | NoUpdate
@@ -104,14 +112,6 @@ type self 'state = {
   update: 'payload .('payload => 'state => self 'state => update 'state) => Callback.t 'payload
 };
 
-
-/**
- * Magic!
- */
-external string : string => reactElement = "%identity";
-
-external elementOfArray : array reactElement => reactElement = "%identity";
-
 type reactClassInternal;
 
 type next 'state = state::'state? => self 'state => 'state;
@@ -134,13 +134,13 @@ type componentSpec 'state 'initialState = {
   propsReceived: 'state => self 'state => 'state,
   didMount: 'state => self 'state => update 'state,
   didUpdate: previous::'state => current::'state => self 'state => unit,
-  jsElementWrapped,
   willMount: 'state => self 'state => update 'state,
   willUnmount: 'state => self 'state => unit,
   willUpdate: previous::'state => next::'state => self 'state => unit,
   shouldUpdate: previous::'state => next::'state => self 'state => bool,
   render: 'state => self 'state => reactElement,
-  initialState: unit => 'initialState
+  initialState: unit => 'initialState,
+  jsElementWrapped
 }
 and component 'state = componentSpec 'state 'state;
 
@@ -162,7 +162,7 @@ type jsPropsToReason 'jsProps 'state = Js.t 'jsProps => component 'state;
  * interop is integrating with untyped, code and it is *possible* to create pure-Reason-React apps without JS
  * interop entirely. */
 let createJsReactClass:
-  jsPropsToReason::jsPropsToReason _ => componentSpec 'state 'initialState => jsReactClass;
+  jsPropsToReason::jsPropsToReason _ => componentSpec 'state 'initialState => reactClass;
 
 let createDomElement: string => props::Js.t {..} => array reactElement => reactElement;
 
@@ -171,10 +171,5 @@ let createDomElement: string => props::Js.t {..} => array reactElement => reactE
  * Wrap props into a JS component
  * Use for interop when Reason components use JS components
  */
-let wrapWithoutRegrets:
-  jsReactClass::jsReactClass =>
-  props::Js.t {..} =>
-  key::string? =>
-  ref::(reactRef => unit)? =>
-  array reactElement =>
-  component stateless;
+let wrapJsComponentForReason:
+  reactClass::reactClass => props::Js.t {..} => array reactElement => component stateless;
