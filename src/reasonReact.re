@@ -92,13 +92,13 @@ and componentSpec 'state 'initialState = {
   reactClassInternal,
   /* Keep here as a way to prove that the API may be implemented soundly */
   mutable handedOffState: ref (option 'state),
-  propsReceived: 'state => self 'state => 'state,
+  willReceiveProps: 'state => self 'state => 'state,
   didMount: 'state => self 'state => update 'state,
-  didUpdate: previous::'state => current::'state => self 'state => unit,
+  didUpdate: previousState::'state => currentState::'state => self 'state => unit,
   willMount: 'state => self 'state => update 'state,
   willUnmount: 'state => self 'state => unit,
-  willUpdate: previous::'state => next::'state => self 'state => unit,
-  shouldUpdate: previous::'state => next::'state => self 'state => bool,
+  willUpdate: previousState::'state => nextState::'state => self 'state => unit,
+  shouldUpdate: previousState::'state => nextState::'state => self 'state => bool,
   render: 'state => self 'state => reactElement,
   initialState: unit => 'initialState,
   jsElementWrapped
@@ -159,13 +159,13 @@ and totalState 'state =
 
 let lifecycleNoUpdate _ _ => NoUpdate;
 
-let lifecyclePreviousNextUnit previous::_ next::_ _ => ();
+let lifecyclePreviousNextUnit previousState::_ nextState::_ _ => ();
 
-let lifecyclePreviousCurrentReturnUnit previous::_ current::_ _ => ();
+let lifecyclePreviousCurrentReturnUnit previousState::_ currentState::_ _ => ();
 
 let lifecycleReturnUnit _ _ => ();
 
-let lifecycleReturnTrue previous::_ next::_ _ => true;
+let lifecycleReturnTrue previousState::_ nextState::_ _ => true;
 
 let didMountDefault = lifecycleNoUpdate;
 
@@ -179,7 +179,7 @@ let willUnmountDefault = lifecycleReturnUnit;
 
 let willUpdateDefault = lifecyclePreviousNextUnit;
 
-let propsReceivedDefault state _self => state;
+let willReceivePropsDefault state _self => state;
 
 let renderDefault _state _self => stringToElement "RenderNotImplemented";
 
@@ -292,7 +292,7 @@ let createClass (type reasonState) debugName :reactClass =>
           let prevReasonState = Obj.magic prevReasonState;
           let curReasonState = curState##reasonState;
           let curReasonState = Obj.magic curReasonState;
-          component.didUpdate previous::prevReasonState current::curReasonState self
+          component.didUpdate previousState::prevReasonState currentState::curReasonState self
         }
       };
       /* pub componentWillMount .. TODO (or not?) */
@@ -327,7 +327,7 @@ let createClass (type reasonState) debugName :reactClass =>
           let curReasonState = Obj.magic curReasonState;
           let nextReasonState = nextState##reasonState;
           let nextReasonState = Obj.magic nextReasonState;
-          component.willUpdate previous::curReasonState next::nextReasonState self
+          component.willUpdate previousState::curReasonState nextState::nextReasonState self
         }
       };
       /**
@@ -369,13 +369,13 @@ let createClass (type reasonState) debugName :reactClass =>
         let convertedNextReasonProps =
           convertPropsIfTheyreFromJs nextProps thisJs##jsPropsToReason debugName;
         let Element component = Obj.magic convertedNextReasonProps;
-        if (component.propsReceived !== propsReceivedDefault) {
+        if (component.willReceiveProps !== willReceivePropsDefault) {
           let self = Obj.magic (this##self ());
           thisJs##setState (
             fun curTotalState _ => {
               let curReasonState = Obj.magic curTotalState##reasonState;
               let curReasonStateVersion = curTotalState##reasonStateVersion;
-              let nextReasonState = Obj.magic (component.propsReceived curReasonState self);
+              let nextReasonState = Obj.magic (component.willReceiveProps curReasonState self);
               let nextReasonStateVersion =
                 nextReasonState !== curReasonState ?
                   curReasonStateVersion + 1 : curReasonStateVersion;
@@ -496,7 +496,7 @@ let createComponent debugName :componentSpec 'state unit => {
     /* Keep here as a way to prove that the API may be implemented soundly */
     handedOffState: {contents: None},
     didMount: didMountDefault,
-    propsReceived: propsReceivedDefault,
+    willReceiveProps: willReceivePropsDefault,
     didUpdate: didUpdateDefault,
     willMount: willMountDefault,
     willUnmount: willUnmountDefault,
