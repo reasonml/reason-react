@@ -131,13 +131,13 @@ type componentSpec 'state 'initialState = {
   reactClassInternal,
   /* Keep here as a way to prove that the API may be implemented soundly */
   mutable handedOffState: ref (option 'state),
-  propsReceived: 'state => self 'state => 'state,
+  willReceiveProps: 'state => self 'state => 'state,
   didMount: 'state => self 'state => update 'state,
-  didUpdate: previous::'state => current::'state => self 'state => unit,
+  didUpdate: previousState::'state => currentState::'state => self 'state => unit,
   willMount: 'state => self 'state => update 'state,
   willUnmount: 'state => self 'state => unit,
-  willUpdate: previous::'state => next::'state => self 'state => unit,
-  shouldUpdate: previous::'state => next::'state => self 'state => bool,
+  willUpdate: previousState::'state => nextState::'state => self 'state => unit,
+  shouldUpdate: previousState::'state => nextState::'state => self 'state => bool,
   render: 'state => self 'state => reactElement,
   initialState: unit => 'initialState,
   jsElementWrapped
