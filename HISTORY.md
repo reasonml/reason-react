@@ -64,6 +64,8 @@ The return type of `update`, instead of `option state`, is now `update state`.
 
 The signature of the callback they take has changed. Instead of e.g. `updater (fun {props, state, instanceVars} event => Some {...state, foo: true})`, it's now `update (fun event state self => ReasonReact.Update {...state, foo: true})`. Formal, simplified type of the new callback: `payload => state => self => update state`.
 
+`update` and `handle` don't memoize anymore; this reduces confusion and potential memory leaks.
+
 ## Render
 `render`, previously in your component module, is now inside `make`. See the example TODO here.
 
