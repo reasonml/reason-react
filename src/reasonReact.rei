@@ -79,6 +79,9 @@ external arrayToElement : array reactElement => reactElement = "%identity";
 
 external refToJsObj : reactRef => Js.t {..} = "%identity";
 
+external createElement : reactClass => props::Js.t {..}? => array reactElement => reactElement =
+  "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "React"];
+
 type update 'state =
   | NoUpdate
   | Update 'state
@@ -144,11 +147,11 @@ type componentSpec 'state 'initialState = {
 }
 and component 'state = componentSpec 'state 'state;
 
-let createComponent: string => componentSpec 'state stateless;
+let statefulComponent: string => componentSpec 'state stateless;
 
 
 /** Create a stateless component: i.e. a component where state has type stateless. */
-let createStatelessComponent: string => component stateless;
+let statelessComponent: string => component stateless;
 
 let element: key::string? => ref::(reactRef => unit)? => component 's => reactElement;
 

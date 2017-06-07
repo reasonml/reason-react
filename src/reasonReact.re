@@ -30,10 +30,10 @@ external arrayToElement : array reactElement => reactElement = "%identity";
 
 external refToJsObj : reactRef => Js.t {..} = "%identity";
 
-external createReactElement : reactClass => props::Js.t {..}? => array reactElement => reactElement =
-  "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "react"];
+external createElement : reactClass => props::Js.t {..}? => array reactElement => reactElement =
+  "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "React"];
 
-external createElementVerbatim : 'a = "createElement" [@@bs.val] [@@bs.module "react"];
+external createElementVerbatim : 'a = "createElement" [@@bs.val] [@@bs.module "React"];
 
 let createDomElement s ::props children => {
   let vararg = [|Obj.magic s, Obj.magic props|] |> Js.Array.concat children;
@@ -42,7 +42,7 @@ let createDomElement s ::props children => {
 };
 
 external createClassInternalHack : Js.t 'classSpec => reactClass =
-  "createClass" [@@bs.val] [@@bs.module "react"];
+  "createClass" [@@bs.val] [@@bs.module "React"];
 
 let magicNull = Obj.magic Js.null;
 
@@ -489,7 +489,7 @@ let createClass (type reasonState) debugName :reactClass =>
     [@bs]
   );
 
-let createComponent debugName :componentSpec 'state unit => {
+let statefulComponent debugName :componentSpec 'state unit => {
   let componentTemplate = {
     reactClassInternal: createClass debugName,
     debugName,
@@ -513,7 +513,7 @@ let createComponent debugName :componentSpec 'state unit => {
   componentTemplate
 };
 
-let createStatelessComponent debugName :component stateless => createComponent debugName;
+let statelessComponent debugName :component stateless => statefulComponent debugName;
 
 
 /**
@@ -532,7 +532,7 @@ let element
   | Some jsElementWrapped =>
     jsElementWrapped key::(Js.Undefined.return key) ref::(Js.Undefined.return ref)
   | None =>
-    createReactElement
+    createElement
       component.reactClassInternal props::{"key": key, "ref": ref, "reasonProps": element} [||]
   }
 };
@@ -559,7 +559,7 @@ module WrapProps = {
     /* Use varargs under the hood */
     (Obj.magic createElementVerbatim)##apply Js.null varargs
   };
-  let dummyInteropComponent = createComponent "interop";
+  let dummyInteropComponent = statefulComponent "interop";
   let wrapJsComponentForReason ::reactClass ::props children :component stateless => {
     let jsElementWrapped = Some (wrapProps ::reactClass ::props children);
     {...dummyInteropComponent, jsElementWrapped}
