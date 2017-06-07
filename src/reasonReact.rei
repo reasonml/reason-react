@@ -56,7 +56,7 @@
  * - Instance variables.
  * - Some portion of unit tests.
  * - Reduces two forms of state setting to one.
- * - Kills constructor and willMount.
+ * - Kills constructor.
  * - Demonstrate that we can also implement this API via a simple `include
  *   ReactComponent.Create {}`
  *
@@ -137,7 +137,6 @@ type componentSpec 'state 'initialState = {
   willReceiveProps: 'state => self 'state => 'state,
   didMount: 'state => self 'state => update 'state,
   didUpdate: previousState::'state => currentState::'state => self 'state => unit,
-  willMount: 'state => self 'state => update 'state,
   willUnmount: 'state => self 'state => unit,
   willUpdate: previousState::'state => nextState::'state => self 'state => unit,
   shouldUpdate: previousState::'state => nextState::'state => self 'state => bool,

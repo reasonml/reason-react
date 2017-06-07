@@ -95,7 +95,6 @@ and componentSpec 'state 'initialState = {
   willReceiveProps: 'state => self 'state => 'state,
   didMount: 'state => self 'state => update 'state,
   didUpdate: previousState::'state => currentState::'state => self 'state => unit,
-  willMount: 'state => self 'state => update 'state,
   willUnmount: 'state => self 'state => unit,
   willUpdate: previousState::'state => nextState::'state => self 'state => unit,
   shouldUpdate: previousState::'state => nextState::'state => self 'state => bool,
@@ -172,8 +171,6 @@ let didMountDefault = lifecycleNoUpdate;
 let didUpdateDefault = lifecyclePreviousCurrentReturnUnit;
 
 let shouldUpdateDefault = lifecycleReturnTrue;
-
-let willMountDefault = lifecycleNoUpdate;
 
 let willUnmountDefault = lifecycleReturnUnit;
 
@@ -498,7 +495,6 @@ let statefulComponent debugName :componentSpec 'state unit => {
     didMount: didMountDefault,
     willReceiveProps: willReceivePropsDefault,
     didUpdate: didUpdateDefault,
-    willMount: willMountDefault,
     willUnmount: willUnmountDefault,
     willUpdate: willUpdateDefault,
     /**
