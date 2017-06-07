@@ -80,7 +80,7 @@ external arrayToElement : array reactElement => reactElement = "%identity";
 external refToJsObj : reactRef => Js.t {..} = "%identity";
 
 external createElement : reactClass => props::Js.t {..}? => array reactElement => reactElement =
-  "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "React"];
+  "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "react"];
 
 type update 'state =
   | NoUpdate

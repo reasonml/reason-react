@@ -31,9 +31,9 @@ external arrayToElement : array reactElement => reactElement = "%identity";
 external refToJsObj : reactRef => Js.t {..} = "%identity";
 
 external createElement : reactClass => props::Js.t {..}? => array reactElement => reactElement =
-  "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "React"];
+  "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "react"];
 
-external createElementVerbatim : 'a = "createElement" [@@bs.val] [@@bs.module "React"];
+external createElementVerbatim : 'a = "createElement" [@@bs.val] [@@bs.module "react"];
 
 let createDomElement s ::props children => {
   let vararg = [|Obj.magic s, Obj.magic props|] |> Js.Array.concat children;
@@ -42,7 +42,7 @@ let createDomElement s ::props children => {
 };
 
 external createClassInternalHack : Js.t 'classSpec => reactClass =
-  "createClass" [@@bs.val] [@@bs.module "React"];
+  "createClass" [@@bs.val] [@@bs.module "react"];
 
 let magicNull = Obj.magic Js.null;
 
