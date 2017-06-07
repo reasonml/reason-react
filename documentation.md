@@ -6,13 +6,13 @@ __This documentation assumes relative familiarity with ReactJS.__
 let component = ReasonReact.statefulComponent "Greeting";
 
 let make ::name _children => {
-  let handleClick _event state _self => ReasonReact.Update (state + 1);
+  let click _event state _self => ReasonReact.Update (state + 1);
   {
     ...component,
     initialState: fun () => 0,
     render: fun state self => {
       let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int state) ^ " time(s)!";
-      <button onClick=(self.update handleClick)> (ReasonReact.stringToElement greeting) </button>
+      <button onClick=(self.update click)> (ReasonReact.stringToElement greeting) </button>
     }
   }
 };
@@ -36,28 +36,97 @@ Prop-less `<MyReasonComponent />` transforms to `ReasonReact.element (MyReasonCo
 
 ## Component Creation
 
-A component template is created through `ReasonReact.statefulComponent "ComponentName"` or `ReasonReact.statelessComponent "ComponentName"`. The latter is a convenience helper of the former, with the `state` type being pre-set to `()` (called "unit"). The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).
+A component template is created through `ReasonReact.statelessComponent "ComponentName"`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).
 
 As an example, here's a `greeting.re` file's content:
 
 ```reason
-let component = ReasonReact.statefulComponent "Greeting";
+let component = ReasonReact.statelessComponent "Greeting";
 ```
 
 Now we'll define the function that's called when other files invoke `<Greeting name="John" />` (without JSX: `ReasonReact.element (Greeting.make name::"John" [||])`): the `make` function. It must return the component spec template we just defined, with functions such as `render` overridden:
 
 ```reason
-let component = ReasonReact.statefulComponent "Greeting";
+let component = ReasonReact.statelessComponent "Greeting";
 let make ::name _children => {
   ...component, /* spread the template's other defaults into here  */
-  render: fun _state _self => <div> (ReasonReact.stringToElement name) </div>
+  render: fun () _self => <div> (ReasonReact.stringToElement name) </div>
 };
 ```
 
 **Note**: place `make` and `component` right beside each other! This helps readability and avoiding a corner-case type error for `state`.
 
-## Accepting Props
+### Stateful Components
+
+To turn a component stateful, use `ReasonReact.statefulComponent "ComponentName"` instead. Then, provide the `initialState` method. The state type you return **can be anything**!
+
+```reason
+let component = ReasonReact.statefulComponent "Greeting";
+let make ::name _children => {
+  ...component,
+  initialState: fun () => 0, /* here, state is an `int` */
+  render: fun state self => {
+    let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int state) ^ " time(s)!";
+    <div> (ReasonReact.stringToElement greeting) </div>
+  }
+};
+```
+
+_As a matter of fact, `ReasonReact.statelessComponent` is just a convenience helper of `statefulComponent`, with the `state` type being pre-set to `()` (called "unit")_.
+
+### Accepting Props
 
 Props are just the labeled arguments of the `make` function, seen above. They can also be optional and/or have defaults, e.g. `let make ::name ::age=? ::className="box" _children => ...`.
 
 The last prop **must** be `children`. If you don't use it, simply ignore it by naming it `_` or `_children`. Names starting with underscore don't trigger compiler warnings if they're unused.
+
+### Render
+
+`render` needs to return a `ReasonReact.reactElement`: `<div />`, `<MyComponent />`, `ReasonReact.nullElement` (the `null` you'd usually return, but this time of the `reactElement` type), etc. It takes in `state` (which is `()` for stateless components) and `self`, described below.
+
+### `self`
+
+`self` is a record that contains `update` and `handle`, used in conjunctions with callbacks.
+
+### Callback Handlers
+
+In ReactJS, we can do `<div onClick={this.handleClick} />` and in `handleClick`, access the latest `props` and `state` (despite the callback being asynchronous) through `this.props` and `this.state`. We don't use `this` in Reason-React; to access the newest `props`, simply read from `make`'s arguments. To access the newest `state`, wrap the callback with `self.update`!
+
+```reason
+let component = ...;
+let make ::name _children => {
+  let click _event state _self => ReasonReact.Update (state + 1); /* this state is guaranteed fresh */
+  {
+    ...component,
+    initialState: ...,
+    render: fun state self => {
+      let greeting = ...;
+      <button onClick=(self.update click)> (ReasonReact.stringToElement greeting) </button>
+    }
+  }
+};
+```
+
+`update` expects a callback that:
+
+- accepts a payload, the newest state and `self`
+- returns a `ReasonReact.update 'state`, aka either
+  - `ReasonReact.Update newStateToBeSet`: indicates the handler (e.g. `click`) wants to update the state (in ReactJS, it'd be an imperative `setState` call)
+  - `ReasonReact.NoUpdate`: no state update
+  - `ReasonReact.SilentUpdate newStateToBeSet`: like `ReasonReact.Update`, but without triggering a re-render. Useful for `ref` and other instance variables, described later.
+
+and `update` itself returns a function, the actual, ordinary callback passed to the component as prop. When the callback's invoked, `update` will in turn invoke the originally passed in handler, forwarding the payload, the up-to-date state, and `self`.
+
+### Lifecycle Events
+
+ReasonReact supports the usual:
+
+```reason
+willReceiveProps: 'state => self 'state => 'state,
+didMount: 'state => self 'state => update 'state,
+didUpdate: previousState::'state => currentState::'state => self 'state => unit,
+willUnmount: 'state => self 'state => unit,
+willUpdate: previousState::'state => nextState::'state => self 'state => unit,
+```
+
+`willMount` is unsupported. Use `didMount` instead.

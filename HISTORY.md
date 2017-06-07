@@ -72,6 +72,10 @@ The signature of the callback they take has changed. Instead of e.g. `updater (f
 ## Ref & Other Mutable Instance Variables
 `ref` now lives inside state, as described in `componentBag.instanceVars` just above. Instead of `componentBag.handler`+ mutating `instanceVars`, you'd now use `update` and returning `ReasonReact.SilentUpdate {...state, ref: theRef}`. `ref`s and others probably default to `None` in your initial state.
 
+## Lifecycles
+
+We've decided to finally drop the `component` prefix to lifecycle methods! `componentDidMount` is now just called `didMount`, etc. The signatures changed slightly; see them TODO here.
+
 ## Children
 The children helpers & types `reactJsChildren`, `listToElement` and `jsChildrenToReason` are all gone from `ReasonReact`, since we now use array instead of list. See the new TODO docs on children for more info.
 
