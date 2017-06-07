@@ -24,13 +24,31 @@ Reason comes with the [JSX](http://facebook.github.io/reason/#diving-deeper-jsx)
 
 ### Uncapitalized JSX
 
-`<div foo=bar>child1 child2</div>` transforms to `ReactDOMRe.createElement "div" props::(ReactDOMRe.props foo::bar ()) [|child1, child2|]`, which compiles to the JS code `React.createElement('div', {foo: bar}, child1, child2)`.
+```reason
+<div foo=bar>child1 child2</div>
+````
+
+transforms into
+
+```reason
+ReactDOMRe.createElement "div" props::(ReactDOMRe.props foo::bar ()) [|child1, child2|]
+```
+
+which compiles to the JS code `React.createElement('div', {foo: bar}, child1, child2)`.
 
 Prop-less `<div />` transforms to `ReactDOMRe.createElement "div" [|child1, child2|]`, which compiles to `React.createElement('div', undefined, child1, child2)`.
 
 ### Capitalized JSX
 
-`<MyReasonComponent key=a ref=b foo=bar>child1 child2</MyReasonComponent>` transforms to `ReasonReact.element key::a ref::b (MyReasonComponent.make foo::bar [|child1, child2|])`.
+```reason
+<MyReasonComponent key=a ref=b foo=bar>child1 child2</MyReasonComponent>
+```
+
+transforms to
+
+```reason
+ReasonReact.element key::a ref::b (MyReasonComponent.make foo::bar [|child1, child2|])
+```
 
 Prop-less `<MyReasonComponent />` transforms to `ReasonReact.element (MyReasonComponent.make [||])`.
 
@@ -109,24 +127,63 @@ let make ::name _children => {
 
 `update` expects a callback that:
 
-- accepts a payload, the newest state and `self`
-- returns a `ReasonReact.update 'state`, aka either
-  - `ReasonReact.Update newStateToBeSet`: indicates the handler (e.g. `click`) wants to update the state (in ReactJS, it'd be an imperative `setState` call)
-  - `ReasonReact.NoUpdate`: no state update
+- Accepts a payload, the newest state and `self`.
+- Returns a `ReasonReact.update 'state`, aka either.
+  - `ReasonReact.Update newStateToBeSet`: indicates the handler (e.g. `click`) wants to update the state (in ReactJS, it'd be an imperative `setState` call).
+  - `ReasonReact.NoUpdate`: no state update.
   - `ReasonReact.SilentUpdate newStateToBeSet`: like `ReasonReact.Update`, but without triggering a re-render. Useful for `ref` and other instance variables, described later.
 
 and `update` itself returns a function, the actual, ordinary callback passed to the component as prop. When the callback's invoked, `update` will in turn invoke the originally passed in handler, forwarding the payload, the up-to-date state, and `self`.
 
-### Lifecycle Events
+Often times, you'd return `NoUpdate` from the handler. For convenience, we've exposed a `self.handle`, which is just an `update` that doesn't expect a return value (aka expects just `unit`).
 
-ReasonReact supports the usual:
+### Ref & Instance Variables
 
-```reason
-willReceiveProps: 'state => self 'state => 'state,
-didMount: 'state => self 'state => update 'state,
-didUpdate: previousState::'state => currentState::'state => self 'state => unit,
-willUnmount: 'state => self 'state => unit,
-willUpdate: previousState::'state => nextState::'state => self 'state => unit,
+A common pattern in ReactJS is to attach extra variables onto a component's spec:
+
+```js
+const Greeting = React.createClass({
+  intervalId: null,
+  componentDidMount: () => this.intervalId = setInterval(...),
+  render: ...
+});
 ```
 
-`willMount` is unsupported. Use `didMount` instead.
+In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. Reason-React asks you to correctly put these refs and instance variables into your component's `state`. To simulate updating the references without triggering a re-render, use `SilentUpdate`:
+
+```reason
+type state = {intervalId: option int, someOtherVar: option string};
+let component = ...; /* remember, `component` needs to be close to `make`, and after `state` type declaration!
+let make _children => {
+  ...component,
+  initialState: fun () => {intervalId: None, someOtherVar: Some "hello"},
+  didMount: fun state _self => ReasonReact.SilentUpdate {...state, intervalId: Some (setInterval ...)},
+  render: ...
+};
+```
+
+### Lifecycle Events
+
+ReasonReact supports the usuals:
+
+```reason
+willReceiveProps: state => self => state,
+didMount: state => self => update state,
+didUpdate: previousState::state => currentState::state => self => unit,
+willUnmount: state => self => unit,
+willUpdate: previousState::state => nextState::state => self => unit,
+```
+
+Note:
+
+- We've dropped the `component` prefix from all these.
+- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. `NoUpdate/Update/SilentUpdate`). We presume you'd always want to update the state in this lifecycle.
+- `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
+- `didUpdate` and `willUpdate` are labeled now! This reduces confusion.
+- `willMount` is unsupported. Use `didMount` instead.
+
+## Interop With Existing JavaScript Components
+
+### ReactJS Using Reason-React
+
+brb sleep.
