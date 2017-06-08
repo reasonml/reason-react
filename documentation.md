@@ -74,7 +74,7 @@ let make ::name _children => {
 
 **Note**: place `make` and `component` right beside each other! This helps readability and avoiding a corner-case type error for `state`.
 
-### Stateful Components
+### State
 
 To turn a component stateful, use `ReasonReact.statefulComponent "ComponentName"` instead. Then, provide the `initialState` method. The state type you return **can be anything**!
 
@@ -92,7 +92,7 @@ let make ::name _children => {
 
 _As a matter of fact, `ReasonReact.statelessComponent` is just a convenience helper of `statefulComponent`, with the `state` type being pre-set to `()` (called "unit")_.
 
-### Accepting Props
+### Props
 
 Props are just the labeled arguments of the `make` function, seen above. They can also be optional and/or have defaults, e.g. `let make ::name ::age=? ::className="box" _children => ...`.
 
@@ -104,11 +104,11 @@ The last prop **must** be `children`. If you don't use it, simply ignore it by n
 
 ### `self`
 
-`self` is a record that contains `update` and `handle`, used in conjunctions with callbacks.
+`self` is a record that contains `update` and `handle`, used in conjunctions with callbacks props passed to components.
 
 ### Callback Handlers
 
-In ReactJS, we can do `<div onClick={this.handleClick} />` and in `handleClick`, access the latest `props` and `state` (despite the callback being asynchronous) through `this.props` and `this.state`. We don't use `this` in Reason-React; to access the newest `props`, simply read from `make`'s arguments. To access the newest `state`, wrap the callback with `self.update`!
+In ReactJS, we can do `<div onClick={this.handleClick} />` and in `handleClick`, access the latest `props` and `state` (despite the callback being asynchronous) through `this.props` and `this.state`. We don't use `this` in Reason-React; to access the newest `props`, simply put the callbacks in `make`'s body and read its arguments. To access the newest `state`, wrap the callback with `self.update`!
 
 ```reason
 let component = ...;
@@ -128,7 +128,7 @@ let make ::name _children => {
 `update` expects a callback that:
 
 - Accepts a payload, the newest state and `self`.
-- Returns a `ReasonReact.update 'state`, aka either.
+- Returns a `ReasonReact.update 'state`, aka either:
   - `ReasonReact.Update newStateToBeSet`: indicates the handler (e.g. `click`) wants to update the state (in ReactJS, it'd be an imperative `setState` call).
   - `ReasonReact.NoUpdate`: no state update.
   - `ReasonReact.SilentUpdate newStateToBeSet`: like `ReasonReact.Update`, but without triggering a re-render. Useful for `ref` and other instance variables, described later.
@@ -137,29 +137,23 @@ and `update` itself returns a function, the actual, ordinary callback passed to 
 
 Often times, you'd return `NoUpdate` from the handler. For convenience, we've exposed a `self.handle`, which is just an `update` that doesn't expect a return value (aka expects just `unit`).
 
-### Ref & Instance Variables
-
-A common pattern in ReactJS is to attach extra variables onto a component's spec:
-
-```js
-const Greeting = React.createClass({
-  intervalId: null,
-  componentDidMount: () => this.intervalId = setInterval(...),
-  render: ...
-});
-```
-
-In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. Reason-React asks you to correctly put these refs and instance variables into your component's `state`. To simulate updating the references without triggering a re-render, use `SilentUpdate`:
+**Note**: sometimes you might be forwarding `update` or `handle` to some helpers. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](common-type-errors). Example:
 
 ```reason
-type state = {intervalId: option int, someOtherVar: option string};
-let component = ...; /* remember, `component` needs to be close to `make`, and after `state` type declaration!
-let make _children => {
-  ...component,
-  initialState: fun () => {intervalId: None, someOtherVar: Some "hello"},
-  didMount: fun state _self => ReasonReact.SilentUpdate {...state, intervalId: Some (setInterval ...)},
-  render: ...
+let click event state self => ...;
+
+let renderItem self => {
+  /* this needs to be self.ReasonReact.update, not self.update */
+  <div onClick=(self.ReasonReact.update click)>
 };
+
+let make ::name _children => {
+  ...component,
+  render: fun state self => {
+    let item = renderItem self;
+    ...
+  }
+}
 ```
 
 ### Lifecycle Events
@@ -181,6 +175,62 @@ Note:
 - `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
 - `didUpdate` and `willUpdate` are labeled now! This reduces confusion.
 - `willMount` is unsupported. Use `didMount` instead.
+
+### Instance Variables
+
+A common pattern in ReactJS is to attach extra variables onto a component's spec:
+
+```js
+const Greeting = React.createClass({
+  intervalId: null,
+  componentDidMount: () => this.intervalId = setInterval(...),
+  render: ...
+});
+```
+
+In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. Reason-React asks you to correctly put these instance variables into your component's `state`. To simulate updating the references without triggering a re-render, use `SilentUpdate`:
+
+```reason
+type state = {intervalId: option int, someOtherVar: option string};
+let component = ...; /* remember, `component` needs to be close to `make`, and after `state` type declaration!
+let make _children => {
+  ...component,
+  initialState: fun () => {intervalId: None, someOtherVar: Some "hello"},
+  didMount: fun state _self => ReasonReact.SilentUpdate {...state, intervalId: Some (setInterval ...)},
+  render: ...
+};
+```
+
+### Ref
+
+A `ref` would be just another instance variable. You'd type it as `ReasonReact.reactRef` if it's attached to a custom component, and `Dom.element` if it's attached to a React DOM element.
+
+```reason
+type state = {isOpen: bool, mySectionRef: option ReasonReact.reactRef};
+
+let setSectionRef theRef state _self => ReasonReact.SilentUpdate {...state, mySectionRef: Some theRef};
+
+let component = ReasonReact.statefulComponent "MyPanel";
+let make ::className="" _children => {
+  ...component,
+  initialState: fun () => {isOpen: false, mySectionRef: None},
+  render: fun state self => <Section1 ref=(self.update setSectionRef) />
+};
+```
+
+Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...state, myDivRef: Js.Null.to_opt theRef}`. **Note** how [React DOM refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `myDivRef` is converted from a [JS nullable](http://bloomberg.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None).
+
+Reason-react ref only accept callbacks. The string `ref` from ReactJS is deprecated.
+
+We also expose an escape hatch `ReasonReact.refToJsObj` (type: `ReasonReact.reactRef => Js.t {..}`) which turns your ref into a JS object you can freely use; **this is only used to access ReactJS component class methods**.
+
+```reason
+let handleClick event state self =>
+  switch state.mySectionRef {
+  | None => ()
+  | Some r => (ReasonReact.refToJsObj r)##someMethod 1 2 3 /* I solemnly swear that I am up to no good */
+  };
+```
 
 ## Interop With Existing JavaScript Components
 
@@ -224,7 +274,91 @@ var MyReasonComponent = require('myReasonComponent').comp;
 <MyReasonComponent name="John" />
 ```
 
+## Events
+
+Reason-React events map cleanly to ReactJS [synthetic events](https://facebook.github.io/react/docs/events.html). More info in the [inline docs](https://github.com/SanderSpies/react-on-reason/blob/380358e5894d4223e7dd9c1fb2df72f0756231bc/src/reactEventRe.rei#L1).
+
+If you're accessing fields on your event object, like `event.target.value`, see [Working with DOM](#working-with-dom) below.
+
+## Styles
+
+Since CSS-in-JS is all the rage right now, we'll recommend our official pick soon. In the meantime, for inline styles, there's the `ReactDOMRe.Style.make` API:
+
+```reason
+<div style=(
+  ReactDOMRe.Style.make
+    color::"#444444"
+    fontSize::"68px"
+    ()
+)/>
+```
+
+It's a labeled (typed!) function call that maps to the familiar style object `{color: '#444444', fontSize: '68px'}`. **Note** that `make` returns an opaque `ReactDOMRe.style` type that you can't read into. We also expose a `ReactDOMRe.Style.combine` that takes in two `style`s and combine them.
+
+### Working with DOM
+
+The `ReactDOMRe` module below exposes an unsafe `domElementToObj`. That's all you need.
+
+## ReactDOM
+
+Reason-react's equivalent `ReactDOMRe` exposes:
+
+- `render : ReasonReact.reactElement => Dom.element => unit`
+
+- `unmountComponentAtNode : Dom.element => unit`
+
+- `findDOMNode : ReasonReact.reactRef => Dom.element`
+
+- `objToDOMProps : Js.t {..} => reactDOMProps` (see use-case in [Invalid Prop Name](invalid-prop-name))
+
+And two helpers:
+
+- `domElementToObj : Dom.element => Js.t {..}`: turns a DOM element into a Js object whose fields that you can dangerously access: `(ReactDOMRe.domElementToObj (ReactEventRe.Form.target event))##value`.
+
+- `renderToElementWithClassName : ReasonReact.reactElement => string => unit`: convenience. Finds the (first) element of the provided class name and `render` to it.
+
+- `renderToElementWithId : ReasonReact.reactElement => string => unit`: convenience. Finds the element of the provided id and `render` to it.
+
+## ReactDOMServer
+
+Reason-react's equivalent `ReactDOMServerRe` exposes:
+
+- `renderToString : ReactRe.reactElement => string`
+
+- `renderToStaticMarkup : ReactRe.reactElement => string`
+
+## Converting Over ReactJS Idioms
+
+### Passing in Components Class as a Prop
+
+In ReactJS, `<Menu banner=MyBanner />` is easy; in reason-react, we can't trivially pass the whole component module ([explanations](http://facebook.github.io/reason/modules.html#modules-basic-modules)). Solution:
+
+```reason
+<Menu bannerFunc=(fun prop1 prop2 => <MyBanner message=prop1 count=prop2 />) />
+```
+
+### Invalid Prop Name
+
+Prop names like `type` (as in `<input type="text" />`) aren't syntactically valid; `type` is a reserved keyword in Reason/OCaml. Use `<input _type="text" />` instead. This follows BuckleScript's [name mangling rules](http://bloomberg.github.io/bucklescript/Manual.html#_object_label_translation_convention).
+
+For `data-*` and `aria-*`, this is a bit trickier; You'd currently need to resort to using `ReactDOMRe.objToDOMProps` + the underlying desugared JSX call:
+
+```reason
+ReactDOMRe.createElement
+  "li"
+  props::(ReactDOMRe.objToDOMProps {"className": "foo", "aria-selected": true})
+  [|child1, child2|]
+```
+
+For non-DOM components, you'd need to expose valid prop names.
+
+## Miscellaneous
+
+- Reason-React doesn't support ReactJS context (yet).
+- No mixins.
+
 ## Common Type Errors
 
 - `The type constructor state would escape its scope`: this probably means you've defined your `state` type _after_ `let component = ...`. Move it before the `let`.
-
+- `Unbound record field update`/`Unbound record field handle`: this means you've passed `self` to a helper function of your render, and it used it like so: `<div onClick=(self.update click)/>`. This is because the record can't be found in the scope of the file. Just annotate it: `<div onClick=(self.ReasonReact.update click)/>`.
+- Something about callbacks passed to `update` (or `handle`) having incompatible types between them: you've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
