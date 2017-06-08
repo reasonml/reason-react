@@ -1,4 +1,4 @@
-# 0.1.4
+# 0.1.4 (**Unreleased**. Soon!)
 Major update! Though this is 100% backward compatible, so no major version bump. We've revamped the whole API based on all you awesome folks' feedback, and we've provided a gradual migration path.
 
 ## Requirements & Self-Congratulations
@@ -82,7 +82,7 @@ The children helpers & types `reactJsChildren`, `listToElement` and `jsChildrenT
 ## New Reason <-> JS Interop
 
 ### `wrapPropsShamelessly` (Reason Calling JS)
-It's not clear why we called it this way in the old API. Please tell @_chenglou that he should name things more seriously on a serious project. The new name is `wrapJsComponentForReason`. The signature hasn't changed much; arguments are labeled now and explicitly accept an unlabeled `children` at the last position. Example:
+It's not clear why we called it this way in the old API. Please tell @_chenglou that he should name things more seriously on a serious project. The new name is `wrapJsForReason`. The signature hasn't changed much; arguments are labeled now and explicitly accept an unlabeled `children` at the last position. Example:
 
 Before:
 
@@ -99,7 +99,7 @@ After:
 external myJSReactClass : ReasonReact.reactClass = "myJSReactClass" [@@bs.module];
 
 let make name::(name: string) age::(age: option int)=? children =>
-  ReasonReact.wrapJsComponentForReason
+  ReasonReact.wrapJsForReason
     reactClass::myJSReactClass
     props::{"name": name, "age": Js.Null_undefined.from_opt age}
     children;
@@ -108,15 +108,21 @@ let make name::(name: string) age::(age: option int)=? children =>
 **Don't forget** that once these are converted over, the callsites of these components will need to use the new JSX transform described above. Otherwise they'll generate type errors.
 
 ### `jsPropsToReasonProps` (JS Calling Reason)
-Now called `jsPropsToReason`. It's now barely an API; you'd simply call `make` while passing the right props. The file-level `include` is also gone; it used to magically export the backing component `comp` for JS consumption. You now have to manually export `comp` through the new `createJsReactClass`. Continuation of the previous example:
+Now called `wrapReasonForJs`. The file-level `include` that served this interop is gone; it used to magically export the backing component `comp` for JS consumption. You now have to manually export `comp` through the new `wrapReasonForJs`. Continuation of the previous example:
 
 ```reason
 let component = ...;
 let make ...;
 
-let jsPropsToReason jsProps => make name::jsProps##name age::?(Js.Null_undefined.to_opt jsProps##age) [||];
-let comp = ReasonReact.createJsReactClass ::jsPropsToReason component; /* this is used on JS' side */
+let comp =
+  ReasonReact.wrapReasonForJs
+    ::component
+    (fun jsProps => make name::jsProps##name age::?(Js.Null_undefined.to_opt jsProps##age) [||]);
 ```
+
+The function takes in the labeled reason `component`, and a function that, given the js props, asks you to call `make` while passing in the correctly converted parameters.
+
+**Aaaand that's it**! Enjoy!
 
 # 0.1.3
 DOM ref is now typed as `Js.null Dom.element`, instead of just `Dom.element` (https://github.com/reasonml/reason-react/commit/6f2a75b). Trivial migration: https://github.com/chenglou/reason-react-example/commit/b44587a
