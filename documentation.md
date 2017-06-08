@@ -1,4 +1,12 @@
-__This documentation assumes relative familiarity with ReactJS.__
+# Reason-React
+
+Reason-React is a safer, simpler way to build React components in [Reason](http://facebook.github.io/reason/).
+
+It integrates deeply with language level features in order to create an expressive, statically typed API, packed into a tiny API surface area.
+
+By binding directly to ReactJS, Reason-React gives you access to the entire React ecosystem, so that you can adopt it incrementally.
+
+_This documentation assumes relative familiarity with ReactJS._
 
 ## Intro Examples
 
@@ -22,11 +30,13 @@ let make ::name _children => {
 
 Reason comes with the [JSX](http://facebook.github.io/reason/#diving-deeper-jsx) syntax! Reason-React transforms it from an agnostic function call into a library-specific call though a macro. To take advantage of Reason-React JSX, put `{"reason": {"react-jsx": 2}"` in your [`bsconfig.json`](http://bloomberg.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bloomberg.github.io/bucklescript/docson/#build-schema.json)).
 
-### Uncapitalized JSX
+**Note** that due to current syntax constraints, you need to put spaces around the JSX children: `<div> foo </div>`.
+
+### Uncapitalized
 
 ```reason
-<div foo=bar>child1 child2</div>
-````
+<div foo=bar> child1 child2 </div>
+```
 
 transforms into
 
@@ -38,10 +48,10 @@ which compiles to the JS code `React.createElement('div', {foo: bar}, child1, ch
 
 Prop-less `<div />` transforms to `ReactDOMRe.createElement "div" [|child1, child2|]`, which compiles to `React.createElement('div', undefined, child1, child2)`.
 
-### Capitalized JSX
+### Capitalized
 
 ```reason
-<MyReasonComponent key=a ref=b foo=bar>child1 child2</MyReasonComponent>
+<MyReasonComponent key=a ref=b foo=bar> child1 child2 </MyReasonComponent>
 ```
 
 transforms to
@@ -180,7 +190,7 @@ Note:
 
 A common pattern in ReactJS is to attach extra variables onto a component's spec:
 
-```js
+```
 const Greeting = React.createClass({
   intervalId: null,
   componentDidMount: () => this.intervalId = setInterval(...),
@@ -268,7 +278,7 @@ let comp =
 
 The function takes in the labeled reason `component` you've created, and a function that, given the js props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to something like `comp`. The JS side can then import it:
 
-```js
+```
 var MyReasonComponent = require('myReasonComponent').comp;
 // make sure you're passing the correct data types!
 <MyReasonComponent name="John" />
@@ -327,9 +337,9 @@ Reason-react's equivalent `ReactDOMServerRe` exposes:
 
 - `renderToStaticMarkup : ReactRe.reactElement => string`
 
-## Converting Over ReactJS Idioms
+## Convert Over ReactJS Idioms
 
-### Passing in Components Class as a Prop
+### Pass in Components Class as a Prop
 
 In ReactJS, `<Menu banner=MyBanner />` is easy; in reason-react, we can't trivially pass the whole component module ([explanations](http://facebook.github.io/reason/modules.html#modules-basic-modules)). Solution:
 
