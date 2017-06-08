@@ -163,8 +163,8 @@ type jsPropsToReason 'jsProps 'state = Js.t 'jsProps => component 'state;
  * {...component}, all extensions will also see the underlying js class. I can sleep at night because js
  * interop is integrating with untyped, code and it is *possible* to create pure-Reason-React apps without JS
  * interop entirely. */
-let createJsReactClass:
-  jsPropsToReason::jsPropsToReason _ => componentSpec 'state 'initialState => reactClass;
+let wrapReasonForJs:
+  component::componentSpec 'state 'initialState => jsPropsToReason _ => reactClass;
 
 let createDomElement: string => props::Js.t {..} => array reactElement => reactElement;
 
@@ -173,5 +173,5 @@ let createDomElement: string => props::Js.t {..} => array reactElement => reactE
  * Wrap props into a JS component
  * Use for interop when Reason components use JS components
  */
-let wrapJsComponentForReason:
+let wrapJsForReason:
   reactClass::reactClass => props::Js.t {..} => array reactElement => component stateless;

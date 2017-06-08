@@ -533,9 +533,7 @@ let element
   }
 };
 
-let createJsReactClass
-    jsPropsToReason::(jsPropsToReason: jsPropsToReason 'jsProps 'state)
-    component => {
+let wrapReasonForJs ::component (jsPropsToReason: jsPropsToReason 'jsProps 'state) => {
   let jsPropsToReason: jsPropsToReason jsProps 'state = Obj.magic jsPropsToReason /* cast 'jsProps to jsProps */;
   (Obj.magic component.reactClassInternal)##prototype##jsPropsToReason#=(Some jsPropsToReason);
   component.reactClassInternal
@@ -556,10 +554,10 @@ module WrapProps = {
     (Obj.magic createElementVerbatim)##apply Js.null varargs
   };
   let dummyInteropComponent = statefulComponent "interop";
-  let wrapJsComponentForReason ::reactClass ::props children :component stateless => {
+  let wrapJsForReason ::reactClass ::props children :component stateless => {
     let jsElementWrapped = Some (wrapProps ::reactClass ::props children);
     {...dummyInteropComponent, jsElementWrapped}
   };
 };
 
-let wrapJsComponentForReason = WrapProps.wrapJsComponentForReason;
+let wrapJsForReason = WrapProps.wrapJsForReason;
