@@ -186,4 +186,8 @@ Note:
 
 ### ReactJS Using Reason-React
 
-brb sleep.
+
+## Common Type Errors
+
+- `The type constructor state would escape its scope`: this probably means you've defined your `state` type _after_ `let component = ...`. Move it before the `let`.
+
