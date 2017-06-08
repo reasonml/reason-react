@@ -164,7 +164,7 @@ let make _children => {
 
 ### Lifecycle Events
 
-ReasonReact supports the usuals:
+Reason-react supports the usuals:
 
 ```reason
 willReceiveProps: state => self => state,
@@ -184,8 +184,45 @@ Note:
 
 ## Interop With Existing JavaScript Components
 
-### ReactJS Using Reason-React
+### ReasonReact using ReactJS
 
+Easy! Since other Reason components only need you to expose a `make` function, fake one up:
+
+```reason
+external myJSReactClass : ReasonReact.reactClass = "myJSReactClass" [@@bs.module];
+
+let make name::(name: string) age::(age: option int)=? children =>
+  ReasonReact.wrapJsForReason
+    reactClass::myJSReactClass
+    props::{"name": name, "age": Js.Null_undefined.from_opt age}
+    children;
+```
+
+`ReasonReact.wrapJsForReason` is the helper we expose for this purpose. It takes in the `reactClass` you want to wrap, the `props` js object (of type `Js.t {. foo: bar}`) you'd pass to it (with values converted from Reason data structures to JS), and the mandatory children you'd forward to the JS side.
+
+**We recommend** to type the `make` parameters, since they're passed to `props` into the JS side, which is untyped.
+
+### ReactJS Using ReasonReact
+
+Eeeeasy. We expose a helper for the other direction, `ReasonReact.wrapReasonForJs`:
+
+```reason
+let component = ...;
+let make ...;
+
+let comp =
+  ReasonReact.wrapReasonForJs
+    ::component
+    (fun jsProps => make name::jsProps##name age::?(Js.Null_undefined.to_opt jsProps##age) [||]);
+```
+
+The function takes in the labeled reason `component` you've created, and a function that, given the js props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to something like `comp`. The JS side can then import it:
+
+```js
+var MyReasonComponent = require('myReasonComponent').comp;
+// make sure you're passing the correct data types!
+<MyReasonComponent name="John" />
+```
 
 ## Common Type Errors
 
