@@ -918,6 +918,11 @@ module Style = {
     strokeWidth::string? =>
     strokeMiterlimit::string? =>
 
+    /* Ruby Layout Level 1 - WD */
+    rubyAlign::string? =>
+    rubyMerge::string? =>
+    rubyPosition::string? =>
+
     /* Not added yet
      * -------------
      * Generated Content for Paged Media - WD
@@ -926,7 +931,6 @@ module Style = {
      * Regions - WD
      * Inline Layout Level 3 - WD
      * Round Display Level 1 - WD
-     * Ruby Layout Level 1 - WD
      * Inline Layout Level 3 - WD
      * Image Values and Replaced Content Level 4 - WD
      * Positioned Layout Level 3 - WD
