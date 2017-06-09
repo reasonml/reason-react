@@ -8,4 +8,4 @@ Come join us in [Discord](https://discord.gg/reasonml)!
 
 ## Documentation
 
-See [documentation.md](documentation.md)
+See [documentation.md](https://github.com/SanderSpies/react-on-reason/blob/master/docs/index.html)
