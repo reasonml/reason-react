@@ -1,9 +1,9 @@
-# 0.1.4 (**Unreleased**. Soon!)
+# 0.1.4
 Major update! Though this is 100% backward compatible, so no major version bump. We've revamped the whole API based on all you awesome folks' feedback, and we've provided a gradual migration path.
 
 ## Requirements & Self-Congratulations
-- New BuckleScript. bs-platform >=1.7.5+
-- This repo. reason-react >= 0.1.4
+- New BuckleScript. bs-platform >=1.7.5
+- This repo. reason-react >=0.1.4
 
 Upon installing the new dependencies, **your existing code still works**. Isn't that great? You can incrementally convert things over. The old modules will stay around until the next or next next version. No rush!
 

@@ -1,10 +1,32 @@
-# Reason-React
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
 
-Reason-React is a safer, simpler way to build React components in [Reason](http://facebook.github.io/reason/).
+  <title>ReasonReact</title>
+
+  <!-- Flatdoc -->
+  <script src='vendor/jquery.js'></script>
+  <script src="highlightJs/build/highlight.pack.js"></script>
+  <link  href='highlightJs/src/styles/xcode.css' rel='stylesheet'>
+  <script src='flatdoc.js'></script>
+
+  <!-- Flatdoc theme -->
+  <link  href='theme-white/style.css' rel='stylesheet'>
+  <script src='theme-white/script.js'></script>
+
+  <script id="markdown" type="text/markdown">
+
+# Reason React
+
+ReasonReact is a safer, simpler way to build React components in [Reason](http://facebook.github.io/reason/).
 
 It integrates deeply with language level features in order to create an expressive, statically typed API, packed into a tiny API surface area.
 
-By binding directly to ReactJS, Reason-React gives you access to the entire React ecosystem, so that you can adopt it incrementally.
+By binding directly to ReactJS, ReasonReact gives you access to the entire React ecosystem, so that you can adopt it incrementally.
 
 _This documentation assumes relative familiarity with ReactJS._
 
@@ -28,7 +50,7 @@ let make ::name _children => {
 
 ## JSX
 
-Reason comes with the [JSX](http://facebook.github.io/reason/#diving-deeper-jsx) syntax! Reason-React transforms it from an agnostic function call into a library-specific call though a macro. To take advantage of Reason-React JSX, put `{"reason": {"react-jsx": 2}"` in your [`bsconfig.json`](http://bloomberg.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bloomberg.github.io/bucklescript/docson/#build-schema.json)).
+Reason comes with the [JSX](http://facebook.github.io/reason/#diving-deeper-jsx) syntax! ReasonReact transforms it from an agnostic function call into a library-specific call though a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}"` in your [`bsconfig.json`](http://bloomberg.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bloomberg.github.io/bucklescript/docson/#build-schema.json)).
 
 **Note** that due to current syntax constraints, you need to put spaces around the JSX children: `<div> foo </div>`.
 
@@ -118,7 +140,7 @@ The last prop **must** be `children`. If you don't use it, simply ignore it by n
 
 ### Callback Handlers
 
-In ReactJS, we can do `<div onClick={this.handleClick} />` and in `handleClick`, access the latest `props` and `state` (despite the callback being asynchronous) through `this.props` and `this.state`. We don't use `this` in Reason-React; to access the newest `props`, simply put the callbacks in `make`'s body and read its arguments. To access the newest `state`, wrap the callback with `self.update`!
+In ReactJS, we can do `<div onClick={this.handleClick} />` and in `handleClick`, access the latest `props` and `state` (despite the callback being asynchronous) through `this.props` and `this.state`. We don't use `this` in ReasonReact; to access the newest `props`, simply put the callbacks in `make`'s body and read its arguments. To access the newest `state`, wrap the callback with `self.update`!
 
 ```reason
 let component = ...;
@@ -168,7 +190,7 @@ let make ::name _children => {
 
 ### Lifecycle Events
 
-Reason-react supports the usuals:
+ReasonReact supports the usuals:
 
 ```reason
 willReceiveProps: state => self => state,
@@ -198,7 +220,7 @@ const Greeting = React.createClass({
 });
 ```
 
-In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. Reason-React asks you to correctly put these instance variables into your component's `state`. To simulate updating the references without triggering a re-render, use `SilentUpdate`:
+In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. ReasonReact asks you to correctly put these instance variables into your component's `state`. To simulate updating the references without triggering a re-render, use `SilentUpdate`:
 
 ```reason
 type state = {intervalId: option int, someOtherVar: option string};
@@ -230,7 +252,7 @@ let make ::className="" _children => {
 
 Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...state, myDivRef: Js.Null.to_opt theRef}`. **Note** how [React DOM refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `myDivRef` is converted from a [JS nullable](http://bloomberg.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None).
 
-Reason-react ref only accept callbacks. The string `ref` from ReactJS is deprecated.
+ReasonReact ref only accept callbacks. The string `ref` from ReactJS is deprecated.
 
 We also expose an escape hatch `ReasonReact.refToJsObj` (type: `ReasonReact.reactRef => Js.t {..}`) which turns your ref into a JS object you can freely use; **this is only used to access ReactJS component class methods**.
 
@@ -286,7 +308,7 @@ var MyReasonComponent = require('myReasonComponent').comp;
 
 ## Events
 
-Reason-React events map cleanly to ReactJS [synthetic events](https://facebook.github.io/react/docs/events.html). More info in the [inline docs](https://github.com/SanderSpies/react-on-reason/blob/380358e5894d4223e7dd9c1fb2df72f0756231bc/src/reactEventRe.rei#L1).
+ReasonReact events map cleanly to ReactJS [synthetic events](https://facebook.github.io/react/docs/events.html). More info in the [inline docs](https://github.com/SanderSpies/react-on-reason/blob/380358e5894d4223e7dd9c1fb2df72f0756231bc/src/reactEventRe.rei#L1).
 
 If you're accessing fields on your event object, like `event.target.value`, see [Working with DOM](#working-with-dom) below.
 
@@ -311,7 +333,7 @@ The `ReactDOMRe` module below exposes an unsafe `domElementToObj`. That's all yo
 
 ## ReactDOM
 
-Reason-react's equivalent `ReactDOMRe` exposes:
+ReasonReact's equivalent `ReactDOMRe` exposes:
 
 - `render : ReasonReact.reactElement => Dom.element => unit`
 
@@ -331,7 +353,7 @@ And two helpers:
 
 ## ReactDOMServer
 
-Reason-react's equivalent `ReactDOMServerRe` exposes:
+ReasonReact's equivalent `ReactDOMServerRe` exposes:
 
 - `renderToString : ReactRe.reactElement => string`
 
@@ -341,7 +363,7 @@ Reason-react's equivalent `ReactDOMServerRe` exposes:
 
 ### Pass in Components Class as a Prop
 
-In ReactJS, `<Menu banner=MyBanner />` is easy; in reason-react, we can't trivially pass the whole component module ([explanations](http://facebook.github.io/reason/modules.html#modules-basic-modules)). Solution:
+In ReactJS, `<Menu banner=MyBanner />` is easy; in ReasonReact, we can't trivially pass the whole component module ([explanations](http://facebook.github.io/reason/modules.html#modules-basic-modules)). Solution:
 
 ```reason
 <Menu bannerFunc=(fun prop1 prop2 => <MyBanner message=prop1 count=prop2 />) />
@@ -364,7 +386,7 @@ For non-DOM components, you'd need to expose valid prop names.
 
 ## Miscellaneous
 
-- Reason-React doesn't support ReactJS context (yet).
+- ReasonReact doesn't support ReactJS context (yet).
 - No mixins.
 
 ## Common Type Errors
@@ -372,3 +394,54 @@ For non-DOM components, you'd need to expose valid prop names.
 - `The type constructor state would escape its scope`: this probably means you've defined your `state` type _after_ `let component = ...`. Move it before the `let`.
 - `Unbound record field update`/`Unbound record field handle`: this means you've passed `self` to a helper function of your render, and it used it like so: `<div onClick=(self.update click)/>`. This is because the record can't be found in the scope of the file. Just annotate it: `<div onClick=(self.ReasonReact.update click)/>`.
 - Something about callbacks passed to `update` (or `handle`) having incompatible types between them: you've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
+
+  </script>
+
+  <!-- Initializer -->
+  <script>
+    Flatdoc.run({
+      fetcher: function(callback) {
+        callback(null, document.getElementById('markdown').innerHTML);
+      },
+      highlight: function (code, value) {
+        return (value === 'reason') ? hljs.highlight('reason', code).value : hljs.highlight(value, code).value;
+      },
+    });
+  </script>
+
+  <!-- Meta -->
+  <meta content="ReasonReact: a safer, simpler way to build ReactJS components in Reason" name="description">
+  <meta content="ReasonReact: a safer, simpler way to build ReactJS components in Reason" property="og:description">
+  <meta content="https://facebook.github.io/reason/images/logoMini.png" property="og:image">
+  </head>
+<body role='flatdoc' class='big-h3 large-brief no-literate'>
+
+  <div class='header'>
+    <div class='left'>
+      <h1><a href='index.html'>ReasonReact</a></h1>
+      <ul>
+        <li><a href='gettingStarted.html'>Getting Started</a></li>
+        <li><a href='examples.html'>Examples</a></li>
+        <li><a href='faq.html'>FAQ</a></li>
+        <li><a href='blog.html'>Blog</a></li>
+        <li><a href='https://github.com/sanderspies/react-on-reason'>GitHub</a></li></ul>
+    </div>
+  </div>
+
+  <div class='content-root'>
+    <div class='menubar'>
+      <div class='menu section' role='flatdoc-menu'></div>
+    </div>
+    <div role='flatdoc-content' class='content'></div>
+  </div>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+  <script type="text/javascript">
+    docsearch({
+      apiKey: 'c0b64d79817b714e4d7038d33cb5bb64',
+      indexName: 'reason',
+      inputSelector: '#agolia-search',
+    });
+  </script>
+</body>
+</html>
