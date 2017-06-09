@@ -391,9 +391,19 @@ For non-DOM components, you'd need to expose valid prop names.
 
 ## Common Type Errors
 
-- `The type constructor state would escape its scope`: this probably means you've defined your `state` type _after_ `let component = ...`. Move it before the `let`.
-- `Unbound record field update`/`Unbound record field handle`: this means you've passed `self` to a helper function of your render, and it used it like so: `<div onClick=(self.update click)/>`. This is because the record can't be found in the scope of the file. Just annotate it: `<div onClick=(self.ReasonReact.update click)/>`.
-- Something about callbacks passed to `update` (or `handle`) having incompatible types between them: you've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
+#### The type constructor state would escape its scope
+
+This probably means you've defined your `state` type _after_ `let component = ...`. Move it before the `let`.
+
+It could also mean that you've defined a `statefulComponent` but haven't started using its state yet; The error message here isn't great. It should be "don't forget to use state at least once!". We'll improve the errors soon.
+
+#### Unbound record field update/Unbound record field handle
+
+This means you've passed `self` to a helper function of your render, and it used it like so: `<div onClick=(self.update click)/>`. This is because the record can't be found in the scope of the file. Just annotate it: `<div onClick=(self.ReasonReact.update click)/>`.
+
+#### Something about callbacks passed to `update` (or `handle`) having incompatible types between them
+
+You've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
 
   </script>
 
