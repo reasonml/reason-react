@@ -862,7 +862,7 @@ module Style = {
     animation::string? =>
     animationDelay::string? =>
     animationDirection::string? =>
-    anumationDuration::string? =>
+    animationDuration::string? =>
     animationFillMode::string? =>
     animationIterationCount::string? =>
     animationName::string? =>
@@ -923,6 +923,15 @@ module Style = {
     rubyMerge::string? =>
     rubyPosition::string? =>
 
+    /* Lists and Counters Level 3 - WD */
+    /* listStyle - already defined by CSS2Properties */
+    /* listStyleImage - already defined by CSS2Properties */
+    /* listStylePosition - already defined by CSS2Properties */
+    /* listStyleType - already defined by CSS2Properties */
+    /* counterIncrement - already defined by CSS2Properties */
+    /* counterReset - already defined by CSS2Properties */
+
+
     /* Not added yet
      * -------------
      * Generated Content for Paged Media - WD
@@ -931,11 +940,9 @@ module Style = {
      * Regions - WD
      * Inline Layout Level 3 - WD
      * Round Display Level 1 - WD
-     * Inline Layout Level 3 - WD
      * Image Values and Replaced Content Level 4 - WD
      * Positioned Layout Level 3 - WD
      * Filter Effects Level 1 -  -WD
-     * Lists and Counters Level 3 - WD
      * Exclusions Level 1 - WD
      * Text Level 4 - FPWD
      * SVG Markers - FPWD
