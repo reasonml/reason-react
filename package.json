@@ -15,6 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/reasonml/reason-react.git"
   },
+  "dependencies": {
+    "create-react-class": "^15.0.0"
+  },
   "devDependencies": {
     "bs-platform": "^1.6.0"
   },

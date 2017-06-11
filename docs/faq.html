@@ -22,7 +22,7 @@
 
 # Frequently Asked Questions
 
-## Common Type Errors
+### Common Type Errors
 
 _Copied over from the main page for visiblity_.
 
@@ -39,6 +39,10 @@ This means you've passed `self` to a helper function of your render, and it used
 #### Something about callbacks passed to `update` (or `handle`) having incompatible types between them
 
 You've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
+
+### How do I do props spreading? `<div {...this.props} />`
+
+You can't. Props spreading is a big source of unpredictability and performance regression (think `shouldComponentUpdate`). Our API prevents this.
 
   </script>
 

@@ -42,7 +42,7 @@ let createDomElement s ::props children => {
 };
 
 external createClassInternalHack : Js.t 'classSpec => reactClass =
-  "createClass" [@@bs.val] [@@bs.module "react"];
+  "create-react-class" [@@bs.module];
 
 let magicNull = Obj.magic Js.null;
 
