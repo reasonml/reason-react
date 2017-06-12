@@ -35,6 +35,7 @@ _This documentation assumes relative familiarity with ReactJS._
 ```reason
 let component = ReasonReact.statefulComponent "Greeting";
 
+/* underscore before names indicate unused variables. We name them for clarity */
 let make ::name _children => {
   let click _event state _self => ReasonReact.Update (state + 1);
   {
