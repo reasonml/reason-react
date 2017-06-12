@@ -167,7 +167,7 @@ external props :
   srcLang::string? =>
   srcSet::string? =>
   start::int? =>
-  step::int? =>
+  step::float? =>
   summary::string? => /* deprecated */
   target::string? =>
   _type::string? => /* has a fixed but large-ish set of possible values */
