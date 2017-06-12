@@ -1,6 +1,6 @@
 {
   "name": "reason-react",
-  "version": "1.0.0",
+  "version": "0.1.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "create-react-class": "^15.0.0"
   },
   "devDependencies": {
-    "bs-platform": "^1.6.0"
+    "bs-platform": "^1.7.5"
   },
   "peerDependencies": {
     "react": "^15.0.0",
