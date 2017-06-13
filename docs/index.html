@@ -269,7 +269,7 @@ In reality, this is nothing but a thinly veiled way to mutate a component's "sta
 
 ```reason
 type state = {intervalId: option int, someOtherVar: option string};
-let component = ...; /* remember, `component` needs to be close to `make`, and after `state` type declaration!
+let component = ...; /* remember, `component` needs to be close to `make`, and after `state` type declaration! */
 let make _children => {
   ...component,
   initialState: fun () => {intervalId: None, someOtherVar: Some "hello"},
