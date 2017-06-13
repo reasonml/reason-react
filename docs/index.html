@@ -411,8 +411,11 @@ ReasonReact's equivalent `ReactDOMServerRe` exposes:
 In ReactJS, `<Menu banner=MyBanner />` is easy; in ReasonReact, we can't trivially pass the whole component module ([explanations](http://facebook.github.io/reason/modules.html#modules-basic-modules)). Solution:
 
 ```reason
-<Menu bannerFunc=(fun prop1 prop2 => <MyBanner message=prop1 count=prop2 />) />
+let bannerCallback prop1 prop2 => <MyBanner message=prop1 count=prop2 />;
+<Menu bannerFunc=bannerCallback />
 ```
+
+**Due to an existing bug in our transform right now, you can't inline that call**. This will be fixed soon. Sorry!
 
 ### Invalid Prop Name
 
