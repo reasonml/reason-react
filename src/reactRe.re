@@ -1,3 +1,8 @@
+/* THIS MODULE IS DEPRECATED. It's kept for backward compatibility. Please see the new one at ReasonReact.re. Migration guide at https://github.com/reasonml/reason-react/blob/master/HISTORY.md#014 */
+
+
+
+
 /* ============================================ some types */
 type reactClass = ReasonReact.reactClass;
 

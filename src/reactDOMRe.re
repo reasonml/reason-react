@@ -914,6 +914,7 @@ module Style = {
 
     /* svg */
     fill::string? =>
+    fillRule::string? =>
     stroke::string? =>
     strokeWidth::string? =>
     strokeMiterlimit::string? =>
@@ -955,10 +956,20 @@ module Style = {
     unit =>
     style = "" [@@bs.obj];
 
-    let combine : style => style => style = [%bs.raw {|
-      function (a, b) {
-        return Object.assign({}, a, b);
-      }
-    |}];
+    let combine: style => style => style =
+      fun a b => {
+        let a: Js.t {..} = Obj.magic a;
+        let b: Js.t {..} = Obj.magic b;
+        Js.Obj.assign (Js.Obj.assign (Js.Obj.empty ()) a) b |> Obj.magic
+      };
 
+    let unsafeAddProp: style => string => string => style =
+      fun style property value => {
+        let propStyle: style = {
+          let dict = Js.Dict.empty ();
+          Js.Dict.set dict property value;
+          Obj.magic dict
+        };
+        combine style propStyle
+      };
 }
