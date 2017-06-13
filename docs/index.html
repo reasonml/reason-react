@@ -204,10 +204,54 @@ willUpdate: previousState::state => nextState::state => self => unit,
 Note:
 
 - We've dropped the `component` prefix from all these.
-- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. `NoUpdate/Update/SilentUpdate`). We presume you'd always want to update the state in this lifecycle.
+- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. `NoUpdate/Update/SilentUpdate`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
 - `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
 - `didUpdate` and `willUpdate` are labeled now! This reduces confusion.
 - `willMount` is unsupported. Use `didMount` instead.
+
+**There's a catch**. Some new lifecyle methods act differently. Described below.
+
+### Access next or previous props
+
+One pattern that's sometimes used in ReactJS is accessing a lifecyle event's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous/next props/state for you yet. The next sections provide the solutions.
+
+#### `willReceiveProps`
+
+Traditional ReactJS `componentWillReceiveProps` takes in a `nextProps`. We don't have `nextProps`, since those are simply the labeled arguments in `make`, available to you in the scope. To access the _current_ props, however, you'd need to manually copy those props into state, and access them from state:
+
+```reason
+type state = {
+  someToggle: bool,
+  /* copied over from props */
+  name: string
+};
+
+let component = ...;
+let make ::name _children => {
+  ...component,
+  initialState: fun () => {someToggle: false, name},
+  willReceiveProps: fun state self => {
+    if (state.name === name) {
+      ...
+      /* previous ReactJS logic would be: if (props.name === nextProps.name)
+    }
+    /* don't forget to sync props into state */
+    {...state, name}
+  }
+}
+```
+
+**Don't forget this props-to-state forwarding**! This is the one place you need to it do. If you forget, you might not get the freshest data.
+
+Compared to the ReactJS approach, this method is more manual and slightly error-prone, though it has the advantage of only retaining the props that are needed and other rather nuanced benefits. We're working on making this API smoother.
+
+#### `willUpdate`
+
+(**Assuming you've synced parts of the props into state in `willReceiveProps`**) ReactJS' `componentwillUpdate`'s `nextProps` is just the labeled arguments in `make`, and "current props" (aka `this.props`) is the props you've copied into state, accessible via ReasonReact's `previousState`.
+
+#### `didUpdate`
+
+ReactJS' `prevProps` is what you've synced in state, under `previousState`.
 
 ### Instance Variables
 
@@ -328,11 +372,11 @@ Since CSS-in-JS is all the rage right now, we'll recommend our official pick soo
 
 It's a labeled (typed!) function call that maps to the familiar style object `{color: '#444444', fontSize: '68px'}`. **Note** that `make` returns an opaque `ReactDOMRe.style` type that you can't read into. We also expose a `ReactDOMRe.Style.combine` that takes in two `style`s and combine them.
 
-### Working with DOM
+## Working with DOM
 
 The `ReactDOMRe` module below exposes an unsafe `domElementToObj`. That's all you need.
 
-## ReactDOM
+### ReactDOM
 
 ReasonReact's equivalent `ReactDOMRe` exposes:
 
@@ -352,7 +396,7 @@ And two helpers:
 
 - `renderToElementWithId : ReasonReact.reactElement => string => unit`: convenience. Finds the element of the provided id and `render` to it.
 
-## ReactDOMServer
+### ReactDOMServer
 
 ReasonReact's equivalent `ReactDOMServerRe` exposes:
 
