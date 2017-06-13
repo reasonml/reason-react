@@ -152,7 +152,7 @@ let statefulComponent: string => componentSpec 'state stateless;
 /** Create a stateless component: i.e. a component where state has type stateless. */
 let statelessComponent: string => component stateless;
 
-let element: key::string? => ref::(reactRef => unit)? => component 's => reactElement;
+let element: key::string? => ref::(Js.null reactRef => unit)? => component 's => reactElement;
 
 type jsPropsToReason 'jsProps 'state = Js.t 'jsProps => component 'state;
 

@@ -82,7 +82,7 @@ and render 'state = state::'state => self 'state => reactElement
  * Type of hidden field for Reason components that use JS components
  */
 and jsElementWrapped =
-  option (key::Js.undefined string => ref::Js.undefined (reactRef => unit) => reactElement)
+  option (key::Js.undefined string => ref::Js.undefined (Js.null reactRef => unit) => reactElement)
 /**
  * Granularly types state, and initial state as being independent, so that we
  * may include a template that all instances extend from.
@@ -521,7 +521,7 @@ let statelessComponent debugName :component stateless => statefulComponent debug
  */
 let element
     key::(key: string)=(Obj.magic Js.undefined)
-    ref::(ref: reactRef => unit)=(Obj.magic Js.undefined)
+    ref::(ref: Js.null reactRef => unit)=(Obj.magic Js.undefined)
     (component: component 'state) => {
   let element = Element component;
   switch component.jsElementWrapped {
@@ -547,7 +547,7 @@ module WrapProps = {
       ::props
       children
       key::(key: Js.undefined string)
-      ref::(ref: Js.undefined (reactRef => unit)) => {
+      ref::(ref: Js.undefined (Js.null reactRef => unit)) => {
     let props = Js.Obj.assign (Js.Obj.assign (Js.Obj.empty ()) props) {"ref": ref, "key": key};
     let varargs = [|Obj.magic reactClass, Obj.magic props|] |> Js.Array.concat children;
     /* Use varargs under the hood */
