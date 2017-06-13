@@ -17,3 +17,4 @@ We've finally removed `ReactRe`. It's been deprecated since 0.1.4. And we've off
 - Fix `reactRef`'s type in various locations. A React ref is actually always nullable; we've previously only acknowledged it for DOM ref, now we do for custom (composite) components ref too. A more detailed explanation is [here](https://github.com/facebook/react/issues/9328#issuecomment-298438237). This is documented in our docs in the ref section as well.
 - `self` now contains a new prop, `retainedProps`. This is a new feature that solves the previous slightly inconvenient way of forwarding props to state, as described in the old API's lifecycle methods. Now there's a dedicated API for it! The docs describes this in detail.
 - `enqueue`. Best thing ever.
+- `ReactDOMRe.createElement` (usually used through the JSX `<div> foo </div>`) has a new implementation that fixes an inadvertent children key warning in the previous version.
