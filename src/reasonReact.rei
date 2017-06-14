@@ -161,7 +161,7 @@ type jsPropsToReason 'jsProps 'state = Js.t 'jsProps => component 'state;
  * We *under* constrain the kind of component spec this accepts because we actually extend the *originally*
  * defined component. It uses mutation on the original component, so that even if it is extended with
  * {...component}, all extensions will also see the underlying js class. I can sleep at night because js
- * interop is integrating with untyped, code and it is *possible* to create pure-Reason-React apps without JS
+ * interop is integrating with untyped, code and it is *possible* to create pure-ReasonReact apps without JS
  * interop entirely. */
 let wrapReasonForJs:
   component::componentSpec 'state 'initialState => jsPropsToReason _ => reactClass;

@@ -41,7 +41,7 @@ _Not to be confused with the `ReactRe.createElement` in the previous section_.
 `Foo.createElement` is now referred to as `Foo.make`. `make` is a more idiomatic term in Reason/OCaml, and is shorter to type!
 
 ## `componentBag`
-The concept of `componentBag` is now called `self`. We thought it'd be a more appropriate name. The new `self` doesn't contain `props`, `state`, `setState` and `instanceVars` anymore; these are no longer needed in the new reason-react.
+The concept of `componentBag` is now called `self`. We thought it'd be a more appropriate name. The new `self` doesn't contain `props`, `state`, `setState` and `instanceVars` anymore; these are no longer needed in the new ReasonReact.
 
 ### `componentBag.props`
 Replaced with the new `make` (previously `createElement`) call which takes in labeled arguments. See more in [TODO] this section.
