@@ -20,12 +20,136 @@
 
   <script id="markdown" type="text/markdown">
 
-Examples
-===========
+# Examples
 
-An example is worth a thousand words.
+See https://github.com/chenglou/reason-react-example for examples you can clone and run. This page copy pastes a few from there for ease of reading.
 
-See https://github.com/chenglou/reason-react-example for examples you can clone and run.
+## Simple
+
+```reason
+let component = ReasonReact.statelessComponent "Page";
+
+let handleClick _event _ _ => Js.log "clicked!";
+
+let make ::message _children => {
+  ...component,
+  render: fun () self =>
+    <div onClick=(self.handle handleClick)> (ReasonReact.stringToElement message) </div>
+};
+```
+
+Usage in another file:
+
+```reason
+ReactDOMRe.renderToElementWithId <Page message="Hello!" /> "index";
+```
+
+In the same file, you'd do:
+
+```reason
+ReactDOMRe.renderToElementWithId (make message::"Hello!" [||]) "index";
+```
+
+## Counter
+
+Demonstrates calling an async "setState" in idiomatic ReasonReact
+
+```reason
+type state = {
+  count: int,
+  timerId: option Js.Global.intervalId
+};
+
+let increaseCount _id state _self => ReasonReact.Update {...state, count: state.count + 1};
+
+let component = ReasonReact.statefulComponent "Counter";
+
+let make _children => {
+  ...component,
+  initialState: fun () => {count: 0, timerId: None},
+  didMount: fun state self =>
+    ReasonReact.SilentUpdate {
+      ...state,
+      timerId: Some (Js.Global.setInterval (self.update increaseCount) 1000)
+      /* if you're not used to currying, this form is clearer: */
+      /* Js.Global.setInterval (fun id => self.update increaseCount id) */
+    },
+  render: fun state _self => <div> (ReasonReact.stringToElement (string_of_int state.count)) </div>
+};
+```
+
+## ReasonReact using ReactJS
+
+myBanner.js:
+
+```
+var ReactDOM = require('react-dom');
+var React = require('react');
+
+var App = React.createClass({
+  render: function() {
+    if (this.props.show) {
+      return React.createElement('div', null,
+        this.props.message
+      );
+    } else {
+      return null;
+    }
+  }
+});
+
+module.exports = App;
+```
+
+myBannerRe.re
+```reason
+/* Typing the myBanner.js component's output as a `reactClass`. */
+/* Note that this file's JS output is located at reason-react-example/lib/js/src/interop/myBannerRe.js; we're specifying the relative path to myBanner.js in the string below */
+external myBanner : ReasonReact.reactClass = "../../../../src/interop/myBanner" [@@bs.module];
+
+let make ::show ::message children =>
+  ReasonReact.wrapJsForReason
+    reactClass::myBanner
+    props::{
+      "show": Js.Boolean.to_js_boolean show, /* ^ don't forget to convert an OCaml bool into a JS boolean! */
+      "message": message /* OCaml string maps to JS string, no conversion needed here */
+    }
+    children;
+```
+
+## ReactJS using ReasonReact
+
+pageReason.re:
+
+```reason
+let component = ReasonReact.statelessComponent "PageReason";
+
+let make ::message ::extraGreeting=? _children => {
+  ...component,
+  render: fun () _self => {
+    let greeting =
+      switch extraGreeting {
+      | None => "How are you?"
+      | Some g => g
+      };
+    <div> <MyBannerRe show=true message=(message ^ " " ^ greeting) /> </div>
+  }
+};
+
+let jsComponent =
+  ReasonReact.wrapReasonForJs
+    ::component
+    (
+      fun jsProps =>
+        make
+          message::jsProps##message
+          extraGreeting::?(Js.Null_undefined.to_opt jsProps##extraGreeting)
+          [||]
+    );
+```
+
+Then use it on the JS side through `var PageReason = require('path/to/pageReason.js').jsComponent;`
+
 
   </script>
   <!-- Initializer -->

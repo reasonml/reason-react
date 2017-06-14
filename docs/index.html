@@ -347,16 +347,16 @@ Eeeeasy. We expose a helper for the other direction, `ReasonReact.wrapReasonForJ
 let component = ...;
 let make ...;
 
-let comp =
+let jsComponent =
   ReasonReact.wrapReasonForJs
     ::component
     (fun jsProps => make name::jsProps##name age::?(Js.Null_undefined.to_opt jsProps##age) [||]);
 ```
 
-The function takes in the labeled reason `component` you've created, and a function that, given the js props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to something like `comp`. The JS side can then import it:
+The function takes in the labeled reason `component` you've created, and a function that, given the js props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to a name such as `jsComponent`. The JS side can then import it:
 
 ```
-var MyReasonComponent = require('myReasonComponent').comp;
+var MyReasonComponent = require('myReasonComponent').jsComponent;
 // make sure you're passing the correct data types!
 <MyReasonComponent name="John" />
 ```
