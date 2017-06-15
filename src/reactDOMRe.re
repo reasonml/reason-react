@@ -914,10 +914,22 @@ module Style = {
 
     /* svg */
     fill::string? =>
+    fillOpacity::string? =>
     fillRule::string? =>
+    markerEnd::string? =>
+    markerMid::string? =>
+    markerStart::string? =>
+    pointerEvents::string? =>
+    stopColor::string? =>
+    stopOpacity::string? =>
     stroke::string? =>
-    strokeWidth::string? =>
+    strokeDasharray::string? =>
+    strokeDashoffset::string? =>
+    strokeLinecap::string? =>
+    strokeLinejoin::string? =>
     strokeMiterlimit::string? =>
+    strokeOpacity::string? =>
+    strokeWidth::string? =>
 
     /* Ruby Layout Level 1 - WD */
     rubyAlign::string? =>
