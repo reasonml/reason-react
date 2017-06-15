@@ -174,7 +174,7 @@ and `update` itself returns a function, the actual, ordinary callback passed to 
 
 Often times, you'd return `NoUpdate` from the handler. For convenience, we've exposed a `self.handle`, which is just an `update` that doesn't expect a return value (aka expects just `unit`).
 
-**Note**: sometimes you might be forwarding `update` or `handle` to some helpers. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](common-type-errors). Example:
+**Note**: sometimes you might be forwarding `update` or `handle` to some helpers. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](#reason-react-common-type-errors). Example:
 
 ```reason
 let click event state self => ...;
@@ -369,7 +369,7 @@ var MyReasonComponent = require('myReasonComponent').jsComponent;
 
 ReasonReact events map cleanly to ReactJS [synthetic events](https://facebook.github.io/react/docs/events.html). More info in the [inline docs](https://github.com/reasonml/reason-react/blob/380358e5894d4223e7dd9c1fb2df72f0756231bc/src/reactEventRe.rei#L1).
 
-If you're accessing fields on your event object, like `event.target.value`, see [Working with DOM](#working-with-dom) below.
+If you're accessing fields on your event object, like `event.target.value`, see [Working with DOM](#reason-react-working-with-dom) below.
 
 ## Styles
 
@@ -400,7 +400,7 @@ ReasonReact's equivalent `ReactDOMRe` exposes:
 
 - `findDOMNode : ReasonReact.reactRef => Dom.element`
 
-- `objToDOMProps : Js.t {..} => reactDOMProps` (see use-case in [Invalid Prop Name](invalid-prop-name))
+- `objToDOMProps : Js.t {..} => reactDOMProps` (see use-case in [Invalid Prop Name](#reason-react-convert-over-reactjs-idioms-invalid-prop-name))
 
 And two helpers:
 
