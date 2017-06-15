@@ -301,6 +301,8 @@ let make ::className="" _children => {
 
 Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...state, myDivRef: Js.Null.to_opt theRef}`. **Note** how [React DOM refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `myDivRef` is converted from a [JS nullable](http://bloomberg.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None).
 
+**You must use `SilentUpdate` with `ref`**. Don't use `Update`. You'll get into an infinite loop. This is a subtle nuance of ReactJS `ref` from the above discussion.
+
 ReasonReact ref only accept callbacks. The string `ref` from ReactJS is deprecated.
 
 We also expose an escape hatch `ReasonReact.refToJsObj` (type: `ReasonReact.reactRef => Js.t {..}`) which turns your ref into a JS object you can freely use; **this is only used to access ReactJS component class methods**.
