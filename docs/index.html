@@ -87,6 +87,8 @@ Prop-less `<MyReasonComponent />` transforms to `ReasonReact.element (MyReasonCo
 
 **Note how `ref` and `key` have been lifted out of the JSX call into the `ReasonReact.element` call**. `ref` and `key` are reserved in ReasonReact, just like in ReactJS. **Don't** use them as props in your component!
 
+**Note 2**: there's currently a bug where explicitly passed optional `ref` and `key` aren't transformed correctly: `<Foo ref=?bar />`. This will be fixed in the next version. Sorry!
+
 ## Component Creation
 
 A component template is created through `ReasonReact.statelessComponent "ComponentName"`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).
@@ -108,6 +110,14 @@ let make ::name _children => {
 ```
 
 **Note**: place `make` and `component` right beside each other! This helps readability and avoiding a corner-case type error for `state`.
+
+**Note 2**: do **not** inline `let component` into the `make` function body like the following!
+
+```reason
+let make ... => {...(ReasonReact.statelessComponent "Greeting"), render: fun ...}
+```
+
+Since `make` is called at every JSX invocation, you'd be creating a fresh new component every time.
 
 ### State
 
@@ -134,6 +144,41 @@ Props are just the labeled arguments of the `make` function, seen above. They ca
 The last prop **must** be `children`. If you don't use it, simply ignore it by naming it `_` or `_children`. Names starting with underscore don't trigger compiler warnings if they're unused.
 
 **The prop name cannot be `ref` nor `key`**. Those are reserved, just like in ReactJS.
+
+Following that example, you'd call that component in another file through `<Foo name="Reason" />`. `className`, if omitted, defaults to "box". `age` defaults to `None`. If you'd like to explicitly pass `age`, simply do so: `<Foo name="Reason" age=20 />`.
+
+#### Neat Trick with Props Forwarding
+
+Sometimes in ReactJS, you're being given a prop from the owner that you'd like to forward directly to the child:
+
+```
+<Foo name="Reason" age={this.props.age} />
+```
+
+This is a source of bugs, because `this.props.age` might be accidentally changed to a nullable number while `Foo` doesn't expect it to be so, or vice-versa; it might be nullable before, and now it's not and `Foo` is left with a useless null check somewhere in the render.
+
+In Reason, if you want to explicitly pass an optional `ageFromProps` (whose type is `option int`, aka `None | Some int`), the following wouldn't work:
+
+```reason
+<Foo name="Reason" age=ageFromProps />
+```
+
+Because `age` expects a normal `int` when you do call `Foo` with it, not an `option int`! Naively, you'd be forced to solve this like so:
+
+```reason
+switch ageFromProps {
+| None => <Foo name="Reason" />
+| Some nonNullableAge => <Foo name="Reason" age=nonNullableAge />
+}
+```
+
+Cumbersome. Fortunately, here's a better way to explicitly pass an optional value:
+
+```reason
+<Foo name="Reason" age=?ageFromProps />
+```
+
+It says "I understand that `age` is optional and that when I use the label I should pass an int. But I'd like to forward an `option` value explicitly". This isn't a JSX trick we've made up; it's just part of the language feature! See the section on "Explicitly Passed Optional" in the [Reason docs](http://facebook.github.io/reason/#basics-function).
 
 ### Render
 
