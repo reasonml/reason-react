@@ -912,14 +912,34 @@ module Style = {
     rotation::string? =>
     rotationPoint::string? =>
 
-    /* svg */
+    /* SVG 1.1 - REC */
+    alignmentBaseline::string? =>
+    baselineShift::string? =>
+    clip::string? =>
+    clipPath::string? =>
+    clipRule::string? =>
+    colorInterpolation::string? =>
+    colorInterpolationFilters::string? =>
+    colorProfile::string? =>
+    colorRendering::string? =>
+    cursor::string? =>
+    dominantBaseline::string? =>
     fill::string? =>
     fillOpacity::string? =>
     fillRule::string? =>
+    filter::string? =>
+    floodColor::string? =>
+    floodOpacity::string? =>
+    glyphOrientationHorizontal::string? =>
+    glyphOrientationVertical::string? =>
+    imageRendering::string? =>
+    kerning::string? =>
+    lightingColor::string? =>
     markerEnd::string? =>
     markerMid::string? =>
     markerStart::string? =>
     pointerEvents::string? =>
+    shapeRendering::string? =>
     stopColor::string? =>
     stopOpacity::string? =>
     stroke::string? =>
@@ -930,6 +950,8 @@ module Style = {
     strokeMiterlimit::string? =>
     strokeOpacity::string? =>
     strokeWidth::string? =>
+    textAnchor::string? =>
+    textRendering::string? =>
 
     /* Ruby Layout Level 1 - WD */
     rubyAlign::string? =>
