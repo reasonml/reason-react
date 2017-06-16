@@ -912,7 +912,7 @@ module Style = {
     rotation::string? =>
     rotationPoint::string? =>
 
-    /* svg */
+    /* SVG 1.1 - REC */
     alignmentBaseline::string? =>
     baselineShift::string? =>
     clip::string? =>
