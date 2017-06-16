@@ -22,3 +22,4 @@ We've finally removed `ReactRe`. It's been deprecated since 0.1.4. And we've off
 (Not in this repo, but ppx fixes that go into bs-platform)
 - JSX ppx now recursively transforms component's props.
 - JSX ppx now reports the correct location for some errors.
+- JSX ppx now correctly transforms some corner case with ref and key (`ref=?foo`).
