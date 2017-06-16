@@ -51,7 +51,7 @@ let make ::name _children => {
 
 ## JSX
 
-Reason comes with the [JSX](http://facebook.github.io/reason/#diving-deeper-jsx) syntax! ReasonReact transforms it from an agnostic function call into a library-specific call though a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}"` in your [`bsconfig.json`](http://bloomberg.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bloomberg.github.io/bucklescript/docson/#build-schema.json)).
+Reason comes with the [JSX](http://facebook.github.io/reason/#diving-deeper-jsx) syntax! ReasonReact transforms it from an agnostic function call into a library-specific call though a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}"` in your [`bsconfig.json`](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
 
 **Note** that due to current syntax constraints, you need to put spaces around the JSX children: `<div> foo </div>`.
 
@@ -299,7 +299,7 @@ let make ::className="" _children => {
 };
 ```
 
-Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...state, myDivRef: Js.Null.to_opt theRef}`. **Note** how [React DOM refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `myDivRef` is converted from a [JS nullable](http://bloomberg.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None).
+Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...state, myDivRef: Js.Null.to_opt theRef}`. **Note** how [React DOM refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `myDivRef` is converted from a [JS nullable](http://bucklescript.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None).
 
 **You must use `SilentUpdate` with `ref`**. Don't use `Update`. You'll get into an infinite loop. This is a subtle nuance of ReactJS `ref` from the above discussion.
 
@@ -435,7 +435,7 @@ let bannerCallback prop1 prop2 => <MyBanner message=prop1 count=prop2 />;
 
 ### Invalid Prop Name
 
-Prop names like `type` (as in `<input type="text" />`) aren't syntactically valid; `type` is a reserved keyword in Reason/OCaml. Use `<input _type="text" />` instead. This follows BuckleScript's [name mangling rules](http://bloomberg.github.io/bucklescript/Manual.html#_object_label_translation_convention).
+Prop names like `type` (as in `<input type="text" />`) aren't syntactically valid; `type` is a reserved keyword in Reason/OCaml. Use `<input _type="text" />` instead. This follows BuckleScript's [name mangling rules](http://bucklescript.github.io/bucklescript/Manual.html#_object_label_translation_convention).
 
 For `data-*` and `aria-*`, this is a bit trickier; You'd currently need to resort to using `ReactDOMRe.objToDOMProps` + the underlying desugared JSX call:
 
