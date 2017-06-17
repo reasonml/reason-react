@@ -15,6 +15,8 @@ external stringToElement : string => reactElement = "%identity";
 
 external arrayToElement : array reactElement => reactElement = "%identity";
 
+external floatToElement : float => reactElement = "%identity";
+
 let listToElement : list reactElement => reactElement;
 
 external refToJsObj : reactRef => Js.t {..} = "%identity";
