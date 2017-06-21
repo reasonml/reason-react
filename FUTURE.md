@@ -12,14 +12,20 @@ We've finally removed `ReactRe`. It's been deprecated since 0.1.4. And we've off
 
 # 0.1.5
 
-- Adjust ReactDOMRe's `props`; more accurate labels and types.
-- Add `ReactDOMRe.Style.unsafeAddProp` to unsafely add a prop to an existing `style`. Make sure you know what you're doing!
-- Fix `reactRef`'s type in various locations. A React ref is actually always nullable; we've previously only acknowledged it for DOM ref, now we do for custom (composite) components ref too. A more detailed explanation is [here](https://github.com/facebook/react/issues/9328#issuecomment-298438237). This is documented in our docs in the ref section as well.
-- `self` now contains a new prop, `retainedProps`. This is a new feature that solves the previous slightly inconvenient way of forwarding props to state, as described in the old API's lifecycle methods. Now there's a dedicated API for it! The docs describes this in detail.
-- `enqueue`. Best thing ever.
-- `ReactDOMRe.createElement` (usually used through the JSX `<div> foo </div>`) has a new implementation that fixes an inadvertent children key warning in the previous version.
+Requirements: bs-platform >=1.7.6, which comes with the following ReasonReact JSX fixes:
 
-(Not in this repo, but ppx fixes that go into bs-platform)
 - JSX ppx now recursively transforms component's props.
 - JSX ppx now reports the correct location for some errors.
 - JSX ppx now correctly transforms some corner case with ref and key (`ref=?foo`).
+
+Our own release contains the following improvements:
+
+- Adjust ReactDOMRe's `props` and `style` to include more accurate DOM and style attributes and styles (#9, #15, #17).
+- Add `ReactDOMRe.Style.unsafeAddProp` to unsafely add a prop to an existing `style`. Make sure you know what you're doing!
+- Fix `reactRef`'s type in various locations. A React ref is actually always nullable; we've previously only acknowledged it for DOM ref, now we do for custom (composite) components ref too. A more detailed explanation is [here](https://github.com/facebook/react/issues/9328#issuecomment-298438237). This is documented in our docs in the ref section as well.
+
+- `self` now contains a new prop, `retainedProps`. This is a new feature that solves the previous slightly inconvenient way of forwarding props to state, as described in the old API's lifecycle methods. Now there's a dedicated API for it! The docs describes this in detail.
+- `enqueue`. Best thing ever.
+- `ReactDOMRe.createElement` (usually used through the JSX `<div> foo </div>`) has a new implementation that fixes an inadvertent children key warning in the previous version.
+- Add `cloneElement`.
+- `shouldUpdate` now implemented.
