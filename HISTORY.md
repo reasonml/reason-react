@@ -33,7 +33,7 @@ To use the new JSX, change `bsconfig.json`'s `{"reason": {"react-jsx": true}}` t
 
 Alternatively, you can go straight to `{"react-jsx": 2}` in `bsconfig.json`, and put a `[@@@bs.config {jsx: 1}]` at the top of files where you'd like to use the old uppercase JSX transform.
 
-**Before starting the sections below**, please look at the TODO overview of the new API.
+**Before starting the sections below**, please briefly go through the new API on the documentation page.
 
 ## `Foo.createElement` (Jargon Change)
 _Not to be confused with the `ReactRe.createElement` in the previous section_.
@@ -44,7 +44,7 @@ _Not to be confused with the `ReactRe.createElement` in the previous section_.
 The concept of `componentBag` is now called `self`. We thought it'd be a more appropriate name. The new `self` doesn't contain `props`, `state`, `setState` and `instanceVars` anymore; these are no longer needed in the new ReasonReact.
 
 ### `componentBag.props`
-Replaced with the new `make` (previously `createElement`) call which takes in labeled arguments. See more in [TODO] this section.
+Replaced with the new `make` (previously `createElement`) call which takes in labeled arguments. See more in [this section](https://reasonml.github.io/reason-react/#reason-react-component-creation-props).
 
 How to access `props` in the `update`/`handle` callbacks now? You'd move these callback definitions into the `make` function body.
 
@@ -52,7 +52,7 @@ How to access `props` in the `update`/`handle` callbacks now? You'd move these c
 Now passed to you as an argument in callbacks and lifecyle events.
 
 ### `componentBag.instanceVars`
-No longer needed. In ReactJS, attaching instance variables onto a component has always been a sly way of introducing 1. mutative state that 2. doesn't trigger re-render. This whole concept is now replaced by putting your value into `state` and using TODO `ReasonReact.SilentUpdate` (doesn't trigger re-render, but does update state) in callbacks & lifecycles.
+No longer needed. In ReactJS, attaching instance variables onto a component has always been a sly way of introducing 1. mutative state that 2. doesn't trigger re-render. This whole concept is now replaced by putting your value into `state` and using [`ReasonReact.SilentUpdate`](https://reasonml.github.io/reason-react/#reason-react-component-creation-callback-handlers) (doesn't trigger re-render, but does update state) in callbacks & lifecycles.
 
 ### `componentBag.setState`
 Not to be confused with the ReactJS `setState` you often use (though if you're reading this migration guide, you probably know this already). This was an escape hatch designed for times when you can't, for example, return an `option state` from an `updater`, because you want to `setState` imperatively and asynchronously. The new idiom is to just use `self.update myhandler ()`. Notice `update myhandler` returns a callback just like before, but now you're immediately applying the callback.
@@ -67,17 +67,17 @@ The signature of the callback they take has changed. Instead of e.g. `updater (f
 `update` and `handle` don't memoize anymore; this reduces confusion and potential memory leaks.
 
 ## Render
-`render`, previously in your component module, is now inside `make`. See the example TODO here.
+`render`, previously in your component module, is now inside `make`. See the example [here](https://reasonml.github.io/reason-react/#reason-react-intro-examples).
 
 ## Ref & Other Mutable Instance Variables
 `ref` now lives inside state, as described in `componentBag.instanceVars` just above. Instead of `componentBag.handler`+ mutating `instanceVars`, you'd now use `update` and returning `ReasonReact.SilentUpdate {...state, ref: theRef}`. `ref`s and others probably default to `None` in your initial state.
 
 ## Lifecycles
 
-We've decided to finally drop the `component` prefix to lifecycle methods! `componentDidMount` is now just called `didMount`, etc. The signatures changed slightly; see them TODO here.
+We've decided to finally drop the `component` prefix to lifecycle methods! `componentDidMount` is now just called `didMount`, etc. The signatures changed slightly; see them in the new [lifecycle events section](https://reasonml.github.io/reason-react/#reason-react-component-creation-lifecycle-events).
 
 ## Children
-The children helpers & types `reactJsChildren`, `listToElement` and `jsChildrenToReason` are all gone from `ReasonReact`, since we now use array instead of list. See the new TODO docs on children for more info.
+The children helpers & types `reactJsChildren`, `listToElement` and `jsChildrenToReason` are all gone from `ReasonReact`, since we now use array instead of list.
 
 ## New Reason <-> JS Interop
 

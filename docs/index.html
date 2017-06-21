@@ -238,6 +238,25 @@ let make ::name _children => {
 }
 ```
 
+#### Async State Setting
+
+In ReactJS, you could use `setState` inside a callback, like so:
+
+```
+setInterval(function() {this.setState(...)}, 1000);
+```
+
+In ReasonReact, since the new state, if any, is returned from the lifecycle events and the callback handlers, the above wouldn't work; naturally, returning the new state from a `setInterval` doesn't make sense!
+
+Instead, you'd do:
+
+```reason
+let handler intervalId state _self => ReasonReact.Update {...state, whateverNewUpdate: bla};
+setInterval (fun intervalId => (self.update handler) intervalId);
+```
+
+Aka, creating an `update` handler and immediately invoke it. See the full [counter example in the examples page](./examples.html#examples-counter).
+
 ### Lifecycle Events
 
 ReasonReact supports the usuals:
