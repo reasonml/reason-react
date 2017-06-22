@@ -82,6 +82,9 @@ external refToJsObj : reactRef => Js.t {..} = "%identity";
 external createElement : reactClass => props::Js.t {..}? => array reactElement => reactElement =
   "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "react"];
 
+external cloneElement : reactElement => props::Js.t {..}? => 'children => reactElement =
+  "cloneElement" [@@bs.module "React"];
+
 type update 'state =
   | NoUpdate
   | Update 'state

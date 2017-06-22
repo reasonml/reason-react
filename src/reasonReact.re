@@ -33,6 +33,9 @@ external refToJsObj : reactRef => Js.t {..} = "%identity";
 external createElement : reactClass => props::Js.t {..}? => array reactElement => reactElement =
   "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "react"];
 
+external cloneElement : reactElement => props::Js.t {..}? => 'children => reactElement =
+  "cloneElement" [@@bs.module "React"];
+
 external createElementVerbatim : 'a = "createElement" [@@bs.val] [@@bs.module "react"];
 
 let createDomElement s ::props children => {
