@@ -696,6 +696,10 @@ body.no-literate .content pre > code:hover::-webkit-scrollbar-thumb {
     vertical-align: middle;
     width: 20px;
   }
+  .header h1 a:hover .logo {
+    -webkit-animation: logo-spin infinite 3s ease;
+    animation: logo-spin infinite 3s ease;
+  }
 }
 @media (max-width: 480px) {
   .right {
@@ -966,3 +970,17 @@ code .comment {
 /* For now, need to put font at bottom of style sheet just to get "inliner" to not crash. */
 /* https://github.com/remy/inliner/issues/142 */
 @import url("../fontSupport/montserratCSS.css");
+
+/* ----------------------------------------------------------------------------
+ * Animation
+ */
+ /* Spins clockwise 3x */
+@-webkit-keyframes logo-spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(1080deg); transform: rotate(1080deg); }
+}
+
+@keyframes logo-spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(1080deg); transform: rotate(1080deg); }
+}
