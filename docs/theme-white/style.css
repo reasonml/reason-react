@@ -695,7 +695,7 @@ body.no-literate .content pre > code:hover::-webkit-scrollbar-thumb {
     margin-right: 5px;
     vertical-align: middle;
     width: 20px;
- }
+  }
 }
 @media (max-width: 480px) {
   .right {
