@@ -431,7 +431,6 @@ let createClass (type reasonState) debugName :reactClass =>
         /* Mark ourselves as all caught up! */
         nextState##reasonStateVersionUsedToComputeSubelements#=nextReasonStateVersion;
         ret
-        /* TODO: Call the component's actual shouldUpdate hook if defined. */
       };
       pub enqueueMethod callback => {
         let thisJs: jsComponentThis reasonState element = [%bs.raw "this"];
