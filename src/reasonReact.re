@@ -284,7 +284,7 @@ let createClass (type reasonState) debugName :reactClass =>
         let thisJs: jsComponentThis reasonState element = [%bs.raw "this"];
         let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
         let Element component = props;
-        if (component.didUpdate !== lifecyclePreviousCurrentReturnUnit) {
+        if (component.didUpdate !== didUpdateDefault) {
           let self = this##self ();
           let self = Obj.magic self;
           let curState = thisJs##state;
@@ -300,7 +300,7 @@ let createClass (type reasonState) debugName :reactClass =>
         let thisJs: jsComponentThis reasonState element = [%bs.raw "this"];
         let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
         let Element component = props;
-        if (component.willUnmount !== lifecycleReturnUnit) {
+        if (component.willUnmount !== willUnmountDefault) {
           let self = this##self ();
           let self = Obj.magic self;
           let curState = thisJs##state;
