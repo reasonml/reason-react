@@ -660,6 +660,9 @@ body.no-literate .content pre > code:hover::-webkit-scrollbar-thumb {
 .header li a:focus {
   color: #3c3c3c;
 }
+.header .logo {
+  display: none;
+}
 @media (min-width: 480px) {
   .header h1 {
     float: left;
@@ -686,6 +689,13 @@ body.no-literate .content pre > code:hover::-webkit-scrollbar-thumb {
   .header li a {
     padding: 0 15px;
   }
+  .header .logo {
+    display: inline-block;
+    height: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 20px;
+ }
 }
 @media (max-width: 480px) {
   .right {
