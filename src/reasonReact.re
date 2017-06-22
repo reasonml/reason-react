@@ -407,16 +407,33 @@ let createClass (type reasonState) debugName :reactClass =>
          * Typically the answer is "true", except we can detect some "next
          * states" that were simply updates that we performed to work around
          * legacy versions of React.
+         *
+         * If we can detect that props have changed or a non-silent update has occured,
+         * we ask the component's shouldUpdate if it would like to update - defaulting to true.
          */
+        let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+        let Element component = props;
         let nextReasonStateVersion = nextState##reasonStateVersion;
         let nextReasonStateVersionUsedToComputeSubelements = nextState##reasonStateVersionUsedToComputeSubelements;
         let stateChangeWarrantsComputingSubelements =
           nextReasonStateVersionUsedToComputeSubelements !== nextReasonStateVersion;
-        let ret = propsWarrantRerender || stateChangeWarrantsComputingSubelements;
+        let warrantsUpdate = propsWarrantRerender || stateChangeWarrantsComputingSubelements;
+        let ret =
+          if (warrantsUpdate && component.shouldUpdate !== shouldUpdateDefault) {
+            let curState = thisJs##state;
+            let self = this##self ();
+            let self = Obj.magic self;
+            let curReasonState = curState##reasonState;
+            let curReasonState = Obj.magic curReasonState;
+            let nextReasonState = nextState##reasonState;
+            let nextReasonState = Obj.magic nextReasonState;
+            component.shouldUpdate previousState::curReasonState nextState::nextReasonState self
+          } else {
+            warrantsUpdate
+          };
         /* Mark ourselves as all caught up! */
         nextState##reasonStateVersionUsedToComputeSubelements#=nextReasonStateVersion;
         ret
-        /* TODO: Call the component's actual shouldUpdate hook if defined. */
       };
       pub enqueueMethod callback => {
         let thisJs: jsComponentThis reasonState element = [%bs.raw "this"];
