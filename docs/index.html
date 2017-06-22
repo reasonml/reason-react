@@ -262,11 +262,17 @@ Aka, creating an `update` handler and immediately invoke it. See the full [count
 ReasonReact supports the usuals:
 
 ```reason
-willReceiveProps: state => self => state,
-didMount: state => self => update state,
-didUpdate: previousState::state => currentState::state => self => unit,
-willUnmount: state => self => unit,
-willUpdate: previousState::state => nextState::state => self => unit,
+didMount: state => self => update state
+
+willReceiveProps: state => self => state
+
+shouldUpdate: previousState::'state => nextState::'state => self 'state => bool
+
+willUpdate: previousState::state => nextState::state => self => unit
+
+didUpdate: previousState::state => currentState::state => self => unit
+
+willUnmount: state => self => unit
 ```
 
 Note:
@@ -321,6 +327,10 @@ Compared to the ReactJS approach, this method is more manual and slightly error-
 
 ReactJS' `prevProps` is what you've synced in state, under `previousState`.
 
+#### `shouldUpdate`
+
+ReactJS' `shouldComponentUpdate` counterpart. Just like `willUpdate`, instead of providing `nextProps` and `nextState`, `shouldUpdate` provides `previousState` and `nextState`. **Note also that `shouldUpdate` isn't called after a [`ReasonReact.SilentUpdate`](#reason-react-component-creation-callback-handlers)**.
+
 ### Instance Variables
 
 A common pattern in ReactJS is to attach extra variables onto a component's spec:
@@ -353,7 +363,7 @@ A `ref` would be just another instance variable. You'd type it as `ReasonReact.r
 ```reason
 type state = {isOpen: bool, mySectionRef: option ReasonReact.reactRef};
 
-let setSectionRef theRef state _self => ReasonReact.SilentUpdate {...state, mySectionRef: Some theRef};
+let setSectionRef theRef state _self => ReasonReact.SilentUpdate {...state, mySectionRef: Js.Null.to_opt theRef}; /* wondering about Js.Null.to_opt? See the note below */
 
 let component = ReasonReact.statefulComponent "MyPanel";
 let make ::className="" _children => {
@@ -363,7 +373,9 @@ let make ::className="" _children => {
 };
 ```
 
-Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...state, myDivRef: Js.Null.to_opt theRef}`. **Note** how [React DOM refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `myDivRef` is converted from a [JS nullable](http://bucklescript.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None).
+Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...state, myDivRef: Js.Null.to_opt theRef}`.
+
+**Note** how [ReactJS refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `theRef` and `myDivRef` are converted from a [JS nullable](http://bucklescript.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None). When you use the ref, you'll be forced to handle the null case through a `switch`, which prevents subtle errors!
 
 **You must use `SilentUpdate` with `ref`**. Don't use `Update`. You'll get into an infinite loop. This is a subtle nuance of ReactJS `ref` from the above discussion.
 
@@ -452,6 +464,39 @@ Since CSS-in-JS is all the rage right now, we'll recommend our official pick soo
 
 It's a labeled (typed!) function call that maps to the familiar style object `{color: '#444444', fontSize: '68px'}`. **Note** that `make` returns an opaque `ReactDOMRe.style` type that you can't read into. We also expose a `ReactDOMRe.Style.combine` that takes in two `style`s and combine them.
 
+### Escape Hatch: `unsafeAddProp`
+
+The above `Style.make` API will safely type check every style field! However, we might have missed some more esoteric fields. If that's the case, the type system will tell you that the field you're trying to add doesn't exist. To remediate this, we're exposing a `ReactDOMRe.Style.unsafeAddProp` to dangerously add a field to a style:
+
+```reason
+let myStyle = ReactDOMRe.Style.make color::"#444444" fontSize::"68px" ();
+let newStyle = ReactDOMRe.Style.unsafeAddProp myStyle "width" "10px";
+```
+
+## `cloneElement`
+
+Signature: `let cloneElement: reactElement => props::Js.t {..}? => 'anyTypeHere => reactElement`;
+
+Same as ReactJS' [cloneElement](https://facebook.github.io/react/docs/react-api.html#cloneelement). However, adding extra props to a ReasonReact component doesn't make sense; you'd either curry the props use other patterns. Therefore, `ReasonReact.cloneElement` is only used for edge-case interop situations. For example, `data-*` and `aria-*` attributes aren't syntactically valid as a function label. The following doesn't parse:
+
+```reason
+<div data-payload=1 aria-label="click me" className="foo" />
+```
+
+You'd use `cloneElement` to circumvent it like so:
+
+```reason
+let myElement =
+  ReasonReact.cloneElement
+    <div className="foo" /> 
+    props::{"data-payload": 1, "aria-label": "click me"} 
+    [||];
+```
+
+This will assign the extra `data-payload` and `aria-label` props (**both untyped**, be careful!) onto the `div`, through a clever, syntactically valid use of Reason's JS object sugar for [BuckleScript objects](http://bucklescript.github.io/bucklescript/Manual.html#_create_js_objects_using_bs_obj).
+
+For non-DOM components, you need to use valid prop names.
+
 ## Working with DOM
 
 The `ReactDOMRe` module below exposes an unsafe `domElementToObj`. That's all you need.
@@ -501,16 +546,7 @@ let bannerCallback prop1 prop2 => <MyBanner message=prop1 count=prop2 />;
 
 Prop names like `type` (as in `<input type="text" />`) aren't syntactically valid; `type` is a reserved keyword in Reason/OCaml. Use `<input _type="text" />` instead. This follows BuckleScript's [name mangling rules](http://bucklescript.github.io/bucklescript/Manual.html#_object_label_translation_convention).
 
-For `data-*` and `aria-*`, this is a bit trickier; You'd currently need to resort to using `ReactDOMRe.objToDOMProps` + the underlying desugared JSX call:
-
-```reason
-ReactDOMRe.createElement
-  "li"
-  props::(ReactDOMRe.objToDOMProps {"className": "foo", "aria-selected": true})
-  [|child1, child2|]
-```
-
-For non-DOM components, you'd need to expose valid prop names.
+For `data-*` and `aria-*`, this is a bit trickier; these props aren't actually syntactically valid when you write `<div aria-label="click me" />`. See [`cloneElement`](#reason-react-cloneelement) above for the workaround. For non-DOM components, you need to use valid prop names.
 
 ## Miscellaneous
 
