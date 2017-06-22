@@ -1,0 +1,28 @@
+.header .logo {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .header .logo {
+    display: inline-block;
+    height: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 20px;
+  }
+  .header h1 a:hover .logo {
+    -webkit-animation: logo-spin infinite 3s ease;
+    animation: logo-spin infinite 3s ease;
+  }
+}
+
+ /* Spins clockwise 3x */
+@-webkit-keyframes logo-spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(1080deg); transform: rotate(1080deg); }
+}
+
+@keyframes logo-spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(1080deg); transform: rotate(1080deg); }
+}
