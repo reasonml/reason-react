@@ -113,9 +113,10 @@ module Callback: {
 };
 
 type self 'state = {
-  enqueue: 'payload .('payload => 'state => self 'state => update 'state) => Callback.t 'payload,
-  handle: 'payload .('payload => 'state => self 'state => unit) => Callback.t 'payload,
-  update: 'payload .('payload => 'state => self 'state => update 'state) => Callback.t 'payload
+  enqueue: 'payload .('payload => self 'state => update 'state) => Callback.t 'payload,
+  handle: 'payload .('payload => self 'state => unit) => Callback.t 'payload,
+  update: 'payload .('payload => self 'state => update 'state) => Callback.t 'payload,
+  state: 'state
 };
 
 type reactClassInternal;
@@ -132,30 +133,35 @@ type stateless = unit;
 /** For internal use only */
 type jsElementWrapped;
 
+type oldNew 'state = {
+  oldSelf: self 'state,
+  newSelf: self 'state
+};
+
 type componentSpec 'state 'initialState = {
   debugName: string,
   reactClassInternal,
   /* Keep here as a way to prove that the API may be implemented soundly */
   mutable handedOffState: ref (option 'state),
-  willReceiveProps: 'state => self 'state => 'state,
-  didMount: 'state => self 'state => update 'state,
-  didUpdate: previousState::'state => currentState::'state => self 'state => unit,
-  willUnmount: 'state => self 'state => unit,
-  willUpdate: previousState::'state => nextState::'state => self 'state => unit,
-  shouldUpdate: previousState::'state => nextState::'state => self 'state => bool,
-  render: 'state => self 'state => reactElement,
+  willReceiveProps: self 'state => 'state,
+  didMount: self 'state => update 'state,
+  didUpdate: oldNew 'state => unit,
+  willUnmount: self 'state => unit,
+  willUpdate: oldNew 'state => unit,
+  shouldUpdate: oldNew 'state => bool,
+  render: self 'state => reactElement,
   initialState: unit => 'initialState,
   jsElementWrapped
 }
 and component 'state = componentSpec 'state 'state;
 
-let statefulComponent: string => componentSpec 'state stateless;
-
 
 /** Create a stateless component: i.e. a component where state has type stateless. */
 let statelessComponent: string => component stateless;
 
-let element: key::string? => ref::(Js.null reactRef => unit)? => component 's => reactElement;
+let statefulComponent: string => componentSpec 'state stateless;
+
+let element: key::string? => ref::(Js.null reactRef => unit)? => component 'state => reactElement;
 
 type jsPropsToReason 'jsProps 'state = Js.t 'jsProps => component 'state;
 

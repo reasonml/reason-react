@@ -95,13 +95,13 @@ and componentSpec 'state 'initialState = {
   reactClassInternal,
   /* Keep here as a way to prove that the API may be implemented soundly */
   mutable handedOffState: ref (option 'state),
-  willReceiveProps: 'state => self 'state => 'state,
-  didMount: 'state => self 'state => update 'state,
-  didUpdate: previousState::'state => currentState::'state => self 'state => unit,
-  willUnmount: 'state => self 'state => unit,
-  willUpdate: previousState::'state => nextState::'state => self 'state => unit,
-  shouldUpdate: previousState::'state => nextState::'state => self 'state => bool,
-  render: 'state => self 'state => reactElement,
+  willReceiveProps: self 'state => 'state,
+  didMount: self 'state => update 'state,
+  didUpdate: oldNew 'state => unit,
+  willUnmount: self 'state => unit,
+  willUpdate: oldNew 'state => unit,
+  shouldUpdate: oldNew 'state => bool,
+  render: self 'state => reactElement,
   initialState: unit => 'initialState,
   jsElementWrapped
 }
@@ -111,9 +111,14 @@ and component 'state = componentSpec 'state 'state
  * API.
  */
 and self 'state = {
-  enqueue: 'payload .('payload => 'state => self 'state => update 'state) => Callback.t 'payload,
-  handle: 'payload .('payload => 'state => self 'state => unit) => Callback.t 'payload,
-  update: 'payload .('payload => 'state => self 'state => update 'state) => Callback.t 'payload
+  enqueue: 'payload .('payload => self 'state => update 'state) => Callback.t 'payload,
+  handle: 'payload .('payload => self 'state => unit) => Callback.t 'payload,
+  update: 'payload .('payload => self 'state => update 'state) => Callback.t 'payload,
+  state: 'state
+}
+and oldNew 'state = {
+  oldSelf: self 'state,
+  newSelf: self 'state
 };
 
 type jsComponentThis 'state 'props =
@@ -159,15 +164,15 @@ and totalState 'state =
     reasonStateVersionUsedToComputeSubelements : int
   };
 
-let lifecycleNoUpdate _ _ => NoUpdate;
+let lifecycleNoUpdate _ => NoUpdate;
 
-let lifecyclePreviousNextUnit previousState::_ nextState::_ _ => ();
+let lifecyclePreviousNextUnit _ => ();
 
-let lifecyclePreviousCurrentReturnUnit previousState::_ currentState::_ _ => ();
+let lifecyclePreviousCurrentReturnUnit _ => ();
 
-let lifecycleReturnUnit _ _ => ();
+let lifecycleReturnUnit _ => ();
 
-let lifecycleReturnTrue previousState::_ nextState::_ _ => true;
+let lifecycleReturnTrue _ => true;
 
 let didMountDefault = lifecycleNoUpdate;
 
@@ -179,9 +184,9 @@ let willUnmountDefault = lifecycleReturnUnit;
 
 let willUpdateDefault = lifecyclePreviousNextUnit;
 
-let willReceivePropsDefault state _self => state;
+let willReceivePropsDefault {state} => state;
 
-let renderDefault _state _self => stringToElement "RenderNotImplemented";
+let renderDefault _bag => stringToElement "RenderNotImplemented";
 
 let initialStateDefault () => ();
 
@@ -208,10 +213,11 @@ let createClass (type reasonState) debugName :reactClass =>
       /**
        * TODO: Avoid allocating this every time we need it. Should be doable.
        */
-      pub self () => {
+      pub self state => {
         enqueue: Obj.magic this##enqueueMethod,
         handle: Obj.magic this##handleMethod,
-        update: Obj.magic this##updateMethod
+        update: Obj.magic this##updateMethod,
+        state
       };
       /**
        * TODO: Null out fields that aren't overridden beyond defaults in
@@ -261,9 +267,6 @@ let createClass (type reasonState) debugName :reactClass =>
         let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
         let Element component = props;
         if (component.didMount !== didMountDefault) {
-          let self = this##self ();
-          let self = Obj.magic self;
-
           /**
            * TODO: Not need to use the callback from of setState here.
            * Keep things consistent with which version of state React sees in
@@ -273,7 +276,9 @@ let createClass (type reasonState) debugName :reactClass =>
             fun curTotalState _ => {
               let curTotalState = Obj.magic curTotalState;
               let curReasonState = curTotalState##reasonState;
-              let reasonStateUpdate = component.didMount curReasonState self;
+              let self = this##self curReasonState;
+              let self = Obj.magic self;
+              let reasonStateUpdate = component.didMount self;
               let reasonStateUpdate = Obj.magic reasonStateUpdate;
               this##transitionNextTotalState curTotalState reasonStateUpdate
             }
@@ -284,15 +289,16 @@ let createClass (type reasonState) debugName :reactClass =>
         let thisJs: jsComponentThis reasonState element = [%bs.raw "this"];
         let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
         let Element component = props;
-        if (component.didUpdate !== didUpdateDefault) {
-          let self = this##self ();
-          let self = Obj.magic self;
+        if (component.didUpdate !== lifecyclePreviousCurrentReturnUnit) {
           let curState = thisJs##state;
           let prevReasonState = prevState##reasonState;
           let prevReasonState = Obj.magic prevReasonState;
           let curReasonState = curState##reasonState;
           let curReasonState = Obj.magic curReasonState;
-          component.didUpdate previousState::prevReasonState currentState::curReasonState self
+          let newSelf = this##self curReasonState;
+          let newSelf = Obj.magic newSelf;
+          let oldSelf = {...newSelf, state: prevReasonState};
+          component.didUpdate {oldSelf, newSelf}
         }
       };
       /* pub componentWillMount .. TODO (or not?) */
@@ -300,13 +306,13 @@ let createClass (type reasonState) debugName :reactClass =>
         let thisJs: jsComponentThis reasonState element = [%bs.raw "this"];
         let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
         let Element component = props;
-        if (component.willUnmount !== willUnmountDefault) {
-          let self = this##self ();
-          let self = Obj.magic self;
+        if (component.willUnmount !== lifecycleReturnUnit) {
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
           let curReasonState = Obj.magic curReasonState;
-          component.willUnmount curReasonState self
+          let self = this##self curReasonState;
+          let self = Obj.magic self;
+          component.willUnmount self
         }
       };
       /**
@@ -321,13 +327,14 @@ let createClass (type reasonState) debugName :reactClass =>
         let Element component = props;
         if (component.willUpdate !== willUpdateDefault) {
           let curState = thisJs##state;
-          let self = this##self ();
-          let self = Obj.magic self;
           let curReasonState = curState##reasonState;
           let curReasonState = Obj.magic curReasonState;
           let nextReasonState = nextState##reasonState;
           let nextReasonState = Obj.magic nextReasonState;
-          component.willUpdate previousState::curReasonState nextState::nextReasonState self
+          let newSelf = this##self nextReasonState;
+          let newSelf = Obj.magic newSelf;
+          let oldSelf = {...newSelf, state: curReasonState};
+          component.willUpdate {oldSelf, newSelf}
         }
       };
       /**
@@ -370,12 +377,12 @@ let createClass (type reasonState) debugName :reactClass =>
           convertPropsIfTheyreFromJs nextProps thisJs##jsPropsToReason debugName;
         let Element component = Obj.magic convertedNextReasonProps;
         if (component.willReceiveProps !== willReceivePropsDefault) {
-          let self = Obj.magic (this##self ());
           thisJs##setState (
             fun curTotalState _ => {
               let curReasonState = Obj.magic curTotalState##reasonState;
               let curReasonStateVersion = curTotalState##reasonStateVersion;
-              let nextReasonState = Obj.magic (component.willReceiveProps curReasonState self);
+              let self = Obj.magic (this##self curReasonState);
+              let nextReasonState = Obj.magic (component.willReceiveProps self);
               let nextReasonStateVersion =
                 nextReasonState !== curReasonState ?
                   curReasonStateVersion + 1 : curReasonStateVersion;
@@ -421,13 +428,14 @@ let createClass (type reasonState) debugName :reactClass =>
         let ret =
           if (warrantsUpdate && component.shouldUpdate !== shouldUpdateDefault) {
             let curState = thisJs##state;
-            let self = this##self ();
-            let self = Obj.magic self;
             let curReasonState = curState##reasonState;
             let curReasonState = Obj.magic curReasonState;
             let nextReasonState = nextState##reasonState;
             let nextReasonState = Obj.magic nextReasonState;
-            component.shouldUpdate previousState::curReasonState nextState::nextReasonState self
+            let newSelf = this##self nextReasonState;
+            let newSelf = Obj.magic newSelf;
+            let oldSelf = {...newSelf, state: curReasonState};
+            component.shouldUpdate {oldSelf, newSelf}
           } else {
             warrantsUpdate
           };
@@ -442,7 +450,7 @@ let createClass (type reasonState) debugName :reactClass =>
           thisJs##setState (
             fun curTotalState _ => {
               let curReasonState = curTotalState##reasonState;
-              let reasonStateUpdate = remainingCallback curReasonState (this##self ());
+              let reasonStateUpdate = remainingCallback (this##self curReasonState);
               if (reasonStateUpdate === NoUpdate) {
                 magicNull
               } else {
@@ -463,7 +471,7 @@ let createClass (type reasonState) debugName :reactClass =>
         fun callbackPayload => {
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
-          callback callbackPayload curReasonState (Obj.magic (this##self ()))
+          callback callbackPayload (this##self curReasonState)
         }
       };
       pub updateMethod callback => {
@@ -471,7 +479,7 @@ let createClass (type reasonState) debugName :reactClass =>
         fun event => {
           let curTotalState = thisJs##state;
           let curReasonState = curTotalState##reasonState;
-          let reasonStateUpdate = callback event curReasonState (this##self ());
+          let reasonStateUpdate = callback event (this##self curReasonState);
           if (reasonStateUpdate === NoUpdate) {
             magicNull
           } else {
@@ -497,16 +505,16 @@ let createClass (type reasonState) debugName :reactClass =>
           convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
         let Element created = Obj.magic convertedNextReasonProps;
         let component = created;
-        let self = Obj.magic (this##self ());
         let curState = thisJs##state;
         let curReasonState = Obj.magic curState##reasonState;
-        component.render curReasonState self
+        let self = Obj.magic (this##self curReasonState);
+        component.render self
       }
     }
     [@bs]
   );
 
-let statefulComponent debugName :componentSpec 'state unit => {
+let basicComponent debugName => {
   let componentTemplate = {
     reactClassInternal: createClass debugName,
     debugName,
@@ -529,7 +537,9 @@ let statefulComponent debugName :componentSpec 'state unit => {
   componentTemplate
 };
 
-let statelessComponent debugName :component stateless => statefulComponent debugName;
+let statelessComponent debugName :component stateless => basicComponent debugName;
+
+let statefulComponent debugName :componentSpec 'state unit => basicComponent debugName;
 
 
 /**
