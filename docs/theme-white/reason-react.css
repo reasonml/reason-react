@@ -10,19 +10,10 @@
     vertical-align: middle;
     width: 20px;
   }
-  .header h1 a:hover .logo {
-    -webkit-animation: logo-spin infinite 3s ease;
-    animation: logo-spin infinite 3s ease;
+  .header h1 a .logo {
+    transition: 3s;
   }
-}
-
- /* Spins clockwise 3x */
-@-webkit-keyframes logo-spin {
-  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
-  to { -webkit-transform: rotate(1080deg); transform: rotate(1080deg); }
-}
-
-@keyframes logo-spin {
-  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
-  to { -webkit-transform: rotate(1080deg); transform: rotate(1080deg); }
+  .header h1 a:hover .logo {
+    transform: rotate(1080deg); 
+  }
 }
