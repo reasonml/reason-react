@@ -7,22 +7,6 @@
  */
 
 /**
- * TODO: Features (Highest Priority First)
- * - The `.shouldUpdate` lifecycle hook needs to be called. It is not
- * currently. This should be a lifecycle hook that behaves like ReactJS today.
- *  - Later we can make a better one using the same single factory function.
- * - componentWillReceiveProps but allowing side effects (Alternatively,
- * justify why we believe this is not needed - perhaps didUpdate is
- * sufficient).
- * - componentDidMount functionality (or perhaps we won't implement it). At
- * least decide that we won't support it and justify our decision.
- * ------------Cutoff to replace the V1 bindings with V2 ----------------------
- * - A way to invoke pure functions with JSX which don't have controllers.
- * - A more fine grained shouldComponentUpdate. Returning portions of previous
- * subelements from last `create`.
- */
-
-/**
  * TODO: Test Cases (Highest Priority First):
  * -------------------
  * 1. That a silent update will not block received props!
@@ -40,31 +24,6 @@
  */
 /* TODOs below this point don't need to block the migration / switch to v2. They need to
  * be done before releasing widely and encouraging other devs to use v2. */
-
-/**
- * TODO: Document:
- * --------------
- * Document the component and tooling abstractions that the core API eliminates
- * most of the time.
- *
- * - getInitialState.
- * - Polymorphic props.
- * - shouldComponentUpdate.
- * - willReceiveProps.
- * - getDefaultProps.
- * - propTypes.
- * - Instance variables.
- * - Some portion of unit tests.
- * - Reduces two forms of state setting to one.
- * - Kills constructor.
- * - Demonstrate that we can also implement this API via a simple `include
- *   ReactComponent.Create {}`
- *
- * Philosophy:
- * -----------
- * - Create a more formal description of the Reason React API.
- * - Document benefits of the ability to have plain integers/strings as state types.
- */
 type reactClass;
 
 type reactElement;
@@ -112,18 +71,25 @@ module Callback: {
   let chain: t 'payload => t 'payload => t 'payload;
 };
 
-type self 'state = {
-  enqueue: 'payload .('payload => self 'state => update 'state) => Callback.t 'payload,
-  handle: 'payload .('payload => self 'state => unit) => Callback.t 'payload,
-  update: 'payload .('payload => self 'state => update 'state) => Callback.t 'payload,
-  state: 'state
+type self 'state 'retainedProps = {
+  enqueue:
+    'payload .
+    ('payload => self 'state 'retainedProps => update 'state) => Callback.t 'payload,
+
+  handle: 'payload .('payload => self 'state 'retainedProps => unit) => Callback.t 'payload,
+  update:
+    'payload .
+    ('payload => self 'state 'retainedProps => update 'state) => Callback.t 'payload,
+
+  state: 'state,
+  retainedProps: 'retainedProps
 };
 
 type reactClassInternal;
 
-type next 'state = state::'state? => self 'state => 'state;
+type next 'state 'retainedProps = state::'state? => self 'state 'retainedProps => 'state;
 
-type render 'state = state::'state => self 'state => reactElement;
+type render 'state 'retainedProps = state::'state => self 'state 'retainedProps => reactElement;
 
 
 /** A stateless component is a component with state of type unit */
@@ -133,37 +99,49 @@ type stateless = unit;
 /** For internal use only */
 type jsElementWrapped;
 
-type oldNew 'state = {
-  oldSelf: self 'state,
-  newSelf: self 'state
+type oldNew 'state 'retainedProps = {
+  oldSelf: self 'state 'retainedProps,
+  newSelf: self 'state 'retainedProps
 };
 
-type componentSpec 'state 'initialState = {
+type componentSpec 'state 'initialState 'retainedProps 'propsToRetain = {
   debugName: string,
   reactClassInternal,
   /* Keep here as a way to prove that the API may be implemented soundly */
   mutable handedOffState: ref (option 'state),
-  willReceiveProps: self 'state => 'state,
-  didMount: self 'state => update 'state,
-  didUpdate: oldNew 'state => unit,
-  willUnmount: self 'state => unit,
-  willUpdate: oldNew 'state => unit,
-  shouldUpdate: oldNew 'state => bool,
-  render: self 'state => reactElement,
+  willReceiveProps: self 'state 'retainedProps => 'state,
+  didMount: self 'state 'retainedProps => update 'state,
+  didUpdate: oldNew 'state 'retainedProps => unit,
+  willUnmount: self 'state 'retainedProps => unit,
+  willUpdate: oldNew 'state 'retainedProps => unit,
+  shouldUpdate: oldNew 'state 'retainedProps => bool,
+  render: self 'state 'retainedProps => reactElement,
   initialState: unit => 'initialState,
-  jsElementWrapped
+  jsElementWrapped,
+  propsToRetain: 'propsToRetain
 }
-and component 'state = componentSpec 'state 'state;
+and component 'state 'retainedProps = componentSpec 'state 'state 'retainedProps 'retainedProps;
 
 
 /** Create a stateless component: i.e. a component where state has type stateless. */
-let statelessComponent: string => component stateless;
+let statelessComponent: string => component stateless unit;
 
-let statefulComponent: string => componentSpec 'state stateless;
+let statefulComponent: string => componentSpec 'state stateless unit unit;
 
-let element: key::string? => ref::(Js.null reactRef => unit)? => component 'state => reactElement;
+let statefulComponentWithRetainedProps:
+  string => componentSpec 'state stateless 'retainedProps unit;
 
-type jsPropsToReason 'jsProps 'state = Js.t 'jsProps => component 'state;
+let statelessComponentWithRetainedProps:
+  string => componentSpec stateless stateless 'retainedProps unit;
+
+let element:
+  key::string? =>
+  ref::(Js.null reactRef => unit)? =>
+  component 'state 'retainedProps =>
+  reactElement;
+
+type jsPropsToReason 'jsProps 'state 'retainedProps =
+  Js.t 'jsProps => component 'state 'retainedProps;
 
 
 /**
@@ -173,7 +151,9 @@ type jsPropsToReason 'jsProps 'state = Js.t 'jsProps => component 'state;
  * interop is integrating with untyped, code and it is *possible* to create pure-ReasonReact apps without JS
  * interop entirely. */
 let wrapReasonForJs:
-  component::componentSpec 'state 'initialState => jsPropsToReason _ => reactClass;
+  component::componentSpec 'state 'initialState 'retainedProps 'retainedProps =>
+  jsPropsToReason _ =>
+  reactClass;
 
 let createDomElement: string => props::Js.t {..} => array reactElement => reactElement;
 
@@ -183,4 +163,4 @@ let createDomElement: string => props::Js.t {..} => array reactElement => reactE
  * Use for interop when Reason components use JS components
  */
 let wrapJsForReason:
-  reactClass::reactClass => props::Js.t {..} => array reactElement => component stateless;
+  reactClass::reactClass => props::Js.t {..} => array reactElement => component stateless unit;
