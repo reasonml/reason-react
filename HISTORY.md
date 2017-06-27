@@ -1,6 +1,6 @@
 # 0.1.5
 
-Non-breaking update. Works better with bs-platform >=1.8.0 (currently unreleased), which comes with the following ReasonReact JSX fixes:
+Non-breaking update. Works better with bs-platform >=1.8.0, which comes with the following ReasonReact JSX fixes:
 
 - JSX ppx now recursively transforms component's props.
 - JSX ppx now reports the correct location for some errors.

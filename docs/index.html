@@ -88,8 +88,6 @@ Prop-less `<MyReasonComponent />` transforms to `ReasonReact.element (MyReasonCo
 
 **Note how `ref` and `key` have been lifted out of the JSX call into the `ReasonReact.element` call**. `ref` and `key` are reserved in ReasonReact, just like in ReactJS. **Don't** use them as props in your component!
 
-**Note 2**: there's currently a bug where explicitly passed optional `ref` and `key` aren't transformed correctly: `<Foo ref=?bar />`. This will be fixed in the next version. Sorry!
-
 ## Component Creation
 
 A component template is created through `ReasonReact.statelessComponent "ComponentName"`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).
@@ -540,8 +538,6 @@ In ReactJS, `<Menu banner=MyBanner />` is easy; in ReasonReact, we can't trivial
 let bannerCallback prop1 prop2 => <MyBanner message=prop1 count=prop2 />;
 <Menu bannerFunc=bannerCallback />
 ```
-
-**Due to an existing bug in our transform right now, you can't inline that call**. This will be fixed soon. Sorry!
 
 ### Invalid Prop Name
 
