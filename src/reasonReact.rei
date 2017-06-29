@@ -60,7 +60,11 @@ module Callback: {
    This type can be left abstract to prevent calling the callback directly.
    For example, calling `update handler event` would force an immediate
    call of `handler` with the current state, and can be prevented by defining:
+
      type t 'payload;
+
+    However, we do want to support immediate calling of a handler, as an escape hatch for the existing async
+    setState reactJS pattern
     */
   type t 'payload = 'payload => unit;
 
@@ -104,7 +108,7 @@ type oldNew 'state 'retainedProps = {
   newSelf: self 'state 'retainedProps
 };
 
-type componentSpec 'state 'initialState 'retainedProps 'propsToRetain = {
+type componentSpec 'state 'initialState 'retainedProps 'initialRetainedProps = {
   debugName: string,
   reactClassInternal,
   /* Keep here as a way to prove that the API may be implemented soundly */
@@ -118,13 +122,13 @@ type componentSpec 'state 'initialState 'retainedProps 'propsToRetain = {
   render: self 'state 'retainedProps => reactElement,
   initialState: unit => 'initialState,
   jsElementWrapped,
-  propsToRetain: 'propsToRetain
+  retainedProps: 'initialRetainedProps
 }
 and component 'state 'retainedProps = componentSpec 'state 'state 'retainedProps 'retainedProps;
 
 
 /** Create a stateless component: i.e. a component where state has type stateless. */
-let statelessComponent: string => component stateless unit;
+let statelessComponent: string => componentSpec stateless stateless unit unit;
 
 let statefulComponent: string => componentSpec 'state stateless unit unit;
 
@@ -151,7 +155,7 @@ type jsPropsToReason 'jsProps 'state 'retainedProps =
  * interop is integrating with untyped, code and it is *possible* to create pure-ReasonReact apps without JS
  * interop entirely. */
 let wrapReasonForJs:
-  component::componentSpec 'state 'initialState 'retainedProps 'retainedProps =>
+  component::componentSpec 'state 'initialState 'retainedProps 'initialRetainedProps =>
   jsPropsToReason _ =>
   reactClass;
 
