@@ -339,15 +339,6 @@ let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
       pub componentWillReceiveProps nextProps => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
 
-        /**
-         * Now, we inspect the next state that we are supposed to render, and ensure that
-         * - We have enough information to answer "should update?"
-         * - We have enough information to render() in the event that the answer is "true".
-         *
-         * Typically the answer is "true", except we can detect some "next
-         * states" that were simply updates that we performed to work around
-         * legacy versions of React.
-         */
         /* Implement props receiving. */
         let convertedNextReasonProps =
           convertPropsIfTheyreFromJs nextProps thisJs##jsPropsToReason debugName;
