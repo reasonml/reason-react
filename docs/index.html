@@ -16,8 +16,9 @@
 
   <!-- Flatdoc theme -->
   <link  href='theme-white/style.css' rel='stylesheet'>
-  <link  href='theme-white/reason-react.css' rel='stylesheet'>
   <script src='theme-white/script.js'></script>
+
+  <link  href='theme-white/reason-react.css' rel='stylesheet'>
 
   <script id="markdown" type="text/markdown">
 
@@ -487,8 +488,8 @@ You'd use `cloneElement` to circumvent it like so:
 ```reason
 let myElement =
   ReasonReact.cloneElement
-    <div className="foo" /> 
-    props::{"data-payload": 1, "aria-label": "click me"} 
+    <div className="foo" />
+    props::{"data-payload": 1, "aria-label": "click me"}
     [||];
 ```
 
