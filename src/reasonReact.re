@@ -203,7 +203,7 @@ let convertPropsIfTheyreFromJs props jsPropsToReason debugName => {
   }
 };
 
-let createClass (type reasonState retainedProps) debugName :reactClass =>
+let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
   createClassInternalHack (
     {
       val displayName = debugName;
@@ -247,8 +247,9 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
         };
       pub getInitialState () :totalState 'state 'retainedProps => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-        let Element component = props;
+        let convertedReasonProps =
+          convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+        let Element component = convertedReasonProps;
         let initialReasonState = component.initialState ();
         {
           "reasonState": Obj.magic initialReasonState,
@@ -262,8 +263,9 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
       };
       pub componentDidMount () => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-        let Element component = props;
+        let convertedReasonProps =
+          convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+        let Element component = convertedReasonProps;
         if (component.didMount !== didMountDefault) {
           /**
            * TODO: Not need to use the callback from of setState here.
@@ -282,26 +284,40 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
           )
         }
       };
-      pub componentDidUpdate _ prevState => {
+      pub componentDidUpdate prevProps prevState => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-        let Element component = props;
-        if (component.didUpdate !== lifecyclePreviousCurrentReturnUnit) {
+        let newJsProps = thisJs##props;
+        let newConvertedReasonProps =
+          convertPropsIfTheyreFromJs newJsProps thisJs##jsPropsToReason debugName;
+        let Element newComponent = newConvertedReasonProps;
+        if (newComponent.didUpdate !== lifecyclePreviousCurrentReturnUnit) {
+          let oldConvertedReasonProps =
+            prevProps === newJsProps ?
+              newConvertedReasonProps :
+              convertPropsIfTheyreFromJs prevProps thisJs##jsPropsToReason debugName;
+          let Element oldComponent = oldConvertedReasonProps;
           let curState = thisJs##state;
           let prevReasonState = prevState##reasonState;
           let prevReasonState = Obj.magic prevReasonState;
           let curReasonState = curState##reasonState;
-          let newSelf = this##self curReasonState (Obj.magic component.retainedProps);
+          let newSelf = this##self curReasonState (Obj.magic newComponent.retainedProps);
           let newSelf = Obj.magic newSelf;
-          let oldSelf = {...newSelf, state: prevReasonState};
-          component.didUpdate {oldSelf, newSelf}
+          /* bypass this##self call for small perf boost */
+          let oldSelf =
+            Obj.magic {
+              ...newSelf,
+              state: prevReasonState,
+              retainedProps: oldComponent.retainedProps
+            };
+          newComponent.didUpdate {oldSelf, newSelf}
         }
       };
       /* pub componentWillMount .. TODO (or not?) */
       pub componentWillUnmount () => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-        let Element component = props;
+        let convertedReasonProps =
+          convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+        let Element component = convertedReasonProps;
         if (component.willUnmount !== lifecycleReturnUnit) {
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
@@ -316,19 +332,33 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
        * this point that we need to rerender, and we've even *precomputed* the
        * render result (subelements)!
        */
-      pub componentWillUpdate _ (nextState: totalState _) => {
+      pub componentWillUpdate nextProps (nextState: totalState _) => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-        let Element component = props;
-        if (component.willUpdate !== willUpdateDefault) {
+        let newConvertedReasonProps =
+          convertPropsIfTheyreFromJs nextProps thisJs##jsPropsToReason debugName;
+        let Element newComponent = newConvertedReasonProps;
+        if (newComponent.willUpdate !== willUpdateDefault) {
+          let oldJsProps = thisJs##props;
+          /* Avoid converting again the props that are just the same as curProps. */
+          let oldConvertedReasonProps =
+            nextProps === oldJsProps ?
+              newConvertedReasonProps :
+              convertPropsIfTheyreFromJs oldJsProps thisJs##jsPropsToReason debugName;
+          let Element oldComponent = oldConvertedReasonProps;
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
           let curReasonState = Obj.magic curReasonState;
           let nextReasonState = nextState##reasonState;
-          let newSelf = this##self nextReasonState (Obj.magic component.retainedProps);
+          let newSelf = this##self nextReasonState (Obj.magic newComponent.retainedProps);
           let newSelf = Obj.magic newSelf;
-          let oldSelf = {...newSelf, state: curReasonState};
-          component.willUpdate {oldSelf, newSelf}
+          /* bypass this##self call for small perf boost */
+          let oldSelf =
+            Obj.magic {
+              ...newSelf,
+              state: curReasonState,
+              retainedProps: oldComponent.retainedProps
+            };
+          newComponent.willUpdate {oldSelf, newSelf}
         }
       };
       /**
@@ -338,10 +368,9 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
        */
       pub componentWillReceiveProps nextProps => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        /* Implement props receiving. */
-        let convertedNextReasonProps =
+        let convertedReasonProps =
           convertPropsIfTheyreFromJs nextProps thisJs##jsPropsToReason debugName;
-        let Element component = Obj.magic convertedNextReasonProps;
+        let Element component = Obj.magic convertedReasonProps;
         if (component.willReceiveProps !== willReceivePropsDefault) {
           thisJs##setState (
             fun curTotalState _ => {
@@ -402,33 +431,36 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
          * If we can detect that props have changed or a non-silent update has occured,
          * we ask the component's shouldUpdate if it would like to update - defaulting to true.
          */
-        let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-        /* Avoid converting again the props are jsut the same as curProps. */
-        let nextProps =
-          nextJsProps !== curJsProps ?
-            convertPropsIfTheyreFromJs nextJsProps thisJs##jsPropsToReason debugName : props;
-        let Element component = props;
-        let Element nextComponent = nextProps;
+        let oldConvertedReasonProps =
+          convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+        /* Avoid converting again the props that are just the same as curProps. */
+        let newConvertedReasonProps =
+          nextJsProps === curJsProps ?
+            oldConvertedReasonProps :
+            convertPropsIfTheyreFromJs nextJsProps thisJs##jsPropsToReason debugName;
+        let Element oldComponent = oldConvertedReasonProps;
+        let Element newComponent = newConvertedReasonProps;
         let nextReasonStateVersion = nextState##reasonStateVersion;
         let nextReasonStateVersionUsedToComputeSubelements = nextState##reasonStateVersionUsedToComputeSubelements;
         let stateChangeWarrantsComputingSubelements =
           nextReasonStateVersionUsedToComputeSubelements !== nextReasonStateVersion;
         let warrantsUpdate = propsWarrantRerender || stateChangeWarrantsComputingSubelements;
         let ret =
-          if (warrantsUpdate && nextComponent.shouldUpdate !== shouldUpdateDefault) {
+          if (warrantsUpdate && newComponent.shouldUpdate !== shouldUpdateDefault) {
             let curState = thisJs##state;
             let curReasonState = curState##reasonState;
             let curReasonState = Obj.magic curReasonState;
             let nextReasonState = nextState##reasonState;
-            let newSelf = this##self nextReasonState (Obj.magic nextComponent.retainedProps);
+            let newSelf = this##self nextReasonState (Obj.magic newComponent.retainedProps);
             let newSelf = Obj.magic newSelf;
+            /* bypass this##self call for small perf boost */
             let oldSelf =
               Obj.magic {
                 ...newSelf,
                 state: curReasonState,
-                retainedProps: component.retainedProps
+                retainedProps: oldComponent.retainedProps
               };
-            nextComponent.shouldUpdate {oldSelf, newSelf}
+            newComponent.shouldUpdate {oldSelf, newSelf}
           } else {
             warrantsUpdate
           };
@@ -443,9 +475,9 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
           thisJs##setState (
             fun curTotalState _ => {
               let curReasonState = curTotalState##reasonState;
-              let props =
+              let convertedReasonProps =
                 convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-              let Element component = props;
+              let Element component = convertedReasonProps;
               let reasonStateUpdate =
                 remainingCallback (
                   Obj.magic (this##self curReasonState (Obj.magic component.retainedProps))
@@ -470,8 +502,9 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
         fun callbackPayload => {
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
-          let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-          let Element component = props;
+          let convertedReasonProps =
+            convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+          let Element component = convertedReasonProps;
           callback
             callbackPayload
             (Obj.magic (this##self curReasonState (Obj.magic component.retainedProps)))
@@ -482,8 +515,9 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
         fun event => {
           let curTotalState = thisJs##state;
           let curReasonState = curTotalState##reasonState;
-          let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-          let Element component = props;
+          let convertedReasonProps =
+            convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+          let Element component = convertedReasonProps;
           let reasonStateUpdate =
             callback
               event (Obj.magic (this##self curReasonState (Obj.magic component.retainedProps)));
@@ -508,9 +542,9 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
        */
       pub render () => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        let convertedNextReasonProps =
+        let convertedReasonProps =
           convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
-        let Element created = Obj.magic convertedNextReasonProps;
+        let Element created = Obj.magic convertedReasonProps;
         let component = created;
         let curState = thisJs##state;
         let curReasonState = Obj.magic curState##reasonState;
