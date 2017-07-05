@@ -336,36 +336,9 @@ let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
        * for a separate `willReceiveProps` function. The primary `create` API
        * is *always* receiving props.
        */
-      /**
-       * shouldComponentUpdate is invoked any time props change, or new state
-       * updates occur.
-       *
-       * The easiest way to think about this method, is:
-       * - "Should component have its componentWillUpdate method called,
-       * followed by its render() method?",
-       *
-       * TODO: This should also call the component.shouldUpdate hook, but only
-       * after we've done the appropriate filtering with version numbers.
-       * Version numbers filter out the state updates that should definitely
-       * not have triggered re-renders in the first place. (Due to returning
-       * things like NoUpdate from callbacks, or returning the previous
-       * state/subdescriptors from named argument factory functions.)
-       *
-       * Therefore the component.shouldUpdate becomes a hook solely to perform
-       * performance optimizations through.
-       */
       pub componentWillReceiveProps nextProps => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
 
-        /**
-         * Now, we inspect the next state that we are supposed to render, and ensure that
-         * - We have enough information to answer "should update?"
-         * - We have enough information to render() in the event that the answer is "true".
-         *
-         * Typically the answer is "true", except we can detect some "next
-         * states" that were simply updates that we performed to work around
-         * legacy versions of React.
-         */
         /* Implement props receiving. */
         let convertedNextReasonProps =
           convertPropsIfTheyreFromJs nextProps thisJs##jsPropsToReason debugName;
@@ -395,6 +368,24 @@ let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
           )
         }
       };
+      /**
+       * shouldComponentUpdate is invoked any time props change, or new state
+       * updates occur.
+       *
+       * The easiest way to think about this method, is:
+       * - "Should component have its componentWillUpdate method called,
+       * followed by its render() method?",
+       *
+       * TODO: This should also call the component.shouldUpdate hook, but only
+       * after we've done the appropriate filtering with version numbers.
+       * Version numbers filter out the state updates that should definitely
+       * not have triggered re-renders in the first place. (Due to returning
+       * things like NoUpdate from callbacks, or returning the previous
+       * state/subdescriptors from named argument factory functions.)
+       *
+       * Therefore the component.shouldUpdate becomes a hook solely to perform
+       * performance optimizations through.
+       */
       pub shouldComponentUpdate nextProps nextState _ => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
         let curProps = thisJs##props;
