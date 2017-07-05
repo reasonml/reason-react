@@ -5,4 +5,5 @@
 {
   "name" : "reason-react",
   "sources": "src",
+  "bsc-flags": ["-w", "-30"],
 }

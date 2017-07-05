@@ -1,3 +1,14 @@
+# 0.2.0
+
+Breaking update (sorry!)
+
+**We've finally removed `ReactRe`**. It's been deprecated since 0.1.4. And we've offered a comprehensive migration in the 0.1.4 section below.
+
+We've given folks a bit of breathing room in terms of breaking changes; now we're shipping another one, this time with a small migration script. **After installing reason-react**, use `node node_modules/reason-react/migrateFrom015To020.js myReasonFile.re`
+
+- Instead of `fun state self => ...`, we've now rolled `state` into `self`, and now, you have `fun {state, self} => ...`. Feel free to destructure and get whatever you need!
+- `self` now contains a new prop, `retainedProps`. This is a new (non-breaking) feature that solves the previous slightly inconvenient way of forwarding props to state, as described in the old API's lifecycle methods. Now there's a dedicated API for it! The docs describes this in detail.
+
 # 0.1.5
 
 Non-breaking update. Works better with bs-platform >=1.8.0, which comes with the following ReasonReact JSX fixes:

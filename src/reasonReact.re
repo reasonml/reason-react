@@ -338,7 +338,6 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
        */
       pub componentWillReceiveProps nextProps => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-
         /* Implement props receiving. */
         let convertedNextReasonProps =
           convertPropsIfTheyreFromJs nextProps thisJs##jsPropsToReason debugName;
@@ -386,10 +385,10 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
        * Therefore the component.shouldUpdate becomes a hook solely to perform
        * performance optimizations through.
        */
-      pub shouldComponentUpdate nextProps nextState _ => {
+      pub shouldComponentUpdate nextJsProps nextState _ => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        let curProps = thisJs##props;
-        let propsWarrantRerender = nextProps !== curProps;
+        let curJsProps = thisJs##props;
+        let propsWarrantRerender = nextJsProps !== curJsProps;
 
         /**
          * Now, we inspect the next state that we are supposed to render, and ensure that
@@ -404,22 +403,32 @@ let createClass (type reasonState retainedProps) debugName :reactClass =>
          * we ask the component's shouldUpdate if it would like to update - defaulting to true.
          */
         let props = convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+        /* Avoid converting again the props are jsut the same as curProps. */
+        let nextProps =
+          nextJsProps !== curJsProps ?
+            convertPropsIfTheyreFromJs nextJsProps thisJs##jsPropsToReason debugName : props;
         let Element component = props;
+        let Element nextComponent = nextProps;
         let nextReasonStateVersion = nextState##reasonStateVersion;
         let nextReasonStateVersionUsedToComputeSubelements = nextState##reasonStateVersionUsedToComputeSubelements;
         let stateChangeWarrantsComputingSubelements =
           nextReasonStateVersionUsedToComputeSubelements !== nextReasonStateVersion;
         let warrantsUpdate = propsWarrantRerender || stateChangeWarrantsComputingSubelements;
         let ret =
-          if (warrantsUpdate && component.shouldUpdate !== shouldUpdateDefault) {
+          if (warrantsUpdate && nextComponent.shouldUpdate !== shouldUpdateDefault) {
             let curState = thisJs##state;
             let curReasonState = curState##reasonState;
             let curReasonState = Obj.magic curReasonState;
             let nextReasonState = nextState##reasonState;
-            let newSelf = this##self nextReasonState (Obj.magic component.retainedProps);
+            let newSelf = this##self nextReasonState (Obj.magic nextComponent.retainedProps);
             let newSelf = Obj.magic newSelf;
-            let oldSelf = {...newSelf, state: curReasonState};
-            component.shouldUpdate {oldSelf, newSelf}
+            let oldSelf =
+              Obj.magic {
+                ...newSelf,
+                state: curReasonState,
+                retainedProps: component.retainedProps
+              };
+            nextComponent.shouldUpdate {oldSelf, newSelf}
           } else {
             warrantsUpdate
           };
