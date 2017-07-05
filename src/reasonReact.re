@@ -203,7 +203,7 @@ let convertPropsIfTheyreFromJs props jsPropsToReason debugName => {
   }
 };
 
-let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
+let createClass (type reasonState retainedProps) debugName :reactClass =>
   createClassInternalHack (
     {
       val displayName = debugName;
