@@ -946,8 +946,16 @@ code .comment {
  * Algolia theme
  */
 
-#agolia-search {
+#algolia-search {
   height: 20px;
+  margin-left: 10px;
+}
+
+/**/
+
+.header-icon {
+  height: 20px;
+  width: 20px;
 }
 
 /* ----------------------------------------------------------------------------
