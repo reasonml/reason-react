@@ -168,4 +168,4 @@ let createDomElement: string => props::Js.t {..} => array reactElement => reactE
  * Use for interop when Reason components use JS components
  */
 let wrapJsForReason:
-  reactClass::reactClass => props::Js.t {..} => array reactElement => component stateless unit;
+  reactClass::reactClass => props::Js.t {..} => array reactElement => component stateless noRetainedProps;

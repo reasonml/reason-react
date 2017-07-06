@@ -638,7 +638,7 @@ module WrapProps = {
     (Obj.magic createElementVerbatim)##apply Js.null varargs
   };
   let dummyInteropComponent = statefulComponent "interop";
-  let wrapJsForReason ::reactClass ::props children :component stateless unit => {
+  let wrapJsForReason ::reactClass ::props children :component stateless noRetainedProps => {
     let jsElementWrapped = Some (wrapProps ::reactClass ::props children);
     {...dummyInteropComponent, jsElementWrapped}
   };
