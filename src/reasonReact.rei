@@ -103,7 +103,7 @@ type stateless = unit;
 /** For internal use only */
 type jsElementWrapped;
 
-type oldNew 'state 'retainedProps = {
+type oldNewSelf 'state 'retainedProps = {
   oldSelf: self 'state 'retainedProps,
   newSelf: self 'state 'retainedProps
 };
@@ -115,10 +115,10 @@ type componentSpec 'state 'initialState 'retainedProps 'initialRetainedProps = {
   mutable handedOffState: ref (option 'state),
   willReceiveProps: self 'state 'retainedProps => 'state,
   didMount: self 'state 'retainedProps => update 'state,
-  didUpdate: oldNew 'state 'retainedProps => unit,
+  didUpdate: oldNewSelf 'state 'retainedProps => unit,
   willUnmount: self 'state 'retainedProps => unit,
-  willUpdate: oldNew 'state 'retainedProps => unit,
-  shouldUpdate: oldNew 'state 'retainedProps => bool,
+  willUpdate: oldNewSelf 'state 'retainedProps => unit,
+  shouldUpdate: oldNewSelf 'state 'retainedProps => bool,
   render: self 'state 'retainedProps => reactElement,
   initialState: unit => 'initialState,
   jsElementWrapped,
