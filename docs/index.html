@@ -39,12 +39,12 @@ let component = ReasonReact.statefulComponent "Greeting";
 
 /* underscore before names indicate unused variables. We name them for clarity */
 let make ::name _children => {
-  let click _event state _self => ReasonReact.Update (state + 1);
+  let click _event {ReasonReact.state} => ReasonReact.Update (state + 1);
   {
     ...component,
     initialState: fun () => 0,
-    render: fun state self => {
-      let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int state) ^ " time(s)!";
+    render: fun self => {
+      let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int self.state) ^ " time(s)!";
       <button onClick=(self.update click)> (ReasonReact.stringToElement greeting) </button>
     }
   }
@@ -105,7 +105,7 @@ Now we'll define the function that's called when other files invoke `<Greeting n
 let component = ReasonReact.statelessComponent "Greeting";
 let make ::name _children => {
   ...component, /* spread the template's other defaults into here  */
-  render: fun () _self => <div> (ReasonReact.stringToElement name) </div>
+  render: fun _self => <div> (ReasonReact.stringToElement name) </div>
 };
 ```
 
@@ -128,8 +128,8 @@ let component = ReasonReact.statefulComponent "Greeting";
 let make ::name _children => {
   ...component,
   initialState: fun () => 0, /* here, state is an `int` */
-  render: fun state self => {
-    let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int state) ^ " time(s)!";
+  render: fun self => {
+    let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int self.state) ^ " time(s)!";
     <div> (ReasonReact.stringToElement greeting) </div>
   }
 };
@@ -186,7 +186,7 @@ It says "I understand that `age` is optional and that when I use the label I sho
 
 ### `self`
 
-`self` is a record that contains `update` and `handle`, used in conjunctions with callbacks props passed to components.
+`self` is a record that contains `state`, `update` and `handle`. The latter two are used in conjunctions with callbacks props passed to components.
 
 ### Callback Handlers
 
@@ -195,11 +195,11 @@ In ReactJS, we can do `<div onClick={this.handleClick} />` and in `handleClick`,
 ```reason
 let component = ...;
 let make ::name _children => {
-  let click _event state _self => ReasonReact.Update (state + 1); /* this state is guaranteed fresh */
+  let click _event {ReasonReact.state} => ReasonReact.Update (state + 1); /* this state is guaranteed fresh */
   {
     ...component,
     initialState: ...,
-    render: fun state self => {
+    render: fun self => {
       let greeting = ...;
       <button onClick=(self.update click)> (ReasonReact.stringToElement greeting) </button>
     }
@@ -209,7 +209,7 @@ let make ::name _children => {
 
 `update` expects a callback that:
 
-- Accepts a payload, the newest state and `self`.
+- Accepts a payload, the newest `self`.
 - Returns a `ReasonReact.update 'state`, aka either:
   - `ReasonReact.Update newStateToBeSet`: indicates the handler (e.g. `click`) wants to update the state (in ReactJS, it'd be an imperative `setState` call).
   - `ReasonReact.NoUpdate`: no state update.
@@ -222,7 +222,7 @@ Often times, you'd return `NoUpdate` from the handler. For convenience, we've ex
 **Note**: sometimes you might be forwarding `update` or `handle` to some helpers. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](#reason-react-common-type-errors). Example:
 
 ```reason
-let click event state self => ...;
+let click event self => ...;
 
 let renderItem self => {
   /* this needs to be self.ReasonReact.update, not self.update */
@@ -231,7 +231,7 @@ let renderItem self => {
 
 let make ::name _children => {
   ...component,
-  render: fun state self => {
+  render: fun self => {
     let item = renderItem self;
     ...
   }
@@ -251,7 +251,7 @@ In ReasonReact, since the new state, if any, is returned from the lifecycle even
 Instead, you'd do:
 
 ```reason
-let handler intervalId state _self => ReasonReact.Update {...state, whateverNewUpdate: bla};
+let handler intervalId {ReasonReact.state} => ReasonReact.Update {...state, whateverNewUpdate: bla};
 setInterval (fun intervalId => (self.update handler) intervalId);
 ```
 
@@ -262,74 +262,93 @@ Aka, creating an `update` handler and immediately invoke it. See the full [count
 ReasonReact supports the usuals:
 
 ```reason
-didMount: state => self => update state
+didMount: self => update state
 
-willReceiveProps: state => self => state
+willReceiveProps: self => state
 
-shouldUpdate: previousState::'state => nextState::'state => self 'state => bool
+shouldUpdate: oldAndNewSelf => bool
 
-willUpdate: previousState::state => nextState::state => self => unit
+willUpdate: oldAndNewSelf => unit
 
-didUpdate: previousState::state => currentState::state => self => unit
+didUpdate: oldAndNewSelf => unit
 
-willUnmount: state => self => unit
+willUnmount: self => unit
 ```
 
 Note:
 
 - We've dropped the `component` prefix from all these.
-- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. `NoUpdate/Update/SilentUpdate`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
+- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. not `NoUpdate/Update/SilentUpdate`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
 - `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
-- `didUpdate` and `willUpdate` are labeled now! This reduces confusion.
 - `willMount` is unsupported. Use `didMount` instead.
+- `didUpdate`, `willUpdate` and `shouldUpdate` take in a **`oldAndNewSelf` record**, of type `{oldSelf: self, newSelf: self}`. These two fields are the equivalent of ReactJS' `componentDidUpdate`'s `prevProps/prevState/` in conjunction with `props/state`. Likewise for `willUpdate` and `shouldUpdate`.
 
-**There's a catch**. Some new lifecyle methods act differently. Described below.
+**Some new lifecyle methods act differently**. Described below.
 
-### Access next or previous props
+### Access next or previous props: `retainedProps`
 
-One pattern that's sometimes used in ReactJS is accessing a lifecyle event's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous/next props/state for you yet. The next sections provide the solutions.
+One pattern that's sometimes used in ReactJS is accessing a lifecyle event's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous props for you. We provide the `retainedProps` API for this purpose:
+
+```reason
+type retainedProps = {message: string};
+
+let component = ReasonReact.statelessComponentWithRetainedProps "RetainedPropsExample";
+
+let make ::message _children => {
+  ...component,
+  retainedProps: {message: message},
+  didUpdate: fun {oldSelf, newSelf} =>
+    if (oldSelf.retainedProps.message !== newSelf.retainedProps.message) {
+      /* do whatever sneaky imperative things here */
+      Js.log "props `message` changed!"
+    },
+  render: fun _self => ...
+};
+```
+
+We expose `ReasonReact.statelessComponentWithRetainedProps` and `ReasonReact.statefulComponentWithRetainedProps`. Both work like their ordinary non-retained-props counterpart, and require you to specify a new field, `retainedProps` (of whatever type you'd like) in your component's spec in `make`.
 
 #### `willReceiveProps`
 
-Traditional ReactJS `componentWillReceiveProps` takes in a `nextProps`. We don't have `nextProps`, since those are simply the labeled arguments in `make`, available to you in the scope. To access the _current_ props, however, you'd need to manually copy those props into state, and access them from state:
+Traditional ReactJS `componentWillReceiveProps` takes in a `nextProps`. We don't have `nextProps`, since those are simply the labeled arguments in `make`, available to you in the scope. To access the _current_ props, however, you'd use the above `retainedProps` API:
 
 ```reason
-type state = {
-  someToggle: bool,
-  /* copied over from props */
-  name: string
-};
+type state = {someToggle: bool};
 
-let component = ...;
+let component = ReasonReact.statefulComponentWithRetainedProps "MyComponent";
 let make ::name _children => {
   ...component,
-  initialState: fun () => {someToggle: false, name},
-  willReceiveProps: fun state self => {
-    if (state.name === name) {
-      ...
+  initialState: fun () => {someToggle: false},
+  /* just like state, the retainedProps field can return anything! Here it retained the `name` prop's value */
+  retainedProps: name,
+  willReceiveProps: fun self => {
+    if (self.retainedProps === name) {
       /* previous ReactJS logic would be: if (props.name === nextProps.name)
+      ...
     }
-    /* don't forget to sync props into state */
-    {...state, name}
+    ...
   }
 }
 ```
 
-**Don't forget this props-to-state forwarding**! This is the one place you need to it do. If you forget, you might not get the freshest data.
-
-Compared to the ReactJS approach, this method is more manual and slightly error-prone, though it has the advantage of only retaining the props that are needed and other rather nuanced benefits. We're working on making this API smoother.
-
 #### `willUpdate`
 
-(**Assuming you've synced parts of the props into state in `willReceiveProps`**) ReactJS' `componentwillUpdate`'s `nextProps` is just the labeled arguments in `make`, and "current props" (aka `this.props`) is the props you've copied into state, accessible via ReasonReact's `previousState`.
+ReactJS' `componentwillUpdate`'s `nextProps` is just the labeled arguments in `make`, and "current props" (aka `this.props`) is the props you've copied into `retainedProps`, accessible via `{oldSelf}`:
+
+```reason
+{
+  ...component,
+  willUpdate: fun {oldSelf, newSelf} => ...
+}
+```
 
 #### `didUpdate`
 
-ReactJS' `prevProps` is what you've synced in state, under `previousState`.
+ReactJS' `prevProps` is what you've synced in `retainedProps`, under `oldSelf`.
 
 #### `shouldUpdate`
 
-ReactJS' `shouldComponentUpdate` counterpart. Just like `willUpdate`, instead of providing `nextProps` and `nextState`, `shouldUpdate` provides `previousState` and `nextState`. **Note also that `shouldUpdate` isn't called after a [`ReasonReact.SilentUpdate`](#reason-react-component-creation-callback-handlers)**.
+ReactJS' `shouldComponentUpdate` counterpart. **Note also that `shouldUpdate` isn't called after a [`ReasonReact.SilentUpdate`](#reason-react-component-creation-callback-handlers)**.
 
 ### Instance Variables
 
@@ -351,7 +370,7 @@ let component = ...; /* remember, `component` needs to be close to `make`, and a
 let make _children => {
   ...component,
   initialState: fun () => {intervalId: None, someOtherVar: Some "hello"},
-  didMount: fun state _self => ReasonReact.SilentUpdate {...state, intervalId: Some (setInterval ...)},
+  didMount: fun {state} => ReasonReact.SilentUpdate {...state, intervalId: Some (setInterval ...)},
   render: ...
 };
 ```
@@ -363,13 +382,13 @@ A `ref` would be just another instance variable. You'd type it as `ReasonReact.r
 ```reason
 type state = {isOpen: bool, mySectionRef: option ReasonReact.reactRef};
 
-let setSectionRef theRef state _self => ReasonReact.SilentUpdate {...state, mySectionRef: Js.Null.to_opt theRef}; /* wondering about Js.Null.to_opt? See the note below */
+let setSectionRef theRef {ReasonReact.state} => ReasonReact.SilentUpdate {...state, mySectionRef: Js.Null.to_opt theRef}; /* wondering about Js.Null.to_opt? See the note below */
 
 let component = ReasonReact.statefulComponent "MyPanel";
 let make ::className="" _children => {
   ...component,
   initialState: fun () => {isOpen: false, mySectionRef: None},
-  render: fun state self => <Section1 ref=(self.update setSectionRef) />
+  render: fun self => <Section1 ref=(self.update setSectionRef) />
 };
 ```
 
@@ -381,11 +400,11 @@ Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...s
 
 ReasonReact ref only accept callbacks. The string `ref` from ReactJS is deprecated.
 
-We also expose an escape hatch `ReasonReact.refToJsObj` (type: `ReasonReact.reactRef => Js.t {..}`) which turns your ref into a JS object you can freely use; **this is only used to access ReactJS component class methods**.
+We also expose an escape hatch `ReasonReact.refToJsObj` of type `ReasonReact.reactRef => Js.t {..}`, which turns your ref into a JS object you can freely use; **this is only used to access ReactJS component class methods**.
 
 ```reason
-let handleClick event state self =>
-  switch state.mySectionRef {
+let handleClick event self =>
+  switch self.state.mySectionRef {
   | None => ()
   | Some r => (ReasonReact.refToJsObj r)##someMethod 1 2 3 /* I solemnly swear that I am up to no good */
   };

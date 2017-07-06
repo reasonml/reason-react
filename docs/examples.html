@@ -31,11 +31,11 @@ See https://github.com/chenglou/reason-react-example for examples you can clone 
 ```reason
 let component = ReasonReact.statelessComponent "Page";
 
-let handleClick _event _ _ => Js.log "clicked!";
+let handleClick _event _self => Js.log "clicked!";
 
 let make ::message _children => {
   ...component,
-  render: fun () self =>
+  render: fun self =>
     <div onClick=(self.handle handleClick)> (ReasonReact.stringToElement message) </div>
 };
 ```
@@ -62,21 +62,43 @@ type state = {
   timerId: option Js.Global.intervalId
 };
 
-let increaseCount _id state _self => ReasonReact.Update {...state, count: state.count + 1};
+let increaseCount _id {ReasonReact.state: state} =>
+  ReasonReact.Update {...state, count: state.count + 1};
 
 let component = ReasonReact.statefulComponent "Counter";
 
 let make _children => {
   ...component,
   initialState: fun () => {count: 0, timerId: None},
-  didMount: fun state self =>
+  didMount: fun {state, update} =>
     ReasonReact.SilentUpdate {
       ...state,
-      timerId: Some (Js.Global.setInterval (self.update increaseCount) 1000)
+      timerId: Some (Js.Global.setInterval (update increaseCount) 1000)
       /* if you're not used to currying, this form is clearer: */
       /* Js.Global.setInterval (fun id => self.update increaseCount id) */
     },
-  render: fun state _self => <div> (ReasonReact.stringToElement (string_of_int state.count)) </div>
+  render: fun {state} => <div> (ReasonReact.stringToElement (string_of_int state.count)) </div>
+};
+```
+
+## Retained Props
+
+Copy a few props into a special field to emulate ReactJS' lifecycle events' `prevProps`/`nextProps` functionality.
+
+```reason
+type retainedProps = {message: string};
+
+let component = ReasonReact.statelessComponentWithRetainedProps "RetainedPropsExample";
+
+let make ::message _children => {
+  ...component,
+  retainedProps: {message: message},
+  didUpdate: fun {oldSelf, newSelf} =>
+    if (oldSelf.retainedProps.message !== newSelf.retainedProps.message) {
+      /* do whatever sneaky imperative things here */
+      Js.log "props `message` changed!"
+    },
+  render: fun _self => <div> (ReasonReact.stringToElement message) </div>
 };
 ```
 
@@ -89,6 +111,7 @@ var ReactDOM = require('react-dom');
 var React = require('react');
 
 var App = React.createClass({
+  displayName: "MyBanner",
   render: function() {
     if (this.props.show) {
       return React.createElement('div', null,
@@ -128,7 +151,7 @@ let component = ReasonReact.statelessComponent "PageReason";
 
 let make ::message ::extraGreeting=? _children => {
   ...component,
-  render: fun () _self => {
+  render: fun _self => {
     let greeting =
       switch extraGreeting {
       | None => "How are you?"
@@ -150,7 +173,11 @@ let jsComponent =
     );
 ```
 
-Then use it on the JS side through `var PageReason = require('path/to/pageReason.js').jsComponent;`
+Then use it on the JS side through
+
+```
+var PageReason = require('path/to/pageReason.js').jsComponent;
+```
 
 
   </script>

@@ -1,4 +1,4 @@
-# 0.2.0
+# 0.2.1
 
 Breaking update (sorry!)
 
@@ -26,6 +26,7 @@ Our own release contains the following improvements:
 - Add `shouldUpdate`.
 
 # 0.1.4
+
 Major update! Though this is 100% backward compatible, so no major version bump. We've revamped the whole API based on all you awesome folks' feedback, and we've provided a gradual migration path.
 
 ## Requirements & Self-Congratulations
