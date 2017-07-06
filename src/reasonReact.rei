@@ -52,6 +52,12 @@ type update 'state =
 type renderNotImplemented =
   | RenderNotImplemented;
 
+
+/** A stateless component is a component with state of type unit */
+type stateless;
+
+type noRetainedProps;
+
 module Callback: {
 
   /**
@@ -96,10 +102,6 @@ type next 'state 'retainedProps = state::'state? => self 'state 'retainedProps =
 type render 'state 'retainedProps = state::'state => self 'state 'retainedProps => reactElement;
 
 
-/** A stateless component is a component with state of type unit */
-type stateless = unit;
-
-
 /** For internal use only */
 type jsElementWrapped;
 
@@ -128,15 +130,16 @@ and component 'state 'retainedProps = componentSpec 'state 'state 'retainedProps
 
 
 /** Create a stateless component: i.e. a component where state has type stateless. */
-let statelessComponent: string => componentSpec stateless stateless unit unit;
+let statelessComponent:
+  string => componentSpec stateless stateless noRetainedProps noRetainedProps;
 
-let statefulComponent: string => componentSpec 'state stateless unit unit;
+let statefulComponent: string => componentSpec 'state stateless noRetainedProps noRetainedProps;
 
 let statefulComponentWithRetainedProps:
-  string => componentSpec 'state stateless 'retainedProps unit;
+  string => componentSpec 'state stateless 'retainedProps noRetainedProps;
 
 let statelessComponentWithRetainedProps:
-  string => componentSpec stateless stateless 'retainedProps unit;
+  string => componentSpec stateless stateless 'retainedProps noRetainedProps;
 
 let element:
   key::string? =>

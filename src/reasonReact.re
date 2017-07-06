@@ -45,6 +45,8 @@ type renderNotImplemented =
 
 type stateless = unit;
 
+type noRetainedProps = unit;
+
 module Callback = {
   type t 'payload = 'payload => unit;
   let default _event => ();
@@ -579,19 +581,19 @@ let basicComponent debugName => {
   componentTemplate
 };
 
-let statelessComponent debugName :component stateless unit => basicComponent debugName;
+let statelessComponent debugName :component stateless noRetainedProps => basicComponent debugName;
 
-let statefulComponent debugName :componentSpec 'state stateless unit unit =>
+let statefulComponent debugName :componentSpec 'state stateless noRetainedProps noRetainedProps =>
   basicComponent debugName;
 
 let statefulComponentWithRetainedProps
     debugName
-    :componentSpec 'state stateless 'retainedProps unit =>
+    :componentSpec 'state stateless 'retainedProps noRetainedProps =>
   basicComponent debugName;
 
 let statelessComponentWithRetainedProps
     debugName
-    :componentSpec stateless stateless 'retainedProps unit =>
+    :componentSpec stateless stateless 'retainedProps noRetainedProps =>
   basicComponent debugName;
 
 
