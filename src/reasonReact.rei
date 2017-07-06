@@ -97,8 +97,6 @@ type self 'state 'retainedProps = {
 
 type reactClassInternal;
 
-type next 'state 'retainedProps = state::'state? => self 'state 'retainedProps => 'state;
-
 type render 'state 'retainedProps = state::'state => self 'state 'retainedProps => reactElement;
 
 

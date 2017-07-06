@@ -66,7 +66,6 @@ type element =
   | Element (component 'state 'retainedProps) :element
 and jsPropsToReason 'jsProps 'state 'retainedProps =
   Js.t 'jsProps => component 'state 'retainedProps
-and next 'state 'retainedProps = state::'state? => self 'state 'retainedProps => 'state
 and render 'state 'retainedProps = state::'state => self 'state 'retainedProps => reactElement
 /**
  * Type of hidden field for Reason components that use JS components
