@@ -61,6 +61,7 @@ external props :
 
   /* react textarea/input */
   defaultValue::string? =>
+  defaultChecked::Js.boolean? =>
 
   /* global html attributes */
   accessKey::string? =>
