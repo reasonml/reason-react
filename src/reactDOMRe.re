@@ -60,6 +60,7 @@ external props :
   ref::(Js.null Dom.element => unit)? =>
 
   /* react textarea/input */
+  defaultChecked::Js.boolean? =>
   defaultValue::string? =>
 
   /* global html attributes */
