@@ -7,7 +7,9 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - Getting rid of ref.
 - Making a great list abstraction to model dynamically changing lists/scrollers.
 
-# 0.2.1
+# 0.2.4
+
+- Added `defaultChecked` to DOM attribute (#29).
 
 - `enqueue`. Best thing ever.
 - Secret (feature-that-must-not-be-named)
