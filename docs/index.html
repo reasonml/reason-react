@@ -516,9 +516,23 @@ This will assign the extra `data-payload` and `aria-label` props (**both untyped
 
 For non-DOM components, you need to use valid prop names.
 
-## Working with DOM
+## Working with Children
 
-The `ReactDOMRe` module below exposes an unsafe `domElementToObj`. That's all you need.
+JSX children are typed as `array`. This is problematic, because `<Foo> children </Foo>` where `children` comes from props (aka your `make` function) is really now a wrapped array (`Foo.make [|children|]`) and wouldn't type.
+
+Some people circumvent this with `<Foo> (ReasonReact.arrayToElement children) </Foo>`, but this is wrong; it'll trigger ReactJS' [key warning](https://facebook.github.io/react/docs/lists-and-keys.html#basic-list-component). Instead, you should use the desugared form, `Foo.make children`, which doesn't automatically wrap the children in an array wrapper like JSX does.
+
+For passing to DOM element, e.g. `<div foo=bar> children </div>` use the following:
+
+```
+ReasonReact.createDomElement "div" props::{"foo": bar} children
+```
+
+The reason why passing nested children array in ReactJS doesn't warn is because ReactJS uses some hacks under the hood.
+
+This isn't ideal; we'll make this better in the future!
+
+## Working with DOM
 
 ### ReactDOM
 
@@ -585,6 +599,10 @@ This means you've passed `self` to a helper function of your render, and it used
 #### Something about callbacks passed to `update` (or `handle`) having incompatible types between them
 
 You've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
+
+#### This expression has type 'a array but an expression was expected of type ReasonReact.reactElement
+
+Sorry! This is our fault. See [Working with Children](./index.html#reason-react-working-with-children).
 
   </script>
 

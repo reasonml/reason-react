@@ -42,6 +42,10 @@ This means you've passed `self` to a helper function of your render, and it used
 
 You've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
 
+#### This expression has type 'a array but an expression was expected of type ReasonReact.reactElement
+
+Sorry! This is our fault. See [Working with Children](./index.html#reason-react-working-with-children).
+
 ### How do I do props spreading? `<div {...this.props} />`
 
 You can't. Props spreading is a big source of unpredictability and performance regression (think `shouldComponentUpdate`). Our API prevents this.
