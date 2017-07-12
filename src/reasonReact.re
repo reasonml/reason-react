@@ -369,16 +369,24 @@ let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
        */
       pub componentWillReceiveProps nextProps => {
         let thisJs: jsComponentThis reasonState element retainedProps = [%bs.raw "this"];
-        let convertedReasonProps =
+        let newConvertedReasonProps =
           convertPropsIfTheyreFromJs nextProps thisJs##jsPropsToReason debugName;
-        let Element component = Obj.magic convertedReasonProps;
-        if (component.willReceiveProps !== willReceivePropsDefault) {
+        let Element newComponent = Obj.magic newConvertedReasonProps;
+        if (newComponent.willReceiveProps !== willReceivePropsDefault) {
+          let oldJsProps = thisJs##props;
+          /* Avoid converting again the props that are just the same as curProps. */
+          let oldConvertedReasonProps =
+            nextProps === oldJsProps ?
+              newConvertedReasonProps :
+              convertPropsIfTheyreFromJs oldJsProps thisJs##jsPropsToReason debugName;
+          let Element oldComponent = oldConvertedReasonProps;
           thisJs##setState (
             fun curTotalState _ => {
               let curReasonState = Obj.magic curTotalState##reasonState;
               let curReasonStateVersion = curTotalState##reasonStateVersion;
-              let self = Obj.magic (this##self curReasonState (Obj.magic component.retainedProps));
-              let nextReasonState = Obj.magic (component.willReceiveProps self);
+              let oldSelf =
+                Obj.magic (this##self curReasonState (Obj.magic oldComponent.retainedProps));
+              let nextReasonState = Obj.magic (newComponent.willReceiveProps oldSelf);
               let nextReasonStateVersion =
                 nextReasonState !== curReasonState ?
                   curReasonStateVersion + 1 : curReasonStateVersion;
