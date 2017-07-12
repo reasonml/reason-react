@@ -28,9 +28,6 @@ let createDomElement s ::props children => {
   (Obj.magic createElementVerbatim)##apply Js.null vararg
 };
 
-external createClassInternalHack : Js.t 'classSpec => reactClass =
-  "create-react-class" [@@bs.module];
-
 let magicNull = Obj.magic Js.null;
 
 type update 's =
@@ -205,7 +202,7 @@ let convertPropsIfTheyreFromJs props jsPropsToReason debugName => {
 };
 
 let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
-  createClassInternalHack (
+  CreateClassInternalHack.createClass (
     {
       val displayName = debugName;
       /**
@@ -562,7 +559,7 @@ let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
       }
     }
     [@bs]
-  );
+  )[@bs];
 
 let basicComponent debugName => {
   let componentTemplate = {
