@@ -534,6 +534,8 @@ This isn't ideal; we'll make this better in the future!
 
 ## Working with DOM
 
+For example, you can dangerously access `event.target.value` as `(ReactDOMRe.domElementToObj (ReactEventRe.Form.target event))##value`.
+
 ### ReactDOM
 
 ReasonReact's equivalent `ReactDOMRe` exposes:
@@ -548,7 +550,7 @@ ReasonReact's equivalent `ReactDOMRe` exposes:
 
 And two helpers:
 
-- `domElementToObj : Dom.element => Js.t {..}`: turns a DOM element into a Js object whose fields that you can dangerously access: `(ReactDOMRe.domElementToObj (ReactEventRe.Form.target event))##value`.
+- `domElementToObj : Dom.element => Js.t {..}`: turns a DOM element into a Js object whose fields that you can dangerously access.
 
 - `renderToElementWithClassName : ReasonReact.reactElement => string => unit`: convenience. Finds the (first) element of the provided class name and `render` to it.
 
