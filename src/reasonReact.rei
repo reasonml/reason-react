@@ -53,8 +53,13 @@ type renderNotImplemented =
   | RenderNotImplemented;
 
 
-/** A stateless component is a component with state of type unit */
-type stateless;
+/** 
+ * A stateless component is a component with state of type unit. This cannot be
+ * abstract for now, because a stateless component's willReceiveProps needs to
+ * return the state, aka unit. We can provide a helper
+ * ReasonReact.statelessReturn that's of type `stateless`, but that's verbose
+ */
+type stateless = unit;
 
 type noRetainedProps;
 
