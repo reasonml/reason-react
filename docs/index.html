@@ -466,7 +466,13 @@ var MyReasonComponent = require('myReasonComponent').jsComponent;
 
 ReasonReact events map cleanly to ReactJS [synthetic events](https://facebook.github.io/react/docs/events.html). More info in the [inline docs](https://github.com/reasonml/reason-react/blob/380358e5894d4223e7dd9c1fb2df72f0756231bc/src/reactEventRe.rei#L1).
 
-If you're accessing fields on your event object, like `event.target.value`, see [Working with DOM](#reason-react-working-with-dom) below.
+If you're accessing fields on your event object, like `event.target.value`, you'd use a combination of a `ReactDOMRe` helper and [BuckleScript's `##` object access FFI](http://bucklescript.github.io/bucklescript/Manual.html#_binding_to_js_objects):
+
+```reason
+(ReactDOMRe.domElementToObj (ReactEventRe.Form.target event))##value
+```
+
+More info on the `ReactDOMRe` module below in the [Working with DOM](#reason-react-working-with-dom) section.
 
 ## Styles
 
@@ -538,7 +544,7 @@ For example, you can dangerously access `event.target.value` as `(ReactDOMRe.dom
 
 ### ReactDOM
 
-ReasonReact's equivalent `ReactDOMRe` exposes:
+ReasonReact's ReactDOM module is called `ReactDOMRe`. The module exposes helpers that work with familiar ReactJS idioms. For example, to access `event.target.value`, you can do `(ReactDOMRe.domElementToObj (ReactEventRe.Form.target event))##value`.
 
 - `render : ReasonReact.reactElement => Dom.element => unit`
 
@@ -548,13 +554,13 @@ ReasonReact's equivalent `ReactDOMRe` exposes:
 
 - `objToDOMProps : Js.t {..} => reactDOMProps` (see use-case in [Invalid Prop Name](#reason-react-convert-over-reactjs-idioms-invalid-prop-name))
 
-And two helpers:
-
 - `domElementToObj : Dom.element => Js.t {..}`: turns a DOM element into a Js object whose fields that you can dangerously access.
 
-- `renderToElementWithClassName : ReasonReact.reactElement => string => unit`: convenience. Finds the (first) element of the provided class name and `render` to it.
+And two extra convenience utilities:
 
-- `renderToElementWithId : ReasonReact.reactElement => string => unit`: convenience. Finds the element of the provided id and `render` to it.
+- `renderToElementWithClassName : ReasonReact.reactElement => string => unit`: finds the (first) element of the provided class name and `render` to it.
+
+- `renderToElementWithId : ReasonReact.reactElement => string => unit`: finds the element of the provided id and `render` to it.
 
 ### ReactDOMServer
 
