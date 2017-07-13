@@ -1,0 +1,116 @@
+
+Initial Tree
+-------------------
+Creating ChangeCounter With Subelements:1
+Creating Box With Subelements:0
+Tree #0
+[{
+  "ChangeCounter.state": [10, "defaultText"],
+  "ChangeCounter.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+};]
+
+Updating Tree With Same Label (ButtonWrapperWrapper)
+-------------------
+Updating Component type ChangeCounter
+Updating Component type Box
+Tree #0
+[{
+  "ChangeCounter.state": [10, "defaultText"],
+  "ChangeCounter.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+};]
+
+Updating Tree With New Label (ButtonWrapperWrapper)
+-------------------
+Updating Component type ChangeCounter
+Updating Component type Box
+Tree #0
+[{
+  "ChangeCounter.state": [11, "updatedText"],
+  "ChangeCounter.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+};]
+
+Updating Tree With New Root Type (ButtonWrapperWrapper)
+-------------------
+Switching Component Types from: ChangeCounter to ButtonWrapperWrapper
+Creating ButtonWrapper With Subelements:2
+Creating StatelessButton With Subelements:1
+Creating Box With Subelements:0
+Creating StatelessButton With Subelements:1
+Creating Box With Subelements:0
+Tree #0
+[{
+  "ButtonWrapperWrapper.state": "buttonWrapperWrapperState",
+  "ButtonWrapperWrapper.subtree": [
+    {
+      "ButtonWrapper.state": [0],
+      "ButtonWrapper.subtree": [
+        {
+          "StatelessButton.state": 0,
+          "StatelessButton.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+        },
+        {
+          "StatelessButton.state": 0,
+          "StatelessButton.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+        }
+      ]
+    }
+  ]
+};]
+
+Updating Tree With Same Root Type as Previous (ButtonWrapperWrapper)
+-------------------
+Updating Component type ButtonWrapperWrapper
+Bailing Out Early Due To Memoization on Component type ButtonWrapper
+Tree #0
+[{
+  "ChangeCounter.state": [10, "defaultText"],
+  "ChangeCounter.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+};]
+Tree #1
+[{
+  "ChangeCounter.state": [10, "defaultText"],
+  "ChangeCounter.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+};]
+Tree #2
+[{
+  "ChangeCounter.state": [11, "updatedText"],
+  "ChangeCounter.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+};]
+Tree #3
+[{
+  "ButtonWrapperWrapper.state": "buttonWrapperWrapperState",
+  "ButtonWrapperWrapper.subtree": [
+    {
+      "ButtonWrapper.state": [0],
+      "ButtonWrapper.subtree": [
+        {
+          "StatelessButton.state": 0,
+          "StatelessButton.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+        },
+        {
+          "StatelessButton.state": 0,
+          "StatelessButton.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+        }
+      ]
+    }
+  ]
+};]
+Tree #4
+[{
+  "ButtonWrapperWrapper.state": "buttonWrapperWrapperState",
+  "ButtonWrapperWrapper.subtree": [
+    {
+      "ButtonWrapper.state": [0],
+      "ButtonWrapper.subtree": [
+        {
+          "StatelessButton.state": 0,
+          "StatelessButton.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+        },
+        {
+          "StatelessButton.state": 0,
+          "StatelessButton.subtree": [{"Box.state": "ImABox", "Box.subtree": []}]
+        }
+      ]
+    }
+  ]
+};]
