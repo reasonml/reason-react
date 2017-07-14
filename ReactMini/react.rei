@@ -2,7 +2,10 @@ type sideEffects;
 
 type update 'state 'event;
 
-type self 'state = {state : 'state, update : 'event .update 'state 'event};
+type self 'state = {
+  state: 'state,
+  update: 'event .update 'state 'event
+};
 
 type instanceTree;
 
@@ -15,6 +18,7 @@ type component 'state = {
   handedOffState: ref (option 'state),
   hitTest: self 'state => bool,
   initialState: unit => 'state,
+  printState: 'state => string,
   willReceiveProps: self 'state => 'state,
   render: self 'state => reactElement
 };

@@ -27,6 +27,7 @@ and component 'state = {
   handedOffState: ref (option 'state),
   hitTest: self 'state => bool,
   initialState: unit => 'state,
+  printState: 'state => string,
   willReceiveProps: self 'state => 'state,
   render: self 'state => reactElement
 }
@@ -42,6 +43,7 @@ and instance 'state = {
    */
   element,
   iState: 'state,
+  iPrintState: 'state => string,
   /**
    * Most recent subtree of instances.
    */
@@ -103,7 +105,7 @@ module Render = {
         component.debugName ^ " With Subelements:" ^ string_of_int (List.length subelements)
       );
       let subtree = List.map render subelements;
-      InstanceTree {component, element, iState: state, subtree}
+      InstanceTree {component, element, iState: state, iPrintState: component.printState, subtree}
     };
     render element
   };
@@ -156,6 +158,7 @@ module Render = {
           component: nextComponent,
           element: nextElement,
           iState: nextState,
+          iPrintState: nextComponent.printState,
           subtree: nextSubtree
         }
       /*
@@ -180,6 +183,7 @@ module Render = {
           component: nextComponent,
           element: nextElement,
           iState: nextState,
+          iPrintState: nextComponent.printState,
           subtree: nextSubtree
         }
       }
@@ -200,6 +204,7 @@ let defaultComponent debugName :component 'a => {
   handedOffState: ref None,
   hitTest: fun _self => false,
   initialState: fun () => assert false,
+  printState: fun _state => "",
   willReceiveProps: fun {state} => state,
   render: fun _self => assert false
 };
@@ -255,24 +260,25 @@ module Print = {
     ignore (Sys.command ("rm " ^ fn));
     s'
   };
+  let arrayStr lst => "[" ^ String.concat "," lst ^ "]";
 
   /** Print a tree */
   let tree ::refmt=true instanceTree => {
-    let rec print (InstanceTree {component, iState, subtree}) =>
-      "{\"" ^
-      component.debugName ^
-      ".state\":" ^
-      PrintUtils.dump iState ^
-      ",\"" ^
-      component.debugName ^ ".subtree\": " ^ PrintUtils.arr (List.map print subtree) ^ "}";
+    let rec print (InstanceTree {component, iState, subtree}) => {
+      let s = component.printState iState;
+      Printf.sprintf
+        "{%s\"%s.subtree\": %s}"
+        (s == "" ? "" : Printf.sprintf "\"%s.state\":%s," component.debugName s)
+        component.debugName
+        (arrayStr (List.map print subtree))
+    };
     let s = print instanceTree;
     refmt ? refmtString s : s
   };
   let trees ::refmt=true treeList => {
     let l: list string =
       List.mapi
-        (fun i t => "Tree #" ^ string_of_int i ^ "\n" ^ PrintUtils.arr [tree ::refmt t])
-        treeList;
+        (fun i t => "Tree #" ^ string_of_int i ^ "\n" ^ arrayStr [tree ::refmt t]) treeList;
     String.concat "\n" l
   };
 };
