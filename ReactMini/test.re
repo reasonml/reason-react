@@ -11,6 +11,7 @@ module Box = {
   let make onClick::_=? children => {
     ...component,
     initialState: fun () => "ImABox",
+    printState: fun s => s,
     render: fun _self => div children
   };
 };
@@ -47,6 +48,8 @@ module ChangeCounter: ChangeCounterIntf = {
   let make ::label _children => {
     ...component,
     initialState: fun () => {mostRecentLabel: label, numChanges: 10},
+    printState: fun {numChanges, mostRecentLabel} =>
+      Printf.sprintf "[%d, \"%s\"]" numChanges mostRecentLabel,
     willReceiveProps: fun {state} =>
       label != state.mostRecentLabel ?
         {mostRecentLabel: label, numChanges: state.numChanges + 1} : state,
@@ -68,6 +71,7 @@ module ButtonWrapper = {
   let make ::wrappedText="default" children => {
     ...component,
     initialState: fun () => {buttonWrapperState: 0},
+    printState: fun {buttonWrapperState} => Printf.sprintf "[%d]" buttonWrapperState,
     render: fun _self =>
       div [|
         React.element (
@@ -87,6 +91,7 @@ module ButtonWrapperWrapper = {
   let make wrappedText::_="default" children => {
     ...component,
     initialState: fun () => "buttonWrapperWrapperState",
+    printState: fun state => Printf.sprintf "\"%s\"" state,
     render: fun _self => div (Array.append children [|buttonWrapperJsx|])
   };
 };
