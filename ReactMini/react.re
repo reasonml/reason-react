@@ -264,14 +264,14 @@ module Print = {
       ".state\":" ^
       PrintUtils.dump iState ^
       ",\"" ^
-      component.debugName ^ ".subtree\": " ^ PrintUtils.arrayStr (List.map print subtree) ^ "}";
+      component.debugName ^ ".subtree\": " ^ PrintUtils.arr (List.map print subtree) ^ "}";
     let s = print instanceTree;
     refmt ? refmtString s : s
   };
   let trees ::refmt=true treeList => {
     let l: list string =
       List.mapi
-        (fun i t => "Tree #" ^ string_of_int i ^ "\n" ^ PrintUtils.arrayStr [tree ::refmt t])
+        (fun i t => "Tree #" ^ string_of_int i ^ "\n" ^ PrintUtils.arr [tree ::refmt t])
         treeList;
     String.concat "\n" l
   };
