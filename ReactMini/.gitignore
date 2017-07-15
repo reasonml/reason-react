@@ -1,2 +1,4 @@
-_build/
-test.byte
+lib/
+node_modules/
+src/_build/
+src/test.byte

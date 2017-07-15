@@ -27,7 +27,9 @@ let div: array reactElement => reactElement;
 
 let createComponent: string => component 'state;
 
-let createStatelessComponent: string => component unit;
+type stateless = unit;
+
+let createStatelessComponent: string => component stateless;
 
 let element: component 'state => reactElement;
 
@@ -38,6 +40,6 @@ let render: reactElement => list instanceTree;
 let update: list instanceTree => reactElement => list instanceTree;
 
 module Print: {
-  let tree: refmt::bool? => instanceTree => string;
-  let trees: refmt::bool? => list instanceTree => string;
+  let tree: instanceTree => string;
+  let trees: list instanceTree => string;
 };

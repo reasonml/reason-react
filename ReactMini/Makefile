@@ -1,12 +1,22 @@
 default: build
 
 build:
-	rebuild -r -cflags -g -lflags -g -cflags -bin-annot -cflags -annot test.byte
+	cd src && make build
 
 clean:
-	rm -rf _build test.byte
+	cd src && make clean
 
-test: build
-	./test.byte >test.actual.txt
-	diff -u test.exp.txt test.actual.txt
-	rm -f test.actual.txt
+test:
+	cd src && make test
+
+buildjs:
+	npm install
+	npm run build
+
+cleanjs:
+	npm run clean
+
+testjs: buildjs
+	node lib/js/src/test.js >src/test.actual.txt
+	diff -u src/test.exp.txt src/test.actual.txt
+	rm -f src/test.actual.txt

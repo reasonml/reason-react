@@ -221,64 +221,27 @@ let element component => [Element component];
 let div a => List.flatten (Array.to_list a);
 
 module Print = {
-  let readFile fname => {
-    let res = ref [];
-    let cin_ref = ref None;
-    let cleanup () =>
-      switch !cin_ref {
-      | None => ()
-      | Some cin => close_in cin
-      };
-    try {
-      let cin = open_in fname;
-      cin_ref := Some cin;
-      while true {
-        let line = input_line cin;
-        res := [line, ...!res]
-      };
-      assert false
-    } {
-    | End_of_file =>
-      cleanup ();
-      Some (List.rev !res)
-    | Sys_error _ =>
-      cleanup ();
-      None
-    }
-  };
-  let refmtString s => {
-    let fn = Filename.temp_file "tree" "tmp";
-    let outc = open_out fn;
-    output_string outc s;
-    close_out outc;
-    ignore (Sys.command ("refmt --parse re --print re --in-place " ^ fn));
-    let s' =
-      switch (readFile fn) {
-      | Some lines => String.concat "\n" lines
-      | None => s
-      };
-    ignore (Sys.command ("rm " ^ fn));
-    s'
-  };
-  let arrayStr lst => "[" ^ String.concat "," lst ^ "]";
+  let arrayStr lst => String.concat "," lst;
 
   /** Print a tree */
-  let tree ::refmt=true instanceTree => {
-    let rec print (InstanceTree {component, iState, subtree}) => {
+  let tree instanceTree => {
+    let rec print ::indent (InstanceTree {component, iState, subtree}) => {
       let s = component.printState iState;
+      let nextIndent = "  " ^ indent;
       Printf.sprintf
-        "{%s\"%s.subtree\": %s}"
-        (s == "" ? "" : Printf.sprintf "\"%s.state\":%s," component.debugName s)
+        "\n%s{%s\n%s\"%s.subtree\": %s\n%s}"
+        indent
+        (s == "" ? "" : Printf.sprintf "\n%s\"%s.state\": %s," nextIndent component.debugName s)
+        nextIndent
         component.debugName
-        (arrayStr (List.map print subtree))
+        (arrayStr (List.map (print indent::nextIndent) subtree))
+        indent
     };
-    let s = print instanceTree;
-    refmt ? refmtString s : s
+    print indent::"" instanceTree
   };
-  let trees ::refmt=true treeList => {
+  let trees treeList => {
     let l: list string =
-      List.mapi
-        (fun i t => "Tree #" ^ string_of_int i ^ "\n" ^ arrayStr [tree ::refmt t]) treeList;
+      List.mapi (fun i t => "Tree #" ^ string_of_int i ^ arrayStr [tree t]) treeList;
     String.concat "\n" l
   };
 };

@@ -71,7 +71,7 @@ module ButtonWrapper = {
   let make ::wrappedText="default" children => {
     ...component,
     initialState: fun () => {buttonWrapperState: 0},
-    printState: fun {buttonWrapperState} => Printf.sprintf "[%d]" buttonWrapperState,
+    printState: fun {buttonWrapperState} => Printf.sprintf "%d" buttonWrapperState,
     render: fun _self =>
       div [|
         React.element (
