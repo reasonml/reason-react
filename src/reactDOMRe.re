@@ -128,6 +128,7 @@ external props :
   kind::string? => /* has a fixed set of possible values */
   label::string? =>
   list::string? =>
+  loop::Js.boolean? =>
   low::int? =>
   manifest::string? => /* uri */
   max::string? => /* should be int or Js.Date.t */
