@@ -24,7 +24,7 @@
 
 # Reason React
 
-ReasonReact is a safer, simpler way to build React components in [Reason](http://facebook.github.io/reason/).
+ReasonReact is a safer, simpler way to build React components in [Reason](http://reasonml.github.io/).
 
 It integrates deeply with language level features in order to create an expressive, statically typed API, packed into a tiny API surface area.
 
@@ -53,7 +53,7 @@ let make ::name _children => {
 
 ## JSX
 
-Reason comes with the [JSX](http://facebook.github.io/reason/#diving-deeper-jsx) syntax! ReasonReact transforms it from an agnostic function call into a library-specific call though a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}"` in your [`bsconfig.json`](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
+Reason comes with the [JSX](https://reasonml.github.io/guide/language/jsx) syntax! ReasonReact transforms it from an agnostic function call into a library-specific call though a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}"` in your [`bsconfig.json`](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
 
 **Note** that due to current syntax constraints, you need to put spaces around the JSX children: `<div> foo </div>`.
 
@@ -178,7 +178,7 @@ Cumbersome. Fortunately, here's a better way to explicitly pass an optional valu
 <Foo name="Reason" age=?ageFromProps />
 ```
 
-It says "I understand that `age` is optional and that when I use the label I should pass an int. But I'd like to forward an `option` value explicitly". This isn't a JSX trick we've made up; it's just part of the language feature! See the section on "Explicitly Passed Optional" in the [Reason docs](http://facebook.github.io/reason/#basics-function).
+It says "I understand that `age` is optional and that when I use the label I should pass an int. But I'd like to forward an `option` value explicitly". This isn't a JSX trick we've made up; it's just part of the language feature! See the section on "Explicitly Passed Optional" in the [Reason docs](https://reasonml.github.io/guide/language/functions).
 
 ### Render
 
@@ -574,7 +574,7 @@ ReasonReact's equivalent `ReactDOMServerRe` exposes:
 
 ### Pass in Components Class as a Prop
 
-In ReactJS, `<Menu banner=MyBanner />` is easy; in ReasonReact, we can't trivially pass the whole component module ([explanations](http://facebook.github.io/reason/modules.html#modules-basic-modules)). Solution:
+In ReactJS, `<Menu banner=MyBanner />` is easy; in ReasonReact, we can't trivially pass the whole component module ([explanations](https://reasonml.github.io/guide/language/modules)). Solution:
 
 ```reason
 let bannerCallback prop1 prop2 => <MyBanner message=prop1 count=prop2 />;
@@ -629,7 +629,7 @@ Sorry! This is our fault. See [Working with Children](./index.html#reason-react-
   <!-- Meta -->
   <meta content="ReasonReact: a safer, simpler way to build ReactJS components in Reason" name="description">
   <meta content="ReasonReact: a safer, simpler way to build ReactJS components in Reason" property="og:description">
-  <meta content="https://facebook.github.io/reason/images/logoMini.png" property="og:image">
+  <meta content="https://reasonml.github.io/reason-react/images/logoMini.png" property="og:image">
   </head>
 <body role='flatdoc' class='big-h3 large-brief no-literate'>
 
