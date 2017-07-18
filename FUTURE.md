@@ -9,7 +9,7 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 
 # 0.2.4
 
-- Added `defaultChecked` to DOM attribute (#29).
+- Added `defaultChecked` and `loop` to DOM attribute (#29, #37).
 - Fix stateless components's `willReceiveProps`'s return value. It's now `unit` again.
 - Remove create-react-class. Now we're back to being dependency-less, and you can now use ReasonReact without dev-time bundling, or use rollup, or webpack as usual. Related post: https://medium.com/@chenglou/mareo-reason-bucklescript-mario-205ce4c1cbe5
 
