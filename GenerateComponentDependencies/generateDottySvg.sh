@@ -60,12 +60,22 @@ $GREP -o "wrapReasonForJs" $files \
 
 echo "digraph {" > comp.dot
 # background color is light grey
-echo "graph [rankdir=LR bgcolor=$lightGrey]" >> comp.dot
+echo "rankdir=LR bgcolor=$lightGrey" >> comp.dot
 # edge color is Reason grey
 echo "edge [color=$reasonGrey]" >> comp.dot
 # default node color is pink
 echo "node [style=filled color=pink fontcolor=white]" >> comp.dot
+echo "subgraph cluster01 {" >> comp.dot
+echo "label=\"dependencies\"" >> comp.dot
 cat nodes.txt edges.txt >> comp.dot
+echo "}" >> comp.dot
+echo "subgraph cluster02 {" >> comp.dot
+echo "label=\"colors legend\"" >> comp.dot
+echo "LegendReadonOrange [color=\"#DD4B39\", label=\"Component not called from JS\"]" >> comp.dot
+echo "LegendBlue [color=blue, label=\"Component callable from JS\"]" >> comp.dot
+echo "LegendReasonGrey [color=\"#8F8F8F\", label=\"Component wrapping JS\"]" >> comp.dot
+echo "LegendPink [label=\"JS Component used by Reason\"]" >> comp.dot
+echo "}" >> comp.dot
 echo "}" >> comp.dot
 
 dot -Tsvg -o comp.svg comp.dot
