@@ -448,19 +448,21 @@ Eeeeasy. We expose a helper for the other direction, `ReasonReact.wrapReasonForJ
 let component = ...;
 let make ...;
 
-let jsComponent =
+let default =
   ReasonReact.wrapReasonForJs
     ::component
     (fun jsProps => make name::jsProps##name age::?(Js.Null_undefined.to_opt jsProps##age) [||]);
 ```
 
-The function takes in the labeled reason `component` you've created, and a function that, given the js props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to a name such as `jsComponent`. The JS side can then import it:
+The function takes in the labeled reason `component` you've created, and a function that, given the JS props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to the name `default`. The JS side can then import it:
 
 ```
-var MyReasonComponent = require('myReasonComponent').jsComponent;
+var MyReasonComponent = require('myReasonComponent');
 // make sure you're passing the correct data types!
 <MyReasonComponent name="John" />
 ```
+
+**Note**: `default` exports like the one above are supported for `BuckleScript >=1.8.2`.
 
 ## Events
 
