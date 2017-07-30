@@ -462,7 +462,17 @@ var MyReasonComponent = require('myReasonComponent');
 <MyReasonComponent name="John" />
 ```
 
-**Note**: `default` exports like the one above are supported for `BuckleScript >=1.8.2`.
+**Note**: `default` exports like the one above are supported for `BuckleScript >=1.8.2`. If that doesn't work, try a non-default export, like:
+
+```reason
+let jsComponent = ReasonReact.wrapReasonForJs ...
+```
+
+and then import it on the JS side with:
+
+```
+var MyReasonComponent = require('myReasonComponent').jsComponent
+```
 
 ## Events
 
