@@ -13,7 +13,7 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - Fix stateless components's `willReceiveProps`'s return value. It's now `unit` again.
 - Remove create-react-class. Now we're back to being dependency-less, and you can now use ReasonReact without dev-time bundling, or use rollup, or webpack as usual. Related post: https://medium.com/@chenglou/mareo-reason-bucklescript-mario-205ce4c1cbe5
 
-- `enqueue`. Best thing ever.
+- Fixed `enqueue` type
 - Secret (feature-that-must-not-be-named)
 - Set lifecycles to null when they do nothing. React skips over lifecycles that are set to null, we currently have wrappers around all of them, so things like didMount are enqueued for *every* component.
 - `ReactDOMRe.createElement` (usually used through the JSX `<div> foo </div>`) has a new implementation that fixes an inadvertent children key warning in the previous version.
