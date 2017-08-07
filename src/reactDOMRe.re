@@ -101,6 +101,7 @@ external props :
   charSet::string? =>
   checked::Js.boolean? =>
   cite::string? => /* uri */
+  crossorigin::Js.boolean? =>
   cols::int? =>
   colSpan::int? =>
   content::string? =>
@@ -115,6 +116,8 @@ external props :
   encType::string? => /* "application/x-www-form-urlencoded", "multipart/form-data" or "text/plain" */
   form::string? =>
   formAction::string? => /* uri */
+  formTarget::string? => /* "_blank", "_self", etc. */
+  formMethod::string? => /* "post", "get", "put" */
   headers::string? =>
   height::string? => /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
   high::int? =>
@@ -123,6 +126,7 @@ external props :
   htmlFor::string? => /* substitute for "for" */
   httpEquiv::string? => /* has a fixed set of possible values */
   icon::string? => /* uri? */
+  inputMode::string? => /* "verbatim", "latin", "numeric", etc. */
   integrity::string? =>
   keyType::string? =>
   kind::string? => /* has a fixed set of possible values */
@@ -134,12 +138,14 @@ external props :
   max::string? => /* should be int or Js.Date.t */
   maxLength::int? =>
   media::string? => /* a valid media query */
+  mediaGroup::string? =>
   method::string? => /* "post" or "get" */
   min::int? =>
   minLength::int? =>
   multiple::Js.boolean? =>
   muted::Js.boolean? =>
   name::string? =>
+  nonce::string? =>
   noValidate::Js.boolean? =>
   open::Js.boolean? =>
   optimum::int? =>
