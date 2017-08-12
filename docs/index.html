@@ -607,6 +607,10 @@ Since ReasonReact props are just function arguments, you can't achieve the React
 
 Generally speaking, prop spread is discouraged; it can be unpredictable, slow and too meta. However, you can still use [`cloneElement`](#reason-react-cloneelement) to achieve this in ReasonReact by passing the extra props to `cloneElement`'s labelled `props` argument.
 
+### Boolean Shortcut
+
+ReactJS allows the pattern `showButton && <Button />`. While in this specific case, it's usually not too harmful, in general, try not to do this. In ReasonReact, you use `showButton ? <Button /> : ReasonReact.nullElement`.
+
 ## Miscellaneous
 
 - ReasonReact doesn't support ReactJS context (yet).
