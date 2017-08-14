@@ -42,7 +42,7 @@ external createElement : reactClass => props::Js.t {..}? => array reactElement =
   "createElement" [@@bs.splice] [@@bs.val] [@@bs.module "react"];
 
 external cloneElement : reactElement => props::Js.t {..}? => array reactElement => reactElement =
-  "cloneElement" [@@bs.splice] [@@bs.module "React"];
+  "cloneElement" [@@bs.splice] [@@bs.module "react"];
 
 type update 'state =
   | NoUpdate
