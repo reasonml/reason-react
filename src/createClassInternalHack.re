@@ -260,28 +260,8 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
         contextTypes
       );
     },
-    statics: function(Constructor, statics) {
-      mixStaticSpecIntoComponent(Constructor, statics);
-    },
     autobind: function() {}
   };
-
-  function validateMethodOverride(isAlreadyDefined, name) {
-    var specPolicy = ReactClassInterface.hasOwnProperty(name)
-      ? ReactClassInterface[name]
-      : null;
-
-    // Disallow defining methods more than once unless explicitly allowed.
-    if (isAlreadyDefined) {
-      _invariant(
-        specPolicy === 'DEFINE_MANY' || specPolicy === 'DEFINE_MANY_MERGED',
-        'ReactClassInterface: You are attempting to define ' +
-          '`%s` on your component more than once. This conflict may be due ' +
-          'to a mixin.',
-        name
-      );
-    }
-  }
 
   /**
    * Mixin helper which handles policy validation and reserved
@@ -302,7 +282,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 
       var property = spec[name];
       var isAlreadyDefined = proto.hasOwnProperty(name);
-      validateMethodOverride(isAlreadyDefined, name);
 
       if (RESERVED_SPEC_KEYS.hasOwnProperty(name)) {
         RESERVED_SPEC_KEYS[name](Constructor, property);
@@ -326,17 +305,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
           if (isAlreadyDefined) {
             var specPolicy = ReactClassInterface[name];
 
-            // These cases should already be caught by validateMethodOverride.
-            _invariant(
-              isReactClassMethod &&
-                (specPolicy === 'DEFINE_MANY_MERGED' ||
-                  specPolicy === 'DEFINE_MANY'),
-              'ReactClass: Unexpected spec policy %s for key %s ' +
-                'when mixing in component specs.',
-              specPolicy,
-              name
-            );
-
             // For methods which are defined more than once, call the existing
             // methods before calling the new property, merging if appropriate.
             if (specPolicy === 'DEFINE_MANY_MERGED') {
@@ -356,38 +324,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
           }
         }
       }
-    }
-  }
-
-  function mixStaticSpecIntoComponent(Constructor, statics) {
-    if (!statics) {
-      return;
-    }
-    for (var name in statics) {
-      var property = statics[name];
-      if (!statics.hasOwnProperty(name)) {
-        continue;
-      }
-
-      var isReserved = name in RESERVED_SPEC_KEYS;
-      _invariant(
-        !isReserved,
-        'ReactClass: You are attempting to define a reserved ' +
-          'property, `%s`, that shouldn\'t be on the "statics" key. Define it ' +
-          'as an instance property instead; it will still be accessible on the ' +
-          'constructor.',
-        name
-      );
-
-      var isInherited = name in Constructor;
-      _invariant(
-        !isInherited,
-        'ReactClass: You are attempting to define ' +
-          '`%s` on your component more than once. This conflict may be ' +
-          'due to a mixin.',
-        name
-      );
-      Constructor[name] = property;
     }
   }
 
