@@ -1,19 +1,9 @@
-[%%bs.raw {|
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
+let _assign = Js.Obj.assign;
+let emptyObject = Js.Obj.empty ();
 
-'use strict';
+[%%bs.raw
+  {|
 
-var _assign = require('object-assign');
-
-var emptyObject = require('fbjs/lib/emptyObject');
 var _invariant = require('fbjs/lib/invariant');
 
 if (process.env.NODE_ENV !== 'production') {
@@ -38,7 +28,9 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   ReactPropTypeLocationNames = {};
 }
-|}];
+|}
+];
+
 let factory = [%bs.raw
   {|
 function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
@@ -344,36 +336,11 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
         Constructor.getDefaultProps = getDefaultProps;
       }
     },
-    propTypes: function(Constructor, propTypes) {
-      if (process.env.NODE_ENV !== 'production') {
-        validateTypeDef(Constructor, propTypes, 'prop');
-      }
-      Constructor.propTypes = _assign({}, Constructor.propTypes, propTypes);
-    },
     statics: function(Constructor, statics) {
       mixStaticSpecIntoComponent(Constructor, statics);
     },
     autobind: function() {}
   };
-
-  function validateTypeDef(Constructor, typeDef, location) {
-    for (var propName in typeDef) {
-      if (typeDef.hasOwnProperty(propName)) {
-        // use a warning instead of an _invariant so components
-        // don't show up in prod but only in __DEV__
-        if (process.env.NODE_ENV !== 'production') {
-          warning(
-            typeof typeDef[propName] === 'function',
-            '%s: %s type `%s` is invalid; it must be a function, usually from ' +
-              'React.PropTypes.',
-            Constructor.displayName || 'ReactClass',
-            ReactPropTypeLocationNames[location],
-            propName
-          );
-        }
-      }
-    }
-  }
 
   function validateMethodOverride(isAlreadyDefined, name) {
     var specPolicy = ReactClassInterface.hasOwnProperty(name)
@@ -412,18 +379,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       if (process.env.NODE_ENV !== 'production') {
         var typeofSpec = typeof spec;
         var isMixinValid = typeofSpec === 'object' && spec !== null;
-
-        if (process.env.NODE_ENV !== 'production') {
-          warning(
-            isMixinValid,
-            "%s: You're attempting to include a mixin that is either null " +
-              'or not an object. Check the mixins included by the component, ' +
-              'as well as any mixins they include themselves. ' +
-              'Expected object but got %s.',
-            Constructor.displayName || 'ReactClass',
-            spec === null ? null : typeofSpec
-          );
-        }
       }
 
       return;
@@ -841,23 +796,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       Constructor.prototype.render,
       'createClass(...): Class specification must implement a `render` method.'
     );
-
-    if (process.env.NODE_ENV !== 'production') {
-      warning(
-        !Constructor.prototype.componentShouldUpdate,
-        '%s has a method called ' +
-          'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' +
-          'The name is phrased as a question because the function is ' +
-          'expected to return a value.',
-        spec.displayName || 'A component'
-      );
-      warning(
-        !Constructor.prototype.componentWillRecieveProps,
-        '%s has a method called ' +
-          'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?',
-        spec.displayName || 'A component'
-      );
-    }
 
     // Reduce time spent doing lookups by setting these on the prototype.
     for (var methodName in ReactClassInterface) {
