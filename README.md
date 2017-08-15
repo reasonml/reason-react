@@ -9,7 +9,7 @@ npm install --save reason-react
 ```
 
 ## Usage
-See https://github.com/chenglou/reason-react-example
+See https://github.com/reasonml-community/reason-react-example
 
 ## Documentation
 

@@ -153,7 +153,7 @@ The function takes in the labeled reason `component`, and a function that, given
 **Aaaand that's it**! Enjoy!
 
 # 0.1.3
-DOM ref is now typed as `Js.null Dom.element`, instead of just `Dom.element` (https://github.com/reasonml/reason-react/commit/6f2a75b). Trivial migration: https://github.com/chenglou/reason-react-example/commit/b44587a
+DOM ref is now typed as `Js.null Dom.element`, instead of just `Dom.element` (https://github.com/reasonml/reason-react/commit/6f2a75b). Trivial migration: https://github.com/reasonml-community/reason-react-example/commit/b44587a
 
 # 0.1.2
 Add `defaultValue` prop for input DOM component (https://github.com/reasonml/reason-react/commit/c293c6e)
