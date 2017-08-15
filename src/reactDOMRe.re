@@ -298,7 +298,7 @@ external props :
   baseProfile::string? =>
   baselineShift::string? =>
   bbox::string? =>
-  begin::string? =>
+  _begin::string? =>
   bias::string? =>
   by::string? =>
   calcMode::string? =>
