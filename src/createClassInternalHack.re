@@ -101,18 +101,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
     // ==== Definition methods ====
 
     /**
-     * Invoked when the component is mounted. Values in the mapping will be set on
-     * `this.props` if that prop is not specified (i.e. using an `in` check).
-     *
-     * This method is invoked before `getInitialState` and therefore cannot rely
-     * on `this.state` or use `this.setState`.
-     *
-     * @return {object}
-     * @optional
-     */
-    getDefaultProps: 'DEFINE_MANY_MERGED',
-
-    /**
      * Invoked once before the component is mounted. The return value will be used
      * as the initial value of `this.state`.
      *
@@ -303,20 +291,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
         contextTypes
       );
     },
-    /**
-     * Special case getDefaultProps which should move into statics but requires
-     * automatic merging.
-     */
-    getDefaultProps: function(Constructor, getDefaultProps) {
-      if (Constructor.getDefaultProps) {
-        Constructor.getDefaultProps = createMergedResultFunction(
-          Constructor.getDefaultProps,
-          getDefaultProps
-        );
-      } else {
-        Constructor.getDefaultProps = getDefaultProps;
-      }
-    },
     statics: function(Constructor, statics) {
       mixStaticSpecIntoComponent(Constructor, statics);
     },
@@ -359,18 +333,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
     if (!spec) {
       return;
     }
-
-    _invariant(
-      typeof spec !== 'function',
-      "ReactClass: You're attempting to " +
-        'use a component class or function as a mixin. Instead, just use a ' +
-        'regular object.'
-    );
-    _invariant(
-      !isValidElement(spec),
-      "ReactClass: You're attempting to " +
-        'use a component as a mixin. Instead, just use a regular object.'
-    );
 
     var proto = Constructor.prototype;
     var autoBindPairs = proto.__reactAutoBindPairs;
@@ -647,19 +609,11 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 
     mixSpecIntoComponent(Constructor, spec);
 
-    // Initialize the defaultProps property after all mixins have been merged.
-    if (Constructor.getDefaultProps) {
-      Constructor.defaultProps = Constructor.getDefaultProps();
-    }
-
     if (process.env.NODE_ENV !== 'production') {
       // This is a tag to indicate that the use of these method names is ok,
       // since it's used with createClass. If it's not, then it's likely a
       // mistake so we'll warn you to use the static property, property
       // initializer or constructor respectively.
-      if (Constructor.getDefaultProps) {
-        Constructor.getDefaultProps.isReactClassApproved = {};
-      }
       if (Constructor.prototype.getInitialState) {
         Constructor.prototype.getInitialState.isReactClassApproved = {};
       }
