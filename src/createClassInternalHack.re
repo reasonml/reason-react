@@ -585,54 +585,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
    */
   function bindAutoBindMethod(component, method) {
     var boundMethod = method.bind(component);
-    if (process.env.NODE_ENV !== 'production') {
-      boundMethod.__reactBoundContext = component;
-      boundMethod.__reactBoundMethod = method;
-      boundMethod.__reactBoundArguments = null;
-      var componentName = component.constructor.displayName;
-      var _bind = boundMethod.bind;
-      boundMethod.bind = function(newThis) {
-        for (
-          var _len = arguments.length,
-            args = Array(_len > 1 ? _len - 1 : 0),
-            _key = 1;
-          _key < _len;
-          _key++
-        ) {
-          args[_key - 1] = arguments[_key];
-        }
-
-        // User is trying to bind() an autobound method; we effectively will
-        // ignore the value of "this" that the user is trying to use, so
-        // let's warn.
-        if (newThis !== component && newThis !== null) {
-          if (process.env.NODE_ENV !== 'production') {
-            warning(
-              false,
-              'bind(): React component methods may only be bound to the ' +
-                'component instance. See %s',
-              componentName
-            );
-          }
-        } else if (!args.length) {
-          if (process.env.NODE_ENV !== 'production') {
-            warning(
-              false,
-              'bind(): You are binding a component method to the component. ' +
-                'React does this for you automatically in a high-performance ' +
-                'way, so you can safely remove this call. See %s',
-              componentName
-            );
-          }
-          return boundMethod;
-        }
-        var reboundMethod = _bind.apply(boundMethod, arguments);
-        reboundMethod.__reactBoundContext = component;
-        reboundMethod.__reactBoundMethod = method;
-        reboundMethod.__reactBoundArguments = args;
-        return reboundMethod;
-      };
-    }
     return boundMethod;
   }
 
