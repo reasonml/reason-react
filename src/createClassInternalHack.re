@@ -6,8 +6,6 @@ let emptyObject = Js.Obj.empty ();
 
 var _invariant = require('fbjs/lib/invariant');
 
-var MIXINS_KEY = 'mixins';
-
 // Helper function to allow the creation of anonymous functions which do not
 // have .name set to the name of the variable being assigned to.
 function identity(fn) {
@@ -291,13 +289,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
     displayName: function(Constructor, displayName) {
       Constructor.displayName = displayName;
     },
-    mixins: function(Constructor, mixins) {
-      if (mixins) {
-        for (var i = 0; i < mixins.length; i++) {
-          mixSpecIntoComponent(Constructor, mixins[i]);
-        }
-      }
-    },
     childContextTypes: function(Constructor, childContextTypes) {
       Constructor.childContextTypes = _assign(
         {},
@@ -384,20 +375,8 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
     var proto = Constructor.prototype;
     var autoBindPairs = proto.__reactAutoBindPairs;
 
-    // By handling mixins before any other properties, we ensure the same
-    // chaining order is applied to methods with DEFINE_MANY policy, whether
-    // mixins are listed before or after these methods in the spec.
-    if (spec.hasOwnProperty(MIXINS_KEY)) {
-      RESERVED_SPEC_KEYS.mixins(Constructor, spec.mixins);
-    }
-
     for (var name in spec) {
       if (!spec.hasOwnProperty(name)) {
-        continue;
-      }
-
-      if (name === MIXINS_KEY) {
-        // We have already handled mixins in a special case above.
         continue;
       }
 
