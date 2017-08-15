@@ -29,12 +29,6 @@ let factory = [%bs.raw
   {|
 function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
   /**
-   * Policies that describe methods in `ReactClassInterface`.
-   */
-
-  var injectedMixins = [];
-
-  /**
    * Composite components are higher-level components that compose other composite
    * or host components.
    *
@@ -57,31 +51,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
    * @internal
    */
   var ReactClassInterface = {
-    /**
-     * An array of Mixin objects to include when defining your component.
-     *
-     * @type {array}
-     * @optional
-     */
-    mixins: 'DEFINE_MANY',
-
-    /**
-     * An object containing properties and methods that should be defined on
-     * the component's constructor instead of its prototype (static methods).
-     *
-     * @type {object}
-     * @optional
-     */
-    statics: 'DEFINE_MANY',
-
-    /**
-     * Definition of prop types for this component.
-     *
-     * @type {object}
-     * @optional
-     */
-    propTypes: 'DEFINE_MANY',
-
     /**
      * Definition of context types for this component.
      *
@@ -302,17 +271,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       ? ReactClassInterface[name]
       : null;
 
-    // Disallow overriding of base class methods unless explicitly allowed.
-    if (ReactClassMixin.hasOwnProperty(name)) {
-      _invariant(
-        specPolicy === 'OVERRIDE_BASE',
-        'ReactClassInterface: You are attempting to override ' +
-          '`%s` from your class specification. Ensure that your method names ' +
-          'do not overlap with React methods.',
-        name
-      );
-    }
-
     // Disallow defining methods more than once unless explicitly allowed.
     if (isAlreadyDefined) {
       _invariant(
@@ -528,26 +486,10 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
     }
   }
 
-  /**
-   * Add more to the ReactClass base class. These are all legacy features and
-   * therefore not already part of the modern ReactComponent.
-   */
-  var ReactClassMixin = {
-    /**
-     * TODO: This will be deprecated because state should always keep a consistent
-     * type signature and the only use case for this, is to avoid that.
-     */
-    replaceState: function(newState, callback) {
-      this.updater.enqueueReplaceState(this, newState, callback);
-    },
-
-  };
-
   var ReactClassComponent = function() {};
   _assign(
     ReactClassComponent.prototype,
-    ReactComponent.prototype,
-    ReactClassMixin
+    ReactComponent.prototype
   );
 
   /**
@@ -593,19 +535,11 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
           initialState = null;
         }
       }
-      _invariant(
-        typeof initialState === 'object' && !Array.isArray(initialState),
-        '%s.getInitialState(): must return an object or null',
-        Constructor.displayName || 'ReactCompositeComponent'
-      );
-
       this.state = initialState;
     });
     Constructor.prototype = new ReactClassComponent();
     Constructor.prototype.constructor = Constructor;
     Constructor.prototype.__reactAutoBindPairs = [];
-
-    injectedMixins.forEach(mixSpecIntoComponent.bind(null, Constructor));
 
     mixSpecIntoComponent(Constructor, spec);
 
@@ -618,11 +552,6 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
         Constructor.prototype.getInitialState.isReactClassApproved = {};
       }
     }
-
-    _invariant(
-      Constructor.prototype.render,
-      'createClass(...): Class specification must implement a `render` method.'
-    );
 
     // Reduce time spent doing lookups by setting these on the prototype.
     for (var methodName in ReactClassInterface) {
