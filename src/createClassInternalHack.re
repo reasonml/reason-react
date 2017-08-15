@@ -1,32 +1,9 @@
 let _assign = Js.Obj.assign;
-let emptyObject = Js.Obj.empty ();
-
-[%%bs.raw
-  {|
-
-var _invariant = require('fbjs/lib/invariant');
-
-// Helper function to allow the creation of anonymous functions which do not
-// have .name set to the name of the variable being assigned to.
-function identity(fn) {
-  return fn;
-}
-
-var ReactPropTypeLocationNames;
-if (process.env.NODE_ENV !== 'production') {
-  ReactPropTypeLocationNames = {
-    prop: 'prop',
-    context: 'context',
-    childContext: 'child context'
-  };
-} else {
-  ReactPropTypeLocationNames = {};
-}
-|}
-];
+let emptyObject = Js.Obj.empty();
+let identity a => a;
 
 let factory = [%bs.raw
-  {|
+{|
 function factory(ReactComponent, ReactNoopUpdateQueue) {
   /**
    * Composite components are higher-level components that compose other composite
@@ -51,22 +28,6 @@ function factory(ReactComponent, ReactNoopUpdateQueue) {
    * @internal
    */
   var ReactClassInterface = {
-    /**
-     * Definition of context types for this component.
-     *
-     * @type {object}
-     * @optional
-     */
-    contextTypes: 'DEFINE_MANY',
-
-    /**
-     * Definition of context types this component sets for its children.
-     *
-     * @type {object}
-     * @optional
-     */
-    childContextTypes: 'DEFINE_MANY',
-
     // ==== Definition methods ====
 
     /**
@@ -84,12 +45,6 @@ function factory(ReactComponent, ReactNoopUpdateQueue) {
      * @optional
      */
     getInitialState: 'DEFINE_MANY_MERGED',
-
-    /**
-     * @return {object}
-     * @optional
-     */
-    getChildContext: 'DEFINE_MANY_MERGED',
 
     /**
      * Uses props from `this.props` and state from `this.state` to render the
@@ -243,24 +198,10 @@ function factory(ReactComponent, ReactNoopUpdateQueue) {
    * which all other static methods are defined.
    */
   var RESERVED_SPEC_KEYS = {
-    displayName: function(Constructor, displayName) {
+    displayName: function (Constructor, displayName) {
       Constructor.displayName = displayName;
     },
-    childContextTypes: function(Constructor, childContextTypes) {
-      Constructor.childContextTypes = _assign(
-        {},
-        Constructor.childContextTypes,
-        childContextTypes
-      );
-    },
-    contextTypes: function(Constructor, contextTypes) {
-      Constructor.contextTypes = _assign(
-        {},
-        Constructor.contextTypes,
-        contextTypes
-      );
-    },
-    autobind: function() {}
+    autobind: function () { }
   };
 
   /**
@@ -281,7 +222,6 @@ function factory(ReactComponent, ReactNoopUpdateQueue) {
       }
 
       var property = spec[name];
-      var isAlreadyDefined = proto.hasOwnProperty(name);
 
       if (RESERVED_SPEC_KEYS.hasOwnProperty(name)) {
         RESERVED_SPEC_KEYS[name](Constructor, property);
@@ -295,7 +235,6 @@ function factory(ReactComponent, ReactNoopUpdateQueue) {
         var shouldAutoBind =
           isFunction &&
           !isReactClassMethod &&
-          !isAlreadyDefined &&
           spec.autobind !== false;
 
         if (shouldAutoBind) {
@@ -341,7 +280,7 @@ function factory(ReactComponent, ReactNoopUpdateQueue) {
     }
   }
 
-  var ReactClassComponent = function() {};
+  var ReactClassComponent = function () { };
   _assign(
     ReactClassComponent.prototype,
     ReactComponent.prototype
@@ -359,7 +298,7 @@ function factory(ReactComponent, ReactNoopUpdateQueue) {
     // To keep our warnings more understandable, we'll use a little hack here to
     // ensure that Constructor.name !== 'Constructor'. This makes sure we don't
     // unnecessarily identify a class without displayName as 'Constructor'.
-    var Constructor = identity(function(props, context, updater) {
+    var Constructor = identity(function (props, context, updater) {
       // This constructor gets overridden by mocks. The argument is used
       // by mocks to assert on what gets mounted.
 
@@ -415,9 +354,9 @@ function factory(ReactComponent, ReactNoopUpdateQueue) {
 
 external reactComponent : 'a = "Component" [@@bs.module "react"];
 
-external newReactComponent : unit => Js.t {. updater : 'a} =
-  "Component" [@@bs.module "react"] [@@bs.new];
+external newReactComponent : unit => Js.t {. updater: 'a} =
+  "Component"[@@bs.module "react"] [@@bs.new];
 
-let reactNoopUpdateQueue = (newReactComponent ())##updater;
+let reactNoopUpdateQueue = (newReactComponent()) ##updater;
 
 let createClass = factory reactComponent reactNoopUpdateQueue [@bs];
