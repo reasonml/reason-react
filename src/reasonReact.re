@@ -201,8 +201,9 @@ let convertPropsIfTheyreFromJs props jsPropsToReason debugName => {
   }
 };
 
-let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
-  CreateClassInternalHack.createClass (
+let createClass (type reasonState retainedProps) debugName :reactClass =>
+  ReasonReactOptimizedCreateClass.createClass
+  (
     {
       val displayName = debugName;
       /**
@@ -559,7 +560,8 @@ let createClass (type reasonState) (type retainedProps) debugName :reactClass =>
       }
     }
     [@bs]
-  )[@bs];
+  )
+  [@bs];
 
 let basicComponent debugName => {
   let componentTemplate = {

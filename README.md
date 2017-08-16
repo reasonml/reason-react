@@ -25,3 +25,5 @@ npm start
 ```
 
 Then add some files somewhere (don't forget to change `bsconfig.json`, if needed).
+
+See the README inside `src` for more info!
