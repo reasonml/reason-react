@@ -32,28 +32,21 @@ By binding directly to ReactJS, ReasonReact gives you access to the entire React
 
 _This documentation assumes relative familiarity with ReactJS._
 
-## Intro Examples
+## Intro Example
 
 ```reason
-let component = ReasonReact.statefulComponent "Greeting";
+let component = ReasonReact.statelessComponent "Greeting";
 
 /* underscore before names indicate unused variables. We name them for clarity */
 let make ::name _children => {
-  let click _event {ReasonReact.state} => ReasonReact.Update (state + 1);
-  {
-    ...component,
-    initialState: fun () => 0,
-    render: fun self => {
-      let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int self.state) ^ " time(s)!";
-      <button onClick=(self.update click)> (ReasonReact.stringToElement greeting) </button>
-    }
-  }
+  ...component,
+  render: fun self => <button> (ReasonReact.stringToElement "Hello!") </button>
 };
 ```
 
 ## JSX
 
-Reason comes with the [JSX](https://reasonml.github.io/guide/language/jsx) syntax! ReasonReact transforms it from an agnostic function call into a library-specific call through a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}"` in your [`bsconfig.json`](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
+Reason comes with the [JSX](https://reasonml.github.io/guide/language/jsx) syntax! ReasonReact transforms it from an agnostic function call into a ReasonReact-specific call through a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}` in your [`bsconfig.json`](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
 
 **Note** that due to current syntax constraints, you need to put spaces around the JSX children: `<div> foo </div>`.
 
@@ -91,7 +84,7 @@ Prop-less `<MyReasonComponent />` transforms to `ReasonReact.element (MyReasonCo
 
 ## Component Creation
 
-A component template is created through `ReasonReact.statelessComponent "ComponentName"`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).
+A component template is created through `ReasonReact.statelessComponent "TheComponentName"`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).
 
 As an example, here's a `greeting.re` file's content:
 
@@ -109,33 +102,13 @@ let make ::name _children => {
 };
 ```
 
-**Note**: place `make` and `component` right beside each other! This helps readability and avoiding a corner-case type error for `state`.
-
-**Note 2**: do **not** inline `let component` into the `make` function body like the following!
+**Note**: do **not** inline `let component` into the `make` function body like the following!
 
 ```reason
-let make ... => {...(ReasonReact.statelessComponent "Greeting"), render: fun ...}
+let make _children => {...(ReasonReact.statelessComponent "Greeting"), render: fun blabla}
 ```
 
 Since `make` is called at every JSX invocation, you'd be creating a fresh new component every time.
-
-### State
-
-To turn a component stateful, use `ReasonReact.statefulComponent "ComponentName"` instead. Then, provide the `initialState` method. The state type you return **can be anything**!
-
-```reason
-let component = ReasonReact.statefulComponent "Greeting";
-let make ::name _children => {
-  ...component,
-  initialState: fun () => 0, /* here, state is an `int` */
-  render: fun self => {
-    let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int self.state) ^ " time(s)!";
-    <div> (ReasonReact.stringToElement greeting) </div>
-  }
-};
-```
-
-_As a matter of fact, `ReasonReact.statelessComponent` is just a convenience helper of `statefulComponent`, with the `state` type being pre-set to `()` (called "unit")_.
 
 ### Props
 
@@ -182,61 +155,196 @@ It says "I understand that `age` is optional and that when I use the label I sho
 
 ### Render
 
-`render` needs to return a `ReasonReact.reactElement`: `<div />`, `<MyComponent />`, `ReasonReact.nullElement` (the `null` you'd usually return, but this time of the `reactElement` type), etc. It takes in `state` (which is `()` for stateless components) and `self`, described below.
+`render` needs to return a `ReasonReact.reactElement`: `<div />`, `<MyComponent />`, `ReasonReact.nullElement` (the `null` you'd usually return, but this time of the `reactElement` type), `ReasonReact.stringToElement "foo"`, etc. Render takes the argument `self`:
+
+```reason
+...
+    render: fun self => <div />
+...
+```
 
 ### `self`
 
-`self` is a record that contains `state`, `update` and `handle`. The latter two are used in conjunctions with callbacks props passed to components.
+`self` is a record that contains `state`, `retainedProps`, `handle` and `reduce`.
+
+We'll be referring to `state`, `retainedProps` and such immediately; they'll be explained later on.
 
 ### Callback Handlers
 
-In ReactJS, we can do `<div onClick={this.handleClick} />` and in `handleClick`, access the latest `props` and `state` (despite the callback being asynchronous) through `this.props` and `this.state`. We don't use `this` in ReasonReact; to access the newest `props`, simply put the callbacks in `make`'s body and read its arguments. To access the newest `state`, wrap the callback with `self.update`!
+#### Callback Without State Update
+
+In ReactJS, to set a new state and/or to trigger a prop callback, you'd do `<div onClick={this.handleClick} />`.
+
+In ReasonReact, **if you don't read into `state`/`retainedProps`** or whatever (e.g. you're only calling a prop callback like `onClick`, and/or accessing the props arguments), you can do basically the same:
 
 ```reason
 let component = ...;
-let make ::name _children => {
-  let click _event {ReasonReact.state} => ReasonReact.Update (state + 1); /* this state is guaranteed fresh */
+let make ::name ::onClick _children => {
+  let click event => onClick name; /* pass the name string up to the owner */
+  {
+    ...component,
+    render: fun self => <button onClick=click />
+  }
+};
+```
+
+If you do want to access `state`, `retainedProps` and the rest, you **need** to wrap the callback in an extra layer called `self.handle`:
+
+```reason
+let component = ...;
+let make ::name ::onClick _children => {
+  let click event self => {
+    onClick event;
+    Js.log self.state;
+  };
   {
     ...component,
     initialState: ...,
-    render: fun self => {
-      let greeting = ...;
-      <button onClick=(self.update click)> (ReasonReact.stringToElement greeting) </button>
-    }
+    render: fun self => <button onClick=(self.handle click) />
   }
 };
 ```
 
-`update` expects a callback that:
+**Note** how your `click` callback now takes an extra argument, `self`. This is the same `self` which contains the latest `state`, `retainedProps` and others, described just above.
 
-- Accepts a payload, the newest `self`.
-- Returns a `ReasonReact.update 'state`, aka either:
-  - `ReasonReact.Update newStateToBeSet`: indicates the handler (e.g. `click`) wants to update the state (in ReactJS, it'd be an imperative `setState` call).
-  - `ReasonReact.NoUpdate`: no state update.
-  - `ReasonReact.SilentUpdate newStateToBeSet`: like `ReasonReact.Update`, but without triggering a re-render. Useful for `ref` and other instance variables, described later.
+Formally, `self.handle` expects a callback that
 
-and `update` itself returns a function, the actual, ordinary callback passed to the component as prop. When the callback's invoked, `update` will in turn invoke the originally passed in handler, forwarding the payload, the up-to-date state, and `self`.
+- accepts the payload you'd normally directly pass to e.g. `handleClick`,
+- plus the argument `self`,
+- returns "nothing" (aka, `()`, aka, `unit`).
 
-Often times, you'd return `NoUpdate` from the handler. For convenience, we've exposed a `self.handle`, which is just an `update` that doesn't expect a return value (aka expects just `unit`).
+**Note**: sometimes you might be forwarding `handle` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](#reason-react-common-type-errors). Example:
 
-**Note**: sometimes you might be forwarding `update` or `handle` to some helpers. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](#reason-react-common-type-errors). Example:
+#### Callback With State Update
+
+You can't update state in `self.handle`; you need to use `self.reduce` instead. See below.
+
+### State, Actions & Reducer
+
+Finally, we're getting onto stateful components!
+
+ReasonReact stateful components are like ReactJS stateful components, except with the concept of "reducer" (like [Redux](http://redux.js.org)) built in. If that word doesn't mean anything to you, just think of it as a state machine. If _that_ word doesn't mean anything to you, just think: "Woah this is great".
+
+To declare a stateful ReasonReact component, instead of `ReasonReact.statelessComponent "MyComponentName"`, use `ReasonReact.reducerComponent "MyComponentName"`:
 
 ```reason
-let click event self => ...;
-
-let renderItem self => {
-  /* this needs to be self.ReasonReact.update, not self.update */
-  <div onClick=(self.ReasonReact.update click)>
-};
+let component = ReasonReact.reducerComponent "Greeting";
 
 let make ::name _children => {
   ...component,
+  initialState: fun () => 0, /* here, state is an `int` */
   render: fun self => {
-    let item = renderItem self;
-    ...
+    let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int self.state) ^ " time(s)!";
+    <div> (ReasonReact.stringToElement greeting) </div>
+  }
+};
+```
+
+#### `initialState`
+
+ReactJS' `getInitialState` is called `initialState` in ReasonReact. It takes `unit` and returns the state type. The state type could be anything! An int, a string, a ref or the common record type, which you should declare **right** before the `reducerComponent` call:
+
+```
+type state = {counter: int, showPopUp: bool};
+
+let component = ReasonReact.reducerComponent "Dialog";
+
+let make ::onClick _children => {
+  ...component,
+  initialState: fun () => {counter: 0, showPopUp: false},
+  render: ...
+};
+```
+
+Since the props are just the arguments on `make`, feel free to read into them to initialize your state based on them.
+
+#### Actions & Reducer
+
+In ReactJS, you'd update the state inside a callback handler, e.g.
+
+```
+{
+  ...
+  handleClick: function() {
+    this.setState({count: this.state.count + 1});
+  },
+  handleSubmit: function() {
+    this.setState(...);
+  },
+  render: function() {
+    return (
+      <MyForm
+        onClick={this.handleClick}
+        onSubmit={this.handleSubmit} />
+    );
   }
 }
 ```
+
+In ReasonReact, you'd gather all these state-setting handlers into a single place, the component's `reducer`! Here's a full example, which we'll explain in detail:
+
+```reason
+type action =
+  | Click
+  | Toggle;
+
+type state = {count: int, show: bool};
+
+let component = ReasonReact.reducerComponent "MyDialog";
+
+let make _children => {
+  ...component,
+  initialState: fun () => {count: 0, show: false},
+  reducer: fun action state =>
+    switch action {
+    | Click => ReasonReact.Update {...state, count: state.count + 1}
+    | Toggle => ReasonReact.Update {...state, show: not state.show}
+    },
+  render: fun self => {
+    let message = "Clicked " ^ string_of_int self.state.count ^ " times(s)";
+    <div>
+      <MyDialog
+        onClick=(self.reduce (fun _event => Click))
+        onSubmit=(self.reduce (fun _event => Toggle)) />
+      (ReasonReact.stringToElement message)
+    </div>
+  }
+};
+```
+
+A few things:
+
+- There's a user-defined type called **`actions`**, named so by convention. It's a variant of all the possible state transitions in your component. _In state machine terminology, this'd be a "token"_.
+- A user-defined `state` type, and an `initialState`. Nothing special.
+- The current `state` value is accessible through `self.state`, whenever `self` is passed to you as an argument of some function.
+- A "**reducer**"! This [pattern-matches](https://reasonml.github.io/guide/language/pattern-matching) on the possible actions and specify what state update each action corresponds to. _In state machine terminology, this'd be a "state transition"_.
+- In `render`, instead of `self.handle` (which doesn't allow state updates), you'd use `self.reduce`. `reduce` takes a callback, passing it the event (or whatever callback payload `onSubmit`/`onClick`/`onFoo` gives you from `MyDialog`) and asking for an action as the return value.
+
+So, when a click on the dialog is triggered, we send the `Click` action to the reducer, which handles the `Click` case by returning the new state that increment a counter. ReasonReact takes the state and updates the component.
+
+**Note**: just like for `self.handle`, sometimes you might be forwarding `reduce` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](#reason-react-common-type-errors). Example:
+
+#### State Update Through Reducer
+
+Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of returning a bare new state, we ask you to return the state wrapped in this "update" variant. Here are its possible values:
+
+- `ReasonReact.NoUpdate`: don't do a state update.
+- `ReasonReact.Update state`: update the state.
+- `ReasonReact.SideEffects (self => unit)`: no state update, but trigger a side-effect, e.g. `ReasonReact.SideEffects (fun _self => Js.log "hello!")`.
+- `ReasonReact.UpdateWithSideEffects state (self => unit)`: update the state, **then** trigger a side-effect.
+
+_If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEffects`. See reasonReact.rei to see what they do. Don't use them if you're trying to update a ref/timer/any other instance variable_.
+
+##### Important Notes
+
+**Please read through all these points**, if you want to fully take advantage of `reducer` and avoid future ReactJS Fiber race condition problems.
+
+- The `action` type's variants can carry a payload: `onClick=(self.reduce (fun data => Click data.foo))`.
+- Don't pass the whole event into the action variant's payload. ReactJS events are pooled; by the time you intercept the action in the `reducer`, the event's already recycled.
+- `reducer` must be pure! Don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use `SideEffects` or `UpdateWithSideEffects` to enqueue a side-effect.
+- If you need to do e.g. `ReactEventRe.BlablaEvent.preventDefault event`, do it in `self.reduce`, before returning the action type. Again, `reducer` must be pure.
+- If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.reduce`. You still needs to specify a `reducer` like so: `reducer: fun () _state => ReasonReact.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
+
 
 #### Async State Setting
 
@@ -246,16 +354,39 @@ In ReactJS, you could use `setState` inside a callback, like so:
 setInterval(function() {this.setState(...)}, 1000);
 ```
 
-In ReasonReact, since the new state, if any, is returned from the lifecycle events and the callback handlers, the above wouldn't work; naturally, returning the new state from a `setInterval` doesn't make sense!
+In ReasonReact, since the new state, if any, is returned from the `reducer`, the above wouldn't work; naturally, returning a new state from a `setInterval` doesn't make sense!
 
 Instead, you'd do:
 
 ```reason
-let handler intervalId {ReasonReact.state} => ReasonReact.Update {...state, whateverNewUpdate: bla};
-setInterval (fun intervalId => (self.update handler) intervalId);
+type action =
+  | Tick
+  | Click;
+
+type state = {
+  count: int,
+  timerId: ref (option Js.Global.intervalId)
+};
+
+let component = ReasonReact.reducerComponent "MyClock";
+
+let make _children => {
+  ...component,
+  initialState: fun () => {count: 0, timerId: ref None},
+  reducer: fun action state =>
+    switch action {
+    | Tick => ReasonReact.Update {...state, count: state.count + 1}
+    | Click => ...
+    },
+  didMount: fun self => {
+    self.state.timerId := Some (Js.Global.setInterval (self.reduce (fun _ => Tick)) 1000);
+    ReasonReact.NoUpdate
+  },
+  render: ...
+};
 ```
 
-Aka, creating an `update` handler and immediately invoke it. See the full [counter example in the examples page](./examples.html#examples-counter).
+Aka, creating a `reducer` handler as you would normally. See the full [counter example in the examples page](./examples.html#examples-counter).
 
 ### Lifecycle Events
 
@@ -278,7 +409,7 @@ willUnmount: self => unit
 Note:
 
 - We've dropped the `component` prefix from all these.
-- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. not `NoUpdate/Update/SilentUpdate`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
+- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. not `NoUpdate/Update/SideEffects/UpdateWithSideEffects`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
 - `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
 - `willMount` is unsupported. Use `didMount` instead.
 - `didUpdate`, `willUpdate` and `shouldUpdate` take in a **`oldAndNewSelf` record**, of type `{oldSelf: self, newSelf: self}`. These two fields are the equivalent of ReactJS' `componentDidUpdate`'s `prevProps/prevState/` in conjunction with `props/state`. Likewise for `willUpdate` and `shouldUpdate`.
@@ -306,7 +437,7 @@ let make ::message _children => {
 };
 ```
 
-We expose `ReasonReact.statelessComponentWithRetainedProps` and `ReasonReact.statefulComponentWithRetainedProps`. Both work like their ordinary non-retained-props counterpart, and require you to specify a new field, `retainedProps` (of whatever type you'd like) in your component's spec in `make`.
+We expose `ReasonReact.statelessComponentWithRetainedProps` and `ReasonReact.reducerComponentWithRetainedProps`. Both work like their ordinary non-retained-props counterpart, and require you to specify a new field, `retainedProps` (of whatever type you'd like) in your component's spec in `make`.
 
 #### `willReceiveProps`
 
@@ -315,7 +446,8 @@ Traditional ReactJS `componentWillReceiveProps` takes in a `nextProps`. We don't
 ```reason
 type state = {someToggle: bool};
 
-let component = ReasonReact.statefulComponentWithRetainedProps "MyComponent";
+let component = ReasonReact.reducerComponentWithRetainedProps "MyComponent";
+
 let make ::name _children => {
   ...component,
   initialState: fun () => {someToggle: false},
@@ -333,7 +465,7 @@ let make ::name _children => {
 
 #### `willUpdate`
 
-ReactJS' `componentwillUpdate`'s `nextProps` is just the labeled arguments in `make`, and "current props" (aka `this.props`) is the props you've copied into `retainedProps`, accessible via `{oldSelf}`:
+ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `make`, and "current props" (aka `this.props`) is the props you've copied into `retainedProps`, accessible via `{oldSelf}`:
 
 ```reason
 {
@@ -348,7 +480,7 @@ ReactJS' `prevProps` is what you've synced in `retainedProps`, under `oldSelf`.
 
 #### `shouldUpdate`
 
-ReactJS' `shouldComponentUpdate` counterpart. **Note also that `shouldUpdate` isn't called after a [`ReasonReact.SilentUpdate`](#reason-react-component-creation-callback-handlers)**.
+ReactJS' `shouldComponentUpdate` counterpart.
 
 ### Instance Variables
 
@@ -362,41 +494,68 @@ const Greeting = React.createClass({
 });
 ```
 
-In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. ReasonReact asks you to correctly put these instance variables into your component's `state`. To simulate updating the references without triggering a re-render, use `SilentUpdate`:
+In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. ReasonReact asks you to correctly put these instance variables into your component's `state`, into Reason [`ref`s](https://reasonml.github.io/guide/language/mutation).
 
 ```reason
-type state = {intervalId: option int, someOtherVar: option string};
+type state = {
+  someRandomState: option string,
+  intervalId: ref (option int)
+};
+
 let component = ...; /* remember, `component` needs to be close to `make`, and after `state` type declaration! */
 let make _children => {
   ...component,
-  initialState: fun () => {intervalId: None, someOtherVar: Some "hello"},
-  didMount: fun {state} => ReasonReact.SilentUpdate {...state, intervalId: Some (setInterval ...)},
+  initialState: fun () => {
+    someRandomState: Some "hello",
+    intervalId: ref None
+  },
+  didMount: fun {state} => {
+    /* mutate the value here */
+    state.intervalId := Some (Js.Global.setInterval ...);
+    /* no extra state update needed */
+    ReasonReact.NoUpdate
+  },
   render: ...
 };
 ```
 
-### Ref
+**All your instance variables (subscriptions, refs, etc.) must be in state fields marked as a `ref`**. Don't directly use a `mutable` field on the state record, use an immutable field pointing to a Reason `ref`. Why such constraint? To prepare for concurrent React which needs to manage side-effects & mutations more formally. More details [here](https://reasonml.github.io/try/?reason=C4TwDgpgBAzlC8UDeBDAXFAlgO2AGlgHsBbCASWxmBWwGMIA1FAJw2YgDMtcBfAbgBQAegBUUbIQDuUEUIEAbCMFjVg0REgFQo6KAEY8WoqQpUa9JqyjsuAJgH9hYiMQCu8lGqgADM2u86tPQwcBzMJFC08oQwruwAdFAAKgAW0OwoACZQhFy+qhABxJgA5inKAEbQZopQFSBQwGmNmKRYwADkcBAAHhC0rmqZGLJOUByu2Mh+EDwIAHzjk1AAFACUC1AAShAoMITYOyi0wPEAqmCZntBI8XczBBUec6OKyjO2CMh38Q86GABmRyiOqDKBuVSYA45PIzALYCAQTJwYCEOrpTiKE5I7g+D4BKiYeTyACEMjkM1+JHIlGodEYLCgaEQABZBCCYClCO5slUoCzyQIAFIweLREpQEkfKkmWnmBnMdliJqYOCSbnyTLYDrKdXMADWWC4kmgmTRoEgOgQqAwOHw4MGKCe1WppjpFhYtt45KAA) if you're ever interested.
 
-A `ref` would be just another instance variable. You'd type it as `ReasonReact.reactRef` if it's attached to a custom component, and `Dom.element` if it's attached to a React DOM element.
+### React Ref
+
+_Not to be confused with Reason `ref`, the language feature that enables mutation_.
+
+A ReasonReact `ref` would be just another instance variable. You'd type it as `ReasonReact.reactRef` if it's attached to a custom component, and `Dom.element` if it's attached to a React DOM element.
 
 ```reason
-type state = {isOpen: bool, mySectionRef: option ReasonReact.reactRef};
+type state = {
+  isOpen: bool,
+  mySectionRef: ref (option ReasonReact.reactRef)
+};
 
-let setSectionRef theRef {ReasonReact.state} => ReasonReact.SilentUpdate {...state, mySectionRef: Js.Null.to_opt theRef}; /* wondering about Js.Null.to_opt? See the note below */
+let setSectionRef theRef {ReasonReact.state} => {
+  state.mySectionRef := Js.Null.to_opt theRef;
+  /* wondering about Js.Null.to_opt? See the note below */
+};
 
-let component = ReasonReact.statefulComponent "MyPanel";
+let component = ReasonReact.reducerComponent "MyPanel";
+
 let make ::className="" _children => {
   ...component,
-  initialState: fun () => {isOpen: false, mySectionRef: None},
-  render: fun self => <Section1 ref=(self.update setSectionRef) />
+  initialState: fun () => {
+    isOpen: false,
+    mySectionRef: ref None
+  },
+  reducer: ...,
+  render: fun self => <Section1 ref=(self.handle setSectionRef) />
 };
 ```
 
-Attaching to a React DOM element looks the same: `ReasonReact.SilentUpdate {...state, myDivRef: Js.Null.to_opt theRef}`.
+Attaching to a React DOM element looks the same: `state.mySectionRef = {myDivRef: Js.Null.to_opt theRef}`.
 
 **Note** how [ReactJS refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `theRef` and `myDivRef` are converted from a [JS nullable](http://bucklescript.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None). When you use the ref, you'll be forced to handle the null case through a `switch`, which prevents subtle errors!
 
-**You must use `SilentUpdate` with `ref`**. Don't use `Update`. You'll get into an infinite loop. This is a subtle nuance of ReactJS `ref` from the above discussion.
+**You must follow the instanceVars convention in the previous section for ref**.
 
 ReasonReact ref only accept callbacks. The string `ref` from ReactJS is deprecated.
 
@@ -404,7 +563,7 @@ We also expose an escape hatch `ReasonReact.refToJsObj` of type `ReasonReact.rea
 
 ```reason
 let handleClick event self =>
-  switch self.state.mySectionRef {
+  switch !self.state.mySectionRef {
   | None => ()
   | Some r => (ReasonReact.refToJsObj r)##someMethod 1 2 3 /* I solemnly swear that I am up to no good */
   };
@@ -611,6 +770,10 @@ Generally speaking, prop spread is discouraged; it can be unpredictable, slow an
 
 ReactJS allows the pattern `showButton && <Button />`. While in this specific case, it's usually not too harmful, in general, try not to do this. In ReasonReact, you use `showButton ? <Button /> : ReasonReact.nullElement`.
 
+### Functional Component
+
+You can use a function as a component in ReactJS. In ReasonReact, this is not yet possible (soon!); though you can obviously just call the function without using the JSX syntax: `MyList.make className::"foo" [||]`.
+
 ## Miscellaneous
 
 - ReasonReact doesn't support ReactJS context (yet).
@@ -618,23 +781,17 @@ ReactJS allows the pattern `showButton && <Button />`. While in this specific ca
 
 ## Common Type Errors
 
-#### The type constructor state would escape its scope
+#### I'm having the type error ________
 
-This probably means you've defined your `state` type _after_ `let component = ...`. Move it before the `let`.
+Check your terminal to see if we've provided a dedicated error message for your use-case! We've encoded a few tips in the type errors.
 
-It could also mean that you've defined a `statefulComponent` but haven't started using its state yet; The error message here isn't great. It should be "don't forget to use state at least once!". We'll improve the errors soon.
+#### Unbound record field reduce/Unbound record field handle
 
-#### Unbound record field update/Unbound record field handle
+This means you've passed `self` to a helper function of your render, and it used it like so: `<div onClick=(self.reduce click)/>`. This is because the record can't be found in the scope of the file. Just annotate it: `<div onClick=(self.ReasonReact.reduce click)/>`.
 
-This means you've passed `self` to a helper function of your render, and it used it like so: `<div onClick=(self.update click)/>`. This is because the record can't be found in the scope of the file. Just annotate it: `<div onClick=(self.ReasonReact.update click)/>`.
+#### Something about callbacks passed to `reduce` (or `handle`) having incompatible types between them
 
-#### Something about callbacks passed to `update` (or `handle`) having incompatible types between them
-
-You've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
-
-#### This expression has type 'a array but an expression was expected of type ReasonReact.reactElement
-
-Sorry! This is our fault. See [Working with Children](./index.html#reason-react-working-with-children).
+You've probably passed `self.reduce` to a helper function that uses this `reduce` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
 
   </script>
 

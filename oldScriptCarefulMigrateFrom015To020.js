@@ -8,7 +8,7 @@
 const fs = require('fs');
 
 if (process.argv.length <= 2) {
-  console.error('You need to pass a list of the files you\'d like to migrate, like so: `node reasonReactMigration.js src/*.re`');
+  console.error('You need to pass a list of the files you\'d like to migrate, like so: `node oldScriptCarefulMigrateFrom015To020.js src/*.re`');
   process.exit(1);
 }
 var filesToMigrate = process.argv.slice(2);

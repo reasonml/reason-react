@@ -28,27 +28,21 @@
 
 _Copied over from the main page for visiblity_.
 
-#### The type constructor state would escape its scope
+#### I'm having the type error ________
 
-This probably means you've defined your `state` type _after_ `let component = ...`. Move it before the `let`.
+Check your terminal to see if we've provided a dedicated error message for your use-case! We've encoded a few tips in the type errors.
 
-It could also mean that you've defined a `statefulComponent` but haven't started using its state yet; The error message here isn't great. It should be "don't forget to use state at least once!". We'll improve the errors soon.
+#### Unbound record field reduce/Unbound record field handle
 
-#### Unbound record field update/Unbound record field handle
+This means you've passed `self` to a helper function of your render, and it used it like so: `<div onClick=(self.reduce click)/>`. This is because the record can't be found in the scope of the file. Just annotate it: `<div onClick=(self.ReasonReact.reduce click)/>`.
 
-This means you've passed `self` to a helper function of your render, and it used it like so: `<div onClick=(self.update click)/>`. This is because the record can't be found in the scope of the file. Just annotate it: `<div onClick=(self.ReasonReact.update click)/>`.
+#### Something about callbacks passed to `reduce` (or `handle`) having incompatible types between them
 
-#### Something about callbacks passed to `update` (or `handle`) having incompatible types between them
-
-You've probably passed `self.update` to a helper function that uses this `update` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
-
-#### This expression has type 'a array but an expression was expected of type ReasonReact.reactElement
-
-Sorry! This is our fault. See [Working with Children](./index.html#reason-react-working-with-children).
+You've probably passed `self.reduce` to a helper function that uses this `reduce` reference twice. For complex reasons this doesn't type; you'd have to pass in the whole `self` to the helper.
 
 ### How do I do props spreading? `<div {...this.props} />`
 
-You can't. Props spreading is a big source of unpredictability and performance regression (think `shouldComponentUpdate`). Our API prevents this.
+You can't. Props spreading is a big source of unpredictability and performance regression (think `shouldComponentUpdate`). Our API prevents this. If you reaaaaally need it for interop, see [this section](,/index.html#reason-react-convert-over-reactjs-idioms-props-spread).
 
   </script>
 
