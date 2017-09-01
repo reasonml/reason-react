@@ -6,7 +6,7 @@ The big change in this release is the deprecation of `statefulComponent` and `st
 
 ## Prerequisites
 
-**Please first read the [blog post](https://reasonml.github.io/reason-react/reason-react/docs/blog.html#reducers-are-here)**.
+**Please first read the [blog post](https://reasonml.github.io/reason-react/blog.html#reducers-are-here)**.
 
 **After** reading this migration guide, use the migratio script (or not) like so: `node node_modules/reason-react/migrateFrom02xTo024.js myReasonFile.re`.
 
@@ -31,11 +31,11 @@ reducer: fun action state =>
 
 We've also exposed new `ReasonReact.SideEffects` (aka `ReasonReact.NoUpdate`, with side-effect) and `ReasonReact.UpdateWithSideEffects` (`ReasonReact.Update` + side-effect).
 
-The relevant section on actions, reducers and the new update additions are [in the main docs](https://reasonml.github.io/reason-react/docs/index.html#reason-react-component-creation-state-actions-reducer).
+The relevant section on actions, reducers and the new update additions are [in the main docs](https://reasonml.github.io/reason-react/#reason-react-component-creation-state-actions-reducer).
 
 ## InstanceVars/React Ref Usage Changed
 
-Before, we used to recommend using `ReasonReact.SilentUpdate` to deal with ReactJS' instance variables pattern (e.g. attaching properties onto the component class itself, like timer IDs, refs, etc.). Now we've moved to using a Reason `ref` cell (not the React ref, the [mutative Reason `ref`](https://reasonml.github.io/guide/language/imperative-loops)). See the updated [instance variables section](https://reasonml.github.io/reason-react/#reason-react-component-creation-instance-variables).
+Before, we used to recommend using `ReasonReact.SilentUpdate` to deal with ReactJS' instance variables pattern (e.g. attaching properties onto the component class itself, like timer IDs, refs, etc.). Now we've moved to using a Reason `ref` cell (not the React ref, the [mutative Reason `ref`](https://reasonml.github.io/guide/language/mutation)). See the updated [instance variables section](https://reasonml.github.io/reason-react/#reason-react-component-creation-instance-variables).
 
 The new recommendation also solves a corner-case bug with assigning more than one refs in the render.
 
