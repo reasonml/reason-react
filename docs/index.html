@@ -350,7 +350,7 @@ _If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEf
 In ReactJS, you could use `setState` inside a callback, like so:
 
 ```
-setInterval(function() {this.setState(...)}, 1000);
+setInterval(() => this.setState(...), 1000);
 ```
 
 In ReasonReact, since the new state, if any, is returned from the `reducer`, the above wouldn't work; naturally, returning a new state from a `setInterval` doesn't make sense!
