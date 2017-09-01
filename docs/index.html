@@ -345,7 +345,6 @@ _If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEf
 - If you need to do e.g. `ReactEventRe.BlablaEvent.preventDefault event`, do it in `self.reduce`, before returning the action type. Again, `reducer` must be pure.
 - If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.reduce`. You still needs to specify a `reducer` like so: `reducer: fun () _state => ReasonReact.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
 
-
 #### Async State Setting
 
 In ReactJS, you could use `setState` inside a callback, like so:
@@ -360,15 +359,14 @@ Instead, you'd do:
 
 ```reason
 type action =
-  | Tick
-  | Click;
+  | Tick;
 
 type state = {
   count: int,
   timerId: ref (option Js.Global.intervalId)
 };
 
-let component = ReasonReact.reducerComponent "MyClock";
+let component = ReasonReact.reducerComponent "Counter";
 
 let make _children => {
   ...component,
@@ -376,19 +374,20 @@ let make _children => {
   reducer: fun action state =>
     switch action {
     | Tick => ReasonReact.Update {...state, count: state.count + 1}
-    | Click => ...
     },
   didMount: fun self => {
     self.state.timerId := Some (Js.Global.setInterval (self.reduce (fun _ => Tick)) 1000);
     ReasonReact.NoUpdate
   },
-  render: ...
+  render: fun {state} => <div> (ReasonReact.stringToElement (string_of_int state.count)) </div>
 };
 ```
 
-Aka, creating a `reducer` handler as you would normally. See the full [counter example in the examples page](./examples.html#examples-counter).
+Aka, creating a `reducer` handler as you would normally.
 
 ### Lifecycle Events
+
+**Note that as of ReasonReact v0.2.4**, you should return `ReasonReact.NoUpdate` whenever possible from the lifecycle events. In preparation for ReactJS fiber, we'll remove the ability to return a new state from lifecycles. If you need to update state, simply send an action to `reducer` and handle it correspondingly: `self.reduce (fun () => DidMountUpdate) ()`.
 
 ReasonReact supports the usuals:
 

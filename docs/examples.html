@@ -58,15 +58,14 @@ Demonstrates calling an async "setState" in idiomatic ReasonReact
 
 ```reason
 type action =
-  | Tick
-  | Click;
+  | Tick;
 
 type state = {
   count: int,
   timerId: ref (option Js.Global.intervalId)
 };
 
-let component = ReasonReact.reducerComponent "MyClock";
+let component = ReasonReact.reducerComponent "Counter";
 
 let make _children => {
   ...component,
@@ -74,13 +73,12 @@ let make _children => {
   reducer: fun action state =>
     switch action {
     | Tick => ReasonReact.Update {...state, count: state.count + 1}
-    | Click => ...
     },
   didMount: fun self => {
     self.state.timerId := Some (Js.Global.setInterval (self.reduce (fun _ => Tick)) 1000);
     ReasonReact.NoUpdate
   },
-  render: ...
+  render: fun {state} => <div> (ReasonReact.stringToElement (string_of_int state.count)) </div>
 };
 ```
 
