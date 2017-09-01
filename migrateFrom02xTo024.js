@@ -1,13 +1,3 @@
-/**
-  * Copyright 2004-present Facebook. All Rights Reserved.
-  *
-  * Please read https://fburl.com/ldkzl04c to understand how this works.
-  *
-  * @haste-ignore
-  * @preserve-whitespace
-  * @nolint
-  */
-
 'use strict';
 
 const fs = require('fs');
