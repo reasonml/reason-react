@@ -2,7 +2,7 @@
 
 **Major update**, but again with **no** breaking changes, and _again_ with a convenience [migration script](https://github.com/reasonml/reason-react/blob/master/migrateFrom02xTo024.js)! =)
 
-The big change in this release is the deprecation of `statefulComponent` and `statefulComponentWithRetainedProps`.
+The big change in this release is the deprecation of `statefulComponent` and `statefulComponentWithRetainedProps`. `statelessComponent` stays the same.
 
 ## Prerequisites
 
@@ -25,13 +25,15 @@ In short:
 ```reason
 reducer: fun action state =>
   switch action {
-  | Click => ReasonReact.Update {...state, foo: bar}  
+  | Click => ReasonReact.Update {...state, foo: bar}
   }
 ```
 
 We've also exposed new `ReasonReact.SideEffects` (aka `ReasonReact.NoUpdate`, with side-effect) and `ReasonReact.UpdateWithSideEffects` (`ReasonReact.Update` + side-effect).
 
 The relevant section on actions, reducers and the new update additions are [in the main docs](https://reasonml.github.io/reason-react/#reason-react-component-creation-state-actions-reducer).
+
+**If everything goes alright, we will be deprecating `statefulComponent` in the future**
 
 ## InstanceVars/React Ref Usage Changed
 
@@ -42,6 +44,8 @@ The new recommendation also solves a corner-case bug with assigning more than on
 ## LifeCycle
 
 The future ReactJS Fiber in ReasonReact won't work well with lifecycle events that return the new state (aka `ReasonReact.Update {...state, foo: bar}`). Please return `ReasonReact.NoUpdate`. If you really need to trigger a state change, before the return, use a `self.reduce (fun () => Bar) ()`, aka immediately apply a reduce.
+
+**We will make lifecycles return `unit` in the future; it'll be an easy codemod to change `ReasonReact.NoUpdate` to nothing**.
 
 ## Miscellaneous Changes
 
