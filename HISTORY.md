@@ -41,7 +41,7 @@ Before, we used to recommend using `ReasonReact.SilentUpdate` to deal with React
 
 The new recommendation also solves a corner-case bug with assigning more than one refs in the render.
 
-## LifeCycle
+## LifeCycle: Future `didMount` and `willReceiveProps` Signature Change
 
 The future ReactJS Fiber in ReasonReact won't work well with lifecycle events that return the new state, aka:
 
