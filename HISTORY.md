@@ -8,7 +8,7 @@ The big change in this release is the deprecation of `statefulComponent` and `st
 
 **Please first read the [blog post](https://reasonml.github.io/reason-react/blog.html#reducers-are-here)**.
 
-**After** reading this migration guide, use the migratio script (or not) like so: `node node_modules/reason-react/migrateFrom02xTo024.js myReasonFile.re`.
+**After** reading this migration guide, use the migration script (or not) like so: `node node_modules/reason-react/migrateFrom02xTo024.js myReasonFile.re`.
 
 ## Migrate From StatefulComponent to ReducerComponent
 
@@ -37,15 +37,20 @@ The relevant section on actions, reducers and the new update additions are [in t
 
 ## InstanceVars/React Ref Usage Changed
 
-Before, we used to recommend using `ReasonReact.SilentUpdate` to deal with ReactJS' instance variables pattern (e.g. attaching properties onto the component class itself, like timer IDs, refs, etc.). Now we've moved to using a Reason `ref` cell (not the React ref, the [mutative Reason `ref`](https://reasonml.github.io/guide/language/mutation)). See the updated [instance variables section](https://reasonml.github.io/reason-react/#reason-react-component-creation-instance-variables).
+Before, we used to recommend using `ReasonReact.SilentUpdate` to deal with ReactJS' instance variables pattern (e.g. attaching properties onto the component class itself, like timer IDs, subscriptions, refs, etc.). Now we've moved to using a Reason `ref` cell (not the React ref, the [mutative Reason `ref`](https://reasonml.github.io/guide/language/mutation)). See the updated [instance variables section](https://reasonml.github.io/reason-react/#reason-react-component-creation-instance-variables).
 
 The new recommendation also solves a corner-case bug with assigning more than one refs in the render.
 
 ## LifeCycle
 
-The future ReactJS Fiber in ReasonReact won't work well with lifecycle events that return the new state (aka `ReasonReact.Update {...state, foo: bar}`). Please return `ReasonReact.NoUpdate`. If you really need to trigger a state change, before the return, use a `self.reduce (fun () => Bar) ()`, aka immediately apply a reduce.
+The future ReactJS Fiber in ReasonReact won't work well with lifecycle events that return the new state, aka:
 
-**We will make lifecycles return `unit` in the future; it'll be an easy codemod to change `ReasonReact.NoUpdate` to nothing**.
+- `didMount`'s `ReasonReact.Update {...state, foo: bar}`
+- `willReceiveProps` `state`.
+
+Please return `ReasonReact.NoUpdate` for the former (can't do much for the latter, `willReceiveProps`, for now. Keep it as it is). If you really need to trigger a state change, before the return, use a `self.reduce (fun () => Bar) ()`, aka immediately apply a reduce.
+
+**We will make all lifecycles return `unit` in the future; it'll be an easy codemod to change `ReasonReact.NoUpdate` to nothing**.
 
 ## Miscellaneous Changes
 
