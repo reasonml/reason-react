@@ -169,7 +169,7 @@ let jsComponent =
       fun jsProps =>
         make
           message::jsProps##message
-          extraGreeting::?(Js.Null_undefined.to_opt jsProps##extraGreeting)
+          extraGreeting::?(Js.Nullable.to_opt jsProps##extraGreeting)
           [||]
     );
 ```

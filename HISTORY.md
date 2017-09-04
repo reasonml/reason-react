@@ -184,7 +184,7 @@ Before:
 external myJSReactClass : ReasonReact.reactClass = "myJSReactClass" [@@bs.module];
 
 let createElement name::(name: string) age::(age: option int)=? =>
-  ReactRe.wrapPropsShamelessly myJSReactClass {"name": name, "age": Js.Null_undefined.from_opt age};
+  ReactRe.wrapPropsShamelessly myJSReactClass {"name": name, "age": Js.Nullable.from_opt age};
 ```
 
 After:
@@ -195,7 +195,7 @@ external myJSReactClass : ReasonReact.reactClass = "myJSReactClass" [@@bs.module
 let make name::(name: string) age::(age: option int)=? children =>
   ReasonReact.wrapJsForReason
     reactClass::myJSReactClass
-    props::{"name": name, "age": Js.Null_undefined.from_opt age}
+    props::{"name": name, "age": Js.Nullable.from_opt age}
     children;
 ```
 
@@ -211,7 +211,7 @@ let make ...;
 let comp =
   ReasonReact.wrapReasonForJs
     ::component
-    (fun jsProps => make name::jsProps##name age::?(Js.Null_undefined.to_opt jsProps##age) [||]);
+    (fun jsProps => make name::jsProps##name age::?(Js.Nullable.to_opt jsProps##age) [||]);
 ```
 
 The function takes in the labeled reason `component`, and a function that, given the js props, asks you to call `make` while passing in the correctly converted parameters.
