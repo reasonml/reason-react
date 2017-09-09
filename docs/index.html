@@ -383,7 +383,7 @@ let make _children => {
 };
 ```
 
-Aka, creating a `reducer` handler as you would normally.
+Aka, creating a `reducer` handler as you would normally, and let that setInterval (or whatver async state setting you use) asynchronously call the callback returned by your `self.reduce`.
 
 ### Lifecycle Events
 
