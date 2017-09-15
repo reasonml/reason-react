@@ -14,3 +14,4 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - either rename `willReceiveProps` to `propsReceived`, or keep the same name and make it take oldNew self bag
 - better modeling for `stateless` and `retainedProps` from `unit` to something else
 - expose `ReasonReact.publicComponentSpec state retainedProps action` for less cryptic component type annotation.
+- All files upper-cased. Follow community idiom
