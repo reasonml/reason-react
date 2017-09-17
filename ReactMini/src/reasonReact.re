@@ -101,8 +101,10 @@ module Render = {
       let self = createSelf ::state ::update;
       let subelements = component.render self;
       logString (
-        "Creating " ^
-        component.debugName ^ " With Subelements:" ^ string_of_int (List.length subelements)
+        "Creating "
+        ^ component.debugName
+        ^ " With Subelements:"
+        ^ string_of_int (List.length subelements)
       );
       let subtree = List.map render subelements;
       InstanceTree {component, element, iState: state, iPrintState: component.printState, subtree}
@@ -173,8 +175,10 @@ module Render = {
         let self = createSelf state::nextState ::update;
         let nextSubelements = nextComponent.render self;
         logString (
-          "Switching Component Types from: " ^
-          component.debugName ^ " to " ^ nextComponent.debugName
+          "Switching Component Types from: "
+          ^ component.debugName
+          ^ " to "
+          ^ nextComponent.debugName
         );
         /* TODO: Invoke destruction lifecycle on previous component. */
         /* TODO: Invoke creation lifecycle on next component. */
@@ -218,7 +222,11 @@ let createStatelessComponent debugName => {
 
 let element component => [Element component];
 
-let div a => List.flatten (Array.to_list a);
+module ReactDOMRe = {
+  type reactDOMProps;
+  let createElement _name props::_props=? elementArray =>
+    List.flatten (Array.to_list elementArray);
+};
 
 module Print = {
   let arrayStr lst => String.concat "," lst;
@@ -245,3 +253,5 @@ module Print = {
     String.concat "\n" l
   };
 };
+
+let arrayToElement (a: array reactElement) :reactElement => Array.to_list a |> List.flatten;

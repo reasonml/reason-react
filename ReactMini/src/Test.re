@@ -1,4 +1,4 @@
-open! React;
+open! ReasonReact;
 
 let log = logString;
 
@@ -7,12 +7,12 @@ let log = logString;
  * The simplest component. Composes nothing!
  */
 module Box = {
-  let component = React.createComponent "Box";
-  let make onClick::_=? children => {
+  let component = ReasonReact.createComponent "Box";
+  let make onClick::_=? _children => {
     ...component,
     initialState: fun () => "ImABox",
     printState: fun s => s,
-    render: fun _self => div children
+    render: fun _self => <div />
   };
 };
 
@@ -44,7 +44,7 @@ module ChangeCounter: ChangeCounterIntf = {
     numChanges: int,
     mostRecentLabel: string
   };
-  let component = React.createComponent "ChangeCounter";
+  let component = ReasonReact.createComponent "ChangeCounter";
   let make ::label _children => {
     ...component,
     initialState: fun () => {mostRecentLabel: label, numChanges: 10},
@@ -53,78 +53,74 @@ module ChangeCounter: ChangeCounterIntf = {
     willReceiveProps: fun {state} =>
       label != state.mostRecentLabel ?
         {mostRecentLabel: label, numChanges: state.numChanges + 1} : state,
-    render: fun _self => div [|React.element (Box.make [||])|]
+    render: fun _self => <div> <Box /> </div>
   };
 };
 
 module StatelessButton = {
-  let component = React.createStatelessComponent "StatelessButton";
-  let make initialClickCount::_="noclicks" test::_="default" children => {
+  let component = ReasonReact.createStatelessComponent "StatelessButton";
+  let make initialClickCount::_="noclicks" test::_="default" _children => {
     ...component,
-    render: fun _self => div [|React.element (Box.make children)|]
+    render: fun _self => <div> <Box /> </div>
   };
 };
 
 module ButtonWrapper = {
   type state = {buttonWrapperState: int};
-  let component = React.createComponent "ButtonWrapper";
-  let make ::wrappedText="default" children => {
+  let component = ReasonReact.createComponent "ButtonWrapper";
+  let make ::wrappedText="default" _children => {
     ...component,
     initialState: fun () => {buttonWrapperState: 0},
     printState: fun {buttonWrapperState} => Printf.sprintf "%d" buttonWrapperState,
     render: fun _self =>
-      div [|
-        React.element (
-          StatelessButton.make initialClickCount::("wrapped:" ^ wrappedText ^ ":wrapped") children
-        ),
-        React.element (
-          StatelessButton.make initialClickCount::("wrapped:" ^ wrappedText ^ ":wrapped") children
-        )
-      |]
+      <div>
+        <StatelessButton initialClickCount=("wrapped:" ^ wrappedText ^ ":wrapped") />
+        <StatelessButton initialClickCount=("wrapped:" ^ wrappedText ^ ":wrapped") />
+      </div>
   };
 };
 
-let buttonWrapperJsx = React.element (ButtonWrapper.make wrappedText::"TestButtonUpdated!!!" [||]);
+let buttonWrapperJsx = <ButtonWrapper wrappedText="TestButtonUpdated!!!" />;
 
 module ButtonWrapperWrapper = {
-  let component = React.createComponent "ButtonWrapperWrapper";
-  let make wrappedText::_="default" children => {
+  let component = ReasonReact.createComponent "ButtonWrapperWrapper";
+  let make wrappedText::_="default" _children => {
     ...component,
     initialState: fun () => "buttonWrapperWrapperState",
     printState: fun state => Printf.sprintf "\"%s\"" state,
-    render: fun _self => div (Array.append children [|buttonWrapperJsx|])
+    render: fun _self => <div> buttonWrapperJsx </div>
   };
 };
 
 log "\nInitial Tree\n-------------------";
 
-let trees0 = render (React.element (ChangeCounter.make label::"defaultText" [||]));
+let trees0 = render (ReasonReact.element (ChangeCounter.make label::"defaultText" [||]));
 
 log (Print.trees trees0);
 
 log "\nUpdating Tree With Same Label (ButtonWrapperWrapper)\n-------------------";
 
-let trees1 = update trees0 (React.element (ChangeCounter.make label::"defaultText" [||]));
+let trees1 = update trees0 (ReasonReact.element (ChangeCounter.make label::"defaultText" [||]));
 
 log (Print.trees trees1);
 
 log "\nUpdating Tree With New Label (ButtonWrapperWrapper)\n-------------------";
 
-let trees2 = update trees1 (React.element (ChangeCounter.make label::"updatedText" [||]));
+let trees2 = update trees1 (ReasonReact.element (ChangeCounter.make label::"updatedText" [||]));
 
 log (Print.trees trees2);
 
 log "\nUpdating Tree With New Root Type (ButtonWrapperWrapper)\n-------------------";
 
 let trees3 =
-  update trees2 (React.element (ButtonWrapperWrapper.make wrappedText::"updatedText" [||]));
+  update trees2 (ReasonReact.element (ButtonWrapperWrapper.make wrappedText::"updatedText" [||]));
 
 log (Print.trees trees3);
 
 log "\nUpdating Tree With Same Root Type as Previous (ButtonWrapperWrapper)\n-------------------";
 
 let trees4 =
-  update trees3 (React.element (ButtonWrapperWrapper.make wrappedText::"updatedTextm" [||]));
+  update trees3 (ReasonReact.element (ButtonWrapperWrapper.make wrappedText::"updatedTextm" [||]));
 
 
 /**

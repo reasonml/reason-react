@@ -4,7 +4,8 @@
   "scripts": {
     "clean": "bsb -clean",
     "clean:all": "bsb -clean-world",
-    "build": "bsb",
+    "build": "bsb -backend native",
+    "build:js": "bsb -backend js",
     "build:all": "bsb -make-world",
     "watch": "bsb -make-world -w"
   },
@@ -13,6 +14,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "bs-platform": "1.7.4"
+    "bs-platform": "bsansouci/bsb-native"
   }
 }
