@@ -23,7 +23,10 @@ type component 'state = {
   render: self 'state => reactElement
 };
 
-let div: array reactElement => reactElement;
+module ReactDOMRe: {
+  type reactDOMProps;
+  let createElement: string => props::reactDOMProps? => array reactElement => reactElement;
+};
 
 let createComponent: string => component 'state;
 
@@ -39,7 +42,6 @@ let render: reactElement => list instanceTree;
 
 let update: list instanceTree => reactElement => list instanceTree;
 
-module Print: {
-  let tree: instanceTree => string;
-  let trees: list instanceTree => string;
-};
+module Print: {let tree: instanceTree => string; let trees: list instanceTree => string;};
+
+let arrayToElement : array reactElement => reactElement;

@@ -2,10 +2,23 @@
   "name": "hello",
   "version": "0.1.0",
   "sources": [
-    "src"
+    {"dir":"src",
+    }    
   ],
-  "reason" : { "react-jsx" : true},
+  "reason" : { "react-jsx" : 2},
   "bs-dependencies" : [
       // add your bs-dependencies here 
-  ]
+  ],
+  "bsc-flags": ["-bs-super-errors", "-w", "-30"],
+  "entries": [
+    {
+      "kind": "native",
+      "main": "Test"
+    },
+    {
+      "kind": "js",
+      "main": "Test"
+    },
+  ],
+
 }
