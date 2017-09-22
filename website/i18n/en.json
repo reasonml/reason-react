@@ -1,0 +1,37 @@
+{
+  "localized-strings": {
+    "next": "Next",
+    "previous": "Previous",
+    "tagline": "A safer, simpler way to build React components in Reason.",
+    "children": "Working with Children",
+    "cloneElement": "cloneElement",
+    "common-errors": "Common Type Errors",
+    "component-creation": "Component Creation",
+    "convert": "Convert Over ReactJS Idioms",
+    "dom": "Working with DOM",
+    "events": "Events",
+    "interop": "Interop With Existing JavaScript Components",
+    "intro-example": "Intro Example",
+    "jsx": "JSX",
+    "miscellaneous": "Miscellaneous",
+    "props-spread": "How do I do props spreading?",
+    "react-element": "React Element",
+    "reason-react": "Reason React",
+    "Docs": "Docs",
+    "FAQ": "FAQ",
+    "Blog": "Blog",
+    "Guide": "Guide",
+    "Frequently Asked Questions": "Frequently Asked Questions"
+  },
+  "pages-strings": {
+    "Learn more using the [documentation on this site.](/test-site/docs/en/doc1.html)|no description given": "Learn more using the [documentation on this site.](/test-site/docs/en/doc1.html)",
+    "Browse Docs|no description given": "Browse Docs",
+    "Ask questions about the documentation and project|no description given": "Ask questions about the documentation and project",
+    "Join the community|no description given": "Join the community",
+    "Find out what's new with this project|no description given": "Find out what's new with this project",
+    "Stay up to date|no description given": "Stay up to date",
+    "Need help?|no description given": "Need help?",
+    "This project is maintained by a dedicated group of people.|statement made to reader": "This project is maintained by a dedicated group of people.",
+    "Try It Out|no description given": "Try It Out"
+  }
+}

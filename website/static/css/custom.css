@@ -1,0 +1,13 @@
+
+.fixedHeaderContainer.fixedHeaderContainer.fixedHeaderContainer {
+  background: linear-gradient(to right, white, #db4d3f 18%, #db4d3f);
+}
+
+@media (min-width: 480px) {
+  .fixedHeaderContainer a img, a.nav-home img {
+    transition: 3s;
+  }
+  .fixedHeaderContainer a:hover img, a.nav-home:hover img {
+    transform: rotate(1080deg);
+  }
+}

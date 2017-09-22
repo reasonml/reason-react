@@ -1,0 +1,24 @@
+{
+  "docs": {
+    "Guide": [
+      "reason-react",
+      "intro-example",
+      "jsx",
+      "component-creation",
+      "react-element",
+      "interop",
+      "events",
+      "cloneElement",
+      "children",
+      "dom",
+      "convert",
+      "miscellaneous"
+    ]
+  },
+  "FAQ": {
+    "Frequently Asked Questions": [
+      "common-errors",
+      "props-spread"
+    ]
+  }
+}
