@@ -16,3 +16,14 @@
   border-left: 4px solid #f7df1e;
   background-color: rgba(247, 223, 30, 0.03);
 }
+
+@media only screen and (min-width: 480px) {
+  .projectTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .projectTitle > small {
+    max-width: 40%;
+  }
+}
