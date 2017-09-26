@@ -9,7 +9,7 @@
   "bs-dependencies" : [
       // add your bs-dependencies here 
   ],
-  "bsc-flags": ["-bs-super-errors", "-w", "-30"],
+  "bsc-flags": ["-bs-super-errors", "-w", "-30-40"],
   "entries": [
     {
       "kind": "native",
