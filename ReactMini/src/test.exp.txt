@@ -1,73 +1,188 @@
 
+
+******* Test 1 *******
+
+BoxWrapper with one box
+-------------------
+Creating instance #1 of BoxWrapper with 1 subelements
+Creating instance #2 of Box with 1 subelements
+Tree #0 
+{
+  id:1
+  "BoxWrapper.subtree": 
+  {
+    id:2
+    "Box.subtree": ImABox
+  }
+}
+
+BoxWrapper with two boxes
+-------------------
+Updating BoxWrapper
+Creating instance #3 of Box with 1 subelements
+Creating instance #4 of Box with 1 subelements
+instance #1 updated to instance #1 changed: subtree
+Tree #0 
+{
+  id:1
+  "BoxWrapper.subtree": 
+  {
+    id:3
+    "Box.subtree": ImABox
+  },
+  {
+    id:4
+    "Box.subtree": ImABox
+  }
+}
+
+Trees rendered
+-------------------
+Tree #0 
+{
+  id:1
+  "BoxWrapper.subtree": 
+  {
+    id:2
+    "Box.subtree": ImABox
+  }
+}
+Tree #1 
+{
+  id:1
+  "BoxWrapper.subtree": 
+  {
+    id:3
+    "Box.subtree": ImABox
+  },
+  {
+    id:4
+    "Box.subtree": ImABox
+  }
+}
+
+******* Test 2 *******
+
 Initial Tree
 -------------------
-Creating ChangeCounter With Subelements:1
-Creating Box With Subelements:0
-Tree #0
+Creating instance #1 of ChangeCounter with 1 subelements
+Creating instance #2 of Box with 1 subelements
+Tree #0 
 {
-  "ChangeCounter.state": [10, "defaultText"],
+  id:1
   "ChangeCounter.subtree": 
   {
-    "Box.state": ImABox,
-    "Box.subtree": 
+    id:2
+    "Box.subtree": [10, "defaultText"]
   }
 }
 
-Updating Tree With Same Label (ButtonWrapperWrapper)
+Updating Tree With Same Label (ChangeCounter)
 -------------------
-Updating Component type ChangeCounter
-Updating Component type Box
-Tree #0
+Updating ChangeCounter
+Updating Box
+instance #2 updated to instance #2 changed: subtree
+instance #1 updated to instance #1 changed: subtree
+Tree #0 
 {
-  "ChangeCounter.state": [10, "defaultText"],
+  id:1
   "ChangeCounter.subtree": 
   {
-    "Box.state": ImABox,
-    "Box.subtree": 
+    id:2
+    "Box.subtree": [10, "defaultText"]
   }
 }
 
-Updating Tree With New Label (ButtonWrapperWrapper)
+Updating Tree With New Label (ChangeCounter)
 -------------------
-Updating Component type ChangeCounter
-Updating Component type Box
-Tree #0
+Updating ChangeCounter
+Calling reduce on ChangeCounter
+Calling reduce on ChangeCounter
+Updating Box
+instance #2 updated to instance #2 changed: subtree
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
 {
-  "ChangeCounter.state": [11, "updatedText"],
+  id:1
   "ChangeCounter.subtree": 
   {
-    "Box.state": ImABox,
-    "Box.subtree": 
+    id:2
+    "Box.subtree": [11, "updatedText"]
+  }
+}
+
+Flushing (ChangeCounter)
+-------------------
+Updating ChangeCounter
+Updating Box
+instance #2 updated to instance #2 changed: subtree
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  id:1
+  "ChangeCounter.subtree": 
+  {
+    id:2
+    "Box.subtree": [2011, "updatedText"]
+  }
+}
+
+Flushing #2 (ChangeCounter)
+-------------------
+Bailing Out Early Due To Memoization on ChangeCounter
+Tree #0 
+{
+  id:1
+  "ChangeCounter.subtree": 
+  {
+    id:2
+    "Box.subtree": [2011, "updatedText"]
+  }
+}
+
+Flushing #3 (ChangeCounter)
+-------------------
+Bailing Out Early Due To Memoization on ChangeCounter
+Tree #0 
+{
+  id:1
+  "ChangeCounter.subtree": 
+  {
+    id:2
+    "Box.subtree": [2011, "updatedText"]
   }
 }
 
 Updating Tree With New Root Type (ButtonWrapperWrapper)
 -------------------
 Switching Component Types from: ChangeCounter to ButtonWrapperWrapper
-Creating ButtonWrapper With Subelements:2
-Creating StatelessButton With Subelements:1
-Creating Box With Subelements:0
-Creating StatelessButton With Subelements:1
-Creating Box With Subelements:0
-Tree #0
+Creating instance #4 of ButtonWrapper with 3 subelements
+Creating instance #5 of StatelessButton with 1 subelements
+Creating instance #6 of Box with 1 subelements
+Creating instance #7 of StatelessButton with 1 subelements
+Creating instance #8 of Box with 1 subelements
+instance #1 updated to instance #3 changed: component state subtree
+Tree #0 
 {
-  "ButtonWrapperWrapper.state": "buttonWrapperWrapperState",
-  "ButtonWrapperWrapper.subtree": 
+  id:3
+  "ButtonWrapperWrapper.subtree": buttonWrapperWrapperState,wrappedText:updatedText,
   {
-    "ButtonWrapper.state": 0,
-    "ButtonWrapper.subtree": 
+    id:4
+    "ButtonWrapper.subtree": 0,
     {
+      id:5
       "StatelessButton.subtree": 
       {
-        "Box.state": ImABox,
-        "Box.subtree": 
+        id:6
+        "Box.subtree": ImABox
       }
     },
     {
+      id:7
       "StatelessButton.subtree": 
       {
-        "Box.state": ImABox,
-        "Box.subtree": 
+        id:8
+        "Box.subtree": ImABox
       }
     }
   }
@@ -75,78 +190,385 @@ Tree #0
 
 Updating Tree With Same Root Type as Previous (ButtonWrapperWrapper)
 -------------------
-Updating Component type ButtonWrapperWrapper
-Bailing Out Early Due To Memoization on Component type ButtonWrapper
-Tree #0
+Updating ButtonWrapperWrapper
+Bailing Out Early Due To Memoization on ButtonWrapper
+instance #3 updated to instance #3 changed: subtree
+Tree #0 
 {
-  "ChangeCounter.state": [10, "defaultText"],
-  "ChangeCounter.subtree": 
+  id:3
+  "ButtonWrapperWrapper.subtree": buttonWrapperWrapperState,wrappedText:updatedTextmodified,
   {
-    "Box.state": ImABox,
-    "Box.subtree": 
-  }
-}
-Tree #1
-{
-  "ChangeCounter.state": [10, "defaultText"],
-  "ChangeCounter.subtree": 
-  {
-    "Box.state": ImABox,
-    "Box.subtree": 
-  }
-}
-Tree #2
-{
-  "ChangeCounter.state": [11, "updatedText"],
-  "ChangeCounter.subtree": 
-  {
-    "Box.state": ImABox,
-    "Box.subtree": 
-  }
-}
-Tree #3
-{
-  "ButtonWrapperWrapper.state": "buttonWrapperWrapperState",
-  "ButtonWrapperWrapper.subtree": 
-  {
-    "ButtonWrapper.state": 0,
-    "ButtonWrapper.subtree": 
+    id:4
+    "ButtonWrapper.subtree": 0,
     {
+      id:5
       "StatelessButton.subtree": 
       {
-        "Box.state": ImABox,
-        "Box.subtree": 
+        id:6
+        "Box.subtree": ImABox
       }
     },
     {
+      id:7
       "StatelessButton.subtree": 
       {
-        "Box.state": ImABox,
-        "Box.subtree": 
+        id:8
+        "Box.subtree": ImABox
       }
     }
   }
 }
-Tree #4
+
+Trees rendered
+-------------------
+Tree #0 
 {
-  "ButtonWrapperWrapper.state": "buttonWrapperWrapperState",
-  "ButtonWrapperWrapper.subtree": 
+  id:1
+  "ChangeCounter.subtree": 
   {
-    "ButtonWrapper.state": 0,
-    "ButtonWrapper.subtree": 
+    id:2
+    "Box.subtree": [10, "defaultText"]
+  }
+}
+Tree #1 
+{
+  id:1
+  "ChangeCounter.subtree": 
+  {
+    id:2
+    "Box.subtree": [10, "defaultText"]
+  }
+}
+Tree #2 
+{
+  id:1
+  "ChangeCounter.subtree": 
+  {
+    id:2
+    "Box.subtree": [11, "updatedText"]
+  }
+}
+Tree #3 
+{
+  id:1
+  "ChangeCounter.subtree": 
+  {
+    id:2
+    "Box.subtree": [2011, "updatedText"]
+  }
+}
+Tree #4 
+{
+  id:3
+  "ButtonWrapperWrapper.subtree": buttonWrapperWrapperState,wrappedText:updatedText,
+  {
+    id:4
+    "ButtonWrapper.subtree": 0,
     {
+      id:5
       "StatelessButton.subtree": 
       {
-        "Box.state": ImABox,
-        "Box.subtree": 
+        id:6
+        "Box.subtree": ImABox
       }
     },
     {
+      id:7
       "StatelessButton.subtree": 
       {
-        "Box.state": ImABox,
-        "Box.subtree": 
+        id:8
+        "Box.subtree": ImABox
       }
     }
   }
 }
+Tree #5 
+{
+  id:3
+  "ButtonWrapperWrapper.subtree": buttonWrapperWrapperState,wrappedText:updatedTextmodified,
+  {
+    id:4
+    "ButtonWrapper.subtree": 0,
+    {
+      id:5
+      "StatelessButton.subtree": 
+      {
+        id:6
+        "Box.subtree": ImABox
+      }
+    },
+    {
+      id:7
+      "StatelessButton.subtree": 
+      {
+        id:8
+        "Box.subtree": ImABox
+      }
+    }
+  }
+}
+
+******* Test Lists With CID *******
+
+Initial BoxList
+-------------------
+Creating instance #1 of BoxList with 0 subelements
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+}
+Calling reduce on BoxList
+
+Add Hello then Flush
+-------------------
+Updating BoxList
+Creating instance #2 of BoxWithID with 1 subelements
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:2
+    "BoxWithID.subtree": Hello
+  }
+}
+Calling reduce on BoxList
+
+Add World then Flush
+-------------------
+Updating BoxList
+Creating instance #3 of BoxWithID with 1 subelements
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:3
+    "BoxWithID.subtree": World
+  },
+  {
+    id:2
+    "BoxWithID.subtree": Hello
+  }
+}
+Calling reduce on BoxList
+
+Reverse then Flush
+-------------------
+Updating BoxList
+Bailing Out Early Due To Memoization on BoxWithID
+Bailing Out Early Due To Memoization on BoxWithID
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:2
+    "BoxWithID.subtree": Hello
+  },
+  {
+    id:3
+    "BoxWithID.subtree": World
+  }
+}
+
+Trees rendered
+-------------------
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+}
+Tree #1 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:2
+    "BoxWithID.subtree": Hello
+  }
+}
+Tree #2 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:3
+    "BoxWithID.subtree": World
+  },
+  {
+    id:2
+    "BoxWithID.subtree": Hello
+  }
+}
+Tree #3 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:2
+    "BoxWithID.subtree": Hello
+  },
+  {
+    id:3
+    "BoxWithID.subtree": World
+  }
+}
+
+******* Test Lists Without CID *******
+
+Initial BoxList
+-------------------
+Creating instance #1 of BoxList with 0 subelements
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+}
+Calling reduce on BoxList
+
+Add Hello then Flush
+-------------------
+Updating BoxList
+Creating instance #2 of Box with 1 subelements
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:2
+    "Box.subtree": Hello
+  }
+}
+Calling reduce on BoxList
+
+Add World then Flush
+-------------------
+Updating BoxList
+Creating instance #3 of Box with 1 subelements
+Creating instance #4 of Box with 1 subelements
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:3
+    "Box.subtree": World
+  },
+  {
+    id:4
+    "Box.subtree": Hello
+  }
+}
+Calling reduce on BoxList
+
+Reverse then Flush
+-------------------
+Updating BoxList
+Updating Box
+instance #4 updated to instance #4 changed: subtree
+Updating Box
+instance #3 updated to instance #3 changed: subtree
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:3
+    "Box.subtree": Hello
+  },
+  {
+    id:4
+    "Box.subtree": World
+  }
+}
+
+Trees rendered
+-------------------
+Tree #0 
+{
+  id:1
+  "BoxList.subtree": 
+}
+Tree #1 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:2
+    "Box.subtree": Hello
+  }
+}
+Tree #2 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:3
+    "Box.subtree": World
+  },
+  {
+    id:4
+    "Box.subtree": Hello
+  }
+}
+Tree #3 
+{
+  id:1
+  "BoxList.subtree": 
+  {
+    id:3
+    "Box.subtree": Hello
+  },
+  {
+    id:4
+    "Box.subtree": World
+  }
+}
+
+******* Test Deep Move Box With CID *******
+
+Initial Box
+-------------------
+Creating instance #1 of BoxWithID with 1 subelements
+Tree #0 
+{
+  id:1
+  "BoxWithID.subtree": box to move
+}
+
+Add 2 Levels of div
+-------------------
+Tree #0 first level before
+Tree #1 second level before
+Tree #2 
+{
+  id:1
+  "BoxWithID.subtree": box to move
+}
+Tree #3 second level after
+Tree #4 first level after
+
+Trees rendered
+-------------------
+Tree #0 
+{
+  id:1
+  "BoxWithID.subtree": box to move
+}
+Tree #1 first level before
+Tree #2 second level before
+Tree #3 
+{
+  id:1
+  "BoxWithID.subtree": box to move
+}
+Tree #4 second level after
+Tree #5 first level after
