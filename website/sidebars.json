@@ -15,6 +15,15 @@
       "miscellaneous"
     ]
   },
+  "examples": {
+    "Examples": [
+      "simple",
+      "counter",
+      "retained-props",
+      "reason-using-js",
+      "js-using-reason"
+    ]
+  },
   "FAQ": {
     "Frequently Asked Questions": [
       "common-errors",
