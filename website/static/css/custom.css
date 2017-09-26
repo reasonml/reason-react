@@ -11,3 +11,8 @@
     transform: rotate(1080deg);
   }
 }
+
+.prism.language-javascript {
+  border-left: 4px solid #f7df1e;
+  background-color: rgba(247, 223, 30, 0.03);
+}

@@ -11,7 +11,7 @@ const siteConfig = {
   title: "Reason React" /* title for your website */,
   tagline: "A safer, simpler way to build React components in Reason.",
   url: "https://reasonml.github.io/reason-react" /* your github url */,
-  baseUrl: "" /* base url for your project */,
+  baseUrl: "/" /* base url for your project */,
   projectName: "reason-react",
   headerLinks: [
     { doc: "reason-react", label: "Docs" },

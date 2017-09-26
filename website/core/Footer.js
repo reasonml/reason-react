@@ -23,6 +23,20 @@ const githubButton = (
   </a>
 );
 
+const highlighterCode = `
+function fn() {
+  Array.prototype.forEach.call(
+    document.querySelectorAll("pre"),
+    hljs.highlightBlock
+  );
+};
+if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+  fn();
+} else {
+  document.addEventListener('DOMContentLoaded', fn);
+}
+`;
+
 class Footer extends React.Component {
   render() {
     const currentYear = new Date().getFullYear();
@@ -95,6 +109,8 @@ class Footer extends React.Component {
         <section className="copyright">
           Copyright &copy; {currentYear} Reason React contributors
         </section>
+        <script src="/highlightJs/highlight.pack.js"></script>
+        <script dangerouslySetInnerHTML={{__html: highlighterCode}} />
       </footer>
     );
   }
