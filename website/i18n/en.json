@@ -12,6 +12,7 @@
     "dom": "Working with DOM",
     "events": "Events",
     "getting-started": "Getting Started",
+    "README": "README",
     "interop": "Interop With Existing JavaScript Components",
     "intro-example": "Intro Example",
     "js-using-reason": "ReactJS using ReasonReact",
@@ -28,6 +29,7 @@
     "Examples": "Examples",
     "FAQ": "FAQ",
     "Blog": "Blog",
+    "GitHub": "GitHub",
     "Guide": "Guide",
     "Frequently Asked Questions": "Frequently Asked Questions"
   },

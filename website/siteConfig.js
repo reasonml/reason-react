@@ -20,7 +20,8 @@ const siteConfig = {
     { doc: "getting-started", label: "Docs" },
     { doc: "simple", label: "Examples" },
     { doc: "common-errors", label: "FAQ" },
-    { blog: true, label: "Blog" }
+    { blog: true, label: "Blog" },
+    { href: "https://github.com/reasonml/reason-react", label: "GitHub" }
   ],
   users: [],
   /* path to images for header/footer */
@@ -33,7 +34,7 @@ const siteConfig = {
     secondaryColor: "#db4d3f",
     prismColor:
       "rgba(219, 77, 63, 0.03)" /* primaryColor in rgba form, with 0.03 alpha */
-  },
+  }
 };
 
 module.exports = siteConfig;

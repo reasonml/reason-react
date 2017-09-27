@@ -44,30 +44,30 @@ class Footer extends React.Component {
                 this.props.config.baseUrl +
                 "docs/" +
                 this.props.language +
-                "/doc1.html"
+                "/getting-started.html"
               }
             >
-              Getting Started (or other categories)
+              Getting Started
             </a>
             <a
               href={
                 this.props.config.baseUrl +
                 "docs/" +
                 this.props.language +
-                "/doc2.html"
+                "/simple.html"
               }
             >
-              Guides (or other categories)
+              Examples
             </a>
             <a
               href={
                 this.props.config.baseUrl +
                 "docs/" +
                 this.props.language +
-                "/doc3.html"
+                "/common-errors.html"
               }
             >
-              API Reference (or other categories)
+              FAQ
             </a>
           </div>
           <div>
@@ -90,9 +90,6 @@ class Footer extends React.Component {
             <a href={this.props.config.baseUrl + "blog"}>Blog</a>
             <a href="https://github.com/reasonml/reason-react">GitHub</a>
           </div>
-        </section>
-        <section className="copyright">
-          Copyright &copy; {currentYear} Reason React contributors
         </section>
         {/* <script src="/highlightJs/highlight.pack.js"></script>
         <script dangerouslySetInnerHTML={{__html: highlighterCode}} /> */}
