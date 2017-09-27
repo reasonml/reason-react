@@ -25,6 +25,12 @@
       '#015-released': '2017/06/21/015.html',
       '#major-new-release': '2017/06/09/major-release.html',
       default: ''
+    },
+    'gettingStarted.html': {
+      '#getting-started': 'getting-started.html',
+      '#getting-started-bsb': 'getting-started.html#bsb',
+      '#getting-started-reason-scripts': 'getting-started.html#reason-scripts',
+      default: 'getting-started.html'
     }
   };
   var hash = window.location.hash;

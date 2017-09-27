@@ -1,6 +1,7 @@
 {
   "docs": {
     "Guide": [
+      "getting-started",
       "reason-react",
       "intro-example",
       "jsx",
