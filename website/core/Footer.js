@@ -9,20 +9,6 @@
 
 const React = require("react");
 
-const githubButton = (
-  <a
-    className="github-button"
-    href="https://github.com/reasonml/reason-react"
-    data-icon="octicon-star"
-    data-count-href="/deltice/test-site/stargazers"
-    data-count-api="/repos/reasonml/reason-react#stargazers_count"
-    data-count-aria-label="# stargazers on GitHub"
-    aria-label="Star this project on GitHub"
-  >
-    Star
-  </a>
-);
-
 const highlighterCode = `
 function fn() {
   Array.prototype.forEach.call(
@@ -103,14 +89,13 @@ class Footer extends React.Component {
             <h5>More</h5>
             <a href={this.props.config.baseUrl + "blog"}>Blog</a>
             <a href="https://github.com/reasonml/reason-react">GitHub</a>
-            {githubButton}
           </div>
         </section>
         <section className="copyright">
           Copyright &copy; {currentYear} Reason React contributors
         </section>
-        <script src="/highlightJs/highlight.pack.js"></script>
-        <script dangerouslySetInnerHTML={{__html: highlighterCode}} />
+        {/* <script src="/highlightJs/highlight.pack.js"></script>
+        <script dangerouslySetInnerHTML={{__html: highlighterCode}} /> */}
       </footer>
     );
   }

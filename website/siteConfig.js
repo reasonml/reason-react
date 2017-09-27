@@ -11,6 +11,7 @@ const siteConfig = {
   title: "Reason React" /* title for your website */,
   tagline: "A safer, simpler way to build React components in Reason.",
   url: "https://reasonml.github.io/reason-react" /* your github url */,
+  sourceCodeButton: null,
   baseUrl: "/" /* base url for your project */,
   projectName: "reason-react",
   headerLinks: [
@@ -21,8 +22,8 @@ const siteConfig = {
   ],
   users: [],
   /* path to images for header/footer */
-  headerIcon: "img/reason-react.svg",
-  footerIcon: "img/reason-react.svg",
+  headerIcon: "img/reason-react-white.svg",
+  footerIcon: "img/reason-react-white.svg",
   favicon: "img/favicon/favicon.png",
   /* colors for website */
   colors: {
@@ -30,7 +31,7 @@ const siteConfig = {
     secondaryColor: "#db4d3f",
     prismColor:
       "rgba(219, 77, 63, 0.03)" /* primaryColor in rgba form, with 0.03 alpha */
-  }
+  },
 };
 
 module.exports = siteConfig;
