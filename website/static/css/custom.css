@@ -25,3 +25,15 @@
     max-width: 40%;
   }
 }
+
+a.hash-link {
+  transition: none;
+}
+
+.read-more .button {
+  margin: 0;
+}
+
+.fixedHeaderContainer {
+  padding: 9px 0;
+}
