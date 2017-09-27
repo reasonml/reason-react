@@ -21,7 +21,7 @@ class Examples extends React.Component {
             <div>Attempting redirect now...</div>
             <div>If you aren't redirected automatically please follow <a href={siteConfig.baseUrl + 'docs/en/simple.html'}>this link</a>.</div>
           </div>
-          <script src={siteConfig.baseUrl + 'js/staticRedirect.js'}></script>
+          <script src={siteConfig.baseUrl + 'js/redirect.js'}></script>
         </div>
       </div>
     );
