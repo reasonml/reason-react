@@ -1,8 +1,5 @@
 ---
 title: Major New Release!
-author: Cheng Lou
-authorURL: http://twitter.com/_chenglou
-authorFBID: 729666732
 ---
 
 0.1.4 is released! We've got a new documentation website here, a brand new ReasonReact API, a smooth migration guide, and best of all: **no breaking change**! Head over to [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#014) for the incremental migration.
