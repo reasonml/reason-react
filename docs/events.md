@@ -10,7 +10,7 @@ If you're accessing fields on your event object, like `event.target.value`, you'
 (ReactDOMRe.domElementToObj (ReactEventRe.Form.target event))##value
 ```
 
-More info on the `ReactDOMRe` module below in the [Working with DOM](#reason-react-working-with-dom) section.
+More info on the `ReactDOMRe` module below in the [Working with DOM](dom.md) section.
 
 ## Styles
 

@@ -14,7 +14,7 @@ const siteConfig = {
   editUrl: "https://github.com/reasonml/reason-react/tree/master/docs/",
   recruitingLink: "https://crowdin.com/project/reason-react",
   sourceCodeButton: null,
-  baseUrl: "/" /* base url for your project */,
+  baseUrl: "/reason-react/" /* base url for your project */,
   projectName: "reason-react",
   headerLinks: [
     { doc: "reason-react", label: "Docs" },

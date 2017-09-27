@@ -1,8 +1,8 @@
 @media (min-width: 480px) {
-  .fixedHeaderContainer a img, a.nav-home img {
+  .fixedHeaderContainer header > a > img, a.nav-home img {
     transition: 3s;
   }
-  .fixedHeaderContainer a:hover img {
+  .fixedHeaderContainer header > a:hover > img {
     transform: rotate(1080deg);
   }
   a.nav-home:hover img {

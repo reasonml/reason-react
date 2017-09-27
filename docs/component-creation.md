@@ -131,7 +131,7 @@ Formally, `self.handle` expects a callback that
 - plus the argument `self`,
 - returns "nothing" (aka, `()`, aka, `unit`).
 
-**Note**: sometimes you might be forwarding `handle` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](#reason-react-common-type-errors). Example:
+**Note**: sometimes you might be forwarding `handle` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](common-errors.md). Example:
 
 #### Callback With State Update
 
@@ -240,7 +240,7 @@ A few things:
 
 So, when a click on the dialog is triggered, we send the `Click` action to the reducer, which handles the `Click` case by returning the new state that increment a counter. ReasonReact takes the state and updates the component.
 
-**Note**: just like for `self.handle`, sometimes you might be forwarding `reduce` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](#reason-react-common-type-errors). Example:
+**Note**: just like for `self.handle`, sometimes you might be forwarding `reduce` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](common-errors.md). Example:
 
 #### State Update Through Reducer
 
