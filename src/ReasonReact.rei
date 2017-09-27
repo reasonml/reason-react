@@ -47,7 +47,6 @@ external cloneElement : reactElement => props::Js.t {..}? => array reactElement 
 type renderNotImplemented =
   | RenderNotImplemented;
 
-
 /**
  * A stateless component is a component with state of type unit. This cannot be
  * abstract for now, because a stateless component's willReceiveProps needs to
@@ -279,5 +278,5 @@ let createDomElement: string => props::Js.t {..} => array reactElement => reactE
 let wrapJsForReason:
   reactClass::reactClass =>
   props::Js.t {..} =>
-  array reactElement =>
+  'a =>
   component stateless noRetainedProps actionless;

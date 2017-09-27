@@ -112,7 +112,8 @@ and self 'state 'retainedProps 'action = {
 
   enqueue:
     'payload .
-    ('payload => self 'state 'retainedProps 'action => update 'state 'retainedProps 'action) => Callback.t 'payload,
+    ('payload => self 'state 'retainedProps 'action => update 'state 'retainedProps 'action) =>
+    Callback.t 'payload,
 
   reduce: 'payload .reduce 'payload 'action,
   state: 'state,
@@ -734,7 +735,7 @@ module WrapProps = {
       key::(key: Js.undefined string)
       ref::(ref: Js.undefined (Js.null reactRef => unit)) => {
     let props = Js.Obj.assign (Js.Obj.assign (Js.Obj.empty ()) props) {"ref": ref, "key": key};
-    let varargs = [|Obj.magic reactClass, Obj.magic props|] |> Js.Array.concat children;
+    let varargs = [|Obj.magic reactClass, Obj.magic props|] |> Js.Array.concat (Obj.magic children);
     /* Use varargs under the hood */
     (Obj.magic createElementVerbatim)##apply Js.null varargs
   };
