@@ -149,6 +149,7 @@ class Index extends React.Component {
           </Container>
 
         </div>
+        <script src={siteConfig.baseUrl + 'js/redirectIndex.js'}></script>
       </div>
     );
   }
