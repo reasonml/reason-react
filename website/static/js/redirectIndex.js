@@ -40,7 +40,7 @@
       var link = document.getElementById('redirectLink');
       var banner = document.getElementById('redirectBanner');
       var location = base + redirects[redirect] + newHash;
-console.log('wut');
+
       link.textContent = 'https://reasonml.github.io' + location;
       link.href = location;
       banner.style.display = 'block';
