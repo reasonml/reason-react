@@ -25,10 +25,10 @@ external createElementVerbatim : 'a = "createElement" [@@bs.val] [@@bs.module "r
 let createDomElement s ::props children => {
   let vararg = [|Obj.magic s, Obj.magic props|] |> Js.Array.concat children;
   /* Use varargs to avoid warnings on duplicate keys in children */
-  (Obj.magic createElementVerbatim)##apply Js.null vararg
+  (Obj.magic createElementVerbatim)##apply Js.Nullable.null vararg
 };
 
-let magicNull = Obj.magic Js.null;
+let magicNull = Obj.magic Js.Nullable.null;
 
 type reactClassInternal = reactClass;
 
@@ -210,7 +210,7 @@ let reducerDefault: 'action => 'state => update 'state 'retainedProps 'action =
 
 let convertPropsIfTheyreFromJs props jsPropsToReason debugName => {
   let props = Obj.magic props;
-  switch (Js.Undefined.to_opt props##reasonProps, jsPropsToReason) {
+  switch (Js.Nullable.to_opt props##reasonProps, jsPropsToReason) {
   | (Some props, _) => props
   /* TODO: annotate with BS to avoid curry overhead */
   | (None, Some toReasonProps) => Element (toReasonProps props)
@@ -737,7 +737,7 @@ module WrapProps = {
     let props = Js.Obj.assign (Js.Obj.assign (Js.Obj.empty ()) props) {"ref": ref, "key": key};
     let varargs = [|Obj.magic reactClass, Obj.magic props|] |> Js.Array.concat (Obj.magic children);
     /* Use varargs under the hood */
-    (Obj.magic createElementVerbatim)##apply Js.null varargs
+    (Obj.magic createElementVerbatim)##apply Js.Nullable.null varargs
   };
   let dummyInteropComponent = statefulComponent "interop";
   let wrapJsForReason ::reactClass ::props children :component stateless noRetainedProps _ => {

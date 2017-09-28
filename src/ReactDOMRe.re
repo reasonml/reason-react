@@ -13,7 +13,7 @@ external render : ReasonReact.reactElement => Dom.element => unit =
 external _getElementsByClassName : string => array Dom.element =
   "document.getElementsByClassName" [@@bs.val];
 external _getElementById : string => option Dom.element =
-  "document.getElementById" [@@bs.val] [@@bs.return null_to_opt];
+  "document.getElementById" [@@bs.val] [@@bs.return nullable];
 
 let renderToElementWithClassName reactElement className => {
   let elements = _getElementsByClassName className;
