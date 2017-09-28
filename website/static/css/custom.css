@@ -45,6 +45,17 @@ a.hash-link {
 }
 #languages-menu .languages-icon {
   margin: 0;
+  padding: 6px 10px;
+}
+#languages-dropdown {
+  width: auto;
+  right: 0;
+}
+/* only targets language dropdown li, i swear */
+@media only screen and (min-width: 1024px) {
+  .nav-site > span > li {
+    position: relative;
+  }
 }
 
 /* mobile click zone for translation is weird */
