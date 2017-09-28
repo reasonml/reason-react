@@ -12,6 +12,7 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - All files upper-cased. Follows new community idiom
 - Preparation for namespace
 - Loosen `children`'s restriction
+- Fix `enqueue` logic. It's still scheduled to be removed in the next breaking version
 
 # 0.3.0 (breaking)
 
