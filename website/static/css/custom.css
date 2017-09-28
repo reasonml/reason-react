@@ -54,3 +54,35 @@ a.hash-link {
 #languages-dropdown-items {
   pointer-events: all;
 }
+
+#redirectMessage {
+  font-size: 30px;
+  line-height: 30px;
+  padding-top: 100px;
+  margin: auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+#redirectBanner {
+  background: #808080;
+  color: #fff;
+  display: none;
+  font-weight: 300;
+  margin: auto;
+  padding: 10px 0;
+  text-align: center;
+}
+
+#redirectBanner a {
+  color: #fff;
+  opacity: 0.6;
+}
+
+#redirectBanner a:hover {
+  opacity: 1;
+}
+
+#redirectLink {
+  white-space: nowrap;
+}

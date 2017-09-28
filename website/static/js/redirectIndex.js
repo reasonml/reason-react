@@ -8,8 +8,6 @@
     'reason-react': 'reason-react.html',
     'intro-example': 'intro-example.html',
     'jsx': 'jsx.html',
-    'jsx-uncapitalized': 1,
-    'jsx-capitalized': 1,
     'component-creation': 'component-creation.html',
     'react-element': 'react-element.html',
     'interop-with-existing-javascript-components': 'interop.html',
@@ -39,7 +37,13 @@
     if (redirect.indexOf(hash) === 0) {
       var newHash = redirect.split(hash + '-')[1] || '';
       newHash = newHash ? '#' + newHash : newHash;
-      window.location.replace(base + redirects[redirect] + newHash);
+      var link = document.getElementById('redirectLink');
+      var banner = document.getElementById('redirectBanner');
+      var location = base + redirects[redirect] + newHash;
+console.log('wut');
+      link.textContent = 'https://reasonml.github.io' + location;
+      link.href = location;
+      banner.style.display = 'block';
     }
   });
 })();

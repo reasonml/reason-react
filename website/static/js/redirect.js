@@ -40,8 +40,10 @@
     ? '/reason-react/blog/'
     : '/reason-react/docs/en/';
   if (redirects[page]) {
+    var link = document.getElementById('redirectLink');
     var location = base +
       (redirects[page][hash] || redirects[page].default);
-    window.location.replace(location);
+    link.textContent = 'https://reasonml.github.io' + location;
+    link.href = location;
   }
 })();

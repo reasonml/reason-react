@@ -38,6 +38,10 @@ class HomeSplash extends React.Component {
   render() {
     return (
       <div className="homeContainer">
+        <div id="redirectBanner">
+          Hello! This particular page hash has moved to <a id="redirectLink"/>.
+          Please update the URLs to reflect it. Thanks!
+        </div>
         <div className="homeSplashFade">
           <div className="wrapper homeWrapper">
             <div className="projectLogo">
