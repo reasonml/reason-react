@@ -530,14 +530,18 @@ let createClass (type reasonState retainedProps action) debugName :reactClass =>
         };
         ret
       };
-      pub enqueueMethod callback => {
+      pub enqueueMethod (callback: 'payload => self _ => update _) => {
         let thisJs: jsComponentThis reasonState element retainedProps action = [%bs.raw "this"];
         fun event => {
           let remainingCallback = callback event;
           thisJs##setState (
             fun curTotalState _ => {
               let curReasonState = curTotalState##reasonState;
-              let reasonStateUpdate = remainingCallback curReasonState;
+              let convertedReasonProps =
+                convertPropsIfTheyreFromJs thisJs##props thisJs##jsPropsToReason debugName;
+              let Element component = Obj.magic convertedReasonProps;
+              let self = this##self curReasonState (Obj.magic component.retainedProps);
+              let reasonStateUpdate = remainingCallback self;
               if (reasonStateUpdate === NoUpdate) {
                 magicNull
               } else {
