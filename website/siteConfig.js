@@ -19,8 +19,8 @@ const siteConfig = {
   headerLinks: [
     { doc: "getting-started", label: "Docs" },
     { doc: "simple", label: "Examples" },
-    { blog: true, label: "Blog" },
     { doc: "community", label: "Community" },
+    { blog: true, label: "Blog" },
     { href: "https://github.com/reasonml/reason-react", label: "GitHub" },
   ],
   users: [],

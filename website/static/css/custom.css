@@ -71,7 +71,7 @@ a.hash-link {
   line-height: 30px;
   padding-top: 100px;
   margin: auto;
-  max-width: 800px;
+  max-width: 1000px;
   text-align: center;
 }
 
@@ -79,9 +79,15 @@ a.hash-link {
   background: #808080;
   color: #fff;
   display: none;
+  font-size: 25px;
   font-weight: 300;
-  margin: auto;
+  line-height: 25px;
   padding: 10px 0;
+}
+
+#redirectBanner > div {
+  margin: auto;
+  max-width: 800px;
   text-align: center;
 }
 
