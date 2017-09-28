@@ -1,0 +1,5 @@
+/node_modules*
+/build*
+/translated_docs*
+/i18n/*
+!/i18n/en.json

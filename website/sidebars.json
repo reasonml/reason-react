@@ -1,0 +1,38 @@
+{
+  "docs": {
+    "Guide": [
+      "getting-started",
+      "reason-react",
+      "intro-example",
+      "jsx",
+      "component-creation",
+      "react-element",
+      "interop",
+      "events",
+      "cloneElement",
+      "children",
+      "dom",
+      "convert",
+      "miscellaneous"
+    ],
+    "Frequently Asked Questions": [
+      "common-errors",
+      "props-spread"
+    ]
+  },
+  "examples": {
+    "Examples": [
+      "simple",
+      "counter",
+      "retained-props",
+      "reason-using-js",
+      "js-using-reason"
+    ]
+  },
+  "community-menu": {
+    "Community": [
+      "community",
+      "roadmap"
+    ]
+  }
+}
