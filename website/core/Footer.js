@@ -25,6 +25,7 @@ if (document.attachEvent ? document.readyState === "complete" : document.readySt
 
 class Footer extends React.Component {
   render() {
+    return null;
     const currentYear = new Date().getFullYear();
     return (
       <footer className="nav-footer" id="footer">

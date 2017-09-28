@@ -37,3 +37,12 @@ a.hash-link {
 .fixedHeaderContainer {
   padding: 9px 0;
 }
+
+/* only show language icon */
+#languages-menu {
+  font-size: 0px;
+  padding: 0;
+}
+#languages-menu .languages-icon {
+  margin: 0;
+}

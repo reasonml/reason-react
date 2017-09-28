@@ -14,6 +14,10 @@
       "dom",
       "convert",
       "miscellaneous"
+    ],
+    "Frequently Asked Questions": [
+      "common-errors",
+      "props-spread"
     ]
   },
   "examples": {
@@ -25,10 +29,10 @@
       "js-using-reason"
     ]
   },
-  "FAQ": {
-    "Frequently Asked Questions": [
-      "common-errors",
-      "props-spread"
+  "community-menu": {
+    "Community": [
+      "community",
+      "roadmap"
     ]
   }
 }
