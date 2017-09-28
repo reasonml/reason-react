@@ -46,3 +46,11 @@ a.hash-link {
 #languages-menu .languages-icon {
   margin: 0;
 }
+
+/* mobile click zone for translation is weird */
+#languages-dropdown {
+  pointer-events: none;
+}
+#languages-dropdown-items {
+  pointer-events: all;
+}
