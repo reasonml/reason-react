@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>ReasonReact Blog</title>
+        <link>https://reasonml.github.io/reason-react/blog</link>
+        <description>The best place to stay up-to-date with the latest ReasonReact news and events.</description>
+        <lastBuildDate>Fri, 01 Sep 2017 06:00:00 GMT</lastBuildDate>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <generator>Feed for Node.js</generator>
+        <image>
+            <title>ReasonReact Blog</title>
+            <url>https://reasonml.github.io/reason-reactimg/reason-react-white.svg</url>
+            <link>https://reasonml.github.io/reason-react/blog</link>
+        </image>
+        <item>
+            <title><![CDATA[Reducers Are Here!]]></title>
+            <link>https://reasonml.github.io/reason-react/blog/2017/09/01/reducers.html</link>
+            <guid>https://reasonml.github.io/reason-react/blog/2017/09/01/reducers.html</guid>
+            <pubDate>Fri, 01 Sep 2017 06:00:00 GMT</pubDate>
+            <description><![CDATA[
+_v0.2.4 was done in collaboration with the ReactJS team_.
+
+This is a release we've been planning for quite a while now, and is one that embodies what the Reason team is trying to achieve through ReasonReact.
+
+First, a bit of context: if you use ReactJS, then you've likely heard of the the massively popular [Redux](https://github.com/reactjs/redux/) state management library. Redux's original inspiration comes from [Elm](http://elm-lang.org), whose root we share.
+
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[0.2.1 Released]]></title>
+            <link>https://reasonml.github.io/reason-react/blog/2017/07/05/021.html</link>
+            <guid>https://reasonml.github.io/reason-react/blog/2017/07/05/021.html</guid>
+            <pubDate>Wed, 05 Jul 2017 06:00:00 GMT</pubDate>
+            <description><![CDATA[Small new breaking release! We've provided [a migration script](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#021). No big change except a better (and much demanded) `self` API. Enjoy!]]></description>
+        </item>
+        <item>
+            <title><![CDATA[0.1.5 Released]]></title>
+            <link>https://reasonml.github.io/reason-react/blog/2017/06/21/015.html</link>
+            <guid>https://reasonml.github.io/reason-react/blog/2017/06/21/015.html</guid>
+            <pubDate>Wed, 21 Jun 2017 06:00:00 GMT</pubDate>
+            <description><![CDATA[Thanks for the wait! Head over to [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#015) to see the changes. This is a small non-breaking release, though we did fix a ref-related issue that can cause type errors. The fix is]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Major New Release!]]></title>
+            <link>https://reasonml.github.io/reason-react/blog/2017/06/09/major-release.html</link>
+            <guid>https://reasonml.github.io/reason-react/blog/2017/06/09/major-release.html</guid>
+            <pubDate>Fri, 09 Jun 2017 06:00:00 GMT</pubDate>
+            <description><![CDATA[
+0.1.4 is released! We've got a new documentation website here, a brand new ReasonReact API, a smooth migration guide, and best of all: **no breaking change**! Head over to [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#014) for the incremental migration.
+
+]]></description>
+        </item>
+    </channel>
+</rss>
