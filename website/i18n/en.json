@@ -29,8 +29,8 @@
     "styles": "Styles",
     "Docs": "Docs",
     "Examples": "Examples",
-    "Blog": "Blog",
     "Community": "Community",
+    "Blog": "Blog",
     "GitHub": "GitHub",
     "Guide": "Guide",
     "Frequently Asked Questions": "Frequently Asked Questions"
@@ -44,6 +44,6 @@
     "Stay up to date|no description given": "Stay up to date",
     "Need help?|no description given": "Need help?",
     "This project is maintained by a dedicated group of people.|statement made to reader": "This project is maintained by a dedicated group of people.",
-    "Try It Out|no description given": "Try It Out"
+    "Get Started|no description given": "Get Started"
   }
 }
