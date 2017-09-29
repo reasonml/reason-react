@@ -17,6 +17,7 @@
     "url": "git+https://github.com/reasonml/reason-react.git"
   },
   "dependencies": {
-    "docusaurus": "^1.0.0-alpha.35"
+    "babel-preset-react": "^6.24.1",
+    "docusaurus": "^1.0.0-alpha.41"
   }
 }
