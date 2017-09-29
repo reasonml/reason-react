@@ -25,7 +25,7 @@ if (document.attachEvent ? document.readyState === "complete" : document.readySt
 
 class Footer extends React.Component {
   render() {
-    return null;
+    return <script src={this.props.config.baseUrl + 'js/redirectBlog.js'}></script>;
     const currentYear = new Date().getFullYear();
     return (
       <footer className="nav-footer" id="footer">
@@ -92,8 +92,6 @@ class Footer extends React.Component {
             <a href="https://github.com/reasonml/reason-react">GitHub</a>
           </div>
         </section>
-        {/* <script src="/highlightJs/highlight.pack.js"></script>
-        <script dangerouslySetInnerHTML={{__html: highlighterCode}} /> */}
       </footer>
     );
   }

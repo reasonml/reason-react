@@ -101,3 +101,13 @@ a.hash-link {
 .navPusher {
   height: auto;
 }
+
+.post-authorName {
+  /* annoying extra height even though it's unused */
+  display: none;
+}
+
+.mainContainer .wrapper .post .postHeader {
+  /* used to be 2em. too extreme */
+  padding: 1em 0 0;
+}
