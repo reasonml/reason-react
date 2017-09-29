@@ -8,7 +8,7 @@ test:
 
 dependencies:
   pre:
-    - sudo apt-get update; sudo apt-get install crowdin
+    - wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb && sudo dpkg -i crowdin.deb
 
 deployment:
   website:
