@@ -10,9 +10,17 @@
   }
 }
 
+/* code */
+.prism {
+  border: 1px solid rgba(218, 218, 218, 0.5);
+  border-radius: 6px;
+  padding: 15px;
+}
 .prism.language-javascript {
-  border-left: 4px solid #f7df1e;
   background-color: rgba(247, 223, 30, 0.03);
+}
+.prism .comment {
+  opacity: 0.7;
 }
 
 @media only screen and (min-width: 480px) {
