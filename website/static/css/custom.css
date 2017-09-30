@@ -10,20 +10,6 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .mainContainer .wrapper p {
-    font-size: 16px;
-  }
-
-  .homeWrapperInner {
-    flex-direction: column;
-  }
-
-  .homeWrapperWrapper {
-    background-image: none !important;
-  }
-}
-
 /* code */
 .prism {
   border: 1px solid #eee;
@@ -35,18 +21,6 @@
 }
 .prism .comment {
   opacity: 0.7;
-}
-
-@media only screen and (min-width: 480px) {
-  .projectTitle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .projectTitle > small {
-    max-width: 40%;
-  }
 }
 
 a.hash-link {
@@ -118,22 +92,33 @@ a.hash-link {
 }
 
 .homeWrapperWrapper {
-  background-image: url("../img/reason-react-white.svg");
   background-color: #f6f4f4;
-  background-repeat: no-repeat;
-  background-size: 50%;
-  background-position: 0% 100px;
+  overflow: hidden;
+  position: relative;
 }
+
+.spinner {
+  margin: auto;
+  position: absolute;
+  width: 800px;
+  left: 0px;
+  bottom: -400px;
+  animation:spin 750s linear infinite;
+  transition: opacity 2s;
+}
+
+@keyframes spin { 100% {transform:rotate(360deg); } }
 
 .homeWrapperInner {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 20px;
+  justify-content: space-evenly;
+  padding: 20px 0px 20px 0px;
 }
 
 .homeCodeSnippet {
   text-align: initial;
+  padding-top: 20px;
 }
 
 .homeCodeSnippet .prism {
@@ -161,29 +146,7 @@ a.hash-link {
   background-color:#f6f4f4;
 }
 
-@media only screen and (min-device-width: 360px) {
-  .projectTitle {
-    font-size: 30px;
-  }
-
-  .homeWrapperInner {
-    padding: 20px 0 20px 0;
-  }
-
-  .homeCodeSnippet {
-    padding-top: 20px;
-  }
-
-  .homeCodeSnippet .prism {
-    font-size: 13px;
-  }
-
-  .homeTagLine {
-    font-size: 20px;
-  }
-}
-
-/* overrides */
+/* overrides. Most of these should be upstreamed into docusaurus */
 
 .read-more .button {
   /* these buttons really shouldn't have any margin */
@@ -241,6 +204,38 @@ nav.toc .toggleNav ul li a.navItemActive {
 }
 
 .projectTitle {
-  font-weight: 500;
+  font-size: 50px;
+  font-weight: bold;
   font-family: proxima-nova,sans-serif;
+}
+
+.threePoints, .homeExamples {
+  padding-top: 20px;
+}
+
+/* end override */
+
+@media (max-width: 1024px) {
+  .mainContainer .wrapper p {
+    font-size: 16px;
+  }
+
+  .homeWrapperInner {
+    flex-direction: column;
+  }
+
+  .projectTitle {
+    font-size: 40px;
+  }
+
+  .spinner {
+    opacity: 0;
+  }
+}
+
+/* mobile */
+@media (max-width: 480px) {
+  .projectTitle {
+    font-size: 30px;
+  }
 }

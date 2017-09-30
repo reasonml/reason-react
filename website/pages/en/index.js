@@ -83,6 +83,8 @@ class HomeSplash extends React.Component {
 
         <div className="homeWrapperWrapper">
 
+          <img src={siteConfig.baseUrl + "img/reason-react-white.svg"} className="spinner"></img>
+
           <div className="wrapper homeWrapper">
             <div className="projectTitle">{siteConfig.title}</div>
 
@@ -121,7 +123,7 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
-          <Container padding={["bottom"]}>
+          <Container className="threePoints" padding={["bottom"]}>
             <GridBlock
               align="center"
               contents={[
@@ -142,7 +144,7 @@ class Index extends React.Component {
             />
           </Container>
 
-          <Container padding={["bottom", "top"]} className="homeExamples">
+          <Container padding={["bottom"]} className="homeExamples">
             <GridBlock
               contents={[
                 {
