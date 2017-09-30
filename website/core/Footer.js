@@ -29,7 +29,7 @@ class Footer extends React.Component {
       <span>
         <script src={this.props.config.baseUrl + 'js/redirectBlog.js'}></script>
         <script src={this.props.config.baseUrl + 'js/pjax.js'}></script>
-        <script dangerouslySetInnerHTML={{__html: 'new Pjax({selectors: [".navPusher"]})'}}></script>
+        <script dangerouslySetInnerHTML={{__html: 'new Pjax({selectors: [".navPusher > div"]})'}}></script>
       </span>
     );
     const currentYear = new Date().getFullYear();
