@@ -100,7 +100,7 @@ class HomeSplash extends React.Component {
 
         <div className="homeWrapperWrapper">
 
-          <img src={siteConfig.baseUrl + "img/reason-react-white.svg"} className="spinner"></img>
+          <img src={siteConfig.baseUrl + siteConfig.headerIcon} className="spinner" />
 
           <div className="wrapper homeWrapper">
             <div className="projectTitle">{siteConfig.title}</div>
@@ -122,22 +122,6 @@ class HomeSplash extends React.Component {
 }
 
 class Index extends React.Component {
-  //
-            // <GridBlock
-            //   contents={[
-            //     {
-            //       content: "Talk about learning how to use this",
-            //       image: siteConfig.baseUrl + "img/logo.png",
-            //       title: "Quick Start"
-            //     },
-            //     {
-            //       content: "Talk about learning how to use this",
-            //       image: siteConfig.baseUrl + "img/logo.png",
-            //       title: "Examples"
-            //     },
-            //   ]}
-            //   layout="twoColumn"
-            // />
   render() {
     let language = this.props.language || "en";
     const showcase = siteConfig.users
@@ -153,7 +137,7 @@ class Index extends React.Component {
       });
 
     return (
-      <div className="aaaaaaaaaaa">
+      <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
           <Container className="homeThreePoints" padding={["bottom"]}>
@@ -176,7 +160,8 @@ class Index extends React.Component {
               layout="threeColumn"
             />
           </Container>
-          <Container background="light" className="homeTwoPoints leftRightContainer quickStartAndExamples homeCodeSnippet">
+
+          <Container background="light" className="quickStartAndExamples homeCodeSnippet">
             <div>
               <h2>Quick Start</h2>
               <Marked>
@@ -199,6 +184,7 @@ class Index extends React.Component {
               />
           </div>
           </Container>
+
           <div className="productShowcaseSection paddingBottom">
             <h2>
               <translate>Projects Using ReasonReact</translate>

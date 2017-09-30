@@ -26,7 +26,7 @@ const examples = [
   {
     name: "Hacker News",
     image: "img/examples/hn.png",
-    link: "https://hackernewsmobile.com",
+    link: "https://github.com/reasonml-community/reason-react-hacker-news",
   },
   {
     name: "TodoMVC",

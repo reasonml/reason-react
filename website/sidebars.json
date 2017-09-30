@@ -12,12 +12,12 @@
       "cloneElement",
       "children",
       "dom",
-      "convert",
-      "miscellaneous"
+      "convert"
     ],
     "Frequently Asked Questions": [
       "common-errors",
-      "props-spread"
+      "props-spread",
+      "context-mixins"
     ]
   },
   "examples": {

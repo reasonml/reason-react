@@ -143,24 +143,19 @@ a.hash-link {
   color: white;
 }
 
-.homeThreePoints, .homeTwoPoints {
+.homeThreePoints {
   padding-top: 20px;
 }
 
-.homeTwoPoints {
-  /*background: linear-gradient(#f6f4f4, transparent);*/
-  display: flex;
+.quickStartAndExamples {
+  /* homeThreePoints + blockElement have 30 padding, so we should have 30 here too */
+  padding-top: 30px;
+  /* block padding of 80px is too huge */
+  padding-bottom: 30px;
 }
 
-.homeQuickStart {
-  border: 1px solid red;
-}
 
-.homeExamples {
-  border: 1px solid blue;
-}
-
-.leftRightContainer .wrapper {
+.quickStartAndExamples .wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -169,17 +164,13 @@ a.hash-link {
 }
 
 @media (max-width: 736px) {
-  .leftRightContainer .wrapper {
+  .quickStartAndExamples .wrapper {
     flex-direction: column;
   }
 }
 
-.quickStartAndExamples .imageAlignTop .blockImage {
-    max-width: 226px;
-}
-
 /* companies page */
-.button.addCompanyButton {
+.addCompanyButton {
   margin-top: 2em;
 }
 
@@ -244,6 +235,16 @@ nav.toc .toggleNav ul li a.navItemActive {
   font-size: 50px;
   font-weight: bold;
   font-family: proxima-nova,sans-serif;
+}
+
+.quickStartAndExamples .blockImage {
+  max-width: 226px;
+  box-shadow: 0px 0 20px lightgrey;
+  margin: 0;
+}
+
+.quickStartAndExamples .blockContent h2 {
+  margin: 0;
 }
 
 /* end override */
