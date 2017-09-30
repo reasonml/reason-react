@@ -25,7 +25,13 @@ if (document.attachEvent ? document.readyState === "complete" : document.readySt
 
 class Footer extends React.Component {
   render() {
-    return <script src={this.props.config.baseUrl + 'js/redirectBlog.js'}></script>;
+    return (
+      <span>
+        <script src={this.props.config.baseUrl + 'js/redirectBlog.js'}></script>
+        <script src={this.props.config.baseUrl + 'js/pjax.js'}></script>
+        <script dangerouslySetInnerHTML={{__html: 'new Pjax({selectors: [".navPusher"]})'}}></script>
+      </span>
+    );
     const currentYear = new Date().getFullYear();
     return (
       <footer className="nav-footer" id="footer">
