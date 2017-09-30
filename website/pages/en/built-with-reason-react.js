@@ -12,6 +12,8 @@ const React = require("react");
 const CompLibrary = require("../../core/CompLibrary.js");
 const Container = CompLibrary.Container;
 
+const translate = require("../../server/translate.js").translate;
+
 const siteConfig = require(process.cwd() + "/siteConfig.js");
 
 class Users extends React.Component {
@@ -19,28 +21,29 @@ class Users extends React.Component {
     const showcase = siteConfig.users.map(user => {
       return (
         <a href={user.infoLink}>
-          <img src={user.image} title={user.caption} />
+          <img
+            src={`${siteConfig.baseUrl}${user.image}`}
+            title={user.caption}
+          />
         </a>
       );
     });
 
     return (
       <div className="mainContainer">
-        <Container padding={["bottom", "top"]}>
+        <Container>
           <div className="showcaseSection">
             <div className="prose">
-              <h1>Who's Using This?</h1>
-              <p>This project is used by many folks</p>
+              <h1><translate>Built With ReasonReact</translate></h1>
             </div>
             <div className="logos">
               {showcase}
             </div>
-            <p>Are you using this project?</p>
             <a
-              href="https://github.com/deltice/test-site/edit/master/website/siteConfig.js"
-              className="button"
+              href="https://github.com/reasonml/reason-react/edit/master/website/siteConfig.js"
+              className="button addCompanyButton"
             >
-              Add your company
+              Add yours
             </a>
           </div>
         </Container>

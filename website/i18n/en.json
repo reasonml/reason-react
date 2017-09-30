@@ -36,6 +36,7 @@
     "Frequently Asked Questions": "Frequently Asked Questions"
   },
   "pages-strings": {
+    "Built With ReasonReact|no description given": "Built With ReasonReact",
     "Learn more using the [documentation on this site.](/test-site/docs/en/doc1.html)|no description given": "Learn more using the [documentation on this site.](/test-site/docs/en/doc1.html)",
     "Browse Docs|no description given": "Browse Docs",
     "Ask questions about the documentation and project|no description given": "Ask questions about the documentation and project",
@@ -44,6 +45,8 @@
     "Stay up to date|no description given": "Stay up to date",
     "Need help?|no description given": "Need help?",
     "This project is maintained by a dedicated group of people.|statement made to reader": "This project is maintained by a dedicated group of people.",
-    "Get Started|no description given": "Get Started"
+    "Get Started|no description given": "Get Started",
+    "Projects Using ReasonReact|no description given": "Projects Using ReasonReact",
+    "See Full List|no description given": "See Full List"
   }
 }

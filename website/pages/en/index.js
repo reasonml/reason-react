@@ -45,7 +45,7 @@ let make ::name _children => {
     </button>
 };`;
 
-// 
+//
 
 const quickStartScript1 = `npm install -g bs-platform
 bsb -init my-react-app -theme react
@@ -114,7 +114,7 @@ class HomeSplash extends React.Component {
 }
 
 class Index extends React.Component {
-  // 
+  //
             // <GridBlock
             //   contents={[
             //     {
@@ -139,7 +139,7 @@ class Index extends React.Component {
       .map(user => {
         return (
           <a href={user.infoLink}>
-            <img src={user.image} title={user.caption} />
+            <img src={`${siteConfig.baseUrl}${user.image}`} title={user.caption} />
           </a>
         );
       });
@@ -192,7 +192,22 @@ class Index extends React.Component {
               </div>
             </div>
           </Container>
-
+          <div className="productShowcaseSection paddingBottom">
+            <h2>
+              <translate>Projects Using ReasonReact</translate>
+            </h2>
+            <div className="logos">
+              {showcase}
+            </div>
+            <div className="more-users">
+              <a
+                className="button"
+                href={`${siteConfig.baseUrl}${this.props.language}/built-with-reason-react.html`}
+              >
+                <translate>See Full List</translate>
+              </a>
+            </div>
+          </div>
         </div>
         <script src={siteConfig.baseUrl + 'js/redirectIndex.js'}></script>
       </div>

@@ -153,12 +153,17 @@ a.hash-link {
 }
 
 .homeQuickStart {
-border: 1px solid red;  
+border: 1px solid red;
 }
 
 .homeExamples {
-border: 1px solid blue;  
+border: 1px solid blue;
 
+}
+
+/* companies page */
+.button.addCompanyButton {
+  margin-top: 2em;
 }
 
 /* overrides. Most of these should be upstreamed into docusaurus */

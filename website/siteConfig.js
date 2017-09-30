@@ -7,6 +7,21 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+const users = [
+  {
+    caption: "Facebook",
+    image: "img/logos/facebook.png",
+    infoLink: "https://www.facebook.com",
+    pinned: true
+  },
+  {
+    caption: "Messenger",
+    image: "img/logos/messenger.png",
+    infoLink: "https://messenger.com",
+    pinned: true
+  }
+];
+
 const siteConfig = {
   title: "ReasonReact" /* title for your website */,
   tagline: "A safer, simpler way to build React components",
@@ -23,7 +38,7 @@ const siteConfig = {
     { blog: true, label: "Blog" },
     { href: "https://github.com/reasonml/reason-react", label: "GitHub" },
   ],
-  users: [],
+  users,
   /* path to images for header/footer */
   headerIcon: "img/reason-react-white.svg",
   footerIcon: "img/reason-react-white.svg",
