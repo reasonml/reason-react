@@ -46,12 +46,34 @@ let make ::name _children => {
 };`;
 
 class HomeSplash extends React.Component {
-            // <div className="projectLogo">
-            //   <img src={siteConfig.baseUrl + "img/logo.png"} />
-            // </div>
+  // 
   render() {
+    let promoSection =
+      <div className="section promoSection">
+        <div className="promoRow">
+          <div className="pluginRowBlock">
+            <Button
+              className="getStarted"
+              href={
+                siteConfig.baseUrl +
+                "docs/" +
+                this.props.language +
+                "/getting-started.html"
+              }
+            >
+              <translate>Get Started</translate>
+            </Button>
+            <Button
+              href="https://jaredforsyth.com/2017/07/05/a-reason-react-tutorial"
+            >
+              Tutorial
+            </Button>
+          </div>
+        </div>
+      </div>;
     return (
       <div className="homeContainer">
+
         <div id="redirectBanner">
           <div>
             Hello! This particular page hash has moved to <a id="redirectLink"/>.
@@ -60,46 +82,20 @@ class HomeSplash extends React.Component {
         </div>
 
         <div className="homeWrapperWrapper">
-          <div className="wrapper homeWrapper">
-            <div className="inner">
-              <div className="projectTitle">
-                {siteConfig.title}
-              </div>
 
-<div className="fuck">
-  <div className="homeCodeSnippet">
-    <Prism>
-      {code}
-    </Prism>
-  </div>
-                  <div className="homeTagLine">
-                    {siteConfig.tagline}
-                  </div>
-</div>
-              <div className="section promoSection">
-                <div className="promoRow">
-                  <div className="pluginRowBlock">
-                    <Button
-                      className="getStarted"
-                      href={
-                        siteConfig.baseUrl +
-                        "docs/" +
-                        this.props.language +
-                        "/getting-started.html"
-                      }
-                    >
-                      <translate>Get Started</translate>
-                    </Button>
-                    <Button
-                      href="https://jaredforsyth.com/2017/07/05/a-reason-react-tutorial"
-                    >
-                      Tutorial
-                    </Button>
-                  </div>
-                </div>
+          <div className="wrapper homeWrapper">
+            <div className="projectTitle">{siteConfig.title}</div>
+
+            <div className="homeWrapperInner">
+              <div className="homeCodeSnippet">
+                <Prism>{code}</Prism>
               </div>
+              <div className="homeTagLine">{siteConfig.tagline}</div>
             </div>
+
+            {promoSection}
           </div>
+
         </div>
       </div>
     );

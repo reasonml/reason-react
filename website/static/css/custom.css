@@ -15,7 +15,7 @@
     font-size: 16px;
   }
 
-  .fuck {
+  .homeWrapperInner {
     flex-direction: column;
   }
 
@@ -124,16 +124,15 @@ a.hash-link {
   background-position: 100% 100px;
 }
 
-.fuck {
+.homeWrapperInner {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   padding: 20px;
 }
 
 .homeCodeSnippet {
   text-align: initial;
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .homeCodeSnippet .prism {
@@ -142,6 +141,7 @@ a.hash-link {
   padding-top: 0;
   padding-bottom: 0;
   margin: 0;
+  color: rgb(57, 57, 57);
 }
 
 .homeTagLine {
@@ -165,7 +165,7 @@ a.hash-link {
     font-size: 30px;
   }
 
-  .fuck {
+  .homeWrapperInner {
     padding: 20px 0 20px 0;
   }
 
