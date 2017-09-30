@@ -2039,6 +2039,7 @@ footer .copyright {
     flex-direction: column;
     align-items: center;
   }
+
   .projectTitle > small {
     max-width: 40%;
   }
@@ -2117,7 +2118,7 @@ a.hash-link {
   background-color: #f6f4f4;
   background-repeat: no-repeat;
   background-size: 50%;
-  background-position: 100% 100px;
+  background-position: 0% 100px;
 }
 
 .homeWrapperInner {
@@ -2165,9 +2166,16 @@ a.hash-link {
     padding: 20px 0 20px 0;
   }
 
+  .homeCodeSnippet {
+    padding-top: 20px;
+  }
+
   .homeCodeSnippet .prism {
-    padding: 0 0 20px 0;
     font-size: 13px;
+  }
+
+  .homeTagLine {
+    font-size: 20px;
   }
 }
 
