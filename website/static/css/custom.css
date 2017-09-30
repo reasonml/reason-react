@@ -139,7 +139,7 @@ a.hash-link {
 }
 
 .getStarted {
-  background-color: #db4d3f;
+  background-color: $primaryColor;
   color: white;
 }
 
