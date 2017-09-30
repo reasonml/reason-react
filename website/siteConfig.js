@@ -22,6 +22,17 @@ const users = [
   }
 ];
 
+const examples = [
+  {
+    name: "Hacker News",
+    image: "img/examples/hn.png",
+  },
+  {
+    name: "TodoMVC",
+    image: "img/examples/todomvc.png",
+  }
+]
+
 const siteConfig = {
   title: "ReasonReact" /* title for your website */,
   tagline: "A safer, simpler way to build React components",
@@ -39,6 +50,7 @@ const siteConfig = {
     { href: "https://github.com/reasonml/reason-react", label: "GitHub" },
   ],
   users,
+  examples,
   /* path to images for header/footer */
   headerIcon: "img/reason-react-white.svg",
   footerIcon: "img/reason-react-white.svg",

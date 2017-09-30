@@ -148,17 +148,34 @@ a.hash-link {
 }
 
 .homeTwoPoints {
-  background: linear-gradient(#f6f4f4, transparent);
+  /*background: linear-gradient(#f6f4f4, transparent);*/
   display: flex;
 }
 
 .homeQuickStart {
-border: 1px solid red;
+  border: 1px solid red;
 }
 
 .homeExamples {
-border: 1px solid blue;
+  border: 1px solid blue;
+}
 
+.leftRightContainer .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1024px;
+}
+
+@media (max-width: 736px) {
+  .leftRightContainer .wrapper {
+    flex-direction: column;
+  }
+}
+
+.quickStartAndExamples .imageAlignTop .blockImage {
+    max-width: 226px;
 }
 
 /* companies page */

@@ -45,14 +45,22 @@ let make ::name _children => {
     </button>
 };`;
 
-//
-
-const quickStartScript1 = `npm install -g bs-platform
+const pre = "```";
+const code = "`";
+const quickStart = `${pre}bash
+npm install -g bs-platform
 bsb -init my-react-app -theme react
 cd my-react-app
-npm install && npm start`;
+npm install && npm start
+${pre}
 
-const quickStartScript2 = `npm run build`;
+Then open another tab and do:
+
+${pre}bash
+npm run build
+${pre}
+
+Your apps are in the html files inside ${code}src/${code}!`;
 
 class HomeSplash extends React.Component {
   render() {
@@ -168,29 +176,27 @@ class Index extends React.Component {
               layout="threeColumn"
             />
           </Container>
-          <Container padding={["bottom"]} className="homeTwoPoints">
-            <div className="homeQuickStart">
-              <p>Quick Start</p>
-              <div className="homeCodeSnippet">
-                <Prism>{quickStartScript1}</Prism>
-              </div>
-              Then open another tab and do:
-              <div className="homeCodeSnippet">
-                <Prism>{quickStartScript2}</Prism>
-              </div>
-              Your apps are in the html files inside `src/`!
+          <Container background="light" className="homeTwoPoints leftRightContainer quickStartAndExamples homeCodeSnippet">
+            <div>
+              <h2>Quick Start</h2>
+              <Marked>
+                {quickStart}
+              </Marked>
             </div>
-            <div className="homeExamples">
-              <p>Examples</p>
-              <div>
-                <div>ReasonReact Hacker News</div>
-                <div>img</div>
-              </div>
-              <div>
-                <div>TodoMVC</div>
-                <div>img2</div>
-              </div>
-            </div>
+            <div>
+              <h2>Examples</h2>
+              <GridBlock
+                className="examples"
+                align="center"
+                contents={siteConfig.examples.map(example => ({
+                  title: example.name,
+                  image: example.image,
+                  imageAlign: "top",
+                  content: ""
+                }))}
+                layout="twoColumn"
+              />
+          </div>
           </Container>
           <div className="productShowcaseSection paddingBottom">
             <h2>
