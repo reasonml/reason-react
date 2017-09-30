@@ -23,7 +23,7 @@ class Button extends React.Component {
   render() {
     return (
       <div className="pluginWrapper">
-        <a className="button" href={this.props.href} target={this.props.target}>
+        <a className={`button ${this.props.className}`} href={this.props.href} target={this.props.target}>
           {this.props.children}
         </a>
       </div>
@@ -59,30 +59,28 @@ class HomeSplash extends React.Component {
           </div>
         </div>
 
-        <div
-          className="homeWrapperWrapper"
-          style={{backgroundImage: `url("${siteConfig.baseUrl}img/reason-react-white.svg")`}}>
+        <div className="homeWrapperWrapper">
           <div className="wrapper homeWrapper">
             <div className="inner">
-              <div className="projectTitle___a">
+              <div className="projectTitle">
                 {siteConfig.title}
+              </div>
 
 <div className="fuck">
-  <div className="fuckinner">
+  <div className="homeCodeSnippet">
     <Prism>
       {code}
     </Prism>
   </div>
-                  <div className="fuckinner2">
+                  <div className="homeTagLine">
                     {siteConfig.tagline}
                   </div>
 </div>
-
-              </div>
               <div className="section promoSection">
                 <div className="promoRow">
                   <div className="pluginRowBlock">
                     <Button
+                      className="getStarted"
                       href={
                         siteConfig.baseUrl +
                         "docs/" +
@@ -133,7 +131,7 @@ class Index extends React.Component {
               contents={[
                 {
                   title: "Safe and Sound",
-                  content: "No magic! It's Just Reason™. We leverage the existing type system to create a library that types just right.",
+                  content: "It's Just Reason. We leverage the existing type system to create a library that types just right.",
                 },
                 {
                   title: "Playground for Future React",
@@ -148,7 +146,7 @@ class Index extends React.Component {
             />
           </Container>
 
-          <Container padding={["bottom", "top"]} background="light">
+          <Container padding={["bottom", "top"]} className="homeExamples">
             <GridBlock
               contents={[
                 {

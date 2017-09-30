@@ -18,6 +18,10 @@
   .fuck {
     flex-direction: column;
   }
+
+  .homeWrapperWrapper {
+    background-image: none !important;
+  }
 }
 
 /* code */
@@ -113,26 +117,62 @@ a.hash-link {
 }
 
 .homeWrapperWrapper {
+  background-image: url("../img/reason-react-white.svg");
   background-color: #f6f4f4;
   background-repeat: no-repeat;
   background-size: 50%;
-  background-repeat: no-repeat;
   background-position: 100% 100px;
 }
 
 .fuck {
   display: flex;
-  flex: 1;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
-.fuckinner {
+.homeCodeSnippet {
   text-align: initial;
+  -webkit-backdrop-filter: blur(10px);
 }
 
-.fuckinner2 {
-  font-size: 20px;
+.homeCodeSnippet .prism {
+  background-color: transparent;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+}
+
+.homeTagLine {
+  font-size: 24px;
+  font-weight: 300;
+  max-width: 500px;
+  line-height: 1.5em;
+}
+
+.getStarted {
+  background-color: #db4d3f;
+  color: white;
+}
+
+.homeExamples {
+  background-color:#f6f4f4;
+}
+
+@media only screen and (min-device-width: 360px) {
+  .projectTitle {
+    font-size: 30px;
+  }
+
+  .fuck {
+    padding: 20px 0 20px 0;
+  }
+
+  .homeCodeSnippet .prism {
+    padding: 0 0 20px 0;
+    font-size: 13px;
+  }
 }
 
 /* overrides */
@@ -190,4 +230,9 @@ nav.toc .toggleNav ul li a.navItemActive {
 
 .navGroup {
   background-color: #f6f4f4 !important;
+}
+
+.projectTitle {
+  font-weight: 500;
+  font-family: proxima-nova,sans-serif;
 }
