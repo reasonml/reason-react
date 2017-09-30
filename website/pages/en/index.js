@@ -35,7 +35,7 @@ Button.defaultProps = {
   target: "_self"
 };
 
-const code =`let component = ReasonReact.statelessComponent "Greeting";
+const codeExample =`let component = ReasonReact.statelessComponent "Greeting";
 
 let make ::name _children => {
   ...component,
@@ -45,8 +45,16 @@ let make ::name _children => {
     </button>
 };`;
 
+// 
+
+const quickStartScript1 = `npm install -g bs-platform
+bsb -init my-react-app -theme react
+cd my-react-app
+npm install && npm start`;
+
+const quickStartScript2 = `npm run build`;
+
 class HomeSplash extends React.Component {
-  // 
   render() {
     let promoSection =
       <div className="section promoSection">
@@ -71,6 +79,7 @@ class HomeSplash extends React.Component {
           </div>
         </div>
       </div>;
+
     return (
       <div className="homeContainer">
 
@@ -91,7 +100,7 @@ class HomeSplash extends React.Component {
             <div className="homeWrapperInner">
               <div className="homeTagLine">{siteConfig.tagline}</div>
               <div className="homeCodeSnippet">
-                <Prism>{code}</Prism>
+                <Prism>{codeExample}</Prism>
               </div>
             </div>
 
@@ -160,6 +169,28 @@ class Index extends React.Component {
             />
           </Container>
           <Container padding={["bottom"]} className="homeTwoPoints">
+            <div className="homeQuickStart">
+              <p>Quick Start</p>
+              <div className="homeCodeSnippet">
+                <Prism>{quickStartScript1}</Prism>
+              </div>
+              Then open another tab and do:
+              <div className="homeCodeSnippet">
+                <Prism>{quickStartScript2}</Prism>
+              </div>
+              Your apps are in the html files inside `src/`!
+            </div>
+            <div className="homeExamples">
+              <p>Examples</p>
+              <div>
+                <div>ReasonReact Hacker News</div>
+                <div>img</div>
+              </div>
+              <div>
+                <div>TodoMVC</div>
+                <div>img2</div>
+              </div>
+            </div>
           </Container>
 
         </div>
