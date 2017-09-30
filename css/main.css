@@ -2124,6 +2124,7 @@ a.hash-link {
   padding-bottom: 0;
   margin: 0;
   color: rgb(57, 57, 57);
+  font-size: 14px;
 }
 
 .homeTagLine {
@@ -2138,8 +2139,22 @@ a.hash-link {
   color: white;
 }
 
+.homeThreePoints, .homeTwoPoints {
+  padding-top: 20px;
+}
+
+.homeTwoPoints {
+  background: linear-gradient(#f6f4f4, transparent);
+  display: flex;
+}
+
+.homeQuickStart {
+border: 1px solid red;  
+}
+
 .homeExamples {
-  background-color:#f6f4f4;
+border: 1px solid blue;  
+
 }
 
 /* overrides. Most of these should be upstreamed into docusaurus */
@@ -2205,10 +2220,6 @@ nav.toc .toggleNav ul li a.navItemActive {
   font-family: proxima-nova,sans-serif;
 }
 
-.threePoints, .homeExamples {
-  padding-top: 20px;
-}
-
 /* end override */
 
 @media (max-width: 1024px) {
@@ -2233,5 +2244,9 @@ nav.toc .toggleNav ul li a.navItemActive {
 @media (max-width: 480px) {
   .projectTitle {
     font-size: 30px;
+  }
+
+  .homeCodeSnippet .prism {
+    font-size: 13px;
   }
 }
