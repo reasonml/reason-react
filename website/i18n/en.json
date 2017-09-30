@@ -2,7 +2,7 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "A safer, simpler way to build React components in Reason.",
+    "tagline": "A safer, simpler way to build React components, in Reason.",
     "children": "Working with Children",
     "cloneElement": "cloneElement",
     "common-errors": "Common Type Errors",
