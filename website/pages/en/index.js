@@ -105,6 +105,22 @@ class HomeSplash extends React.Component {
 }
 
 class Index extends React.Component {
+  // 
+            // <GridBlock
+            //   contents={[
+            //     {
+            //       content: "Talk about learning how to use this",
+            //       image: siteConfig.baseUrl + "img/logo.png",
+            //       title: "Quick Start"
+            //     },
+            //     {
+            //       content: "Talk about learning how to use this",
+            //       image: siteConfig.baseUrl + "img/logo.png",
+            //       title: "Examples"
+            //     },
+            //   ]}
+            //   layout="twoColumn"
+            // />
   render() {
     let language = this.props.language || "en";
     const showcase = siteConfig.users
@@ -120,10 +136,10 @@ class Index extends React.Component {
       });
 
     return (
-      <div>
+      <div className="aaaaaaaaaaa">
         <HomeSplash language={language} />
         <div className="mainContainer">
-          <Container className="threePoints" padding={["bottom"]}>
+          <Container className="homeThreePoints" padding={["bottom"]}>
             <GridBlock
               align="center"
               contents={[
@@ -143,25 +159,7 @@ class Index extends React.Component {
               layout="threeColumn"
             />
           </Container>
-
-          <Container padding={["bottom"]} className="homeExamples">
-            <GridBlock
-              contents={[
-                {
-                  content: "Talk about learning how to use this",
-                  image: siteConfig.baseUrl + "img/logo.png",
-                  imageAlign: "right",
-                  title: "Quick Start"
-                },
-                {
-                  content: "Talk about learning how to use this",
-                  image: siteConfig.baseUrl + "img/logo.png",
-                  imageAlign: "right",
-                  title: "Examples"
-                },
-              ]}
-              layout="twoColumn"
-            />
+          <Container padding={["bottom"]} className="homeTwoPoints">
           </Container>
 
         </div>
