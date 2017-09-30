@@ -1,7 +1,8 @@
 ---
-id: reason-react
-title: Reason React
+id: what-why
+title: What & Why
 ---
+
 ReasonReact is a safer, simpler way to build React components in [Reason](http://reasonml.github.io/).
 
 It integrates deeply with language level features in order to create an expressive, statically typed API, packed into a tiny API surface area.

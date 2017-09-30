@@ -9,7 +9,7 @@
 
 const siteConfig = {
   title: "ReasonReact" /* title for your website */,
-  tagline: "A safer, simpler way to build React components in Reason.",
+  tagline: "A safer, simpler way to build React components, in Reason.",
   url: "https://reasonml.github.io/reason-react" /* your github url */,
   editUrl: "https://github.com/reasonml/reason-react/tree/master/docs/",
   recruitingLink: "https://crowdin.com/project/reason-react",
@@ -33,7 +33,7 @@ const siteConfig = {
     primaryColor: "#db4d3f",
     secondaryColor: "#db4d3f",
     prismColor:
-      "rgba(219, 77, 63, 0.03)" /* primaryColor in rgba form, with 0.03 alpha */
+      "rgba(243, 136, 136, 0.03)" /* primaryColor in rgba form, with 0.03 alpha */
   }
 };
 

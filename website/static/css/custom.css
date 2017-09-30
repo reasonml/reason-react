@@ -10,9 +10,19 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .mainContainer .wrapper p {
+    font-size: 16px;
+  }
+
+  .fuck {
+    flex-direction: column;
+  }
+}
+
 /* code */
 .prism {
-  border: 1px solid rgba(218, 218, 218, 0.5);
+  border: 1px solid #eee;
   border-radius: 6px;
   padding: 15px;
 }
@@ -36,10 +46,6 @@
 
 a.hash-link {
   transition: none;
-}
-
-.read-more .button {
-  margin: 0;
 }
 
 .fixedHeaderContainer {
@@ -106,8 +112,38 @@ a.hash-link {
   white-space: nowrap;
 }
 
-.navPusher {
-  height: auto;
+.homeWrapperWrapper {
+  background-color: #f6f4f4;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: 100% 100px;
+}
+
+.fuck {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.fuckinner {
+  text-align: initial;
+}
+
+.fuckinner2 {
+  font-size: 20px;
+}
+
+/* overrides */
+
+.read-more .button {
+  /* these buttons really shouldn't have any margin */
+  margin: 0;
+}
+.read-more {
+  /* ... the margin belongs to the wrapper */
+  margin: 20px 0 0 0;
 }
 
 .post-authorName {
@@ -115,7 +151,43 @@ a.hash-link {
   display: none;
 }
 
+.navPusher {
+  height: auto;
+}
+
 .mainContainer .wrapper .post .postHeader {
   /* used to be 2em. too extreme */
   padding: 1em 0 0;
+}
+
+.mainContainer .wrapper p {
+  padding: 0.8em 0 0 0;
+  line-height: 1.7;
+}
+
+.mainContainer .wrapper a {
+  text-decoration: none;
+}
+
+.mainContainer .wrapper a:hover {
+  text-decoration: underline;
+}
+
+nav.toc .toggleNav ul li a.navItemActive {
+  /* no bolding. Sometimes titles overflow when the text width changes */
+  font-weight: normal;
+}
+
+.blogContainer .posts .post {
+  /* this makes sure that when we click on a read more, the article itself has the same (aka 0) padding */
+  padding: 0 0 20px;
+}
+
+.mainContainer .wrapper .posts .post {
+  /* bottom margin too large for posts in the blog view */
+  margin-bottom: 0;
+}
+
+.navGroup {
+  background-color: #f6f4f4 !important;
 }
