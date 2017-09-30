@@ -39,7 +39,7 @@ const code =`let component = ReasonReact.statelessComponent "Greeting";
 
 let make ::name _children => {
   ...component,
-  render: fun self =>
+  render: fun _self =>
     <button>
       (ReasonReact.stringToElement "Hello!")
     </button>
@@ -87,10 +87,10 @@ class HomeSplash extends React.Component {
             <div className="projectTitle">{siteConfig.title}</div>
 
             <div className="homeWrapperInner">
+              <div className="homeTagLine">{siteConfig.tagline}</div>
               <div className="homeCodeSnippet">
                 <Prism>{code}</Prism>
               </div>
-              <div className="homeTagLine">{siteConfig.tagline}</div>
             </div>
 
             {promoSection}
@@ -149,9 +149,16 @@ class Index extends React.Component {
                   content: "Talk about learning how to use this",
                   image: siteConfig.baseUrl + "img/logo.png",
                   imageAlign: "right",
-                  title: "Learn How1"
+                  title: "Quick Start"
+                },
+                {
+                  content: "Talk about learning how to use this",
+                  image: siteConfig.baseUrl + "img/logo.png",
+                  imageAlign: "right",
+                  title: "Examples"
                 },
               ]}
+              layout="twoColumn"
             />
           </Container>
 
