@@ -10,19 +10,6 @@
   }
 }
 
-/* code */
-.prism {
-  border: 1px solid #eee;
-  border-radius: 6px;
-  padding: 15px;
-}
-.prism.language-javascript {
-  background-color: rgba(247, 223, 30, 0.03);
-}
-.prism .comment {
-  opacity: 0.7;
-}
-
 a.hash-link {
   transition: none;
 }
@@ -121,16 +108,6 @@ a.hash-link {
   padding-top: 20px;
 }
 
-.homeCodeSnippet .prism {
-  background-color: transparent;
-  border: none;
-  padding-top: 0;
-  padding-bottom: 0;
-  margin: 0;
-  color: rgb(57, 57, 57);
-  font-size: 14px;
-}
-
 .homeTagLine {
   font-size: 24px;
   font-weight: 300;
@@ -175,6 +152,21 @@ a.hash-link {
 }
 
 /* overrides. Most of these should be upstreamed into docusaurus */
+
+/* code */
+.prism {
+  margin-left: -15px;
+  margin-right: -15px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 15px;
+}
+.prism.language-javascript {
+  background-color: rgba(247, 223, 30, 0.03);
+}
+.prism .comment {
+  opacity: 0.7;
+}
 
 .read-more .button {
   /* these buttons really shouldn't have any margin */
@@ -276,4 +268,14 @@ nav.toc .toggleNav ul li a.navItemActive {
   .homeCodeSnippet .prism {
     font-size: 13px;
   }
+}
+
+.homeCodeSnippet .prism {
+  background-color: transparent;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  color: rgb(57, 57, 57);
+  font-size: 14px;
 }
