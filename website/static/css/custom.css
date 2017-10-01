@@ -46,6 +46,21 @@ a.hash-link {
   pointer-events: all;
 }
 
+#docsNav.container.docsNavContainer .toc {
+  position: fixed;
+  overflow-y: scroll;
+  bottom: 0;
+  padding: 0;
+  top: 90px;
+
+  margin-top: -90px;
+  padding-top: 90px;
+}
+
+#docsNav.container.docsNavContainer .toc::-webkit-scrollbar {
+    display: none;
+}
+
 #redirectMessage {
   font-size: 30px;
   line-height: 30px;
