@@ -45,7 +45,7 @@ const siteConfig = {
   baseUrl: "/reason-react/" /* base url for your project */,
   projectName: "reason-react",
   headerLinks: [
-    { doc: "getting-started", label: "Docs" },
+    { doc: "installation", label: "Docs" },
     { doc: "simple", label: "Examples" },
     { doc: "community", label: "Community" },
     { blog: true, label: "Blog" },

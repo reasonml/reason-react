@@ -1,7 +1,8 @@
 ---
 id: interop
-title: Interop With Existing JavaScript Components
+title: Interop With Existing ReactJS Components
 ---
+
 ### ReasonReact using ReactJS
 
 Easy! Since other Reason components only need you to expose a `make` function, fake one up:

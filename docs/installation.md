@@ -1,6 +1,6 @@
 ---
-id: getting-started
-title: Getting Started
+id: installation
+title: Installation
 ---
 
 To easily try ReasonReact, we offer two solutions with different goals in mind.
