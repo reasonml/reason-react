@@ -11,13 +11,19 @@
       "events",
       "cloneElement",
       "children",
-      "dom",
-      "convert"
+      "dom"
+    ],
+    "ReactJS Idioms Equivalents": [
+      "invalid-prop-name",
+      "props-spread",
+      "component-as-prop",
+      "ternary-shortcut",
+      "context-mixins"
     ],
     "Frequently Asked Questions": [
-      "common-errors",
-      "props-spread",
-      "context-mixins"
+      "im-having-a-type-error",
+      "record-field-reduce-handle-not-found",
+      "reduce-handle-callbacks-having-incompatible-types"
     ]
   },
   "examples": {

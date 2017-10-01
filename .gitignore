@@ -4,4 +4,5 @@ npm-debug.log
 finalOutput/*.js
 .merlin
 /lib/bs/
+/lib/ocaml/
 *.log
