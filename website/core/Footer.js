@@ -30,13 +30,14 @@ class Footer extends React.Component {
         <script src={this.props.config.baseUrl + 'js/redirectBlog.js'}></script>
         <script src={this.props.config.baseUrl + 'js/pjax-api.js'}></script>
         <script dangerouslySetInnerHTML={{__html: `new Pjax({
-  areas: [
-    // try to use the first query.
-    '.mainContainer, .toc .navWrapper',
-    // fallback
-    'body'
-  ]
-});`}}></script>
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .toc .navWrapper',
+            // fallback
+            'body'
+          ],
+          link: 'a:not(#languages-menu, #languages-dropdown a)'
+        });`}}></script>
       </span>
     );
     const currentYear = new Date().getFullYear();
