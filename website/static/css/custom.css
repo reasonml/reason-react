@@ -254,6 +254,10 @@ nav.toc .toggleNav ul li a.navItemActive {
   margin: 0;
 }
 
+.quickStartAndExamples .blockimage img {
+  border-radius: 3px;
+}
+
 /* end override */
 
 @media (max-width: 1024px) {

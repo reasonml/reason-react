@@ -29,7 +29,6 @@
     'faq': faq,
     'faq/': faq,
     'examples': examples,
-    'examples': examples,
     'examples/': examples,
     'gettingStarted.html': gettingStarted,
     'gettingStarted': gettingStarted,
