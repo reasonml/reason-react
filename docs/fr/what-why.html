@@ -14,4 +14,12 @@
           toggler.onclick = function() {
             nav.classList.toggle('docsSliderActive');
           };
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/fr" target="_blank">Translate this Doc</a><h1>What &amp; Why</h1></header><article><div><p>ReasonReact is a safer, simpler way to build React components in <a href="http://reasonml.github.io/" target="_blank">Reason</a>.</p><p>It integrates deeply with language level features in order to create an expressive, statically typed API, packed into a tiny API surface area.</p><p>By binding directly to ReactJS, ReasonReact gives you access to the entire React ecosystem, so that you can adopt it incrementally.</p><p><em>This documentation assumes relative familiarity with ReactJS.</em></p></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="installation.html#content">Next →</a></div></div></div></div><script src="/reason-react/js/redirectBlog.js"></script></div></body></html>
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/fr" target="_blank">Translate this Doc</a><h1>What &amp; Why</h1></header><article><div><p>ReasonReact is a safer, simpler way to build React components in <a href="http://reasonml.github.io/" target="_blank">Reason</a>.</p><p>It integrates deeply with language level features in order to create an expressive, statically typed API, packed into a tiny API surface area.</p><p>By binding directly to ReactJS, ReasonReact gives you access to the entire React ecosystem, so that you can adopt it incrementally.</p><p><em>This documentation assumes relative familiarity with ReactJS.</em></p></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="installation.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .toc .navWrapper',
+            // fallback
+            'body'
+          ],
+          link: 'a:not(#languages-menu, #languages-dropdown a)'
+        });</script></span></div></body></html>

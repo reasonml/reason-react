@@ -14,4 +14,12 @@
           toggler.onclick = function() {
             nav.classList.toggle('docsSliderActive');
           };
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/fr" target="_blank">Translate this Doc</a><h1>Record Field Reduce/Handle Not Found</h1></header><article><div><p>Do you see a type error related to this? This might mean that you&#x27;ve passed <code>self</code> to a helper function of your render, and it used it like so: <code>&lt;div onClick=(self.reduce click)/&gt;</code>. This is because the record can&#x27;t be found in the scope of the file. Just annotate it: <code>&lt;div onClick=(self.ReasonReact.reduce click)/&gt;</code>.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="im-having-a-type-error.html#content">← Previous</a><a class="docs-next button" href="reduce-handle-callbacks-having-incompatible-types.html#content">Next →</a></div></div></div></div><script src="/reason-react/js/redirectBlog.js"></script></div></body></html>
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/fr" target="_blank">Translate this Doc</a><h1>Record Field Reduce/Handle Not Found</h1></header><article><div><p>Do you see a type error related to this? This might mean that you&#x27;ve passed <code>self</code> to a helper function of your render, and it used it like so: <code>&lt;div onClick=(self.reduce click)/&gt;</code>. This is because the record can&#x27;t be found in the scope of the file. Just annotate it: <code>&lt;div onClick=(self.ReasonReact.reduce click)/&gt;</code>.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="im-having-a-type-error.html#content">← Previous</a><a class="docs-next button" href="reduce-handle-callbacks-having-incompatible-types.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .toc .navWrapper',
+            // fallback
+            'body'
+          ],
+          link: 'a:not(#languages-menu, #languages-dropdown a)'
+        });</script></span></div></body></html>
