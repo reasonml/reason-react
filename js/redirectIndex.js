@@ -17,7 +17,7 @@
     'working-with-children': 'children.html',
     'working-with-dom': 'dom.html',
     'convert-over-reactjs-idioms': 'convert.html',
-    'miscellaneous.html': 'getting-started.html#reason-scripts',
+    'miscellaneous': 'context-mixins.html',
     'common-type-errors': 'common-errors.html',
   };
   // they all start with reason-react
