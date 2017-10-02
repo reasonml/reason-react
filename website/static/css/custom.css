@@ -31,10 +31,23 @@ a.hash-link {
   width: auto;
   right: 0;
 }
-/* only targets language dropdown li, i swear */
 @media only screen and (min-width: 1024px) {
+  /* only targets language dropdown li, i swear */
   .nav-site > span > li {
     position: relative;
+  }
+  /* makes desktop nav scroll independently of content */
+  #docsNav.container.docsNavContainer .toc {
+    position: fixed;
+    overflow-y: scroll;
+    bottom: 0;
+    top: 0;
+    padding: 0;
+    padding-top: 90px;
+  }
+  /* safari fix */
+  #docsNav.container.docsNavContainer {
+    position: static;
   }
 }
 
@@ -46,19 +59,10 @@ a.hash-link {
   pointer-events: all;
 }
 
-#docsNav.container.docsNavContainer .toc {
-  position: fixed;
-  overflow-y: scroll;
-  bottom: 0;
-  padding: 0;
-  top: 90px;
 
-  margin-top: -90px;
-  padding-top: 90px;
-}
 
 #docsNav.container.docsNavContainer .toc::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 #redirectMessage {
