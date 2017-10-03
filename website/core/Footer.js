@@ -36,7 +36,7 @@ class Footer extends React.Component {
             // fallback
             'body'
           ],
-          link: 'a:not(#languages-menu, #languages-dropdown a)'
+          link: 'a:not(#languages-menu)'
         });`}}></script>
       </span>
     );
