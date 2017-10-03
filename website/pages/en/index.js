@@ -60,7 +60,7 @@ ${pre}bash
 npm run build
 ${pre}
 
-Your apps are in the html files inside ${code}src/${code}!`;
+Your apps are the html files inside ${code}src/${code}`;
 
 class HomeSplash extends React.Component {
   render() {
