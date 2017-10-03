@@ -35,8 +35,13 @@ class Footer extends React.Component {
             '.mainContainer, .toc .navWrapper',
             // fallback
             'body'
-          ],
-          link: 'a:not(#languages-menu)'
+          ]
+        });
+        var languagesMenuItem = document.getElementById("languages-menu");
+        languagesMenuItem.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
         });`}}></script>
       </span>
     );
