@@ -207,7 +207,17 @@ a.hash-link {
 
 .fixedHeaderContainer {
   /* why is it 8 at bottom in the original? */
-  padding: 10px 0 10px 0;
+  padding: 9px 0 9px 0;
+}
+
+.navigationSlider .slidingNav {
+  /* fixed makes this calculation *much* easier */
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: auto;
 }
 
 .mainContainer .wrapper .post .postHeader {
