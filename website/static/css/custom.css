@@ -14,10 +14,6 @@ a.hash-link {
   transition: none;
 }
 
-.fixedHeaderContainer {
-  padding: 9px 0;
-}
-
 /* only show language icon */
 #languages-menu {
   font-size: 0px;
@@ -207,6 +203,11 @@ a.hash-link {
 
 .navPusher {
   height: auto;
+}
+
+.fixedHeaderContainer {
+  /* why is it 8 at bottom in the original? */
+  padding: 10px 0 10px 0;
 }
 
 .mainContainer .wrapper .post .postHeader {
