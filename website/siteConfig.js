@@ -26,6 +26,12 @@ const users = [
     infoLink: "https://wowair.com",
     pinned: true
   },
+  {
+    caption: "BeOpinion",
+    image: "img/logos/beopinion.png",
+    infoLink: "https://beopinion.com",
+    pinned: true
+  },
 ];
 
 const examples = [
