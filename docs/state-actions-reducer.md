@@ -7,7 +7,7 @@ Finally, we're getting onto stateful components!
 
 ReasonReact stateful components are like ReactJS stateful components, except with the concept of "reducer" (like [Redux](http://redux.js.org)) built in. If that word doesn't mean anything to you, just think of it as a state machine. If _that_ word doesn't mean anything to you, just think: "Woah this is great".
 
-To declare a stateful ReasonReact component, instead of `ReasonReact.statelessComponent "MyComponentName"`, use `ReasonReact.reducerComponent "MyComponentName"`:
+To declare a stateful ReasonReact component, instead of `ReasonReact.statelessComponent "MyComponentName"`, use `ReasonReact.reducerComponent "MyComponentName"`.
 
 ```reason
 let component = ReasonReact.reducerComponent "Greeting";
@@ -16,7 +16,8 @@ let make ::name _children => {
   ...component,
   initialState: fun () => 0, /* here, state is an `int` */
   render: fun self => {
-    let greeting = "Hello " ^ name ^ ". You've clicked the button " ^ (string_of_int self.state) ^ " time(s)!";
+    let greeting =
+      "Hello " ^ name ^ ". You've clicked the button " ^ string_of_int self.state ^ " time(s)!";
     <div> (ReasonReact.stringToElement greeting) </div>
   }
 };
@@ -26,7 +27,7 @@ let make ::name _children => {
 
 ReactJS' `getInitialState` is called `initialState` in ReasonReact. It takes `unit` and returns the state type. The state type could be anything! An int, a string, a ref or the common record type, which you should declare **right** before the `reducerComponent` call:
 
-```
+```reason
 type state = {counter: int, showPopUp: bool};
 
 let component = ReasonReact.reducerComponent "Dialog";
@@ -44,7 +45,7 @@ Since the props are just the arguments on `make`, feel free to read into them to
 
 In ReactJS, you'd update the state inside a callback handler, e.g.
 
-```
+```javascript
 {
   ...
   handleClick: function() {
@@ -104,7 +105,7 @@ A few things:
 
 So, when a click on the dialog is triggered, we send the `Click` action to the reducer, which handles the `Click` case by returning the new state that increment a counter. ReasonReact takes the state and updates the component.
 
-**Note**: just like for `self.handle`, sometimes you might be forwarding `reduce` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Common Type Errors](common-errors.md). Example:
+**Note**: just like for `self.handle`, sometimes you might be forwarding `reduce` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Record Field `reduce`/`handle` Not Found](record-field-reduce-handle-not-found.md).
 
 ## State Update Through Reducer
 

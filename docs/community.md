@@ -14,6 +14,5 @@ Come say hi!
 
 ### Github
 
-- [Reason Org](https://github.com/reasonml)
+- [ReasonReact repo](https://github.com/reasonml/reason-react)
 - [Reason Community Org](https://github.com/reasonml-community)
-- [Reason Editor Plugins](https://github.com/reasonml-editor)

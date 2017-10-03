@@ -3,6 +3,8 @@ id: creation-props-self
 title: Creation, Props & Self
 ---
 
+_The documentation assumes relative familiarity with ReactJS._
+
 ReasonReact doesn't use/need classes. The component creation API gives you a plain record, whose fields (like `render`) you can override.
 
 The component template is created through `ReasonReact.statelessComponent "TheComponentName"`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).

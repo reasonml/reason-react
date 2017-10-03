@@ -3,9 +3,7 @@ id: lifecycles
 title: Lifecycles
 ---
 
-**Note that you should return `ReasonReact.NoUpdate` whenever possible from the lifecycle events**. In preparation for ReactJS fiber, we'll remove the ability to return a new state from lifecycles. If you need to update state, simply send an action to `reducer` and handle it correspondingly: `self.reduce (fun () => DidMountUpdate) ()`.
-
-ReasonReact supports the usuals:
+ReasonReact supports the familiar ReactJS lifecycle events.
 
 ```reason
 didMount: self => update state
@@ -28,6 +26,8 @@ Note:
 - `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
 - `willMount` is unsupported. Use `didMount` instead.
 - `didUpdate`, `willUpdate` and `shouldUpdate` take in a **`oldAndNewSelf` record**, of type `{oldSelf: self, newSelf: self}`. These two fields are the equivalent of ReactJS' `componentDidUpdate`'s `prevProps/prevState/` in conjunction with `props/state`. Likewise for `willUpdate` and `shouldUpdate`.
+
+**Note that you should return `ReasonReact.NoUpdate` whenever possible from the lifecycle events**. In preparation for ReactJS fiber, we'll remove the ability to return a new state from lifecycles. If you need to update state, simply send an action to `reducer` and handle it correspondingly: `self.reduce (fun () => DidMountUpdate) ()`.
 
 **Some new lifecyle methods act differently**. Described below.
 
