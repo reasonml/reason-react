@@ -19,7 +19,13 @@ const users = [
     image: "img/logos/messenger.png",
     infoLink: "https://messenger.com",
     pinned: true
-  }
+  },
+  {
+    caption: "WOW air",
+    image: "img/logos/wowair.svg",
+    infoLink: "https://wowair.com",
+    pinned: true
+  },
 ];
 
 const examples = [
