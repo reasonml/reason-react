@@ -10,13 +10,13 @@
 const users = [
   {
     caption: "Facebook",
-    image: "img/logos/facebook.png",
+    image: "img/logos/facebook.svg",
     infoLink: "https://www.facebook.com",
     pinned: true
   },
   {
     caption: "Messenger",
-    image: "img/logos/messenger.png",
+    image: "img/logos/messenger.svg",
     infoLink: "https://messenger.com",
     pinned: true
   },
