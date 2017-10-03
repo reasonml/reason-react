@@ -4,7 +4,7 @@
         <title>ReasonReact Blog</title>
         <link>https://reasonml.github.io/reason-react/blog</link>
         <description>The best place to stay up-to-date with the latest ReasonReact news and events.</description>
-        <lastBuildDate>Fri, 01 Sep 2017 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 02 Oct 2017 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -12,6 +12,15 @@
             <url>https://reasonml.github.io/reason-reactimg/reason-react-white.svg</url>
             <link>https://reasonml.github.io/reason-react/blog</link>
         </image>
+        <item>
+            <title><![CDATA[New Docs Site]]></title>
+            <link>https://reasonml.github.io/reason-react/blog/2017/10/02/new-docs-site.html</link>
+            <guid>https://reasonml.github.io/reason-react/blog/2017/10/02/new-docs-site.html</guid>
+            <pubDate>Mon, 02 Oct 2017 06:00:00 GMT</pubDate>
+            <description><![CDATA[_The ReactJS doc site has also been updated last friday **by pure coincidence**. No conspiracy theory!_
+
+Do you like the new look? There's been quite a bit of iterations on the new docs, with an eye toward settings up site templates for our future li]]></description>
+        </item>
         <item>
             <title><![CDATA[Reducers Are Here!]]></title>
             <link>https://reasonml.github.io/reason-react/blog/2017/09/01/reducers.html</link>

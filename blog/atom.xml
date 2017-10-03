@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://reasonml.github.io/reason-react/blog</id>
     <title>ReasonReact Blog</title>
-    <updated>2017-09-01T06:00:00Z</updated>
+    <updated>2017-10-02T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
     <link rel="alternate" href="https://reasonml.github.io/reason-react/blog"/>
     <subtitle>The best place to stay up-to-date with the latest ReasonReact news and events.</subtitle>
     <logo>https://reasonml.github.io/reason-reactimg/reason-react-white.svg</logo>
+    <entry>
+        <title type="html"><![CDATA[New Docs Site]]></title>
+        <id>https://reasonml.github.io/reason-react/blog/2017/10/02/new-docs-site.html</id>
+        <link href="https://reasonml.github.io/reason-react/blog/2017/10/02/new-docs-site.html">
+        </link>
+        <updated>2017-10-02T06:00:00Z</updated>
+        <summary type="html"><![CDATA[_The ReactJS doc site has also been updated last friday **by pure coincidence**. No conspiracy theory!_
+
+Do you like the new look? There's been quite a bit of iterations on the new docs, with an eye toward settings up site templates for our future li]]></summary>
+        <author>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Reducers Are Here!]]></title>
         <id>https://reasonml.github.io/reason-react/blog/2017/09/01/reducers.html</id>

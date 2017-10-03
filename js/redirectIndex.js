@@ -8,17 +8,17 @@
     'reason-react': 'reason-react.html',
     'intro-example': 'intro-example.html',
     'jsx': 'jsx.html',
-    'component-creation': 'component-creation.html',
-    'react-element': 'react-element.html',
+    'component-creation': 'creation-props-self.html',
+    'react-element': 'render.html',
     'interop-with-existing-javascript-components': 'interop.html',
-    'events': 'events.html',
-    'styles': 'styles.html',
-    'cloneelement': 'cloneElement.html',
+    'events': 'event.html',
+    'styles': 'style.html',
+    'cloneelement': 'cloneelement.html',
     'working-with-children': 'children.html',
     'working-with-dom': 'dom.html',
     'convert-over-reactjs-idioms': 'convert.html',
     'miscellaneous': 'context-mixins.html',
-    'common-type-errors': 'common-errors.html',
+    'common-type-errors': 'im-having-a-type-error.html',
   };
   // they all start with reason-react
   var hash = window.location.hash
