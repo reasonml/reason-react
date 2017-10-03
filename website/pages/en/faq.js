@@ -9,7 +9,7 @@ const siteConfig = require(process.cwd() + "/siteConfig.js");
 class FAQ extends React.Component {
   render() {
     return (
-      <div>
+      <div className="wrapper">
         <div id="redirectMessage">
           Hello! This page has moved to <a id="redirectLink"/>.
           Please update the URLs to reflect it. Thanks!

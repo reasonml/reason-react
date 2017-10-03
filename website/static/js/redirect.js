@@ -14,7 +14,7 @@
     '#examples-reasonreact-using-reactjs': 'retained-props.html',
     '#examples-reasonreact-using-reactjs': 'reason-using-js.html',
     '#examples-reactjs-using-reasonreact': 'js-using-reason.html',
-    default: 'example.html'
+    default: 'simple.html'
   };
   var gettingStarted = {
     '#getting-started': 'installation.html',
@@ -36,14 +36,14 @@
     'gettingStarted/': gettingStarted,
   };
   var hash = window.location.hash;
-  var base = '';
+  var base = '/reason-react/docs/en/';
   var path = window.location.pathname.split('/');
   var page = path[path.length - 1];
   if (redirects[page]) {
     var link = document.getElementById('redirectLink');
     var location = base +
       (redirects[page][hash] || redirects[page].default);
-    link.textContent = 'https://reasonml.github.io/reason-react/docs/en/' + location;
+    link.textContent = 'https://reasonml.github.io' + location;
     link.href = location;
   }
 })();

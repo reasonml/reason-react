@@ -93,10 +93,6 @@ a.hash-link {
   opacity: 1;
 }
 
-#redirectLink {
-  white-space: nowrap;
-}
-
 .homeWrapperWrapper {
   background-color: #f6f4f4;
   overflow: hidden;
