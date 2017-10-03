@@ -13,7 +13,7 @@
     'interop-with-existing-javascript-components': 'interop.html',
     'events': 'event.html',
     'styles': 'style.html',
-    'cloneelement': 'cloneelement.html',
+    'cloneelement': 'clone-element.html',
     'working-with-children': 'children.html',
     'working-with-dom': 'dom.html',
     'convert-over-reactjs-idioms': 'convert.html',
