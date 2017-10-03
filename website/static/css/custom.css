@@ -227,6 +227,11 @@ a.hash-link {
 
 .mainContainer .wrapper p {
   padding: 0.8em 0 0 0;
+}
+
+.mainContainer .wrapper p,
+.mainContainer .wrapper ul li,
+.mainContainer .wrapper ol li {
   line-height: 1.7;
 }
 
@@ -277,13 +282,25 @@ nav.toc .toggleNav ul li a.navItemActive {
   border-radius: 3px;
 }
 
+/* the empty space at the beginning of a standalone blog post is huge */
+.blogContainer .lonePost {
+  margin-top: 40px;
+}
+@media (max-width: 1024px) {
+  .blogContainer .lonePost {
+    margin-top: 20px;
+  }
+
+  .mainContainer .wrapper p,
+  .mainContainer .wrapper ul li,
+  .mainContainer .wrapper ol li {
+    font-size: 16px;
+  }
+}
+
 /* end override */
 
 @media (max-width: 1024px) {
-  .mainContainer .wrapper p {
-    font-size: 16px;
-  }
-
   .homeWrapperInner {
     flex-direction: column;
   }
