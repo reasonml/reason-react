@@ -166,6 +166,7 @@ a.hash-link {
   border: 1px solid #eee;
   border-radius: 6px;
   padding: 15px;
+  overflow: auto;
 }
 .prism.language-javascript {
   background-color: rgba(247, 223, 30, 0.03);
