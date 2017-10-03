@@ -28,6 +28,7 @@
     'faq.html': faq,
     'faq': faq,
     'faq/': faq,
+    'examples.html': examples,
     'examples': examples,
     'examples/': examples,
     'gettingStarted.html': gettingStarted,
@@ -35,6 +36,7 @@
     'gettingStarted/': gettingStarted,
   };
   var hash = window.location.hash;
+  var base = '';
   var path = window.location.pathname.split('/');
   var page = path[path.length - 1];
   if (redirects[page]) {
