@@ -6,9 +6,14 @@
       "intro-example"
     ],
     "Core": [
+      "creation-props-self",
       "jsx",
-      "component-creation",
-      "react-element",
+      "render",
+      "callback-handlers",
+      "state-actions-reducer",
+      "lifecycles",
+      "instance-variables",
+      "react-ref",
       "interop",
       "event",
       "style",
@@ -30,12 +35,13 @@
     ]
   },
   "examples": {
-    "Examples": [
+    "Code Snippets": [
       "simple",
       "counter",
       "retained-props",
       "reason-using-js",
-      "js-using-reason"
+      "js-using-reason",
+      "example-projects"
     ]
   },
   "community-menu": {

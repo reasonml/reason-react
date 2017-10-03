@@ -134,11 +134,6 @@ a.hash-link {
   line-height: 1.5em;
 }
 
-.getStarted {
-  background-color: $primaryColor;
-  color: white;
-}
-
 .homeThreePoints {
   padding-top: 20px;
 }
@@ -187,13 +182,17 @@ a.hash-link {
   opacity: 0.7;
 }
 
-.read-more .button {
+.button {
   /* these buttons really shouldn't have any margin */
   margin: 0;
 }
 .read-more {
   /* ... the margin belongs to the wrapper */
   margin: 20px 0 0 0;
+}
+.edit-page-link {
+  /* doc header H1 height is 45, button is 35, center it */
+  margin-top: 23px;
 }
 
 .post-authorName {
@@ -301,4 +300,11 @@ nav.toc .toggleNav ul li a.navItemActive {
   margin: 0;
   color: rgb(57, 57, 57);
   font-size: 14px;
+}
+
+.getStarted {
+  background-color: $primaryColor;
+  color: white;
+  /* buttons have 10px margin. Make the right padding 10px too so that it looks nicely spaced beside the Tutorial button */
+  margin: 0 10px 0 0;
 }

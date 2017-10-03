@@ -23,7 +23,7 @@ class Button extends React.Component {
   render() {
     return (
       <div className="pluginWrapper">
-        <a className={`button ${this.props.className}`} href={this.props.href} target={this.props.target}>
+        <a className={`button ${this.props.className || ""}`} href={this.props.href} target={this.props.target}>
           {this.props.children}
         </a>
       </div>
