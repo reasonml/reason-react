@@ -1,5 +1,5 @@
 ---
-id: cloneElement
+id: cloneelement
 title: cloneElement
 ---
 Signature: `let cloneElement: reactElement => props::Js.t {..}? => 'anyTypeHere => reactElement`;

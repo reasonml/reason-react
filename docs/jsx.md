@@ -54,4 +54,6 @@ Prop-less `<MyReasonComponent />` transforms to:
 ReasonReact.element (MyReasonComponent.make [||])
 ```
 
+The `make` above is exactly the `make` function you've seen in the previous section.
+
 **Note how `ref` and `key` have been lifted out of the JSX call into the `ReasonReact.element` call**. `ref` and `key` are reserved in ReasonReact, just like in ReactJS. **Don't** use them as props in your component!

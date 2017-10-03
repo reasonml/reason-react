@@ -17,7 +17,7 @@
       "interop",
       "event",
       "style",
-      "cloneElement",
+      "cloneelement",
       "children",
       "dom"
     ],

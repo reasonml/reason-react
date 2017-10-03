@@ -4,9 +4,9 @@
 
 (function() {
   var faq = {
-    '#frequently-asked-questions-common-type-errors': 'common-errors.html',
+    '#frequently-asked-questions-common-type-errors': 'im-having-a-type-error.html',
     '#frequently-asked-questions-how-do-i-do-props-spreading-div-thisprops': 'props-spread.html',
-    default: 'common-errors.html'
+    default: 'im-having-a-type-error.html'
   };
   var examples = {
     '#examples-simple': 'simple.html',
@@ -14,13 +14,13 @@
     '#examples-reasonreact-using-reactjs': 'retained-props.html',
     '#examples-reasonreact-using-reactjs': 'reason-using-js.html',
     '#examples-reactjs-using-reasonreact': 'js-using-reason.html',
-    default: 'simple.html'
+    default: 'example.html'
   };
   var gettingStarted = {
-    '#getting-started': 'getting-started.html',
-    '#getting-started-bsb': 'getting-started.html#bsb',
-    '#getting-started-reason-scripts': 'getting-started.html#reason-scripts',
-    default: 'getting-started.html'
+    '#getting-started': 'installation.html',
+    '#getting-started-bsb': 'installation.html#bsb',
+    '#getting-started-reason-scripts': 'installation.html#reason-scripts',
+    default: 'installation.html'
   };
   // redirects[page][hash] => new page;
   // yarn start only supports faq.html format, but gh pages upens up the other two.

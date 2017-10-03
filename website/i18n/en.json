@@ -5,7 +5,7 @@
     "tagline": "A safer, simpler way to build React components",
     "callback-handlers": "Callback Handlers",
     "children": "Children",
-    "cloneElement": "cloneElement",
+    "cloneelement": "cloneElement",
     "community": "Community",
     "component-as-prop": "Component as Prop",
     "creation-props-self": "Creation, Props & Self",
