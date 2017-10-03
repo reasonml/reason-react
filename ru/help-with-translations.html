@@ -8,13 +8,14 @@
             languagesDropDown.className = "hide";
           }
         });
-      </script></span></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer documentContainer postContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h2>Need help?</h2></header><p>This project is maintained by a dedicated group of people.</p><div class="gridBlock"><div class="blockElement threeByGridBlock"><div class="blockContent"><h2><div><p>Browse Docs</p></div></h2><div><p>Learn more using the <a href="/test-site/docs/en/doc1.html" target="">documentation on this site.</a></p></div></div></div><div class="blockElement threeByGridBlock"><div class="blockContent"><h2><div><p>Join the community</p></div></h2><div><p>Ask questions about the documentation and project</p></div></div></div><div class="blockElement threeByGridBlock"><div class="blockContent"><h2><div><p>Stay up to date</p></div></h2><div><p>Find out what&#x27;s new with this project</p></div></div></div></div></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+      </script></span></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer documentContainer postContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h2>Need help?</h2></header><p>This project is maintained by a dedicated group of people.</p><div class="gridBlock"><div class="blockElement threeByGridBlock"><div class="blockContent"><h2><div><p>Browse Docs</p></div></h2><div><p>Learn more using the <a href="/test-site/docs/en/doc1.html" target="">documentation on this site.</a></p></div></div></div><div class="blockElement threeByGridBlock"><div class="blockContent"><h2><div><p>Join the community</p></div></h2><div><p>Ask questions about the documentation and project</p></div></div></div><div class="blockElement threeByGridBlock"><div class="blockContent"><h2><div><p>Stay up to date</p></div></h2><div><p>Find out what&#x27;s new with this project</p></div></div></div></div></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
             // fallback
             'body'
-          ]
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a'
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){

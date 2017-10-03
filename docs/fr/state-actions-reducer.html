@@ -93,13 +93,14 @@
     <span class="token class-name">ReasonReact</span><span class="token punctuation">.</span><span class="token constructor variable">NoUpdate</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   render<span class="token punctuation">:</span> <span class="token keyword">fun</span> <span class="token punctuation">{</span>state<span class="token punctuation">}</span> <span class="token operator">=&gt;</span> <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token class-name">ReasonReact</span><span class="token punctuation">.</span>stringToElement <span class="token punctuation">(</span>string_of_int state<span class="token punctuation">.</span>count<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span></pre><p>Aka, creating a <code>reducer</code> handler as you would normally, and let that setInterval (or whatver async state setting you use) asynchronously call the callback returned by your <code>self.reduce</code>.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="callback-handlers.html#content">← Previous</a><a class="docs-next button" href="lifecycles.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+<span class="token punctuation">}</span><span class="token punctuation">;</span></pre><p>Aka, creating a <code>reducer</code> handler as you would normally, and let that setInterval (or whatver async state setting you use) asynchronously call the callback returned by your <code>self.reduce</code>.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="callback-handlers.html#content">← Previous</a><a class="docs-next button" href="lifecycles.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
             // fallback
             'body'
-          ]
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a'
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){

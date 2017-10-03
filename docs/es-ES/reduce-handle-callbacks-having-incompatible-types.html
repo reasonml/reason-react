@@ -14,13 +14,14 @@
           toggler.onclick = function() {
             nav.classList.toggle('docsSliderActive');
           };
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate this Doc</a><h1>reduce/handle callbacks having Incompatible Types</h1></header><article><div><p>You&#x27;ve probably passed <code>self.reduce</code> to a helper function that uses this <code>reduce</code> reference twice. For complex reasons this doesn&#x27;t type; you&#x27;d have to pass in the whole <code>self</code> to the helper.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="record-field-reduce-handle-not-found.html#content">← Previous</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate this Doc</a><h1>reduce/handle callbacks having Incompatible Types</h1></header><article><div><p>You&#x27;ve probably passed <code>self.reduce</code> to a helper function that uses this <code>reduce</code> reference twice. For complex reasons this doesn&#x27;t type; you&#x27;d have to pass in the whole <code>self</code> to the helper.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="record-field-reduce-handle-not-found.html#content">← Previous</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
             // fallback
             'body'
-          ]
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a'
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){

@@ -8,13 +8,14 @@
             languagesDropDown.className = "hide";
           }
         });
-      </script></span></ul></nav></div></header></div></div><div class="navPusher"><div><div id="redirectMessage">Hello! This page has moved to <a id="redirectLink"></a>. Please update the URLs to reflect it. Thanks!</div><script src="/reason-react/js/redirect.js"></script></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+      </script></span></ul></nav></div></header></div></div><div class="navPusher"><div><div id="redirectMessage">Hello! This page has moved to <a id="redirectLink"></a>. Please update the URLs to reflect it. Thanks!</div><script src="/reason-react/js/redirect.js"></script></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
             // fallback
             'body'
-          ]
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a'
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){

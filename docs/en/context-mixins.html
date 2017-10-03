@@ -14,13 +14,14 @@
           toggler.onclick = function() {
             nav.classList.toggle('docsSliderActive');
           };
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/miscellaneous.md" target="_blank">Edit this Doc</a><h1>Context &amp; Mixins?</h1></header><article><div><p>ReactJS&#x27; context API is currently unstable. To avoid excessive API surface, ReasonReact doesn&#x27;t bind to it (yet).</p><p>ReasonReact doesn&#x27;t support ReactJS mixins. Composing normal functions is a good alternative.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="ternary-shortcut.html#content">← Previous</a><a class="docs-next button" href="im-having-a-type-error.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/miscellaneous.md" target="_blank">Edit this Doc</a><h1>Context &amp; Mixins?</h1></header><article><div><p>ReactJS&#x27; context API is currently unstable. To avoid excessive API surface, ReasonReact doesn&#x27;t bind to it (yet).</p><p>ReasonReact doesn&#x27;t support ReactJS mixins. Composing normal functions is a good alternative.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="ternary-shortcut.html#content">← Previous</a><a class="docs-next button" href="im-having-a-type-error.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
             // fallback
             'body'
-          ]
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a'
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){

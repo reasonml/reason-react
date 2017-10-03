@@ -14,13 +14,14 @@
           toggler.onclick = function() {
             nav.classList.toggle('docsSliderActive');
           };
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate this Doc</a><h1>I&#x27;m Having a Type Error</h1></header><article><div><p>Check your terminal to see if we&#x27;ve provided a dedicated error message for your use-case! If not, please file an issue <a href="https://github.com/reasonml/reason-react/issues" target="_blank">here</a> or <a href="https://github.com/reasonml-community/error-message-improvement/issues" target="_blank">here</a>. Thanks!</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="context-mixins.html#content">← Previous</a><a class="docs-next button" href="record-field-reduce-handle-not-found.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate this Doc</a><h1>I&#x27;m Having a Type Error</h1></header><article><div><p>Check your terminal to see if we&#x27;ve provided a dedicated error message for your use-case! If not, please file an issue <a href="https://github.com/reasonml/reason-react/issues" target="_blank">here</a> or <a href="https://github.com/reasonml-community/error-message-improvement/issues" target="_blank">here</a>. Thanks!</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="context-mixins.html#content">← Previous</a><a class="docs-next button" href="record-field-reduce-handle-not-found.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
             // fallback
             'body'
-          ]
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a'
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){

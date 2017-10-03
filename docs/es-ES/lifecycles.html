@@ -56,13 +56,14 @@ willUnmount<span class="token punctuation">:</span> self <span class="token oper
 <span class="token punctuation">}</span></pre><h3><a class="anchor" name="willupdate"></a><code>willUpdate</code> <a class="hash-link" href="#willupdate">#</a></h3><p>ReactJS&#x27; <code>componentWillUpdate</code>&#x27;s <code>nextProps</code> is just the labeled arguments in <code>make</code>, and &quot;current props&quot; (aka <code>this.props</code>) is the props you&#x27;ve copied into <code>retainedProps</code>, accessible via <code>{oldSelf}</code>:</p><pre class="prism language-reason"><span class="token punctuation">{</span>
   <span class="token operator">...</span>component<span class="token punctuation">,</span>
   willUpdate<span class="token punctuation">:</span> <span class="token keyword">fun</span> <span class="token punctuation">{</span>oldSelf<span class="token punctuation">,</span> newSelf<span class="token punctuation">}</span> <span class="token operator">=&gt;</span> <span class="token operator">...</span>
-<span class="token punctuation">}</span></pre><h3><a class="anchor" name="didupdate"></a><code>didUpdate</code> <a class="hash-link" href="#didupdate">#</a></h3><p>ReactJS&#x27; <code>prevProps</code> is what you&#x27;ve synced in <code>retainedProps</code>, under <code>oldSelf</code>.</p><h3><a class="anchor" name="shouldupdate"></a><code>shouldUpdate</code> <a class="hash-link" href="#shouldupdate">#</a></h3><p>ReactJS&#x27; <code>shouldComponentUpdate</code> counterpart.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="state-actions-reducer.html#content">← Previous</a><a class="docs-next button" href="instance-variables.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+<span class="token punctuation">}</span></pre><h3><a class="anchor" name="didupdate"></a><code>didUpdate</code> <a class="hash-link" href="#didupdate">#</a></h3><p>ReactJS&#x27; <code>prevProps</code> is what you&#x27;ve synced in <code>retainedProps</code>, under <code>oldSelf</code>.</p><h3><a class="anchor" name="shouldupdate"></a><code>shouldUpdate</code> <a class="hash-link" href="#shouldupdate">#</a></h3><p>ReactJS&#x27; <code>shouldComponentUpdate</code> counterpart.</p></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="state-actions-reducer.html#content">← Previous</a><a class="docs-next button" href="instance-variables.html#content">Next →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
             // fallback
             'body'
-          ]
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a'
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){

@@ -8,13 +8,14 @@
             languagesDropDown.className = "hide";
           }
         });
-      </script></span></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ru" target="_blank">Translate this Doc</a><h1>Functional Component</h1></header><article><div><p>You can use a function as a component in ReactJS. In ReasonReact, this is not yet possible (soon!); though you can obviously just call the function without using the JSX syntax: <code>MyList.make className::&quot;foo&quot; [||]</code>.</p></div></article></div><div class="docs-prevnext"></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>new Pjax({
+      </script></span></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ru" target="_blank">Translate this Doc</a><h1>Functional Component</h1></header><article><div><p>You can use a function as a component in ReactJS. In ReasonReact, this is not yet possible (soon!); though you can obviously just call the function without using the JSX syntax: <code>MyList.make className::&quot;foo&quot; [||]</code>.</p></div></article></div><div class="docs-prevnext"></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
             // fallback
             'body'
-          ]
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a'
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){
