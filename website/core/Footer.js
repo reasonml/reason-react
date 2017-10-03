@@ -37,8 +37,8 @@ class Footer extends React.Component {
             'body'
           ]
         });
-        var languagesMenuItem = document.getElementById("languages-menu");
-        languagesMenuItem.addEventListener("click", function(e){
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
