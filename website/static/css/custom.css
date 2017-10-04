@@ -160,19 +160,20 @@ a.hash-link {
 /* overrides. Most of these should be upstreamed into docusaurus */
 
 /* fonts */
-body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
-}
-
-h1, h2, h3, h4 {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
-}
-.projectTitle {
+body, h1, h2, h3, h4, .projectTitle, .fixedHeaderContainer header h2  {
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
 }
 
 code, pre {
   font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;
+}
+
+code {
+  color: inherit;
+  background-color: rgba(243, 136, 136, 0.1);
+  border-radius: .3em;
+  box-shadow: 2px 0 rgba(243, 136, 136, 0.1), -2px 0 rgba(243, 136, 136, 0.1);
+  padding: 2px 0;
 }
 
 /* code */
