@@ -179,6 +179,23 @@ code {
 
 /* code */
 .prism {
+  /* this -15px margin offsets the usual margin given to a page. This way it looks like this:
+      |        |
+    | myCode     |
+      |        |
+
+    instead of:
+
+      |        |
+      | myCode |
+      |        |
+
+    might not be clear as ascii comment, but the **code words inside the code
+    block** are aligned with the page's boundaries; previously the code block
+    itself starts at the boundary, then has extra padding. Now the code words
+    themselves are aligned with the rest of the page's paragraphs' starting
+    point
+   */
   margin-left: -15px;
   margin-right: -15px;
   border: 1px solid #eee;
@@ -191,6 +208,18 @@ code {
 }
 .prism .comment {
   opacity: 0.7;
+}
+@media (max-width: 1024px) {
+  .prism {
+    margin-left: -10px;
+    margin-right: -10px;
+    padding: 10px;
+    /* on small screens, the code block completely occupies the width of the
+      view. No need for left/right borders */
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
 }
 
 .button {
