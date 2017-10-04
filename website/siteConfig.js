@@ -28,7 +28,7 @@ const users = [
   },
   {
     caption: "BeOpinion",
-    image: "img/logos/beopinion.png",
+    image: "img/logos/beopinion.svg",
     infoLink: "https://beopinion.com",
     pinned: true
   },
