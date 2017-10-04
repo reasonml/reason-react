@@ -1,13 +1,12 @@
-@media (min-width: 480px) {
-  .fixedHeaderContainer header > a > img, a.nav-home img {
-    transition: 3s;
-  }
-  .fixedHeaderContainer header > a:hover > img {
-    transform: rotate(1080deg);
-  }
-  a.nav-home:hover img {
-    transform: rotate(-1080deg);
-  }
+.fixedHeaderContainer header > a > img {
+  /* spinning logo */
+  transition: 3s;
+  /* make sure it's a square. Spins at the center */
+  height: 34px;
+  width: 34px;
+}
+.fixedHeaderContainer header > a:hover > img {
+  transform: rotate(1080deg);
 }
 
 a.hash-link {
