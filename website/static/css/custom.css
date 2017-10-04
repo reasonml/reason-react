@@ -142,7 +142,6 @@ a.hash-link {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 100%;
   max-width: 1024px;
 }
 
@@ -174,6 +173,8 @@ code {
   border-radius: .3em;
   box-shadow: 2px 0 rgba(243, 136, 136, 0.1), -2px 0 rgba(243, 136, 136, 0.1);
   padding: 2px 0;
+  /* avoids scale issues on mobile */
+  word-break: break-word;
 }
 
 /* code */
