@@ -159,6 +159,22 @@ a.hash-link {
 
 /* overrides. Most of these should be upstreamed into docusaurus */
 
+/* fonts */
+body {
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
+}
+.projectTitle {
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
+}
+
+code, pre {
+  font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;
+}
+
 /* code */
 .prism {
   margin-left: -15px;
