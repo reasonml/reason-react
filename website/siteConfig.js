@@ -80,7 +80,7 @@ const siteConfig = {
   },
   algolia: {
     apiKey: "55156da6520de795d3a2c2d23786f08e",
-    indexName: "reason-react"
+    indexName: "react-reason"
   },
 };
 
