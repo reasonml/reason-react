@@ -61,6 +61,8 @@ const siteConfig = {
     { doc: "simple", label: "Examples" },
     { doc: "community", label: "Community" },
     { blog: true, label: "Blog" },
+    { languages: true },
+    { search: true },
     { href: "https://github.com/reasonml/reason-react", label: "GitHub" },
   ],
   users,
@@ -75,7 +77,11 @@ const siteConfig = {
     secondaryColor: "#db4d3f",
     prismColor:
       "rgba(243, 136, 136, 0.03)" /* primaryColor in rgba form, with 0.03 alpha */
-  }
+  },
+  algolia: {
+    apiKey: "55156da6520de795d3a2c2d23786f08e",
+    indexName: "reason-react"
+  },
 };
 
 module.exports = siteConfig;

@@ -226,6 +226,24 @@ code {
   }
 }
 
+/* search */
+.navSearchWrapper {
+  align-self: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 34px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .navSearchWrapper {
+    position: relative;
+    top: auto;
+    right: auto;
+    padding-left: 10px;
+  }
+}
+
 .button {
   /* these buttons really shouldn't have any margin */
   margin: 0;
