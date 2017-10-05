@@ -162,8 +162,13 @@ body, h1, h2, h3, h4, .projectTitle, .fixedHeaderContainer header h2  {
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
 }
 
-code, pre {
-  font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;
+code, pre, code.prism, pre.prism {
+  font-family: "SFMono-Regular",source-code-pro,Menlo,Monaco,Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Consolas,"Courier New",Courier,monospace;
+}
+
+.prism {
+  font-size: 15px;
+  line-height: 23px;
 }
 
 code {
