@@ -36,7 +36,10 @@ class Footer extends React.Component {
             // fallback
             'body'
           ],
-          link: '.docsNavContainer:not(.docsSliderActive) a'
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
         });
         var languagesMenuItemCopy = document.getElementById("languages-menu");
         languagesMenuItemCopy.addEventListener("click", function(e){

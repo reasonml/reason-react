@@ -231,6 +231,9 @@ code {
   top: 10px;
   right: 10px;
   height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -240,6 +243,10 @@ code {
     right: auto;
     padding-left: 10px;
   }
+}
+
+.algolia-autocomplete {
+  bottom: auto;
 }
 
 .button {
