@@ -228,9 +228,8 @@ code {
 .navSearchWrapper {
   align-self: center;
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 10px;
-  height: 34px;
   display: flex;
   justify-content: center;
   align-items: center;
