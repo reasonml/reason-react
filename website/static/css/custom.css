@@ -166,11 +166,6 @@ code, pre, code.prism, pre.prism {
   font-family: "SFMono-Regular",source-code-pro,Menlo,Monaco,Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Consolas,"Courier New",Courier,monospace;
 }
 
-.prism {
-  font-size: 15px;
-  line-height: 23px;
-}
-
 code {
   color: inherit;
   background-color: rgba(243, 136, 136, 0.1);
@@ -206,6 +201,9 @@ code {
   border-radius: 6px;
   padding: 15px;
   overflow: auto;
+
+  font-size: 15px;
+  line-height: 23px;
 }
 .prism.language-javascript {
   background-color: rgba(247, 223, 30, 0.03);
