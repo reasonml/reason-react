@@ -2158,8 +2158,8 @@ body, h1, h2, h3, h4, .projectTitle, .fixedHeaderContainer header h2  {
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
 }
 
-code, pre {
-  font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;
+code, pre, code.prism, pre.prism {
+  font-family: "SFMono-Regular",source-code-pro,Menlo,Monaco,Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Consolas,"Courier New",Courier,monospace;
 }
 
 code {
@@ -2197,6 +2197,9 @@ code {
   border-radius: 6px;
   padding: 15px;
   overflow: auto;
+
+  font-size: 15px;
+  line-height: 23px;
 }
 .prism.language-javascript {
   background-color: rgba(247, 223, 30, 0.03);
@@ -2214,6 +2217,24 @@ code {
     border-radius: 0;
     border-left: none;
     border-right: none;
+  }
+}
+
+/* search */
+.navSearchWrapper {
+  align-self: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 34px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .navSearchWrapper {
+    position: relative;
+    top: auto;
+    right: auto;
+    padding-left: 10px;
   }
 }
 
