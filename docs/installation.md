@@ -5,7 +5,7 @@ title: Installation
 
 To easily try ReasonReact, we offer two solutions with different goals in mind.
 
-## Bsb (No Server)
+## Bsb
 
 **Goals**: simplicity, control, traditional app with several html files.
 
