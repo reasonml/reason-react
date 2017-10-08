@@ -228,11 +228,21 @@ code {
 .navSearchWrapper {
   align-self: center;
   position: absolute;
-  top: 15px;
+  top: 55px;
   right: 10px;
+  left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: auto;
+}
+
+@media only screen and (min-width: 375px) {
+  .navSearchWrapper {
+    top: 16px;
+    left: auto;
+    width: 50%;
+  }
 }
 
 @media only screen and (min-width: 1024px) {
@@ -285,6 +295,7 @@ code {
 }
 
 .navigationSlider .slidingNav {
+  background-color: $primaryColor;
   /* fixed makes this calculation *much* easier */
   box-sizing: border-box;
   position: fixed;
@@ -294,6 +305,11 @@ code {
   bottom: auto;
 }
 
+@media only screen and (max-width: 375px) {
+  .navigationSlider .slidingNav ul {
+    margin-top: 75px;
+  }
+}
 .mainContainer .wrapper .post .postHeader {
   /* used to be 2em. too extreme */
   padding: 1em 0 0;
