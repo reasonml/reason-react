@@ -34,7 +34,7 @@ ReasonReact.element (Greeting.make name::"John" [||]) /* the `make` function in 
 /* equivalent to <Greeting name="John" /> */
 ```
 
-`make` asks you to return a component record, of the same type than the `component` template above. You'd override a few fields, such as the familiar `render`, `initialState`, `didMount`, etc., all described later.
+`make` asks you to return the component record created above. You'd override a few fields, such as the familiar `render`, `initialState`, `didMount`, etc., all described later.
 
 **Note**: do **not** inline `let component` into the `make` function body like the following!
 
