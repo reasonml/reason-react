@@ -9,7 +9,7 @@ Reason comes with the [JSX](https://reasonml.github.io/guide/language/jsx) synta
 ### Uncapitalized
 
 ```reason
-<div foo=bar> child1 child2 </div>
+<div foo={bar}> {child1} {child2} </div>
 ```
 
 transforms into
@@ -39,7 +39,7 @@ React.createElement('div', undefined, child1, child2)
 ### Capitalized
 
 ```reason
-<MyReasonComponent key=a ref=b foo=bar baz=qux> child1 child2 </MyReasonComponent>
+<MyReasonComponent key={a} ref={b} foo={bar} baz={qux}> {child1} {child2} </MyReasonComponent>
 ```
 
 transforms to
