@@ -24,4 +24,4 @@ This will assign the extra `data-payload` and `aria-label` props (**both untyped
 
 For non-DOM components, you need to use valid prop names.
 
-You can also use `cloneElement` to simulate [prop spreading](reason-react.md#props-spread), but this is discouraged in ReasonReact.
+You can also use `cloneElement` to simulate [prop spreading](props-spread.md), but this is discouraged in ReasonReact.
