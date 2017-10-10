@@ -29,6 +29,12 @@ const users = [
     infoLink: "https://gain.ai",
     pinned: true
   },
+  {
+    caption: "Social Tables",
+    image: "img/logos/socialtables.svg",
+    infoLink: "https://www.socialtables.com",
+    pinned: true
+  },
 ];
 
 const examples = [
