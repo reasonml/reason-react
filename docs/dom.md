@@ -15,7 +15,7 @@ ReasonReact's ReactDOM module is called `ReactDOMRe`. The module exposes helpers
 
 - `findDOMNode` : `ReasonReact.reactRef => Dom.element`
 
-- `objToDOMProps` : `Js.t {..} => reactDOMProps` (see use-case in [Invalid Prop Name](convert.md#invalid-prop-name))
+- `objToDOMProps` : `Js.t {..} => reactDOMProps` (see use-case in [Invalid Prop Name](invalid-prop-name.md))
 
 - `domElementToObj` : `Dom.element => Js.t {..}`: turns a DOM element into a Js object whose fields that you can dangerously access.
 
