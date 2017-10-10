@@ -32,6 +32,12 @@ const users = [
     infoLink: "https://beopinion.com",
     pinned: true
   },
+  {
+    caption: "Gain by Sentia",
+    image: "img/logos/gain.svg",
+    infoLink: "https://gain.ai",
+    pinned: true
+  },
 ];
 
 const examples = [
