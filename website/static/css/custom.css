@@ -331,6 +331,15 @@ nav.toc .toggleNav ul li a.navItemActive {
   /* bottom margin too large for posts in the blog view */
   margin-bottom: 0;
 }
+.mainContainer .wrapper p,
+.mainContainer .wrapper li {
+  max-width: 50rem;
+}
+.blogContainer .postHeader h1,
+.blogContainer .postHeader .post-authorName,
+.mainContainer .wrapper .post .postHeader .post-meta {
+  text-align: inherit;
+}
 
 .navGroup {
   background-color: #f6f4f4 !important;
