@@ -128,6 +128,10 @@ _If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEf
 - If you need to do e.g. `ReactEventRe.BlablaEvent.preventDefault event`, do it in `self.reduce`, before returning the action type. Again, `reducer` must be pure.
 - If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.reduce`. You still needs to specify a `reducer` like so: `reducer: fun () _state => ReasonReact.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
 
+### Tip
+
+Cram as much as possible into `reducer`. Keep your actual callback handlers (the `self.reduce (fun foo => Bar))` part) dumb and small. This makes all your state updates & side-effects (which itself should mostly only be inside `ReasonReact.SideEffects` and `ReasonReact.UpdateWithSideEffects`) much easier to scan through. Also more ReactJS fiber async-mode resilient.
+
 ## Async State Setting
 
 In ReactJS, you could use `setState` inside a callback, like so:
