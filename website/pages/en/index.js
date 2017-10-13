@@ -167,7 +167,7 @@ class Index extends React.Component {
                 contents={siteConfig.examples.map(example => ({
                   title: example.name,
                   image: example.image,
-                  imageLink: `${siteConfig.baseUrl}${example.link}`,
+                  imageLink: example.link,
                   imageAlign: "top",
                   content: "",
                 }))}
