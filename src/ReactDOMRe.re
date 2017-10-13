@@ -147,7 +147,7 @@ external props :
   name::string? =>
   nonce::string? =>
   noValidate::Js.boolean? =>
-  open::Js.boolean? =>
+  open_::Js.boolean? =>
   optimum::int? =>
   pattern::string? => /* valid Js RegExp */
   placeholder::string? =>
@@ -330,7 +330,7 @@ external props :
   edgeMode::string? =>
   elevation::string? =>
   enableBackground::string? =>
-  end::string? =>
+  end_::string? =>
   exponent::string? =>
   externalResourcesRequired::string? =>
   fill::string? =>
@@ -366,7 +366,7 @@ external props :
   horizOriginX::string? =>
   ideographic::string? =>
   imageRendering::string? =>
-  in::string? =>
+  in_::string? =>
   in2::string? =>
   intercept::string? =>
   k::string? =>

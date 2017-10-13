@@ -13,6 +13,7 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - Preparation for namespace
 - Loosen `children`'s restriction
 - Fix `enqueue` logic. It's still scheduled to be removed in the next breaking version
+- DOM components (`ReactDOMRe`)'s `open`, `end` and `in` attributes are now changed to `open_`, `end_` and `in_` to avoid using reserved keywords
 
 # 0.3.0 (breaking)
 
