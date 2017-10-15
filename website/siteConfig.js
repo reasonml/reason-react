@@ -25,7 +25,7 @@ const users = [
   },
   {
     caption: "Gain by Sentia",
-    image: "img/logos/gain.svg",
+    image: "img/logos/gain_logo.svg",
     infoLink: "https://gain.ai",
     pinned: true
   },
