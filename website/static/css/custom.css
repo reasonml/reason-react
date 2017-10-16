@@ -100,7 +100,7 @@ a.hash-link {
   width: 800px;
   left: 0px;
   bottom: -400px;
-  animation:spin 750s linear infinite;
+  animation:spin 250s linear infinite;
   transition: opacity 2s;
 }
 
