@@ -519,14 +519,31 @@ let createClass (type reasonState retainedProps action) debugName :reactClass =>
         nextState##reasonStateVersionUsedToComputeSubelements#=nextReasonStateVersion;
         let nextSideEffects = List.rev nextState##sideEffects;
         if (nextSideEffects !== []) {
+          /* This can enqueue additional side effects */
           List.iter (fun performSideEffects => performSideEffects newSelf) nextSideEffects;
-          let nextStateNoSideEffects = {
-            "reasonState": nextState##reasonState,
-            "reasonStateVersion": nextState##reasonStateVersion,
-            "reasonStateVersionUsedToComputeSubelements": nextReasonStateVersion,
-            "sideEffects": []
-          };
-          thisJs##setState (Obj.magic nextStateNoSideEffects)
+          thisJs##setState (
+            fun futureTotalState _ => {
+              let rec initialSegment acc n l =>
+                switch l {
+                | [x, ...nextL] when n > 0 => initialSegment [x, ...acc] (n - 1) nextL
+                | _ => List.rev acc
+                };
+              /* Additional side effects are the initial segment. */
+              let newSideEffects = {
+                let acc = [];
+                let n =
+                  List.length futureTotalState##sideEffects - List.length nextState##sideEffects;
+                initialSegment acc n futureTotalState##sideEffects
+              };
+              let nextStateOnlyNewSideEffects = {
+                "reasonState": futureTotalState##reasonState,
+                "reasonStateVersion": futureTotalState##reasonStateVersion,
+                "reasonStateVersionUsedToComputeSubelements": futureTotalState##reasonStateVersionUsedToComputeSubelements,
+                "sideEffects": newSideEffects
+              };
+              nextStateOnlyNewSideEffects
+            }
+          )
         };
         ret
       };
