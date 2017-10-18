@@ -36,7 +36,7 @@ Which compiles to
 React.createElement('div', undefined)
 ```
 
-**Note that `ReactDOMRe.createElement` is intended for internal use**. Use `ReasonReact.createDomElement` instead. 
+**Note that `ReactDOMRe.createElement` is intended for internal use by the JSX transform**. For escape-hatch scenarios, use `ReasonReact.createDomElement` instead, as outlined in the [children section](children.md).
 
 ### Capitalized
 
