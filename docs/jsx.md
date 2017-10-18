@@ -27,13 +27,13 @@ React.createElement('div', {foo: bar}, child1, child2)
 Prop-less `<div />` transforms to:
 
 ```reason
-ReactDOMRe.createElement "div" [|child1, child2|]
+ReactDOMRe.createElement "div" [||]
 ```
 
 Which compiles to
 
 ```js
-React.createElement('div', undefined, child1, child2)
+React.createElement('div', undefined)
 ```
 
 ### Capitalized
