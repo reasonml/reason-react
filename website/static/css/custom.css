@@ -167,15 +167,6 @@ a.hash-link {
 
 /* overrides. Most of these should be upstreamed into docusaurus */
 
-/* fonts */
-body, h1, h2, h3, h4, .projectTitle, .fixedHeaderContainer header h2  {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
-}
-
-code, pre, code.prism, pre.prism {
-  font-family: "SFMono-Regular",source-code-pro,Menlo,Monaco,Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Consolas,"Courier New",Courier,monospace;
-}
-
 code {
   color: inherit;
   background-color: rgba(243, 136, 136, 0.1);
@@ -234,30 +225,6 @@ code {
   }
 }
 
-/* search */
-.navSearchWrapper {
-  align-self: center;
-  position: absolute;
-  top: 15px;
-  right: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@media only screen and (min-width: 1024px) {
-  .navSearchWrapper {
-    position: relative;
-    top: auto;
-    right: auto;
-    padding-left: 10px;
-  }
-}
-
-.algolia-autocomplete {
-  bottom: auto;
-}
-
 .button {
   /* these buttons really shouldn't have any margin */
   margin: 0;
@@ -280,75 +247,8 @@ code {
   }
 }
 
-.post-authorName {
-  /* annoying extra height even though it's unused */
-  display: none;
-}
-
 .navPusher {
   height: auto;
-}
-
-.fixedHeaderContainer {
-  /* why is it 8 at bottom in the original? */
-  padding: 9px 0 9px 0;
-}
-
-.navigationSlider .slidingNav {
-  /* fixed makes this calculation *much* easier */
-  box-sizing: border-box;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: auto;
-}
-
-.mainContainer .wrapper .post .postHeader {
-  /* used to be 2em. too extreme */
-  padding: 1em 0 0;
-}
-
-.mainContainer .wrapper p {
-  padding: 0.8em 0 0 0;
-}
-
-.mainContainer .wrapper p,
-.mainContainer .wrapper ul li,
-.mainContainer .wrapper ol li {
-  line-height: 1.7;
-}
-
-.mainContainer .wrapper a {
-  text-decoration: none;
-}
-
-.mainContainer .wrapper a:hover {
-  text-decoration: underline;
-}
-
-nav.toc .toggleNav ul li a.navItemActive {
-  /* no bolding. Sometimes titles overflow when the text width changes */
-  font-weight: normal;
-}
-
-.blogContainer .posts .post {
-  /* this makes sure that when we click on a read more, the article itself has the same (aka 0) padding */
-  padding: 0 0 20px;
-}
-
-.mainContainer .wrapper .posts .post {
-  /* bottom margin too large for posts in the blog view */
-  margin-bottom: 0;
-}
-.mainContainer .wrapper p,
-.mainContainer .wrapper li {
-  max-width: 50rem;
-}
-.blogContainer .postHeader h1,
-.blogContainer .postHeader .post-authorName,
-.mainContainer .wrapper .post .postHeader .post-meta {
-  text-align: inherit;
 }
 
 .navGroup {
@@ -373,22 +273,6 @@ nav.toc .toggleNav ul li a.navItemActive {
 
 .quickStartAndExamples .blockimage img {
   border-radius: 3px;
-}
-
-/* the empty space at the beginning of a standalone blog post is huge */
-.blogContainer .lonePost {
-  margin-top: 40px;
-}
-@media (max-width: 1024px) {
-  .blogContainer .lonePost {
-    margin-top: 20px;
-  }
-
-  .mainContainer .wrapper p,
-  .mainContainer .wrapper ul li,
-  .mainContainer .wrapper ol li {
-    font-size: 16px;
-  }
 }
 
 /* end override */
