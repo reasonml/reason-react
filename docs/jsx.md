@@ -36,6 +36,8 @@ Which compiles to
 React.createElement('div', undefined)
 ```
 
+**Note that `ReactDOMRe.createElement` is intended for internal use**. Use `ReasonReact.createDomElement` instead. 
+
 ### Capitalized
 
 ```reason
