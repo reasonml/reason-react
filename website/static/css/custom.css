@@ -9,6 +9,16 @@
   transform: rotate(1080deg);
 }
 
+@media (max-width: 375px) {
+  .logo {
+    display: none;
+  }
+
+  .headerTitle {
+    font-size: 17px;
+  }
+}
+
 a.hash-link {
   transition: none;
 }
