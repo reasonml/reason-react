@@ -793,9 +793,9 @@ diff@^3.3.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.4.0.tgz#b1d85507daf3964828de54b37d0d73ba67dda56c"
 
-docusaurus@^1.0.0-beta.3:
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/docusaurus/-/docusaurus-1.0.0-beta.3.tgz#69c05949fdb158827049c878a3830efb6e7e2075"
+docusaurus@^1.0.0-beta.4:
+  version "1.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/docusaurus/-/docusaurus-1.0.0-beta.4.tgz#902f9d9fb97caf018e38996a0558b78f0c931b8d"
   dependencies:
     babel-preset-env "^1.6.0"
     babel-preset-react "^6.24.1"
