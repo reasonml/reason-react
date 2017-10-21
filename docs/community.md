@@ -9,10 +9,9 @@ Come say hi!
 - [Discord](https://discord.gg/reasonml)
 - [Twitter](https://twitter.com/reasonml)
 - [Reddit](https://www.reddit.com/r/reasonml/)
-- [Stack Overflow](http://stackoverflow.com/questions/tagged/reason)
+- [Stack Overflow](http://stackoverflow.com/questions/tagged/reason-react)
 - IRC (freenode #reasonml)
 
 ### Github
 
 - [ReasonReact repo](https://github.com/reasonml/reason-react)
-- [Reason Community Org](https://github.com/reasonml-community)
