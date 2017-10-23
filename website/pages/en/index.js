@@ -166,7 +166,7 @@ class Index extends React.Component {
                 align="center"
                 contents={siteConfig.examples.map(example => ({
                   title: example.name,
-                  image: example.image,
+                  image: `${siteConfig.baseUrl}${example.image}`,
                   imageLink: example.link,
                   imageAlign: "top",
                   content: "",
