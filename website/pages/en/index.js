@@ -26,14 +26,11 @@ Button.defaultProps = {
   target: "_self"
 };
 
-const codeExample =`let component = ReasonReact.statelessComponent "Greeting";
+const codeExample =`let component = ReasonReact.statelessComponent("Greeting");
 
-let make ::name _children => {
+let make = (~name, _children) => {
   ...component,
-  render: fun _self =>
-    <button>
-      (ReasonReact.stringToElement "Hello!")
-    </button>
+  render: (_self) => <button> (ReasonReact.stringToElement("Hello!")) </button>
 };`;
 
 const pre = "```";
