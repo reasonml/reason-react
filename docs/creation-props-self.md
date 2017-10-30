@@ -7,30 +7,30 @@ _The documentation assumes relative familiarity with ReactJS._
 
 ReasonReact doesn't use/need classes. The component creation API gives you a plain record, whose fields (like `render`) you can override.
 
-The component template is created through `ReasonReact.statelessComponent "TheComponentName"`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).
+The component template is created through `ReasonReact.statelessComponent("TheComponentName")`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://facebook.github.io/react/docs/react-component.html#displayname)).
 
 As an example, here's the file `Greeting.re`:
 
 ```reason
-let component = ReasonReact.statelessComponent "Greeting";
+let component = ReasonReact.statelessComponent("Greeting");
 ```
 
 **In ReactJS**, you'd create a component class and call it through JSX which transforms into `React.createElement(myClass, {prop1: 'hello'})` under the hood. **In ReasonReact**, instead of passing the whole "class" (aka component template) into a hypothetical `ReasonReact.createElement` function, you'd instead declare a `make` function:
 
 ```reason
 /* still in Greeting.re */
-let component = ReasonReact.statelessComponent "Greeting";
+let component = ReasonReact.statelessComponent("Greeting");
 
-let make ::name children => {
+let make = (~name, _children) => {
   ...component, /* spread the template's other defaults into here  */
-  render: fun self => <div> (ReasonReact.stringToElement name) </div>
+  render: (self) => <div> {ReasonReact.stringToElement(name)} </div>
 };
 ```
 
 The `make` function is what's called by ReasonReact's JSX, described later. For now, the JSX-less way of calling & rendering a component is:
 
 ```reason
-ReasonReact.element (Greeting.make name::"John" [||]) /* the `make` function in the module `Greeting` */
+ReasonReact.element(Greeting.make(~name="John", [||])) /* the `make` function in the module `Greeting` */
 /* equivalent to <Greeting name="John" /> */
 ```
 
@@ -39,14 +39,14 @@ ReasonReact.element (Greeting.make name::"John" [||]) /* the `make` function in 
 **Note**: do **not** inline `let component` into the `make` function body like the following!
 
 ```reason
-let make _children => {...(ReasonReact.statelessComponent "Greeting"), render: fun blabla}
+let make = (_children) => {...(ReasonReact.statelessComponent("Greeting")), render: (self) => blabla}
 ```
 
 Since `make` is called at every JSX invocation, you'd be accidentally creating a fresh new component every time.
 
 ## Props
 
-Props are just the labeled arguments of the `make` function, seen above. They can also be optional and/or have defaults, e.g. `let make ::name ::age=? ::className="box" _children => ...`.
+Props are just the labeled arguments of the `make` function, seen above. They can also be optional and/or have defaults, e.g. `let make = (~name, ~age=?, ~className="box", _children) => ...`.
 
 The last prop **must** be `children`. If you don't use it, simply ignore it by naming it `_` or `_children`. Names starting with underscore don't trigger compiler warnings if they're unused.
 
@@ -75,7 +75,7 @@ Because `age` expects a normal `int` when you do call `Foo` with it, not an `opt
 ```reason
 switch ageFromProps {
 | None => <Foo name="Reason" />
-| Some nonNullableAge => <Foo name="Reason" age=nonNullableAge />
+| Some(nonNullableAge) => <Foo name="Reason" age=nonNullableAge />
 }
 ```
 
@@ -89,5 +89,5 @@ It says "I understand that `age` is optional and that when I use the label I sho
 
 ## `self`
 
-You might have seen the `render: fun self => ...` part in `make`. The concept of JavaScript `this` doesn't exist in ReasonReact (but can exist in Reason, since it has an optional object system); the `this` equivalent is called `self`. It's a record that contains `state`, `retainedProps`, `handle` and `reduce`, which we pass around to the lifecycle events, `make` and a few others, when they need the bag of information. These concepts will be explained later on.
+You might have seen the `render: (self) => ...` part in `make`. The concept of JavaScript `this` doesn't exist in ReasonReact (but can exist in Reason, since it has an optional object system); the `this` equivalent is called `self`. It's a record that contains `state`, `retainedProps`, `handle` and `reduce`, which we pass around to the lifecycle events, `make` and a few others, when they need the bag of information. These concepts will be explained later on.
 
