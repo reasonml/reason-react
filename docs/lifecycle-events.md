@@ -6,7 +6,7 @@ title: Lifecycles
 ReasonReact supports the familiar ReactJS lifecycle events.
 
 ```reason
-didMount: self => update state
+didMount: self => update(state)
 
 willReceiveProps: self => state
 
