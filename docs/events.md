@@ -8,7 +8,7 @@ ReasonReact events map cleanly to ReactJS [synthetic events](https://facebook.gi
 If you're accessing fields on your event object, like `event.target.value`, you'd use a combination of a `ReactDOMRe` helper and [BuckleScript's `##` object access FFI](http://bucklescript.github.io/bucklescript/Manual.html#_binding_to_js_objects):
 
 ```reason
-(ReactDOMRe.domElementToObj (ReactEventRe.Form.target event))##value
+ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
 ```
 
 More info on the `ReactDOMRe` module below in the [Working with DOM](dom.md) section.

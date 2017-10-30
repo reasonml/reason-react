@@ -15,7 +15,7 @@ Reason comes with the [JSX](https://reasonml.github.io/guide/language/jsx) synta
 transforms into
 
 ```reason
-ReactDOMRe.createElement "div" props::(ReactDOMRe.props foo::bar ()) [|child1, child2|]
+ReactDOMRe.createElement("div", ~props=ReactDOMRe.props(~foo=bar, ()), [|child1, child2|]);
 ```
 
 which compiles to the JS code:
@@ -27,7 +27,7 @@ React.createElement('div', {foo: bar}, child1, child2)
 Prop-less `<div />` transforms to:
 
 ```reason
-ReactDOMRe.createElement "div" [||]
+ReactDOMRe.createElement("div", [||]);
 ```
 
 Which compiles to
@@ -47,13 +47,17 @@ React.createElement('div', undefined)
 transforms to
 
 ```reason
-ReasonReact.element key::a ref::b (MyReasonComponent.make foo::bar baz::qux [|child1, child2|])
+ReasonReact.element(
+  ~key=a,
+  ~ref=b,
+  MyReasonComponent.make(~foo=bar, ~baz=qux, [|child1, child2|])
+);
 ```
 
 Prop-less `<MyReasonComponent />` transforms to:
 
 ```reason
-ReasonReact.element (MyReasonComponent.make [||])
+ReasonReact.element(MyReasonComponent.make([||]));
 ```
 
 The `make` above is exactly the `make` function you've seen in the previous section.

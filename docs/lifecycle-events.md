@@ -27,7 +27,7 @@ Note:
 - `willMount` is unsupported. Use `didMount` instead.
 - `didUpdate`, `willUpdate` and `shouldUpdate` take in a **`oldAndNewSelf` record**, of type `{oldSelf: self, newSelf: self}`. These two fields are the equivalent of ReactJS' `componentDidUpdate`'s `prevProps/prevState/` in conjunction with `props/state`. Likewise for `willUpdate` and `shouldUpdate`.
 
-**Note that you should return `ReasonReact.NoUpdate` whenever possible from the lifecycle events**. In preparation for ReactJS fiber, we'll remove the ability to return a new state from lifecycles. If you need to update state, simply send an action to `reducer` and handle it correspondingly: `self.reduce (fun () => DidMountUpdate) ()`.
+**Note that you should return `ReasonReact.NoUpdate` whenever possible from the lifecycle events**. In preparation for ReactJS fiber, we'll remove the ability to return a new state from lifecycles. If you need to update state, simply send an action to `reducer` and handle it correspondingly: `self.reduce(() => DidMountUpdate, ())`.
 
 **Some new lifecyle methods act differently**. Described below.
 
@@ -38,17 +38,17 @@ One pattern that's sometimes used in ReactJS is accessing a lifecyle event's `pr
 ```reason
 type retainedProps = {message: string};
 
-let component = ReasonReact.statelessComponentWithRetainedProps "RetainedPropsExample";
+let component = ReasonReact.statelessComponentWithRetainedProps("RetainedPropsExample");
 
-let make ::message _children => {
+let make = (~message, _children) => {
   ...component,
   retainedProps: {message: message},
-  didUpdate: fun {oldSelf, newSelf} =>
+  didUpdate: ({oldSelf, newSelf}) =>
     if (oldSelf.retainedProps.message !== newSelf.retainedProps.message) {
       /* do whatever sneaky imperative things here */
-      Js.log "props `message` changed!"
+      Js.log("props `message` changed!")
     },
-  render: fun _self => ...
+  render: (_self) => ...
 };
 ```
 
@@ -61,21 +61,21 @@ Traditional ReactJS `componentWillReceiveProps` takes in a `nextProps`. We don't
 ```reason
 type state = {someToggle: bool};
 
-let component = ReasonReact.reducerComponentWithRetainedProps "MyComponent";
+let component = ReasonReact.reducerComponentWithRetainedProps("MyComponent");
 
-let make ::name _children => {
+let make = (~name, _children) => {
   ...component,
-  initialState: fun () => {someToggle: false},
+  initialState: () => {someToggle: false},
   /* just like state, the retainedProps field can return anything! Here it retained the `name` prop's value */
   retainedProps: name,
-  willReceiveProps: fun self => {
+  willReceiveProps: (self) => {
     if (self.retainedProps === name) {
-      /* previous ReactJS logic would be: if (props.name === nextProps.name)
       ...
-    }
+      /* previous ReactJS logic would be: if (props.name === nextProps.name) */
+    };
     ...
   }
-}
+};
 ```
 
 ### `willUpdate`
@@ -85,7 +85,7 @@ ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `m
 ```reason
 {
   ...component,
-  willUpdate: fun {oldSelf, newSelf} => ...
+  willUpdate: {oldSelf, newSelf} => ...
 }
 ```
 

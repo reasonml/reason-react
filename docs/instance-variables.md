@@ -17,20 +17,18 @@ In reality, this is nothing but a thinly veiled way to mutate a component's "sta
 
 ```reason
 type state = {
-  someRandomState: option string,
-  intervalId: ref (option int)
+  someRandomState: option(string),
+  intervalId: ref(option(int))
 };
 
 let component = ...; /* remember, `component` needs to be close to `make`, and after `state` type declaration! */
-let make _children => {
+
+let make = (_children) => {
   ...component,
-  initialState: fun () => {
-    someRandomState: Some "hello",
-    intervalId: ref None
-  },
-  didMount: fun {state} => {
+  initialState: () => {someRandomState: Some("hello"), intervalId: ref(None)},
+  didMount: ({state}) => {
     /* mutate the value here */
-    state.intervalId := Some (Js.Global.setInterval ...);
+    state.intervalId := Some(Js.Global.setInterval(...));
     /* no extra state update needed */
     ReasonReact.NoUpdate
   },
