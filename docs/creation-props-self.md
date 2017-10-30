@@ -23,7 +23,7 @@ let component = ReasonReact.statelessComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component, /* spread the template's other defaults into here  */
-  render: (self) => <div> (ReasonReact.stringToElement(name)) </div>
+  render: (self) => <div> {ReasonReact.stringToElement(name)} </div>
 };
 ```
 
