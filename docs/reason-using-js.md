@@ -3,7 +3,7 @@ id: reason-using-js
 title: ReasonReact using ReactJS
 ---
 MyBanner.js:
-```
+```javascript
 var ReactDOM = require('react-dom');
 var React = require('react');
 var App = React.createClass({
