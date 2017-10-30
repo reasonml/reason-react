@@ -32,7 +32,7 @@ let make = (~name, _children) => {
   ...component,
   render: (_self) =>
     <button>
-      (ReasonReact.stringToElement("Hello!"))
+      {ReasonReact.stringToElement("Hello!")}
     </button>
 };`;
 
