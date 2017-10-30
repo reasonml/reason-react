@@ -18,9 +18,9 @@ If you're just forwarding a callback prop onto your child, you'd do exactly the 
 ```reason
 let component = ...;
 
-let make ::name ::onClick _children => {
+let make (~name, ~onClick, _children) => {
   ...component,
-  render: fun self => <button onClick=onClick />
+  render: (self) => <button onClick=onClick />
 };
 ```
 
@@ -31,11 +31,11 @@ Similarly, to pre-process a value before sending it back to the component's owne
 ```reason
 let component = ...;
 
-let make ::name ::onClick _children => {
+let make (~name, ~onClick, _children) => {
   let click event => onClick name; /* pass the name string up to the owner */
   {
     ...component,
-    render: fun self => <button onClick=click />
+    render: (self) => <button onClick=click />
   }
 };
 ```
@@ -46,15 +46,15 @@ To access `state`, `retainedProps` and the other items in `self` from a callback
 
 ```reason
 let component = ...;
-let make ::name ::onClick _children =>
-  let click event self => {
-    onClick event;
-    Js.log self.state;
+let make (~name, ~onClick, _children) =>
+  let click = (event, self) => {
+    onClick(event);
+    Js.log(self.state);
   };
   {
     ...component,
     initialState: ...,
-    render: fun self => <button onClick=(self.handle click) />
+    render: (self) => <button onClick={self.handle(click)} />
   }
 };
 ```
@@ -88,7 +88,8 @@ handleSubmit: function(username, password, event) {
 You cannot write such `handleSubmit` in ReasonReact, as `handle` expects to wrap around a function that only takes **one** argument. Here's the workaround:
 
 ```
-let handleSubmitEscapeHatch username password event => self.handle (fun tupleOfThreeItems => doSomething tupleOfThreeItems) (username, password, event);
+let handleSubmitEscapeHatch = (username, password, event) => 
+        self.handle((tupleOfThreeItems) => doSomething(tupleOfThreeItems))(username, password, event));
 ...
 <MyForm onUserClickedSubmit=(handleSubmitEscapeHatch) />
 ```
