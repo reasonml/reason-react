@@ -7,7 +7,7 @@ title: Render
 
 ```reason
 ...
-    render: fun self => <div />
+    render: (self) => <div />
 ...
 ```
 
@@ -19,6 +19,6 @@ Fortunately, we special-case a few special elements of the type `ReasonReact.rea
 
 - `ReasonReact.nullElement`: This is your `null` equivalent for `render`'s return value. Akin to `return null` in ReactJS render.
 
-- `ReasonReact.stringToElement`: Takes a string and converts it to a `reactElement`. You'd use `<div> (ReasonReact.stringToElement (string_of_int 10)) </div>` to display an int.
+- `ReasonReact.stringToElement`: Takes a string and converts it to a `reactElement`. You'd use `<div> {ReasonReact.stringToElement(string_of_int(10))} </div>` to display an int.
 
 - `ReasonReact.arrayToElement`: Takes an array and converts it to a `reactElement`.
