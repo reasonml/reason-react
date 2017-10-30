@@ -18,7 +18,7 @@ let make = (~name, _children) => {
   render: (self) => {
     let greeting =
       "Hello " ++ ". You've clicked the button2  " ++ string_of_int(state.state) ++ " time(s)!";
-    <div> (ReasonReact.stringToElement(greeting)) </div>
+    <div> {ReasonReact.stringToElement(greeting)} </div>
   }
 };
 
@@ -95,7 +95,7 @@ let make = (_children) => {
         onClick=(self.reduce((_event) => Click))
         onSubmit=(self.reduce((_event) => Toggle))
       />
-      (ReasonReact.stringToElement(message))
+      {ReasonReact.stringToElement(message)}
     </div>
   }
 };
@@ -121,7 +121,7 @@ Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of 
 - `ReasonReact.NoUpdate`: don't do a state update.
 - `ReasonReact.Update state`: update the state.
 - `ReasonReact.SideEffects((self) => unit)`: no state update, but trigger a side-effect, e.g. `ReasonReact.SideEffects((_self) => Js.log "hello!"))`.
-- `ReasonReact.UpdateWithSideEffects(state, ((self) => unit))`: update the state, **then** trigger a side-effect.
+- `ReasonReact.UpdateWithSideEffects(state, (self) => unit)`: update the state, **then** trigger a side-effect.
 
 _If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEffects`. See reasonReact.rei to see what they do. Don't use them if you're trying to update a ref/timer/subscription/any other instance variable_.
 
@@ -173,7 +173,7 @@ let make = (_children) => {
     self.state.timerId := Some(Js.Global.setInterval(self.reduce((_) => Tick), 1000));
     ReasonReact.NoUpdate
   },
-  render: ({state}) => <div> (ReasonReact.stringToElement(string_of_int(state.count))) </div>
+  render: ({state}) => <div> {ReasonReact.stringToElement(string_of_int(state.count))} </div>
 };
 
 ```
