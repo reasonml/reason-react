@@ -7,10 +7,7 @@ Since CSS-in-JS is all the rage right now, we'll recommend our official pick soo
 
 ```reason
 <div style=(
-  ReactDOMRe.Style.make
-    color::"#444444"
-    fontSize::"68px"
-    ()
+  ReactDOMRe.Style.make(~color="#444444", ~fontSize="68px", ())
 )/>
 ```
 
@@ -21,6 +18,6 @@ It's a labeled (typed!) function call that maps to the familiar style object `{c
 The above `Style.make` API will safely type check every style field! However, we might have missed some more esoteric fields. If that's the case, the type system will tell you that the field you're trying to add doesn't exist. To remediate this, we're exposing a `ReactDOMRe.Style.unsafeAddProp` to dangerously add a field to a style:
 
 ```reason
-let myStyle = ReactDOMRe.Style.make color::"#444444" fontSize::"68px" ();
-let newStyle = ReactDOMRe.Style.unsafeAddProp myStyle "width" "10px";
+let myStyle = ReactDOMRe.Style.make(~color="#444444", ~fontSize="68px", ());
+let newStyle = ReactDOMRe.Style.unsafeAddProp(myStyle, "width", "10px");
 ```
