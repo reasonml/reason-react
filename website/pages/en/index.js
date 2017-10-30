@@ -30,7 +30,10 @@ const codeExample =`let component = ReasonReact.statelessComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component,
-  render: (_self) => <button> (ReasonReact.stringToElement("Hello!")) </button>
+  render: (_self) =>
+    <button>
+      (ReasonReact.stringToElement("Hello!"))
+    </button>
 };`;
 
 const pre = "```";
