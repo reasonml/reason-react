@@ -17,7 +17,7 @@ let make = (~name, _children) => {
   initialState: () => 0, /* here, state is an `int` */
   render: (self) => {
     let greeting =
-      "Hello " ++ ". You've clicked the button2  " ++ string_of_int(state.state) ++ " time(s)!";
+      "Hello " ++ name ++ ". You've clicked the button " ++ string_of_int(self.state) ++ " time(s)!";
     <div> {ReasonReact.stringToElement(greeting)} </div>
   }
 };
