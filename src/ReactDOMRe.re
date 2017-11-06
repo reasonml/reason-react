@@ -143,7 +143,7 @@ external props :
     ~name: string=?,
     ~nonce: string=?,
     ~noValidate: Js.boolean=?,
-    ~open_: Js.boolean=?,
+    ~_open: Js.boolean=?,
     ~optimum: int=?,
     ~pattern: string=?, /* valid Js RegExp */
     ~placeholder: string=?,
@@ -310,7 +310,7 @@ external props :
     ~edgeMode: string=?,
     ~elevation: string=?,
     ~enableBackground: string=?,
-    ~end_: string=?,
+    ~_end: string=?,
     ~exponent: string=?,
     ~externalResourcesRequired: string=?,
     ~fill: string=?,
