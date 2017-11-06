@@ -346,7 +346,7 @@ external props :
     ~horizOriginX: string=?,
     ~ideographic: string=?,
     ~imageRendering: string=?,
-    ~in_: string=?,
+    ~_in: string=?,
     ~in2: string=?,
     ~intercept: string=?,
     ~k: string=?,
