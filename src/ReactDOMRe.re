@@ -58,7 +58,7 @@ type style;
 external props :
   (
     ~key: string=?,
-    ~ref: Js.null(Dom.element) => unit=?,
+    ~ref: Js.nullable(Dom.element) => unit=?,
     /* react textarea/input */
     ~defaultChecked: Js.boolean=?,
     ~defaultValue: string=?,

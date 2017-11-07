@@ -271,7 +271,7 @@ let statefulComponentWithRetainedProps:
 let element:
   (
     ~key: string=?,
-    ~ref: Js.null(reactRef) => unit=?,
+    ~ref: Js.nullable(reactRef) => unit=?,
     component('state, 'retainedProps, 'action)
   ) =>
   reactElement;

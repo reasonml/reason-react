@@ -67,7 +67,10 @@ and jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
  */
 and jsElementWrapped =
   option(
-    ((~key: Js.undefined(string), ~ref: Js.undefined((Js.null(reactRef) => unit))) => reactElement)
+    (
+      (~key: Js.nullable(string), ~ref: Js.nullable((Js.nullable(reactRef) => unit))) =>
+      reactElement
+    )
   )
 and update('state, 'retainedProps, 'action) =
   | NoUpdate
@@ -756,14 +759,14 @@ let reducerComponentWithRetainedProps =
  */
 let element =
     (
-      ~key: string=Obj.magic(Js.undefined),
-      ~ref: Js.null(reactRef) => unit=Obj.magic(Js.undefined),
+      ~key: string=Obj.magic(Js.Nullable.undefined),
+      ~ref: Js.nullable(reactRef) => unit=Obj.magic(Js.Nullable.undefined),
       component: component('state, 'retainedProps, 'action)
     ) => {
   let element = Element(component);
   switch component.jsElementWrapped {
   | Some(jsElementWrapped) =>
-    jsElementWrapped(~key=Js.Undefined.return(key), ~ref=Js.Undefined.return(ref))
+    jsElementWrapped(~key=Js.Nullable.return(key), ~ref=Js.Nullable.return(ref))
   | None =>
     createElement(
       component.reactClassInternal,
@@ -789,8 +792,8 @@ module WrapProps = {
         ~reactClass,
         ~props,
         children,
-        ~key: Js.undefined(string),
-        ~ref: Js.undefined((Js.null(reactRef) => unit))
+        ~key: Js.nullable(string),
+        ~ref: Js.nullable((Js.nullable(reactRef) => unit))
       ) => {
     let props = Js.Obj.assign(Js.Obj.assign(Js.Obj.empty(), props), {"ref": ref, "key": key});
     let varargs =
