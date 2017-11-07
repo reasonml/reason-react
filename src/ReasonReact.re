@@ -687,16 +687,6 @@ let basicComponent = (debugName) => {
 let statelessComponent = (debugName) : component(stateless, noRetainedProps, actionless) =>
   basicComponent(debugName);
 
-let statefulComponent =
-    (debugName)
-    : componentSpec('state, stateless, noRetainedProps, noRetainedProps, actionless) =>
-  basicComponent(debugName);
-
-let statefulComponentWithRetainedProps =
-    (debugName)
-    : componentSpec('state, stateless, 'retainedProps, noRetainedProps, actionless) =>
-  basicComponent(debugName);
-
 let statelessComponentWithRetainedProps =
     (debugName)
     : componentSpec(stateless, stateless, 'retainedProps, noRetainedProps, actionless) =>
@@ -764,7 +754,7 @@ module WrapProps = {
     /* Use varargs under the hood */
     Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, varargs)
   };
-  let dummyInteropComponent = statefulComponent("interop");
+  let dummyInteropComponent = basicComponent("interop");
   let wrapJsForReason = (~reactClass, ~props, children) : component(stateless, noRetainedProps, _) => {
     let jsElementWrapped = Some(wrapProps(~reactClass, ~props, children));
     {...dummyInteropComponent, jsElementWrapped}

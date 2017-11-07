@@ -225,18 +225,6 @@ let reducerComponent:
 let reducerComponentWithRetainedProps:
   string => componentSpec('state, stateless, 'retainedProps, noRetainedProps, 'action);
 
-[@ocaml.deprecated
-  "Please use the new reducerComponent instead. See the migration guide at https://github.com/reasonml/reason-react/blob/master/HISTORY.md#024"
-]
-let statefulComponent:
-  string => componentSpec('state, stateless, noRetainedProps, noRetainedProps, actionless);
-
-[@ocaml.deprecated
-  "Please use the new reducerComponentWithRetainedProps instead. See the migration guide at https://github.com/reasonml/reason-react/blob/master/HISTORY.md#024"
-]
-let statefulComponentWithRetainedProps:
-  string => componentSpec('state, stateless, 'retainedProps, noRetainedProps, actionless);
-
 let element:
   (
     ~key: string=?,
