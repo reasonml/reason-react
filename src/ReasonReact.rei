@@ -152,35 +152,6 @@ and self('state, 'retainedProps, 'action) = {
     ),
 
   /***
-   * Schedule a callback that performs state update,
-   * by adding it at the end of the queue of pending updates.
-   * The function passed as first argument has two phases:
-   * Phase 1 when the payload is provided
-   * Phase 2 when the state is provided.
-   *
-   * Phase 1 is executed immediately.
-   *
-   * Phase 2 is a state update enqueued after the existing state updates pending.
-   * The state received will be the resulting one after the pending updates have been executed.
-   * Note: phase 2 must not perform side effects.
-   * If side effects are required, they should be contained in a
-   * side-effectful function specified in the returned update.
-   */
-  enqueue:
-    'payload .
-
-      [@ocaml.deprecated
-        "Please use self.reduce instead. See the migration guide at https://github.com/reasonml/reason-react/blob/master/HISTORY.md#024"
-      ]
-
-    (
-      (
-        ('payload, self('state, 'retainedProps, 'action)) => update('state, 'retainedProps, 'action)
-      ) =>
-      Callback.t('payload)
-    ),
-
-  /***
    * Run the reducer function with the action returned by the fuction passed as first argument.
    *
    * The reducer lifecycle has two phases:
@@ -190,8 +161,6 @@ and self('state, 'retainedProps, 'action) = {
    * Note: The reducer function must not perform side effects, but a state update is scheduled,
    * which can optionally specify delayed side effects.
    *
-   * Note: enqueue is a simplified form of reducer api where no actions are defined,
-   * and both phases of the lifecycle happen on the single fuction passed as first argument.
    */
   reduce: 'payload .reduce('payload, 'action) /* ('payload => 'action) => Callback.t 'payload */,
   state: 'state,

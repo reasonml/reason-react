@@ -119,13 +119,6 @@ and self('state, 'retainedProps, 'action) = {
     ) =>
     Callback.t('payload),
 
-  enqueue:
-    'payload .
-    (
-      ('payload, self('state, 'retainedProps, 'action)) => update('state, 'retainedProps, 'action)
-    ) =>
-    Callback.t('payload),
-
   reduce: 'payload .reduce('payload, 'action),
   state: 'state,
   retainedProps: 'retainedProps
@@ -242,7 +235,6 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
        * TODO: Avoid allocating this every time we need it. Should be doable.
        */
       pub self = (state, retainedProps) => {
-        enqueue: Obj.magic(this##enqueueMethod),
         handle: Obj.magic(this##handleMethod),
         update: Obj.magic(this##updateMethod),
         reduce: Obj.magic(this##reduceMethod),
@@ -569,35 +561,6 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
           )
         };
         ret
-      };
-      pub enqueueMethod = (callback: ('payload, self(_)) => update(_)) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
-          "this"
-        ];
-        (event) => {
-          let remainingCallback = callback(event);
-          thisJs##setState(
-            (curTotalState, _) => {
-              let curReasonState = curTotalState##reasonState;
-              let convertedReasonProps =
-                convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
-              let Element(component) = Obj.magic(convertedReasonProps);
-              let self = this##self(curReasonState, Obj.magic(component.retainedProps));
-              let reasonStateUpdate = remainingCallback(self);
-              if (reasonStateUpdate === NoUpdate) {
-                magicNull
-              } else {
-                let nextTotalState =
-                  this##transitionNextTotalState(curTotalState, reasonStateUpdate);
-                if (nextTotalState##reasonStateVersion !== curTotalState##reasonStateVersion) {
-                  nextTotalState
-                } else {
-                  magicNull
-                }
-              }
-            }
-          )
-        }
       };
       pub handleMethod = (callback) => {
         let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
