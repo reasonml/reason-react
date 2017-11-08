@@ -104,7 +104,7 @@ let make = (_children) => {
 
 A few things:
 
-- There's a user-defined type called **`actions`**, named so by convention. It's a variant of all the possible state transitions in your component. _In state machine terminology, this'd be a "token"_.
+- There's a user-defined type called **`action`**, named so by convention. It's a variant of all the possible state transitions in your component. _In state machine terminology, this'd be a "token"_.
 - A user-defined `state` type, and an `initialState`. Nothing special.
 - The current `state` value is accessible through `self.state`, whenever `self` is passed to you as an argument of some function.
 - A "**reducer**"! This [pattern-matches](https://reasonml.github.io/guide/language/pattern-matching) on the possible actions and specify what state update each action corresponds to. _In state machine terminology, this'd be a "state transition"_.
