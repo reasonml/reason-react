@@ -3,7 +3,7 @@
 const fs = require('fs');
 
 if (process.argv.length <= 2) {
-  console.error('You need to pass a list of the files you\'d like to migrate, like so: `node migrateFrom02xTo024.js src/*.re`');
+  console.error('You need to pass a list of the files you\'d like to migrate, like so: `node migrate/from02xTo024.js src/*.re`');
   process.exit(1);
 }
 const filesToMigrate = process.argv.slice(2);
@@ -110,7 +110,7 @@ The follow files have \`SilentUpdate\`:
 \u{1b}[39m`);
       console.log(filesWithSilentUpdate.map(f => '- ' + f).join('\n'));
       console.log(`\u{1b}[36m
-In most cases this isn\'t what you want. Please change it to ref cells on state: https://reasonml.github.io/reason-react/#reason-react-component-creation-instance-variables
+In most cases this isn\'t what you want. Please change it to ref cells on state: https://reasonml.github.io/reason-react/docs/en/instance-variables.html
 \u{1b}[39m`);
   }
   if (filesWithSelfUpdate.length !== 0) {

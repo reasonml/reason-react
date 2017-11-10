@@ -1,6 +1,6 @@
 # 0.2.4
 
-**Major update**, but again with **no** breaking changes, and _again_ with a convenience [migration script](https://github.com/reasonml/reason-react/blob/master/migrateFrom02xTo024.js)! =)
+**Major update**, but again with **no** breaking changes, and _again_ with a convenience [migration script](https://github.com/reasonml/reason-react/blob/master/migrate/from02xTo024.js)! =)
 
 The big change in this release is the deprecation of `statefulComponent` and `statefulComponentWithRetainedProps`. `statelessComponent` stays the same.
 
@@ -8,7 +8,7 @@ The big change in this release is the deprecation of `statefulComponent` and `st
 
 **Please first read the [blog post](https://reasonml.github.io/reason-react/blog.html#reducers-are-here)**.
 
-**After** reading this migration guide, use the migration script (or not) like so: `node node_modules/reason-react/migrateFrom02xTo024.js myReasonFile.re`.
+**After** reading this migration guide, use the migration script (or not) like so: `node node_modules/reason-react/migrate/from02xTo024.js myReasonFile.re`.
 
 ## Migrate From StatefulComponent to ReducerComponent
 
