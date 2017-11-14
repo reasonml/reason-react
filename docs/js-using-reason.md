@@ -31,6 +31,6 @@ let jsComponent =
 
 ```
 Then use it on the JS side through
-```
+```javascript
 var PageReason = require('path/to/PageReason.js').jsComponent;
 ```

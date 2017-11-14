@@ -1,10 +1,9 @@
 const React = require("react");
 
 const CompLibrary = require("../../core/CompLibrary.js");
-const Marked = CompLibrary.Marked; /* Used to read markdown */
+const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
 const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
-const Prism = CompLibrary.Prism;
 
 const translate = require("../../server/translate.js").translate;
 
@@ -25,8 +24,11 @@ class Button extends React.Component {
 Button.defaultProps = {
   target: "_self"
 };
+const pre = "```";
+const code = "`";
 
-const codeExample =`let component = ReasonReact.statelessComponent("Greeting");
+const codeExample =`${pre}reason
+let component = ReasonReact.statelessComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component,
@@ -34,10 +36,10 @@ let make = (~name, _children) => {
     <button>
       {ReasonReact.stringToElement("Hello!")}
     </button>
-};`;
+};
+${pre}`;
 
-const pre = "```";
-const code = "`";
+
 const quickStart = `${pre}bash
 npm install -g bs-platform
 bsb -init my-react-app -theme react
@@ -99,7 +101,7 @@ class HomeSplash extends React.Component {
             <div className="homeWrapperInner">
               <div className="homeTagLine">{siteConfig.tagline}</div>
               <div className="homeCodeSnippet">
-                <Prism>{codeExample}</Prism>
+                <MarkdownBlock>{codeExample}</MarkdownBlock>
               </div>
             </div>
 
@@ -155,9 +157,9 @@ class Index extends React.Component {
           <Container background="light" className="quickStartAndExamples homeCodeSnippet">
             <div>
               <h2>Quick Start</h2>
-              <Marked>
+              <MarkdownBlock>
                 {quickStart}
-              </Marked>
+              </MarkdownBlock>
             </div>
             <div>
               <h2>Examples</h2>
