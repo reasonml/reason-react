@@ -385,6 +385,8 @@ external props :
     ~orientation: string=?,
     ~origin: string=?,
     ~overflow: string=?,
+    ~overflowX: string=?,
+    ~overflowY: string=?,
     ~overlinePosition: string=?,
     ~overlineThickness: string=?,
     ~paintOrder: string=?,
@@ -608,6 +610,8 @@ module Style = {
       ~outlineStyle: string=?,
       ~outlineWidth: string=?,
       ~overflow: string=?,
+      ~overflowX: string=?,
+      ~overflowY: string=?,
       ~padding: string=?,
       ~paddingTop: string=?,
       ~paddingRight: string=?,
@@ -945,7 +949,7 @@ module Style = {
     ) =>
     style =
     "";
-    /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
+  /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
   let combine: (style, style) => style =
     (a, b) => {
       let a: Js.t({..}) = Obj.magic(a);
