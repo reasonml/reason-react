@@ -5,6 +5,6 @@
 {
   "name" : "reason-react",
   "sources": "src",
-  "bsc-flags": ["-w", "-30", "-bs-no-version-header"],
-  "refmt": 3
+  "refmt": 3,
+  "bsc-flags": ["-bs-no-version-header"]
 }
