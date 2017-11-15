@@ -7,16 +7,9 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - Getting rid of ref.
 - Making a great list abstraction to model dynamically changing lists/scrollers.
 
-# 0.2.5
+# 0.3.1
 
-- All files upper-cased. Follows new community idiom
 - Preparation for namespace
-- Loosen `children`'s restriction
-- Fix `enqueue` logic. It's still scheduled to be removed in the next breaking version
-- DOM components (`ReactDOMRe`)'s `open`, `end` and `in` attributes are now changed to `open_`, `end_` and `in_` to avoid using reserved keywords
-
-# 0.3.0 (breaking)
-
 - Set lifecycles to null when they do nothing. React skips over lifecycles that are set to null, we currently have wrappers around all of them, so things like didMount are enqueued for *every* component.
 - `ReactDOMRe.createElement` (usually used through the JSX `<div> foo </div>`) has a new implementation that fixes an inadvertent children key warning in the previous version.
 - either rename `willReceiveProps` to `propsReceived`, or keep the same name and make it take oldNew self bag

@@ -1,3 +1,21 @@
+# 0.3.0
+
+Technically a breaking change, but just because of the removal of a few deprecated things. **No migration script this time**; since the few breaking changes you encounter (if any) should have be spotted by the type system and fixed in a few secs anyway.
+
+Improvements:
+
+- **Loosen `children`'s restriction**. This unlocks _huge_ potentials. See the blog post!
+- Fix a bug where side effects inside side effects were skipped (#96).
+- React 16 support.
+- All files upper-cased. This follows the [new community idiom](https://reasonml.github.io/guide/meta/project-structure#file-casing). Technically an internal change; doesn't affect your usage of ReasonReact.
+- More DOM props. There are like, more DOM props added per year than the number of releases we have. What a funny time to be alive.
+
+Breaking Changes:
+
+- **`ref` is now typed as `Js.nullable(Dom.element)`, not `Js.null(Dom.element)`**. `Js.nullable` is the new community idiom from BuckleScript. Go through your codebase and change your `state.myRef := Js.Null.to_opt(theRef)` into `state.myRef := Js.Nullable.to_opt(theRef)`. We suggest you to also remove all mentions of `Js.null`, `Js.undefined`, `Js.Null` and `Js.Undefined`. `Js.Nullable` checks for both JavaScript `null` and `undefined`, thus making the JS interop more robust. In the past, people type certain values (especially js objects fields) as e.g. `null` and forget they can be `undefined`.
+- DOM components (`ReactDOMRe`)'s `open`, `end` and `in` attributes are now changed to `_open`, `_end` and `_in` to avoid using reserved keywords. This is only breaking if you're using these attributes _and_ are on the old syntax.
+- Remove old stuff: `enqueue`, `statefulComponent` and `self.update`. These have long been deprecated.
+
 # 0.2.4
 
 **Major update**, but again with **no** breaking changes, and _again_ with a convenience [migration script](https://github.com/reasonml/reason-react/blob/master/migrate/from02xTo024.js)! =)

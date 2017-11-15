@@ -125,33 +125,6 @@ and self('state, 'retainedProps, 'action) = {
     (('payload, self('state, 'retainedProps, 'action)) => unit) => Callback.t('payload),
 
   /***
-   * Execute a callback to perform state update.
-   *
-   * The callback is passed the payload and current state immediately.
-   * Note: there can be pending state updates, so the state seen by the callback could be stale.
-   * Note: the returned state is determined immediately, but the update will be performed
-   * only after all the pending ones. At that point, the then-current state will simply be
-   * ignored and overwritten.
-   * Note: this callback can perform side effects as well as specify additional side effects
-   * in the returned update. The side effects of the callback are executed immediately when
-   * it is called. Those specified in the returned update are scheduled and executed when
-   * all the updates are complete.
-   */
-  update:
-    'payload .
-
-      [@ocaml.deprecated
-        "Please use self.reduce instead. See the migration guide at https://github.com/reasonml/reason-react/blob/master/HISTORY.md#024"
-      ]
-
-    (
-      (
-        ('payload, self('state, 'retainedProps, 'action)) => update('state, 'retainedProps, 'action)
-      ) =>
-      Callback.t('payload)
-    ),
-
-  /***
    * Run the reducer function with the action returned by the fuction passed as first argument.
    *
    * The reducer lifecycle has two phases:
