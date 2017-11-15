@@ -1,6 +1,5 @@
 .DS_Store
 /node_modules*
-npm-debug.log
 finalOutput/*.js
 .merlin
 /lib/bs/
