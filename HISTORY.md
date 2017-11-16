@@ -5,7 +5,7 @@ Technically a breaking change, but just because of the removal of a few deprecat
 Improvements:
 
 - **Loosen `children`'s restriction**. This unlocks _huge_ potentials. See the blog post!
-- Fix a bug where side effects inside side effects were skipped (#96).
+- Fix a bug where side effects inside side effects were skipped (#98).
 - React 16 support.
 - All files upper-cased. This follows the [new community idiom](https://reasonml.github.io/guide/meta/project-structure#file-casing). Technically an internal change; doesn't affect your usage of ReasonReact.
 - More DOM props. There are like, more DOM props added per year than the number of releases we have. What a funny time to be alive.
