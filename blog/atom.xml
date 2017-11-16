@@ -8,6 +8,16 @@
     <subtitle>The best place to stay up-to-date with the latest ReasonReact news and events.</subtitle>
     <logo>https://reasonml.github.io/reason-reactimg/reason-react-white.svg</logo>
     <entry>
+        <title type="html"><![CDATA[ReasonReact 0.3.0 - Power Children]]></title>
+        <id>https://reasonml.github.io/reason-react/blog/2017/10/02/power-children.html</id>
+        <link href="https://reasonml.github.io/reason-react/blog/2017/10/02/power-children.html">
+        </link>
+        <updated>2017-10-02T06:00:00Z</updated>
+        <summary type="html"><![CDATA[0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for ]]></summary>
+        <author>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[New Docs Site]]></title>
         <id>https://reasonml.github.io/reason-react/blog/2017/10/02/new-docs-site.html</id>
         <link href="https://reasonml.github.io/reason-react/blog/2017/10/02/new-docs-site.html">

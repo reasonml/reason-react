@@ -1,0 +1,58 @@
+<html><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/><title>ReasonReact 0.3.0 - Power Children · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="ReasonReact 0.3.0 - Power Children · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/blog/2017/10/02/power-children.html"/><meta property="og:description" content="0.3.0 is here! We&#x27;ve bumped the minor version because it&#x27;s a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We&#x27;ve been _really_ careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here&#x27;s the big improvement of this release: **you&#x27;re now allowed to pass any data type to JSX children**. And yes, they all type check, naturally!"/><link rel="shortcut icon" href="/reason-react/img/reason-react-red.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/"><img class="logo" src="/reason-react/img/reason-react-white.svg"/><h2 class="headerTitle">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li><a href="/reason-react/docs/en/installation.html" target="_self">Docs</a></li><li><a href="/reason-react/docs/en/simple.html" target="_self">Examples</a></li><li><a href="/reason-react/docs/en/community.html" target="_self">Community</a></li><li><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(){
+          if(languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Recent Posts</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Recent Posts</h3><ul><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/blog/2017/10/02/power-children.html">ReasonReact 0.3.0 - Power Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/10/02/new-docs-site.html">New Docs Site</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/09/01/reducers.html">Reducers Are Here!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/07/05/021.html">0.2.1 Released</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/06/21/015.html">0.1.5 Released</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer documentContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1><a href="/reason-react/blog/2017/10/02/power-children.html">ReasonReact 0.3.0 - Power Children</a></h1><p class="post-meta">October 2, 2017</p><div class="authorBlock"></div></header><div><span><p>0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030">HISTORY.md</a>. We've been <em>really</em> careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here's the big improvement of this release: <strong>you're now allowed to pass any data type to JSX children</strong>. And yes, they all type check, naturally!</p>
+<p>Head over to the improved <a href="jsx.md#children">JSX</a> docs and then <a href="children.md">Children</a> docs to know the details. Here's a summary.</p>
+<p>Previously, <code>&lt;Comp&gt; child1 child2 &lt;/Comp&gt;</code> desugars to passing an array of <code>[|child1, child2|]</code> to <code>Comp</code> as <code>children</code>. This is likewise the case for <code>&lt;Comp&gt; child1 &lt;/Comp&gt;</code> where, due to syntax constraints, we're <em>still</em> passing an array of <code>[|child1|]</code> to <code>Comp</code>. Since Reason 3, we've introduced the <a href="https://reasonml.github.io/guide/language/jsx#children-spread">children spread syntax</a> which simply makes <code>&lt;Comp&gt; ...child1 &lt;/Comp&gt;</code> <em>not</em> pass the array wrapper, but directly <code>child1</code>, to <code>children</code>.</p>
+<p>What does this unlock? Crazy tricks like these:</p>
+<ul>
+<li><p>A layout component that mandates a tuple of 2 react element and shows them side-by-side:</p>
+<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> ...(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
+</code></pre></li>
+<li><p>A component that mandates a callback, no need for ReactJS' <code>React.Children.only</code> runtime check:</p>
+<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">Motion</span>&gt;</span> ...((name) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">name</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">Motion</span>&gt;</span>
+</code></pre></li>
+<li><p>A layout helper that accepts a variant of <code>TwoRows | ThreeRows | FourColumns</code></p>
+<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span> ...(ThreeRows(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, child2, child3)) <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span>
+</code></pre></li>
+</ul>
+<p>The type system will ensure that the data you're passing matches with its usage inside these component. No need to explicitly annotate them unless you want to.</p>
+<p>In reality, this change was around 2 or 3 lines of code (albeit with lots of thinking time). It's a nice indicator of us leveraging the language itself rather than reinventing such concept within the framework. Notice also that the new spread syntax addition is <em>still</em> ReasonReact-agnostic (under the hood, the <code>children</code> label simply isn't passed a wrapper list/array in the presence of <code>...</code>). This kind of simple, gradual and vertically-integrated-yet-agnostic improvement is a large part of what we're hoping to do more in the future.</p>
+<p><strong>Note</strong> that the bsb templates are still using ReasonReact <code>0.2.x</code>. You'll get the <code>0.3.x</code> template after the next BuckleScript release.</p>
+</span></div></div></div><div class="blog-recent"><a class="button" href="/reason-react/blog">Recent Posts</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>

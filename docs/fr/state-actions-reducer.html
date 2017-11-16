@@ -30,7 +30,7 @@ let make ::name _children =&gt; {
 };
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" name="initialstate"></a><a href="#initialstate" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>initialState</code></h2>
-<p>Le <code>getInitialState</code> de ReactJS est appelé <code>initialState</code> en ReasonReact. It takes <code>unit</code> and returns the state type. The state type could be anything! An int, a string, a ref or the common record type, which you should declare <strong>right</strong> before the <code>reducerComponent</code> call:</p>
+<p>Le <code>getInitialState</code> de ReactJS est appelé <code>initialState</code> en ReasonReact. Il prend <code>unit</code> et retourne le type de l'état. Le type de l'état peut être n'importe quoi ! Un entier, une chaîne de caractères, une référence ou le type standard record, que vous devez déclarer <strong>juste</strong> avant l'appel à <code>reducerComponent</code> :</p>
 <pre><code class="hljs css reason"><span class="hljs-keyword">type</span> state = {counter: <span class="hljs-built_in">int</span>, showPopUp: <span class="hljs-built_in">bool</span>};
 
 <span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.reducerComponent <span class="hljs-string">"Dialog"</span>;
@@ -41,9 +41,9 @@ let make ::name _children =&gt; {
   render: ...
 };
 </code></pre>
-<p>Since the props are just the arguments on <code>make</code>, feel free to read into them to initialize your state based on them.</p>
+<p>Puisque les propriétés ne sont que les paramètres de <code>make</code>, n’hésitez pas à les exploiter pour pour initialiser votre état en fonction de leur valeur.</p>
 <h2><a class="anchor" aria-hidden="true" name="actions-reducer"></a><a href="#actions-reducer" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Actions &amp; Reducer</h2>
-<p>In ReactJS, you'd update the state inside a callback handler, e.g.</p>
+<p>En ReactJS, vous mettreriez à jour l'état à l'intérieur d'un callback, par exemple .</p>
 <pre><code class="hljs css javascript">{
   ...
   handleClick: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
@@ -61,7 +61,7 @@ let make ::name _children =&gt; {
   }
 }
 </span></code></pre>
-<p>In ReasonReact, you'd gather all these state-setting handlers into a single place, the component's <code>reducer</code>! Here's a full example, which we'll explain in detail:</p>
+<p>En ReasonReact, vous rassemblerez tous ces gestionnaires d'état au sein du même endroit, le <code>reducer</code> du composant ! Voici un exemple complet, que nous allons expliquer en détail :</p>
 <pre><code class="hljs css reason">type action =
   | Click
   | Toggle;
@@ -89,13 +89,13 @@ let make _children =&gt; {
   }
 };
 </code></pre>
-<p>A few things:</p>
+<p>Quelques notes :</p>
 <ul>
-<li>There's a user-defined type called <strong><code>actions</code></strong>, named so by convention. It's a variant of all the possible state transitions in your component. <em>In state machine terminology, this'd be a &quot;token&quot;</em>.</li>
-<li>A user-defined <code>state</code> type, and an <code>initialState</code>. Nothing special.</li>
-<li>The current <code>state</code> value is accessible through <code>self.state</code>, whenever <code>self</code> is passed to you as an argument of some function.</li>
-<li>A &quot;<strong>reducer</strong>&quot;! This <a href="https://reasonml.github.io/guide/language/pattern-matching">pattern-matches</a> on the possible actions and specify what state update each action corresponds to. <em>In state machine terminology, this'd be a &quot;state transition&quot;</em>.</li>
-<li>In <code>render</code>, instead of <code>self.handle</code> (which doesn't allow state updates), you'd use <code>self.reduce</code>. <code>reduce</code> takes a callback, passing it the event (or whatever callback payload <code>onSubmit</code>/<code>onClick</code>/<code>onFoo</code> gives you from <code>MyDialog</code>) and asking for an action as the return value.</li>
+<li>Il y a un type utilisateur, appelé <strong><code>actions</code></strong>, nommé ainsi par convention. C'est un variant qui contient l'ensemble des transitions d'état de votre composant. <em>Dans la terminologie des machines à état, ce serait un &quot;jeton&quot;</em>.</li>
+<li>Un type défini par l’utilisateur <code>state</code>, et un <code>initialState</code>. Rien de spécial.</li>
+<li>La valeur courante de <code>state</code> est accessible via <code>self.state</code>, chaque fois que <code>self</code> vous est passé en tant que paramètre d’une fonction.</li>
+<li>Un &quot;<strong>reducer</strong>&quot; ! Il utilise le <a href="https://reasonml.github.io/guide/language/pattern-matching">pattern-match</a> sur les actions possibles et spécifie à quelle mise à jour de l'état correspond chaque action. <em>Dans la terminologie des machines à état, ce serait un &quot;état de transition&quot;</em>.</li>
+<li>Dans <code>render</code>, au lieu d'utiliser <code>self.handle</code> (qui ne permet pas les mises à jour d'état), vous utiliserez <code>self.reduce</code>. <code>reduce</code> takes a callback, passing it the event (or whatever callback payload <code>onSubmit</code>/<code>onClick</code>/<code>onFoo</code> gives you from <code>MyDialog</code>) and asking for an action as the return value.</li>
 </ul>
 <p>So, when a click on the dialog is triggered, we send the <code>Click</code> action to the reducer, which handles the <code>Click</code> case by returning the new state that increment a counter. ReasonReact takes the state and updates the component.</p>
 <p><strong>Note</strong>: just like for <code>self.handle</code>, sometimes you might be forwarding <code>reduce</code> to some helper functions. Pass the whole <code>self</code> instead and <strong>annotate it</strong>. This avoids a complex <code>self</code> record type behavior. See <a href="/reason-react/docs/fr/record-field-reduce-handle-not-found.html">Record Field <code>reduce</code>/<code>handle</code> Not Found</a>.</p>
@@ -108,7 +108,7 @@ let make _children =&gt; {
 <li><code>ReasonReact.UpdateWithSideEffects state (self =&gt; unit)</code>: update the state, <strong>then</strong> trigger a side-effect.</li>
 </ul>
 <p><em>If you're a power user, there's also <code>SilentUpdate</code> and <code>SilentUpdateWithSideEffects</code>. See reasonReact.rei to see what they do. Don't use them if you're trying to update a ref/timer/subscription/any other instance variable</em>.</p>
-<h3><a class="anchor" aria-hidden="true" name="important-notes"></a><a href="#important-notes" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Important Notes</h3>
+<h3><a class="anchor" aria-hidden="true" name="notes-importantes"></a><a href="#notes-importantes" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Notes importantes</h3>
 <p><strong>Please read through all these points</strong>, if you want to fully take advantage of <code>reducer</code> and avoid future ReactJS Fiber race condition problems.</p>
 <ul>
 <li>The <code>action</code> type's variants can carry a payload: <code>onClick=(self.reduce (fun data =&gt; Click data.foo))</code>.</li>
@@ -117,7 +117,7 @@ let make _children =&gt; {
 <li>If you need to do e.g. <code>ReactEventRe.BlablaEvent.preventDefault event</code>, do it in <code>self.reduce</code>, before returning the action type. Again, <code>reducer</code> must be pure.</li>
 <li>If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains <code>self.handle</code>, no <code>self.reduce</code>. You still needs to specify a <code>reducer</code> like so: <code>reducer: fun () _state =&gt; ReasonReact.NoUpdate</code>. Otherwise you'll get a <code>variable cannot be generalized</code> type error.</li>
 </ul>
-<h3><a class="anchor" aria-hidden="true" name="tip"></a><a href="#tip" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tip</h3>
+<h3><a class="anchor" aria-hidden="true" name="conseil"></a><a href="#conseil" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Conseil</h3>
 <p>Cram as much as possible into <code>reducer</code>. Keep your actual callback handlers (the <code>self.reduce (fun foo =&gt; Bar))</code> part) dumb and small. This makes all your state updates &amp; side-effects (which itself should mostly only be inside <code>ReasonReact.SideEffects</code> and <code>ReasonReact.UpdateWithSideEffects</code>) much easier to scan through. Also more ReactJS fiber async-mode resilient.</p>
 <h2><a class="anchor" aria-hidden="true" name="async-state-setting"></a><a href="#async-state-setting" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Async State Setting</h2>
 <p>In ReactJS, you could use <code>setState</code> inside a callback, like so:</p>

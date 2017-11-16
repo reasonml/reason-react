@@ -13,6 +13,13 @@
             <link>https://reasonml.github.io/reason-react/blog</link>
         </image>
         <item>
+            <title><![CDATA[ReasonReact 0.3.0 - Power Children]]></title>
+            <link>https://reasonml.github.io/reason-react/blog/2017/10/02/power-children.html</link>
+            <guid>https://reasonml.github.io/reason-react/blog/2017/10/02/power-children.html</guid>
+            <pubDate>Mon, 02 Oct 2017 06:00:00 GMT</pubDate>
+            <description><![CDATA[0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for ]]></description>
+        </item>
+        <item>
             <title><![CDATA[New Docs Site]]></title>
             <link>https://reasonml.github.io/reason-react/blog/2017/10/02/new-docs-site.html</link>
             <guid>https://reasonml.github.io/reason-react/blog/2017/10/02/new-docs-site.html</guid>

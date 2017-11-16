@@ -1,4 +1,4 @@
-<html><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/><title>Children · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Children · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="JSX children are typed as `array`. This is problematic, because `&lt;Foo&gt; children &lt;/Foo&gt;` where `children` comes from props (aka your `make` function) is really now a wrapped array (`Foo.make([|children|])`) and wouldn&#x27;t type."/><link rel="shortcut icon" href="/reason-react/img/reason-react-red.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/"><img class="logo" src="/reason-react/img/reason-react-white.svg"/><h2 class="headerTitle">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li><a href="/reason-react/docs/en/installation.html" target="_self">Docs</a></li><li><a href="/reason-react/docs/en/simple.html" target="_self">Examples</a></li><li><a href="/reason-react/docs/en/community.html" target="_self">Community</a></li><li><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank">Help Translate</a></li></ul></div></li><script>
+<html><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/><title>Children · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Children · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself."/><link rel="shortcut icon" href="/reason-react/img/reason-react-red.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/"><img class="logo" src="/reason-react/img/reason-react-white.svg"/><h2 class="headerTitle">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li><a href="/reason-react/docs/en/installation.html" target="_self">Docs</a></li><li><a href="/reason-react/docs/en/simple.html" target="_self">Examples</a></li><li><a href="/reason-react/docs/en/community.html" target="_self">Community</a></li><li><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank">Help Translate</a></li></ul></div></li><script>
         const languagesMenuItem = document.getElementById("languages-menu");
         const languagesDropDown = document.getElementById("languages-dropdown");
         languagesMenuItem.addEventListener("click", function(){
@@ -14,13 +14,62 @@
           toggler.onclick = function() {
             nav.classList.toggle('docsSliderActive');
           };
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/children.md" target="_blank">Edit</a><h1>Children</h1></header><article><div><span><p>JSX children are typed as <code>array</code>. This is problematic, because <code>&lt;Foo&gt; children &lt;/Foo&gt;</code> where <code>children</code> comes from props (aka your <code>make</code> function) is really now a wrapped array (<code>Foo.make([|children|])</code>) and wouldn't type.</p>
-<p>Some people circumvent this with <code>&lt;Foo&gt; {ReasonReact.arrayToElement(children)} &lt;/Foo&gt;</code>, but this is wrong; it'll trigger ReactJS' <a href="https://facebook.github.io/react/docs/lists-and-keys.html#basic-list-component">key warning</a>. Instead, you should use the desugared form, <code>Foo.make(children)</code>, which doesn't automatically wrap the children in an array wrapper like JSX does. Learn about desugaring JSX <a href="/reason-react/docs/en/jsx.html#capitalized">here</a>.</p>
-<p>For passing to DOM element, e.g. <code>&lt;div foo=bar&gt; children &lt;/div&gt;</code> use the following:</p>
-<pre><code class="hljs css reason">ReasonReact.createDomElement(<span class="hljs-string">"div"</span>, ~props={<span class="hljs-string">"foo"</span>: <span class="hljs-keyword">bar}, </span>children)<span class="hljs-comment">;</span>
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/children.md" target="_blank">Edit</a><h1>Children</h1></header><article><div><span><p>ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself.</p>
+<p>For example, in ReactJS, you'd often want to constrain the <code>children</code> being passed to you as a single child. So inside your own render, you'd do:</p>
+<pre><code class="hljs css js">render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.children);
+}
 </code></pre>
-<p>The reason why passing nested children array in ReactJS doesn't warn is because ReactJS uses some hacks under the hood.</p>
-<p>This isn't ideal; we'll make this better in the future!</p>
+<p>Or, maybe you accept two (and exactly two) children:</p>
+<pre><code class="hljs css js">render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      {this.props.children[0]}
+      <span class="hljs-tag">&lt;<span class="hljs-name">Separator</span> /&gt;</span>
+      {this.props.children[1]}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</code></pre>
+<p>Or maybe you're actually rendering a children callback:</p>
+<pre><code class="hljs css js">render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.props.children(<span class="hljs-string">'hello'</span>));
+}
+</code></pre>
+<p>And for more complicated cases, you'd start using some elaborate <code>React.Children.*</code> utils. None of these are type-safe (naturally, since JS is dynamic):</p>
+<pre><code class="hljs css js">&lt;MyForm&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span></span>
+<span class="hljs-comment">// oops, this blows up because `MyForm` expects a single child</span>
+</code></pre>
+<p>We can do better in ReasonReact through simply using the language!</p>
+<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> ...(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
+</code></pre>
+<p>Two things:</p>
+<ul>
+<li><p><code>MyForm</code>'s children is expected to be a tuple of 2 react elements.</p></li>
+<li><p>The presence of <code>...</code> is called <a href="https://reasonml.github.io/guide/language/jsx#children-spread">children spread</a>. Passing <code>&lt;MyForm&gt; (&lt;div /&gt;, &lt;div /&gt;) &lt;/MyForm&gt;</code> would wrap the tuple in an array (see the <a href="/reason-react/docs/en/jsx.html#children">JSX</a> section).</p></li>
+</ul>
+<p>Here are some use-cases for children + children spread + Reason built-in data structures:</p>
+<ul>
+<li><p>A layout component that mandates a tuple of 2 react element and shows them side-by-side:</p>
+<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> ...(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
+</code></pre></li>
+<li><p>A component that mandates a callback, no need for ReactJS' <code>React.Children.only</code> runtime check:</p>
+<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">Motion</span>&gt;</span> ...((name) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">name</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">Motion</span>&gt;</span>
+</code></pre></li>
+<li><p>A layout helper that accepts a variant of <code>TwoRows | ThreeRows | FourColumns</code></p>
+<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span> ...(ThreeRows(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, child2, child3)) <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span>
+</code></pre></li>
+</ul>
+<p>How do we know that <code>MyForm</code>, <code>Motion</code> and <code>Layout</code> accept such children? Well, that'll simply be inferred by internal usage of <code>children</code> in these components' respective <code>render</code>. Just another day in the magical land of type inference.</p>
+<p>Go wild!</p>
+<h3><a class="anchor" aria-hidden="true" name="pitfall"></a><a href="#pitfall" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pitfall</h3>
+<p>Following the above section's reasoning, this code should work:</p>
+<pre><code class="hljs css reason">let children = [| &lt;<span class="hljs-keyword">div</span> /&gt; |];
+&lt;<span class="hljs-keyword">div</span>&gt; ...children &lt;/<span class="hljs-keyword">div</span>&gt;; /* &lt;<span class="hljs-comment">--- this line */</span>
+</code></pre>
+<p>It <em>does</em> work for custom components (upper-case), But it doesn't for DOM components (lower-cased). This is due to some bindings-related constraints; we'll make this better in the future! In the meantime, for passing to DOM element, e.g. <code>&lt;div className=bar&gt; ...children &lt;/div&gt;</code> use the following:</p>
+<pre><code class="hljs css reason">ReasonReact.createDomElement(<span class="hljs-string">"div"</span>, ~props={<span class="hljs-string">"className"</span>: <span class="hljs-keyword">bar}, </span>children)<span class="hljs-comment">;</span>
+</code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="clone-element.html">← cloneElement</a><a class="docs-next button" href="dom.html">Working with DOM →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
