@@ -2,7 +2,7 @@
 title: ReasonReact 0.3.0 - Power Children
 ---
 
-0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here's the big improvement of this release: **you're now allowed to pass any data type to JSX children**. And yes, they all type check, naturally!
+0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here's the big improvement of this release: **you're now allowed to pass any data type to JSX children**. And yes, they all type check, naturally! **Note** that this particular feature currently requires the master version of `bs-platform`. BuckleScript will make a new stable release next week.
 
 Head over to the improved [JSX](jsx.md#children) docs and then [Children](children.md) docs to know the details. Here's a summary.
 
@@ -32,4 +32,4 @@ The type system will ensure that the data you're passing matches with its usage 
 
 In reality, this change was around 2 or 3 lines of code (albeit with lots of thinking time). It's a nice indicator of us leveraging the language itself rather than reinventing such concept within the framework. Notice also that the new spread syntax addition is _still_ ReasonReact-agnostic (under the hood, the `children` label simply isn't passed a wrapper list/array in the presence of `...`). This kind of simple, gradual and vertically-integrated-yet-agnostic improvement is a large part of what we're hoping to do more in the future.
 
-**Note** that the bsb templates are still using ReasonReact `0.2.x`. You'll get the `0.3.x` template after the next BuckleScript release.
+**Note**
