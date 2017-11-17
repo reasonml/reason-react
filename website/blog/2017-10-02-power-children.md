@@ -6,7 +6,7 @@ title: RR 0.3.0 - Power Children
 
 **Note** that this particular children feature currently requires the master version of `bs-platform`. BuckleScript will make a new stable release next week.
 
-Head over to the improved [JSX](jsx.md#children) docs and then [Children](children.md) docs to know the details. Here's a summary.
+Head over to the improved [JSX](https://reasonml.github.io/reason-react/docs/en/jsx.html#children) docs and then [Children](https://reasonml.github.io/reason-react/docs/en/children.html) docs to know the details. Here's a summary.
 
 Previously, `<Comp> child1 child2 </Comp>` desugars to passing an array of `[|child1, child2|]` to `Comp` as `children`. This is likewise the case for `<Comp> child1 </Comp>` where, due to syntax constraints, we're _still_ passing an array of `[|child1|]` to `Comp`. Since Reason 3, we've introduced the [children spread syntax](https://reasonml.github.io/guide/language/jsx#children-spread) which simply makes `<Comp> ...child1 </Comp>` _not_ pass the array wrapper, but directly `child1`, to `children`.
 
