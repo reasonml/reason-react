@@ -12,7 +12,7 @@ Previously, `<Comp> child1 child2 </Comp>` desugars to passing an array of `[|ch
 
 What does this unlock? Crazy tricks like these:
 
-- A layout component that mandates a tuple of 2 react element and shows them side-by-side:
+- A form component that mandates a tuple of 2 react element and shows them side-by-side:
 
   ```reason
   <MyForm> ...(<div />, <div />) </MyForm>
@@ -30,8 +30,8 @@ What does this unlock? Crazy tricks like these:
   <Layout> ...(ThreeRows(<div />, child2, child3)) </Layout>
   ```
 
-The type system will ensure that the data you're passing matches with its usage inside these component. No need to explicitly annotate them unless you want to.
+The type system will ensure that the data you're passing matches its usage inside these component. No need to explicitly annotate them unless you want to.
 
 In reality, this change was around 2 or 3 lines of code (albeit with lots of thinking time). It's a nice indicator of us leveraging the language itself rather than reinventing such concept within the framework. Notice also that the new spread syntax addition is _still_ ReasonReact-agnostic (under the hood, the `children` label simply isn't passed a wrapper list/array in the presence of `...`). This kind of simple, gradual and vertically-integrated-yet-agnostic improvement is a large part of what we're hoping to do more in the future.
 
-**Note**
+Go ahead and try it! If you'd rather wait for the stable bs-platform release for this feature, check back next week!
