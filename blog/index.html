@@ -20,7 +20,7 @@
 <p>Previously, <code>&lt;Comp&gt; child1 child2 &lt;/Comp&gt;</code> desugars to passing an array of <code>[|child1, child2|]</code> to <code>Comp</code> as <code>children</code>. This is likewise the case for <code>&lt;Comp&gt; child1 &lt;/Comp&gt;</code> where, due to syntax constraints, we're <em>still</em> passing an array of <code>[|child1|]</code> to <code>Comp</code>. Since Reason 3, we've introduced the <a href="https://reasonml.github.io/guide/language/jsx#children-spread">children spread syntax</a> which simply makes <code>&lt;Comp&gt; ...child1 &lt;/Comp&gt;</code> <em>not</em> pass the array wrapper, but directly <code>child1</code>, to <code>children</code>.</p>
 <p>What does this unlock? Crazy tricks like these:</p>
 <ul>
-<li><p>A layout component that mandates a tuple of 2 react element and shows them side-by-side:</p>
+<li><p>A form component that mandates a tuple of 2 react element and shows them side-by-side:</p>
 <pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> ...(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
 </code></pre></li>
 <li><p>A component that mandates a callback, no need for ReactJS' <code>React.Children.only</code> runtime check:</p>
@@ -30,9 +30,9 @@
 <pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span> ...(ThreeRows(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, child2, child3)) <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span>
 </code></pre></li>
 </ul>
-<p>The type system will ensure that the data you're passing matches with its usage inside these component. No need to explicitly annotate them unless you want to.</p>
+<p>The type system will ensure that the data you're passing matches its usage inside these component. No need to explicitly annotate them unless you want to.</p>
 <p>In reality, this change was around 2 or 3 lines of code (albeit with lots of thinking time). It's a nice indicator of us leveraging the language itself rather than reinventing such concept within the framework. Notice also that the new spread syntax addition is <em>still</em> ReasonReact-agnostic (under the hood, the <code>children</code> label simply isn't passed a wrapper list/array in the presence of <code>...</code>). This kind of simple, gradual and vertically-integrated-yet-agnostic improvement is a large part of what we're hoping to do more in the future.</p>
-<p><strong>Note</strong></p>
+<p>Go ahead and try it! If you'd rather wait for the stable bs-platform release for this feature, check back next week!</p>
 </span></div></article></div><div class="post"><header class="postHeader"><h1><a href="/reason-react/blog/2017/10/02/new-docs-site.html">New Docs Site</a></h1><p class="post-meta">October 2, 2017</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p><em>The ReactJS doc site has also been updated last friday <strong>by pure coincidence</strong>. No conspiracy theory!</em></p>
 <p>Do you like the new look? There's been quite a bit of iterations on the new docs, with an eye toward settings up site templates for our future libraries API docs effort (more on that another time). Meawhile, true to our community's spirit:</p>
 <ul>
