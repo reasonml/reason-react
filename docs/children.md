@@ -79,18 +79,3 @@ Here are some use-cases for children + children spread + Reason built-in data st
 How do we know that `MyForm`, `Motion` and `Layout` accept such children? Well, that'll simply be inferred by internal usage of `children` in these components' respective `render`. Just another day in the magical land of type inference.
 
 Go wild!
-
-### Pitfall
-
-Following the above section's reasoning, this code should work:
-
-```reason
-let children = [| <div /> |];
-<div> ...children </div>; /* <--- this line */
-```
-
-It _does_ work for custom components (upper-case), But it doesn't for DOM components (lower-cased). This is due to some bindings-related constraints; we'll make this better in the future! In the meantime, for passing to DOM element, e.g. `<div className=bar> ...children </div>` use the following:
-
-```reason
-ReasonReact.createDomElement("div", ~props={"className": bar}, children);
-```

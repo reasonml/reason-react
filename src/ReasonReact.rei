@@ -223,8 +223,6 @@ let wrapReasonForJs:
   ) =>
   reactClass;
 
-let createDomElement: (string, ~props: Js.t({..}), array(reactElement)) => reactElement;
-
 
 /***
  * Wrap props into a JS component

@@ -24,12 +24,6 @@ external cloneElement : (reactElement, ~props: Js.t({..})=?, array(reactElement)
 
 [@bs.val] [@bs.module "react"] external createElementVerbatim : 'a = "createElement";
 
-let createDomElement = (s, ~props, children) => {
-  let vararg = [|Obj.magic(s), Obj.magic(props)|] |> Js.Array.concat(children);
-  /* Use varargs to avoid warnings on duplicate keys in children */
-  Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, vararg)
-};
-
 let magicNull = Obj.magic(Js.Nullable.null);
 
 type reactClassInternal = reactClass;
