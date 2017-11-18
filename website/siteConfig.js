@@ -52,7 +52,7 @@ const examples = [
 
 const siteConfig = {
   title: "ReasonReact" /* title for your website */,
-  tagline: "A safer, simpler way to build React components",
+  tagline: "All your ReactJS knowledge, codified.",
   url: "https://reasonml.github.io/reason-react" /* your github url */,
   editUrl: "https://github.com/reasonml/reason-react/tree/master/docs/",
   translationRecruitingLink: "https://crowdin.com/project/reason-react",
