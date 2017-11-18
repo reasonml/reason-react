@@ -2,7 +2,7 @@
 title: RR 0.3.0 - Power Children
 ---
 
-0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here's the big improvement of this release: **you're now allowed to pass any data type to JSX children**. And yes, they all type check, naturally!
+0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here's the big improvement of this release: **you're now allowed to pass any data type to JSX children**, not just `array(reactElement)`. And yes, they all type check, naturally!
 
 **Note** that this particular children feature currently requires the master version of `bs-platform`. BuckleScript will make a new stable release next week.
 

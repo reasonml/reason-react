@@ -3,7 +3,7 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "A safer, simpler way to build React components",
+    "tagline": "All your ReactJS knowledge, codified.",
     "callback-handlers": "Callback Handlers",
     "children": "Children",
     "clone-element": "cloneElement",
