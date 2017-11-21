@@ -14,8 +14,8 @@ type state = {
 };
 
 let setSectionRef = (theRef, {ReasonReact.state}) => {
-  state.mySectionRef := Js.Null.to_opt(theRef);
-  /* wondering about Js.Null.to_opt? See the note below */
+  state.mySectionRef := Js.Nullable.to_opt(theRef);
+  /* wondering about Js.Nullable.to_opt? See the note below */
 };
 
 let component = ReasonReact.reducerComponent("MyPanel");
@@ -28,7 +28,7 @@ let make = (~className="", _children) => {
 };
 ```
 
-Attaching to a React DOM element looks the same: `state.mySectionRef = {myDivRef: Js.Null.to_opt theRef}`.
+Attaching to a React DOM element looks the same: `state.mySectionRef = {myDivRef: Js.Nullable.to_opt(theRef)}`.
 
 **Note** how [ReactJS refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `theRef` and `myDivRef` are converted from a [JS nullable](http://bucklescript.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None). When you use the ref, you'll be forced to handle the null case through a `switch`, which prevents subtle errors!
 
