@@ -22,8 +22,8 @@
 };
 
 let <span class="hljs-built_in">set</span>SectionRef = (theRef, {ReasonReact.<span class="hljs-keyword">state</span>}) =&gt; {
-  <span class="hljs-keyword">state</span>.mySectionRef := Js.Null.to_opt(theRef);
-  /* wondering about Js.Null.to_opt? See the note below */
+  <span class="hljs-keyword">state</span>.mySectionRef := Js.Nullable.to_opt(theRef);
+  /* wondering about Js.Nullable.to_opt? See the note below */
 };
 
 let component = ReasonReact.reducerComponent(<span class="hljs-string">"MyPanel"</span>);
@@ -35,7 +35,7 @@ let make = (~className=<span class="hljs-string">""</span>, _children) =&gt; {
   render: (<span class="hljs-literal">self</span>) =&gt; <span class="hljs-variable">&lt;Section1 ref={self.handle(setSectionRef)} /&gt;</span>
 };
 </code></pre>
-<p>Attaching to a React DOM element looks the same: <code>state.mySectionRef = {myDivRef: Js.Null.to_opt theRef}</code>.</p>
+<p>Attaching to a React DOM element looks the same: <code>state.mySectionRef = {myDivRef: Js.Nullable.to_opt(theRef)}</code>.</p>
 <p><strong>Note</strong> how <a href="https://github.com/facebook/react/issues/9328#issuecomment-298438237">ReactJS refs can be null</a>. Which is why <code>theRef</code> and <code>myDivRef</code> are converted from a <a href="http://bucklescript.github.io/bucklescript/Manual.html#_null_and_undefined">JS nullable</a> to an OCaml <code>option</code> (Some/None). When you use the ref, you'll be forced to handle the null case through a <code>switch</code>, which prevents subtle errors!</p>
 <p><strong>You must follow the instanceVars convention in the previous section for ref</strong>.</p>
 <p>ReasonReact ref only accept callbacks. The string <code>ref</code> from ReactJS is deprecated.</p>
