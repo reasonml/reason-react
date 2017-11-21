@@ -89,7 +89,7 @@ let make = (_children) => {
     | Toggle => ReasonReact.Update({...state, show: ! state.show})
     },
   render: (self) => {
-    let message = "Clicked " ++ (string_of_int(self.state.count) ++ " times(s)");
+    let message = "Clicked " ++ string_of_int(self.state.count) ++ " times(s)";
     <div>
       <MyDialog
         onClick=(self.reduce((_event) => Click))
@@ -99,7 +99,6 @@ let make = (_children) => {
     </div>
   }
 };
-
 ```
 
 A few things:
@@ -131,8 +130,9 @@ _If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEf
 
 - The `action` type's variants can carry a payload: `onClick=(self.reduce((data) => Click data.foo))`.
 - Don't pass the whole event into the action variant's payload. ReactJS events are pooled; by the time you intercept the action in the `reducer`, the event's already recycled.
-- `reducer` must be pure (not to be confused with `self.reduce`, which can be impure)! Don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use `SideEffects` or `UpdateWithSideEffects` to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.
+- `reducer` **must** be pure (not to be confused with `self.reduce`, which can be impure)! Aka don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use `SideEffects` or `UpdateWithSideEffects` to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.
 - If you need to do e.g. `ReactEventRe.BlablaEvent.preventDefault event`, do it in `self.reduce`, before returning the action type. Again, `reducer` must be pure.
+- Feel free to trigger another action in `SideEffects` and `UpdateWithSideEffects`, e.g. `UpdateWithSideEffects(newState, (self) => self.reduce(() => Click), ())`.
 - If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.reduce`. You still needs to specify a `reducer` like so: `reducer:((), _state) => ReasonReact.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
 
 ### Tip
