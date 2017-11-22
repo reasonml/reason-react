@@ -17,7 +17,7 @@
     "url": "git+https://github.com/reasonml/reason-react.git"
   },
   "devDependencies": {
-    "bs-platform": "^2.0.0"
+    "bs-platform": "^2.1.0"
   },
   "dependencies": {
     "react": ">=15.0.0 || >=16.0.0",
