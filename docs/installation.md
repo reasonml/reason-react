@@ -9,11 +9,13 @@ To easily try ReasonReact, we offer two solutions with different goals in mind.
 
 **Goals**: simplicity, control, traditional app with several html files.
 
-**Prerequisites**: having `bsb` installed, through `npm install -g https://github.com/BuckleScript/bucklescript`\*. Further installation instructions [here](http://bucklescript.github.io/bucklescript/Manual.html#_installation).
-
-\* **Note** that this installs BuckleScript directly from source. Installing `bs-platform` from npm gives you a version whose `react` template has a few bugs currently. This will be fixed soon.
-
-`bsb -init my-react-app -theme react`
+```sh
+npm install -g bs-platform
+bsb -init my-react-app -theme react
+cd my-react-app && npm install && npm start
+# in another tab
+npm run webpack
+```
 
 BuckleScript's [bsb](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) build system has an `init` command that generates a project template. The `react` theme offers a lightweight solution optimized for low learning overhead and ease of integration into an existing project.
 
