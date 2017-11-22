@@ -3,8 +3,6 @@ id: children
 title: Children
 ---
 
-**Note**: the particular feature described here requires a master version of BuckleScript (aka `bs-platform`). BuckleScript will make a new stable release next week.
-
 ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself.
 
 For example, in ReactJS, you'd often want to constrain the `children` being passed to you as a single child. So inside your own render, you'd do:
