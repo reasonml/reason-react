@@ -10,6 +10,8 @@ Don't use `npm build` for now.
 
 In the end, we spit out normal HTML, with all the JS dependencies (barring a few critical ones) removed, including ReactJS itself. It's a full, static website, super lightweight, portable, unfancy but good looking.
 
+During your development, most changes will be picked up at each browser refresh. If you change `siteConfig.js`, you need to restart the server for changes to take effect.
+
 ## Translations
 
 The entire site can be translated via the [Crowdin project](https://crowdin.com/project/reason-react). This repo only has the canonical english documentation. Don't manually editor things in `i18n/`.
