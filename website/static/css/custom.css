@@ -68,16 +68,13 @@ a.hash-link {
   margin: 20px 0 0 0;
 }
 .edit-page-link {
-  /* doc header H1 height is 45, button is 34, center it (5.5px) */
-  /* there's also a padding of 18 that the header has */
-  margin-top: 23.5px;
+  /* header H1 height at small size is 27, button is 34, center it (-3.5px) */
+  margin-top: -3.5px;
 }
-@media (max-width: 1024px) {
+@media (min-width: 736px) {
   .edit-page-link {
-    /* edit button disabled for mobile. Should prolly enable it */
-    display: block !important;
-    /* (header padding-top 10.8 + padding-bottom 10 + height 27 - button height 34) / 2 */
-    margin-top: 6.9px !important;
+    /* doc header H1 height at big size is 45, button is 34, center it (5.5px) */
+    margin-top: 5.5px;
   }
 }
 
