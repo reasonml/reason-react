@@ -7,7 +7,8 @@
     "build": "bsb -backend native",
     "build:js": "bsb -backend js",
     "build:all": "bsb -make-world",
-    "watch": "bsb -make-world -w"
+    "watch": "bsb -make-world -w",
+    "test": "bsb -make-world && ./lib/bs/native/test.native > src/test.out.txt && diff src/test.exp.txt src/test.out.txt"
   },
   "keywords": [
     "Bucklescript"

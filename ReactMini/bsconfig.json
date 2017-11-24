@@ -6,18 +6,19 @@
     }    
   ],
   "reason" : { "react-jsx" : 2},
+  "refmt": 3,
   "bs-dependencies" : [
       // add your bs-dependencies here 
   ],
   "bsc-flags": ["-bs-super-errors", "-w", "-30-40"],
   "entries": [
     {
-      "kind": "native",
-      "main": "Test"
+      "backend": "native",
+      "main-module": "Test"
     },
     {
-      "kind": "js",
-      "main": "Test"
+      "backend": "js",
+      "main-module": "Test"
     },
   ],
 

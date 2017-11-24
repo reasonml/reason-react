@@ -308,7 +308,7 @@ Tree #5
   }
 }
 
-******* Test Lists With CID *******
+******* Test Lists With Dynamic Keys *******
 
 Initial BoxList
 -------------------
@@ -318,12 +318,12 @@ Tree #0
   id:1
   "BoxList.subtree": 
 }
-Calling reduce on BoxList
+Calling act on BoxList
 
 Add Hello then Flush
 -------------------
 Updating BoxList
-Creating instance #2 of BoxWithID with 1 subelements
+Creating instance #2 of BoxWithDynamicKeys with 1 subelements
 instance #1 updated to instance #1 changed: state subtree
 Tree #0 
 {
@@ -331,15 +331,16 @@ Tree #0
   "BoxList.subtree": 
   {
     id:2
-    "BoxWithID.subtree": Hello
+    "BoxWithDynamicKeys.subtree": Hello
   }
 }
-Calling reduce on BoxList
+Calling act on BoxList
 
 Add World then Flush
 -------------------
 Updating BoxList
-Creating instance #3 of BoxWithID with 1 subelements
+Creating instance #3 of BoxWithDynamicKeys with 1 subelements
+Bailing Out Early Due To Memoization on BoxWithDynamicKeys
 instance #1 updated to instance #1 changed: state subtree
 Tree #0 
 {
@@ -347,20 +348,20 @@ Tree #0
   "BoxList.subtree": 
   {
     id:3
-    "BoxWithID.subtree": World
+    "BoxWithDynamicKeys.subtree": World
   },
   {
     id:2
-    "BoxWithID.subtree": Hello
+    "BoxWithDynamicKeys.subtree": Hello
   }
 }
-Calling reduce on BoxList
+Calling act on BoxList
 
 Reverse then Flush
 -------------------
 Updating BoxList
-Bailing Out Early Due To Memoization on BoxWithID
-Bailing Out Early Due To Memoization on BoxWithID
+Bailing Out Early Due To Memoization on BoxWithDynamicKeys
+Bailing Out Early Due To Memoization on BoxWithDynamicKeys
 instance #1 updated to instance #1 changed: state subtree
 Tree #0 
 {
@@ -368,11 +369,11 @@ Tree #0
   "BoxList.subtree": 
   {
     id:2
-    "BoxWithID.subtree": Hello
+    "BoxWithDynamicKeys.subtree": Hello
   },
   {
     id:3
-    "BoxWithID.subtree": World
+    "BoxWithDynamicKeys.subtree": World
   }
 }
 
@@ -389,7 +390,7 @@ Tree #1
   "BoxList.subtree": 
   {
     id:2
-    "BoxWithID.subtree": Hello
+    "BoxWithDynamicKeys.subtree": Hello
   }
 }
 Tree #2 
@@ -398,11 +399,11 @@ Tree #2
   "BoxList.subtree": 
   {
     id:3
-    "BoxWithID.subtree": World
+    "BoxWithDynamicKeys.subtree": World
   },
   {
     id:2
-    "BoxWithID.subtree": Hello
+    "BoxWithDynamicKeys.subtree": Hello
   }
 }
 Tree #3 
@@ -411,15 +412,15 @@ Tree #3
   "BoxList.subtree": 
   {
     id:2
-    "BoxWithID.subtree": Hello
+    "BoxWithDynamicKeys.subtree": Hello
   },
   {
     id:3
-    "BoxWithID.subtree": World
+    "BoxWithDynamicKeys.subtree": World
   }
 }
 
-******* Test Lists Without CID *******
+******* Test Lists Without Dynamic Keys *******
 
 Initial BoxList
 -------------------
@@ -429,7 +430,7 @@ Tree #0
   id:1
   "BoxList.subtree": 
 }
-Calling reduce on BoxList
+Calling act on BoxList
 
 Add Hello then Flush
 -------------------
@@ -445,7 +446,7 @@ Tree #0
     "Box.subtree": Hello
   }
 }
-Calling reduce on BoxList
+Calling act on BoxList
 
 Add World then Flush
 -------------------
@@ -466,7 +467,7 @@ Tree #0
     "Box.subtree": Hello
   }
 }
-Calling reduce on BoxList
+Calling act on BoxList
 
 Reverse then Flush
 -------------------
@@ -533,25 +534,26 @@ Tree #3
   }
 }
 
-******* Test Deep Move Box With CID *******
+******* Test Deep Move Box With Dynamic Keys *******
 
 Initial Box
 -------------------
-Creating instance #1 of BoxWithID with 1 subelements
+Creating instance #1 of BoxWithDynamicKeys with 1 subelements
 Tree #0 
 {
   id:1
-  "BoxWithID.subtree": box to move
+  "BoxWithDynamicKeys.subtree": box to move
 }
 
 Add 2 Levels of div
 -------------------
+Bailing Out Early Due To Memoization on BoxWithDynamicKeys
 Tree #0 first level before
 Tree #1 second level before
 Tree #2 
 {
   id:1
-  "BoxWithID.subtree": box to move
+  "BoxWithDynamicKeys.subtree": box to move
 }
 Tree #3 second level after
 Tree #4 first level after
@@ -561,14 +563,164 @@ Trees rendered
 Tree #0 
 {
   id:1
-  "BoxWithID.subtree": box to move
+  "BoxWithDynamicKeys.subtree": box to move
 }
 Tree #1 first level before
 Tree #2 second level before
 Tree #3 
 {
   id:1
-  "BoxWithID.subtree": box to move
+  "BoxWithDynamicKeys.subtree": box to move
 }
 Tree #4 second level after
 Tree #5 first level after
+
+******* Test With Static Keys *******
+
+Initial Boxes
+-------------------
+Creating instance #1 of Box with 1 subelements
+Creating instance #2 of Box with 1 subelements
+Tree #0 
+{
+  id:1
+  "Box.subtree": Box1unchanged
+}
+Tree #1 
+{
+  id:2
+  "Box.subtree": Box2unchanged
+}
+
+Swap Boxes
+-------------------
+Updating Box
+instance #1 updated to instance #1 changed: subtree
+Updating Box
+instance #2 updated to instance #2 changed: subtree
+Tree #0 
+{
+  id:2
+  "Box.subtree": Box2changed
+}
+Tree #1 
+{
+  id:1
+  "Box.subtree": Box1changed
+}
+
+Trees rendered
+-------------------
+Tree #0 
+{
+  id:1
+  "Box.subtree": Box1unchanged
+}
+Tree #1 
+{
+  id:2
+  "Box.subtree": Box2unchanged
+}
+Tree #2 
+{
+  id:2
+  "Box.subtree": Box2changed
+}
+Tree #3 
+{
+  id:1
+  "Box.subtree": Box1changed
+}
+
+******* Test Update on Alternate Clicks *******
+
+Initial
+-------------------
+Creating instance #1 of UpdateAlternateClicks with 1 subelements
+Tree #0 
+{
+  "UpdateAlternateClicks.state": 0,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 0
+}
+Calling act on UpdateAlternateClicks
+
+First click then flush
+-------------------
+Updating UpdateAlternateClicks
+instance #1 updated to instance #1 changed: state
+Tree #0 
+{
+  "UpdateAlternateClicks.state": 1,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 0
+}
+Calling act on UpdateAlternateClicks
+
+Second click then flush
+-------------------
+Updating UpdateAlternateClicks
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  "UpdateAlternateClicks.state": 2,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 2
+}
+Calling act on UpdateAlternateClicks
+
+Third click then flush
+-------------------
+Updating UpdateAlternateClicks
+instance #1 updated to instance #1 changed: state
+Tree #0 
+{
+  "UpdateAlternateClicks.state": 3,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 2
+}
+Calling act on UpdateAlternateClicks
+
+Fourth click then flush
+-------------------
+Updating UpdateAlternateClicks
+instance #1 updated to instance #1 changed: state subtree
+Tree #0 
+{
+  "UpdateAlternateClicks.state": 4,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 4
+}
+
+Trees rendered
+-------------------
+Tree #0 
+{
+  "UpdateAlternateClicks.state": 0,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 0
+}
+Tree #1 
+{
+  "UpdateAlternateClicks.state": 1,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 0
+}
+Tree #2 
+{
+  "UpdateAlternateClicks.state": 2,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 2
+}
+Tree #3 
+{
+  "UpdateAlternateClicks.state": 3,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 2
+}
+Tree #4 
+{
+  "UpdateAlternateClicks.state": 4,
+  id:1
+  "UpdateAlternateClicks.subtree": Rendered state is 4
+}
