@@ -123,7 +123,7 @@ class Index extends React.Component {
       })
       .map(user => {
         return (
-          <a href={user.infoLink}>
+          <a href={user.infoLink} key={user.caption}>
             <img src={`${siteConfig.baseUrl}${user.image}`} title={user.caption} />
           </a>
         );
