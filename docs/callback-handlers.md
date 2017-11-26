@@ -18,7 +18,7 @@ If you're just forwarding a callback prop onto your child, you'd do exactly the 
 ```reason
 let component = ...;
 
-let make (~name, ~onClick, _children) => {
+let make = (~name, ~onClick, _children) => {
   ...component,
   render: (self) => <button onClick=onClick />
 };
@@ -31,8 +31,8 @@ Similarly, to pre-process a value before sending it back to the component's owne
 ```reason
 let component = ...;
 
-let make (~name, ~onClick, _children) => {
-  let click event => onClick name; /* pass the name string up to the owner */
+let make = (~name, ~onClick, _children) => {
+  let click = (event) => onClick(name); /* pass the name string up to the owner */
   {
     ...component,
     render: (self) => <button onClick=click />
@@ -46,7 +46,7 @@ To access `state`, `retainedProps` and the other items in `self` from a callback
 
 ```reason
 let component = ...;
-let make (~name, ~onClick, _children) =>
+let make = (~name, ~onClick, _children) =>
   let click = (event, self) => {
     onClick(event);
     Js.log(self.state);
