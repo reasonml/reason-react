@@ -16,25 +16,27 @@
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/pt-BR" target="_blank">Translate</a><h1>Interop With Existing ReactJS Components</h1></header><article><div><span><h3><a class="anchor" aria-hidden="true" name="reasonreact-using-reactjs"></a><a href="#reasonreact-using-reactjs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ReasonReact using ReactJS</h3>
 <p>Easy! Since other Reason components only need you to expose a <code>make</code> function, fake one up:</p>
-<pre><code class="hljs css reason">external <span class="hljs-string">myJSReactClass :</span> ReasonReact.reactClass = <span class="hljs-string">"myJSReactClass"</span> [@<span class="hljs-meta">@bs</span>.module];
+<pre><code class="hljs css reason">[@bs.<span class="hljs-built_in">module</span>] external myJSReactClass : ReasonReact.reactClass = <span class="hljs-string">"myJSReactClass"</span>;
 
-let make <span class="hljs-string">name:</span>:(<span class="hljs-string">name:</span> string) <span class="hljs-string">age:</span>:(<span class="hljs-string">age:</span> option <span class="hljs-keyword">int</span>)=? children =&gt;
-  ReasonReact.wrapJsForReason
-    reactClass::myJSReactClass
-<span class="hljs-symbol">    props:</span>:{<span class="hljs-string">"name"</span>: name, <span class="hljs-string">"age"</span>: Js.Nullable.from_opt age}
-    children;
+let make = <span class="hljs-function"><span class="hljs-params">(~name: <span class="hljs-built_in">string</span>, ~age: option(int)=?, children)</span> =&gt;</span>
+  ReasonReact.wrapJsForReason(
+    ~reactClass=myJSReactClass,
+    ~props={<span class="hljs-string">"name"</span>: name, <span class="hljs-string">"age"</span>: Js.Nullable.from_opt(age)},
+    children
+  );
 </code></pre>
 <p><code>ReasonReact.wrapJsForReason</code> is the helper we expose for this purpose. It takes in the <code>reactClass</code> you want to wrap, the <code>props</code> js object (of type <code>Js.t {. foo: bar}</code>) you'd pass to it (with values converted from Reason data structures to JS), and the mandatory children you'd forward to the JS side.</p>
 <p><strong>We recommend</strong> to type the <code>make</code> parameters, since they're passed to <code>props</code> into the JS side, which is untyped.</p>
 <h3><a class="anchor" aria-hidden="true" name="reactjs-using-reasonreact"></a><a href="#reactjs-using-reasonreact" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ReactJS Using ReasonReact</h3>
 <p>Eeeeasy. We expose a helper for the other direction, <code>ReasonReact.wrapReasonForJs</code>:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ...;
-<span class="hljs-keyword">let</span> make ...;
+<pre><code class="hljs css reason">let component = <span class="hljs-built_in">..</span>.;
+let make <span class="hljs-built_in">..</span>.;
 
-<span class="hljs-keyword">let</span> default =
-  ReasonReact.wrapReasonForJs
-    ::component
-    (fun jsProps =&gt; make name::jsProps##name age::?(Js.Nullable.to_opt jsProps##age) [||]);
+let<span class="hljs-built_in"> default </span>=
+  ReasonReact.wrapReasonForJs(
+    ~component,
+    (jsProps) =&gt; make(~<span class="hljs-attribute">name</span>=jsProps##name, ~<span class="hljs-attribute">age</span>=?Js.Nullable.to_opt(jsProps##age), [||])
+  );
 </code></pre>
 <p>The function takes in the labeled reason <code>component</code> you've created, and a function that, given the JS props, asks you to call <code>make</code> while passing in the correctly converted parameters. You'd assign the whole thing to the name <code>default</code>. The JS side can then import it:</p>
 <pre><code class="hljs">var MyReasonComponent = require('myReasonComponent');
@@ -42,7 +44,7 @@ let make <span class="hljs-string">name:</span>:(<span class="hljs-string">name:
 &lt;MyReasonComponent name=&quot;John&quot; /&gt;
 </code></pre>
 <p><strong>Note</strong>: <code>default</code> exports like the one above are supported for <code>BuckleScript &gt;=1.8.2</code>. If that doesn't work, try a non-default export, like:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> jsComponent = ReasonReact.wrapReasonForJs ...
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> jsComponent = ReasonReact.wrapReasonForJs(...)
 </code></pre>
 <p>and then import it on the JS side with:</p>
 <pre><code class="hljs">var MyReasonComponent = require('myReasonComponent').jsComponent</code></pre>

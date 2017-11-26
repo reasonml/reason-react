@@ -16,25 +16,27 @@
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank">Translate</a><h1>与现有的 ReactJS 组件交互</h1></header><article><div><span><h3><a class="anchor" aria-hidden="true" name="reasonreact-reactjs"></a><a href="#reasonreact-reactjs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>在 ReasonReact 中使用 ReactJS 组件</h3>
 <p>很简单！既然 Reason 组件需要暴露一个 <code>make</code> 函数，写一个就行了：</p>
-<pre><code class="hljs css reason">external <span class="hljs-string">myJSReactClass :</span> ReasonReact.reactClass = <span class="hljs-string">"myJSReactClass"</span> [@<span class="hljs-meta">@bs</span>.module];
+<pre><code class="hljs css reason">[@bs.<span class="hljs-built_in">module</span>] external myJSReactClass : ReasonReact.reactClass = <span class="hljs-string">"myJSReactClass"</span>;
 
-let make <span class="hljs-string">name:</span>:(<span class="hljs-string">name:</span> string) <span class="hljs-string">age:</span>:(<span class="hljs-string">age:</span> option <span class="hljs-keyword">int</span>)=? children =&gt;
-  ReasonReact.wrapJsForReason
-    reactClass::myJSReactClass
-<span class="hljs-symbol">    props:</span>:{<span class="hljs-string">"name"</span>: name, <span class="hljs-string">"age"</span>: Js.Nullable.from_opt age}
-    children;
+let make = <span class="hljs-function"><span class="hljs-params">(~name: <span class="hljs-built_in">string</span>, ~age: option(int)=?, children)</span> =&gt;</span>
+  ReasonReact.wrapJsForReason(
+    ~reactClass=myJSReactClass,
+    ~props={<span class="hljs-string">"name"</span>: name, <span class="hljs-string">"age"</span>: Js.Nullable.from_opt(age)},
+    children
+  );
 </code></pre>
 <p><code>ReasonReact.wrapJsForReason</code> 是我们为此设计的一个辅助函数。 它的参数有：你想要使用的 <code>reactClass</code>， 你需要传下去的 <code>props</code> (类型是 <code>Js.t {. foo: bar}</code>，数据类型需要从 Reason 的类型转换成对应的 JS 数据类型），以及如果你需要的话传到 JS 那边的 children。</p>
 <p><strong>我们建议</strong> 定义好 <code>make</code> 函数参数的数据类型，因为他们会作为 <code>props</code> 传入 JS 中，那边不会规定参数的类型。</p>
 <h3><a class="anchor" aria-hidden="true" name="reactjs-reasonreact"></a><a href="#reactjs-reasonreact" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>在 ReactJS 中使用 ReasonReact 组件</h3>
 <p>非常简单，我们暴露了一个方法 <code>ReasonReact.wrapReasonForJs</code>：</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ...;
-<span class="hljs-keyword">let</span> make ...;
+<pre><code class="hljs css reason">let component = <span class="hljs-built_in">..</span>.;
+let make <span class="hljs-built_in">..</span>.;
 
-<span class="hljs-keyword">let</span> default =
-  ReasonReact.wrapReasonForJs
-    ::component
-    (fun jsProps =&gt; make name::jsProps##name age::?(Js.Nullable.to_opt jsProps##age) [||]);
+let<span class="hljs-built_in"> default </span>=
+  ReasonReact.wrapReasonForJs(
+    ~component,
+    (jsProps) =&gt; make(~<span class="hljs-attribute">name</span>=jsProps##name, ~<span class="hljs-attribute">age</span>=?Js.Nullable.to_opt(jsProps##age), [||])
+  );
 </code></pre>
 <p>这个函数接受两个参数，第一个是 labeled argument，就是你刚才构造的 reason <code>component</code> ，第二个参数是一个函数，这个函数接受 JS props，然后需要你去调用 <code>make</code> 函数，同时将 JS props 的类型转换成 reason 数据类型。 你只要将所有东西 （这个函数）命名为 <code>default</code>， 然后 JS 那边就可以直接拿到：</p>
 <pre><code class="hljs">var MyReasonComponent = require('myReasonComponent');
@@ -42,7 +44,7 @@ let make <span class="hljs-string">name:</span>:(<span class="hljs-string">name:
 &lt;MyReasonComponent name=&quot;John&quot; /&gt;
 </code></pre>
 <p><strong>注意</strong>： <code>default</code> 语法直到 <code>BuckleScript &gt;=1.8.2</code> 版本才被支持，如果你发现这样写不起作用，试着用一个非 default 的导出方式：</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> jsComponent = ReasonReact.wrapReasonForJs ...
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> jsComponent = ReasonReact.wrapReasonForJs(...)
 </code></pre>
 <p>然后在 JS 的代码中：</p>
 <pre><code class="hljs">var MyReasonComponent = require('myReasonComponent').jsComponent</code></pre>

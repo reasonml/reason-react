@@ -15,19 +15,21 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>Retained Props</h1></header><article><div><span><p>Copy a few props into a special field to emulate ReactJS' lifecycle events' <code>prevProps</code>/<code>nextProps</code> functionality.</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> retainedProps = {<span class="hljs-symbol">message:</span> string};
-let component = ReasonReact.statelessComponentWithRetainedProps <span class="hljs-string">"RetainedPropsExample"</span>;
-let make ::message _children =&gt; {
+<pre><code class="hljs css reason">type retainedProps = {<span class="hljs-keyword">message</span>: <span class="hljs-keyword">string</span>};
+
+let component = ReasonReact.statelessComponentWithRetainedProps(<span class="hljs-string">"RetainedPropsExample"</span>);
+
+let make = (~<span class="hljs-keyword">message</span>, _children) =&gt; {
   ...component,
-  <span class="hljs-symbol">retainedProps:</span> {<span class="hljs-symbol">message:</span> message},
-  <span class="hljs-symbol">didUpdate:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> {<span class="hljs-title">oldSelf</span></span>, newSelf} =&gt;
-    <span class="hljs-keyword">if</span> (oldSelf.retainedProps.message !== newSelf.retainedProps.message) {
-      <span class="hljs-regexp">/* do whatever sneaky imperative things here */</span>
-      Js.log <span class="hljs-string">"props `message` changed!"</span>
+  retainedProps: {<span class="hljs-keyword">message</span>: <span class="hljs-keyword">message</span>},
+  didUpdate: ({oldSelf, newSelf}) =&gt;
+    <span class="hljs-keyword">if</span> (oldSelf.retainedProps.<span class="hljs-keyword">message</span> !== newSelf.retainedProps.<span class="hljs-keyword">message</span>) {
+      /* do whatever sneaky imperative things here */
+      Js.log(<span class="hljs-string">"props `message` changed!"</span>)
     },
-  <span class="hljs-symbol">render:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">_self</span></span> =&gt; &lt;div&gt; (ReasonReact.stringToElement message) &lt;<span class="hljs-regexp">/div&gt;
+  render: (_self) =&gt; &lt;div&gt; (ReasonReact.stringToElement(<span class="hljs-keyword">message</span>)) &lt;/div&gt;
 };
-</span></code></pre>
+</code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="counter.html">← Counter</a><a class="docs-next button" href="reason-using-js.html">ReasonReact con ReactJS →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.

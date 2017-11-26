@@ -15,7 +15,7 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank">Translate</a><h1>生命周期</h1></header><article><div><span><p>ReasonReact 有类似与 ReactJS 的生命周期事件。</p>
-<pre><code class="hljs css reason">didMount: <span class="hljs-literal">self</span> =&gt; update <span class="hljs-keyword">state</span>
+<pre><code class="hljs css reason">didMount: <span class="hljs-literal">self</span> =&gt; update(<span class="hljs-keyword">state</span>)
 
 willReceiveProps: <span class="hljs-literal">self</span> =&gt; <span class="hljs-keyword">state</span>
 
@@ -35,51 +35,51 @@ willUnmount: <span class="hljs-literal">self</span> =&gt; unit
 <li>不支持 <code>willMount</code>，请使用 <code>didMount</code> 。</li>
 <li><code>didUpdate</code>, <code>willUpdate</code> 和 <code>shouldUpdate</code> 的输入是 <strong><code>oldAndNewSelf</code> record</strong>，类型是 <code>{oldSelf: self, newSelf: self}</code>. 这两个字段相当于ReactJS里面的 <code>componentDidUpdate</code>'的 <code>prevProps/prevState/</code> 结合了 <code>props/state</code>（通过self同时得到props和state）。 <code>willUpdate</code> 和 <code>shouldUpdate</code> 也是类似。</li>
 </ul>
-<p>**请注意，您应该尽可能从生命周期事件内返回 <code>ReasonReact.NoUpdate</code> **。 为了准备迎接React Fiber，我们会移除在生命周期里返回一个新的state的接口。 如果你需要更新状态，只要相应的向 <code>reducer</code> 里面触发一个新的 <code>action</code> ： <code>self.reduce (fun () =&gt; DidMountUpdate) ()</code>。</p>
+<p>**请注意，您应该尽可能从生命周期事件内返回 <code>ReasonReact.NoUpdate</code> **。 为了准备迎接React Fiber，我们会移除在生命周期里返回一个新的state的接口。 If you need to update state, simply send an action to <code>reducer</code> and handle it correspondingly: <code>self.reduce(() =&gt; DidMountUpdate, ())</code>.</p>
 <p><strong>有一些生命周期（和ReactJS相比会）表现不同，可以参考下面的内容。</strong></p>
 <h2><a class="anchor" aria-hidden="true" name="retainedprops"></a><a href="#retainedprops" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>获取下一个或者上一个属性：<code>retainedProps</code></h2>
 <p>在ReactJS里，我们有时会在组件的生命周期中使用 <code>prevProps</code>(<code>componentDidUpdate</code>) ，<code>nextProps</code>(componentWillUpdate) 之类的API。 ReasonReact并不会为你自动保留这些之前的属性。 为了满足这些功能，我们提供了 <code>retainedProps</code> API：</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> retainedProps = {<span class="hljs-symbol">message:</span> string};
+<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> retainedProps = {message: <span class="hljs-built_in">string</span>};
 
-let component = ReasonReact.statelessComponentWithRetainedProps <span class="hljs-string">"RetainedPropsExample"</span>;
+<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponentWithRetainedProps(<span class="hljs-string">"RetainedPropsExample"</span>);
 
-let make ::message _children =&gt; {
+<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~message, _children</span>) =&gt;</span> {
   ...component,
-  <span class="hljs-symbol">retainedProps:</span> {<span class="hljs-symbol">message:</span> message},
-  <span class="hljs-symbol">didUpdate:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> {<span class="hljs-title">oldSelf</span></span>, newSelf} =&gt;
+  retainedProps: {message: message},
+  didUpdate: <span class="hljs-function">(<span class="hljs-params">{oldSelf, newSelf}</span>) =&gt;</span>
     <span class="hljs-keyword">if</span> (oldSelf.retainedProps.message !== newSelf.retainedProps.message) {
-      <span class="hljs-regexp">/* do whatever sneaky imperative things here */</span>
-      Js.log <span class="hljs-string">"props `message` changed!"</span>
+      <span class="hljs-comment">/* do whatever sneaky imperative things here */</span>
+      Js.log(<span class="hljs-string">"props `message` changed!"</span>)
     },
-  <span class="hljs-symbol">render:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">_self</span></span> =&gt; ...
+  render: <span class="hljs-function">(<span class="hljs-params">_self</span>) =&gt;</span> ...
 };
 </code></pre>
 <p>我们提供了 <code>ReasonReact.statelessComponentWithRetainedProps</code> 和<code>ReasonReact.reducerComponentWithRetainedProps</code> 这两个方法。 其他用法和之前不包含retained-props的一样，只是让你在make函数中多定义一个 <code>retainedProps</code> 字段 （可以是任何类型）。</p>
 <h3><a class="anchor" aria-hidden="true" name="willreceiveprops"></a><a href="#willreceiveprops" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>willReceiveProps</code></h3>
 <p>ReactJS 中的 <code>componentWillReceiveProps</code> 方法接受一个 <code>nextProps</code> 参数， 在这里我们没有 <code>nextProps</code> 参数，因为它就是 <code>make</code> 函数的参数（labeled arguments），你可以直接拿到它们。 而要获取 <em>现在的</em> props，你需要用到上面 <code>retainedProps</code> API：</p>
-<pre><code class="hljs css reason">type state = {someToggle: bool};
+<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> state = {someToggle: bool};
 
-let component = ReasonReact.reducerComponentWithRetainedProps <span class="hljs-string">"MyComponent"</span>;
+<span class="hljs-keyword">let</span> component = ReasonReact.reducerComponentWithRetainedProps(<span class="hljs-string">"MyComponent"</span>);
 
-let make ::name _children =&gt; {
+<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~name, _children</span>) =&gt;</span> {
   ...component,
-  initialState: <span class="hljs-function"><span class="hljs-title">fun</span> <span class="hljs-params">()</span></span> =&gt; {someToggle: <span class="hljs-literal">false</span>},
+  initialState: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {someToggle: <span class="hljs-literal">false</span>},
   <span class="hljs-comment">/* just like state, the retainedProps field can return anything! Here it retained the `name` prop's value */</span>
   retainedProps: name,
-  willReceiveProps: <span class="hljs-function"><span class="hljs-keyword">fun</span> self =&gt; {</span>
+  willReceiveProps: <span class="hljs-function">(<span class="hljs-params">self</span>) =&gt;</span> {
     <span class="hljs-keyword">if</span> (self.retainedProps === name) {
-      <span class="hljs-comment">/* previous ReactJS logic would be: if (props.name === nextProps.name)
       ...
-    }
+      <span class="hljs-comment">/* previous ReactJS logic would be: if (props.name === nextProps.name) */</span>
+    };
     ...
   }
-}
-</span></code></pre>
+};
+</code></pre>
 <h3><a class="anchor" aria-hidden="true" name="willupdate"></a><a href="#willupdate" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>willUpdate</code></h3>
 <p>ReactJS 的 <code>componentWillUpdate</code> 中的参数 <code>nextProps</code> 现在是 <code>make</code> 函数的参数，而现在的props (this.props) 是上面的 <code>retainedProps</code>，可以通过 <code>{oldSelf}</code> 得到：</p>
 <pre><code class="hljs css reason">{
   ...component,
-  <span class="hljs-symbol">willUpdate:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> {<span class="hljs-title">oldSelf</span></span>, newSelf} =&gt; ...
+  willUpdate: {oldSelf, newSelf} =&gt; ...
 }
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" name="didupdate"></a><a href="#didupdate" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>didUpdate</code></h3>

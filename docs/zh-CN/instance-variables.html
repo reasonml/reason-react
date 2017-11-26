@@ -23,27 +23,25 @@
 </code></pre>
 <p>实际上，这么做你同样是改变了这个组件的 &quot;state&quot;，只是不触发 re-render， ReasonReact 要求你把这些变量也正确的放进组件的 <code>state</code> 里，通过 Reason <a href="https://reasonml.github.io/guide/language/mutation"><code>ref</code>s</a>。</p>
 <pre><code class="hljs css reason">type <span class="hljs-keyword">state</span> = {
-  someRandomState: option string,
-  intervalId: ref (option int)
+  someRandomState: option(string),
+  intervalId: ref(option(int))
 };
 
 let component = ...; /* remember, `component` needs <span class="hljs-keyword">to</span> be close <span class="hljs-keyword">to</span> `make`, and after `<span class="hljs-keyword">state</span>` type declaration! */
-let make _children =&gt; {
+
+let make = (_children) =&gt; {
   ...component,
-  initialState: fun () =&gt; {
-    someRandomState: Some <span class="hljs-string">"hello"</span>,
-    intervalId: ref None
-  },
-  didMount: fun {<span class="hljs-keyword">state</span>} =&gt; {
+  initialState: () =&gt; {someRandomState: Some(<span class="hljs-string">"hello"</span>), intervalId: ref(None)},
+  didMount: ({<span class="hljs-keyword">state</span>}) =&gt; {
     /* mutate the value here */
-    <span class="hljs-keyword">state</span>.intervalId := Some (Js.Global.<span class="hljs-built_in">set</span>Interval ...);
+    <span class="hljs-keyword">state</span>.intervalId := Some(Js.Global.<span class="hljs-built_in">set</span>Interval(...));
     /* no extra <span class="hljs-keyword">state</span> update needed */
     ReasonReact.NoUpdate
   },
   render: ...
 };
 </code></pre>
-<p><strong>所有的实例变量 (subscriptions, refs, etc.) 都必须在 state 里面标记成 <code>ref</code></strong>， 不要在 state record 上直接使用 <code>mutable</code>， 使用一个不可变的字段去指向一个 Reason <code>ref</code>。 为什么要这样约束？ 为了更好的管理 side-effects 和 mutations 来准备 concurrent React。 有兴趣的话可以看 <a href="https://reasonml.github.io/try/?reason=C4TwDgpgBAzlC8UDeBDAXFAlgO2AGlgHsBbCASWxmBWwGMIA1FAJw2YgDMtcBfAbgBQAegBUUbIQDuUEUIEAbCMFjVg0REgFQo6KAEY8WoqQpUa9JqyjsuAJgH9hYiMQCu8lGqgADM2u86tPQwcBzMJFC08oQwruwAdFAAKgAW0OwoACZQhFy+qhABxJgA5inKAEbQZopQFSBQwGmNmKRYwADkcBAAHhC0rmqZGLJOUByu2Mh+EDwIAHzjk1AAFACUC1AAShAoMITYOyi0wPEAqmCZntBI8XczBBUec6OKyjO2CMh38Q86GABmRyiOqDKBuVSYA45PIzALYCAQTJwYCEOrpTiKE5I7g+D4BKiYeTyACEMjkM1+JHIlGodEYLCgaEQABZBCCYClCO5slUoCzyQIAFIweLREpQEkfKkmWnmBnMdliJqYOCSbnyTLYDrKdXMADWWC4kmgmTRoEgOgQqAwOHw4MGKCe1WppjpFhYtt45KAA">这里</a>。</p>
+<p><strong>所有的实例变量 (subscriptions, refs, etc.) 都必须在 state 里面标记成 <code>ref</code></strong>， 不要在 state record 上直接使用 <code>mutable</code>， 使用一个不可变的字段去指向一个 Reason <code>ref</code>。 为什么要这样约束？ 为了更好的管理 side-effects 和 mutations 来准备 concurrent React。 More details <a href="https://reasonml.github.io/try/?reason=C4TwDgpgBAzlC8UDeBDAXFAlgO2AGlgHsBbCASWxmBWwGMIA1FAJw2YgDMAKHYASgC+AbgBQAegBUUbIQDuUCWJEAbCMFjVg0REhFQo6KAEY8eoqQpUa9JqyjtuAJj4jh4qRGIBXZSi1QAAystAINaehg4DmYSKFplQhgvdgA6KAAVAAtodhQAEyhCDkDgiFDiTABzTPUAI2grVShakChgbLbMUixgAHI4CAAPCFovLTyMRXcoDi9sZFKBBAA+GbmoLj4VqAAlCBQYQmw9lFpgFIBVMDy-aCQUh9KCWt8lqdV1UscEZAeUp4MGAAzG5JM0xlBvJpMEdCsUgpoytIIBA8nBgIRmjlOKozqisPMEbdHKEqJhlMoAIQKJSlf4kciUah0RgsKBoRAAFlEYJgmUIPgK9SgnJpIgAUjAUglKlwvvSLEzrKzmAA9Pg8qTtTBwWQC5R5bC9dR65gAaywxVk0DymNAkAMCFQGF4BChKBeDQZlmZNhYLtwbzEQA">here</a> if you're ever interested.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="lifecycles.html">← 生命周期</a><a class="docs-next button" href="react-ref.html">React Ref →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.

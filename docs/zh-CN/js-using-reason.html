@@ -15,31 +15,35 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank">Translate</a><h1>ReactJS 使用 ReasonReact</h1></header><article><div><span><p>PageReason.re:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent <span class="hljs-string">"PageReason"</span>;
-<span class="hljs-keyword">let</span> make ::message ::<span class="hljs-attr">extraGreeting=?</span> <span class="hljs-attr">_children</span> =&gt; {
+<pre><code class="hljs css reason">let component = ReasonReact.statelessComponent(<span class="hljs-string">"PageReason"</span>);
+
+let make = <span class="hljs-function"><span class="hljs-params">(~message, ~extraGreeting=?, _children)</span> =&gt;</span> {
   ...component,
-  render: fun <span class="hljs-attr">_self</span> =&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-attr">greeting</span> =
-      switch extraGreeting {
-      | <span class="hljs-attr">None</span> =&gt; <span class="hljs-string">"How are you?"</span>
-      | Some <span class="hljs-attr">g</span> =&gt; g
+  render: <span class="hljs-function"><span class="hljs-params">(_self)</span> =&gt;</span> {
+    let greeting =
+      <span class="hljs-keyword">switch</span> extraGreeting {
+      | None =&gt; <span class="hljs-string">"How are you?"</span>
+      | Some(<span class="hljs-function"><span class="hljs-params">(g)</span>) =&gt;</span> g
       };
-    &lt;div&gt; &lt;MyBannerRe <span class="hljs-attr">show=true</span> <span class="hljs-attr">message=(message</span> ^ <span class="hljs-string">" "</span> ^ greeting) /&gt; &lt;/div&gt;
+    &lt;div&gt; &lt;MyBannerRe show=<span class="hljs-literal">true</span> message=(message ++ (<span class="hljs-string">" "</span> ++ greeting)) /&gt; &lt;/div&gt;
   }
 };
-<span class="hljs-keyword">let</span> <span class="hljs-attr">jsComponent</span> =
-  ReasonReact.wrapReasonForJs
-    ::component
-    (
-      fun <span class="hljs-attr">jsProps</span> =&gt;
-        make
-          message::jsProps<span class="hljs-comment">##message</span>
-          extraGreeting::?(Js.Nullable.to_opt jsProps<span class="hljs-comment">##extraGreeting)</span>
-          [||]
-    );
+
+let jsComponent =
+  ReasonReact.wrapReasonForJs(
+    ~component=component,
+    <span class="hljs-function"><span class="hljs-params">(jsProps)</span> =&gt;</span>
+      make(
+        ~message=jsProps<span class="hljs-comment">##message,</span>
+        ~extraGreeting=?Js.Nullable.to_opt(jsProps<span class="hljs-comment">##extraGreeting),</span>
+        [||]
+      )
+  );
+
 </code></pre>
 <p>Then use it on the JS side through</p>
-<pre><code class="hljs">var PageReason = require('path/to/PageReason.js').jsComponent;</code></pre>
+<pre><code class="hljs css javascript"><span class="hljs-keyword">var</span> PageReason = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path/to/PageReason.js'</span>).jsComponent;
+</code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="reason-using-js.html">← ReasonReact 使用 ReactJS</a><a class="docs-next button" href="example-projects.html">示例项目 →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.

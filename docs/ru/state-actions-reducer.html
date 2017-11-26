@@ -16,30 +16,32 @@
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ru" target="_blank">Translate</a><h1>State, Actions &amp; Reducer</h1></header><article><div><span><p>Finally, we're getting onto stateful components!</p>
 <p>ReasonReact stateful components are like ReactJS stateful components, except with the concept of &quot;reducer&quot; (like <a href="http://redux.js.org">Redux</a>) built in. If that word doesn't mean anything to you, just think of it as a state machine. If <em>that</em> word doesn't mean anything to you, just think: &quot;Woah this is great&quot;.</p>
-<p>To declare a stateful ReasonReact component, instead of <code>ReasonReact.statelessComponent &quot;MyComponentName&quot;</code>, use <code>ReasonReact.reducerComponent &quot;MyComponentName&quot;</code>.</p>
-<pre><code class="hljs css reason">let component = ReasonReact.reducerComponent <span class="hljs-string">"Greeting"</span>;
+<p>To declare a stateful ReasonReact component, instead of <code>ReasonReact.statelessComponent(&quot;MyComponentName&quot;)</code>, use <code>ReasonReact.reducerComponent(&quot;MyComponentName&quot;)</code>.</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ReasonReact.reducerComponent(<span class="hljs-string">"Greeting"</span>);
 
-let make ::name _children =&gt; {
+<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~name, _children</span>) =&gt;</span> {
   ...component,
-  initialState: <span class="hljs-function"><span class="hljs-title">fun</span> <span class="hljs-params">()</span></span> =&gt; <span class="hljs-number">0</span>, <span class="hljs-comment">/* here, state is an `int` */</span>
-  render: <span class="hljs-function"><span class="hljs-keyword">fun</span> self =&gt; {</span>
-    let greeting =
-      <span class="hljs-string">"Hello "</span> ^ name ^ <span class="hljs-string">". You've clicked the button "</span> ^ string_of_int self.state ^ <span class="hljs-string">" time(s)!"</span>;
-    &lt;div&gt; (ReasonReact.stringToElement greeting) &lt;/div&gt;
+  <span class="hljs-attr">initialState</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-number">0</span>, <span class="hljs-comment">/* here, state is an `int` */</span>
+  render: <span class="hljs-function">(<span class="hljs-params">self</span>) =&gt;</span> {
+    <span class="hljs-keyword">let</span> greeting =
+      <span class="hljs-string">"Hello "</span> ++ name ++ <span class="hljs-string">". You've clicked the button "</span> ++ string_of_int(self.state) ++ <span class="hljs-string">" time(s)!"</span>;
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span> {ReasonReact.stringToElement(greeting)} <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   }
 };
+
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" name="initialstate"></a><a href="#initialstate" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>initialState</code></h2>
 <p>ReactJS' <code>getInitialState</code> is called <code>initialState</code> in ReasonReact. It takes <code>unit</code> and returns the state type. The state type could be anything! An int, a string, a ref or the common record type, which you should declare <strong>right</strong> before the <code>reducerComponent</code> call:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> state = {counter: <span class="hljs-built_in">int</span>, showPopUp: <span class="hljs-built_in">bool</span>};
+<pre><code class="hljs css reason"><span class="hljs-built_in">type</span> state = {<span class="hljs-name">counter</span>: int, <span class="hljs-name">showPopUp</span>: bool};
 
-<span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.reducerComponent <span class="hljs-string">"Dialog"</span>;
+let component = ReasonReact.reducerComponent(<span class="hljs-string">"Dialog"</span>);
 
-<span class="hljs-keyword">let</span> make ::onClick _children =&gt; {
+let make = <span class="hljs-function"><span class="hljs-params">(~onClick, _children)</span> =&gt;</span> {
   ...component,
-  initialState: <span class="hljs-keyword">fun</span> <span class="hljs-literal">()</span> =&gt; {counter: <span class="hljs-number">0</span>, showPopUp: <span class="hljs-literal">false</span>},
-  render: ...
+  <span class="hljs-name">initialState</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {<span class="hljs-name">counter</span>: <span class="hljs-number">0</span>, <span class="hljs-name">showPopUp</span>: <span class="hljs-literal">false</span>},
+  <span class="hljs-name">render</span>: ...
 };
+
 </code></pre>
 <p>Since the props are just the arguments on <code>make</code>, feel free to read into them to initialize your state based on them.</p>
 <h2><a class="anchor" aria-hidden="true" name="actions-reducer"></a><a href="#actions-reducer" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Actions &amp; Reducer</h2>
@@ -66,32 +68,36 @@ let make ::name _children =&gt; {
   | Click
   | Toggle;
 
-type <span class="hljs-keyword">state</span> = {count: int, show: bool};
+type <span class="hljs-keyword">state</span> = {
+  count: int,
+  show: bool
+};
 
-let component = ReasonReact.reducerComponent <span class="hljs-string">"MyForm"</span>;
+let component = ReasonReact.reducerComponent(<span class="hljs-string">"MyForm"</span>);
 
-let make _children =&gt; {
+let make = (_children) =&gt; {
   ...component,
-  initialState: fun () =&gt; {count: <span class="hljs-number">0</span>, show: false},
-  reducer: fun action <span class="hljs-keyword">state</span> =&gt;
+  initialState: () =&gt; {count: <span class="hljs-number">0</span>, show: false},
+  reducer: (action, <span class="hljs-keyword">state</span>) =&gt;
     switch action {
-    | Click =&gt; ReasonReact.Update {...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>}
-    | Toggle =&gt; ReasonReact.Update {...<span class="hljs-keyword">state</span>, show: not <span class="hljs-keyword">state</span>.show}
+    | Click =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
+    | Toggle =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, show: ! <span class="hljs-keyword">state</span>.show})
     },
-  render: fun <span class="hljs-literal">self</span> =&gt; {
-    let message = <span class="hljs-string">"Clicked "</span> ^ string_of_int <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.count ^ <span class="hljs-string">" times(s)"</span>;
+  render: (<span class="hljs-literal">self</span>) =&gt; {
+    let message = <span class="hljs-string">"Clicked "</span> ++ string_of_int(<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.count) ++ <span class="hljs-string">" times(s)"</span>;
     <span class="hljs-variable">&lt;div&gt;</span>
       <span class="hljs-variable">&lt;MyDialog
-        onClick=(self.reduce (fun _event =&gt;</span> Click))
-        <span class="hljs-keyword">on</span>Submit=(<span class="hljs-literal">self</span>.reduce (fun _event =&gt; Toggle)) /&gt;
-      (ReasonReact.stringToElement message)
+        onClick=(self.reduce((_event) =&gt;</span> Click))
+        <span class="hljs-keyword">on</span>Submit=(<span class="hljs-literal">self</span>.reduce((_event) =&gt; Toggle))
+      /&gt;
+      {ReasonReact.stringToElement(message)}
     &lt;/div&gt;
   }
 };
 </code></pre>
 <p>A few things:</p>
 <ul>
-<li>There's a user-defined type called <strong><code>actions</code></strong>, named so by convention. It's a variant of all the possible state transitions in your component. <em>In state machine terminology, this'd be a &quot;token&quot;</em>.</li>
+<li>There's a user-defined type called <strong><code>action</code></strong>, named so by convention. It's a variant of all the possible state transitions in your component. <em>In state machine terminology, this'd be a &quot;token&quot;</em>.</li>
 <li>A user-defined <code>state</code> type, and an <code>initialState</code>. Nothing special.</li>
 <li>The current <code>state</code> value is accessible through <code>self.state</code>, whenever <code>self</code> is passed to you as an argument of some function.</li>
 <li>A &quot;<strong>reducer</strong>&quot;! This <a href="https://reasonml.github.io/guide/language/pattern-matching">pattern-matches</a> on the possible actions and specify what state update each action corresponds to. <em>In state machine terminology, this'd be a &quot;state transition&quot;</em>.</li>
@@ -104,21 +110,22 @@ let make _children =&gt; {
 <ul>
 <li><code>ReasonReact.NoUpdate</code>: don't do a state update.</li>
 <li><code>ReasonReact.Update state</code>: update the state.</li>
-<li><code>ReasonReact.SideEffects (self =&gt; unit)</code>: no state update, but trigger a side-effect, e.g. <code>ReasonReact.SideEffects (fun _self =&gt; Js.log &quot;hello!&quot;)</code>.</li>
-<li><code>ReasonReact.UpdateWithSideEffects state (self =&gt; unit)</code>: update the state, <strong>then</strong> trigger a side-effect.</li>
+<li><code>ReasonReact.SideEffects((self) =&gt; unit)</code>: no state update, but trigger a side-effect, e.g. <code>ReasonReact.SideEffects((_self) =&gt; Js.log &quot;hello!&quot;))</code>.</li>
+<li><code>ReasonReact.UpdateWithSideEffects(state, (self) =&gt; unit)</code>: update the state, <strong>then</strong> trigger a side-effect.</li>
 </ul>
 <p><em>If you're a power user, there's also <code>SilentUpdate</code> and <code>SilentUpdateWithSideEffects</code>. See reasonReact.rei to see what they do. Don't use them if you're trying to update a ref/timer/subscription/any other instance variable</em>.</p>
 <h3><a class="anchor" aria-hidden="true" name="important-notes"></a><a href="#important-notes" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Important Notes</h3>
 <p><strong>Please read through all these points</strong>, if you want to fully take advantage of <code>reducer</code> and avoid future ReactJS Fiber race condition problems.</p>
 <ul>
-<li>The <code>action</code> type's variants can carry a payload: <code>onClick=(self.reduce (fun data =&gt; Click data.foo))</code>.</li>
+<li>The <code>action</code> type's variants can carry a payload: <code>onClick=(self.reduce((data) =&gt; Click data.foo))</code>.</li>
 <li>Don't pass the whole event into the action variant's payload. ReactJS events are pooled; by the time you intercept the action in the <code>reducer</code>, the event's already recycled.</li>
-<li><code>reducer</code> must be pure (not to be confused with <code>self.reduce</code>, which can be impure)! Don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use <code>SideEffects</code> or <code>UpdateWithSideEffects</code> to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.</li>
+<li><code>reducer</code> <strong>must</strong> be pure (not to be confused with <code>self.reduce</code>, which can be impure)! Aka don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use <code>SideEffects</code> or <code>UpdateWithSideEffects</code> to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.</li>
 <li>If you need to do e.g. <code>ReactEventRe.BlablaEvent.preventDefault event</code>, do it in <code>self.reduce</code>, before returning the action type. Again, <code>reducer</code> must be pure.</li>
-<li>If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains <code>self.handle</code>, no <code>self.reduce</code>. You still needs to specify a <code>reducer</code> like so: <code>reducer: fun () _state =&gt; ReasonReact.NoUpdate</code>. Otherwise you'll get a <code>variable cannot be generalized</code> type error.</li>
+<li>Feel free to trigger another action in <code>SideEffects</code> and <code>UpdateWithSideEffects</code>, e.g. <code>UpdateWithSideEffects(newState, (self) =&gt; self.reduce(() =&gt; Click), ())</code>.</li>
+<li>If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains <code>self.handle</code>, no <code>self.reduce</code>. You still needs to specify a <code>reducer</code> like so: <code>reducer:((), _state) =&gt; ReasonReact.NoUpdate</code>. Otherwise you'll get a <code>variable cannot be generalized</code> type error.</li>
 </ul>
 <h3><a class="anchor" aria-hidden="true" name="tip"></a><a href="#tip" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tip</h3>
-<p>Cram as much as possible into <code>reducer</code>. Keep your actual callback handlers (the <code>self.reduce (fun foo =&gt; Bar))</code> part) dumb and small. This makes all your state updates &amp; side-effects (which itself should mostly only be inside <code>ReasonReact.SideEffects</code> and <code>ReasonReact.UpdateWithSideEffects</code>) much easier to scan through. Also more ReactJS fiber async-mode resilient.</p>
+<p>Cram as much as possible into <code>reducer</code>. Keep your actual callback handlers (the <code>self.reduce((foo) =&gt; Bar))</code> part) dumb and small. This makes all your state updates &amp; side-effects (which itself should mostly only be inside <code>ReasonReact.SideEffects</code> and <code>ReasonReact.UpdateWithSideEffects</code>) much easier to scan through. Also more ReactJS fiber async-mode resilient.</p>
 <h2><a class="anchor" aria-hidden="true" name="async-state-setting"></a><a href="#async-state-setting" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Async State Setting</h2>
 <p>In ReactJS, you could use <code>setState</code> inside a callback, like so:</p>
 <pre><code class="hljs">setInterval(() =&gt; this.setState(...), 1000);
@@ -130,24 +137,25 @@ let make _children =&gt; {
 
 type <span class="hljs-keyword">state</span> = {
   count: int,
-  timerId: ref (option Js.Global.intervalId)
+  timerId: ref(option(Js.Global.intervalId))
 };
 
-let component = ReasonReact.reducerComponent <span class="hljs-string">"Counter"</span>;
+let component = ReasonReact.reducerComponent(<span class="hljs-string">"Counter"</span>);
 
-let make _children =&gt; {
+let make = (_children) =&gt; {
   ...component,
-  initialState: fun () =&gt; {count: <span class="hljs-number">0</span>, timerId: ref None},
-  reducer: fun action <span class="hljs-keyword">state</span> =&gt;
+  initialState: () =&gt; {count: <span class="hljs-number">0</span>, timerId: ref(None)},
+  reducer: (action, <span class="hljs-keyword">state</span>) =&gt;
     switch action {
-    | Tick =&gt; ReasonReact.Update {...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>}
+    | Tick =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
     },
-  didMount: fun <span class="hljs-literal">self</span> =&gt; {
-    <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.timerId := Some (Js.Global.<span class="hljs-built_in">set</span>Interval (<span class="hljs-literal">self</span>.reduce (fun _ =&gt; Tick)) <span class="hljs-number">1000</span>);
+  didMount: (<span class="hljs-literal">self</span>) =&gt; {
+    <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.timerId := Some(Js.Global.<span class="hljs-built_in">set</span>Interval(<span class="hljs-literal">self</span>.reduce((_) =&gt; Tick), <span class="hljs-number">1000</span>));
     ReasonReact.NoUpdate
   },
-  render: fun {<span class="hljs-keyword">state</span>} =&gt; <span class="hljs-variable">&lt;div&gt;</span> (ReasonReact.stringToElement (string_of_int <span class="hljs-keyword">state</span>.count)) &lt;/div&gt;
+  render: ({<span class="hljs-keyword">state</span>}) =&gt; <span class="hljs-variable">&lt;div&gt;</span> {ReasonReact.stringToElement(string_of_int(<span class="hljs-keyword">state</span>.count))} &lt;/div&gt;
 };
+
 </code></pre>
 <p>Aka, creating a <code>reducer</code> handler as you would normally, and let that setInterval (or whatver async state setting you use) asynchronously call the callback returned by your <code>self.reduce</code>.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="callback-handlers.html">← Callback Handlers</a><a class="docs-next button" href="lifecycles.html">Lifecycles →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({

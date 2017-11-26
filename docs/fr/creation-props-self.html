@@ -16,30 +16,30 @@
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/fr" target="_blank">Translate</a><h1>Creation, Props &amp; Self</h1></header><article><div><span><p><em>Cette documentation nécessite une connaissance relative de ReactJS.</em></p>
 <p>ReasonReact n'utilise pas/n'a pas besoin de classes. L'API de création de composants retourne un simple &quot;record&quot;, dont vous pouvez surcharger les champs (par exemple <code>render</code>).</p>
-<p>Le modèle de composant est créé par le biais de <code>ReasonReact.statelessComponent &quot;LeNomDuComposant&quot;</code>. La chaîne de caractères est utilisée à des fins de debugging uniquement (l'équivalent du <a href="https://facebook.github.io/react/docs/react-component.html#displayname"><code>displayName</code></a> de ReactJS).</p>
+<p>The component template is created through <code>ReasonReact.statelessComponent(&quot;TheComponentName&quot;)</code>. La chaîne de caractères est utilisée à des fins de debugging uniquement (l'équivalent du <a href="https://facebook.github.io/react/docs/react-component.html#displayname"><code>displayName</code></a> de ReactJS).</p>
 <p>À titre d’exemple, voici le fichier <code>Greeting.re</code> :</p>
-<pre><code class="hljs css reason"><span class="hljs-attribute">let component</span> = ReasonReact.statelessComponent <span class="hljs-string">"Greeting"</span>;
+<pre><code class="hljs css reason"><span class="hljs-attribute">let component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 </code></pre>
 <p><strong>En ReactJS</strong>, vous auriez créé un composant en tant que classe et l'auriez appelé à travers du JSX qui le transforme en <code>React.createElement(myClass, {prop1: 'hello'})</code> en interne. <strong>En ReasonReact</strong>, au lieu de passer la 'classe' complète (ie modèle de composant) dans une hypothétique fonction <code>ReasonReact.createElement</code>, nous allons plutôt définir une fonction <code>make</code> :</p>
-<pre><code class="hljs css reason"><span class="hljs-comment">/* toujours dans Greeting.re */</span>
-let component = ReasonReact.statelessComponent <span class="hljs-string">"Greeting"</span>;
+<pre><code class="hljs css reason"><span class="hljs-comment">/* still in Greeting.re */</span>
+<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
-let make ::name children =&gt; {
-  ...component, <span class="hljs-comment">/* propage les autres valeurs par défaut du modèle ici  */</span>
-  render: <span class="hljs-function"><span class="hljs-keyword">fun</span> self =&gt; <span class="hljs-type">&lt;div&gt;</span> <span class="hljs-params">(ReasonReact.stringToElement name)</span></span> &lt;/div&gt;
+<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
+  ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
+  render: (<span class="hljs-keyword">self</span>) =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
 };
 </code></pre>
 <p>La fonction <code>make</code> est la fonction appelée par le JSX de ReasonReact, décrite plus tard. Pour le moment, la manière non-JSX d'appeler et de faire le rendu d'un composant est :</p>
-<pre><code class="hljs css reason"><span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span> (<span class="hljs-selector-tag">Greeting</span><span class="hljs-selector-class">.make</span> <span class="hljs-selector-tag">name</span><span class="hljs-selector-pseudo">::"John"</span> <span class="hljs-selector-attr">[||]</span>) <span class="hljs-comment">/* la fonction `make` du module `Greeting` */</span>
-<span class="hljs-comment">/* l'équivalent de &lt;Greeting name="John" /&gt; */</span>
+<pre><code class="hljs css reason">ReasonReact.element(Greeting.make(~name=<span class="hljs-string">"John"</span>, [||])) /* the <span class="hljs-string">`make`</span> <span class="hljs-keyword">function</span> <span class="hljs-keyword">in</span> the <span class="hljs-keyword">module</span> <span class="hljs-string">`Greeting`</span> */
+/* equivalent to &lt;Greeting name=<span class="hljs-string">"John"</span> /&gt; */
 </code></pre>
 <p>Il est nécessaire que <code>make</code> retourne le 'record' de composant défini ci dessus. Vous pouvez surcharger quelques champs, tels que les familiers <code>render</code>, <code>initialState</code>, <code>didMount</code>, etc., tous décrits plus loin.</p>
 <p><strong>Note</strong>: ne <strong>pas</strong> inliner <code>let component</code> dans le corps de la fonction <code>make</code> comme ce qui suit !</p>
-<pre><code class="hljs css reason">let make _children =&gt; {...(ReasonReact.statelessComponent <span class="hljs-string">"Greeting"</span>), render: <span class="hljs-function"><span class="hljs-keyword">fun</span> blabla}</span>
+<pre><code class="hljs css reason">let make = <span class="hljs-function"><span class="hljs-params">(_children)</span> =&gt;</span> {...(ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>)), render: <span class="hljs-function"><span class="hljs-params">(self)</span> =&gt;</span> blabla}
 </code></pre>
 <p>Puisque <code>make</code> est appelé à chaque invocation JSX, vous créériez accidentellement un nouveau composant à chaque fois.</p>
 <h2><a class="anchor" aria-hidden="true" name="proprietes"></a><a href="#proprietes" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Propriétés</h2>
-<p>Les propriétés sont juste des arguments nommés de la fonction <code>make</code>, vue plus haut. Ils peuvent également être optionnels et/ou avoir des valeurs par défaut, par exemple <code>let make ::name ::age=? ::className=&quot;box&quot; _children =&gt; ...</code>.</p>
+<p>Les propriétés sont juste des arguments nommés de la fonction <code>make</code>, vue plus haut. They can also be optional and/or have defaults, e.g. <code>let make = (~name, ~age=?, ~className=&quot;box&quot;, _children) =&gt; ...</code>.</p>
 <p>La dernière propriété <strong>doit</strong> être <code>children</code>. Si vous ne l’utilisez pas, ignorez la simplement en la nommant <code>_</code> ou <code>_children</code>. Les noms commençant par 'underscore' ne déclenchent pas d'alertes lorsqu'ils sont inutilisés.</p>
 <p><strong>Le nom d'une propriété ne peut pas être <code>ref</code> ni <code>key</code></strong>. Ce sont des noms réservés, tout comme en ReactJS.</p>
 <p>Selon cet exemple, vous appelleriez ce composant depuis un autre fichier par le biais de <code>&lt;Foo name=&quot;Reason&quot; /&gt;</code>. Si <code>className</code> est omis, sa valeur par défaut est &quot;box&quot;. La valeur par défaut de <code>age</code> est <code>None</code>. Si vous souhaitez passer explicitement <code>age</code>, il suffit de faire : <code>&lt;Foo name=&quot;Reason&quot; age=20 /&gt;</code>.</p>
@@ -54,7 +54,7 @@ let make ::name children =&gt; {
 <p>Tout simplement parce que <code>age</code> attend un <code>int</code> normal lorsqu'on appelle <code>Foo</code> avec, non pas un <code>option int</code> ! Naivement, vous pourriez résoudre le problème ainsi :</p>
 <pre><code class="hljs css reason"><span class="hljs-keyword">switch</span> ageFromProps {
 | <span class="hljs-function"><span class="hljs-params">None</span> =&gt;</span> &lt;Foo name=<span class="hljs-string">"Reason"</span> /&gt;
-| Some nonNullableAge =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Foo</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attr">age</span>=<span class="hljs-string">nonNullableAge</span> /&gt;</span>
+| Some(nonNullableAge) =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Foo</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attr">age</span>=<span class="hljs-string">nonNullableAge</span> /&gt;</span>
 }
 </span></code></pre>
 <p>Pénible. Heureusement, il y a une meilleure façon de passer explicitement une valeur optionnelle :</p>
@@ -62,7 +62,7 @@ let make ::name children =&gt; {
 </code></pre>
 <p>Cela se traduit par &quot;Je comprend que <code>age</code> est optionel et que lorsque j'utilise le label je dois passer un entier. Mais je tiens à transmettre une valeur <code>option</code> explicitement&quot;. Ce n’est pas un truc JSX que nous avons créé ; cela fait juste partie du langage ! Voir la section &quot;Explicitly Passed Optional&quot; dans la documentation <a href="https://reasonml.github.io/guide/language/function/#explicitly-passed-optional"> Reason</a>.</p>
 <h2><a class="anchor" aria-hidden="true" name="self"></a><a href="#self" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>self</code></h2>
-<p>Vous avez certainement vu le code <code>render: fun self =&gt; ...</code> dans la fonction <code>make</code>. Le concept JavaScript <code>this</code> n'existe pas en ReasonReact (bien qu'il puisse exister en Reason, puisqu'il a un système objet optionnel) ; l'équivalence de <code>this</code> s'appelle <code>self</code>. Il s'agit d'un record qui contient <code>state</code>, <code>retainedProps</code>, <code>handle</code> et <code>reduce</code>, que l'on peut passer aux événements de cycle de vie, <code>make</code> et quelques autres, lorsqu'ils ont besoin de cet ensemble d'information. Ces concepts seront expliqués plus tard.</p>
+<p>You might have seen the <code>render: (self) =&gt; ...</code> part in <code>make</code>. Le concept JavaScript <code>this</code> n'existe pas en ReasonReact (bien qu'il puisse exister en Reason, puisqu'il a un système objet optionnel) ; l'équivalence de <code>this</code> s'appelle <code>self</code>. Il s'agit d'un record qui contient <code>state</code>, <code>retainedProps</code>, <code>handle</code> et <code>reduce</code>, que l'on peut passer aux événements de cycle de vie, <code>make</code> et quelques autres, lorsqu'ils ont besoin de cet ensemble d'information. Ces concepts seront expliqués plus tard.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="intro-example.html">← Exemple d’introduction</a><a class="docs-next button" href="jsx.html">JSX →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.

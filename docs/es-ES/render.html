@@ -16,7 +16,7 @@
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>Render</h1></header><article><div><span><p><code>render</code> needs to return a <code>ReasonReact.reactElement</code>: <code>&lt;div /&gt;</code>, <code>&lt;MyComponent /&gt;</code>, etc. Render takes the argument <code>self</code>:</p>
 <pre><code class="hljs css reason">...
-    <span class="hljs-symbol">render:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">self</span></span> =&gt; &lt;div /&gt;
+    render: <span class="hljs-function"><span class="hljs-params">(self)</span> =&gt;</span> &lt;div /&gt;
 ...
 </code></pre>
 <p>What if you want to return <code>null</code> from a <code>render</code>? Or pass a string to a DOM component like <code>div</code> which only allows <code>ReasonReact.reactElement</code>s?</p>
@@ -24,7 +24,7 @@
 <p>Fortunately, we special-case a few special elements of the type <code>ReasonReact.reactElement</code>:</p>
 <ul>
 <li><p><code>ReasonReact.nullElement</code>: This is your <code>null</code> equivalent for <code>render</code>'s return value. Akin to <code>return null</code> in ReactJS render.</p></li>
-<li><p><code>ReasonReact.stringToElement</code>: Takes a string and converts it to a <code>reactElement</code>. You'd use <code>&lt;div&gt; (ReasonReact.stringToElement (string_of_int 10)) &lt;/div&gt;</code> to display an int.</p></li>
+<li><p><code>ReasonReact.stringToElement</code>: Takes a string and converts it to a <code>reactElement</code>. You'd use <code>&lt;div&gt; {ReasonReact.stringToElement(string_of_int(10))} &lt;/div&gt;</code> to display an int.</p></li>
 <li><p><code>ReasonReact.arrayToElement</code>: Takes an array and converts it to a <code>reactElement</code>.</p></li>
 </ul>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="jsx.html">← JSX</a><a class="docs-next button" href="callback-handlers.html">Callback Handlers →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({

@@ -20,28 +20,58 @@
 <pre><code class="hljs css reason"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">foo</span>=</span></span><span class="hljs-template-variable">{bar}</span><span class="xml"><span class="hljs-tag">&gt;</span> </span><span class="hljs-template-variable">{child1}</span><span class="xml"> </span><span class="hljs-template-variable">{child2}</span><span class="xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 </span></code></pre>
 <p>переходит в</p>
-<pre><code class="hljs css reason"><span class="hljs-selector-tag">ReactDOMRe</span><span class="hljs-selector-class">.createElement</span> "<span class="hljs-selector-tag">div</span>" <span class="hljs-selector-tag">props</span><span class="hljs-selector-pseudo">::(ReactDOMRe.props</span> <span class="hljs-selector-tag">foo</span><span class="hljs-selector-pseudo">::bar</span> ()) <span class="hljs-selector-attr">[|child1, child2|]</span>
-</code></pre>
+<pre><code class="hljs css reason">ReactDOMRe.createElement(<span class="hljs-string">"div"</span>, ~props=ReactDOMRe.props(~foo=bar, ()), [|<span class="hljs-string">child1, child2</span>|<span class="hljs-string">]);
+</span></code></pre>
 <p>which compiles to the JS code:</p>
 <pre><code class="hljs css js">React.createElement(<span class="hljs-string">'div'</span>, {<span class="hljs-attr">foo</span>: bar}, child1, child2)
 </code></pre>
 <p>Prop-less <code>&lt;div /&gt;</code> transforms to:</p>
-<pre><code class="hljs css reason">ReactDOMRe.createElement <span class="hljs-string">"div"</span> [|<span class="hljs-string">child1, child2</span>|<span class="hljs-string">]
-</span></code></pre>
-<p>Which compiles to</p>
-<pre><code class="hljs css js">React.createElement(<span class="hljs-string">'div'</span>, <span class="hljs-literal">undefined</span>, child1, child2)
+<pre><code class="hljs css reason">ReactDOMRe.createElement(<span class="hljs-string">"div"</span>, [<span class="hljs-string">||]);</span>
 </code></pre>
+<p>Which compiles to</p>
+<pre><code class="hljs css js">React.createElement(<span class="hljs-string">'div'</span>, <span class="hljs-literal">undefined</span>)
+</code></pre>
+<p><strong>Note that <code>ReactDOMRe.createElement</code> is intended for internal use by the JSX transform</strong>. For escape-hatch scenarios, use <code>ReasonReact.createDomElement</code> instead, as outlined in the <a href="/reason-react/docs/ru/children.html">children section</a>.</p>
 <h3><a class="anchor" aria-hidden="true" name="capitalized"></a><a href="#capitalized" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Capitalized</h3>
 <pre><code class="hljs css reason"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span> <span class="hljs-attr">key</span>=</span></span><span class="hljs-template-variable">{a}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">ref</span>=</span></span><span class="hljs-template-variable">{b}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">foo</span>=</span></span><span class="hljs-template-variable">{bar}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">baz</span>=</span></span><span class="hljs-template-variable">{qux}</span><span class="xml"><span class="hljs-tag">&gt;</span> </span><span class="hljs-template-variable">{child1}</span><span class="xml"> </span><span class="hljs-template-variable">{child2}</span><span class="xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
 </span></code></pre>
 <p>transforms to</p>
-<pre><code class="hljs css reason"><span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span> <span class="hljs-selector-tag">key</span><span class="hljs-selector-pseudo">::a</span> <span class="hljs-selector-tag">ref</span><span class="hljs-selector-pseudo">::b</span> (<span class="hljs-selector-tag">MyReasonComponent</span><span class="hljs-selector-class">.make</span> <span class="hljs-selector-tag">foo</span><span class="hljs-selector-pseudo">::bar</span> <span class="hljs-selector-tag">baz</span><span class="hljs-selector-pseudo">::qux</span> <span class="hljs-selector-attr">[|child1, child2|]</span>)
+<pre><code class="hljs css reason">ReasonReact.element(
+  ~<span class="hljs-attribute">key</span>=a,
+  ~<span class="hljs-attribute">ref</span>=b,
+  MyReasonComponent.make(~<span class="hljs-attribute">foo</span>=bar, ~<span class="hljs-attribute">baz</span>=qux, [|child1, child2|])
+);
 </code></pre>
 <p>Prop-less <code>&lt;MyReasonComponent /&gt;</code> transforms to:</p>
-<pre><code class="hljs css reason"><span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span> (<span class="hljs-selector-tag">MyReasonComponent</span><span class="hljs-selector-class">.make</span> <span class="hljs-selector-attr">[||]</span>)
+<pre><code class="hljs css reason"><span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span>(<span class="hljs-selector-tag">MyReasonComponent</span><span class="hljs-selector-class">.make</span>(<span class="hljs-selector-attr">[||]</span>));
 </code></pre>
 <p>The <code>make</code> above is exactly the <code>make</code> function you've seen in the previous section.</p>
 <p><strong>Note how <code>ref</code> and <code>key</code> have been lifted out of the JSX call into the <code>ReasonReact.element</code> call</strong>. <code>ref</code> and <code>key</code> are reserved in ReasonReact, just like in ReactJS. <strong>Don't</strong> use them as props in your component!</p>
+<h3><a class="anchor" aria-hidden="true" name="children"></a><a href="#children" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Children</h3>
+<p>ReasonReact children are <strong>fully typed</strong>, and you can pass any data structure to it (as long as the receiver component permits it). When you write:</p>
+<pre><code class="hljs css reason"><span class="hljs-section">&lt;MyForm&gt;</span> <span class="hljs-section">&lt;div /&gt;</span> <span class="hljs-section">&lt;div /&gt;</span> <span class="hljs-section">&lt;/MyForm&gt;</span>
+</code></pre>
+<p>You're effectively passing the array <code>[| &lt;div /&gt;, &lt;div /&gt; |]</code> to <code>MyForm</code>'s children. But this also means that the following wouldn't work:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> |];
+<span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> theChildren <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
+</span></code></pre>
+<p>Because this actually translates to:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="hljs-type">&lt;div</span> /&gt;, &lt;div /&gt; |<span class="hljs-type">];
+ReasonReact</span>.element(
+  MyReasonComponent.make([|<span class="hljs-type">theChildren</span>|<span class="hljs-type">])
+);
+</span></code></pre>
+<p>Which wraps the already wrapped <code>theChildren</code> in another layer of array. To solve this issue, Reason has a special <a href="https://reasonml.github.io/guide/language/jsx#children-spread">children spread syntax</a>:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> |];
+<span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> ...theChildren <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
+</span></code></pre>
+<p>This simply passes <code>theChildren</code> without array wrapping. It becomes:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="hljs-type">&lt;div</span> /&gt;, &lt;div /&gt; |<span class="hljs-type">];
+ReasonReact</span>.element(
+  MyReasonComponent.make(theChildren)
+);
+</code></pre>
+<p>For more creative way of leveraging Reason's type system, data structures and performance to use <code>children</code> to its full potential, see the <a href="/reason-react/docs/ru/children.html">Children section</a>!</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="creation-props-self.html">← Creation, Props &amp; Self</a><a class="docs-next button" href="render.html">Render →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.

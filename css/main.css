@@ -1009,6 +1009,8 @@ pre code {
 #languages-dropdown {
   position: absolute;
   width:100%;
+  /* positioning can block the main menu on mobile */
+  pointer-events: none;
 }
 #languages-dropdown.visible {
   display: flex;
@@ -1021,6 +1023,7 @@ ul#languages-dropdown-items {
   background-color: #db4d3f;
   flex-direction: column;
   min-width: 120px;
+  pointer-events: all;
 }
 
 ul#languages li {
@@ -1810,10 +1813,6 @@ footer .copyright {
   transform: rotate(1080deg);
 }
 
-a.hash-link {
-  transition: none;
-}
-
 /* only show language icon */
 #languages-menu {
   font-size: 0px;
@@ -1834,14 +1833,6 @@ a.hash-link {
   }
 }
 
-/* mobile click zone for translation is weird */
-#languages-dropdown {
-  pointer-events: none;
-}
-#languages-dropdown-items {
-  pointer-events: all;
-}
-
 #docsNav.container.docsNavContainer .toc::-webkit-scrollbar {
   display: none;
 }
@@ -1854,6 +1845,12 @@ a.hash-link {
   bottom: -400px;
   animation:spin 750s linear infinite;
   transition: opacity 2s;
+}
+
+@media (max-width: 1024px) {
+  .spinner {
+    opacity: 0;
+  }
 }
 
 @keyframes spin { 100% {transform:rotate(360deg); } }
@@ -1909,12 +1906,6 @@ a.hash-link {
 
 /* end override */
 
-@media (max-width: 1024px) {
-  .spinner {
-    opacity: 0;
-  }
-}
-
 /* These are styles that should be global to all Reason-ecosystem sites
  * but which we have no current plans to upstream to Docusaurus. */
 
@@ -1938,17 +1929,14 @@ a.hash-link {
 /* 2. Custom code block styling */
 /* code */
 code {
-  color: inherit;
-  background-color: rgba(243, 136, 136, 0.1);
-  border-radius: .3em;
-  box-shadow: 2px 0 rgba(243, 136, 136, 0.1), -2px 0 rgba(243, 136, 136, 0.1);
   padding: 2px 0;
+  color: inherit;
+  border-radius: .3em;
   /* avoids scale issues on mobile */
   word-break: break-word;
 }
 pre code {
   background-color: unset;
-  box-shadow: none;
 }
 .hljs {
   /* this -15px margin offsets the usual margin given to a page. This way it looks like this:

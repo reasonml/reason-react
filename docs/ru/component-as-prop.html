@@ -15,8 +15,9 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ru" target="_blank">Translate</a><h1>Component as Prop</h1></header><article><div><span><p>In ReactJS, <code>&lt;Menu banner=MyBanner /&gt;</code> is easy; in ReasonReact, we can't trivially pass the whole component module (<a href="https://reasonml.github.io/guide/language/module">explanations</a>). Solution:</p>
-<pre><code class="hljs css reason">let bannerCallback prop1 prop2 =&gt; &lt;MyBanner <span class="hljs-attribute">message</span>=prop1 <span class="hljs-attribute">count</span>=prop2 /&gt;;
-&lt;Menu <span class="hljs-attribute">bannerFunc</span>=bannerCallback /&gt;
+<pre><code class="hljs css reason">let bannerCallback = (prop1, prop2) =&gt; &lt;MyBanner <span class="hljs-attribute">message</span>=prop1 <span class="hljs-attribute">count</span>=prop2 /&gt;;
+
+&lt;Menu <span class="hljs-attribute">bannerFunc</span>=bannerCallback /&gt;;
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="props-spread.html">← Props Spread</a><a class="docs-next button" href="ternary-shortcut.html">Ternary Shortcut →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [

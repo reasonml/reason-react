@@ -15,7 +15,7 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>Lifecycles</h1></header><article><div><span><p>ReasonReact supports the familiar ReactJS lifecycle events.</p>
-<pre><code class="hljs css reason">didMount: <span class="hljs-literal">self</span> =&gt; update <span class="hljs-keyword">state</span>
+<pre><code class="hljs css reason">didMount: <span class="hljs-literal">self</span> =&gt; update(<span class="hljs-keyword">state</span>)
 
 willReceiveProps: <span class="hljs-literal">self</span> =&gt; <span class="hljs-keyword">state</span>
 
@@ -35,51 +35,51 @@ willUnmount: <span class="hljs-literal">self</span> =&gt; unit
 <li><code>willMount</code> is unsupported. Use <code>didMount</code> instead.</li>
 <li><code>didUpdate</code>, <code>willUpdate</code> and <code>shouldUpdate</code> take in a <strong><code>oldAndNewSelf</code> record</strong>, of type <code>{oldSelf: self, newSelf: self}</code>. These two fields are the equivalent of ReactJS' <code>componentDidUpdate</code>'s <code>prevProps/prevState/</code> in conjunction with <code>props/state</code>. Likewise for <code>willUpdate</code> and <code>shouldUpdate</code>.</li>
 </ul>
-<p><strong>Note that you should return <code>ReasonReact.NoUpdate</code> whenever possible from the lifecycle events</strong>. In preparation for ReactJS fiber, we'll remove the ability to return a new state from lifecycles. If you need to update state, simply send an action to <code>reducer</code> and handle it correspondingly: <code>self.reduce (fun () =&gt; DidMountUpdate) ()</code>.</p>
+<p><strong>Note that you should return <code>ReasonReact.NoUpdate</code> whenever possible from the lifecycle events</strong>. In preparation for ReactJS fiber, we'll remove the ability to return a new state from lifecycles. If you need to update state, simply send an action to <code>reducer</code> and handle it correspondingly: <code>self.reduce(() =&gt; DidMountUpdate, ())</code>.</p>
 <p><strong>Some new lifecyle methods act differently</strong>. Described below.</p>
 <h2><a class="anchor" aria-hidden="true" name="access-next-or-previous-props-retainedprops"></a><a href="#access-next-or-previous-props-retainedprops" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Access next or previous props: <code>retainedProps</code></h2>
 <p>One pattern that's sometimes used in ReactJS is accessing a lifecyle event's <code>prevProps</code> (<code>componentDidUpdate</code>), <code>nextProps</code> (<code>componentWillUpdate</code>), and so on. ReasonReact doesn't automatically keep copies of previous props for you. We provide the <code>retainedProps</code> API for this purpose:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> retainedProps = {<span class="hljs-symbol">message:</span> string};
+<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> retainedProps = {message: <span class="hljs-built_in">string</span>};
 
-let component = ReasonReact.statelessComponentWithRetainedProps <span class="hljs-string">"RetainedPropsExample"</span>;
+<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponentWithRetainedProps(<span class="hljs-string">"RetainedPropsExample"</span>);
 
-let make ::message _children =&gt; {
+<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~message, _children</span>) =&gt;</span> {
   ...component,
-  <span class="hljs-symbol">retainedProps:</span> {<span class="hljs-symbol">message:</span> message},
-  <span class="hljs-symbol">didUpdate:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> {<span class="hljs-title">oldSelf</span></span>, newSelf} =&gt;
+  retainedProps: {message: message},
+  didUpdate: <span class="hljs-function">(<span class="hljs-params">{oldSelf, newSelf}</span>) =&gt;</span>
     <span class="hljs-keyword">if</span> (oldSelf.retainedProps.message !== newSelf.retainedProps.message) {
-      <span class="hljs-regexp">/* do whatever sneaky imperative things here */</span>
-      Js.log <span class="hljs-string">"props `message` changed!"</span>
+      <span class="hljs-comment">/* do whatever sneaky imperative things here */</span>
+      Js.log(<span class="hljs-string">"props `message` changed!"</span>)
     },
-  <span class="hljs-symbol">render:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">_self</span></span> =&gt; ...
+  render: <span class="hljs-function">(<span class="hljs-params">_self</span>) =&gt;</span> ...
 };
 </code></pre>
 <p>We expose <code>ReasonReact.statelessComponentWithRetainedProps</code> and <code>ReasonReact.reducerComponentWithRetainedProps</code>. Both work like their ordinary non-retained-props counterpart, and require you to specify a new field, <code>retainedProps</code> (of whatever type you'd like) in your component's spec in <code>make</code>.</p>
 <h3><a class="anchor" aria-hidden="true" name="willreceiveprops"></a><a href="#willreceiveprops" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>willReceiveProps</code></h3>
 <p>Traditional ReactJS <code>componentWillReceiveProps</code> takes in a <code>nextProps</code>. We don't have <code>nextProps</code>, since those are simply the labeled arguments in <code>make</code>, available to you in the scope. To access the <em>current</em> props, however, you'd use the above <code>retainedProps</code> API:</p>
-<pre><code class="hljs css reason">type state = {someToggle: bool};
+<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> state = {someToggle: bool};
 
-let component = ReasonReact.reducerComponentWithRetainedProps <span class="hljs-string">"MyComponent"</span>;
+<span class="hljs-keyword">let</span> component = ReasonReact.reducerComponentWithRetainedProps(<span class="hljs-string">"MyComponent"</span>);
 
-let make ::name _children =&gt; {
+<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~name, _children</span>) =&gt;</span> {
   ...component,
-  initialState: <span class="hljs-function"><span class="hljs-title">fun</span> <span class="hljs-params">()</span></span> =&gt; {someToggle: <span class="hljs-literal">false</span>},
+  initialState: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {someToggle: <span class="hljs-literal">false</span>},
   <span class="hljs-comment">/* just like state, the retainedProps field can return anything! Here it retained the `name` prop's value */</span>
   retainedProps: name,
-  willReceiveProps: <span class="hljs-function"><span class="hljs-keyword">fun</span> self =&gt; {</span>
+  willReceiveProps: <span class="hljs-function">(<span class="hljs-params">self</span>) =&gt;</span> {
     <span class="hljs-keyword">if</span> (self.retainedProps === name) {
-      <span class="hljs-comment">/* previous ReactJS logic would be: if (props.name === nextProps.name)
       ...
-    }
+      <span class="hljs-comment">/* previous ReactJS logic would be: if (props.name === nextProps.name) */</span>
+    };
     ...
   }
-}
-</span></code></pre>
+};
+</code></pre>
 <h3><a class="anchor" aria-hidden="true" name="willupdate"></a><a href="#willupdate" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>willUpdate</code></h3>
 <p>ReactJS' <code>componentWillUpdate</code>'s <code>nextProps</code> is just the labeled arguments in <code>make</code>, and &quot;current props&quot; (aka <code>this.props</code>) is the props you've copied into <code>retainedProps</code>, accessible via <code>{oldSelf}</code>:</p>
 <pre><code class="hljs css reason">{
   ...component,
-  <span class="hljs-symbol">willUpdate:</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> {<span class="hljs-title">oldSelf</span></span>, newSelf} =&gt; ...
+  willUpdate: {oldSelf, newSelf} =&gt; ...
 }
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" name="didupdate"></a><a href="#didupdate" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>didUpdate</code></h3>

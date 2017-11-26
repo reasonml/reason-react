@@ -15,34 +15,36 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ru" target="_blank">Translate</a><h1>ReasonReact using ReactJS</h1></header><article><div><span><p>MyBanner.js:</p>
-<pre><code class="hljs">var ReactDOM = require('react-dom');
-var React = require('react');
-var App = React.createClass({
-  displayName: &quot;MyBanner&quot;,
-  render: function() {
-    if (this.props.show) {
-      return React.createElement('div', null,
-        this.props.message
+<pre><code class="hljs css javascript"><span class="hljs-keyword">var</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
+<span class="hljs-keyword">var</span> App = React.createClass({
+  <span class="hljs-attr">displayName</span>: <span class="hljs-string">"MyBanner"</span>,
+  <span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.props.show) {
+      <span class="hljs-keyword">return</span> React.createElement(<span class="hljs-string">'div'</span>, <span class="hljs-literal">null</span>,
+        <span class="hljs-keyword">this</span>.props.message
       );
-    } else {
-      return null;
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
     }
   }
 });
-module.exports = App;
+<span class="hljs-built_in">module</span>.exports = App;
 </code></pre>
 <p>MyBannerRe.re</p>
 <pre><code class="hljs css reason"><span class="hljs-comment">/* Typing the MyBanner.js component's output as a `reactClass`. */</span>
 <span class="hljs-comment">/* Note that this file's JS output is located at reason-react-example/lib/js/src/interop/MyBannerRe.js; we're specifying the relative path to MyBanner.js in the string below */</span>
-external myBanner : ReasonReact.reactClass = <span class="hljs-string">"../../../../src/interop/MyBanner"</span> [@@bs.<span class="hljs-keyword">module</span>];
-<span class="hljs-keyword">let</span> make ::show ::message children =&gt;
-  ReasonReact.wrapJsForReason
-    reactClass::myBanner
-    props::{
-      <span class="hljs-string">"show"</span>: Js.Boolean.to_js_boolean show, <span class="hljs-comment">/* ^ don't forget to convert an OCaml bool into a JS boolean! */</span>
+[@<span class="hljs-keyword">bs.module] </span><span class="hljs-keyword">external </span>myBanner : ReasonReact.reactClass = <span class="hljs-string">"../../../../src/interop/MyBanner"</span><span class="hljs-comment">;</span>
+
+let make = (~<span class="hljs-keyword">show, </span>~message, children) =&gt;
+  ReasonReact.wrapJsForReason(
+    ~reactClass=myBanner,
+    ~props={
+      <span class="hljs-string">"show"</span>: <span class="hljs-keyword">Js.Boolean.to_js_boolean(show), </span><span class="hljs-comment">/* ^ don't forget to convert an OCaml bool into a JS boolean! */</span>
       <span class="hljs-string">"message"</span>: message <span class="hljs-comment">/* OCaml string maps to JS string, no conversion needed here */</span>
-    }
-    children;
+    },
+    children
+  )<span class="hljs-comment">;</span>
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="retained-props.html">← Retained Props</a><a class="docs-next button" href="js-using-reason.html">ReactJS using ReasonReact →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
