@@ -9,10 +9,6 @@
   transform: rotate(1080deg);
 }
 
-a.hash-link {
-  transition: none;
-}
-
 /* only show language icon */
 #languages-menu {
   font-size: 0px;
@@ -33,14 +29,6 @@ a.hash-link {
   }
 }
 
-/* mobile click zone for translation is weird */
-#languages-dropdown {
-  pointer-events: none;
-}
-#languages-dropdown-items {
-  pointer-events: all;
-}
-
 #docsNav.container.docsNavContainer .toc::-webkit-scrollbar {
   display: none;
 }
@@ -53,6 +41,12 @@ a.hash-link {
   bottom: -400px;
   animation:spin 750s linear infinite;
   transition: opacity 2s;
+}
+
+@media (max-width: 1024px) {
+  .spinner {
+    opacity: 0;
+  }
 }
 
 @keyframes spin { 100% {transform:rotate(360deg); } }
@@ -107,9 +101,3 @@ a.hash-link {
 }
 
 /* end override */
-
-@media (max-width: 1024px) {
-  .spinner {
-    opacity: 0;
-  }
-}
