@@ -22,6 +22,8 @@
 /* code */
 code {
   padding: 2px 0;
+  background-color: rgba(243, 136, 136, 0.1);
+  box-shadow: 2px 0 rgba(243, 136, 136, 0.1), -2px 0 rgba(243, 136, 136, 0.1);
   color: inherit;
   border-radius: .3em;
   /* avoids scale issues on mobile */
@@ -29,6 +31,7 @@ code {
 }
 pre code {
   background-color: unset;
+  box-shadow: none;
 }
 .hljs {
   /* this -15px margin offsets the usual margin given to a page. This way it looks like this:
