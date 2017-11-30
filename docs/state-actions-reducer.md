@@ -119,7 +119,7 @@ Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of 
 
 - `ReasonReact.NoUpdate`: don't do a state update.
 - `ReasonReact.Update state`: update the state.
-- `ReasonReact.SideEffects((self) => unit)`: no state update, but trigger a side-effect, e.g. `ReasonReact.SideEffects((_self) => Js.log "hello!"))`.
+- `ReasonReact.SideEffects((self) => unit)`: no state update, but trigger a side-effect, e.g. `ReasonReact.SideEffects((_self) => Js.log("hello!"))`.
 - `ReasonReact.UpdateWithSideEffects(state, (self) => unit)`: update the state, **then** trigger a side-effect.
 
 _If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEffects`. See reasonReact.rei to see what they do. Don't use them if you're trying to update a ref/timer/subscription/any other instance variable_.
@@ -128,7 +128,7 @@ _If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEf
 
 **Please read through all these points**, if you want to fully take advantage of `reducer` and avoid future ReactJS Fiber race condition problems.
 
-- The `action` type's variants can carry a payload: `onClick=(self.reduce((data) => Click data.foo))`.
+- The `action` type's variants can carry a payload: `onClick=(self.reduce((data) => Click(data.foo)))`.
 - Don't pass the whole event into the action variant's payload. ReactJS events are pooled; by the time you intercept the action in the `reducer`, the event's already recycled.
 - `reducer` **must** be pure (not to be confused with `self.reduce`, which can be impure)! Aka don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use `SideEffects` or `UpdateWithSideEffects` to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.
 - If you need to do e.g. `ReactEventRe.BlablaEvent.preventDefault event`, do it in `self.reduce`, before returning the action type. Again, `reducer` must be pure.
