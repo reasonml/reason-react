@@ -10,7 +10,13 @@ Don't use `npm build` for now.
 
 In the end, we spit out normal HTML, with all the JS dependencies (barring a few critical ones) removed, including ReactJS itself. It's a full, static website, super lightweight, portable, unfancy but good looking.
 
-During your development, most changes will be picked up at each browser refresh. If you change `siteConfig.js`, you need to restart the server for changes to take effect.
+Two special files:
+
+- `sidebars.json`: lists the sections.
+
+- `siteConfig.json`: some header and i18n configs.
+
+During your development, most changes will be picked up at each browser refresh. If you touch these two files, however, you'll have to kill & restart the server.
 
 ## Translations
 
