@@ -4,7 +4,7 @@
         <title>ReasonReact Blog</title>
         <link>https://reasonml.github.io/reason-react/blog</link>
         <description>The best place to stay up-to-date with the latest ReasonReact news and events.</description>
-        <lastBuildDate>Mon, 02 Oct 2017 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 17 Nov 2017 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -14,9 +14,9 @@
         </image>
         <item>
             <title><![CDATA[RR 0.3.0 - Power Children]]></title>
-            <link>https://reasonml.github.io/reason-react/blog/2017/10/02/power-children.html</link>
-            <guid>https://reasonml.github.io/reason-react/blog/2017/10/02/power-children.html</guid>
-            <pubDate>Mon, 02 Oct 2017 06:00:00 GMT</pubDate>
+            <link>https://reasonml.github.io/reason-react/blog/2017/11/17/power-children.html</link>
+            <guid>https://reasonml.github.io/reason-react/blog/2017/11/17/power-children.html</guid>
+            <pubDate>Fri, 17 Nov 2017 06:00:00 GMT</pubDate>
             <description><![CDATA[0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for ]]></description>
         </item>
         <item>
