@@ -30,7 +30,7 @@ let make = (~className="", _children) => {
 
 Attaching to a React DOM element looks the same: `state.mySectionRef = {myDivRef: Js.Nullable.to_opt(theRef)}`.
 
-**Note** how [ReactJS refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `theRef` and `myDivRef` are converted from a [JS nullable](http://bucklescript.github.io/bucklescript/Manual.html#_null_and_undefined) to an OCaml `option` (Some/None). When you use the ref, you'll be forced to handle the null case through a `switch`, which prevents subtle errors!
+**Note** how [ReactJS refs can be null](https://github.com/facebook/react/issues/9328#issuecomment-298438237). Which is why `theRef` and `myDivRef` are converted from a [JS nullable](https://bucklescript.github.io/docs/en/null-undefined-option.html) to an OCaml `option` (Some/None). When you use the ref, you'll be forced to handle the null case through a `switch`, which prevents subtle errors!
 
 **You must follow the instanceVars convention in the previous section for ref**.
 

@@ -21,7 +21,7 @@ let myElement =
   );
 ```
 
-This will assign the extra `data-payload` and `aria-label` props (**both untyped**, be careful!) onto the `div`, through a clever, syntactically valid use of Reason's JS object sugar for [BuckleScript objects](http://bucklescript.github.io/bucklescript/Manual.html#_create_js_objects_using_bs_obj).
+This will assign the extra `data-payload` and `aria-label` props (**both untyped**, be careful!) onto the `div`, through a clever, syntactically valid use of Reason's JS object sugar for [BuckleScript objects](https://bucklescript.github.io/docs/en/object.html#object-as-record).
 
 For non-DOM components, you need to use valid prop names.
 

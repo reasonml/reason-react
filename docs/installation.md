@@ -19,7 +19,7 @@ cd my-react-app && npm install && npm start
 npm run webpack
 ```
 
-BuckleScript's [bsb](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_build_system_code_bsb_code) build system has an `init` command that generates a project template. The `react` theme offers a lightweight solution optimized for low learning overhead and ease of integration into an existing project.
+BuckleScript's [bsb](https://bucklescript.github.io/docs/en/build-overview.html) build system has an `init` command that generates a project template. The `react` theme offers a lightweight solution optimized for low learning overhead and ease of integration into an existing project.
 
 It compiles to straighfoward JS files, so you can open `index.html` directly from the file system. No server needed.
 
