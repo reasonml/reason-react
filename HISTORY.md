@@ -4,7 +4,7 @@ Technically a breaking change, but just because of the removal of a few deprecat
 
 Improvements:
 
-- **Loosen `children`'s restriction**. This unlocks _huge_ potentials. See the blog post! **This requires the master version of bs-platform for now**
+- **Loosen `children`'s restriction**. This unlocks _huge_ potentials. See the [blog post](https://reasonml.github.io/reason-react/blog/2017/11/17/power-children.html)!
 - Fix a bug where side effects inside side effects were skipped (#98).
 - React 16 support.
 - All files upper-cased. This follows the [new community idiom](https://reasonml.github.io/guide/meta/project-structure#file-casing). Technically an internal change; doesn't affect your usage of ReasonReact.
