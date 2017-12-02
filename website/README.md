@@ -16,7 +16,7 @@ Two special files:
 
 - `siteConfig.json`: some header and i18n configs.
 
-During your development, most changes will be picked up at each browser refresh. If you touch these two files, however, you'll have to kill & restart the server.
+During your development, most changes will be picked up at each browser refresh. If you touch these two files or `blog/`, however, you'll have to restart the server to see the changes.
 
 ## Translations
 
