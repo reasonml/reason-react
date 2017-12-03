@@ -46,7 +46,7 @@ To access `state`, `retainedProps` and the other items in `self` from a callback
 
 ```reason
 let component = ...;
-let make = (~name, ~onClick, _children) =>
+let make = (~name, ~onClick, _children) => {
   let click = (event, self) => {
     onClick(event);
     Js.log(self.state);
