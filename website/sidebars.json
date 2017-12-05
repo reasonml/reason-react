@@ -26,7 +26,8 @@
       "props-spread",
       "component-as-prop",
       "ternary-shortcut",
-      "context-mixins"
+      "context-mixins",
+      "custom-class-component-property"
     ],
     "FAQ": [
       "im-having-a-type-error",
