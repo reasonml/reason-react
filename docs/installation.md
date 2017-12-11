@@ -9,7 +9,7 @@ To easily try ReasonReact, we offer two solutions with different goals in mind.
 
 ## Bsb
 
-**Goals**: simplicity, control, traditional app with several html files.
+Our preferred option in most cases. If it's your first time trying ReasonReact, feel free to use the more familiar create-react-app option below, too.
 
 ```sh
 npm install -g bs-platform
@@ -23,9 +23,7 @@ BuckleScript's [bsb](https://bucklescript.github.io/docs/en/build-overview.html)
 
 It compiles to straighfoward JS files, so you can open `index.html` directly from the file system. No server needed.
 
-## Reason Scripts (with Development Server)
-
-**Goals**: single-page app (SPA), builds on best practices from create-react-app community.
+## Reason Scripts (Aka Create-React-App)
 
 [Reason-scripts](https://github.com/reasonml-community/reason-scripts) provides a familiar experience to the ReactJS users who are already familiar with [create-react-app](https://github.com/facebookincubator/create-react-app). It's an all-encompassing solution. However, if it's too heavy for your taste, try the first option above (bsb).
 
