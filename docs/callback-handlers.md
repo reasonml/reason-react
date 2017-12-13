@@ -87,8 +87,8 @@ handleSubmit: function(username, password, event) {
 
 You cannot write such `handleSubmit` in ReasonReact, as `handle` expects to wrap around a function that only takes **one** argument. Here's the workaround:
 
-```
-let handleSubmitEscapeHatch = (username, password, event) => 
+```reason
+let handleSubmitEscapeHatch = (username, password, event) =>
         self.handle((tupleOfThreeItems) => doSomething(tupleOfThreeItems))(username, password, event));
 ...
 <MyForm onUserClickedSubmit=(handleSubmitEscapeHatch) />
