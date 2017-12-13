@@ -73,7 +73,7 @@ let make = <span class="hljs-function"><span class="hljs-params">(~name, ~onClic
 &lt;MyForm onUserClickedSubmit={<span class="hljs-keyword">this</span>.handleSubmit} /&gt;
 </code></pre>
 <p>You cannot write such <code>handleSubmit</code> in ReasonReact, as <code>handle</code> expects to wrap around a function that only takes <strong>one</strong> argument. Here's the workaround:</p>
-<pre><code class="hljs">let handleSubmitEscapeHatch = <span class="hljs-function"><span class="hljs-params">(username, password, event)</span> =&gt;</span> 
+<pre><code class="hljs css reason">let handleSubmitEscapeHatch = <span class="hljs-function"><span class="hljs-params">(username, password, event)</span> =&gt;</span>
         self.handle(<span class="hljs-function"><span class="hljs-params">(tupleOfThreeItems)</span> =&gt;</span> doSomething(tupleOfThreeItems))(username, password, event));
 ...
 &lt;MyForm onUserClickedSubmit=(handleSubmitEscapeHatch) /&gt;
