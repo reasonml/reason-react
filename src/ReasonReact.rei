@@ -87,6 +87,13 @@ module Callback: {
   let chain: (t('payload), t('payload)) => t('payload);
 };
 
+/**
+ * Subscriptions handle resources that need to be initialized and finalized.
+ * Initialization returns a token, and finalization consumes a token.
+ */
+type subscription =
+  | Sub(unit => 'token, 'token => unit): subscription;
+
 type reduce('payload, 'action) = ('payload => 'action) => Callback.t('payload);
 
 /* Control how a state update is performed.
@@ -137,7 +144,8 @@ and self('state, 'retainedProps, 'action) = {
    */
   reduce: 'payload .reduce('payload, 'action) /* ('payload => 'action) => Callback.t 'payload */,
   state: 'state,
-  retainedProps: 'retainedProps
+  retainedProps: 'retainedProps,
+  send: 'action => unit
 };
 
 type reactClassInternal;
@@ -179,6 +187,8 @@ type componentSpec('state, 'initialState, 'retainedProps, 'initialRetainedProps,
    * side-effectful function specified in the returned update.
    */
   reducer: ('action, 'state) => update('state, 'retainedProps, 'action),
+  /* read onto only once at the beginning */
+  subscriptions: self('state, 'retainedProps, 'action) => list(subscription),
   jsElementWrapped
 }
 and component('state, 'retainedProps, 'action) =

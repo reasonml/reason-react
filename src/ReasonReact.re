@@ -52,6 +52,9 @@ module Callback = {
   };
 };
 
+type subscription =
+  | Sub(unit => 'token, 'token => unit): subscription;
+
 
 /***
  * Elements are what JSX blocks become. They represent the *potential* for a
@@ -67,10 +70,7 @@ and jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
  */
 and jsElementWrapped =
   option(
-    (
-      (~key: Js.nullable(string), ~ref: Js.nullable((Js.nullable(reactRef) => unit))) =>
-      reactElement
-    )
+    (~key: Js.nullable(string), ~ref: Js.nullable(Js.nullable(reactRef) => unit)) => reactElement
   )
 and update('state, 'retainedProps, 'action) =
   | NoUpdate
@@ -98,6 +98,7 @@ and componentSpec('state, 'initialState, 'retainedProps, 'initialRetainedProps, 
   initialState: unit => 'initialState,
   retainedProps: 'initialRetainedProps,
   reducer: ('action, 'state) => update('state, 'retainedProps, 'action),
+  subscriptions: self('state, 'retainedProps, 'action) => list(subscription),
   jsElementWrapped
 }
 and component('state, 'retainedProps, 'action) =
@@ -114,7 +115,8 @@ and self('state, 'retainedProps, 'action) = {
 
   reduce: 'payload .reduce('payload, 'action),
   state: 'state,
-  retainedProps: 'retainedProps
+  retainedProps: 'retainedProps,
+  send: 'action => unit,
 }
 and oldNewSelf('state, 'retainedProps, 'action) = {
   oldSelf: self('state, 'retainedProps, 'action),
@@ -168,7 +170,7 @@ and totalState('state, 'retainedProps, 'action) = {
    * `reasonStateVersionUsedToComputeSubelements` can lag behind if there has
    * not yet been a chance to rerun the named arg factory function.  */
   "reasonStateVersionUsedToComputeSubelements": int,
-  "sideEffects": list((self('state, 'retainedProps, 'action) => unit))
+  "sideEffects": list(self('state, 'retainedProps, 'action) => unit)
 };
 
 let lifecycleNoUpdate = (_) => NoUpdate;
@@ -193,7 +195,7 @@ let willUpdateDefault = lifecyclePreviousNextUnit;
 
 let willReceivePropsDefault = ({state}) => state;
 
-let renderDefault = (_bag) => stringToElement("RenderNotImplemented");
+let renderDefault = (_self) => stringToElement("RenderNotImplemented");
 
 let initialStateDefault = () => ();
 
@@ -201,6 +203,8 @@ let retainedPropsDefault = ();
 
 let reducerDefault: ('action, 'state) => update('state, 'retainedProps, 'action) =
   (_action, _state) => NoUpdate;
+
+let subscriptionsDefault = (_self) => [];
 
 let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
   let props = Obj.magic(props);
@@ -212,7 +216,8 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
     raise(
       Invalid_argument(
         "A JS component called the Reason component "
-        ++ (debugName ++ " which didn't implement the JS->Reason React props conversion.")
+        ++ debugName
+        ++ " which didn't implement the JS->Reason React props conversion."
       )
     )
   }
@@ -224,11 +229,13 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
     [@bs]
     {
       val displayName = debugName;
+      val mutable subscriptions = Js.Nullable.null;
       /***
        * TODO: Avoid allocating this every time we need it. Should be doable.
        */
       pub self = (state, retainedProps) => {
         handle: Obj.magic(this##handleMethod),
+        send: Obj.magic(this##sendMethod),
         reduce: Obj.magic(this##reduceMethod),
         state,
         retainedProps
@@ -309,11 +316,22 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
         let convertedReasonProps =
           convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
         let Element(component) = convertedReasonProps;
+        let curTotalState = thisJs##state;
+        let curReasonState = curTotalState##reasonState;
+        let self = this##self(curReasonState, Obj.magic(component.retainedProps));
+        let self = Obj.magic(self);
+        if (component.subscriptions !== subscriptionsDefault) {
+          let subscriptions =
+            component.subscriptions(self)
+            |> List.map(
+                 (Sub(subscribe, unsubscribe)) => {
+                   let token = subscribe();
+                   () => unsubscribe(token)
+                 }
+               );
+          this##subscriptions#=(Js.Nullable.return(subscriptions))
+        };
         if (component.didMount !== didMountDefault) {
-          let curTotalState = thisJs##state;
-          let curReasonState = curTotalState##reasonState;
-          let self = this##self(curReasonState, Obj.magic(component.retainedProps));
-          let self = Obj.magic(self);
           let reasonStateUpdate = component.didMount(self);
           let reasonStateUpdate = Obj.magic(reasonStateUpdate);
           let nextTotalState = this##transitionNextTotalState(curTotalState, reasonStateUpdate);
@@ -361,12 +379,16 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
         let convertedReasonProps =
           convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
         let Element(component) = convertedReasonProps;
+        let curState = thisJs##state;
+        let curReasonState = curState##reasonState;
         if (component.willUnmount !== lifecycleReturnUnit) {
-          let curState = thisJs##state;
-          let curReasonState = curState##reasonState;
           let self = this##self(curReasonState, Obj.magic(component.retainedProps));
           let self = Obj.magic(self);
           component.willUnmount(self)
+        };
+        switch (Js.Nullable.to_opt(this##subscriptions)) {
+        | None => ()
+        | Some(subs) => List.rev(subs) |> List.iter((unsubscribe) => unsubscribe())
         }
       };
       /***
@@ -598,37 +620,36 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
           }
         }
       };
-      pub reduceMethod = (callback: 'payload => 'action) => {
+      pub sendMethod = (action: 'action) => {
         let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
-        (event) => {
-          let convertedReasonProps =
-            convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
-          let Element(component) = convertedReasonProps;
-          if (component.reducer !== reducerDefault) {
-            let action = callback(event);
-            thisJs##setState(
-              (curTotalState, _) => {
-                let curReasonState = curTotalState##reasonState;
-                let reasonStateUpdate =
-                  component.reducer(Obj.magic(action), Obj.magic(curReasonState));
-                if (reasonStateUpdate === NoUpdate) {
-                  magicNull
+        let convertedReasonProps =
+          convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+        let Element(component) = convertedReasonProps;
+        if (component.reducer !== reducerDefault) {
+          thisJs##setState(
+            (curTotalState, _) => {
+              let curReasonState = curTotalState##reasonState;
+              let reasonStateUpdate =
+                component.reducer(Obj.magic(action), Obj.magic(curReasonState));
+              if (reasonStateUpdate === NoUpdate) {
+                magicNull
+              } else {
+                let nextTotalState =
+                  this##transitionNextTotalState(curTotalState, Obj.magic(reasonStateUpdate));
+                if (nextTotalState##reasonStateVersion !== curTotalState##reasonStateVersion) {
+                  nextTotalState
                 } else {
-                  let nextTotalState =
-                    this##transitionNextTotalState(curTotalState, Obj.magic(reasonStateUpdate));
-                  if (nextTotalState##reasonStateVersion !== curTotalState##reasonStateVersion) {
-                    nextTotalState
-                  } else {
-                    magicNull
-                  }
+                  magicNull
                 }
               }
-            )
-          }
+            }
+          )
         }
       };
+      pub reduceMethod = (callback: 'payload => 'action, payload) =>
+        this##sendMethod(callback(payload));
       /***
        * In order to ensure we always operate on freshest props / state, and to
        * support the API that "reduces" the next state along with the next
@@ -656,7 +677,9 @@ let basicComponent = (debugName) => {
     reactClassInternal: createClass(debugName),
     debugName,
     /* Keep here as a way to prove that the API may be implemented soundly */
-    handedOffState: {contents: None},
+    handedOffState: {
+      contents: None
+    },
     didMount: didMountDefault,
     willReceiveProps: willReceivePropsDefault,
     didUpdate: didUpdateDefault,
@@ -671,7 +694,8 @@ let basicComponent = (debugName) => {
     initialState: initialStateDefault,
     reducer: reducerDefault,
     jsElementWrapped: None,
-    retainedProps: retainedPropsDefault
+    retainedProps: retainedPropsDefault,
+    subscriptions: subscriptionsDefault
   };
   componentTemplate
 };
@@ -738,7 +762,7 @@ module WrapProps = {
         ~props,
         children,
         ~key: Js.nullable(string),
-        ~ref: Js.nullable((Js.nullable(reactRef) => unit))
+        ~ref: Js.nullable(Js.nullable(reactRef) => unit)
       ) => {
     let props = Js.Obj.assign(Js.Obj.assign(Js.Obj.empty(), props), {"ref": ref, "key": key});
     let varargs =
