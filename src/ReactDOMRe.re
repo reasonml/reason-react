@@ -67,7 +67,7 @@ external props :
     ~className: string=?, /* substitute for "class" */
     ~contentEditable: Js.boolean=?,
     ~contextMenu: string=?,
-    ~dataName: string=?
+    ~dataName: string=?,
     ~dir: string=?, /* "ltr", "rtl" or "auto" */
     ~draggable: Js.boolean=?,
     ~hidden: Js.boolean=?,
