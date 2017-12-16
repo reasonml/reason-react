@@ -9,7 +9,11 @@
     "clean": "bsb -clean-world",
     "test": "exit 0"
   },
-  "keywords": [],
+  "keywords": [
+    "reasonml",
+    "bucklescript",
+    "react"
+  ],
   "author": "",
   "license": "MIT",
   "repository": {
