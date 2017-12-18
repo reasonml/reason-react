@@ -38,12 +38,14 @@ external arrayToElement : array(reactElement) => reactElement = "%identity";
 
 external refToJsObj : reactRef => Js.t({..}) = "%identity";
 
-[@bs.splice] [@bs.val] [@bs.module "react"]
-external createElement : (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
+[@bs.splice] [@bs.val] [@bs.module "React"]
+external createElement :
+  (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "createElement";
 
-[@bs.splice] [@bs.module "react"]
-external cloneElement : (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
+[@bs.splice] [@bs.module "React"]
+external cloneElement :
+  (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "cloneElement";
 
 type renderNotImplemented =
@@ -116,10 +118,16 @@ type update('state, 'retainedProps, 'action) =
   | SideEffects(self('state, 'retainedProps, 'action) => unit)
   /* Update the state and perform side effects.
      The side effects function is invoked when all the updates have completed. */
-  | UpdateWithSideEffects('state, self('state, 'retainedProps, 'action) => unit)
+  | UpdateWithSideEffects(
+      'state,
+      self('state, 'retainedProps, 'action) => unit
+    )
   /* Like UpdateWithSideEffects, but don't trigger a re-render.
      Do not prevent a re-render either, if one was scheduled to happen. */
-  | SilentUpdateWithSideEffects('state, self('state, 'retainedProps, 'action) => unit)
+  | SilentUpdateWithSideEffects(
+      'state,
+      self('state, 'retainedProps, 'action) => unit
+    )
 and self('state, 'retainedProps, 'action) = {
   /***
    * Call a handler function.
@@ -129,7 +137,8 @@ and self('state, 'retainedProps, 'action) = {
    */
   handle:
     'payload .
-    (('payload, self('state, 'retainedProps, 'action)) => unit) => Callback.t('payload),
+    (('payload, self('state, 'retainedProps, 'action)) => unit) =>
+    Callback.t('payload),
 
   /***
    * Run the reducer function with the action returned by the fuction passed as first argument.
@@ -159,7 +168,13 @@ type oldNewSelf('state, 'retainedProps, 'action) = {
   newSelf: self('state, 'retainedProps, 'action)
 };
 
-type componentSpec('state, 'initialState, 'retainedProps, 'initialRetainedProps, 'action) = {
+type componentSpec(
+  'state,
+  'initialState,
+  'retainedProps,
+  'initialRetainedProps,
+  'action
+) = {
   debugName: string,
   reactClassInternal,
   /* Keep here as a way to prove that the API may be implemented soundly */
@@ -168,7 +183,9 @@ type componentSpec('state, 'initialState, 'retainedProps, 'initialRetainedProps,
    * Note: this callback must not perform side effects.
    */
   willReceiveProps: self('state, 'retainedProps, 'action) => 'state,
-  didMount: self('state, 'retainedProps, 'action) => update('state, 'retainedProps, 'action),
+  didMount:
+    self('state, 'retainedProps, 'action) =>
+    update('state, 'retainedProps, 'action),
   didUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
   willUnmount: self('state, 'retainedProps, 'action) => unit,
   willUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
@@ -197,16 +214,32 @@ and component('state, 'retainedProps, 'action) =
 
 /*** Create a stateless component: i.e. a component where state has type stateless. */
 let statelessComponent:
-  string => componentSpec(stateless, stateless, noRetainedProps, noRetainedProps, actionless);
+  string =>
+  componentSpec(
+    stateless,
+    stateless,
+    noRetainedProps,
+    noRetainedProps,
+    actionless
+  );
 
 let statelessComponentWithRetainedProps:
-  string => componentSpec(stateless, stateless, 'retainedProps, noRetainedProps, actionless);
+  string =>
+  componentSpec(
+    stateless,
+    stateless,
+    'retainedProps,
+    noRetainedProps,
+    actionless
+  );
 
 let reducerComponent:
-  string => componentSpec('state, stateless, noRetainedProps, noRetainedProps, 'action);
+  string =>
+  componentSpec('state, stateless, noRetainedProps, noRetainedProps, 'action);
 
 let reducerComponentWithRetainedProps:
-  string => componentSpec('state, stateless, 'retainedProps, noRetainedProps, 'action);
+  string =>
+  componentSpec('state, stateless, 'retainedProps, noRetainedProps, 'action);
 
 let element:
   (
@@ -228,12 +261,19 @@ type jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
  * interop entirely. */
 let wrapReasonForJs:
   (
-    ~component: componentSpec('state, 'initialState, 'retainedProps, 'initialRetainedProps, 'action),
+    ~component: componentSpec(
+                  'state,
+                  'initialState,
+                  'retainedProps,
+                  'initialRetainedProps,
+                  'action
+                ),
     jsPropsToReason(_)
   ) =>
   reactClass;
 
-let createDomElement: (string, ~props: Js.t({..}), array(reactElement)) => reactElement;
+let createDomElement:
+  (string, ~props: Js.t({..}), array(reactElement)) => reactElement;
 
 
 /***
@@ -243,3 +283,12 @@ let createDomElement: (string, ~props: Js.t({..}), array(reactElement)) => react
 let wrapJsForReason:
   (~reactClass: reactClass, ~props: Js.t({..}), 'a) =>
   component(stateless, noRetainedProps, actionless);
+
+module Router: {
+  let push: string => unit;
+  type url = {
+    path: list(string),
+    hash: string
+  };
+  let make: (~render:url => reactElement, array(reactElement)) => component(unit, unit, unit);
+};

@@ -14,20 +14,23 @@ external arrayToElement : array(reactElement) => reactElement = "%identity";
 
 external refToJsObj : reactRef => Js.t({..}) = "%identity";
 
-[@bs.splice] [@bs.val] [@bs.module "react"]
-external createElement : (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
+[@bs.splice] [@bs.val] [@bs.module "React"]
+external createElement :
+  (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "createElement";
 
-[@bs.splice] [@bs.module "react"]
-external cloneElement : (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
+[@bs.splice] [@bs.module "React"]
+external cloneElement :
+  (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "cloneElement";
 
-[@bs.val] [@bs.module "react"] external createElementVerbatim : 'a = "createElement";
+[@bs.val] [@bs.module "React"]
+external createElementVerbatim : 'a = "createElement";
 
 let createDomElement = (s, ~props, children) => {
   let vararg = [|Obj.magic(s), Obj.magic(props)|] |> Js.Array.concat(children);
   /* Use varargs to avoid warnings on duplicate keys in children */
-  Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, vararg)
+  Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, vararg);
 };
 
 let magicNull = Obj.magic(Js.Nullable.null);
@@ -45,10 +48,10 @@ type actionless = unit;
 
 module Callback = {
   type t('payload) = 'payload => unit;
-  let default = (_event) => ();
+  let default = _event => ();
   let chain = (handlerOne, handlerTwo, payload) => {
     handlerOne(payload);
-    handlerTwo(payload)
+    handlerTwo(payload);
   };
 };
 
@@ -70,26 +73,44 @@ and jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
  */
 and jsElementWrapped =
   option(
-    (~key: Js.nullable(string), ~ref: Js.nullable(Js.nullable(reactRef) => unit)) => reactElement
+    (
+      ~key: Js.nullable(string),
+      ~ref: Js.nullable(Js.nullable(reactRef) => unit)
+    ) =>
+    reactElement
   )
 and update('state, 'retainedProps, 'action) =
   | NoUpdate
   | Update('state)
   | SilentUpdate('state)
   | SideEffects(self('state, 'retainedProps, 'action) => unit)
-  | UpdateWithSideEffects('state, self('state, 'retainedProps, 'action) => unit)
-  | SilentUpdateWithSideEffects('state, self('state, 'retainedProps, 'action) => unit)
+  | UpdateWithSideEffects(
+      'state,
+      self('state, 'retainedProps, 'action) => unit
+    )
+  | SilentUpdateWithSideEffects(
+      'state,
+      self('state, 'retainedProps, 'action) => unit
+    )
 /***
  * Granularly types state, and initial state as being independent, so that we
  * may include a template that all instances extend from.
  */
-and componentSpec('state, 'initialState, 'retainedProps, 'initialRetainedProps, 'action) = {
+and componentSpec(
+  'state,
+  'initialState,
+  'retainedProps,
+  'initialRetainedProps,
+  'action
+) = {
   debugName: string,
   reactClassInternal,
   /* Keep here as a way to prove that the API may be implemented soundly */
   mutable handedOffState: ref(option('state)),
   willReceiveProps: self('state, 'retainedProps, 'action) => 'state,
-  didMount: self('state, 'retainedProps, 'action) => update('state, 'retainedProps, 'action),
+  didMount:
+    self('state, 'retainedProps, 'action) =>
+    update('state, 'retainedProps, 'action),
   didUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
   willUnmount: self('state, 'retainedProps, 'action) => unit,
   willUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
@@ -111,12 +132,13 @@ and reduce('payload, 'action) = ('payload => 'action) => Callback.t('payload)
 and self('state, 'retainedProps, 'action) = {
   handle:
     'payload .
-    (('payload, self('state, 'retainedProps, 'action)) => unit) => Callback.t('payload),
+    (('payload, self('state, 'retainedProps, 'action)) => unit) =>
+    Callback.t('payload),
 
   reduce: 'payload .reduce('payload, 'action),
   state: 'state,
   retainedProps: 'retainedProps,
-  send: 'action => unit,
+  send: 'action => unit
 }
 and oldNewSelf('state, 'retainedProps, 'action) = {
   oldSelf: self('state, 'retainedProps, 'action),
@@ -136,7 +158,8 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       ) =>
       unit
     ),
-  "jsPropsToReason": option(jsPropsToReason('props, 'state, 'retainedProps, 'action))
+  "jsPropsToReason":
+    option(jsPropsToReason('props, 'state, 'retainedProps, 'action))
 }
 /***
  * `totalState` tracks all of the internal reason API bookkeeping, as well as
@@ -195,16 +218,17 @@ let willUpdateDefault = lifecyclePreviousNextUnit;
 
 let willReceivePropsDefault = ({state}) => state;
 
-let renderDefault = (_self) => stringToElement("RenderNotImplemented");
+let renderDefault = _self => stringToElement("RenderNotImplemented");
 
 let initialStateDefault = () => ();
 
 let retainedPropsDefault = ();
 
-let reducerDefault: ('action, 'state) => update('state, 'retainedProps, 'action) =
+let reducerDefault:
+  ('action, 'state) => update('state, 'retainedProps, 'action) =
   (_action, _state) => NoUpdate;
 
-let subscriptionsDefault = (_self) => [];
+let subscriptionsDefault = _self => [];
 
 let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
   let props = Obj.magic(props);
@@ -220,10 +244,12 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
         ++ " which didn't implement the JS->Reason React props conversion."
       )
     )
-  }
+  };
 };
 
-let createClass = (type reasonState, type retainedProps, type action, debugName) : reactClass =>
+let createClass =
+    (type reasonState, type retainedProps, type action, debugName)
+    : reactClass =>
   [@bs]
   ReasonReactOptimizedCreateClass.createClass(
     [@bs]
@@ -291,11 +317,16 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
           }
         };
       pub getInitialState = () : totalState('state, 'retainedProps, 'action) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let convertedReasonProps =
-          convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            thisJs##props,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         let Element(component) = convertedReasonProps;
         let initialReasonState = component.initialState();
         {
@@ -307,59 +338,75 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
           "reasonStateVersion": 1,
           "reasonStateVersionUsedToComputeSubelements": 1,
           "sideEffects": []
-        }
+        };
       };
       pub componentDidMount = () => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let convertedReasonProps =
-          convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            thisJs##props,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         let Element(component) = convertedReasonProps;
         let curTotalState = thisJs##state;
         let curReasonState = curTotalState##reasonState;
-        let self = this##self(curReasonState, Obj.magic(component.retainedProps));
+        let self =
+          this##self(curReasonState, Obj.magic(component.retainedProps));
         let self = Obj.magic(self);
         if (component.subscriptions !== subscriptionsDefault) {
           let subscriptions =
             component.subscriptions(self)
-            |> List.map(
-                 (Sub(subscribe, unsubscribe)) => {
-                   let token = subscribe();
-                   () => unsubscribe(token)
-                 }
-               );
-          this##subscriptions#=(Js.Nullable.return(subscriptions))
+            |> List.map((Sub(subscribe, unsubscribe)) => {
+                 let token = subscribe();
+                 () => unsubscribe(token);
+               });
+          this##subscriptions#=(Js.Nullable.return(subscriptions));
         };
         if (component.didMount !== didMountDefault) {
           let reasonStateUpdate = component.didMount(self);
           let reasonStateUpdate = Obj.magic(reasonStateUpdate);
-          let nextTotalState = this##transitionNextTotalState(curTotalState, reasonStateUpdate);
-          if (nextTotalState##reasonStateVersion !== curTotalState##reasonStateVersion) {
+          let nextTotalState =
+            this##transitionNextTotalState(curTotalState, reasonStateUpdate);
+          if (nextTotalState##reasonStateVersion
+              !== curTotalState##reasonStateVersion) {
             let nextTotalState = Obj.magic(nextTotalState);
-            thisJs##setState(nextTotalState)
-          }
-        }
+            thisJs##setState(nextTotalState);
+          };
+        };
       };
       pub componentDidUpdate = (prevProps, prevState) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let curState = thisJs##state;
         let curReasonState = curState##reasonState;
         let newJsProps = thisJs##props;
         let newConvertedReasonProps =
-          convertPropsIfTheyreFromJs(newJsProps, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            newJsProps,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         let Element(newComponent) = newConvertedReasonProps;
         if (newComponent.didUpdate !== lifecyclePreviousCurrentReturnUnit) {
           let oldConvertedReasonProps =
             prevProps === newJsProps ?
               newConvertedReasonProps :
-              convertPropsIfTheyreFromJs(prevProps, thisJs##jsPropsToReason, debugName);
+              convertPropsIfTheyreFromJs(
+                prevProps,
+                thisJs##jsPropsToReason,
+                debugName
+              );
           let Element(oldComponent) = oldConvertedReasonProps;
           let prevReasonState = prevState##reasonState;
           let prevReasonState = Obj.magic(prevReasonState);
-          let newSelf = this##self(curReasonState, Obj.magic(newComponent.retainedProps));
+          let newSelf =
+            this##self(curReasonState, Obj.magic(newComponent.retainedProps));
           let newSelf = Obj.magic(newSelf);
           /* bypass this##self call for small perf boost */
           let oldSelf =
@@ -368,28 +415,35 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
               state: prevReasonState,
               retainedProps: oldComponent.retainedProps
             });
-          newComponent.didUpdate({oldSelf, newSelf})
-        }
+          newComponent.didUpdate({oldSelf, newSelf});
+        };
       };
       /* pub componentWillMount .. TODO (or not?) */
       pub componentWillUnmount = () => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let convertedReasonProps =
-          convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            thisJs##props,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         let Element(component) = convertedReasonProps;
         let curState = thisJs##state;
         let curReasonState = curState##reasonState;
         if (component.willUnmount !== lifecycleReturnUnit) {
-          let self = this##self(curReasonState, Obj.magic(component.retainedProps));
+          let self =
+            this##self(curReasonState, Obj.magic(component.retainedProps));
           let self = Obj.magic(self);
-          component.willUnmount(self)
+          component.willUnmount(self);
         };
         switch (Js.Nullable.to_opt(this##subscriptions)) {
         | None => ()
-        | Some(subs) => List.rev(subs) |> List.iter((unsubscribe) => unsubscribe())
-        }
+        | Some(subs) =>
+          List.rev(subs) |> List.iter(unsubscribe => unsubscribe())
+        };
       };
       /***
        * If we are even getting this far, we've already done all the logic for
@@ -398,11 +452,16 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
        * render result (subelements)!
        */
       pub componentWillUpdate = (nextProps, nextState: totalState(_)) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let newConvertedReasonProps =
-          convertPropsIfTheyreFromJs(nextProps, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            nextProps,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         let Element(newComponent) = newConvertedReasonProps;
         if (newComponent.willUpdate !== willUpdateDefault) {
           let oldJsProps = thisJs##props;
@@ -410,13 +469,18 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
           let oldConvertedReasonProps =
             nextProps === oldJsProps ?
               newConvertedReasonProps :
-              convertPropsIfTheyreFromJs(oldJsProps, thisJs##jsPropsToReason, debugName);
+              convertPropsIfTheyreFromJs(
+                oldJsProps,
+                thisJs##jsPropsToReason,
+                debugName
+              );
           let Element(oldComponent) = oldConvertedReasonProps;
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
           let curReasonState = Obj.magic(curReasonState);
           let nextReasonState = nextState##reasonState;
-          let newSelf = this##self(nextReasonState, Obj.magic(newComponent.retainedProps));
+          let newSelf =
+            this##self(nextReasonState, Obj.magic(newComponent.retainedProps));
           let newSelf = Obj.magic(newSelf);
           /* bypass this##self call for small perf boost */
           let oldSelf =
@@ -425,20 +489,25 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
               state: curReasonState,
               retainedProps: oldComponent.retainedProps
             });
-          newComponent.willUpdate({oldSelf, newSelf})
-        }
+          newComponent.willUpdate({oldSelf, newSelf});
+        };
       };
       /***
        * One interesting part of the new Reason React API. There isn't a need
        * for a separate `willReceiveProps` function. The primary `create` API
        * is *always* receiving props.
        */
-      pub componentWillReceiveProps = (nextProps) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+      pub componentWillReceiveProps = nextProps => {
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let newConvertedReasonProps =
-          convertPropsIfTheyreFromJs(nextProps, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            nextProps,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         let Element(newComponent) = Obj.magic(newConvertedReasonProps);
         if (newComponent.willReceiveProps !== willReceivePropsDefault) {
           let oldJsProps = thisJs##props;
@@ -446,33 +515,41 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
           let oldConvertedReasonProps =
             nextProps === oldJsProps ?
               newConvertedReasonProps :
-              convertPropsIfTheyreFromJs(oldJsProps, thisJs##jsPropsToReason, debugName);
+              convertPropsIfTheyreFromJs(
+                oldJsProps,
+                thisJs##jsPropsToReason,
+                debugName
+              );
           let Element(oldComponent) = oldConvertedReasonProps;
-          thisJs##setState(
-            (curTotalState, _) => {
-              let curReasonState = Obj.magic(curTotalState##reasonState);
-              let curReasonStateVersion = curTotalState##reasonStateVersion;
-              let oldSelf =
-                Obj.magic(this##self(curReasonState, Obj.magic(oldComponent.retainedProps)));
-              let nextReasonState = Obj.magic(newComponent.willReceiveProps(oldSelf));
-              let nextReasonStateVersion =
-                nextReasonState !== curReasonState ?
-                  curReasonStateVersion + 1 : curReasonStateVersion;
-              if (nextReasonStateVersion !== curReasonStateVersion) {
-                let nextTotalState: totalState(_) = {
-                  "reasonState": nextReasonState,
-                  "reasonStateVersion": nextReasonStateVersion,
-                  "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-                  "sideEffects": nextReasonState##sideEffects
-                };
-                let nextTotalState = Obj.magic(nextTotalState);
-                nextTotalState
-              } else {
-                curTotalState
-              }
-            }
-          )
-        }
+          thisJs##setState((curTotalState, _) => {
+            let curReasonState = Obj.magic(curTotalState##reasonState);
+            let curReasonStateVersion = curTotalState##reasonStateVersion;
+            let oldSelf =
+              Obj.magic(
+                this##self(
+                  curReasonState,
+                  Obj.magic(oldComponent.retainedProps)
+                )
+              );
+            let nextReasonState =
+              Obj.magic(newComponent.willReceiveProps(oldSelf));
+            let nextReasonStateVersion =
+              nextReasonState !== curReasonState ?
+                curReasonStateVersion + 1 : curReasonStateVersion;
+            if (nextReasonStateVersion !== curReasonStateVersion) {
+              let nextTotalState: totalState(_) = {
+                "reasonState": nextReasonState,
+                "reasonStateVersion": nextReasonStateVersion,
+                "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
+                "sideEffects": nextReasonState##sideEffects
+              };
+              let nextTotalState = Obj.magic(nextTotalState);
+              nextTotalState;
+            } else {
+              curTotalState;
+            };
+          });
+        };
       };
       /***
        * shouldComponentUpdate is invoked any time props change, or new state
@@ -493,7 +570,8 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
        * performance optimizations through.
        */
       pub shouldComponentUpdate = (nextJsProps, nextState, _) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let curJsProps = thisJs##props;
@@ -512,23 +590,35 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
          * we ask the component's shouldUpdate if it would like to update - defaulting to true.
          */
         let oldConvertedReasonProps =
-          convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            thisJs##props,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         /* Avoid converting again the props that are just the same as curProps. */
         let newConvertedReasonProps =
           nextJsProps === curJsProps ?
             oldConvertedReasonProps :
-            convertPropsIfTheyreFromJs(nextJsProps, thisJs##jsPropsToReason, debugName);
+            convertPropsIfTheyreFromJs(
+              nextJsProps,
+              thisJs##jsPropsToReason,
+              debugName
+            );
         let Element(oldComponent) = oldConvertedReasonProps;
         let Element(newComponent) = newConvertedReasonProps;
         let nextReasonStateVersion = nextState##reasonStateVersion;
         let nextReasonStateVersionUsedToComputeSubelements = nextState##reasonStateVersionUsedToComputeSubelements;
         let stateChangeWarrantsComputingSubelements =
-          nextReasonStateVersionUsedToComputeSubelements !== nextReasonStateVersion;
-        let warrantsUpdate = propsWarrantRerender || stateChangeWarrantsComputingSubelements;
+          nextReasonStateVersionUsedToComputeSubelements
+          !== nextReasonStateVersion;
+        let warrantsUpdate =
+          propsWarrantRerender || stateChangeWarrantsComputingSubelements;
         let nextReasonState = nextState##reasonState;
-        let newSelf = this##self(nextReasonState, Obj.magic(newComponent.retainedProps));
+        let newSelf =
+          this##self(nextReasonState, Obj.magic(newComponent.retainedProps));
         let ret =
-          if (warrantsUpdate && newComponent.shouldUpdate !== shouldUpdateDefault) {
+          if (warrantsUpdate
+              && newComponent.shouldUpdate !== shouldUpdateDefault) {
             let curState = thisJs##state;
             let curReasonState = curState##reasonState;
             let curReasonState = Obj.magic(curReasonState);
@@ -540,113 +630,141 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
                 state: curReasonState,
                 retainedProps: oldComponent.retainedProps
               });
-            newComponent.shouldUpdate({oldSelf, newSelf})
+            newComponent.shouldUpdate({oldSelf, newSelf});
           } else {
-            warrantsUpdate
+            warrantsUpdate;
           };
         /* Mark ourselves as all caught up! */
         nextState##reasonStateVersionUsedToComputeSubelements#=nextReasonStateVersion;
         let nextSideEffects = List.rev(nextState##sideEffects);
         if (nextSideEffects !== []) {
           /* This can enqueue additional side effects */
-          List.iter((performSideEffects) => performSideEffects(newSelf), nextSideEffects);
-          thisJs##setState(
-            (futureTotalState, _) => {
-              let rec initialSegment = (acc, n, l) =>
-                switch l {
-                | [x, ...nextL] when n > 0 => initialSegment([x, ...acc], n - 1, nextL)
-                | _ => List.rev(acc)
-                };
-              /* Additional side effects are the initial segment. */
-              let newSideEffects = {
-                let acc = [];
-                let n =
-                  List.length(futureTotalState##sideEffects) - List.length(nextState##sideEffects);
-                initialSegment(acc, n, futureTotalState##sideEffects)
+          List.iter(
+            performSideEffects => performSideEffects(newSelf),
+            nextSideEffects
+          );
+          thisJs##setState((futureTotalState, _) => {
+            let rec initialSegment = (acc, n, l) =>
+              switch l {
+              | [x, ...nextL] when n > 0 =>
+                initialSegment([x, ...acc], n - 1, nextL)
+              | _ => List.rev(acc)
               };
-              let nextStateOnlyNewSideEffects = {
-                "reasonState": futureTotalState##reasonState,
-                "reasonStateVersion": futureTotalState##reasonStateVersion,
-                "reasonStateVersionUsedToComputeSubelements": futureTotalState##reasonStateVersionUsedToComputeSubelements,
-                "sideEffects": newSideEffects
-              };
-              nextStateOnlyNewSideEffects
-            }
-          )
+            /* Additional side effects are the initial segment. */
+            let newSideEffects = {
+              let acc = [];
+              let n =
+                List.length(futureTotalState##sideEffects)
+                - List.length(nextState##sideEffects);
+              initialSegment(acc, n, futureTotalState##sideEffects);
+            };
+            let nextStateOnlyNewSideEffects = {
+              "reasonState": futureTotalState##reasonState,
+              "reasonStateVersion": futureTotalState##reasonStateVersion,
+              "reasonStateVersionUsedToComputeSubelements": futureTotalState##reasonStateVersionUsedToComputeSubelements,
+              "sideEffects": newSideEffects
+            };
+            nextStateOnlyNewSideEffects;
+          });
         };
-        ret
+        ret;
       };
-      pub handleMethod = (callback) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+      pub handleMethod = callback => {
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
-        (callbackPayload) => {
+        callbackPayload => {
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
           let convertedReasonProps =
-            convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+            convertPropsIfTheyreFromJs(
+              thisJs##props,
+              thisJs##jsPropsToReason,
+              debugName
+            );
           let Element(component) = convertedReasonProps;
           callback(
             callbackPayload,
-            Obj.magic(this##self(curReasonState, Obj.magic(component.retainedProps)))
-          )
-        }
+            Obj.magic(
+              this##self(curReasonState, Obj.magic(component.retainedProps))
+            )
+          );
+        };
       };
-      pub updateMethod = (callback) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+      pub updateMethod = callback => {
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
-        (event) => {
+        event => {
           let curTotalState = thisJs##state;
           let curReasonState = curTotalState##reasonState;
           let convertedReasonProps =
-            convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+            convertPropsIfTheyreFromJs(
+              thisJs##props,
+              thisJs##jsPropsToReason,
+              debugName
+            );
           let Element(component) = convertedReasonProps;
           let reasonStateUpdate =
             callback(
               event,
-              Obj.magic(this##self(curReasonState, Obj.magic(component.retainedProps)))
+              Obj.magic(
+                this##self(curReasonState, Obj.magic(component.retainedProps))
+              )
             );
           if (reasonStateUpdate === NoUpdate) {
-            magicNull
+            magicNull;
           } else {
-            let nextTotalState = this##transitionNextTotalState(curTotalState, reasonStateUpdate);
-            if (nextTotalState##reasonStateVersion !== curTotalState##reasonStateVersion) {
+            let nextTotalState =
+              this##transitionNextTotalState(curTotalState, reasonStateUpdate);
+            if (nextTotalState##reasonStateVersion
+                !== curTotalState##reasonStateVersion) {
               /* Need to Obj.magic because setState accepts a callback
                * everywhere else */
               let nextTotalState = Obj.magic(nextTotalState);
-              thisJs##setState(nextTotalState)
-            }
-          }
-        }
+              thisJs##setState(nextTotalState);
+            };
+          };
+        };
       };
       pub sendMethod = (action: 'action) => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let convertedReasonProps =
-          convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            thisJs##props,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         let Element(component) = convertedReasonProps;
         if (component.reducer !== reducerDefault) {
-          thisJs##setState(
-            (curTotalState, _) => {
-              let curReasonState = curTotalState##reasonState;
-              let reasonStateUpdate =
-                component.reducer(Obj.magic(action), Obj.magic(curReasonState));
-              if (reasonStateUpdate === NoUpdate) {
-                magicNull
+          /* allow side-effects to be executed here */
+          let partialStateApplication = component.reducer(Obj.magic(action));
+          thisJs##setState((curTotalState, _) => {
+            let curReasonState = curTotalState##reasonState;
+            let reasonStateUpdate =
+              partialStateApplication(Obj.magic(curReasonState));
+            if (reasonStateUpdate === NoUpdate) {
+              magicNull;
+            } else {
+              let nextTotalState =
+                this##transitionNextTotalState(
+                  curTotalState,
+                  Obj.magic(reasonStateUpdate)
+                );
+              if (nextTotalState##reasonStateVersion
+                  !== curTotalState##reasonStateVersion) {
+                nextTotalState;
               } else {
-                let nextTotalState =
-                  this##transitionNextTotalState(curTotalState, Obj.magic(reasonStateUpdate));
-                if (nextTotalState##reasonStateVersion !== curTotalState##reasonStateVersion) {
-                  nextTotalState
-                } else {
-                  magicNull
-                }
-              }
-            }
-          )
-        }
+                magicNull;
+              };
+            };
+          });
+        };
       };
       pub reduceMethod = (callback: 'payload => 'action, payload) =>
         this##sendMethod(callback(payload));
@@ -657,22 +775,30 @@ let createClass = (type reasonState, type retainedProps, type action, debugName)
        * we always *pre* compute the render result.
        */
       pub render = () => {
-        let thisJs: jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
+        let thisJs:
+          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
         ];
         let convertedReasonProps =
-          convertPropsIfTheyreFromJs(thisJs##props, thisJs##jsPropsToReason, debugName);
+          convertPropsIfTheyreFromJs(
+            thisJs##props,
+            thisJs##jsPropsToReason,
+            debugName
+          );
         let Element(created) = Obj.magic(convertedReasonProps);
         let component = created;
         let curState = thisJs##state;
         let curReasonState = Obj.magic(curState##reasonState);
-        let self = Obj.magic(this##self(curReasonState, Obj.magic(component.retainedProps)));
-        component.render(self)
+        let self =
+          Obj.magic(
+            this##self(curReasonState, Obj.magic(component.retainedProps))
+          );
+        component.render(self);
       }
     }
   );
 
-let basicComponent = (debugName) => {
+let basicComponent = debugName => {
   let componentTemplate = {
     reactClassInternal: createClass(debugName),
     debugName,
@@ -697,25 +823,45 @@ let basicComponent = (debugName) => {
     retainedProps: retainedPropsDefault,
     subscriptions: subscriptionsDefault
   };
-  componentTemplate
+  componentTemplate;
 };
 
-let statelessComponent = (debugName) : component(stateless, noRetainedProps, actionless) =>
+let statelessComponent =
+    debugName
+    : component(stateless, noRetainedProps, actionless) =>
   basicComponent(debugName);
 
 let statelessComponentWithRetainedProps =
-    (debugName)
-    : componentSpec(stateless, stateless, 'retainedProps, noRetainedProps, actionless) =>
+    debugName
+    : componentSpec(
+        stateless,
+        stateless,
+        'retainedProps,
+        noRetainedProps,
+        actionless
+      ) =>
   basicComponent(debugName);
 
 let reducerComponent =
-    (debugName)
-    : componentSpec('state, stateless, noRetainedProps, noRetainedProps, 'action) =>
+    debugName
+    : componentSpec(
+        'state,
+        stateless,
+        noRetainedProps,
+        noRetainedProps,
+        'action
+      ) =>
   basicComponent(debugName);
 
 let reducerComponentWithRetainedProps =
-    (debugName)
-    : componentSpec('state, stateless, 'retainedProps, noRetainedProps, 'action) =>
+    debugName
+    : componentSpec(
+        'state,
+        stateless,
+        'retainedProps,
+        noRetainedProps,
+        'action
+      ) =>
   basicComponent(debugName);
 
 
@@ -735,22 +881,34 @@ let element =
   let element = Element(component);
   switch component.jsElementWrapped {
   | Some(jsElementWrapped) =>
-    jsElementWrapped(~key=Js.Nullable.return(key), ~ref=Js.Nullable.return(ref))
+    jsElementWrapped(
+      ~key=Js.Nullable.return(key),
+      ~ref=Js.Nullable.return(ref)
+    )
   | None =>
     createElement(
       component.reactClassInternal,
       ~props={"key": key, "ref": ref, "reasonProps": element},
       [||]
     )
-  }
+  };
 };
 
 let wrapReasonForJs =
-    (~component, jsPropsToReason: jsPropsToReason('jsProps, 'state, 'retainedProps, 'action)) => {
-  let jsPropsToReason: jsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
+    (
+      ~component,
+      jsPropsToReason:
+        jsPropsToReason('jsProps, 'state, 'retainedProps, 'action)
+    ) => {
+  let jsPropsToReason:
+    jsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     Obj.magic(jsPropsToReason) /* cast 'jsProps to jsProps */;
-  Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason#=(Some(jsPropsToReason));
-  component.reactClassInternal
+  Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason#=(
+                                                                    Some(
+                                                                    jsPropsToReason
+                                                                    )
+                                                                    );
+  component.reactClassInternal;
 };
 
 module WrapProps = {
@@ -764,17 +922,124 @@ module WrapProps = {
         ~key: Js.nullable(string),
         ~ref: Js.nullable(Js.nullable(reactRef) => unit)
       ) => {
-    let props = Js.Obj.assign(Js.Obj.assign(Js.Obj.empty(), props), {"ref": ref, "key": key});
+    let props =
+      Js.Obj.assign(
+        Js.Obj.assign(Js.Obj.empty(), props),
+        {"ref": ref, "key": key}
+      );
     let varargs =
-      [|Obj.magic(reactClass), Obj.magic(props)|] |> Js.Array.concat(Obj.magic(children));
+      [|Obj.magic(reactClass), Obj.magic(props)|]
+      |> Js.Array.concat(Obj.magic(children));
     /* Use varargs under the hood */
-    Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, varargs)
+    Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, varargs);
   };
   let dummyInteropComponent = basicComponent("interop");
-  let wrapJsForReason = (~reactClass, ~props, children) : component(stateless, noRetainedProps, _) => {
+  let wrapJsForReason =
+      (~reactClass, ~props, children)
+      : component(stateless, noRetainedProps, _) => {
     let jsElementWrapped = Some(wrapProps(~reactClass, ~props, children));
-    {...dummyInteropComponent, jsElementWrapped}
+    {...dummyInteropComponent, jsElementWrapped};
   };
 };
 
 let wrapJsForReason = WrapProps.wrapJsForReason;
+
+module Router = {
+  [@bs.get] external location : Dom.window => Dom.location = "";
+  [@bs.send] [@bs.send]
+  /* actually the cb is Dom.event => unit, but let's restrict the access for now */
+  external addEventListener :
+    (Dom.window, [@bs.string] [ | `popstate], unit => unit) => unit =
+    "";
+  [@bs.send]
+  external removeEventListener :
+    (Dom.window, [@bs.string] [ | `popstate], unit => unit) => unit =
+    "";
+  [@bs.send] external dispatchEvent : (Dom.window, Dom.event) => unit = "";
+  [@bs.get] external pathname : Dom.location => string = "";
+  [@bs.get] external hash : Dom.location => string = "";
+  [@bs.send]
+  external pushState :
+    (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
+    unit =
+    "";
+  [@bs.new]
+  external makeEvent : ([@bs.string] [ | `popstate]) => Dom.event = "Event";
+  /* if we ever roll our own parser in the future, make sure you test all url combinations
+     e.g. foo.com/?#bar
+     */
+  /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
+  /* actually you know what, not gonna provide search for now. It's a mess.
+     We'll let users roll their own solution/data structure for now */
+  let path = () =>
+    switch [%external window] {
+    | None => []
+    | Some((window: Dom.window)) =>
+      switch (window |> location |> pathname) {
+      | ""
+      | "/" => []
+      | raw =>
+        /* remove the preceeding /, which every pathname seems to have */
+        let raw = Js.String.sliceToEnd(~from=1, raw);
+        /* remove the trailing /, which some pathnames might have. Ugh */
+        let raw =
+          switch (Js.String.get(raw, Js.String.length(raw) - 1)) {
+          | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
+          | _ => raw
+          };
+        raw |> Js.String.split("/") |> Array.to_list;
+      }
+    };
+  let hash = () =>
+    switch [%external window] {
+    | None => ""
+    | Some((window: Dom.window)) =>
+      switch (window |> location |> hash) {
+      | ""
+      | "#" => ""
+      | raw =>
+        /* remove the preceeding #, which every hash seems to have.
+           Why is this even included in location.hash?? */
+        raw |> Js.String.sliceToEnd(~from=1)
+      }
+    };
+  /* TODO: unexposed. Not sure about the subscription API yet */
+  let subscribe = callback =>
+    Sub(
+      () =>
+        switch [%external window] {
+        | None => callback
+        | Some((window: Dom.window)) =>
+          addEventListener(window, `popstate, callback);
+          callback;
+        },
+      cb =>
+        switch [%external window] {
+        | None => ()
+        | Some((window: Dom.window)) =>
+          removeEventListener(window, `popstate, cb)
+        }
+    );
+  let push = path =>
+    switch ([%external history], [%external window]) {
+    | (None, _)
+    | (_, None) => ()
+    | (Some((history: Dom.history)), Some((window: Dom.window))) =>
+      pushState(history, ~href=path);
+      dispatchEvent(window, makeEvent(`popstate));
+    };
+  type url = {
+    path: list(string),
+    hash: string
+  };
+  let component = reducerComponent("ReasonRouter");
+  let make = (~render, _child) => {
+    ...component,
+    subscriptions: self => [subscribe(() => self.send())],
+    reducer: (_action, _state) => Update(),
+    render: _self => {
+      let url = {path: path(), hash: hash()};
+      render(url);
+    }
+  };
+};
