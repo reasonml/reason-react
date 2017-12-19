@@ -5,18 +5,25 @@ title: Children
 
 ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself.
 
-For example, in ReactJS, you'd often want to constrain the `children` being passed to you as a single child. So inside your own render, you'd do:
+Let's say people are using your component like so: `<Animation><div /></Animation>`. In the `Animation` component, you'd want to constrain the `children` being passed to you (the `div` here) as a single child. Aka, you'd like to error on this: `<Animation><div /><div /></Animation>`.
+
+ReactJS provides such helper:
 
 ```js
+// inside Animation.js
 render: () => {
   return React.Children.only(this.children);
 }
 ```
 
-Or, maybe you accept two (and exactly two) children:
+Or, maybe you made a Layout component and accepts exactly two children (e.g. `<Layout><MyColumn /><MyColumn /></Layout>`):
 
 ```js
+// Layout.js
 render: () => {
+  if (React.Children.count(this.props.children) !== 2) {
+    // ... error
+  }
   return (
     <div>
       {this.props.children[0]}
@@ -27,34 +34,84 @@ render: () => {
 }
 ```
 
-Or maybe you're actually rendering a children callback:
+Or maybe you mandate a children callback:
 
 ```js
+
 render: () => {
   return React.Children.only(this.props.children('hello'));
 }
 ```
 
-And for more complicated cases, you'd start using some elaborate `React.Children.*` utils. None of these are type-safe (naturally, since JS is dynamic):
+As an author of these JS components, you can only hope that the user provided the right children type to you, and throw an error for them if not. In ReasonReact, `children` prop is typed and prevents bad usage from the consumer. This seems pretty natural, once you realize that `children` props **is basically like any other prop**! Yes, you can pass tuple, variant, record and others to children! This also mean we don't have to provide the equivalent `React.Children.*` utils in ReasonReact at all!
 
-```js
-<MyForm> <div /> <div /> </MyForm>
-// oops, this blows up because `MyForm` expects a single child
-```
+However, due to syntactical and interoperability reasons, we do have some small restrictions on `children`:
 
-We can do better in ReasonReact through simply using the language!
+- DOM elements such as `div`, `span` and others mandate the `children` you pass to be `array(reactElement)`. For example, `<div> [1, 2, 3] </div>` or `<span> Some(10) </span>` don't work, since the `list` and the `option` are forwarded to the underlying ReactJS `div`/`span` and such data types don't make sense in JS.
+- User-defined elements, by default, also accept an array (of anything). This is due to a rather silly constraint of the JSX syntax, described below.
+
+## Syntax Constraint
+
+_Technically_, if you've written a component that accepts a tuple as `children`:
 
 ```reason
-<MyForm> ...(<div />, <div />) </MyForm>
+/* MyForm.re */
+type tuple2Children = (ReasonReact.reactElement, ReasonReact.reactElement);
+
+let make = (children: tuple2Children) => {
+  ...component,
+  render: _self => {
+    <div>
+      {fst(children)}
+      <Separator />
+      {snd(children)}
+    </div>
+  }
+};
 ```
 
-Two things:
+Then you can expect the user you pass you a tuple:
 
-- `MyForm`'s children is expected to be a tuple of 2 react elements.
+```reason
+<MyForm> (<div />, <div />) </MyForm>
+```
 
-- The presence of `...` is called [children spread](https://reasonml.github.io/guide/language/jsx#children-spread). Passing `<MyForm> (<div />, <div />) </MyForm>` would wrap the tuple in an array (see the [JSX](jsx.md#children) section).
+This, however, will give you a type error:
 
-Here are some use-cases for children + children spread + Reason built-in data structures:
+```
+This has type:
+  array('a)
+But somewhere wanted:
+  tuple2Children (defined as (ReasonReact.reactElement, ReasonReact.reactElement))
+```
+
+It means that `MyForm` is expecting the tuple, but you're giving `array` instead! What's happening? Well, look at what JSX is transformed into:
+
+```reason
+<MyLayout> a b </MyLayout>
+<MyLayout> a </MyLayout>
+```
+
+These actually become:
+
+```reason
+ReasonReact.element(
+  MyLayout.make([|a, b|])
+);
+ReasonReact.element(
+  MyLayout.make([|a|])
+);
+```
+
+See how the second `MyLayout`'s children is also wrapped in an array? We can't special-case `<MyLayout> a </MyLayout>` to pass `a` without the array wrapping (it'd give even more confusing errors). Since children is usually an array, we've decided to always wrap it with an array, no matter how many items we visually see in the JSX. But what if you really want to pass unwrapped data?
+
+### Children Spread
+
+Just use `<MyLayout> ...a </MyLayout>`. This will simply transform into `ReasonReact.element(MyLayout.make(a))`, aka without the array wrapping.
+
+#### Tips & Tricks
+
+Here are some use-cases for children spread + Reason built-in data structures:
 
 - A layout component that mandates a tuple of 2 react element and shows them side-by-side:
 
@@ -73,10 +130,6 @@ Here are some use-cases for children + children spread + Reason built-in data st
   ```reason
   <Layout> ...(ThreeRows(<div />, child2, child3)) </Layout>
   ```
-
-How do we know that `MyForm`, `Motion` and `Layout` accept such children? Well, that'll simply be inferred by internal usage of `children` in these components' respective `render`. Just another day in the magical land of type inference.
-
-Go wild!
 
 ### Pitfall
 
