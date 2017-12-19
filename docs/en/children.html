@@ -15,13 +15,19 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/children.md" target="_blank">Edit</a><h1>Children</h1></header><article><div><span><p>ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself.</p>
-<p>For example, in ReactJS, you'd often want to constrain the <code>children</code> being passed to you as a single child. So inside your own render, you'd do:</p>
-<pre><code class="hljs css js">render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<p>Let's say people are using your component like so: <code>&lt;Animation&gt;&lt;div /&gt;&lt;/Animation&gt;</code>. In the <code>Animation</code> component, you'd want to constrain the <code>children</code> being passed to you (the <code>div</code> here) as a single child. Aka, you'd like to error on this: <code>&lt;Animation&gt;&lt;div /&gt;&lt;div /&gt;&lt;/Animation&gt;</code>.</p>
+<p>ReactJS provides such helper:</p>
+<pre><code class="hljs css js"><span class="hljs-comment">// inside Animation.js</span>
+render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.children);
 }
 </code></pre>
-<p>Or, maybe you accept two (and exactly two) children:</p>
-<pre><code class="hljs css js">render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<p>Or, maybe you made a Layout component and accepts exactly two children (e.g. <code>&lt;Layout&gt;&lt;MyColumn /&gt;&lt;MyColumn /&gt;&lt;/Layout&gt;</code>):</p>
+<pre><code class="hljs css js"><span class="hljs-comment">// Layout.js</span>
+render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">if</span> (React.Children.count(<span class="hljs-keyword">this</span>.props.children) !== <span class="hljs-number">2</span>) {
+    <span class="hljs-comment">// ... error</span>
+  }
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
       {this.props.children[0]}
@@ -31,24 +37,60 @@
   );
 }
 </code></pre>
-<p>Or maybe you're actually rendering a children callback:</p>
-<pre><code class="hljs css js">render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<p>Or maybe you mandate a children callback:</p>
+<pre><code class="hljs css js">
+render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.props.children(<span class="hljs-string">'hello'</span>));
 }
 </code></pre>
-<p>And for more complicated cases, you'd start using some elaborate <code>React.Children.*</code> utils. None of these are type-safe (naturally, since JS is dynamic):</p>
-<pre><code class="hljs css js">&lt;MyForm&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span></span>
-<span class="hljs-comment">// oops, this blows up because `MyForm` expects a single child</span>
-</code></pre>
-<p>We can do better in ReasonReact through simply using the language!</p>
-<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> ...(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
-</code></pre>
-<p>Two things:</p>
+<p>As an author of these JS components, you can only hope that the user provided the right children type to you, and throw an error for them if not. In ReasonReact, <code>children</code> prop is typed and prevents bad usage from the consumer. This seems pretty natural, once you realize that <code>children</code> props <strong>is basically like any other prop</strong>! Yes, you can pass tuple, variant, record and others to children! This also mean we don't have to provide the equivalent <code>React.Children.*</code> utils in ReasonReact at all!</p>
+<p>However, due to syntactical and interoperability reasons, we do have some small restrictions on <code>children</code>:</p>
 <ul>
-<li><p><code>MyForm</code>'s children is expected to be a tuple of 2 react elements.</p></li>
-<li><p>The presence of <code>...</code> is called <a href="https://reasonml.github.io/guide/language/jsx#children-spread">children spread</a>. Passing <code>&lt;MyForm&gt; (&lt;div /&gt;, &lt;div /&gt;) &lt;/MyForm&gt;</code> would wrap the tuple in an array (see the <a href="/reason-react/docs/en/jsx.html#children">JSX</a> section).</p></li>
+<li>DOM elements such as <code>div</code>, <code>span</code> and others mandate the <code>children</code> you pass to be <code>array(reactElement)</code>. For example, <code>&lt;div&gt; [1, 2, 3] &lt;/div&gt;</code> or <code>&lt;span&gt; Some(10) &lt;/span&gt;</code> don't work, since the <code>list</code> and the <code>option</code> are forwarded to the underlying ReactJS <code>div</code>/<code>span</code> and such data types don't make sense in JS.</li>
+<li>User-defined elements, by default, also accept an array (of anything). This is due to a rather silly constraint of the JSX syntax, described below.</li>
 </ul>
-<p>Here are some use-cases for children + children spread + Reason built-in data structures:</p>
+<h2><a class="anchor" aria-hidden="true" name="syntax-constraint"></a><a href="#syntax-constraint" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Syntax Constraint</h2>
+<p><em>Technically</em>, if you've written a component that accepts a tuple as <code>children</code>:</p>
+<pre><code class="hljs css reason"><span class="hljs-comment">/* MyForm.re */</span>
+type tuple2Children = (ReasonReact.reactElement, ReasonReact.reactElement);
+
+<span class="hljs-built_in">let</span> make = (<span class="hljs-built_in">children</span>: tuple2Children) =&gt; {
+  ...component,
+  <span class="hljs-built_in">render</span>: _self =&gt; {
+    &lt;div&gt;
+      {fst(<span class="hljs-built_in">children</span>)}
+      &lt;Separator /&gt;
+      {snd(<span class="hljs-built_in">children</span>)}
+    &lt;/div&gt;
+  }
+};
+</code></pre>
+<p>Then you can expect the user you pass you a tuple:</p>
+<pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> (<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
+</code></pre>
+<p>This, however, will give you a type error:</p>
+<pre><code class="hljs">This has <span class="hljs-class"><span class="hljs-keyword">type</span>:</span>
+  array(<span class="hljs-symbol">'a</span>)
+But somewhere wanted:
+  tuple2Children (defined <span class="hljs-keyword">as</span> (ReasonReact.reactElement, ReasonReact.reactElement))
+</code></pre>
+<p>It means that <code>MyForm</code> is expecting the tuple, but you're giving <code>array</code> instead! What's happening? Well, look at what JSX is transformed into:</p>
+<pre><code class="hljs css reason">&lt;MyLayout&gt; <span class="hljs-selector-tag">a</span> <span class="hljs-selector-tag">b</span> &lt;/MyLayout&gt;
+&lt;MyLayout&gt; <span class="hljs-selector-tag">a</span> &lt;/MyLayout&gt;
+</code></pre>
+<p>These actually become:</p>
+<pre><code class="hljs css reason"><span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span>(
+  <span class="hljs-selector-tag">MyLayout</span><span class="hljs-selector-class">.make</span>(<span class="hljs-selector-attr">[|a, b|]</span>)
+);
+<span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span>(
+  <span class="hljs-selector-tag">MyLayout</span><span class="hljs-selector-class">.make</span>(<span class="hljs-selector-attr">[|a|]</span>)
+);
+</code></pre>
+<p>See how the second <code>MyLayout</code>'s children is also wrapped in an array? We can't special-case <code>&lt;MyLayout&gt; a &lt;/MyLayout&gt;</code> to pass <code>a</code> without the array wrapping (it'd give even more confusing errors). Since children is usually an array, we've decided to always wrap it with an array, no matter how many items we visually see in the JSX. But what if you really want to pass unwrapped data?</p>
+<h3><a class="anchor" aria-hidden="true" name="children-spread"></a><a href="#children-spread" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Children Spread</h3>
+<p>Just use <code>&lt;MyLayout&gt; ...a &lt;/MyLayout&gt;</code>. This will simply transform into <code>ReasonReact.element(MyLayout.make(a))</code>, aka without the array wrapping.</p>
+<h4><a class="anchor" aria-hidden="true" name="tips-tricks"></a><a href="#tips-tricks" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tips &amp; Tricks</h4>
+<p>Here are some use-cases for children spread + Reason built-in data structures:</p>
 <ul>
 <li><p>A layout component that mandates a tuple of 2 react element and shows them side-by-side:</p>
 <pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> ...(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
@@ -60,8 +102,6 @@
 <pre><code class="hljs css reason"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span> ...(ThreeRows(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, child2, child3)) <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span>
 </code></pre></li>
 </ul>
-<p>How do we know that <code>MyForm</code>, <code>Motion</code> and <code>Layout</code> accept such children? Well, that'll simply be inferred by internal usage of <code>children</code> in these components' respective <code>render</code>. Just another day in the magical land of type inference.</p>
-<p>Go wild!</p>
 <h3><a class="anchor" aria-hidden="true" name="pitfall"></a><a href="#pitfall" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pitfall</h3>
 <p>Following the above section's reasoning, this code should work:</p>
 <pre><code class="hljs css reason">let children = [| &lt;<span class="hljs-keyword">div</span> /&gt; |];
