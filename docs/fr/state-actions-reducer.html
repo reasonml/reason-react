@@ -110,14 +110,14 @@ let make = (_children) =&gt; {
 <ul>
 <li><code>ReasonReact.NoUpdate</code>: don't do a state update.</li>
 <li><code>ReasonReact.Update state</code>: update the state.</li>
-<li><code>ReasonReact.SideEffects((self) =&gt; unit)</code>: no state update, but trigger a side-effect, e.g. <code>ReasonReact.SideEffects((_self) =&gt; Js.log &quot;hello!&quot;))</code>.</li>
+<li><code>ReasonReact.SideEffects((self) =&gt; unit)</code>: no state update, but trigger a side-effect, e.g. <code>ReasonReact.SideEffects((_self) =&gt; Js.log(&quot;hello!&quot;))</code>.</li>
 <li><code>ReasonReact.UpdateWithSideEffects(state, (self) =&gt; unit)</code>: update the state, <strong>then</strong> trigger a side-effect.</li>
 </ul>
 <p><em>If you're a power user, there's also <code>SilentUpdate</code> and <code>SilentUpdateWithSideEffects</code>. See reasonReact.rei to see what they do. Don't use them if you're trying to update a ref/timer/subscription/any other instance variable</em>.</p>
 <h3><a class="anchor" aria-hidden="true" name="notes-importantes"></a><a href="#notes-importantes" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Notes importantes</h3>
 <p><strong>Please read through all these points</strong>, if you want to fully take advantage of <code>reducer</code> and avoid future ReactJS Fiber race condition problems.</p>
 <ul>
-<li>The <code>action</code> type's variants can carry a payload: <code>onClick=(self.reduce((data) =&gt; Click data.foo))</code>.</li>
+<li>The <code>action</code> type's variants can carry a payload: <code>onClick=(self.reduce((data) =&gt; Click(data.foo)))</code>.</li>
 <li>Don't pass the whole event into the action variant's payload. ReactJS events are pooled; by the time you intercept the action in the <code>reducer</code>, the event's already recycled.</li>
 <li><code>reducer</code> <strong>must</strong> be pure (not to be confused with <code>self.reduce</code>, which can be impure)! Aka don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use <code>SideEffects</code> or <code>UpdateWithSideEffects</code> to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.</li>
 <li>If you need to do e.g. <code>ReactEventRe.BlablaEvent.preventDefault event</code>, do it in <code>self.reduce</code>, before returning the action type. Again, <code>reducer</code> must be pure.</li>

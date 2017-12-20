@@ -36,7 +36,7 @@ let make = (~className=<span class="hljs-string">""</span>, _children) =&gt; {
 };
 </code></pre>
 <p>Attaching to a React DOM element looks the same: <code>state.mySectionRef = {myDivRef: Js.Nullable.to_opt(theRef)}</code>.</p>
-<p><strong>Note</strong> how <a href="https://github.com/facebook/react/issues/9328#issuecomment-298438237">ReactJS refs can be null</a>. Which is why <code>theRef</code> and <code>myDivRef</code> are converted from a <a href="http://bucklescript.github.io/bucklescript/Manual.html#_null_and_undefined">JS nullable</a> to an OCaml <code>option</code> (Some/None). When you use the ref, you'll be forced to handle the null case through a <code>switch</code>, which prevents subtle errors!</p>
+<p><strong>Note</strong> how <a href="https://github.com/facebook/react/issues/9328#issuecomment-298438237">ReactJS refs can be null</a>. Which is why <code>theRef</code> and <code>myDivRef</code> are converted from a <a href="https://bucklescript.github.io/docs/en/null-undefined-option.html">JS nullable</a> to an OCaml <code>option</code> (Some/None). When you use the ref, you'll be forced to handle the null case through a <code>switch</code>, which prevents subtle errors!</p>
 <p><strong>You must follow the instanceVars convention in the previous section for ref</strong>.</p>
 <p>ReasonReact ref only accept callbacks. The string <code>ref</code> from ReactJS is deprecated.</p>
 <p>We also expose an escape hatch <code>ReasonReact.refToJsObj</code> of type <code>ReasonReact.reactRef =&gt; Js.t {..}</code>, which turns your ref into a JS object you can freely use; <strong>this is only used to access ReactJS component class methods</strong>.</p>

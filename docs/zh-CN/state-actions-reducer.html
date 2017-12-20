@@ -110,14 +110,14 @@ let make = (_children) =&gt; {
 <ul>
 <li><code>ReasonReact.NoUpdate</code>: 不要更新state。</li>
 <li><code>ReasonReact.Update state</code>: 更新state。</li>
-<li><code>ReasonReact.SideEffects((self) =&gt; unit)</code>: no state update, but trigger a side-effect, e.g. <code>ReasonReact.SideEffects((_self) =&gt; Js.log &quot;hello!&quot;))</code>.</li>
+<li><code>ReasonReact.SideEffects((self) =&gt; unit)</code>: no state update, but trigger a side-effect, e.g. <code>ReasonReact.SideEffects((_self) =&gt; Js.log(&quot;hello!&quot;))</code>.</li>
 <li><code>ReasonReact.UpdateWithSideEffects(state, (self) =&gt; unit)</code>: update the state, <strong>then</strong> trigger a side-effect.</li>
 </ul>
 <p><em>如果你对ReasonReact很熟悉，这里你还可以使用 <code>SilentUpdate</code> 和 <code>SilentUpdateWithSideEffects</code>。 请参阅 reasonReact.rei，来查看如何使用它们。 但是不要试图使用它们去更新一些像 ref/timer/subscription 之类的实例变量（Instance variable 值可以改变的变量）。</em></p>
 <h3><a class="anchor" aria-hidden="true" name=""></a><a href="#" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>重要提示</h3>
 <p><strong>请阅读以下所有内容</strong>，如果你想更好的使用 <code>reducer</code> 以及避免未来在 ReactJS Fiber 中遇到race condition的问题：</p>
 <ul>
-<li>The <code>action</code> type's variants can carry a payload: <code>onClick=(self.reduce((data) =&gt; Click data.foo))</code>.</li>
+<li>The <code>action</code> type's variants can carry a payload: <code>onClick=(self.reduce((data) =&gt; Click(data.foo)))</code>.</li>
 <li>不要直接把一个事件本身当成参数传递给 action。ReactJS中事件是在一个事件池中的，当你试图在 <code>reducer</code> 中得到它时，它已经被回收了。</li>
 <li><code>reducer</code> <strong>must</strong> be pure (not to be confused with <code>self.reduce</code>, which can be impure)! Aka don't do side-effects in them directly. 在将来 React Fiber 可以并发渲染时你会感谢我们这么做。 用 <code>SideEffects</code> 或者 <code>UpdateWithSideEffects</code> 去安排一个 side-effect， 这个 side-effect 会在 state 处理完之后，下一次渲染之前进行。</li>
 <li>如果你要用到类似于 <code>ReactEventRe.BlablaEvent.preventDefault event</code>（注：JS里面的event.preventDefault），请在 <code>self.reduce</code> 方法返回 action 之前使用，再强调一遍， <code>reducer</code> 必须要是纯函数。</li>
