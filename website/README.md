@@ -20,9 +20,7 @@ During your development, most changes will be picked up at each browser refresh.
 
 ## Translations
 
-The entire site can be translated via the [Crowdin project](https://crowdin.com/project/reason-react). This repo only has the canonical english documentation. Don't manually editor things in `i18n/`.
-
-For repo maintainers: to have the new translated strings appear in prod, run `yarn crowin-upload`. This assumes you have `crowdin` installed, through https://support.crowdin.com/cli-tool/.
+The entire site can be translated via the [Crowdin project](https://crowdin.com/project/reason-react). This repo only has the canonical english documentation. Don't manually edit things in `i18n/`.
 
 ## Debugging
 
