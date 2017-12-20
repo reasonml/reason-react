@@ -68,14 +68,14 @@ The `make` above is exactly the `make` function you've seen in the previous sect
 ReasonReact children are **fully typed**, and you can pass any data structure to it (as long as the receiver component permits it). When you write:
 
 ```reason
-<MyForm> <div /> <div /> </MyForm>
+<MyReasonComponent> <div /> <div /> </MyReasonComponent>
 ```
 
-You're effectively passing the array `[| <div />, <div /> |]` to `MyForm`'s children. But this also means that the following wouldn't work:
+You're effectively passing the array `[| <div />, <div /> |]` to `MyReasonComponent`'s children. But this also means that the following wouldn't work:
 
 ```reason
 let theChildren = [| <div />, <div /> |];
-<MyForm> theChildren </MyForm>
+<MyReasonComponent> theChildren </MyReasonComponent>
 ```
 
 Because this actually translates to:
@@ -91,7 +91,7 @@ Which wraps the already wrapped `theChildren` in another layer of array. To solv
 
 ```reason
 let theChildren = [| <div />, <div /> |];
-<MyForm> ...theChildren </MyForm>
+<MyReasonComponent> ...theChildren </MyReasonComponent>
 ```
 
 This simply passes `theChildren` without array wrapping. It becomes:
