@@ -247,15 +247,12 @@ let wrapJsForReason:
 
 module Router: {
   let push: string => unit;
-  let path: unit => list(string);
-  let hash: unit => string;
   type watcherID;
   type url = {
     path: list(string),
     hash: string,
     search: string
   };
-  let watchUrl: (url => unit, unit) => watcherID;
+  let watchUrl: (url => unit) => watcherID;
   let unwatchUrl: watcherID => unit;
-  /*let make: (~render: url => reactElement, array(reactElement)) => component(unit, unit, unit);*/
 };

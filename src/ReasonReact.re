@@ -1030,7 +1030,7 @@ module Router = {
     search: string
   };
   type watcherID = unit => unit;
-  let watchUrl = (callback, ()) =>
+  let watchUrl = (callback) =>
     switch [%external window] {
     | None => (() => ())
     | Some((window: Dom.window)) =>
