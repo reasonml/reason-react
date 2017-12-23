@@ -958,6 +958,7 @@ module Router = {
   [@bs.send] external dispatchEvent : (Dom.window, Dom.event) => unit = "";
   [@bs.get] external pathname : Dom.location => string = "";
   [@bs.get] external hash : Dom.location => string = "";
+  [@bs.get] external search : Dom.location => string = "";
   [@bs.send]
   external pushState :
     (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
@@ -1003,23 +1004,18 @@ module Router = {
         raw |> Js.String.sliceToEnd(~from=1)
       }
     };
-  /* TODO: unexposed. Not sure about the subscription API yet */
-  let subscribe = callback =>
-    Sub(
-      () =>
-        switch [%external window] {
-        | None => callback
-        | Some((window: Dom.window)) =>
-          addEventListener(window, `popstate, callback);
-          callback;
-        },
-      cb =>
-        switch [%external window] {
-        | None => ()
-        | Some((window: Dom.window)) =>
-          removeEventListener(window, `popstate, cb)
-        }
-    );
+  let search = () =>
+    switch [%external window] {
+    | None => ""
+    | Some((window: Dom.window)) =>
+      switch (window |> location |> search) {
+      | ""
+      | "?" => ""
+      | raw =>
+        /* remove the preceeding ?, which every hash seems to have. */
+        raw |> Js.String.sliceToEnd(~from=1)
+      }
+    };
   let push = path =>
     switch ([%external history], [%external window]) {
     | (None, _)
@@ -1030,16 +1026,23 @@ module Router = {
     };
   type url = {
     path: list(string),
-    hash: string
+    hash: string,
+    search: string
   };
-  let component = reducerComponent("ReasonRouter");
-  let make = (~render, _child) => {
-    ...component,
-    subscriptions: self => [subscribe(() => self.send())],
-    reducer: (_action, _state) => Update(),
-    render: _self => {
-      let url = {path: path(), hash: hash()};
-      render(url);
-    }
-  };
+  type watcherID = unit => unit;
+  let watchUrl = (callback, ()) =>
+    switch [%external window] {
+    | None => (() => ())
+    | Some((window: Dom.window)) =>
+      let watcherID = () =>
+        callback({path: path(), hash: hash(), search: search()});
+      addEventListener(window, `popstate, watcherID);
+      watcherID;
+    };
+  let unwatchUrl = watcherID =>
+    switch [%external window] {
+    | None => ()
+    | Some((window: Dom.window)) =>
+      removeEventListener(window, `popstate, watcherID)
+    };
 };
