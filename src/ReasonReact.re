@@ -754,3 +754,10 @@ module WrapProps = {
 };
 
 let wrapJsForReason = WrapProps.wrapJsForReason;
+
+/* reference: https://reactjs.org/docs/fragments.html */
+module Fragment = {
+  [@bs.module "react"] external fragment : ReasonReact.reactClass = "Fragment";
+  let make = (children) =>
+    ReasonReact.wrapJsForReason(~reactClass=fragment, ~props=Js.Obj.empty(), children);
+};
