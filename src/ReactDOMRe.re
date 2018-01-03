@@ -39,6 +39,10 @@ let renderToElementWithId = (reactElement, id) =>
   | Some(element) => render(reactElement, element)
   };
 
+[@bs.val] [@bs.module "react-dom"]
+external createPortal : (ReasonReact.reactElement, Dom.element) => ReasonReact.reactElement =
+  "createPortal";
+
 [@bs.val] [@bs.module "react-dom"] external unmountComponentAtNode : Dom.element => unit =
   "unmountComponentAtNode";
 
