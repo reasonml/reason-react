@@ -16,13 +16,13 @@
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>JSX</h1></header><article><div><span><p>Reason incluye <a href="https://reasonml.github.io/guide/language/jsx">JSX</a>! ReasonReact transforma las llamadas a funciones en JSX a llamadas específicas de ReasonReact utilizando macros. Para utilizar ReasonReact JSX, añade <code>{&quot;reason&quot;: {&quot;react-jsx&quot;: 2}</code> al archivo <a href="https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt"><code>bsconfig.json</code></a> (<em>schema</em> <a href="http://bucklescript.github.io/bucklescript/docson/#build-schema.json">aquí</a>).</p>
 <h3><a class="anchor" aria-hidden="true" name="en-minusculas"></a><a href="#en-minusculas" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>En minúsculas</h3>
-<pre><code class="hljs css reason"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">foo</span>=</span></span><span class="hljs-template-variable">{bar}</span><span class="xml"><span class="hljs-tag">&gt;</span> </span><span class="hljs-template-variable">{child1}</span><span class="xml"> </span><span class="hljs-template-variable">{child2}</span><span class="xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<pre><code class="hljs css reason"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">foo</span>=</span></span><span class="hljs-template-variable">{bar}</span><span class="xml"><span class="hljs-tag">&gt;</span> </span><span class="hljs-template-variable">{hijo1}</span><span class="xml"> </span><span class="hljs-template-variable">{hijo2}</span><span class="xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 </span></code></pre>
 <p>se transforma en</p>
-<pre><code class="hljs css reason">ReactDOMRe.createElement(<span class="hljs-string">"div"</span>, ~props=ReactDOMRe.props(~foo=bar, ()), [|<span class="hljs-string">child1, child2</span>|<span class="hljs-string">]);
+<pre><code class="hljs css reason">ReactDOMRe.createElement(<span class="hljs-string">"div"</span>, ~props=ReactDOMRe.props(~foo=bar, ()), [|<span class="hljs-string">hijo1, hijo2</span>|<span class="hljs-string">]);
 </span></code></pre>
 <p>que a su vez compila a este JS:</p>
-<pre><code class="hljs css js">React.createElement(<span class="hljs-string">'div'</span>, {<span class="hljs-attr">foo</span>: bar}, child1, child2)
+<pre><code class="hljs css js">React.createElement(<span class="hljs-string">'div'</span>, {<span class="hljs-attr">foo</span>: bar}, hijo1, hijo2)
 </code></pre>
 <p>Un <code>&lt;div /&gt;</code> sin <code>props</code> se transforma en:</p>
 <pre><code class="hljs css reason">ReactDOMRe.createElement(<span class="hljs-string">"div"</span>, [<span class="hljs-string">||]);</span>
@@ -32,13 +32,13 @@
 </code></pre>
 <p><strong>Ten en cuenta que <code>ReactDOMRe.createElement</code> está planteado para ser usado internamente para transformar JSX</strong>. En el caso de necesitar utilizarlo (si no hay otra alternativa), usa <code>ReasonReact.createDomElement</code> en su lugar, como se explica en la sección sobre <a href="/reason-react/docs/es-ES/children.html"><em>Children</em></a>.</p>
 <h3><a class="anchor" aria-hidden="true" name="en-mayusculas"></a><a href="#en-mayusculas" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>En mayúsculas</h3>
-<pre><code class="hljs css reason"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span> <span class="hljs-attr">key</span>=</span></span><span class="hljs-template-variable">{a}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">ref</span>=</span></span><span class="hljs-template-variable">{b}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">foo</span>=</span></span><span class="hljs-template-variable">{bar}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">baz</span>=</span></span><span class="hljs-template-variable">{qux}</span><span class="xml"><span class="hljs-tag">&gt;</span> </span><span class="hljs-template-variable">{child1}</span><span class="xml"> </span><span class="hljs-template-variable">{child2}</span><span class="xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
+<pre><code class="hljs css reason"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span> <span class="hljs-attr">key</span>=</span></span><span class="hljs-template-variable">{a}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">ref</span>=</span></span><span class="hljs-template-variable">{b}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">foo</span>=</span></span><span class="hljs-template-variable">{bar}</span><span class="xml"><span class="hljs-tag"> <span class="hljs-attr">baz</span>=</span></span><span class="hljs-template-variable">{qux}</span><span class="xml"><span class="hljs-tag">&gt;</span> </span><span class="hljs-template-variable">{hijo1}</span><span class="xml"> </span><span class="hljs-template-variable">{hijo2}</span><span class="xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
 </span></code></pre>
 <p>se transforma a</p>
 <pre><code class="hljs css reason">ReasonReact.element(
   ~<span class="hljs-attribute">key</span>=a,
   ~<span class="hljs-attribute">ref</span>=b,
-  MyReasonComponent.make(~<span class="hljs-attribute">foo</span>=bar, ~<span class="hljs-attribute">baz</span>=qux, [|child1, child2|])
+  MyReasonComponent.make(~<span class="hljs-attribute">foo</span>=bar, ~<span class="hljs-attribute">baz</span>=qux, [|hijo1, hijo2|])
 );
 </code></pre>
 <p><code>&lt;MyReasonComponent /&gt;</code>, sin <code>props</code>, se transforma en:</p>
@@ -51,23 +51,23 @@
 <pre><code class="hljs css reason"><span class="hljs-section">&lt;MyReasonComponent&gt;</span> <span class="hljs-section">&lt;div /&gt;</span> <span class="hljs-section">&lt;div /&gt;</span> <span class="hljs-section">&lt;/MyReasonComponent&gt;</span>
 </code></pre>
 <p>Estas, a todos los efectos, pasando el array <code>[| &lt;div /&gt;, &lt;div /&gt; |]</code> a los descendientes de <code>MyReasonComponent</code>. Esto significa que el siguiente código no funcionaría:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> |];
-<span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span>&gt;</span> theChildren <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> hijos = [| <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> |];
+<span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span>&gt;</span> hijos <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
 </span></code></pre>
 <p>Porque en realidad se traduce en:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="hljs-type">&lt;div</span> /&gt;, &lt;div /&gt; |<span class="hljs-type">];
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> hijos = [| <span class="hljs-type">&lt;div</span> /&gt;, &lt;div /&gt; |<span class="hljs-type">];
 ReasonReact</span>.element(
-  MyReasonComponent.make([|<span class="hljs-type">theChildren</span>|<span class="hljs-type">])
+  MyReasonComponent.make([|<span class="hljs-type">hijos</span>|<span class="hljs-type">])
 );
 </span></code></pre>
-<p>Lo que encapsula el array de descendientes (<code>theChildren</code>) en un array adicional. Para solucionar este problema, Reason incluye la sintaxis de <a href="https://reasonml.github.io/guide/language/jsx#children-spread">expansión de descendientes</a>:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> |];
-<span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span>&gt;</span> ...theChildren <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
+<p>Lo que encapsula el array de descendientes (<code>hijos</code>) en un array adicional. Para solucionar este problema, Reason incluye la sintaxis de <a href="https://reasonml.github.io/guide/language/jsx#children-spread">expansión de descendientes</a>:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> hijos = [| <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> |];
+<span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span>&gt;</span> ...hijos <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
 </span></code></pre>
-<p>Esto hace que <code>theChildren</code> sea pasado sin el array adicional y se transforma en:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="hljs-type">&lt;div</span> /&gt;, &lt;div /&gt; |<span class="hljs-type">];
+<p>Esto hace que <code>hijos</code> sea pasado sin el array adicional y se transforma en:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> hijos = [| <span class="hljs-type">&lt;div</span> /&gt;, &lt;div /&gt; |<span class="hljs-type">];
 ReasonReact</span>.element(
-  MyReasonComponent.make(theChildren)
+  MyReasonComponent.make(hijos)
 );
 </code></pre>
 <p>Para conocer más formas de aprovechar el sistema de tipos de Reason, sus estructuras de datos y optimizaciones en el uso de <code>children</code>, lee la <a href="/reason-react/docs/es-ES/children.html">Sección sobre Descendientes</a>!</p>
