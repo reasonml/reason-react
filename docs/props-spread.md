@@ -1,5 +1,4 @@
 ---
-id: props-spread
 title: Props Spread
 ---
 

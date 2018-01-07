@@ -1,5 +1,4 @@
 ---
-id: functional-component
 title: Functional Component
 ---
 

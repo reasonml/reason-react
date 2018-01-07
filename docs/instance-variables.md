@@ -1,5 +1,4 @@
 ---
-id: instance-variables
 title: Instance Variables
 ---
 
@@ -13,7 +12,7 @@ const Greeting = React.createClass({
 });
 ```
 
-In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. ReasonReact asks you to correctly put these instance variables into your component's `state`, into Reason [`ref`s](https://reasonml.github.io/guide/language/mutation).
+In reality, this is nothing but a thinly veiled way to mutate a component's "state", without triggering a re-render. ReasonReact asks you to correctly put these instance variables into your component's `state`, into Reason [`ref`s](https://reasonml.github.io/docs/en/mutation.html).
 
 ```reason
 type state = {

@@ -7,7 +7,7 @@ Improvements:
 - **Loosen `children`'s restriction**. This unlocks _huge_ potentials. See the [blog post](https://reasonml.github.io/reason-react/blog/2017/11/17/power-children.html)!
 - Fix a bug where side effects inside side effects were skipped (#98).
 - React 16 support.
-- All files upper-cased. This follows the [new community idiom](https://reasonml.github.io/guide/meta/project-structure#file-casing). Technically an internal change; doesn't affect your usage of ReasonReact.
+- All files upper-cased. This follows the [new community idiom](https://reasonml.github.io/docs/en/project-structure.html#file-casing). Technically an internal change; doesn't affect your usage of ReasonReact.
 - More DOM props. There are like, more DOM props added per year than the number of releases we have. What a funny time to be alive.
 
 Breaking Changes:
@@ -49,13 +49,13 @@ reducer: fun action state =>
 
 We've also exposed new `ReasonReact.SideEffects` (aka `ReasonReact.NoUpdate`, with side-effect) and `ReasonReact.UpdateWithSideEffects` (`ReasonReact.Update` + side-effect).
 
-The relevant section on actions, reducers and the new update additions are [in the main docs](https://reasonml.github.io/reason-react/#reason-react-component-creation-state-actions-reducer).
+The relevant section on actions, reducers and the new update additions are [in the main docs](https://reasonml.github.io/reason-react/docs/en/state-actions-reducer.html).
 
 **If everything goes alright, we will be deprecating `statefulComponent` in the future**
 
 ## InstanceVars/React Ref Usage Changed
 
-Before, we used to recommend using `ReasonReact.SilentUpdate` to deal with ReactJS' instance variables pattern (e.g. attaching properties onto the component class itself, like timer IDs, subscriptions, refs, etc.). Now we've moved to using a Reason `ref` cell (not the React ref, the [mutative Reason `ref`](https://reasonml.github.io/guide/language/mutation)). See the updated [instance variables section](https://reasonml.github.io/reason-react/#reason-react-component-creation-instance-variables).
+Before, we used to recommend using `ReasonReact.SilentUpdate` to deal with ReactJS' instance variables pattern (e.g. attaching properties onto the component class itself, like timer IDs, subscriptions, refs, etc.). Now we've moved to using a Reason `ref` cell (not the React ref, the [mutative Reason `ref`](https://reasonml.github.io/docs/en/mutation.html)). See the updated [instance variables section](https://reasonml.github.io/reason-react/docs/en/instance-variables.html).
 
 The new recommendation also solves a corner-case bug with assigning more than one refs in the render.
 
@@ -156,7 +156,7 @@ _Not to be confused with the `ReactRe.createElement` in the previous section_.
 The concept of `componentBag` is now called `self`. We thought it'd be a more appropriate name. The new `self` doesn't contain `props`, `state`, `setState` and `instanceVars` anymore; these are no longer needed in the new ReasonReact.
 
 ### `componentBag.props`
-Replaced with the new `make` (previously `createElement`) call which takes in labeled arguments. See more in [this section](https://reasonml.github.io/reason-react/#reason-react-component-creation-props).
+Replaced with the new `make` (previously `createElement`) call which takes in labeled arguments. See more in [this section](https://reasonml.github.io/reason-react/docs/en/creation-props-self.html).
 
 How to access `props` in the `update`/`handle` callbacks now? You'd move these callback definitions into the `make` function body.
 
@@ -164,7 +164,7 @@ How to access `props` in the `update`/`handle` callbacks now? You'd move these c
 Now passed to you as an argument in callbacks and lifecyle events.
 
 ### `componentBag.instanceVars`
-No longer needed. In ReactJS, attaching instance variables onto a component has always been a sly way of introducing 1. mutative state that 2. doesn't trigger re-render. This whole concept is now replaced by putting your value into `state` and using [`ReasonReact.SilentUpdate`](https://reasonml.github.io/reason-react/#reason-react-component-creation-callback-handlers) (doesn't trigger re-render, but does update state) in callbacks & lifecycles.
+No longer needed. In ReactJS, attaching instance variables onto a component has always been a sly way of introducing 1. mutative state that 2. doesn't trigger re-render. This whole concept is now replaced by putting your value into `state` and using [`ReasonReact.SilentUpdate`](https://reasonml.github.io/reason-react/docs/en/callback-handlers.html) (doesn't trigger re-render, but does update state) in callbacks & lifecycles.
 
 ### `componentBag.setState`
 Not to be confused with the ReactJS `setState` you often use (though if you're reading this migration guide, you probably know this already). This was an escape hatch designed for times when you can't, for example, return an `option state` from an `updater`, because you want to `setState` imperatively and asynchronously. The new idiom is to just use `self.update myhandler ()`. Notice `update myhandler` returns a callback just like before, but now you're immediately applying the callback.
@@ -179,14 +179,14 @@ The signature of the callback they take has changed. Instead of e.g. `updater (f
 `update` and `handle` don't memoize anymore; this reduces confusion and potential memory leaks.
 
 ## Render
-`render`, previously in your component module, is now inside `make`. See the example [here](https://reasonml.github.io/reason-react/#reason-react-intro-examples).
+`render`, previously in your component module, is now inside `make`. See the example [here](https://reasonml.github.io/reason-react/docs/en/intro-example.html).
 
 ## Ref & Other Mutable Instance Variables
 `ref` now lives inside state, as described in `componentBag.instanceVars` just above. Instead of `componentBag.handler`+ mutating `instanceVars`, you'd now use `update` and returning `ReasonReact.SilentUpdate {...state, ref: theRef}`. `ref`s and others probably default to `None` in your initial state.
 
 ## Lifecycles
 
-We've decided to finally drop the `component` prefix to lifecycle methods! `componentDidMount` is now just called `didMount`, etc. The signatures changed slightly; see them in the new [lifecycle events section](https://reasonml.github.io/reason-react/#reason-react-component-creation-lifecycle-events).
+We've decided to finally drop the `component` prefix to lifecycle methods! `componentDidMount` is now just called `didMount`, etc. The signatures changed slightly; see them in the new [lifecycle events section](https://reasonml.github.io/reason-react/docs/en/lifecycles.html).
 
 ## Children
 The children helpers & types `reactJsChildren`, `listToElement` and `jsChildrenToReason` are all gone from `ReasonReact`, since we now use array instead of list.

@@ -1,5 +1,4 @@
 ---
-id: example-projects
 title: Example Projects
 ---
 

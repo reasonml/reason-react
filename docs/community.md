@@ -1,5 +1,4 @@
 ---
-id: community
 title: Community
 ---
 

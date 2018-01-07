@@ -1,5 +1,4 @@
 ---
-id: children
 title: Children
 ---
 

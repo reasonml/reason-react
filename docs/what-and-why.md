@@ -1,5 +1,4 @@
 ---
-id: what-why
 title: What & Why
 ---
 

@@ -1,5 +1,4 @@
 ---
-id: im-having-a-type-error
 title: I'm Having a Type Error
 ---
 

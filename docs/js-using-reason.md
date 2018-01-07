@@ -1,5 +1,4 @@
 ---
-id: js-using-reason
 title: ReactJS using ReasonReact
 ---
 PageReason.re:

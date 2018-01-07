@@ -1,5 +1,4 @@
 ---
-id: creation-props-self
 title: Creation, Props & Self
 ---
 
@@ -85,7 +84,7 @@ Cumbersome. Fortunately, here's a better way to explicitly pass an optional valu
 <Foo name="Reason" age=?ageFromProps />
 ```
 
-It says "I understand that `age` is optional and that when I use the label I should pass an int. But I'd like to forward an `option` value explicitly". This isn't a JSX trick we've made up; it's just a language feature! See the section on "Explicitly Passed Optional" in the [Reason docs](https://reasonml.github.io/guide/language/function/#explicitly-passed-optional).
+It says "I understand that `age` is optional and that when I use the label I should pass an int. But I'd like to forward an `option` value explicitly". This isn't a JSX trick we've made up; it's just a language feature! See the section on "Explicitly Passed Optional" in the [Reason docs](https://reasonml.github.io/docs/en/function.html#explicitly-passed-optional).
 
 ## `self`
 

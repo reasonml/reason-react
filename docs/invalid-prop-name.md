@@ -1,5 +1,4 @@
 ---
-id: invalid-prop-name
 title: Invalid Prop Name
 ---
 

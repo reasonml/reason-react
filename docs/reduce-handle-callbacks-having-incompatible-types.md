@@ -1,5 +1,4 @@
 ---
-id: reduce-handle-callbacks-having-incompatible-types
 title: reduce/handle callbacks having Incompatible Types
 ---
 

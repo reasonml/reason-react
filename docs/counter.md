@@ -1,5 +1,4 @@
 ---
-id: counter
 title: Counter
 ---
 Demonstrates calling an async "setState" in idiomatic ReasonReact

@@ -1,5 +1,4 @@
 ---
-id: react-ref
 title: React Ref
 ---
 

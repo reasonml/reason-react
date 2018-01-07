@@ -1,5 +1,4 @@
 ---
-id: custom-class-component-property
 title: Custom Class/Component Property
 ---
 

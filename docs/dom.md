@@ -1,5 +1,4 @@
 ---
-id: dom
 title: Working with DOM
 ---
 

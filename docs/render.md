@@ -1,5 +1,4 @@
 ---
-id: render
 title: Render
 ---
 

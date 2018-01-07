@@ -1,5 +1,4 @@
 ---
-id: intro-example
 title: Intro Example
 ---
 

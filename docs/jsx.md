@@ -1,9 +1,8 @@
 ---
-id: jsx
 title: JSX
 ---
 
-Reason comes with the [JSX](https://reasonml.github.io/guide/language/jsx) syntax! ReasonReact transforms it from an agnostic function call into a ReasonReact-specific call through a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}` in your [`bsconfig.json`](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
+Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact transforms it from an agnostic function call into a ReasonReact-specific call through a macro. To take advantage of ReasonReact JSX, put `{"reason": {"react-jsx": 2}` in your [`bsconfig.json`](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
 
 ### Uncapitalized
 
@@ -87,7 +86,7 @@ ReasonReact.element(
 );
 ```
 
-Which wraps the already wrapped `theChildren` in another layer of array. To solve this issue, Reason has a special [children spread syntax](https://reasonml.github.io/guide/language/jsx#children-spread):
+Which wraps the already wrapped `theChildren` in another layer of array. To solve this issue, Reason has a special [children spread syntax](https://reasonml.github.io/docs/en/jsx.html#children-spread):
 
 ```reason
 let theChildren = [| <div />, <div /> |];

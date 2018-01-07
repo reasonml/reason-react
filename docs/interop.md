@@ -1,5 +1,4 @@
 ---
-id: interop
 title: Interop With Existing ReactJS Components
 ---
 

@@ -1,5 +1,4 @@
 ---
-id: reason-using-js
 title: ReasonReact using ReactJS
 ---
 MyBanner.js:

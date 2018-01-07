@@ -1,5 +1,4 @@
 ---
-id: i-really-need-feature-x-from-reactjs
 title: I Really Need Feature X From ReactJS
 ---
 

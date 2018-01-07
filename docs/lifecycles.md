@@ -1,5 +1,4 @@
 ---
-id: lifecycles
 title: Lifecycles
 ---
 

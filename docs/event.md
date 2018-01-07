@@ -1,5 +1,4 @@
 ---
-id: event
 title: Event
 ---
 

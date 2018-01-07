@@ -1,5 +1,4 @@
 ---
-id: state-actions-reducer
 title: State, Actions & Reducer
 ---
 
@@ -106,7 +105,7 @@ A few things:
 - There's a user-defined type called **`action`**, named so by convention. It's a variant of all the possible state transitions in your component. _In state machine terminology, this'd be a "token"_.
 - A user-defined `state` type, and an `initialState`. Nothing special.
 - The current `state` value is accessible through `self.state`, whenever `self` is passed to you as an argument of some function.
-- A "**reducer**"! This [pattern-matches](https://reasonml.github.io/guide/language/pattern-matching) on the possible actions and specify what state update each action corresponds to. _In state machine terminology, this'd be a "state transition"_.
+- A "**reducer**"! This [pattern-matches](https://reasonml.github.io/docs/en/pattern-matching.html) on the possible actions and specify what state update each action corresponds to. _In state machine terminology, this'd be a "state transition"_.
 - In `render`, instead of `self.handle` (which doesn't allow state updates), you'd use `self.reduce`. `reduce` takes a callback, passing it the event (or whatever callback payload `onSubmit`/`onClick`/`onFoo` gives you from `MyDialog`) and asking for an action as the return value.
 
 So, when a click on the dialog is triggered, we send the `Click` action to the reducer, which handles the `Click` case by returning the new state that increment a counter. ReasonReact takes the state and updates the component.

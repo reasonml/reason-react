@@ -1,5 +1,4 @@
 ---
-id: ternary-shortcut
 title: Ternary Shortcut
 ---
 
