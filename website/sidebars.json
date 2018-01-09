@@ -19,7 +19,9 @@
       "style",
       "clone-element",
       "children",
-      "dom"
+      "dom",
+      "subscriptions-helper",
+      "router"
     ],
     "ReactJS Idioms Equivalents": [
       "invalid-prop-name",

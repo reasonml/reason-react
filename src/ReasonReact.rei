@@ -246,13 +246,19 @@ let wrapJsForReason:
   component(stateless, noRetainedProps, actionless);
 
 module Router: {
+  /* update the url with the string path. Example: `push("/book/1")`, `push("/books#title")` */
   let push: string => unit;
   type watcherID;
   type url = {
+    /* path takes window.location.path, like "/book/title/edit" and turns it into `["book", "title", "edit"]` */
     path: list(string),
+    /* the url's hash, if any. The # symbol is stripped out for you */
     hash: string,
+    /* the url's query params, if any. The ? symbol is stripped out for you */
     search: string
   };
+  /* start watching for URL changes. Returns a subscription token. Upon url change, calls the callback and passes it the url record */
   let watchUrl: (url => unit) => watcherID;
+  /* stop watching for URL changes */
   let unwatchUrl: watcherID => unit;
 };
