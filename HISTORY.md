@@ -1,6 +1,6 @@
 # 0.3.1
 
-No breaking change. **The migration script is [here]()**.
+No breaking change. **The migration script is [here](https://github.com/chenglou/upgrade-reason-react-to-031)**.
 
 - New [subscriptions helper](https://reasonml.github.com/reason-react/docs/en/subscriptions-helper.html).
 - [**Router** is here](https://reasonml.github.com/reason-react/docs/en/router.html)!
