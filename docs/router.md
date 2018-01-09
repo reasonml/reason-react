@@ -4,7 +4,7 @@ title: Router
 
 ReasonReact comes with a router! We've leveraged the language and library features in order to create a router that's:
 
-- The simplest, dumbest possible.
+- The simplest, thinnest possible.
 - Easily pluggable anywhere into your existing code.
 - Performant and tiny.
 
@@ -60,7 +60,7 @@ ReasonReact.Router.unwatchUrl(watcherID);
 
 ### Tips & Tricks
 
-Notice that this is just normal [pattern matching](https://reasonml.github.io/docs/en/pattern-matching.html). You can combine it with other features, such as tuple + ReasonReact features like [subscriptions](subscriptions-helpers.md) and reducer:
+Notice that this is just normal [pattern matching](https://reasonml.github.io/docs/en/pattern-matching.html). You can combine it with other features, such as tuple + ReasonReact features like [subscriptions](subscriptions-helper.md) and reducer:
 
 ```reason
 let component = ReasonReact.reducerComponent("TodoApp");

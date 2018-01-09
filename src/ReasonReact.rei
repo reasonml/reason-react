@@ -38,11 +38,11 @@ external arrayToElement : array(reactElement) => reactElement = "%identity";
 
 external refToJsObj : reactRef => Js.t({..}) = "%identity";
 
-[@bs.splice] [@bs.val] [@bs.module "React"]
+[@bs.splice] [@bs.val] [@bs.module "react"]
 external createElement : (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "createElement";
 
-[@bs.splice] [@bs.module "React"]
+[@bs.splice] [@bs.module "react"]
 external cloneElement : (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "cloneElement";
 

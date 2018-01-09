@@ -64,7 +64,7 @@ let make = (~name, ~onClick, _children) => {
 - plus the argument `self`,
 - returns "nothing" (aka, `()`, aka, `unit`).
 
-**Note 2**: sometimes you might be forwarding `handle` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Record Field `reduce`/`handle` Not Found](record-field-reduce-handle-not-found.md).
+**Note 2**: sometimes you might be forwarding `handle` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Record Field `send`/`handle` Not Found](record-field-send-handle-not-found.md).
 
 #### Explanation
 
@@ -102,4 +102,4 @@ Basically, you write a normal callback that:
 
 ## Callback With State Update
 
-You can't update state in `self.handle`; you need to use `self.reduce` instead. See the next section.
+You can't update state in `self.handle`; you need to use `self.send` instead. See the next section.

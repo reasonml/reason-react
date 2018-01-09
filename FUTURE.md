@@ -7,7 +7,7 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - Getting rid of ref.
 - Making a great list abstraction to model dynamically changing lists/scrollers.
 
-# 0.3.1
+# 0.3.2
 
 - Preparation for namespace
 - Set lifecycles to null when they do nothing. React skips over lifecycles that are set to null, we currently have wrappers around all of them, so things like didMount are enqueued for *every* component.

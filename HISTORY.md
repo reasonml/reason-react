@@ -1,3 +1,17 @@
+# 0.3.1
+
+No breaking change. **The migration script is [here]()**.
+
+- New [subscriptions helper](https://reasonml.github.com/reason-react/docs/en/subscriptions-helper.html).
+- [**Router** is here](https://reasonml.github.com/reason-react/docs/en/router.html)!
+- `self.reduce` is now changed into `self.send`, with a simpler semantic that clears up the confusion on the immediate call case. More performant and fewer allocations too! The migration script will convert most of the code over for you.
+
+Before: `onClick={self.reduce(_event => Click)}`
+After: `onClick={_event => self.send(Click)}`
+
+Before: `didMount: self => {self.reduce(() => Click, ()); NoUpdate}`
+After: `didMount: self => {self.send(Click); NoUpdate}`
+
 # 0.3.0
 
 Technically a breaking change, but just because of the removal of a few deprecated things. **No migration script this time**; since the few breaking changes you encounter (if any) should have be spotted by the type system and fixed in a few secs anyway.

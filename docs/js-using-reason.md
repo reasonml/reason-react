@@ -1,7 +1,9 @@
 ---
 title: ReactJS using ReasonReact
 ---
-PageReason.re:
+
+`PageReason.re`:
+
 ```reason
 let component = ReasonReact.statelessComponent("PageReason");
 
@@ -9,17 +11,17 @@ let make = (~message, ~extraGreeting=?, _children) => {
   ...component,
   render: (_self) => {
     let greeting =
-      switch extraGreeting {
+      switch (extraGreeting) {
       | None => "How are you?"
-      | Some((g)) => g
+      | Some(g) => g
       };
-    <div> <MyBannerRe show=true message=(message ++ (" " ++ greeting)) /> </div>
+    <div> <MyBannerRe show=true message={message ++ " " ++ greeting} /> </div>
   }
 };
 
 let jsComponent =
   ReasonReact.wrapReasonForJs(
-    ~component=component,
+    ~component,
     (jsProps) =>
       make(
         ~message=jsProps##message,
@@ -27,9 +29,10 @@ let jsComponent =
         [||]
       )
   );
-
 ```
+
 Then use it on the JS side through
+
 ```javascript
 var PageReason = require('path/to/PageReason.js').jsComponent;
 ```
