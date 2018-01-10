@@ -49,7 +49,9 @@ let watcherID = ReasonReact.Router.watchUrl(url => {
   | ["book", id, _] => noSuchBookOperation()
   | [] => showMainPage()
   | ["shop"] | ["shop", "index"] => showShoppingPage()
-  | ["shop", ...rest] => nestedMatch(rest) /* e.g. "shop/cart/10" */
+  | ["shop", ...rest] =>
+     /* e.g. "shop/cart/10", but let "cart/10" be handled by another function */
+    nestedMatch(rest)
   | _ => showNotFoundPage()
   }
 });
@@ -57,6 +59,8 @@ let watcherID = ReasonReact.Router.watchUrl(url => {
 /* some time later */
 ReasonReact.Router.unwatchUrl(watcherID);
 ```
+
+So you can match a path, match a subset of a path, defer part of a matching to a nested logic, etc.
 
 ### Tips & Tricks
 
