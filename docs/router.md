@@ -8,7 +8,7 @@ ReasonReact comes with a router! We've leveraged the language and library featur
 - Easily pluggable anywhere into your existing code.
 - Performant and tiny.
 
-[Here's the documented pubic interface](https://github.com/reasonml/reason-react/blob/30899702ce2a6da002a99b6cc7cd95a065aface8/src/ReasonReact.rei#L248-L264), repeated here:
+[Here's the documented public interface](https://github.com/reasonml/reason-react/blob/30899702ce2a6da002a99b6cc7cd95a065aface8/src/ReasonReact.rei#L248-L264), repeated here:
 
 - `ReasonReact.Router.push(string)`: takes a new path and update the URL.
 - `ReasonReact.Router.watchUrl(f)`: start watching for URL changes. Returns a subscription token. Upon url change, calls the callback and passes it the `ReasonReact.Router.url` record.
