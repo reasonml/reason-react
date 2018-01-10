@@ -84,6 +84,7 @@ let make = (_children) => {
             | ("active", _) => self.send(ShowActive)
             | ("completed", _) => self.send(ShowCompleted)
             | ("shared", true) => self.send(ShowShared)
+            | ("shared", false) when isSpecialUser => ... /* handle this state */
             | ("shared", false) => ... /* handle this state */
             | _ => self.send(ShowAll)
             }
