@@ -2,8 +2,6 @@
 title: Working with DOM
 ---
 
-For example, you can dangerously access `event.target.value` as `ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value`.
-
 ### ReactDOM
 
 ReasonReact's ReactDOM module is called `ReactDOMRe`. The module exposes helpers that work with familiar ReactJS idioms. For example, to access `event.target.value`, you can do `ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value`.
