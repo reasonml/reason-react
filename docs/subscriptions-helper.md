@@ -2,7 +2,7 @@
 title: Subscriptions Helper
 ---
 
-In a large, heterogeneous app, you might often have legacy or interop data sources that come from outside of the React/ReasonReact tree, or a timer, or some browser even handling. You'd listen and react to these changes by, say, updating the state.
+In a large, heterogeneous app, you might often have legacy or interop data sources that come from outside of the React/ReasonReact tree, or a timer, or some browser event handling. You'd listen and react to these changes by, say, updating the state.
 
 For example, Here's what you're probably doing currently, for setting up a timer event:
 
