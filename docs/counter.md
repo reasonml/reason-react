@@ -20,7 +20,7 @@ let make = _children => {
   initialState: () => {count: 0, timerId: ref(None)},
   reducer: (action, state) =>
     switch (action) {
-    | Tick => ReasonReact.Update({...state, count: state.count + 1})
+    | Tick => ReasonReact.Update({count: state.count + 1})
     },
   didMount: self => {
     self.state.timerId :=
