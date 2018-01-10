@@ -72,7 +72,7 @@ In Reason, if you want to explicitly pass an optional `ageFromProps` (whose type
 Because `age` expects a normal `int` when you do call `Foo` with it, not an `option int`! Naively, you'd be forced to solve this like so:
 
 ```reason
-switch ageFromProps {
+switch (ageFromProps) {
 | None => <Foo name="Reason" />
 | Some(nonNullableAge) => <Foo name="Reason" age=nonNullableAge />
 }

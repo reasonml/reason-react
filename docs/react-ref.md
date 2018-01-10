@@ -39,7 +39,7 @@ We also expose an escape hatch `ReasonReact.refToJsObj` of type `ReasonReact.rea
 
 ```reason
 let handleClick = (event, self) =>
-  switch self.state.mySectionRef^ {
+  switch (self.state.mySectionRef^) {
   | None => ()
   | Some(r) => ReasonReact.refToJsObj(r)##someMethod(1, 2, 3) /* I solemnly swear that I am up to no good */
   };
