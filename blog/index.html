@@ -25,7 +25,7 @@
 <li>The subscriptions helper prevents you from forgetting to free your event listeners and timers.</li>
 <li>The router just uses pattern-matching to kill a majority of otherwise needed API surface.</li>
 </ul>
-<p>There are no FAQs for these two features. Check out the linked docs; you can use your existing understanding of Reason to answer your questions: is this performant? Will this work in my existing setup? How does nesting work? Etc.</p>
+<p>There are no FAQs for these two features. Check out the linked docs; you can use your existing understanding of Reason to answer your questions: is this performant? Will this work in my existing setup? How does nesting work? Etc. Special thanks to Ryan Florence and Michael Jackson for some small conversations.</p>
 <p>Additionally, we've <strong>deprecated</strong> <code>self.reduce</code> in favor of <code>self.send</code> (the migration script takes care of that):</p>
 <ul>
 <li><p>Before: <code>onClick={self.reduce(_event =&gt; Click)}</code></p></li>
