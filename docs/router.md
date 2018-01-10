@@ -110,4 +110,4 @@ We always strive to lower the performance and learning overhead in ReasonReact, 
 
 The API also doesn't dictate whether matching on a route should return a component, a state update, or a side-effect. Flexible enough to slip into existing apps.
 
-Performance-wise, a JavaScript-like API tend to use a JS object of route string -> callback. We eschewed that in favor of pattern-matching, since the latter in Reason is guaranteed not to allocate memory, and is compiled to a fast jump table in C++ (through the JS JIT). In fact, the only allocation in the router matching is the creation of the `url` record!
+Performance-wise, a JavaScript-like API tend to use a JS object of route string -> callback. We eschewed that in favor of pattern-matching, since the latter in Reason does not allocate memory, and is compiled to a fast jump table in C++ (through the JS JIT). In fact, the only allocation in the router matching is the creation of the `url` record!
