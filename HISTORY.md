@@ -2,8 +2,8 @@
 
 No breaking change. **The migration script is [here](https://github.com/chenglou/upgrade-reason-react-to-031)**.
 
-- New [subscriptions helper](https://reasonml.github.com/reason-react/docs/en/subscriptions-helper.html).
-- [**Router** is here](https://reasonml.github.com/reason-react/docs/en/router.html)!
+- New [subscriptions helper](https://reasonml.github.io/reason-react/docs/en/subscriptions-helper.html).
+- [**Router** is here](https://reasonml.github.io/reason-react/docs/en/router.html)!
 - `self.reduce` is now changed into `self.send`, with a simpler semantic that clears up the confusion on the immediate call case. More performant and fewer allocations too! The migration script will convert most of the code over for you.
 
 Before: `onClick={self.reduce(_event => Click)}`
