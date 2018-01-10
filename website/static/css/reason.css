@@ -101,6 +101,7 @@ pre code {
   margin: auto;
   max-width: 800px;
   text-align: center;
+  overflow-wrap: break-word;
 }
 
 #redirectBanner {
@@ -188,16 +189,6 @@ pre code {
     font-size: 40px;
   }
 }
-/* mobile */
-@media (max-width: 480px) {
-  .projectTitle {
-    font-size: 30px;
-  }
-
-  .homeCodeSnippet .hljs {
-    font-size: 13px;
-  }
-}
 
 .homeCodeSnippet .hljs {
   background-color: transparent;
@@ -207,6 +198,28 @@ pre code {
   margin: 0;
   color: rgb(57, 57, 57);
   font-size: 14px;
+}
+/* hide the small code snippet on normal screens */
+.homeWrapperInner .homeCodeSnippet > div:nth-child(1) {
+  display: none;
+}
+/* mobile */
+@media (max-width: 480px) {
+  .projectTitle {
+    font-size: 30px;
+  }
+
+  .homeCodeSnippet .hljs {
+    font-size: 13px;
+    padding: 0;
+  }
+  .homeWrapperInner .homeCodeSnippet > div:nth-child(1) {
+    display: block;
+  }
+  /* hide the big code snippet on small screens */
+  .homeWrapperInner .homeCodeSnippet > div:nth-child(2) {
+    display: none;
+  }
 }
 
 .getStarted {

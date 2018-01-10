@@ -27,18 +27,31 @@ Button.defaultProps = {
 const pre = "```";
 const code = "`";
 
-const codeExample =`${pre}reason
-let component = ReasonReact.statelessComponent("Greeting");
+// fake, static, responsive refmt, lol. See reason.css homeCodeSnippet logic
+const codeExampleSmallScreen =`${pre}reason
+let component =
+  ReasonReact.statelessComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component,
-  render: (_self) =>
+  render: _self =>
     <button>
       {ReasonReact.stringToElement("Hello!")}
     </button>
 };
 ${pre}`;
 
+const codeExampleLargeScreen =`${pre}reason
+let component = ReasonReact.statelessComponent("Greeting");
+
+let make = (~name, _children) => {
+  ...component,
+  render: _self =>
+    <button>
+      {ReasonReact.stringToElement("Hello!")}
+    </button>
+};
+${pre}`;
 
 const quickStart = `${pre}bash
 npm install -g bs-platform
@@ -101,7 +114,8 @@ class HomeSplash extends React.Component {
             <div className="homeWrapperInner">
               <div className="homeTagLine">{siteConfig.tagline}</div>
               <div className="homeCodeSnippet">
-                <MarkdownBlock>{codeExample}</MarkdownBlock>
+                <MarkdownBlock>{codeExampleSmallScreen}</MarkdownBlock>
+                <MarkdownBlock>{codeExampleLargeScreen}</MarkdownBlock>
               </div>
             </div>
 
@@ -133,7 +147,7 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
-          <Container className="homeThreePoints" padding={["bottom"]}>
+          <Container className="homeThreePoints">
             <GridBlock
               align="center"
               contents={[
