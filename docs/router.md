@@ -34,7 +34,7 @@ So the url `www.hello.com/book/10/edit#author?name=Jane` is given back as:
 ```reason
 {
   path: ["book", "10", "edit"],
-  hash: edit,
+  hash: "author",
   search: "name=jane"
 }
 ```
