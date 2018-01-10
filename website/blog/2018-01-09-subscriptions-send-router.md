@@ -2,7 +2,7 @@
 title: Router and Subscriptions!
 ---
 
-Happy new year! We've got a new, non-breaking release for you =). As always, [here](https://github.com/chenglou/upgrade-reason-react-to-031)'s the migration script.
+Happy new year! We've got a new, non-breaking release for you =). As always, **[here](https://github.com/chenglou/upgrade-reason-react-to-031)'s the migration script**.
 
 V0.3.1 brings two important features, both super lightweight and performant, yet strike, we hope, a sweet spot in terms of usability:
 
