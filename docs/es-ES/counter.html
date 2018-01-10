@@ -30,7 +30,7 @@ let make = _children =&gt; {
   initialState: () =&gt; {count: <span class="hljs-number">0</span>, timerId: ref(None)},
   reducer: (action, <span class="hljs-keyword">state</span>) =&gt;
     switch (action) {
-    | Tick =&gt; ReasonReact.Update({count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
+    | Tick =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
     },
   didMount: <span class="hljs-literal">self</span> =&gt; {
     <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.timerId :=
@@ -60,7 +60,7 @@ let make = _children =&gt; {
   initialState: () =&gt; {count: <span class="hljs-number">0</span>},
   reducer: (action, <span class="hljs-keyword">state</span>) =&gt;
     switch (action) {
-    | Tick =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
+    | Tick =&gt; ReasonReact.Update({count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
     },
   subscriptions: <span class="hljs-literal">self</span> =&gt; [
     Sub(

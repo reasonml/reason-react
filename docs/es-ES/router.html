@@ -83,6 +83,7 @@ ReasonReact.Router.unwatchUrl(watcherID);
             | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"active"</span>, _</span>) =&gt;</span> self.send(ShowActive)
             | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"completed"</span>, _</span>) =&gt;</span> self.send(ShowCompleted)
             | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"shared"</span>, <span class="hljs-literal">true</span></span>) =&gt;</span> self.send(ShowShared)
+            | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span>) when isSpecialUser =&gt; ... <span class="hljs-comment">/* handle this state */</span>
             | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span></span>) =&gt;</span> ... <span class="hljs-comment">/* handle this state */</span>
             | <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> self.send(ShowAll)
             }
