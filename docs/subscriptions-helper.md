@@ -2,7 +2,7 @@
 title: Subscriptions Helper
 ---
 
-In a large, heterogenous app, you might often have legacy or interop data sources that come from outside of the React/ReasonReact tree, or a timer, or some browser even handling. You'd listen and react to these changes by, say, updating the state.
+In a large, heterogeneous app, you might often have legacy or interop data sources that come from outside of the React/ReasonReact tree, or a timer, or some browser even handling. You'd listen and react to these changes by, say, updating the state.
 
 For example, Here's what you're probably doing currently, for setting up a timer event:
 
@@ -32,7 +32,7 @@ let make = (_children) => {
 
 Notice a few things:
 
-- This is rather boilerplat-y.
+- This is rather boilerplate-y.
 - Did you use a `ref(option(foo))` type correctly instead of a mutable field, as indicated by the [Instance Variables section](instance-variables.md)?
 - Did you remember to free your timer subscription in `willUnmount`?
 
