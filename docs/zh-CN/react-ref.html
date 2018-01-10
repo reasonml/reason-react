@@ -41,7 +41,7 @@ let make = (~className=<span class="hljs-string">""</span>, _children) =&gt; {
 <p>ReasonReact ref 只接受回调函数作为参数，ReactJS 中字符串 <code>ref</code> 现在是不赞成的。</p>
 <p>我们还暴露的一个接口，可以通过 <code>ReasonReact.refToJsObj</code>，类型是 <code>ReasonReact.reactRef =&gt; Js.t {..}</code>，来将你的 ref 作为一个 JS object 返回，让你可以自由的使用。<strong>你应该仅仅在需要获取 ReactJS Component 的时候才使用这个接口</strong>。</p>
 <pre><code class="hljs css reason">let handleClick = (event, <span class="hljs-literal">self</span>) =&gt;
-  switch <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.mySectionRef^ {
+  switch (<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.mySectionRef^) {
   | None =&gt; ()
   | Some(r) =&gt; ReasonReact.refToJsObj(r)<span class="hljs-comment">##someMethod(1, 2, 3) /* I solemnly swear that I am up to no good */</span>
   };

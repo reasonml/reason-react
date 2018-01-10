@@ -52,7 +52,7 @@
 <pre><code class="hljs css reason">&lt;Foo <span class="hljs-attribute">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attribute">age</span>=ageFromProps /&gt;
 </code></pre>
 <p>因为当你调用<code>Foo</code>的是时候，<code>age</code>需要一个普通的<code>int</code>型数据，而不是<code>option int</code>！你需要像下面这样解决：</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">switch</span> ageFromProps {
+<pre><code class="hljs css reason"><span class="hljs-keyword">switch</span> (ageFromProps) {
 | <span class="hljs-function"><span class="hljs-params">None</span> =&gt;</span> &lt;Foo name=<span class="hljs-string">"Reason"</span> /&gt;
 | Some(nonNullableAge) =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Foo</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attr">age</span>=<span class="hljs-string">nonNullableAge</span> /&gt;</span>
 }

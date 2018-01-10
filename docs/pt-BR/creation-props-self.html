@@ -52,9 +52,9 @@
 <pre><code class="hljs css reason">&lt;Foo <span class="hljs-attribute">nome</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attribute">idade</span>=idadePorProps /&gt;
 </code></pre>
 <p>Pois <code>idade</code> espera um <code>int</code> normal quando você chama <code>Foo</code> com ele, e não um <code>option int</code>! Inocentemente, você seria forçado a resolver assim:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">switch</span> idadePorProps {
-| <span class="hljs-function"><span class="hljs-params">None</span> =&gt;</span> &lt;Foo nome=<span class="hljs-string">"Reason"</span> /&gt;
-| Some(idadeNaoNulavel) =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Foo</span> <span class="hljs-attr">nome</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attr">idade</span>=<span class="hljs-string">idadeNaoNulavel</span> /&gt;</span>
+<pre><code class="hljs css reason"><span class="hljs-keyword">switch</span> (ageFromProps) {
+| <span class="hljs-function"><span class="hljs-params">None</span> =&gt;</span> &lt;Foo name=<span class="hljs-string">"Reason"</span> /&gt;
+| Some(nonNullableAge) =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Foo</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attr">age</span>=<span class="hljs-string">nonNullableAge</span> /&gt;</span>
 }
 </span></code></pre>
 <p>Trabalhoso. Felizmente, temos um jeito melho de passar explicitamente um valor opcional:</p>

@@ -41,7 +41,7 @@ let make = (~className=<span class="hljs-string">""</span>, _children) =&gt; {
 <p>ReasonReact ref only accept callbacks. The string <code>ref</code> from ReactJS is deprecated.</p>
 <p>We also expose an escape hatch <code>ReasonReact.refToJsObj</code> of type <code>ReasonReact.reactRef =&gt; Js.t {..}</code>, which turns your ref into a JS object you can freely use; <strong>this is only used to access ReactJS component class methods</strong>.</p>
 <pre><code class="hljs css reason">let handleClick = (event, <span class="hljs-literal">self</span>) =&gt;
-  switch <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.mySectionRef^ {
+  switch (<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.mySectionRef^) {
   | None =&gt; ()
   | Some(r) =&gt; ReasonReact.refToJsObj(r)<span class="hljs-comment">##someMethod(1, 2, 3) /* I solemnly swear that I am up to no good */</span>
   };
