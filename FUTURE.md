@@ -9,6 +9,8 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 
 # 0.3.2
 
+- Portal support (#152)
+
 - Preparation for namespace
 - Set lifecycles to null when they do nothing. React skips over lifecycles that are set to null, we currently have wrappers around all of them, so things like didMount are enqueued for *every* component.
 - `ReactDOMRe.createElement` (usually used through the JSX `<div> foo </div>`) has a new implementation that fixes an inadvertent children key warning in the previous version.
