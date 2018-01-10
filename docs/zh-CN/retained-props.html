@@ -27,7 +27,7 @@ let make = (~<span class="hljs-keyword">message</span>, _children) =&gt; {
       /* do whatever sneaky imperative things here */
       Js.log(<span class="hljs-string">"props `message` changed!"</span>)
     },
-  render: (_self) =&gt; &lt;div&gt; (ReasonReact.stringToElement(<span class="hljs-keyword">message</span>)) &lt;/div&gt;
+  render: _self =&gt; &lt;div&gt;{ReasonReact.stringToElement(<span class="hljs-keyword">message</span>)}&lt;/div&gt;
 };
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="counter.html">← 计时器</a><a class="docs-next button" href="reason-using-js.html">ReasonReact 使用 ReactJS →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({

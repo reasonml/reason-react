@@ -1,0 +1,61 @@
+<html><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/><title>Router and Subscriptions! · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Router and Subscriptions! · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/blog/2018/01/09/subscriptions-send-router.html"/><meta property="og:description" content="Happy new year! We&#x27;ve got a new, non-breaking release for you =). As always, [here](https://github.com/chenglou/upgrade-reason-react-to-031)&#x27;s the migration script."/><link rel="shortcut icon" href="/reason-react/img/reason-react-red.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/"><img class="logo" src="/reason-react/img/reason-react-white.svg"/><h2 class="headerTitle">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li><a href="/reason-react/docs/en/installation.html" target="_self">Docs</a></li><li><a href="/reason-react/docs/en/simple.html" target="_self">Examples</a></li><li><a href="/reason-react/docs/en/community.html" target="_self">Community</a></li><li><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(){
+          if(languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Recent Posts</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Recent Posts</h3><ul><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/blog/2018/01/09/subscriptions-send-router.html">Router and Subscriptions!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/11/17/power-children.html">RR 0.3.0 - Power Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/10/02/new-docs-site.html">New Docs Site</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/09/01/reducers.html">Reducers Are Here!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/07/05/021.html">0.2.1 Released</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer documentContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1><a href="/reason-react/blog/2018/01/09/subscriptions-send-router.html">Router and Subscriptions!</a></h1><p class="post-meta">January 9, 2018</p><div class="authorBlock"></div></header><div><span><p>Happy new year! We've got a new, non-breaking release for you =). As always, <a href="https://github.com/chenglou/upgrade-reason-react-to-031">here</a>'s the migration script.</p>
+<p>V0.3.1 brings two important features, both super lightweight and performant, yet strike, we hope, a sweet spot in terms of usability:</p>
+<ul>
+<li><a href="https://reasonml.github.io/reason-react/docs/en/router.html"><strong>Router</strong></a>! It's tiny and has almost no learning overhead.</li>
+<li><a href="https://reasonml.github.io/reason-react/docs/en/subscriptions-helper.html">Subscriptions helper</a>. Helps you cut down on some boilerplate.</li>
+</ul>
+<p>These two features follow our spirit of keeping the learning and performance overhead low, while providing facilities that codifies your existing knowledge of ReactJS. In particular, note how:</p>
+<ul>
+<li>The subscriptions helper prevents you from forgetting to free your event listeners and timers.</li>
+<li>The router just uses pattern-matching to kill a majority of otherwise needed API surface.</li>
+</ul>
+<p>There are no FAQs for these two features. Check out the linked docs; you can use your existing understanding of Reason to answer your questions: is this performant? Will this work in my existing setup? How does nesting work? Etc.</p>
+<p>Additionally, we've <strong>deprecated</strong> <code>self.reduce</code> in favor of <code>self.send</code> (the migration script takes care of that):</p>
+<ul>
+<li><p>Before: <code>onClick={self.reduce(_event =&gt; Click)}</code></p></li>
+<li><p>After: <code>onClick={_event =&gt; self.send(Click)}</code></p></li>
+<li><p>Before: <code>didMount: self =&gt; {self.reduce(() =&gt; Click, ()); NoUpdate}</code></p></li>
+<li><p>After: <code>didMount: self =&gt; {self.send(Click); NoUpdate}</code></p></li>
+</ul>
+<p>This change should drastically reduce the confusion of an immediately called <code>self.reduce</code> (the form with two arguments). It also rolls on the tongue better: you &quot;send&quot; an action to the reducer.</p>
+<p>Happy coding!</p>
+</span></div></div></div><div class="blog-recent"><a class="button" href="/reason-react/blog">Recent Posts</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>

@@ -15,12 +15,14 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>Simple</h1></header><article><div><span><p>Visita <a href="https://github.com/reasonml-community/reason-react-example">https://github.com/reasonml-community/reason-react-example</a> para ver ejemplos que puedes clonar y ejecutar. Esta página muestra algunos de ellos para facilitarte la lectura.</p>
-<pre><code class="hljs css reason">let component = ReasonReact.statelessComponent(<span class="hljs-string">"Page"</span>);
-let handleClick = <span class="hljs-function"><span class="hljs-params">(_event, _self)</span> =&gt;</span> Js.log(<span class="hljs-string">"clicked!"</span>);
-let make = <span class="hljs-function"><span class="hljs-params">(~message, _children)</span> =&gt;</span> {
-  ...component,
-  render: <span class="hljs-function"><span class="hljs-params">(self)</span> =&gt;</span>
-    &lt;div onClick=(self.handle(handleClick))&gt; (ReasonReact.stringToElement(message)) &lt;/div&gt;
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Page"</span>);
+
+<span class="hljs-keyword">let</span> handleClick = (_event, _self) =&gt; Js.<span class="hljs-keyword">log</span>(<span class="hljs-string">"clicked!"</span>);
+
+<span class="hljs-keyword">let</span> make = (~message, _children) =&gt; {
+  <span class="hljs-params">...</span>component,
+  render: <span class="hljs-built_in">self</span> =&gt;
+    &lt;div onClick={<span class="hljs-built_in">self</span>.<span class="hljs-keyword">handle</span>(handleClick)}&gt;{ReasonReact.stringToElement(message)}&lt;/div&gt;
 };
 </code></pre>
 <p>Uso desde otro archivo:</p>
