@@ -1,0 +1,89 @@
+<html><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/><title>组件申明，属性以及Self · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="组件申明，属性以及Self · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="*进一步阅读我们的文档内容，请务必先大致了解 ReactJS。*"/><link rel="shortcut icon" href="/reason-react/img/reason-react-red.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/"><img class="logo" src="/reason-react/img/reason-react-white.svg"/><h2 class="headerTitle">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li><a href="/reason-react/docs/zh-CN/installation.html" target="_self">文档</a></li><li><a href="/reason-react/docs/zh-CN/simple.html" target="_self">示例</a></li><li><a href="/reason-react/docs/zh-CN/community.html" target="_self">社区</a></li><li><a href="/reason-react/blog" target="_self">博客</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>中文</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/en">English</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank">帮助翻译</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(){
+          if(languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Core</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>入门</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/what-and-why.html">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/installation.html">安装</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/intro-example.html">示例</a></li></ul></div><div class="navGroup navGroupActive"><h3>核心</h3><ul><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/docs/zh-CN/creation-props-self.html">组件申明，属性以及Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/jsx.html">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/render.html">Render</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/callback-handlers.html">处理回调</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/state-actions-reducer.html">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/lifecycles.html">生命周期</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/instance-variables.html">实例变量</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/react-ref.html">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/interop.html">与现有的 ReactJS 组件交互</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/event.html">事件</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/style.html">Style</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/clone-element.html">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/children.html">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/dom.html">处理DOM元素</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/subscriptions-helper.html">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/router.html">Router</a></li></ul></div><div class="navGroup navGroupActive"><h3>ReactJS Idioms Equivalents</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/invalid-prop-name.html">无效的Prop命名</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/props-spread.html">属性遍历</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/component-as-prop.html">Component as Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/ternary-shortcut.html">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/context-mixins.html">Context &amp; Mixins?</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/custom-class-component-property.html">Custom Class/Component Property</a></li></ul></div><div class="navGroup navGroupActive"><h3>常见问题</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/im-having-a-type-error.html">我遇到一个类型错误</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/record-field-send-handle-not-found.html">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/send-handle-callbacks-having-incompatible-types.html">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/i-really-need-feature-x-from-reactjs.html">我真的需要ReactJS实现某项功能</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank">Translate</a><h1>组件申明，属性以及Self</h1></header><article><div><span><p><em>进一步阅读我们的文档内容，请务必先大致了解 ReactJS。</em></p>
+<p>ReasonReact 不使用类去声明组件。组件声明的 API 会返回一个Record(注释：Reason的一个数据类型)，你只要改写其中的<code>render</code>的内容就可以了。</p>
+<p>The component template is created through <code>ReasonReact.statelessComponent(&quot;TheComponentName&quot;)</code>. 传递的字符串的作用是方便调试 （相当于 ReactJS 的 <a href="https://facebook.github.io/react/docs/react-component.html#displayname"> <code>displayName</code></a>）。</p>
+<p>举个例子，这里是 <code>Greeting.re</code> 文件：</p>
+<pre><code class="hljs css reason"><span class="hljs-attribute">let component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+</code></pre>
+<p><strong>在 ReactJS</strong>中，你会创建一个Component Class然后再JSX中去调用它，这样的过程实际会编译成<code>React.createElement (myClass，{prop1: 'hello'})</code>。 <strong>在 ReasonReact</strong>中，不同于将整个“类”（也可以说是组件模板）传入一个假想的<code>ReasonReact.createElement</code>函数中，我们会用一个<code>make</code>函数：</p>
+<pre><code class="hljs css reason"><span class="hljs-comment">/* still in Greeting.re */</span>
+<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+
+<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
+  ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
+  render: (<span class="hljs-keyword">self</span>) =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
+};
+</code></pre>
+<p><code>make</code> 是你在写ReasonReact JSX时会调用的函数（JSX会在稍后的内容中介绍）。现在，不使用JSX去调用一个组件的方法是：</p>
+<pre><code class="hljs css reason">ReasonReact.element(Greeting.make(~name=<span class="hljs-string">"John"</span>, [||])) /* the <span class="hljs-string">`make`</span> <span class="hljs-keyword">function</span> <span class="hljs-keyword">in</span> the <span class="hljs-keyword">module</span> <span class="hljs-string">`Greeting`</span> */
+/* equivalent to &lt;Greeting name=<span class="hljs-string">"John"</span> /&gt; */
+</code></pre>
+<p><code>make</code> 函数将会返回一个预定义好的Component Record。 你只要改写其中一些字段，比如熟悉的 <code>render</code>、 <code>initialState</code>、 <code>didMount</code> 等，所有的生命周期会在后面介绍。</p>
+<p><strong>Note</strong>: <strong>不要</strong> 在<code>make</code>函数内使用 <code>let component</code> ：</p>
+<pre><code class="hljs css reason">let make = <span class="hljs-function"><span class="hljs-params">(_children)</span> =&gt;</span> {...(ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>)), render: <span class="hljs-function"><span class="hljs-params">(self)</span> =&gt;</span> blabla}
+</code></pre>
+<p>因为<code>make</code>函数会在每次JSX调用时被调用一遍，所以你会每一次都创建一个新的组件（而造成不必要的浪费）。</p>
+<h2><a class="anchor" aria-hidden="true" name="props"></a><a href="#props" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Props</h2>
+<p>像上面看到的，Props只是<code>make</code>函数中的一些 labeled arguments。（可以参考<a href="https://reasonml.github.io/guide/language/function#labeled-arguments">这里</a>） They can also be optional and/or have defaults, e.g. <code>let make = (~name, ~age=?, ~className=&quot;box&quot;, _children) =&gt; ...</code>.</p>
+<p>最后一个props<strong>必须</strong>是<code>children</code>。 如果你不需要用到它，只要将它命名为<code>_</code>或者<code>_children</code>就可以了。 用下划线开头的命名如果没有被使用的话，不会触发编译器报错。</p>
+<p>属性名称不能是ref或者key，和在React JS里面一样，它们是保留关键词。</p>
+<p>根据示例，你可以在另外一个文件里面用<code>&lt;Foo name=&quot;Reason&quot; /&gt;</code>来生成组件。 如果没有指定，<code>className</code>默认值为 &quot;box&quot;。 <code>age</code>的默认值是<code>None</code>。 如果你想要传递一个<code>age</code>属性，只要像这样：<code>&lt;Foo name=&quot;Reason&quot; age=20 /&gt;</code></p>
+<h3><a class="anchor" aria-hidden="true" name="props"></a><a href="#props" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>关于传递Props</h3>
+<p>在ReactJS中，有时你会在一些组件中得到一个prop，并想把这个prop传递给自己的children:</p>
+<pre><code class="hljs">&lt;Foo name=&quot;Reason&quot; age={this.props.age} /&gt;
+</code></pre>
+<p>这是潜在的bug的来源，因为<code>this.props.age</code>可能突然变成一个null但是<code>Foo</code>并不能处理这种情况，反过来也是一样，这个值可能是一个null，但是现在它一直不会是null，这样<code>Foo</code>组件中形成了不必要的检查。</p>
+<p>在Reason里，如果你想传递一个可选的属性<code>ageFromProps</code>（类型是<code>option int</code>, 或者说<code>None | Some int</code>），下面的代码是不可行的：</p>
+<pre><code class="hljs css reason">&lt;Foo <span class="hljs-attribute">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attribute">age</span>=ageFromProps /&gt;
+</code></pre>
+<p>因为当你调用<code>Foo</code>的是时候，<code>age</code>需要一个普通的<code>int</code>型数据，而不是<code>option int</code>！你需要像下面这样解决：</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">switch</span> (ageFromProps) {
+| <span class="hljs-function"><span class="hljs-params">None</span> =&gt;</span> &lt;Foo name=<span class="hljs-string">"Reason"</span> /&gt;
+| Some(nonNullableAge) =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Foo</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attr">age</span>=<span class="hljs-string">nonNullableAge</span> /&gt;</span>
+}
+</span></code></pre>
+<p>很繁琐。不过很幸运的是，这里有一个更好的方式：</p>
+<pre><code class="hljs css reason">&lt;Foo <span class="hljs-attribute">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attribute">age</span>=?ageFromProps /&gt;
+</code></pre>
+<p>这表示，&quot;我理解<code>age</code>是一个可选的值，当我要使用它的时候我应该传一个int型的数据， 现在我想明确的传递一个完整的<code>option</code>。 This isn't a JSX trick we've made up; it's just a language feature! See the section on &quot;Explicitly Passed Optional&quot; in the <a href="https://reasonml.github.io/docs/en/function.html#explicitly-passed-optional">Reason docs</a>.</p>
+<h2><a class="anchor" aria-hidden="true" name="self"></a><a href="#self" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>self</code></h2>
+<p>You might have seen the <code>render: (self) =&gt; ...</code> part in <code>make</code>. JavaScript中<code>this</code>的概念在ReasonReact中不存在（但是在Reason里是有的，因为Reason中也有类似的对象类型）。在这里，和<code>this</code>等价的概念叫<code>self</code>。 它（self）是一个包含了 <code>state</code>, <code>retainedProps</code>, <code>handle</code> 和<code>reduce</code>字段的Record，我们用这些字段定义组件的生命周期，<code>render</code>函数以及当我们需要的时候获取一些别的信息。 这些概念将在稍后解释。</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="intro-example.html">← 示例</a><a class="docs-next button" href="jsx.html">JSX →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
