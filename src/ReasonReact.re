@@ -1012,7 +1012,7 @@ module Router = {
       | ""
       | "?" => ""
       | raw =>
-        /* remove the preceeding ?, which every hash seems to have. */
+        /* remove the preceeding ?, which every search seems to have. */
         raw |> Js.String.sliceToEnd(~from=1)
       }
     };
