@@ -54,7 +54,7 @@ let make = (_children) => {
   ...component,
   subscriptions: (self) => [
     Sub(
-      () => Js.Global.setInterval(() => Js.log("hello!), 1000),
+      () => Js.Global.setInterval(() => Js.log("hello!"), 1000),
       Js.Global.clearInterval
     )
   ],
