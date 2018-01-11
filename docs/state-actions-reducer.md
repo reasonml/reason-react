@@ -87,7 +87,7 @@ let make = (_children) => {
     | Click => ReasonReact.Update({...state, count: state.count + 1})
     | Toggle => ReasonReact.Update({...state, show: ! state.show})
     },
-  render: self => {
+  render: (self) => {
     let message = "Clicked " ++ string_of_int(self.state.count) ++ " times(s)";
     <div>
       <MyDialog
