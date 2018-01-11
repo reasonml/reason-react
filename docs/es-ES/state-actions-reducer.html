@@ -83,7 +83,7 @@ let make = (_children) =&gt; {
     | Click =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
     | Toggle =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, show: ! <span class="hljs-keyword">state</span>.show})
     },
-  render: <span class="hljs-literal">self</span> =&gt; {
+  render: (<span class="hljs-literal">self</span>) =&gt; {
     let message = <span class="hljs-string">"Clicked "</span> ++ string_of_int(<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.count) ++ <span class="hljs-string">" times(s)"</span>;
     <span class="hljs-variable">&lt;div&gt;</span>
       <span class="hljs-variable">&lt;MyDialog
