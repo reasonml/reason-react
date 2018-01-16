@@ -16,4 +16,4 @@ Wanna help?
 
 - [Suggest better error messages for ReasonReact](https://github.com/reasonml-community/error-message-improvement/issues).
 
-- Convert over the ReactJS components! With ReasonReact's [interop](./interop.md), you can actually keep your JS component library's API stable while provinding a better ReasonReact API.
+- Convert over the ReactJS components! With ReasonReact's [interop](./interop.md), you can actually keep your JS component library's API stable while providing a better ReasonReact API.
