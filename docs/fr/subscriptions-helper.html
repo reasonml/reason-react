@@ -58,13 +58,13 @@ let make = <span class="hljs-function"><span class="hljs-params">(_children)</sp
   ...component,
   subscriptions: <span class="hljs-function"><span class="hljs-params">(self)</span> =&gt;</span> [
     Sub(
-      <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> Js.Global.setInterval(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> Js.log(<span class="hljs-string">"hello!), 1000),
+      <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> Js.Global.setInterval(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> Js.log(<span class="hljs-string">"hello!"</span>), <span class="hljs-number">1000</span>),
       Js.Global.clearInterval
     )
   ],
   render: ...
 }
-</span></code></pre>
+</code></pre>
 <p>Now you won't ever forget to clear your timer!</p>
 <p><strong>Note</strong>: this is an <strong>interop helper</strong>. This isn't meant to be used as a shiny first-class feature for e.g. adding more flux stores into your app (for that purpose, please use our <a href="/reason-react/docs/fr/state-actions-reducer.html#actions-reducer">local reducer</a>). Every time you use <code>subscriptions</code>, consider it as a simple, pragmatic and performant way to talk to the existing world.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="dom.html">← Travailler avec le DOM</a><a class="docs-next button" href="router.html">Router →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
