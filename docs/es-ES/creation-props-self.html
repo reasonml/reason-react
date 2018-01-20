@@ -22,11 +22,11 @@
 </code></pre>
 <p><strong>En ReactJS</strong>, crearíamos un componente heredando de <code>Component</code> y lo llamaríamos usando JSX el cuál se transformaría en <code>React.createElement(myClass, {prop1: 'hello'})</code>. <strong>En ReasonReact</strong>, en vez de pasar la clase (aka el template del componente) a la hipotética función <code>ReasonReact.createElement</code> declaramos la función <code>make</code>:</p>
 <pre><code class="hljs css reason"><span class="hljs-comment">/* still in Greeting.re */</span>
-<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+<span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
-<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
+<span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
   ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
-  render: (<span class="hljs-keyword">self</span>) =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
+  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
 };
 </code></pre>
 <p>La función <code>make</code> es llamada por la implementación de JSX de ReasonReact, la cual cubriremos más adelante. Por ahora, la forma sin JSX de llamar y renderear un componente es la siguiente:</p>
