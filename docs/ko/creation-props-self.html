@@ -22,11 +22,11 @@
 </code></pre>
 <p><strong>In ReactJS</strong>, you'd create a component class and call it through JSX which transforms into <code>React.createElement(myClass, {prop1: 'hello'})</code> under the hood. <strong>In ReasonReact</strong>, instead of passing the whole &quot;class&quot; (aka component template) into a hypothetical <code>ReasonReact.createElement</code> function, you'd instead declare a <code>make</code> function:</p>
 <pre><code class="hljs css reason"><span class="hljs-comment">/* still in Greeting.re */</span>
-<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+<span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
-<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
+<span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
   ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
-  render: (<span class="hljs-keyword">self</span>) =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
+  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
 };
 </code></pre>
 <p>The <code>make</code> function is what's called by ReasonReact's JSX, described later. For now, the JSX-less way of calling &amp; rendering a component is:</p>

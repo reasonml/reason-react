@@ -22,11 +22,11 @@
 </code></pre>
 <p><strong>在 ReactJS</strong>中，你会创建一个Component Class然后再JSX中去调用它，这样的过程实际会编译成<code>React.createElement (myClass，{prop1: 'hello'})</code>。 <strong>在 ReasonReact</strong>中，不同于将整个“类”（也可以说是组件模板）传入一个假想的<code>ReasonReact.createElement</code>函数中，我们会用一个<code>make</code>函数：</p>
 <pre><code class="hljs css reason"><span class="hljs-comment">/* still in Greeting.re */</span>
-<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+<span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
-<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
+<span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
   ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
-  render: (<span class="hljs-keyword">self</span>) =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
+  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
 };
 </code></pre>
 <p><code>make</code> 是你在写ReasonReact JSX时会调用的函数（JSX会在稍后的内容中介绍）。现在，不使用JSX去调用一个组件的方法是：</p>
