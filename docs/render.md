@@ -12,7 +12,7 @@ title: Render
 
 What if you want to return `null` from a `render`? Or pass a string to a DOM component like `div` which only allows `ReasonReact.reactElement`s?
 
-In ReactJS, you can easily do: `<div> hello </div>`, `<div> 1 </div>`, `<div> null </div>`, etc. In Reason, the type system restrict you from passing arbitrary data like so; you can only return `ReasonReact.reactElement` from `render`.
+In ReactJS, you can easily do: `<div> hello </div>`, `<div> 1 </div>`, `<div> null </div>`, etc. In Reason, the type system restricts you from passing arbitrary data like so; you can only return `ReasonReact.reactElement` from `render`.
 
 Fortunately, we special-case a few special elements of the type `ReasonReact.reactElement`:
 
