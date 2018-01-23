@@ -64,4 +64,6 @@ let make = (_children) => {
 
 Now you won't ever forget to clear your timer!
 
+**Note**: `subscriptions` is called **once**, after the component is mounted. It's not re-evaluated every time the component updates.
+
 **Note**: this is an **interop helper**. This isn't meant to be used as a shiny first-class feature for e.g. adding more flux stores into your app (for that purpose, please use our [local reducer](state-actions-reducer.md#actions-reducer)). Every time you use `subscriptions`, consider it as a simple, pragmatic and performant way to talk to the existing world.
