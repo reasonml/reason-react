@@ -1,7 +1,7 @@
 ---
 title: cloneElement
 ---
-Signature: `let cloneElement: (reactElement, ~props: Js.t({..})=?, 'anyTypeHere) => reactElement`
+Signature: `let cloneElement: (reactElement, ~props: Js.t({..})=?, 'anyChildrenType) => reactElement`
 
 Same as ReactJS' [cloneElement](https://facebook.github.io/react/docs/react-api.html#cloneelement). However, adding extra props to a ReasonReact component doesn't make sense; you'd either curry the props or use other patterns. Therefore, `ReasonReact.cloneElement` is only used for edge-case interop situations. For example, `data-*` and `aria-*` attributes aren't syntactically valid as a function label. The following doesn't parse:
 
