@@ -66,6 +66,7 @@ let make = <span class="hljs-function"><span class="hljs-params">(_children)</sp
 }
 </code></pre>
 <p>Now you won't ever forget to clear your timer!</p>
+<p><strong>Note</strong>: <code>subscriptions</code> is called <strong>once</strong>, after the component is mounted. It's not re-evaluated every time the component updates.</p>
 <p><strong>Note</strong>: this is an <strong>interop helper</strong>. This isn't meant to be used as a shiny first-class feature for e.g. adding more flux stores into your app (for that purpose, please use our <a href="/reason-react/docs/zh-CN/state-actions-reducer.html#actions-reducer">local reducer</a>). Every time you use <code>subscriptions</code>, consider it as a simple, pragmatic and performant way to talk to the existing world.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="dom.html">← 处理DOM元素</a><a class="docs-next button" href="router.html">Router →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [

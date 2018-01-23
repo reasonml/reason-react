@@ -21,12 +21,12 @@
 <pre><code class="hljs css reason"><span class="hljs-attribute">let component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 </code></pre>
 <p><strong>En ReactJS</strong>, vous auriez créé un composant en tant que classe et l'auriez appelé à travers du JSX qui le transforme en <code>React.createElement(myClass, {prop1: 'hello'})</code> en interne. <strong>En ReasonReact</strong>, au lieu de passer la 'classe' complète (ie modèle de composant) dans une hypothétique fonction <code>ReasonReact.createElement</code>, nous allons plutôt définir une fonction <code>make</code> :</p>
-<pre><code class="hljs css reason"><span class="hljs-comment">/* toujours dans Greeting.re */</span>
-<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+<pre><code class="hljs css reason"><span class="hljs-comment">/* still in Greeting.re */</span>
+<span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
-<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
-  ...component, <span class="hljs-comment">/* propage les autres propriétés par défaut du modèle ici */</span>
-  render: (<span class="hljs-keyword">self</span>) =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
+<span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
+  ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
+  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
 };
 </code></pre>
 <p>La fonction <code>make</code> est la fonction appelée par le JSX de ReasonReact, décrite plus tard. Pour le moment, la manière non-JSX d'appeler et de faire le rendu d'un composant est :</p>
