@@ -1,7 +1,7 @@
 {
   "name": "reason-react",
   "version": "0.3.1",
-  "description": "",
+  "description": "React bindings for Reason",
   "main": "index.js",
   "scripts": {
     "build": "bsb -make-world",
@@ -20,6 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/reasonml/reason-react.git"
   },
+  "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
     "bs-platform": "^2.1.0"
   },
