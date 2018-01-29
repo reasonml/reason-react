@@ -1,13 +1,58 @@
 ---
-title: Interop With Existing ReactJS Components
+title: Talk to Existing ReactJS Code
 ---
+
+### Project Setup
+
+You can reuse the _same_ bsb setup (that you might have seen [here](installation.md#bsb))! Aka, put a `bsconfig.json` at the root of your ReactJS project:
+
+```json
+{
+  "name": "my-project-name",
+  "reason": {"react-jsx" : 2},
+  "sources": [
+    "my_source_folder"
+  ],
+  "package-specs": [{
+    "module": "commonjs",
+    "in-source": true
+  }],
+  "suffix": ".bs.js",
+  "namespace": true,
+  "bs-dependencies": [
+    "reason-react"
+  ],
+  "refmt": 3
+}
+```
+
+This will build Reason files in `my_source_folder` (e.g. `reasonComponent.re`) and output the JS files (e.g. `reasonComponent.bs.js`) alongside them.
+
+Then add `bs-platform` to your package.json (`npm install --save-dev bs-platform` or `yarn add --dev bs-platform`):
+
+```json
+"scripts": {
+  "start": "bsb -make-world -w"
+},
+"devDependencies": {
+  "bs-platform": "^2.1.0"
+},
+"dependencies": {
+  "react": "^15.4.2",
+  "react-dom": "^15.4.2",
+  "reason-react": "^0.3.1"
+}
+...
+```
+
+Running `npm start` (or alias it to your favorite command) starts the `bsb` build watcher. **You don't have to touch your existing JavaScript build configuration**!
 
 ### ReasonReact using ReactJS
 
 Easy! Since other Reason components only need you to expose a `make` function, fake one up:
 
 ```reason
-[@bs.module] external myJSReactClass : ReasonReact.reactClass = "myJSReactClass";
+[@bs.module] external myJSReactClass : ReasonReact.reactClass = "./myJSReactClass";
 
 let make = (~name: string, ~age: option(int)=?, children) =>
   ReasonReact.wrapJsForReason(
@@ -39,7 +84,7 @@ let default =
 The function takes in the labeled reason `component` you've created, and a function that, given the JS props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to the name `default`. The JS side can then import it:
 
 ```
-var MyReasonComponent = require('myReasonComponent');
+var MyReasonComponent = require('./myReasonComponent.bs');
 // make sure you're passing the correct data types!
 <MyReasonComponent name="John" />
 ```
@@ -53,5 +98,5 @@ let jsComponent = ReasonReact.wrapReasonForJs(...)
 and then import it on the JS side with:
 
 ```
-var MyReasonComponent = require('myReasonComponent').jsComponent
+var MyReasonComponent = require('./myReasonComponent.bs').jsComponent
 ```

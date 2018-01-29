@@ -4,11 +4,11 @@ title: Installation
 
 **Note**: for general Reason + BuckleScript editor setup, see [here](https://reasonml.github.io/docs/en/global-installation.html).
 
-To easily try ReasonReact, we offer two solutions with different goals in mind.
+To easily try ReasonReact, we offer two solutions.
 
 ## Bsb
 
-Our preferred option in most cases. If it's your first time trying ReasonReact, feel free to use the more familiar create-react-app option below, too.
+Our preferred option. If it's your first time trying ReasonReact, feel free to use the more familiar create-react-app option below, too.
 
 ```sh
 npm install -g bs-platform
