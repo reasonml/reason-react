@@ -1030,12 +1030,14 @@ module Router = {
     search: string
   };
   type watcherID = unit => unit;
-  let watchUrl = (callback) =>
+  let url = () => {path: path(), hash: hash(), search: search()};
+  /* alias exposed publicly */
+  let dangerouslyGetInitialUrl = url;
+  let watchUrl = callback =>
     switch [%external window] {
     | None => (() => ())
     | Some((window: Dom.window)) =>
-      let watcherID = () =>
-        callback({path: path(), hash: hash(), search: search()});
+      let watcherID = () => callback(url());
       addEventListener(window, `popstate, watcherID);
       watcherID;
     };
