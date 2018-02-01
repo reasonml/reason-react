@@ -15,7 +15,7 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>Handlers de Callback</h1></header><article><div><span><p>Esta sección describe como se traduce en ReasonReact el patrón <code>&lt;div onClick={this.handleClick} /&gt;</code> de ReactJS.</p>
-<h2><a class="anchor" aria-hidden="true" name="callback-sin-actualizar-el-state"></a><a href="#callback-sin-actualizar-el-state" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback Sin Actualizar el State</h2>
+<h2><a class="anchor" aria-hidden="true" name="callback-sin-actualizacion-del-state"></a><a href="#callback-sin-actualizacion-del-state" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback Sin Actualización del State</h2>
 <p>Aquí tenemos dos escenarios.</p>
 <h3><a class="anchor" aria-hidden="true" name="no-leyendo-de-self"></a><a href="#no-leyendo-de-self" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>No Leyendo de <code>self</code></h3>
 <p><em>Recuerda que <code>self</code> es el equivalente a <code>this</code> en ReasonReact, es un record que contiene elementos como <code>state</code> y <code>retainedProps</code> entre otros.</em></p>
@@ -54,39 +54,39 @@ let make = <span class="hljs-function"><span class="hljs-params">(~name, ~onClic
   }
 };
 </code></pre>
-<p><strong>Note</strong> how your <code>click</code> callback now takes the extra argument <code>self</code>. Formally, <code>self.handle</code> expects a callback that</p>
+<p><strong>Observa</strong> cómo tu <code>click</code> callback recibe ahora el argumento extra <code>self</code>. Formalmente, <code>self.handle</code> espera un callback que:</p>
 <ul>
-<li>accepts the <strong>single</strong> payload you'd normally directly pass to e.g. <code>handleClick</code>,</li>
-<li>plus the argument <code>self</code>,</li>
-<li>returns &quot;nothing&quot; (aka, <code>()</code>, aka, <code>unit</code>).</li>
+<li>acepta los parámetros que normalmente pasarías a e.g. <code>handleClick</code>,</li>
+<li>más el parámetro <code>self</code>,</li>
+<li>devuelve &quot;nada&quot; (véase, <code>()</code>, véase, <code>unit</code>).</li>
 </ul>
-<p><strong>Note 2</strong>: sometimes you might be forwarding <code>handle</code> to some helper functions. Pass the whole <code>self</code> instead and <strong>annotate it</strong>. This avoids a complex <code>self</code> record type behavior. See <a href="/reason-react/docs/es-ES/record-field-send-handle-not-found.html">Record Field <code>send</code>/<code>handle</code> Not Found</a>.</p>
-<h4><a class="anchor" aria-hidden="true" name="explanation"></a><a href="#explanation" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Explanation</h4>
-<p>In reality, <code>self.handle</code> is just a regular function accepting two arguments, the first being the callback in question, and the second one being the payload that's intended to be passed to the callback.</p>
-<p>Get it? Through Reason's natural language-level currying, we usually only ask you to pass the first argument. This returns a new function that takes in the second argument and executes the function body. The second argument being passed by the caller, aka the component you're rendering!</p>
-<h4><a class="anchor" aria-hidden="true" name="callback-receiving-multiple-arguments"></a><a href="#callback-receiving-multiple-arguments" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback Receiving Multiple Arguments</h4>
-<p>Sometimes, the component you're calling is from JavaScript (using the <a href="/reason-react/docs/es-ES/interop.html">ReasonReact&lt;-&gt;ReactJS interop</a>), and its callback prop asks you to pass a callback that receives more than one argument. In ReactJS, it'd look like:</p>
+<p><strong>Observación 2</strong>: en algunas ocasiones querrás pasar <code>handle</code> a alguna función de apoyo. Es este caso, pasa <code>self</code> directamente y <strong>anótalo</strong>. Esto evita complicar demasiado el comportamiento del tipo <code>self</code>. Véase <a href="/reason-react/docs/es-ES/record-field-send-handle-not-found.html">Record Field <code>send</code>/<code>handle</code> no encontrado</a>.</p>
+<h4><a class="anchor" aria-hidden="true" name="explicacion"></a><a href="#explicacion" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Explicación</h4>
+<p>En realidad, <code>self.handle</code> es una función normal y corriente que acepta dos parámetros. El primero es el callback en cuestión, y el segundo los datos que queremos que el callback reciba.</p>
+<p>¿Entiendes? Debido al currying en Reason, generalmente sólo te pedimos pasar un parámetro. Esto devuelve una nueva función que toma el segundo parámetro y ejecuta la función. El segundo parámetro en este caso está siendo pasado por el &quot;llamador&quot;, es decir, el componente que estás renderizando.</p>
+<h4><a class="anchor" aria-hidden="true" name="callback-recibiendo-multiples-parametros"></a><a href="#callback-recibiendo-multiples-parametros" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback Recibiendo Múltiples Parámetros</h4>
+<p>Algunas veces, el componente que estamos llamando proviene de Javascript, (utilizando la <a href="/reason-react/docs/es-ES/interop.html">interoperabilidad de ReasonReact&lt;-&gt;ReactJS </a>), y su prop de callback pide que pases una función de callback que acepte más de un argumento. En ReactJS, sería algo así:</p>
 <pre><code class="hljs css javascript">handleSubmit: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">username, password, event</span>) </span>{
   <span class="hljs-keyword">this</span>.setState(...)
 }
 ...
 &lt;MyForm onUserClickedSubmit={<span class="hljs-keyword">this</span>.handleSubmit} /&gt;
 </code></pre>
-<p>You cannot write such <code>handleSubmit</code> in ReasonReact, as <code>handle</code> expects to wrap around a function that only takes <strong>one</strong> argument. Here's the workaround:</p>
+<p>No puedes escribir esta función <code>handleSubmit</code> en ReasonReact, ya que <code>handle</code> espera una función que recibe sólo un parámetro. Así es como lo solucionarías:</p>
 <pre><code class="hljs css reason">let handleSubmitEscapeHatch = <span class="hljs-function"><span class="hljs-params">(username, password, event)</span> =&gt;</span>
         self.handle(<span class="hljs-function"><span class="hljs-params">(tupleOfThreeItems)</span> =&gt;</span> doSomething(tupleOfThreeItems))(username, password, event));
 ...
 &lt;MyForm onUserClickedSubmit=(handleSubmitEscapeHatch) /&gt;
 </code></pre>
-<p>Basically, you write a normal callback that:</p>
+<p>Básicamente, escribirías una función de callback normal que:</p>
 <ul>
-<li>takes those many arguments from the JS component callback prop,</li>
-<li>packs them into a tuple and call <code>self.handle</code>,</li>
-<li>pass to <code>handle</code> the usual function that expects a single argument,</li>
-<li>finish calling <code>self.handle</code> by passing the tuple directly yourself.</li>
+<li>toma todos los argumentos de la prop de callback el componente JS,</li>
+<li>los empaqueta en una tupla y llama a <code>self.handle</code>,</li>
+<li>pasa a <code>handle</code> una función que espera un solo argumento</li>
+<li>acaba llamando a <code>self.handle</code> pasándole la tupla directamente.</li>
 </ul>
-<h2><a class="anchor" aria-hidden="true" name="callback-with-state-update"></a><a href="#callback-with-state-update" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback With State Update</h2>
-<p>You can't update state in <code>self.handle</code>; you need to use <code>self.send</code> instead. See the next section.</p>
+<h2><a class="anchor" aria-hidden="true" name="callback-con-actualizacion-del-state"></a><a href="#callback-con-actualizacion-del-state" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback Con Actualización del State</h2>
+<p>No se puede actualizar el state en <code>self.handle</code>; tiene que usar <code>self.send</code> en su lugar. Esto se explica en la siguiente sección.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="render.html">← Render</a><a class="docs-next button" href="state-actions-reducer.html">Estado, Acciones y Reducer →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.

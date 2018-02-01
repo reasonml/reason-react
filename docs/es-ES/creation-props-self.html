@@ -25,7 +25,7 @@
 <span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
 <span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
-  ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
+  ...component, <span class="hljs-comment">/* expande los valores por defecto de component aquí  */</span>
   render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
 };
 </code></pre>
@@ -60,9 +60,9 @@
 <p>Demasiado engorroso. Afortunadamente hay una mejor forma de pasar explícitamente un valor opcional:</p>
 <pre><code class="hljs css reason">&lt;Foo <span class="hljs-attribute">name</span>=<span class="hljs-string">"Reason"</span> <span class="hljs-attribute">age</span>=?ageFromProps /&gt;
 </code></pre>
-<p>Lo que se traduce a: &quot;Entiendo que <code>age</code> es opcional y que, cuando uso el label debo pasar un int. Pero voy a hacerlo pasando un valor <code>option</code> explícitamente&quot;. Esto no es un truco que nos hayamos inventado; es una característica del lenguaje! See the section on &quot;Explicitly Passed Optional&quot; in the <a href="https://reasonml.github.io/docs/en/function.html#explicitly-passed-optional">Reason docs</a>.</p>
+<p>Lo que se traduce a: &quot;Entiendo que <code>age</code> es opcional y que, cuando uso el label debo pasar un int. Pero voy a hacerlo pasando un valor <code>option</code> explícitamente&quot;. Esto no es un truco que nos hayamos inventado; es una característica del lenguaje! Lee la sección acerca de &quot;Pasando Optional Explícitamente&quot; en la <a href="https://reasonml.github.io/docs/en/function.html#explicitly-passed-optional">documentación de Reason</a>.</p>
 <h2><a class="anchor" aria-hidden="true" name="self"></a><a href="#self" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>self</code></h2>
-<p>Quizás hayas notado el siguiente código <code>render: (self) =&gt; ...</code> que es parte de la función <code>make</code>. El concepto <code>this</code> como lo conocemos en JavaScript no existe en ReasonReact (pero puede existir en Reason debido a su sistema opcional de objetos); el equivalente a <code>this</code> es <code>self</code>. It's a record that contains <code>state</code>, <code>retainedProps</code>, <code>handle</code> and <code>reduce</code>, which we pass around to the lifecycle events, <code>render</code> and a few others, when they need the bag of information. Estos conceptos se explicarán más adelante.</p>
+<p>Quizás hayas notado el siguiente código <code>render: (self) =&gt; ...</code> que es parte de la función <code>make</code>. El concepto <code>this</code> como lo conocemos en JavaScript no existe en ReasonReact (pero puede existir en Reason debido a su sistema opcional de objetos); el equivalente a <code>this</code> es <code>self</code>. Es un record que contiene <code>state</code>, <code>retainedProps</code>, <code>handle</code> y <code>reduce</code>, el cual pasamos a los eventos de ciclo de vida, <code>render</code> y algunos otros, cuando necesitan un &quot;saco de información&quot;. Estos conceptos se explicarán más adelante.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="intro-example.html">← Ejemplo de introducción</a><a class="docs-next button" href="jsx.html">JSX →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
