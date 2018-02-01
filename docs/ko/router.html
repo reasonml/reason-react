@@ -20,11 +20,12 @@
 <li>Easily pluggable anywhere into your existing code.</li>
 <li>Performant and tiny.</li>
 </ul>
-<p><a href="https://github.com/reasonml/reason-react/blob/30899702ce2a6da002a99b6cc7cd95a065aface8/src/ReasonReact.rei#L248-L264">Here's the documented public interface</a>, repeated here:</p>
+<p><a href="https://github.com/reasonml/reason-react/blob/9e9e40ea4c7e8d55e56cba47a4d0188c26d0791e/src/ReasonReact.rei#L248-L276">Here's the documented public interface</a>, repeated here:</p>
 <ul>
 <li><code>ReasonReact.Router.push(string)</code>: takes a new path and update the URL.</li>
 <li><code>ReasonReact.Router.watchUrl(f)</code>: start watching for URL changes. Returns a subscription token. Upon url change, calls the callback and passes it the <code>ReasonReact.Router.url</code> record.</li>
 <li><code>ReasonReact.Router.unwatchUrl(watcherID)</code>: stop watching for url changes.</li>
+<li><code>ReasonReact.Router.dangerouslyGetInitialUrl()</code>: get <code>url</code> record outside of <code>watchUrl</code>. Described later.</li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" name="match-a-route"></a><a href="#match-a-route" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Match a Route</h2>
 <p><strong>There's no API</strong>! <code>watchUrl</code> gives you back a <code>url</code> record of the following shape:</p>
@@ -98,6 +99,10 @@
   <span class="hljs-attr">render</span>: ...
 }
 </code></pre>
+<h2><a class="anchor" aria-hidden="true" name="directly-get-a-route"></a><a href="#directly-get-a-route" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Directly Get a Route</h2>
+<p>In one specific occasion, you might want to take hold of a <code>url</code> record <em>outside</em> of <code>watchUrl</code>. For example, if you've put <code>watchUrl</code> inside a component's <code>didMount</code> so that a URL change triggers a component state change, you might also want the initial state to be dictated by the URL.</p>
+<p>In other words, you'd like to read from the <code>url</code> record once at the beginning of your app logic. We expose <code>dangerouslyGetInitialUrl()</code> for this purpose.</p>
+<p><strong>Note</strong>: the reason why we label it as &quot;dangerous&quot; is to remind you <strong>not</strong> to read this <code>url</code> in any arbitrary component's e.g. <code>render</code>, since that information might be out of date if said component doesn't also contain a <code>watchUrl</code> subscription that re-renders the component when the URL changes. Aka, please only use <code>dangerouslyGetInitialUrl</code> alongside <code>watchUrl</code>.</p>
 <h2><a class="anchor" aria-hidden="true" name="push-a-new-route"></a><a href="#push-a-new-route" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Push a New Route</h2>
 <p>From anywhere in your app, just call e.g. <code>ReasonReact.Router.push('/books/10/edit#validated')</code>. This will trigger a URL change (without a page refresh) and <code>watchUrl</code>'s callback will be called again.</p>
 <p>We might provide better facilities for typed routing + payload carrying in the future!</p>
