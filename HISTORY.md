@@ -1,3 +1,8 @@
+# 0.3.2
+
+- Portal support (#152)
+- Add `Router.dangerouslyGetInitialUrl`. Please see the corresponding docs on router.
+
 # 0.3.1
 
 No breaking change. **The migration script is [here](https://github.com/chenglou/upgrade-reason-react-to-031)**.

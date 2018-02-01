@@ -3,7 +3,6 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 # Medium/Long-term
 
 - Static tree (prevents top-level component switching, enables destructuring of owned tree).
-- Getting rid of keys altogether in the common case.
 - Getting rid of ref.
 - Making a great list abstraction to model dynamically changing lists/scrollers.
 - Preparation for namespace
@@ -13,8 +12,6 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - better modeling for `stateless` and `retainedProps` from `unit` to something else
 - expose `ReasonReact.publicComponentSpec state retainedProps action` for less cryptic component type annotation.
 
-# 0.3.2
+# 0.3.3
 
-- Portal support (#152)
-- Add `Router.dangerouslyGetInitialUrl`. Please see the corresponding docs on router.
-
+- Get rid of implicit keys on a component (likely non-breaking)
