@@ -8,11 +8,12 @@ ReasonReact comes with a router! We've leveraged the language and library featur
 - Easily pluggable anywhere into your existing code.
 - Performant and tiny.
 
-[Here's the documented public interface](https://github.com/reasonml/reason-react/blob/30899702ce2a6da002a99b6cc7cd95a065aface8/src/ReasonReact.rei#L248-L264), repeated here:
+[Here's the documented public interface](https://github.com/reasonml/reason-react/blob/9e9e40ea4c7e8d55e56cba47a4d0188c26d0791e/src/ReasonReact.rei#L248-L276), repeated here:
 
 - `ReasonReact.Router.push(string)`: takes a new path and update the URL.
 - `ReasonReact.Router.watchUrl(f)`: start watching for URL changes. Returns a subscription token. Upon url change, calls the callback and passes it the `ReasonReact.Router.url` record.
 - `ReasonReact.Router.unwatchUrl(watcherID)`: stop watching for url changes.
+- `ReasonReact.Router.dangerouslyGetInitialUrl()`: get `url` record outside of `watchUrl`. Described later.
 
 ## Match a Route
 
@@ -100,6 +101,14 @@ let make = (_children) => {
   render: ...
 }
 ```
+
+## Directly Get a Route
+
+In one specific occasion, you might want to take hold of a `url` record _outside_ of `watchUrl`. For example, if you've put `watchUrl` inside a component's `didMount` so that a URL change triggers a component state change, you might also want the initial state to be dictated by the URL.
+
+In other words, you'd like to read from the `url` record once at the beginning of your app logic. We expose `dangerouslyGetInitialUrl()` for this purpose.
+
+**Note**: the reason why we label it as "dangerous" is to remind you **not** to read this `url` in any arbitrary component's e.g. `render`, since that information might be out of date if said component doesn't also contain a `watchUrl` subscription that re-renders the component when the URL changes. Aka, please only use `dangerouslyGetInitialUrl` alongside `watchUrl`.
 
 ## Push a New Route
 
