@@ -28,6 +28,17 @@ let renderToElementWithClassName = (reactElement, className) => {
   }
 };
 
+let renderToDomNode = (reactElement, node) =>
+  switch (node) {
+  | None =>
+    raise(
+      Invalid_argument(
+        "ReactDOMRE.renderToDomNode : no DOM Node supplied."
+      )
+    )
+  | Some(node) => render(reactElement, node)
+  };
+
 let renderToElementWithId = (reactElement, id) =>
   switch (_getElementById(id)) {
   | None =>
