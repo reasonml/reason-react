@@ -38,7 +38,10 @@ ReasonReact.element(Greeting.make(~name="John", [||])) /* the `make` function in
 **Note**: do **not** inline `let component` into the `make` function body like the following!
 
 ```reason
-let make = (_children) => {...(ReasonReact.statelessComponent("Greeting")), render: (self) => blabla}
+let make = _children => {
+  ...(ReasonReact.statelessComponent("Greeting")),
+  render: self => blabla
+}
 ```
 
 Since `make` is called at every JSX invocation, you'd be accidentally creating a fresh new component every time.
