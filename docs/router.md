@@ -112,7 +112,7 @@ In other words, you'd like to read from the `url` record once at the beginning o
 
 ## Push a New Route
 
-From anywhere in your app, just call e.g. `ReasonReact.Router.push('/books/10/edit#validated')`. This will trigger a URL change (without a page refresh) and `watchUrl`'s callback will be called again.
+From anywhere in your app, just call e.g. `ReasonReact.Router.push("/books/10/edit#validated")`. This will trigger a URL change (without a page refresh) and `watchUrl`'s callback will be called again.
 
 We might provide better facilities for typed routing + payload carrying in the future!
 
