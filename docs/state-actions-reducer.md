@@ -123,7 +123,7 @@ Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of 
 - `ReasonReact.SideEffects(self => unit)`: no state update, but trigger a side-effect, e.g. `ReasonReact.SideEffects(_self => Js.log("hello!"))`.
 - `ReasonReact.UpdateWithSideEffects(state, self => unit)`: update the state, **then** trigger a side-effect.
 
-_If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEffects`. See reasonReact.rei to see what they do. Don't use them if you're trying to update a ref/timer/subscription/any other instance variable_.
+_If you're a power user, there's also `SilentUpdate` and `SilentUpdateWithSideEffects`. See [`ReasonReact.rei`](https://github.com/reasonml/reason-react/blob/master/src/ReasonReact.rei) to see what they do. Don't use them if you're trying to update a ref/timer/subscription/any other instance variable_.
 
 ### Important Notes
 

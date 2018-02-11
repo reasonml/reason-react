@@ -20,10 +20,10 @@ npm run webpack
 
 BuckleScript's [bsb](https://bucklescript.github.io/docs/en/build-overview.html) build system has an `init` command that generates a project template. The `react` theme offers a lightweight solution optimized for low learning overhead and ease of integration into an existing project.
 
-It compiles to straighfoward JS files, so you can open `index.html` directly from the file system. No server needed.
+It compiles to straightforward JS files, so you can open `index.html` directly from the file system. No server needed.
 
 ## Reason Scripts (Aka Create-React-App)
 
 [Reason-scripts](https://github.com/reasonml-community/reason-scripts) provides a familiar experience to the ReactJS users who are already familiar with [create-react-app](https://github.com/facebookincubator/create-react-app). It's an all-encompassing solution. However, if it's too heavy for your taste, try the first option above (bsb).
 
-As with `create-react-app`, `reason-scripts` comes with a server and hotloading built in.
+As with `create-react-app`, `reason-scripts` comes with a server and hot-reloading built in.

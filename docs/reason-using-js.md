@@ -1,7 +1,9 @@
 ---
 title: ReasonReact using ReactJS
 ---
-MyBanner.js:
+
+`MyBanner.js:`
+
 ```javascript
 var ReactDOM = require('react-dom');
 var React = require('react');
@@ -19,7 +21,9 @@ var App = React.createClass({
 });
 module.exports = App;
 ```
-MyBannerRe.re
+
+`MyBannerRe.re`
+
 ```reason
 /* Typing the MyBanner.js component's output as a `reactClass`. */
 /* Note that this file's JS output is located at reason-react-example/lib/js/src/interop/MyBannerRe.js; we're specifying the relative path to MyBanner.js in the string below */
