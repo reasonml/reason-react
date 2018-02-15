@@ -250,8 +250,7 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
 let createClass =
     (type reasonState, type retainedProps, type action, debugName)
     : reactClass =>
-  [@bs]
-  ReasonReactOptimizedCreateClass.createClass(
+  ReasonReactOptimizedCreateClass.createClass(.
     [@bs]
     {
       val displayName = debugName;
