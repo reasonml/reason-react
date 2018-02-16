@@ -2,6 +2,7 @@
 title: Retained Props
 ---
 Copy a few props into a special field to emulate ReactJS' lifecycle events' `prevProps`/`nextProps` functionality.
+
 ```reason
 type retainedProps = {message: string};
 
