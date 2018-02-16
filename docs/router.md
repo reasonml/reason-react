@@ -21,7 +21,7 @@ ReasonReact comes with a router! We've leveraged the language and library featur
 
 ```reason
 type url = {
-  /* path takes window.location.path, like "/book/title/edit" and turns it into `["book", "title", "edit"]` */
+  /* path takes window.location.pathname, like "/book/title/edit" and turns it into `["book", "title", "edit"]` */
   path: list(string),
   /* the url's hash, if any. The # symbol is stripped out for you */
   hash: string,
