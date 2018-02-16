@@ -2,6 +2,4 @@
 title: I Really Need Feature X From ReactJS
 ---
 
-If you _really_ need whichever idiom we currently don't support in ReasonReact (after making sure that you indeed can't achieve it in current ReasonReact. P.S.you can ask us on [Discord](https://discord.gg/reasonml)), you can always write the component in ReactJS first, then bind to it using [our interop](interop.md). Try to isolate that functionality into a tiny ReactJS component and leave the rest in ReasonReact.
-
-Then, fill an issue!
+First make sure that you indeed can't achieve this idiom using the latest version of ReasonReact. If you need help figuring out how to translate a certain idiom, feel free to ask us on [Discord](https://discord.gg/reasonml). If it is not achievable with ReasonReact, you can always write the component in ReactJS first, then bind to it using [our interop](interop.md). Try to isolate the required functionality into a tiny ReactJS component and write the rest of your code in ReasonReact. Once this is done, feel free to [file an issue](https://github.com/reasonml/reason-react/issues) explaining your use case!
