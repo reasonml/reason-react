@@ -69,7 +69,7 @@ let make = (children: tuple2Children) => {
 };
 ```
 
-Then you can expect the user you pass you a tuple:
+Then you can expect the user to pass you a tuple:
 
 ```reason
 <MyForm> (<div />, <div />) </MyForm>
