@@ -14,6 +14,7 @@
     "creation-props-self": "Creation, Props & Self",
     "custom-class-component-property": "Custom Class/Component Property",
     "dom": "Working with DOM",
+    "element-type-is-invalid": "Element Type is Invalid Runtime Error",
     "event": "Event",
     "example-projects": "Example Projects",
     "functional-component": "Functional Component",

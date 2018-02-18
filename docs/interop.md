@@ -66,6 +66,8 @@ let make = (~name: string, ~age: option(int)=?, children) =>
 
 **We recommend** to type the `make` parameters, since they're passed to `props` into the JS side, which is untyped.
 
+**Note**: if your app successfully compiles, and you see the error "element type is invalid..." in your console, you might be hitting [this mistake](element-type-is-invalid.md).
+
 ### ReactJS Using ReasonReact
 
 Eeeeasy. We expose a helper for the other direction, `ReasonReact.wrapReasonForJs`:

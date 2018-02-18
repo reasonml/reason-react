@@ -35,7 +35,8 @@
       "im-having-a-type-error",
       "record-field-send-handle-not-found",
       "send-handle-callbacks-having-incompatible-types",
-      "i-really-need-feature-x-from-reactjs"
+      "i-really-need-feature-x-from-reactjs",
+      "element-type-is-invalid"
     ]
   },
   "examples": {
