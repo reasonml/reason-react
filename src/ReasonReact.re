@@ -971,11 +971,8 @@ module Router = {
   /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
   /* actually you know what, not gonna provide search for now. It's a mess.
      We'll let users roll their own solution/data structure for now */
-  let path = () =>
-    switch [%external window] {
-    | None => []
-    | Some((window: Dom.window)) =>
-      switch (window |> location |> pathname) {
+  let parseUrlPath = pathString =>
+    switch pathString {
       | ""
       | "/" => []
       | raw =>
@@ -988,7 +985,12 @@ module Router = {
           | _ => raw
           };
         raw |> Js.String.split("/") |> Array.to_list;
-      }
+    };
+  let path = () =>
+    switch [%external window] {
+    | None => []
+    | Some((window: Dom.window)) =>
+      window |> location |> pathname |> parseUrlPath
     };
   let hash = () =>
     switch [%external window] {
@@ -1003,17 +1005,19 @@ module Router = {
         raw |> Js.String.sliceToEnd(~from=1)
       }
     };
-  let search = () =>
-    switch [%external window] {
-    | None => ""
-    | Some((window: Dom.window)) =>
-      switch (window |> location |> search) {
+  let parseUrlSearch = searchString =>
+    switch searchString {
       | ""
       | "?" => ""
       | raw =>
         /* remove the preceeding ?, which every search seems to have. */
         raw |> Js.String.sliceToEnd(~from=1)
-      }
+    };
+  let search = () =>
+    switch [%external window] {
+    | None => ""
+    | Some((window: Dom.window)) =>
+      window |> location |> search |> parseUrlSearch
     };
   let push = path =>
     switch ([%external history], [%external window]) {

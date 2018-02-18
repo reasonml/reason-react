@@ -273,4 +273,6 @@ module Router: {
       for an example.
       */
   let dangerouslyGetInitialUrl: unit => url;
+  let parseUrlPath: string => list(string);
+  let parseUrlSearch: string => string;
 };
