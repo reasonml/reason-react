@@ -13,13 +13,13 @@ This stateful component should also declare the state type, the action type and 
 ```reason
 type action = ...
 
-type state = ...
+type state = int
 
 let component = ReasonReact.reducerComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component,
-  initialState: () => { ... },
+  initialState: () => 42,  /* here, state is an `int` */
   reducer: (action,state) => { ... },
   render: (self) => {
     let greeting =
