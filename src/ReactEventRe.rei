@@ -17,24 +17,24 @@
    get to be passed to a generic handler:
 
    ```
-   let handleClick {state, props} event => {
-     ReactEventRe.Mouse.preventDefault event;
+   let handleClick = ({state, props}, event) => {
+     ReactEventRe.Mouse.preventDefault(event);
      ...
    };
-   let handleSubmit {state, props} event => {
+   let handleSubmit = ({state, props}, event) => {
      /* this handler can be triggered by either a Keyboard or a Mouse event; conveniently use the generic
         preventDefault */
-     ReactEventRe.Synthetic.preventDefault event;
+     ReactEventRe.Synthetic.preventDefault(event);
      ...
    };
 
-   let render _ => <Foo onSubmit=handleSubmit onEnter=handleSubmit .../>;
+   let render = (_) => <Foo onSubmit=handleSubmit onEnter=handleSubmit .../>;
    ```
 
    How to translate idioms from ReactJS:
 
-   1. myMouseEvent.preventDefault() -> ReactEventRe.Mouse.preventDefault myMouseEvent
-   2. myKeyboardEvent.which -> ReactEventRe.Keyboard.which myMouseEvent
+   1. myMouseEvent.preventDefault() -> ReactEventRe.Mouse.preventDefault(myMouseEvent)
+   2. myKeyboardEvent.which -> ReactEventRe.Keyboard.which(myMouseEvent)
    */
 type synthetic('a);
 

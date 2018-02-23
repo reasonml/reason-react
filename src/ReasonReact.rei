@@ -1,8 +1,8 @@
 /***
  * This API assumes that JSX will desugar <Foo key ref attr1=val1 attrn=valn /> into:
  *
- * ReasonReact.element (
- *   Foo.make ::key ::ref attr1::val1 attrn::valn [| |]
+ * ReasonReact.element(
+ *   Foo.make(~key, ~ref, ~attr1=val1, ~attrn=valn, [| |]
  * )
  */
 
@@ -73,7 +73,7 @@ module Callback: {
    For example, calling `update handler event` would force an immediate
    call of `handler` with the current state, and can be prevented by defining:
 
-     type t 'payload;
+     type t('payload);
 
     However, we do want to support immediate calling of a handler, as an escape hatch for the existing async
     setState reactJS pattern
@@ -142,7 +142,7 @@ and self('state, 'retainedProps, 'action) = {
    * which can optionally specify delayed side effects.
    *
    */
-  reduce: 'payload .reduce('payload, 'action) /* ('payload => 'action) => Callback.t 'payload */,
+  reduce: 'payload .reduce('payload, 'action) /* ('payload => 'action) => Callback.t('payload) */,
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit

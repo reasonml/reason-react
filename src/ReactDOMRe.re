@@ -257,7 +257,7 @@ external props :
     ~onVolumeChange: ReactEventRe.Media.t => unit=?,
     ~onWaiting: ReactEventRe.Media.t => unit=?,
     /* Image events */
-    ~onLoad: ReactEventRe.Image.t => unit=? /* duplicate */, /*onError::(ReactEventRe.Image.t => unit)? =>*/
+    ~onLoad: ReactEventRe.Image.t => unit=? /* duplicate */, /*~onError: ReactEventRe.Image.t => unit=?,*/
     /* Animation events */
     ~onAnimationStart: ReactEventRe.Animation.t => unit=?,
     ~onAnimationEnd: ReactEventRe.Animation.t => unit=?,
