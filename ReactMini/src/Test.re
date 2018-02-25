@@ -54,8 +54,8 @@ module BoxList = {
         ])
       | Reverse => ReasonReact.Update(List.rev(state))
       },
-    render: ({state, act}) => {
-      ReasonReact.RemoteAction.subscribe(~act, rAction);
+    render: ({state, send}) => {
+      ReasonReact.RemoteAction.subscribe(~send, rAction);
       ReasonReact.listToElement(state)
     }
   };
@@ -147,8 +147,8 @@ module UpdateAlternateClicks = {
     printState: (state) => string_of_int(state),
     reducer: (Click, state) => Update(state + 1),
     shouldUpdate: ({newSelf: {state}}) => state mod 2 === 0,
-    render: ({state, act}) => {
-      ReasonReact.RemoteAction.subscribe(~act, rAction);
+    render: ({state, send}) => {
+      ReasonReact.RemoteAction.subscribe(~send, rAction);
       ReasonReact.stringToElement("Rendered state is " ++ string_of_int(state))
     }
   };
@@ -260,11 +260,11 @@ module RunTestListsWithDynamicKeys = {
   startTest(~msg="Test Lists With Dynamic Keys");
   let rAction = RemoteAction.create();
   let rendered0 = renderAndPrint(~msg="Initial BoxList", <BoxList useDynamicKeys=true rAction />);
-  RemoteAction.act(rAction, ~action=BoxList.Create("Hello"));
+  RemoteAction.send(rAction, ~action=BoxList.Create("Hello"));
   let rendered1 = flushAndPrint(~msg="Add Hello then Flush", rendered0);
-  RemoteAction.act(rAction, ~action=BoxList.Create("World"));
+  RemoteAction.send(rAction, ~action=BoxList.Create("World"));
   let rendered2 = flushAndPrint(~msg="Add World then Flush", rendered1);
-  RemoteAction.act(rAction, ~action=BoxList.Reverse);
+  RemoteAction.send(rAction, ~action=BoxList.Reverse);
   let rendered3 = flushAndPrint(~msg="Reverse then Flush", rendered2);
   printAll([rendered0, rendered1, rendered2, rendered3]);
 };
@@ -275,11 +275,11 @@ module RunTestListsWithoutDynamicKeys = {
   startTest(~msg="Test Lists Without Dynamic Keys");
   let rAction = RemoteAction.create();
   let rendered0 = renderAndPrint(~msg="Initial BoxList", <BoxList useDynamicKeys=false rAction />);
-  RemoteAction.act(rAction, ~action=BoxList.Create("Hello"));
+  RemoteAction.send(rAction, ~action=BoxList.Create("Hello"));
   let rendered1 = flushAndPrint(~msg="Add Hello then Flush", rendered0);
-  RemoteAction.act(rAction, ~action=BoxList.Create("World"));
+  RemoteAction.send(rAction, ~action=BoxList.Create("World"));
   let rendered2 = flushAndPrint(~msg="Add World then Flush", rendered1);
-  RemoteAction.act(rAction, ~action=BoxList.Reverse);
+  RemoteAction.send(rAction, ~action=BoxList.Reverse);
   let rendered3 = flushAndPrint(~msg="Reverse then Flush", rendered2);
   printAll([rendered0, rendered1, rendered2, rendered3]);
 };
@@ -331,13 +331,13 @@ module TestUpdateAlternateClicks = {
   startTest(~msg="Test Update on Alternate Clicks");
   let rAction = RemoteAction.create();
   let rendered0 = renderAndPrint(~msg="Initial", <UpdateAlternateClicks rAction />);
-  RemoteAction.act(rAction, ~action=Click);
+  RemoteAction.send(rAction, ~action=Click);
   let rendered1 = flushAndPrint(~msg="First click then flush", rendered0);
-  RemoteAction.act(rAction, ~action=Click);
+  RemoteAction.send(rAction, ~action=Click);
   let rendered2 = flushAndPrint(~msg="Second click then flush", rendered1);
-  RemoteAction.act(rAction, ~action=Click);
+  RemoteAction.send(rAction, ~action=Click);
   let rendered3 = flushAndPrint(~msg="Third click then flush", rendered2);
-  RemoteAction.act(rAction, ~action=Click);
+  RemoteAction.send(rAction, ~action=Click);
   let rendered4 = flushAndPrint(~msg="Fourth click then flush", rendered3);
   printAll([rendered0, rendered1, rendered2, rendered3, rendered4]);
 };
@@ -359,14 +359,14 @@ module PerfTest = {
     let currentRenderedElement = ref(rendered0);
     let currentOutputTree = ref(OutputTree.fromRenderedElement(currentRenderedElement^));
     for (i in 1 to iterationsWithoutFlush) {
-      RemoteAction.act(rAction, ~action=BoxList.Create(string_of_int(i)))
+      RemoteAction.send(rAction, ~action=BoxList.Create(string_of_int(i)))
     };
     let (newRenderedElement, updateLog) =
       RenderedElement.flushPendingUpdates(currentRenderedElement^);
     currentRenderedElement := newRenderedElement;
     currentOutputTree := OutputTree.applyUpdateLog(updateLog, currentOutputTree^);
     for (i in 1 to iterationsWithFlush) {
-      RemoteAction.act(rAction, ~action=BoxList.Create(string_of_int(i)));
+      RemoteAction.send(rAction, ~action=BoxList.Create(string_of_int(i)));
       let (newRenderedElement, updateLog) =
         RenderedElement.flushPendingUpdates(currentRenderedElement^);
       currentRenderedElement := newRenderedElement;

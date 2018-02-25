@@ -45,7 +45,7 @@ type reduce('payload, 'action) = ('payload => 'action) => Callback.t('payload);
 type self('state, 'action) = {
   state: 'state,
   reduce: 'payload .reduce('payload, 'action),
-  act: 'action => unit
+  send: 'action => unit
 };
 
 
@@ -153,8 +153,8 @@ module RemoteAction: {
   let create: unit => t('action);
 
   /*** Subscribe to the remote action, via the component's `act` function. */
-  let subscribe: (~act: 'action => unit, t('action)) => unit;
+  let subscribe: (~send: 'action => unit, t('action)) => unit;
 
   /*** Perform an action on the subscribed component. */
-  let act: (t('action), ~action: 'action) => unit;
+  let send: (t('action), ~action: 'action) => unit;
 };

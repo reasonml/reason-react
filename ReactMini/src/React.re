@@ -47,7 +47,7 @@ type update('state, 'action) =
 and self('state, 'action) = {
   state: 'state,
   reduce: 'payload .reduce('payload, 'action),
-  act: 'action => unit
+  send: 'action => unit
 }
 /***
  * Elements are what JSX blocks become. They represent the *potential* for a
@@ -218,7 +218,7 @@ module Render = {
       let stateUpdate = instance.component.reducer(action);
       instance.pendingStateUpdates := [stateUpdate, ...instance.pendingStateUpdates^]
     },
-    act: (action) => {
+    send: (action) => {
       logString("Calling act on " ++ instance.component.debugName);
       let stateUpdate = instance.component.reducer(action);
       instance.pendingStateUpdates := [stateUpdate, ...instance.pendingStateUpdates^]
@@ -868,12 +868,12 @@ module OutputTree = {
 };
 
 module RemoteAction = {
-  type t('action) = {mutable act: 'action => unit};
-  let actDefault = (_action) => ();
-  let create = () => {act: actDefault};
-  let subscribe = (~act, x) =>
-    if (x.act === actDefault) {
-      x.act = act
+  type t('action) = {mutable send: 'action => unit};
+  let sendDefault = (_action) => ();
+  let create = () => {send: sendDefault};
+  let subscribe = (~send, x) =>
+    if (x.send === sendDefault) {
+      x.send = send
     };
-  let act = (x, ~action) => x.act(action);
+  let send = (x, ~action) => x.send(action);
 };
