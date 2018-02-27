@@ -38,7 +38,7 @@ let make = _children =&gt; {
     ReasonReact.NoUpdate;
   },
   willUnmount: <span class="hljs-literal">self</span> =&gt; {
-    switch (<span class="hljs-literal">self</span>.timerId^) {
+    switch (<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.timerId^) {
     | Some(id) =&gt; Js.Global.clearInterval(id)
     | None =&gt; ()
     }
