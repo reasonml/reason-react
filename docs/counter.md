@@ -28,7 +28,7 @@ let make = _children => {
     ReasonReact.NoUpdate;
   },
   willUnmount: self => {
-    switch (self.timerId^) {
+    switch (self.state.timerId^) {
     | Some(id) => Js.Global.clearInterval(id)
     | None => ()
     }
