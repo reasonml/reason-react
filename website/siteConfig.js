@@ -35,6 +35,12 @@ const users = [
     infoLink: "https://www.socialtables.com",
     pinned: true
   },
+  {
+    caption: "Ahrefs",
+    image: "img/logos/ahrefs.svg",
+    infoLink: "https://ahrefs.com",
+    pinned: true
+  },
 ];
 
 const examples = [
