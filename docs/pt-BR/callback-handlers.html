@@ -74,7 +74,10 @@ let make = <span class="hljs-function"><span class="hljs-params">(~name, ~onClic
 </code></pre>
 <p>Você não pode escrever tal <code>handleSubmit</code> em ReasonReact, como <code>handle</code> espera que seja encapsulado em torno de uma função que só leve <strong>um</strong> argumento. Aqui está uma solução:</p>
 <pre><code class="hljs css reason">let handleSubmitEscapeHatch = <span class="hljs-function"><span class="hljs-params">(username, password, event)</span> =&gt;</span>
-        self.handle(<span class="hljs-function"><span class="hljs-params">(tupleOfThreeItems)</span> =&gt;</span> doSomething(tupleOfThreeItems))(username, password, event));
+  self.handle(
+    <span class="hljs-function"><span class="hljs-params">(tupleOfThreeItems, self)</span> =&gt;</span> doSomething(tupleOfThreeItems, self),
+    (username, password, event),
+  );
 ...
 &lt;MyForm onUserClickedSubmit=(handleSubmitEscapeHatch) /&gt;
 </code></pre>

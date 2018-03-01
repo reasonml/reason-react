@@ -74,7 +74,10 @@ let make = <span class="hljs-function"><span class="hljs-params">(~name, ~onClic
 </code></pre>
 <p>你不能直接在ReasonReact里面写<code>handleSubmit</code>这样的方法，因为 <code>handle</code> 包裹的函数只能接收<strong>一个</strong>参数。下面是处理这种情况的方法:</p>
 <pre><code class="hljs css reason">let handleSubmitEscapeHatch = <span class="hljs-function"><span class="hljs-params">(username, password, event)</span> =&gt;</span>
-        self.handle(<span class="hljs-function"><span class="hljs-params">(tupleOfThreeItems)</span> =&gt;</span> doSomething(tupleOfThreeItems))(username, password, event));
+  self.handle(
+    <span class="hljs-function"><span class="hljs-params">(tupleOfThreeItems, self)</span> =&gt;</span> doSomething(tupleOfThreeItems, self),
+    (username, password, event),
+  );
 ...
 &lt;MyForm onUserClickedSubmit=(handleSubmitEscapeHatch) /&gt;
 </code></pre>
