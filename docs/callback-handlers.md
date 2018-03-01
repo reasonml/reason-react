@@ -88,7 +88,10 @@ You cannot write such `handleSubmit` in ReasonReact, as `handle` expects to wrap
 
 ```reason
 let handleSubmitEscapeHatch = (username, password, event) =>
-        self.handle((tupleOfThreeItems) => doSomething(tupleOfThreeItems))(username, password, event));
+  self.handle(
+    (tupleOfThreeItems, self) => doSomething(tupleOfThreeItems, self),
+    (username, password, event),
+  );
 ...
 <MyForm onUserClickedSubmit=(handleSubmitEscapeHatch) />
 ```
