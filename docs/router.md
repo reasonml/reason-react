@@ -30,13 +30,13 @@ type url = {
 };
 ```
 
-So the url `www.hello.com/book/10/edit#author?name=Jane` is given back as:
+So the url `www.hello.com/book/10/edit?name=Jane#author` is given back as:
 
 ```reason
 {
   path: ["book", "10", "edit"],
   hash: "author",
-  search: "name=jane"
+  search: "name=Jane"
 }
 ```
 
