@@ -38,11 +38,11 @@
   search: <span class="hljs-built_in">string</span>
 };
 </code></pre>
-<p>So the url <code>www.hello.com/book/10/edit#author?name=Jane</code> is given back as:</p>
+<p>So the url <code>www.hello.com/book/10/edit?name=Jane#author</code> is given back as:</p>
 <pre><code class="hljs css reason">{
   <span class="hljs-attribute">path</span>: [<span class="hljs-string">"book"</span>, <span class="hljs-string">"10"</span>, <span class="hljs-string">"edit"</span>],
   hash: <span class="hljs-string">"author"</span>,
-  search: <span class="hljs-string">"name=jane"</span>
+  search: <span class="hljs-string">"name=Jane"</span>
 }
 </code></pre>
 <p>At this point, you can simply pattern match your way to glory!</p>
