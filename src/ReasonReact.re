@@ -232,7 +232,7 @@ let subscriptionsDefault = _self => [];
 
 let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
   let props = Obj.magic(props);
-  switch (Js.Nullable.to_opt(props##reasonProps), jsPropsToReason) {
+  switch (Js.Nullable.toOption(props##reasonProps), jsPropsToReason) {
   | (Some(props), _) => props
   /* TODO: annotate with BS to avoid curry overhead */
   | (None, Some(toReasonProps)) => Element(toReasonProps(props))
@@ -439,7 +439,7 @@ let createClass =
           let self = Obj.magic(self);
           component.willUnmount(self);
         };
-        switch (Js.Nullable.to_opt(this##subscriptions)) {
+        switch (Js.Nullable.toOption(this##subscriptions)) {
         | None => ()
         | Some(subs) =>
           List.rev(subs) |> List.iter(unsubscribe => unsubscribe())
