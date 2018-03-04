@@ -22,7 +22,7 @@
   },
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
-    "bs-platform": "^2.2.1"
+    "bs-platform": "^2.2.2"
   },
   "dependencies": {
     "react": ">=15.0.0 || >=16.0.0",
