@@ -12,6 +12,6 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - better modeling for `stateless` and `retainedProps` from `unit` to something else
 - expose `ReasonReact.publicComponentSpec state retainedProps action` for less cryptic component type annotation.
 
-# 0.3.4
+# 0.3.5
 
 - Get rid of implicit keys on a component (likely non-breaking)

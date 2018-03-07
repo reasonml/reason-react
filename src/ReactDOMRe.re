@@ -42,7 +42,7 @@ let renderToElementWithId = (reactElement, id) =>
   };
 
 [@bs.val] [@bs.module "react-dom"]
-external hydrate : (ReasonReact.reactElement, Dom.element) => unit = "render";
+external hydrate : (ReasonReact.reactElement, Dom.element) => unit = "hydrate";
 
 let hydrateToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
