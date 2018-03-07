@@ -39,6 +39,35 @@ let renderToElementWithId = (reactElement, id) =>
   };
 
 [@bs.val] [@bs.module "react-dom"]
+external hydrate : (ReasonReact.reactElement, Dom.element) => unit =
+  "render";
+
+let hydrateToElementWithClassName = (reactElement, className) => {
+ let elements = _getElementsByClassName(className);
+  if (Array.length(elements) == 0) {
+    raise(
+      Invalid_argument(
+        "ReactDOMRE.hydrateToElementWithClassName: no element of class "
+        ++ (className ++ " found in the HTML.")
+      )
+    )
+  } else {
+    hydrate(reactElement, elements[0])
+  }
+};
+
+let hydrateToElementWithId = (reactElement, id) =>
+  switch (_getElementById(id)) {
+  | None =>
+    raise(
+      Invalid_argument(
+        "ReactDOMRE.hydrateToElementWithId : no element of id " ++ (id ++ " found in the HTML.")
+      )
+    )
+  | Some(element) => hydrate(reactElement, element)
+  };
+
+[@bs.val] [@bs.module "react-dom"]
 external createPortal : (ReasonReact.reactElement, Dom.element) => ReasonReact.reactElement =
   "createPortal";
 
