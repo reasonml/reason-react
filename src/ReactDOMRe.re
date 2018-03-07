@@ -5,77 +5,82 @@
 /* It's like `let`, except you're pointing the implementation to the JS side. The compiler will inline these
    calls and add the appropriate `require("react-dom")` in the file calling this `render` */
 [@bs.val] [@bs.module "react-dom"]
-external render : (ReasonReact.reactElement, Dom.element) => unit =
-  "render";
+external render : (ReasonReact.reactElement, Dom.element) => unit = "render";
 
-[@bs.val] external _getElementsByClassName : string => array(Dom.element) =
+[@bs.val]
+external _getElementsByClassName : string => array(Dom.element) =
   "document.getElementsByClassName";
 
-[@bs.val] [@bs.return nullable] external _getElementById : string => option(Dom.element) =
+[@bs.val] [@bs.return nullable]
+external _getElementById : string => option(Dom.element) =
   "document.getElementById";
 
-let renderToElementWithClassName = (reactElement, className) => {
+let renderToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
-  | [||] => 
+  | [||] =>
     raise(
       Invalid_argument(
         "ReactDOMRe.renderToElementWithClassName: no element of class "
-        ++ (className ++ " found in the HTML.")
-      )
+        ++ className
+        ++ " found in the HTML.",
+      ),
     )
   | elements => render(reactElement, Array.unsafe_get(elements, 0))
   };
-};
 
 let renderToElementWithId = (reactElement, id) =>
   switch (_getElementById(id)) {
   | None =>
     raise(
       Invalid_argument(
-        "ReactDOMRe.renderToElementWithId : no element of id " ++ (id ++ " found in the HTML.")
-      )
+        "ReactDOMRe.renderToElementWithId : no element of id "
+        ++ id
+        ++ " found in the HTML.",
+      ),
     )
   | Some(element) => render(reactElement, element)
   };
 
 [@bs.val] [@bs.module "react-dom"]
-external hydrate : (ReasonReact.reactElement, Dom.element) => unit =
-  "render";
+external hydrate : (ReasonReact.reactElement, Dom.element) => unit = "render";
 
-let hydrateToElementWithClassName = (reactElement, className) => {
- let elements = _getElementsByClassName(className);
-  if (Array.length(elements) == 0) {
+let hydrateToElementWithClassName = (reactElement, className) =>
+  switch (_getElementsByClassName(className)) {
+  | [||] =>
     raise(
       Invalid_argument(
-        "ReactDOMRE.hydrateToElementWithClassName: no element of class "
-        ++ (className ++ " found in the HTML.")
-      )
+        "ReactDOMRe.hydrateToElementWithClassName: no element of class "
+        ++ className
+        ++ " found in the HTML.",
+      ),
     )
-  } else {
-    hydrate(reactElement, elements[0])
-  }
-};
+  | elements => hydrate(reactElement, Array.unsafe_get(elements, 0))
+  };
 
 let hydrateToElementWithId = (reactElement, id) =>
   switch (_getElementById(id)) {
   | None =>
     raise(
       Invalid_argument(
-        "ReactDOMRE.hydrateToElementWithId : no element of id " ++ (id ++ " found in the HTML.")
-      )
+        "ReactDOMRe.hydrateToElementWithId : no element of id "
+        ++ id
+        ++ " found in the HTML.",
+      ),
     )
   | Some(element) => hydrate(reactElement, element)
   };
 
 [@bs.val] [@bs.module "react-dom"]
-external createPortal : (ReasonReact.reactElement, Dom.element) => ReasonReact.reactElement =
+external createPortal :
+  (ReasonReact.reactElement, Dom.element) => ReasonReact.reactElement =
   "createPortal";
 
-[@bs.val] [@bs.module "react-dom"] external unmountComponentAtNode : Dom.element => unit =
+[@bs.val] [@bs.module "react-dom"]
+external unmountComponentAtNode : Dom.element => unit =
   "unmountComponentAtNode";
 
-[@bs.val] [@bs.module "react-dom"] external findDOMNode : ReasonReact.reactRef => Dom.element =
-  "findDOMNode";
+[@bs.val] [@bs.module "react-dom"]
+external findDOMNode : ReasonReact.reactRef => Dom.element = "findDOMNode";
 
 external domElementToObj : Dom.element => Js.t({..}) = "%identity";
 
@@ -555,7 +560,8 @@ external props :
 
 [@bs.splice] [@bs.val] [@bs.module "react"]
 external createElement :
-  (string, ~props: reactDOMProps=?, array(ReasonReact.reactElement)) => ReasonReact.reactElement =
+  (string, ~props: reactDOMProps=?, array(ReasonReact.reactElement)) =>
+  ReasonReact.reactElement =
   "createElement";
 
 module Style = {
@@ -986,15 +992,15 @@ module Style = {
     (a, b) => {
       let a: Js.t({..}) = Obj.magic(a);
       let b: Js.t({..}) = Obj.magic(b);
-      Js.Obj.assign(Js.Obj.assign(Js.Obj.empty(), a), b) |> Obj.magic
+      Js.Obj.assign(Js.Obj.assign(Js.Obj.empty(), a), b) |> Obj.magic;
     };
   let unsafeAddProp: (style, string, string) => style =
     (style, property, value) => {
       let propStyle: style = {
         let dict = Js.Dict.empty();
         Js.Dict.set(dict, property, value);
-        Obj.magic(dict)
+        Obj.magic(dict);
       };
-      combine(style, propStyle)
+      combine(style, propStyle);
     };
 };
