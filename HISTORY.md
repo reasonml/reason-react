@@ -1,7 +1,7 @@
 # 0.3.3
 
 - Use the new bs-platform `Js.Nullable.toOption`. No more deprecation warnings when you use ReasonReact.
-- Add `ReactDOMRe.hydrate` (#184).
+- Add `ReactDOMRe.hydrate`, `hydrateToElementWithId`, `hydrateToElementWithClassName` (#184).
 
 # 0.3.2
 
