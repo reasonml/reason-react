@@ -1,6 +1,8 @@
 # 0.3.3
 
-- Use the new bs-platform `Js.Nullable.toOption`. No more deprecation warnings when you use ReasonReact.
+This release **requires** bs-platform 2.2.2! If your app haven't upgraded to it, don't worry; you can still use ResonReact 0.3.2 just fine. Only two small changes.
+
+- Use the new bs-platform `Js.Nullable.toOption`. No more deprecation warnings when you use ReasonReact (main purpose of the release).
 - Add `ReactDOMRe.hydrate`, `hydrateToElementWithId`, `hydrateToElementWithClassName` (#184).
 
 # 0.3.2
