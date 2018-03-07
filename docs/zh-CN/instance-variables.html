@@ -1,0 +1,68 @@
+<html><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/><title>实例变量 · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="实例变量 · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="在 ReactJS 中，你可以很容易的在组件内部定义另外的变量："/><link rel="shortcut icon" href="/reason-react/img/reason-react-red.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/"><img class="logo" src="/reason-react/img/reason-react-white.svg"/><h2 class="headerTitle">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li><a href="/reason-react/docs/zh-CN/installation.html" target="_self">文档</a></li><li><a href="/reason-react/docs/zh-CN/simple.html" target="_self">示例</a></li><li><a href="/reason-react/docs/zh-CN/community.html" target="_self">社区</a></li><li><a href="/reason-react/blog" target="_self">博客</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>中文</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/en">English</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank">帮助翻译</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(){
+          if(languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Core</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>入门</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/what-and-why.html">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/installation.html">安装</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/intro-example.html">示例</a></li></ul></div><div class="navGroup navGroupActive"><h3>核心</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/creation-props-self.html">组件申明，属性以及Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/jsx.html">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/render.html">Render</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/callback-handlers.html">处理回调</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/state-actions-reducer.html">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/lifecycles.html">生命周期</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/docs/zh-CN/instance-variables.html">实例变量</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/react-ref.html">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/interop.html">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/event.html">事件</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/style.html">Style</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/clone-element.html">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/children.html">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/dom.html">处理DOM元素</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/subscriptions-helper.html">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/router.html">Router</a></li></ul></div><div class="navGroup navGroupActive"><h3>ReactJS Idioms Equivalents</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/invalid-prop-name.html">无效的Prop命名</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/props-spread.html">属性遍历</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/component-as-prop.html">Component as Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/ternary-shortcut.html">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/context-mixins.html">Context &amp; Mixins?</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/custom-class-component-property.html">Custom Class/Component Property</a></li></ul></div><div class="navGroup navGroupActive"><h3>常见问题</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/im-having-a-type-error.html">我遇到一个类型错误</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/record-field-send-handle-not-found.html">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/send-handle-callbacks-having-incompatible-types.html">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/i-really-need-feature-x-from-reactjs.html">我真的需要ReactJS实现某项功能</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/element-type-is-invalid.html">Element Type is Invalid Runtime Error</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank">Translate</a><h1>实例变量</h1></header><article><div><span><p>在 ReactJS 中，你可以很容易的在组件内部定义另外的变量：</p>
+<pre><code class="hljs">const Greeting = React.createClass({
+  intervalId: null,
+  componentDidMount: () =&gt; this.intervalId = setInterval(...),
+  render: ...
+});
+</code></pre>
+<p>实际上，这么做你同样是改变了这个组件的 &quot;state&quot;，只是不触发 re-render， ReasonReact asks you to correctly put these instance variables into your component's <code>state</code>, into Reason <a href="https://reasonml.github.io/docs/en/mutation.html"><code>ref</code>s</a>.</p>
+<pre><code class="hljs css reason">type <span class="hljs-keyword">state</span> = {
+  someRandomState: option(string),
+  intervalId: ref(option(int))
+};
+
+let component = ...; /* remember, `component` needs <span class="hljs-keyword">to</span> be close <span class="hljs-keyword">to</span> `make`, and after `<span class="hljs-keyword">state</span>` type declaration! */
+
+let make = (_children) =&gt; {
+  ...component,
+  initialState: () =&gt; {someRandomState: Some(<span class="hljs-string">"hello"</span>), intervalId: ref(None)},
+  didMount: ({<span class="hljs-keyword">state</span>}) =&gt; {
+    /* mutate the value here */
+    <span class="hljs-keyword">state</span>.intervalId := Some(Js.Global.<span class="hljs-built_in">set</span>Interval(...));
+    /* no extra <span class="hljs-keyword">state</span> update needed */
+    ReasonReact.NoUpdate
+  },
+  render: ...
+};
+</code></pre>
+<p><strong>所有的实例变量 (subscriptions, refs, etc.) 都必须在 state 里面标记成 <code>ref</code></strong>， 不要在 state record 上直接使用 <code>mutable</code>， 使用一个不可变的字段去指向一个 Reason <code>ref</code>。 为什么要这样约束？ 为了更好的管理 side-effects 和 mutations 来准备 concurrent React。 More details <a href="https://reasonml.github.io/try/?reason=C4TwDgpgBAzlC8UDeBDAXFAlgO2AGlgHsBbCASWxmBWwGMIA1FAJw2YgDMAKHYASgC+AbgBQAegBUUbIQDuUCWJEAbCMFjVg0REhFQo6KAEY8eoqQpUa9JqyjtuAJj4jh4qRGIBXZSi1QAAystAINaehg4DmYSKFplQhgvdgA6KAAVAAtodhQAEyhCDkDgiFDiTABzTPUAI2grVShakChgbLbMUixgAHI4CAAPCFovLTyMRXcoDi9sZFKBBAA+GbmoLj4VqAAlCBQYQmw9lFpgFIBVMDy-aCQUh9KCWt8lqdV1UscEZAeUp4MGAAzG5JM0xlBvJpMEdCsUgpoytIIBA8nBgIRmjlOKozqisPMEbdHKEqJhlMoAIQKJSlf4kciUah0RgsKBoRAAFlEYJgmUIPgK9SgnJpIgAUjAUglKlwvvSLEzrKzmAA9Pg8qTtTBwWQC5R5bC9dR65gAaywxVk0DymNAkAMCFQGF4BChKBeDQZlmZNhYLtwbzEQA">here</a> if you're ever interested.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="lifecycles.html">← 生命周期</a><a class="docs-next button" href="react-ref.html">React Ref →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
