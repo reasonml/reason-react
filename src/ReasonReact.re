@@ -28,7 +28,8 @@ external cloneElement :
 external createElementVerbatim : 'a = "createElement";
 
 let createDomElement = (s, ~props, children) => {
-  let vararg = [|Obj.magic(s), Obj.magic(props)|] |> Js.Array.concat(children);
+  let vararg =
+    [|Obj.magic(s), Obj.magic(props)|] |> Js.Array.concat(children);
   /* Use varargs to avoid warnings on duplicate keys in children */
   Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, vararg);
 };
@@ -77,7 +78,7 @@ and jsElementWrapped =
       ~key: Js.nullable(string),
       ~ref: Js.nullable(Js.nullable(reactRef) => unit)
     ) =>
-    reactElement
+    reactElement,
   )
 and update('state, 'retainedProps, 'action) =
   | NoUpdate
@@ -86,11 +87,11 @@ and update('state, 'retainedProps, 'action) =
   | SideEffects(self('state, 'retainedProps, 'action) => unit)
   | UpdateWithSideEffects(
       'state,
-      self('state, 'retainedProps, 'action) => unit
+      self('state, 'retainedProps, 'action) => unit,
     )
   | SilentUpdateWithSideEffects(
       'state,
-      self('state, 'retainedProps, 'action) => unit
+      self('state, 'retainedProps, 'action) => unit,
     )
 /***
  * Granularly types state, and initial state as being independent, so that we
@@ -101,7 +102,7 @@ and componentSpec(
   'initialState,
   'retainedProps,
   'initialRetainedProps,
-  'action
+  'action,
 ) = {
   debugName: string,
   reactClassInternal,
@@ -120,7 +121,7 @@ and componentSpec(
   retainedProps: 'initialRetainedProps,
   reducer: ('action, 'state) => update('state, 'retainedProps, 'action),
   subscriptions: self('state, 'retainedProps, 'action) => list(subscription),
-  jsElementWrapped
+  jsElementWrapped,
 }
 and component('state, 'retainedProps, 'action) =
   componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action)
@@ -138,11 +139,11 @@ and self('state, 'retainedProps, 'action) = {
   reduce: 'payload .reduce('payload, 'action),
   state: 'state,
   retainedProps: 'retainedProps,
-  send: 'action => unit
+  send: 'action => unit,
 }
 and oldNewSelf('state, 'retainedProps, 'action) = {
   oldSelf: self('state, 'retainedProps, 'action),
-  newSelf: self('state, 'retainedProps, 'action)
+  newSelf: self('state, 'retainedProps, 'action),
 };
 
 type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
@@ -150,8 +151,7 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
   "state": totalState('state, 'retainedProps, 'action),
   "props": {. "reasonProps": 'props},
   "setState":
-    [@bs.meth]
-    (
+    [@bs.meth] (
       (
         (totalState('state, 'retainedProps, 'action), 'props) =>
         totalState('state, 'retainedProps, 'action)
@@ -159,7 +159,7 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       unit
     ),
   "jsPropsToReason":
-    option(jsPropsToReason('props, 'state, 'retainedProps, 'action))
+    option(jsPropsToReason('props, 'state, 'retainedProps, 'action)),
 }
 /***
  * `totalState` tracks all of the internal reason API bookkeeping, as well as
@@ -193,7 +193,7 @@ and totalState('state, 'retainedProps, 'action) = {
    * `reasonStateVersionUsedToComputeSubelements` can lag behind if there has
    * not yet been a chance to rerun the named arg factory function.  */
   "reasonStateVersionUsedToComputeSubelements": int,
-  "sideEffects": list(self('state, 'retainedProps, 'action) => unit)
+  "sideEffects": list(self('state, 'retainedProps, 'action) => unit),
 };
 
 let lifecycleNoUpdate = (_) => NoUpdate;
@@ -241,8 +241,8 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
       Invalid_argument(
         "A JS component called the Reason component "
         ++ debugName
-        ++ " which didn't implement the JS->Reason React props conversion."
-      )
+        ++ " which didn't implement the JS->Reason React props conversion.",
+      ),
     )
   };
 };
@@ -250,8 +250,7 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
 let createClass =
     (type reasonState, type retainedProps, type action, debugName)
     : reactClass =>
-  [@bs]
-  ReasonReactOptimizedCreateClass.createClass(
+  ReasonReactOptimizedCreateClass.createClass(.
     [@bs]
     {
       val displayName = debugName;
@@ -264,7 +263,7 @@ let createClass =
         send: Obj.magic(this##sendMethod),
         reduce: Obj.magic(this##reduceMethod),
         state,
-        retainedProps
+        retainedProps,
       };
       /***
        * TODO: Null out fields that aren't overridden beyond defaults in
@@ -280,40 +279,49 @@ let createClass =
        * reasonStateVersionUsedToComputeSubelements).
        */
       pub transitionNextTotalState = (curTotalState, reasonStateUpdate) =>
-        switch reasonStateUpdate {
+        switch (reasonStateUpdate) {
         | NoUpdate => curTotalState
         | Update(nextReasonState) => {
             "reasonState": nextReasonState,
             "reasonStateVersion": curTotalState##reasonStateVersion + 1,
             "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-            "sideEffects": curTotalState##sideEffects
+            "sideEffects": curTotalState##sideEffects,
           }
         | SilentUpdate(nextReasonState) => {
             "reasonState": nextReasonState,
             "reasonStateVersion": curTotalState##reasonStateVersion + 1,
             "reasonStateVersionUsedToComputeSubelements":
               curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            "sideEffects": curTotalState##sideEffects
+            "sideEffects": curTotalState##sideEffects,
           }
         | SideEffects(performSideEffects) => {
             "reasonState": curTotalState##reasonState,
             "reasonStateVersion": curTotalState##reasonStateVersion + 1,
             "reasonStateVersionUsedToComputeSubelements":
               curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            "sideEffects": [performSideEffects, ...curTotalState##sideEffects]
+            "sideEffects": [
+              performSideEffects,
+              ...curTotalState##sideEffects,
+            ],
           }
         | UpdateWithSideEffects(nextReasonState, performSideEffects) => {
             "reasonState": nextReasonState,
             "reasonStateVersion": curTotalState##reasonStateVersion + 1,
             "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-            "sideEffects": [performSideEffects, ...curTotalState##sideEffects]
+            "sideEffects": [
+              performSideEffects,
+              ...curTotalState##sideEffects,
+            ],
           }
         | SilentUpdateWithSideEffects(nextReasonState, performSideEffects) => {
             "reasonState": nextReasonState,
             "reasonStateVersion": curTotalState##reasonStateVersion + 1,
             "reasonStateVersionUsedToComputeSubelements":
               curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            "sideEffects": [performSideEffects, ...curTotalState##sideEffects]
+            "sideEffects": [
+              performSideEffects,
+              ...curTotalState##sideEffects,
+            ],
           }
         };
       pub getInitialState = () : totalState('state, 'retainedProps, 'action) => {
@@ -325,7 +333,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             thisJs##props,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         let Element(component) = convertedReasonProps;
         let initialReasonState = component.initialState();
@@ -337,7 +345,7 @@ let createClass =
            */
           "reasonStateVersion": 1,
           "reasonStateVersionUsedToComputeSubelements": 1,
-          "sideEffects": []
+          "sideEffects": [],
         };
       };
       pub componentDidMount = () => {
@@ -349,7 +357,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             thisJs##props,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         let Element(component) = convertedReasonProps;
         let curTotalState = thisJs##state;
@@ -390,7 +398,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             newJsProps,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         let Element(newComponent) = newConvertedReasonProps;
         if (newComponent.didUpdate !== lifecyclePreviousCurrentReturnUnit) {
@@ -400,20 +408,23 @@ let createClass =
               convertPropsIfTheyreFromJs(
                 prevProps,
                 thisJs##jsPropsToReason,
-                debugName
+                debugName,
               );
           let Element(oldComponent) = oldConvertedReasonProps;
           let prevReasonState = prevState##reasonState;
           let prevReasonState = Obj.magic(prevReasonState);
           let newSelf =
-            this##self(curReasonState, Obj.magic(newComponent.retainedProps));
+            this##self(
+              curReasonState,
+              Obj.magic(newComponent.retainedProps),
+            );
           let newSelf = Obj.magic(newSelf);
           /* bypass this##self call for small perf boost */
           let oldSelf =
             Obj.magic({
               ...newSelf,
               state: prevReasonState,
-              retainedProps: oldComponent.retainedProps
+              retainedProps: oldComponent.retainedProps,
             });
           newComponent.didUpdate({oldSelf, newSelf});
         };
@@ -428,7 +439,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             thisJs##props,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         let Element(component) = convertedReasonProps;
         let curState = thisJs##state;
@@ -460,7 +471,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             nextProps,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         let Element(newComponent) = newConvertedReasonProps;
         if (newComponent.willUpdate !== willUpdateDefault) {
@@ -472,7 +483,7 @@ let createClass =
               convertPropsIfTheyreFromJs(
                 oldJsProps,
                 thisJs##jsPropsToReason,
-                debugName
+                debugName,
               );
           let Element(oldComponent) = oldConvertedReasonProps;
           let curState = thisJs##state;
@@ -480,14 +491,17 @@ let createClass =
           let curReasonState = Obj.magic(curReasonState);
           let nextReasonState = nextState##reasonState;
           let newSelf =
-            this##self(nextReasonState, Obj.magic(newComponent.retainedProps));
+            this##self(
+              nextReasonState,
+              Obj.magic(newComponent.retainedProps),
+            );
           let newSelf = Obj.magic(newSelf);
           /* bypass this##self call for small perf boost */
           let oldSelf =
             Obj.magic({
               ...newSelf,
               state: curReasonState,
-              retainedProps: oldComponent.retainedProps
+              retainedProps: oldComponent.retainedProps,
             });
           newComponent.willUpdate({oldSelf, newSelf});
         };
@@ -506,7 +520,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             nextProps,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         let Element(newComponent) = Obj.magic(newConvertedReasonProps);
         if (newComponent.willReceiveProps !== willReceivePropsDefault) {
@@ -518,7 +532,7 @@ let createClass =
               convertPropsIfTheyreFromJs(
                 oldJsProps,
                 thisJs##jsPropsToReason,
-                debugName
+                debugName,
               );
           let Element(oldComponent) = oldConvertedReasonProps;
           thisJs##setState((curTotalState, _) => {
@@ -528,8 +542,8 @@ let createClass =
               Obj.magic(
                 this##self(
                   curReasonState,
-                  Obj.magic(oldComponent.retainedProps)
-                )
+                  Obj.magic(oldComponent.retainedProps),
+                ),
               );
             let nextReasonState =
               Obj.magic(newComponent.willReceiveProps(oldSelf));
@@ -541,7 +555,7 @@ let createClass =
                 "reasonState": nextReasonState,
                 "reasonStateVersion": nextReasonStateVersion,
                 "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-                "sideEffects": nextReasonState##sideEffects
+                "sideEffects": nextReasonState##sideEffects,
               };
               let nextTotalState = Obj.magic(nextTotalState);
               nextTotalState;
@@ -593,7 +607,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             thisJs##props,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         /* Avoid converting again the props that are just the same as curProps. */
         let newConvertedReasonProps =
@@ -602,7 +616,7 @@ let createClass =
             convertPropsIfTheyreFromJs(
               nextJsProps,
               thisJs##jsPropsToReason,
-              debugName
+              debugName,
             );
         let Element(oldComponent) = oldConvertedReasonProps;
         let Element(newComponent) = newConvertedReasonProps;
@@ -628,7 +642,7 @@ let createClass =
               Obj.magic({
                 ...newSelf,
                 state: curReasonState,
-                retainedProps: oldComponent.retainedProps
+                retainedProps: oldComponent.retainedProps,
               });
             newComponent.shouldUpdate({oldSelf, newSelf});
           } else {
@@ -641,11 +655,11 @@ let createClass =
           /* This can enqueue additional side effects */
           List.iter(
             performSideEffects => performSideEffects(newSelf),
-            nextSideEffects
+            nextSideEffects,
           );
           thisJs##setState((futureTotalState, _) => {
             let rec initialSegment = (acc, n, l) =>
-              switch l {
+              switch (l) {
               | [x, ...nextL] when n > 0 =>
                 initialSegment([x, ...acc], n - 1, nextL)
               | _ => List.rev(acc)
@@ -662,7 +676,7 @@ let createClass =
               "reasonState": futureTotalState##reasonState,
               "reasonStateVersion": futureTotalState##reasonStateVersion,
               "reasonStateVersionUsedToComputeSubelements": futureTotalState##reasonStateVersionUsedToComputeSubelements,
-              "sideEffects": newSideEffects
+              "sideEffects": newSideEffects,
             };
             nextStateOnlyNewSideEffects;
           });
@@ -681,14 +695,14 @@ let createClass =
             convertPropsIfTheyreFromJs(
               thisJs##props,
               thisJs##jsPropsToReason,
-              debugName
+              debugName,
             );
           let Element(component) = convertedReasonProps;
           callback(
             callbackPayload,
             Obj.magic(
-              this##self(curReasonState, Obj.magic(component.retainedProps))
-            )
+              this##self(curReasonState, Obj.magic(component.retainedProps)),
+            ),
           );
         };
       };
@@ -704,21 +718,27 @@ let createClass =
             convertPropsIfTheyreFromJs(
               thisJs##props,
               thisJs##jsPropsToReason,
-              debugName
+              debugName,
             );
           let Element(component) = convertedReasonProps;
           let reasonStateUpdate =
             callback(
               event,
               Obj.magic(
-                this##self(curReasonState, Obj.magic(component.retainedProps))
-              )
+                this##self(
+                  curReasonState,
+                  Obj.magic(component.retainedProps),
+                ),
+              ),
             );
           if (reasonStateUpdate === NoUpdate) {
             magicNull;
           } else {
             let nextTotalState =
-              this##transitionNextTotalState(curTotalState, reasonStateUpdate);
+              this##transitionNextTotalState(
+                curTotalState,
+                reasonStateUpdate,
+              );
             if (nextTotalState##reasonStateVersion
                 !== curTotalState##reasonStateVersion) {
               /* Need to Obj.magic because setState accepts a callback
@@ -738,7 +758,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             thisJs##props,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         let Element(component) = convertedReasonProps;
         if (component.reducer !== reducerDefault) {
@@ -754,7 +774,7 @@ let createClass =
               let nextTotalState =
                 this##transitionNextTotalState(
                   curTotalState,
-                  Obj.magic(reasonStateUpdate)
+                  Obj.magic(reasonStateUpdate),
                 );
               if (nextTotalState##reasonStateVersion
                   !== curTotalState##reasonStateVersion) {
@@ -783,7 +803,7 @@ let createClass =
           convertPropsIfTheyreFromJs(
             thisJs##props,
             thisJs##jsPropsToReason,
-            debugName
+            debugName,
           );
         let Element(created) = Obj.magic(convertedReasonProps);
         let component = created;
@@ -791,11 +811,11 @@ let createClass =
         let curReasonState = Obj.magic(curState##reasonState);
         let self =
           Obj.magic(
-            this##self(curReasonState, Obj.magic(component.retainedProps))
+            this##self(curReasonState, Obj.magic(component.retainedProps)),
           );
         component.render(self);
       }
-    }
+    },
   );
 
 let basicComponent = debugName => {
@@ -804,7 +824,7 @@ let basicComponent = debugName => {
     debugName,
     /* Keep here as a way to prove that the API may be implemented soundly */
     handedOffState: {
-      contents: None
+      contents: None,
     },
     didMount: didMountDefault,
     willReceiveProps: willReceivePropsDefault,
@@ -821,7 +841,7 @@ let basicComponent = debugName => {
     reducer: reducerDefault,
     jsElementWrapped: None,
     retainedProps: retainedPropsDefault,
-    subscriptions: subscriptionsDefault
+    subscriptions: subscriptionsDefault,
   };
   componentTemplate;
 };
@@ -838,7 +858,7 @@ let statelessComponentWithRetainedProps =
         stateless,
         'retainedProps,
         noRetainedProps,
-        actionless
+        actionless,
       ) =>
   basicComponent(debugName);
 
@@ -849,7 +869,7 @@ let reducerComponent =
         stateless,
         noRetainedProps,
         noRetainedProps,
-        'action
+        'action,
       ) =>
   basicComponent(debugName);
 
@@ -860,7 +880,7 @@ let reducerComponentWithRetainedProps =
         stateless,
         'retainedProps,
         noRetainedProps,
-        'action
+        'action,
       ) =>
   basicComponent(debugName);
 
@@ -876,20 +896,20 @@ let element =
     (
       ~key: string=Obj.magic(Js.Nullable.undefined),
       ~ref: Js.nullable(reactRef) => unit=Obj.magic(Js.Nullable.undefined),
-      component: component('state, 'retainedProps, 'action)
+      component: component('state, 'retainedProps, 'action),
     ) => {
   let element = Element(component);
-  switch component.jsElementWrapped {
+  switch (component.jsElementWrapped) {
   | Some(jsElementWrapped) =>
     jsElementWrapped(
       ~key=Js.Nullable.return(key),
-      ~ref=Js.Nullable.return(ref)
+      ~ref=Js.Nullable.return(ref),
     )
   | None =>
     createElement(
       component.reactClassInternal,
       ~props={"key": key, "ref": ref, "reasonProps": element},
-      [||]
+      [||],
     )
   };
 };
@@ -898,14 +918,14 @@ let wrapReasonForJs =
     (
       ~component,
       jsPropsToReason:
-        jsPropsToReason('jsProps, 'state, 'retainedProps, 'action)
+        jsPropsToReason('jsProps, 'state, 'retainedProps, 'action),
     ) => {
   let jsPropsToReason:
     jsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     Obj.magic(jsPropsToReason) /* cast 'jsProps to jsProps */;
   Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason#=(
                                                                     Some(
-                                                                    jsPropsToReason
+                                                                    jsPropsToReason,
                                                                     )
                                                                     );
   component.reactClassInternal;
@@ -920,12 +940,12 @@ module WrapProps = {
         ~props,
         children,
         ~key: Js.nullable(string),
-        ~ref: Js.nullable(Js.nullable(reactRef) => unit)
+        ~ref: Js.nullable(Js.nullable(reactRef) => unit),
       ) => {
     let props =
       Js.Obj.assign(
         Js.Obj.assign(Js.Obj.empty(), props),
-        {"ref": ref, "key": key}
+        {"ref": ref, "key": key},
       );
     let varargs =
       [|Obj.magic(reactClass), Obj.magic(props)|]
@@ -966,6 +986,17 @@ module Router = {
     "";
   [@bs.new]
   external makeEvent : ([@bs.string] [ | `popstate]) => Dom.event = "Event";
+  /* This is copied from array.ml. We want to cut dependencies for ReasonReact so
+     that it's friendlier to use in size-constrained codebases */
+  let arrayToList = a => {
+    let rec tolist = (i, res) =>
+      if (i < 0) {
+        res;
+      } else {
+        tolist(i - 1, [Array.unsafe_get(a, i), ...res]);
+      };
+    tolist(Array.length(a) - 1, []);
+  };
   /* if we ever roll our own parser in the future, make sure you test all url combinations
      e.g. foo.com/?#bar
      */
@@ -973,7 +1004,7 @@ module Router = {
   /* actually you know what, not gonna provide search for now. It's a mess.
      We'll let users roll their own solution/data structure for now */
   let path = () =>
-    switch [%external window] {
+    switch ([%external window]) {
     | None => []
     | Some((window: Dom.window)) =>
       switch (window |> location |> pathname) {
@@ -988,11 +1019,11 @@ module Router = {
           | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
           | _ => raw
           };
-        raw |> Js.String.split("/") |> Array.to_list;
+        raw |> Js.String.split("/") |> arrayToList;
       }
     };
   let hash = () =>
-    switch [%external window] {
+    switch ([%external window]) {
     | None => ""
     | Some((window: Dom.window)) =>
       switch (window |> location |> hash) {
@@ -1005,7 +1036,7 @@ module Router = {
       }
     };
   let search = () =>
-    switch [%external window] {
+    switch ([%external window]) {
     | None => ""
     | Some((window: Dom.window)) =>
       switch (window |> location |> search) {
@@ -1027,14 +1058,14 @@ module Router = {
   type url = {
     path: list(string),
     hash: string,
-    search: string
+    search: string,
   };
   type watcherID = unit => unit;
   let url = () => {path: path(), hash: hash(), search: search()};
   /* alias exposed publicly */
   let dangerouslyGetInitialUrl = url;
   let watchUrl = callback =>
-    switch [%external window] {
+    switch ([%external window]) {
     | None => (() => ())
     | Some((window: Dom.window)) =>
       let watcherID = () => callback(url());
@@ -1042,7 +1073,7 @@ module Router = {
       watcherID;
     };
   let unwatchUrl = watcherID =>
-    switch [%external window] {
+    switch ([%external window]) {
     | None => ()
     | Some((window: Dom.window)) =>
       removeEventListener(window, `popstate, watcherID)

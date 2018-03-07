@@ -15,17 +15,16 @@ external render : (ReasonReact.reactElement, Dom.element) => unit =
   "document.getElementById";
 
 let renderToElementWithClassName = (reactElement, className) => {
-  let elements = _getElementsByClassName(className);
-  if (Array.length(elements) == 0) {
+  switch (_getElementsByClassName(className)) {
+  | [||] => 
     raise(
       Invalid_argument(
-        "ReactDOMRE.renderToElementWithClassName: no element of class "
+        "ReactDOMRe.renderToElementWithClassName: no element of class "
         ++ (className ++ " found in the HTML.")
       )
     )
-  } else {
-    render(reactElement, elements[0])
-  }
+  | elements => render(reactElement, Array.unsafe_get(elements, 0))
+  };
 };
 
 let renderToElementWithId = (reactElement, id) =>
@@ -33,7 +32,7 @@ let renderToElementWithId = (reactElement, id) =>
   | None =>
     raise(
       Invalid_argument(
-        "ReactDOMRE.renderToElementWithId : no element of id " ++ (id ++ " found in the HTML.")
+        "ReactDOMRe.renderToElementWithId : no element of id " ++ (id ++ " found in the HTML.")
       )
     )
   | Some(element) => render(reactElement, element)
