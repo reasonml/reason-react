@@ -8,12 +8,19 @@ ReasonReact stateful components are like ReactJS stateful components, except wit
 
 To declare a stateful ReasonReact component, instead of `ReasonReact.statelessComponent("MyComponentName")`, use `ReasonReact.reducerComponent("MyComponentName")`.
 
+The compiler will need a type for component state and action. The most idiomatic way to fullfil its needs is to declare those types and let the compiler infer them based on your `initialState` and/or `reducer` functions.
+
 ```reason
+type action = ...
+
+type state = int
+
 let component = ReasonReact.reducerComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component,
-  initialState: () => 0, /* here, state is an `int` */
+  initialState: () => 42,  /* here, state is an `int` */
+  reducer: (action,state) => { ... },
   render: (self) => {
     let greeting =
       "Hello " ++ name ++ ". You've clicked the button " ++ string_of_int(self.state) ++ " time(s)!";
