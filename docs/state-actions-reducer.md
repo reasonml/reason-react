@@ -8,34 +8,71 @@ ReasonReact stateful components are like ReactJS stateful components, except wit
 
 To declare a stateful ReasonReact component, instead of `ReasonReact.statelessComponent("MyComponentName")`, use `ReasonReact.reducerComponent("MyComponentName")`.
 
-```reason
-let component = ReasonReact.reducerComponent("Greeting");
+Here's a complete, working, stateful ReasonReact component. We'll refer to it later on.
 
-let make = (~name, _children) => {
-  ...component,
-  initialState: () => 0, /* here, state is an `int` */
-  render: (self) => {
-    let greeting =
-      "Hello " ++ name ++ ". You've clicked the button " ++ string_of_int(self.state) ++ " time(s)!";
-    <div>{ReasonReact.stringToElement(greeting)}</div>
-  }
+```reason
+/* State declaration */
+type state = {
+  count: int,
+  show: bool,
 };
 
+/* Action declaration */
+type action =
+  | Click
+  | Toggle;
+
+/* Component template declaration.
+   Needs to be **after** state and action declarations! */
+let component = ReasonReact.reducerComponent("Example");
+
+/* greeting and children are props. `children` isn't used, therefore ignored.
+   We ignore it by prepending it with an underscore */
+let make = (~greeting, _children) => {
+  /* spread the other default fields of component here and override a few */
+  ...component,
+
+  initialState: () => {count: 0, show: true},
+
+  /* State transitions */
+  reducer: (action, state) =>
+    switch (action) {
+    | Click => ReasonReact.Update({...state, count: state.count + 1})
+    | Toggle => ReasonReact.Update({...state, show: ! state.show})
+    },
+
+  render: self => {
+    let message =
+      "You've clicked this " ++ string_of_int(self.state.count) ++ " times(s)";
+    <div>
+      <button onClick=(_event => self.send(Click))>
+        (ReasonReact.stringToElement(message))
+      </button>
+      <button onClick=(_event => self.send(Toggle))>
+        (ReasonReact.stringToElement("Toggle greeting"))
+      </button>
+      (
+        self.state.show ?
+          ReasonReact.stringToElement(greeting) : ReasonReact.nullElement
+      )
+    </div>;
+  },
+};
 ```
 
 ## `initialState`
 
-ReactJS' `getInitialState` is called `initialState` in ReasonReact. It takes `unit` and returns the state type. The state type could be anything! An int, a string, a ref or the common record type, which you should declare **right** before the `reducerComponent` call:
+ReactJS' `getInitialState` is called `initialState` in ReasonReact. It takes `unit` and returns the state type. The state type could be anything! An int, a string, a ref or the common record type, which you should declare **right before the `reducerComponent` call**:
 
 ```reason
-type state = {counter: int, showPopUp: bool};
+type state = {count: int, show: bool};
 
-let component = ReasonReact.reducerComponent("Dialog");
+let component = ReasonReact.reducerComponent("Example");
 
 let make = (~onClick, _children) => {
   ...component,
-  initialState: () => {counter: 0, showPopUp: false},
-  render: ...
+  initialState: () => {count: 0, show: true},
+  /* ... other fields */
 };
 
 ```
@@ -48,7 +85,7 @@ In ReactJS, you'd update the state inside a callback handler, e.g.
 
 ```javascript
 {
-  ...
+  /* ... other fields */
   handleClick: function() {
     this.setState({count: this.state.count + 1});
   },
@@ -65,40 +102,7 @@ In ReactJS, you'd update the state inside a callback handler, e.g.
 }
 ```
 
-In ReasonReact, you'd gather all these state-setting handlers into a single place, the component's `reducer`! Here's a full example, which we'll explain in detail:
-
-```reason
-type action =
-  | Click
-  | Toggle;
-
-type state = {
-  count: int,
-  show: bool
-};
-
-let component = ReasonReact.reducerComponent("MyForm");
-
-let make = (_children) => {
-  ...component,
-  initialState: () => {count: 0, show: false},
-  reducer: (action, state) =>
-    switch (action) {
-    | Click => ReasonReact.Update({...state, count: state.count + 1})
-    | Toggle => ReasonReact.Update({...state, show: ! state.show})
-    },
-  render: (self) => {
-    let message = "Clicked " ++ string_of_int(self.state.count) ++ " times(s)";
-    <div>
-      <MyDialog
-        onClick={_event => self.send(Click)}
-        onSubmit={_event => self.send(Toggle)}
-      />
-      {ReasonReact.stringToElement(message)}
-    </div>
-  }
-};
-```
+In ReasonReact, you'd gather all these state-setting handlers into a single place, the component's `reducer`! **Please refer to the first snippet of code on this page**.
 
 **Note**: if you ever see mentions of `self.reduce`, this is the old API. The new API is called `self.send`. The old API's docs are [here](https://github.com/reasonml/reason-react/blob/e17fcb5d27a2b7fb2cfdc09d46f0b4cf765e50e4/docs/state-actions-reducer.md).
 
