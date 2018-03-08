@@ -17,29 +17,65 @@
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/pt-BR" target="_blank">Translate</a><h1>State, Actions &amp; Reducer</h1></header><article><div><span><p>Finally, we're getting onto stateful components!</p>
 <p>ReasonReact stateful components are like ReactJS stateful components, except with the concept of &quot;reducer&quot; (like <a href="http://redux.js.org">Redux</a>) built in. If that word doesn't mean anything to you, just think of it as a state machine. If <em>that</em> word doesn't mean anything to you, just think: &quot;Woah this is great&quot;.</p>
 <p>To declare a stateful ReasonReact component, instead of <code>ReasonReact.statelessComponent(&quot;MyComponentName&quot;)</code>, use <code>ReasonReact.reducerComponent(&quot;MyComponentName&quot;)</code>.</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ReasonReact.reducerComponent(<span class="hljs-string">"Greeting"</span>);
-
-<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~name, _children</span>) =&gt;</span> {
-  ...component,
-  <span class="hljs-attr">initialState</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-number">0</span>, <span class="hljs-comment">/* here, state is an `int` */</span>
-  render: <span class="hljs-function">(<span class="hljs-params">self</span>) =&gt;</span> {
-    <span class="hljs-keyword">let</span> greeting =
-      <span class="hljs-string">"Hello "</span> ++ name ++ <span class="hljs-string">". You've clicked the button "</span> ++ string_of_int(self.state) ++ <span class="hljs-string">" time(s)!"</span>;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{ReasonReact.stringToElement(greeting)}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-  }
+<p>Here's a complete, working, stateful ReasonReact component. We'll refer to it later on.</p>
+<pre><code class="hljs css reason">/* State declaration */
+type <span class="hljs-keyword">state</span> = {
+  count: int,
+  show: bool,
 };
 
+/* Action declaration */
+type action =
+  | Click
+  | Toggle;
+
+/* Component template declaration.
+   Needs <span class="hljs-keyword">to</span> be **after** <span class="hljs-keyword">state</span> and action declarations! */
+let component = ReasonReact.reducerComponent(<span class="hljs-string">"Example"</span>);
+
+/* greeting and children are props. `children` isn't used, therefore ignored.
+   We ignore it by prepending it with an underscore */
+let make = (~greeting, _children) =&gt; {
+  /* spread the other <span class="hljs-keyword">default</span> fields of component here and override a few */
+  ...component,
+
+  initialState: () =&gt; {count: <span class="hljs-number">0</span>, show: true},
+
+  /* State transitions */
+  reducer: (action, <span class="hljs-keyword">state</span>) =&gt;
+    switch (action) {
+    | Click =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
+    | Toggle =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, show: ! <span class="hljs-keyword">state</span>.show})
+    },
+
+  render: <span class="hljs-literal">self</span> =&gt; {
+    let message =
+      <span class="hljs-string">"You've clicked this "</span> ++ string_of_int(<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.count) ++ <span class="hljs-string">" times(s)"</span>;
+    <span class="hljs-variable">&lt;div&gt;</span>
+      <span class="hljs-variable">&lt;button onClick=(_event =&gt;</span> <span class="hljs-literal">self</span>.send(Click))&gt;
+        (ReasonReact.stringToElement(message))
+      &lt;/button&gt;
+      <span class="hljs-variable">&lt;button onClick=(_event =&gt;</span> <span class="hljs-literal">self</span>.send(Toggle))&gt;
+        (ReasonReact.stringToElement(<span class="hljs-string">"Toggle greeting"</span>))
+      &lt;/button&gt;
+      (
+        <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.show ?
+          ReasonReact.stringToElement(greeting) : ReasonReact.nullElement
+      )
+    &lt;/div&gt;;
+  },
+};
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" name="initialstate"></a><a href="#initialstate" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>initialState</code></h2>
-<p>ReactJS' <code>getInitialState</code> is called <code>initialState</code> in ReasonReact. It takes <code>unit</code> and returns the state type. The state type could be anything! An int, a string, a ref or the common record type, which you should declare <strong>right</strong> before the <code>reducerComponent</code> call:</p>
-<pre><code class="hljs css reason"><span class="hljs-built_in">type</span> state = {<span class="hljs-name">counter</span>: int, <span class="hljs-name">showPopUp</span>: bool};
+<p>ReactJS' <code>getInitialState</code> is called <code>initialState</code> in ReasonReact. It takes <code>unit</code> and returns the state type. The state type could be anything! An int, a string, a ref or the common record type, which you should declare <strong>right before the <code>reducerComponent</code> call</strong>:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">type</span> state = {count: int, show: bool};
 
-let component = ReasonReact.reducerComponent(<span class="hljs-string">"Dialog"</span>);
+<span class="hljs-keyword">let</span> component = ReasonReact.reducerComponent(<span class="hljs-string">"Example"</span>);
 
-let make = <span class="hljs-function"><span class="hljs-params">(~onClick, _children)</span> =&gt;</span> {
+<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~onClick, _children</span>) =&gt;</span> {
   ...component,
-  <span class="hljs-name">initialState</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {<span class="hljs-name">counter</span>: <span class="hljs-number">0</span>, <span class="hljs-name">showPopUp</span>: <span class="hljs-literal">false</span>},
-  <span class="hljs-name">render</span>: ...
+  initialState: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {count: <span class="hljs-number">0</span>, show: <span class="hljs-literal">true</span>},
+  <span class="hljs-comment">/* ... other fields */</span>
 };
 
 </code></pre>
@@ -47,7 +83,7 @@ let make = <span class="hljs-function"><span class="hljs-params">(~onClick, _chi
 <h2><a class="anchor" aria-hidden="true" name="actions-reducer"></a><a href="#actions-reducer" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Actions &amp; Reducer</h2>
 <p>In ReactJS, you'd update the state inside a callback handler, e.g.</p>
 <pre><code class="hljs css javascript">{
-  ...
+  <span class="hljs-comment">/* ... other fields */</span>
   handleClick: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">this</span>.setState({<span class="hljs-attr">count</span>: <span class="hljs-keyword">this</span>.state.count + <span class="hljs-number">1</span>});
   },
@@ -63,38 +99,7 @@ let make = <span class="hljs-function"><span class="hljs-params">(~onClick, _chi
   }
 }
 </span></code></pre>
-<p>In ReasonReact, you'd gather all these state-setting handlers into a single place, the component's <code>reducer</code>! Here's a full example, which we'll explain in detail:</p>
-<pre><code class="hljs css reason">type action =
-  | Click
-  | Toggle;
-
-type <span class="hljs-keyword">state</span> = {
-  count: int,
-  show: bool
-};
-
-let component = ReasonReact.reducerComponent(<span class="hljs-string">"MyForm"</span>);
-
-let make = (_children) =&gt; {
-  ...component,
-  initialState: () =&gt; {count: <span class="hljs-number">0</span>, show: false},
-  reducer: (action, <span class="hljs-keyword">state</span>) =&gt;
-    switch (action) {
-    | Click =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
-    | Toggle =&gt; ReasonReact.Update({...<span class="hljs-keyword">state</span>, show: ! <span class="hljs-keyword">state</span>.show})
-    },
-  render: (<span class="hljs-literal">self</span>) =&gt; {
-    let message = <span class="hljs-string">"Clicked "</span> ++ string_of_int(<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.count) ++ <span class="hljs-string">" times(s)"</span>;
-    <span class="hljs-variable">&lt;div&gt;</span>
-      <span class="hljs-variable">&lt;MyDialog
-        onClick={_event =&gt;</span> <span class="hljs-literal">self</span>.send(Click)}
-        <span class="hljs-keyword">on</span>Submit={_event =&gt; <span class="hljs-literal">self</span>.send(Toggle)}
-      /&gt;
-      {ReasonReact.stringToElement(message)}
-    &lt;/div&gt;
-  }
-};
-</code></pre>
+<p>In ReasonReact, you'd gather all these state-setting handlers into a single place, the component's <code>reducer</code>! <strong>Please refer to the first snippet of code on this page</strong>.</p>
 <p><strong>Note</strong>: if you ever see mentions of <code>self.reduce</code>, this is the old API. The new API is called <code>self.send</code>. The old API's docs are <a href="https://github.com/reasonml/reason-react/blob/e17fcb5d27a2b7fb2cfdc09d46f0b4cf765e50e4/docs/state-actions-reducer.md">here</a>.</p>
 <p>A few things:</p>
 <ul>
