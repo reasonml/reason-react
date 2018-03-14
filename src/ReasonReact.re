@@ -706,49 +706,6 @@ let createClass =
           );
         };
       };
-      pub updateMethod = callback => {
-        let thisJs:
-          jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
-          "this"
-        ];
-        event => {
-          let curTotalState = thisJs##state;
-          let curReasonState = curTotalState##reasonState;
-          let convertedReasonProps =
-            convertPropsIfTheyreFromJs(
-              thisJs##props,
-              thisJs##jsPropsToReason,
-              debugName,
-            );
-          let Element(component) = convertedReasonProps;
-          let reasonStateUpdate =
-            callback(
-              event,
-              Obj.magic(
-                this##self(
-                  curReasonState,
-                  Obj.magic(component.retainedProps),
-                ),
-              ),
-            );
-          if (reasonStateUpdate === NoUpdate) {
-            magicNull;
-          } else {
-            let nextTotalState =
-              this##transitionNextTotalState(
-                curTotalState,
-                reasonStateUpdate,
-              );
-            if (nextTotalState##reasonStateVersion
-                !== curTotalState##reasonStateVersion) {
-              /* Need to Obj.magic because setState accepts a callback
-               * everywhere else */
-              let nextTotalState = Obj.magic(nextTotalState);
-              thisJs##setState(nextTotalState);
-            };
-          };
-        };
-      };
       pub sendMethod = (action: 'action) => {
         let thisJs:
           jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
