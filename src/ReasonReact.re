@@ -135,8 +135,7 @@ and self('state, 'retainedProps, 'action) = {
     'payload .
     (('payload, self('state, 'retainedProps, 'action)) => unit) =>
     Callback.t('payload),
-
-  reduce: 'payload .reduce('payload, 'action),
+  reduce: 'payload .reduce ('payload, 'action),
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,
@@ -154,7 +153,8 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
     [@bs.meth] (
       (
         (totalState('state, 'retainedProps, 'action), 'props) =>
-        totalState('state, 'retainedProps, 'action)
+        totalState('state, 'retainedProps, 'action),
+        Js.nullable(unit => unit)
       ) =>
       unit
     ),
@@ -193,7 +193,6 @@ and totalState('state, 'retainedProps, 'action) = {
    * `reasonStateVersionUsedToComputeSubelements` can lag behind if there has
    * not yet been a chance to rerun the named arg factory function.  */
   "reasonStateVersionUsedToComputeSubelements": int,
-  "sideEffects": list(self('state, 'retainedProps, 'action) => unit),
 };
 
 let lifecycleNoUpdate = (_) => NoUpdate;
@@ -280,49 +279,50 @@ let createClass =
        */
       pub transitionNextTotalState = (curTotalState, reasonStateUpdate) =>
         switch (reasonStateUpdate) {
-        | NoUpdate => curTotalState
-        | Update(nextReasonState) => {
-            "reasonState": nextReasonState,
-            "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-            "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-            "sideEffects": curTotalState##sideEffects,
-          }
-        | SilentUpdate(nextReasonState) => {
-            "reasonState": nextReasonState,
-            "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-            "reasonStateVersionUsedToComputeSubelements":
-              curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            "sideEffects": curTotalState##sideEffects,
-          }
-        | SideEffects(performSideEffects) => {
-            "reasonState": curTotalState##reasonState,
-            "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-            "reasonStateVersionUsedToComputeSubelements":
-              curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            "sideEffects": [
-              performSideEffects,
-              ...curTotalState##sideEffects,
-            ],
-          }
-        | UpdateWithSideEffects(nextReasonState, performSideEffects) => {
-            "reasonState": nextReasonState,
-            "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-            "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-            "sideEffects": [
-              performSideEffects,
-              ...curTotalState##sideEffects,
-            ],
-          }
-        | SilentUpdateWithSideEffects(nextReasonState, performSideEffects) => {
-            "reasonState": nextReasonState,
-            "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-            "reasonStateVersionUsedToComputeSubelements":
-              curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            "sideEffects": [
-              performSideEffects,
-              ...curTotalState##sideEffects,
-            ],
-          }
+        | NoUpdate => (None, curTotalState)
+        | Update(nextReasonState) => (
+            None,
+            {
+              "reasonState": nextReasonState,
+              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
+              "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
+            },
+          )
+        | SilentUpdate(nextReasonState) => (
+            None,
+            {
+              "reasonState": nextReasonState,
+              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
+              "reasonStateVersionUsedToComputeSubelements":
+                curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
+            },
+          )
+        | SideEffects(performSideEffects) => (
+            Some(performSideEffects),
+            {
+              "reasonState": curTotalState##reasonState,
+              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
+              "reasonStateVersionUsedToComputeSubelements":
+                curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
+            },
+          )
+        | UpdateWithSideEffects(nextReasonState, performSideEffects) => (
+            Some(performSideEffects),
+            {
+              "reasonState": nextReasonState,
+              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
+              "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
+            },
+          )
+        | SilentUpdateWithSideEffects(nextReasonState, performSideEffects) => (
+            Some(performSideEffects),
+            {
+              "reasonState": nextReasonState,
+              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
+              "reasonStateVersionUsedToComputeSubelements":
+                curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
+            },
+          )
         };
       pub getInitialState = () : totalState('state, 'retainedProps, 'action) => {
         let thisJs:
@@ -345,7 +345,6 @@ let createClass =
            */
           "reasonStateVersion": 1,
           "reasonStateVersionUsedToComputeSubelements": 1,
-          "sideEffects": [],
         };
       };
       pub componentDidMount = () => {
@@ -377,12 +376,32 @@ let createClass =
         if (component.didMount !== didMountDefault) {
           let reasonStateUpdate = component.didMount(self);
           let reasonStateUpdate = Obj.magic(reasonStateUpdate);
-          let nextTotalState =
+          let (performSideEffects, nextTotalState) =
             this##transitionNextTotalState(curTotalState, reasonStateUpdate);
-          if (nextTotalState##reasonStateVersion
-              !== curTotalState##reasonStateVersion) {
+          switch (
+            nextTotalState##reasonStateVersion
+            === curTotalState##reasonStateVersion,
+            performSideEffects,
+          ) {
+          | (false, Some(performSideEffects)) =>
             let nextTotalState = Obj.magic(nextTotalState);
-            thisJs##setState(nextTotalState);
+            thisJs##setState(
+              nextTotalState,
+              Js.Nullable.return(
+                this##handleMethod(((), self) => performSideEffects(self)),
+              ),
+            );
+          | (true, Some(performSideEffects)) =>
+            thisJs##setState(
+              (_) => magicNull,
+              Js.Nullable.return(
+                this##handleMethod(((), self) => performSideEffects(self)),
+              ),
+            )
+          | (false, None) =>
+            let nextTotalState = Obj.magic(nextTotalState);
+            thisJs##setState(nextTotalState, Js.Nullable.null);
+          | (true, None) => ()
           };
         };
       };
@@ -535,34 +554,36 @@ let createClass =
                 debugName,
               );
           let Element(oldComponent) = oldConvertedReasonProps;
-          thisJs##setState((curTotalState, _) => {
-            let curReasonState = Obj.magic(curTotalState##reasonState);
-            let curReasonStateVersion = curTotalState##reasonStateVersion;
-            let oldSelf =
-              Obj.magic(
-                this##self(
-                  curReasonState,
-                  Obj.magic(oldComponent.retainedProps),
-                ),
-              );
-            let nextReasonState =
-              Obj.magic(newComponent.willReceiveProps(oldSelf));
-            let nextReasonStateVersion =
-              nextReasonState !== curReasonState ?
-                curReasonStateVersion + 1 : curReasonStateVersion;
-            if (nextReasonStateVersion !== curReasonStateVersion) {
-              let nextTotalState: totalState(_) = {
-                "reasonState": nextReasonState,
-                "reasonStateVersion": nextReasonStateVersion,
-                "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-                "sideEffects": nextReasonState##sideEffects,
+          thisJs##setState(
+            (curTotalState, _) => {
+              let curReasonState = Obj.magic(curTotalState##reasonState);
+              let curReasonStateVersion = curTotalState##reasonStateVersion;
+              let oldSelf =
+                Obj.magic(
+                  this##self(
+                    curReasonState,
+                    Obj.magic(oldComponent.retainedProps),
+                  ),
+                );
+              let nextReasonState =
+                Obj.magic(newComponent.willReceiveProps(oldSelf));
+              let nextReasonStateVersion =
+                nextReasonState !== curReasonState ?
+                  curReasonStateVersion + 1 : curReasonStateVersion;
+              if (nextReasonStateVersion !== curReasonStateVersion) {
+                let nextTotalState: totalState(_) = {
+                  "reasonState": nextReasonState,
+                  "reasonStateVersion": nextReasonStateVersion,
+                  "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
+                };
+                let nextTotalState = Obj.magic(nextTotalState);
+                nextTotalState;
+              } else {
+                curTotalState;
               };
-              let nextTotalState = Obj.magic(nextTotalState);
-              nextTotalState;
-            } else {
-              curTotalState;
-            };
-          });
+            },
+            Js.Nullable.null,
+          );
         };
       };
       /***
@@ -650,37 +671,6 @@ let createClass =
           };
         /* Mark ourselves as all caught up! */
         nextState##reasonStateVersionUsedToComputeSubelements#=nextReasonStateVersion;
-        let nextSideEffects = List.rev(nextState##sideEffects);
-        if (nextSideEffects !== []) {
-          /* This can enqueue additional side effects */
-          List.iter(
-            performSideEffects => performSideEffects(newSelf),
-            nextSideEffects,
-          );
-          thisJs##setState((futureTotalState, _) => {
-            let rec initialSegment = (acc, n, l) =>
-              switch (l) {
-              | [x, ...nextL] when n > 0 =>
-                initialSegment([x, ...acc], n - 1, nextL)
-              | _ => List.rev(acc)
-              };
-            /* Additional side effects are the initial segment. */
-            let newSideEffects = {
-              let acc = [];
-              let n =
-                List.length(futureTotalState##sideEffects)
-                - List.length(nextState##sideEffects);
-              initialSegment(acc, n, futureTotalState##sideEffects);
-            };
-            let nextStateOnlyNewSideEffects = {
-              "reasonState": futureTotalState##reasonState,
-              "reasonStateVersion": futureTotalState##reasonStateVersion,
-              "reasonStateVersionUsedToComputeSubelements": futureTotalState##reasonStateVersionUsedToComputeSubelements,
-              "sideEffects": newSideEffects,
-            };
-            nextStateOnlyNewSideEffects;
-          });
-        };
         ret;
       };
       pub handleMethod = callback => {
@@ -719,28 +709,40 @@ let createClass =
           );
         let Element(component) = convertedReasonProps;
         if (component.reducer !== reducerDefault) {
+          let sideEffects = ref(ignore);
           /* allow side-effects to be executed here */
           let partialStateApplication = component.reducer(Obj.magic(action));
-          thisJs##setState((curTotalState, _) => {
-            let curReasonState = curTotalState##reasonState;
-            let reasonStateUpdate =
-              partialStateApplication(Obj.magic(curReasonState));
-            if (reasonStateUpdate === NoUpdate) {
-              magicNull;
-            } else {
-              let nextTotalState =
-                this##transitionNextTotalState(
-                  curTotalState,
-                  Obj.magic(reasonStateUpdate),
-                );
-              if (nextTotalState##reasonStateVersion
-                  !== curTotalState##reasonStateVersion) {
-                nextTotalState;
-              } else {
+          thisJs##setState(
+            (curTotalState, _) => {
+              let curReasonState = curTotalState##reasonState;
+              let reasonStateUpdate =
+                partialStateApplication(Obj.magic(curReasonState));
+              if (reasonStateUpdate === NoUpdate) {
                 magicNull;
+              } else {
+                let reasonStateUpdate = Obj.magic(reasonStateUpdate);
+                let (performSideEffects, nextTotalState) =
+                  this##transitionNextTotalState(
+                    curTotalState,
+                    reasonStateUpdate,
+                  );
+                switch (performSideEffects) {
+                | Some(performSideEffects) =>
+                  sideEffects.contents = performSideEffects
+                | None => ()
+                };
+                if (nextTotalState##reasonStateVersion
+                    !== curTotalState##reasonStateVersion) {
+                  nextTotalState;
+                } else {
+                  magicNull;
+                };
               };
-            };
-          });
+            },
+            Js.Nullable.return(
+              this##handleMethod(((), self) => sideEffects.contents(self)),
+            ),
+          );
         };
       };
       pub reduceMethod = (callback: 'payload => 'action, payload) =>
