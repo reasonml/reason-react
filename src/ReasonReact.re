@@ -135,7 +135,8 @@ and self('state, 'retainedProps, 'action) = {
     'payload .
     (('payload, self('state, 'retainedProps, 'action)) => unit) =>
     Callback.t('payload),
-  reduce: 'payload .reduce ('payload, 'action),
+
+  reduce: 'payload .reduce('payload, 'action),
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,

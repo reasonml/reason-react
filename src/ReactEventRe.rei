@@ -48,14 +48,14 @@ module Synthetic: {
   [@bs.get] external eventPhase : synthetic('a) => int = "";
   [@bs.get] external isTrusted : synthetic('a) => bool = "";
   [@bs.get] external nativeEvent : synthetic('a) => Js.t({..}) = "";
-  [@bs.send.pipe : synthetic('a)] external preventDefault : unit = "";
-  [@bs.send.pipe : synthetic('a)] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : synthetic('a)] external stopPropagation : unit = "";
-  [@bs.send.pipe : synthetic('a)] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: synthetic('a)] external preventDefault : unit = "";
+  [@bs.send.pipe: synthetic('a)] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: synthetic('a)] external stopPropagation : unit = "";
+  [@bs.send.pipe: synthetic('a)] external isPropagationStopped : bool = "";
   [@bs.get] external target : synthetic('a) => Dom.element = "";
   [@bs.get] external timeStamp : synthetic('a) => float = "";
   [@bs.get] external _type : synthetic('a) => string = "type";
-  [@bs.send.pipe : synthetic('a)] external persist : unit = "";
+  [@bs.send.pipe: synthetic('a)] external persist : unit = "";
 };
 
 /* Cast any event type to the general synthetic type. This is safe, since synthetic is more general */
@@ -71,14 +71,14 @@ module Clipboard: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external clipboardData : t => Js.t({..}) = ""; /* Should return Dom.dataTransfer */
 };
 
@@ -92,14 +92,14 @@ module Composition: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external data : t => string = "";
 };
 
@@ -113,18 +113,18 @@ module Keyboard: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external altKey : t => bool = "";
   [@bs.get] external charCode : t => int = "";
   [@bs.get] external ctrlKey : t => bool = "";
-  [@bs.send.pipe : t] external getModifierState : string => bool = "";
+  [@bs.send.pipe: t] external getModifierState : string => bool = "";
   [@bs.get] external key : t => string = "";
   [@bs.get] external keyCode : t => int = "";
   [@bs.get] external locale : t => string = "";
@@ -145,14 +145,14 @@ module Focus: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external relatedTarget : t => Dom.element = ""; /* Should return Dom.eventTarget */
 };
 
@@ -166,14 +166,14 @@ module Form: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
 };
 
 module Mouse: {
@@ -186,21 +186,21 @@ module Mouse: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external altKey : t => bool = "";
   [@bs.get] external button : t => int = "";
   [@bs.get] external buttons : t => int = "";
   [@bs.get] external clientX : t => int = "";
   [@bs.get] external clientY : t => int = "";
   [@bs.get] external ctrlKey : t => bool = "";
-  [@bs.send.pipe : t] external getModifierState : string => bool = "";
+  [@bs.send.pipe: t] external getModifierState : string => bool = "";
   [@bs.get] external metaKey : t => bool = "";
   [@bs.get] external pageX : t => int = "";
   [@bs.get] external pageY : t => int = "";
@@ -220,14 +220,14 @@ module Selection: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
 };
 
 module Touch: {
@@ -240,18 +240,18 @@ module Touch: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external altKey : t => bool = "";
   [@bs.get] external changedTouches : t => Js.t({..}) = ""; /* Should return Dom.touchList */
   [@bs.get] external ctrlKey : t => bool = "";
-  [@bs.send.pipe : t] external getModifierState : string => bool = "";
+  [@bs.send.pipe: t] external getModifierState : string => bool = "";
   [@bs.get] external metaKey : t => bool = "";
   [@bs.get] external shiftKey : t => bool = "";
   [@bs.get] external targetTouches : t => Js.t({..}) = ""; /* Should return Dom.touchList */
@@ -268,14 +268,14 @@ module UI: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external detail : t => int = "";
   [@bs.get] external view : t => Dom.window = ""; /* Should return DOMAbstractView/WindowProxy */
 };
@@ -290,14 +290,14 @@ module Wheel: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external deltaMode : t => int = "";
   [@bs.get] external deltaX : t => float = "";
   [@bs.get] external deltaY : t => float = "";
@@ -314,14 +314,14 @@ module Media: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
 };
 
 module Image: {
@@ -334,14 +334,14 @@ module Image: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
 };
 
 module Animation: {
@@ -354,14 +354,14 @@ module Animation: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external animationName : t => string = "";
   [@bs.get] external pseudoElement : t => string = "";
   [@bs.get] external elapsedTime : t => float = "";
@@ -377,14 +377,14 @@ module Transition: {
   [@bs.get] external eventPhase : t => int = "";
   [@bs.get] external isTrusted : t => bool = "";
   [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe : t] external preventDefault : unit = "";
-  [@bs.send.pipe : t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe : t] external stopPropagation : unit = "";
-  [@bs.send.pipe : t] external isPropagationStopped : bool = "";
+  [@bs.send.pipe: t] external preventDefault : unit = "";
+  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
+  [@bs.send.pipe: t] external stopPropagation : unit = "";
+  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
   [@bs.get] external target : t => Dom.element = "";
   [@bs.get] external timeStamp : t => float = "";
   [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe : t] external persist : unit = "";
+  [@bs.send.pipe: t] external persist : unit = "";
   [@bs.get] external propertyName : t => string = "";
   [@bs.get] external pseudoElement : t => string = "";
   [@bs.get] external elapsedTime : t => float = "";
