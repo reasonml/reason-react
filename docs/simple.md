@@ -25,5 +25,5 @@ ReactDOMRe.renderToElementWithId(<Page message="Hello!" />, "index");
 In the same file, you'd do:
 
 ```reason
-ReactDOMRe.renderToElementWithId(make(~message="Hello!", [||]), "index");
+ReactDOMRe.renderToElementWithId(ReasonReact.element(make(~message="Hello!", [||])), "index");
 ```
