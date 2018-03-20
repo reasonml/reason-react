@@ -29,7 +29,7 @@
 <pre><code class="hljs css reason">ReactDOMRe.renderToElementWithId(&lt;Page <span class="hljs-keyword">message</span>=<span class="hljs-string">"Hello!"</span> /&gt;, <span class="hljs-string">"index"</span>);
 </code></pre>
 <p>In the same file, you'd do:</p>
-<pre><code class="hljs css reason">ReactDOMRe.renderToElementWithId(make(~<span class="hljs-attribute">message</span>=<span class="hljs-string">"Hello!"</span>, [||]), <span class="hljs-string">"index"</span>);
+<pre><code class="hljs css reason">ReactDOMRe.renderToElementWithId(ReasonReact.element(make(~<span class="hljs-attribute">message</span>=<span class="hljs-string">"Hello!"</span>, [||])), <span class="hljs-string">"index"</span>);
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="counter.html">计时器 →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
