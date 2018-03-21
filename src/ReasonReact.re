@@ -926,14 +926,11 @@ let wrapJsForReason = WrapProps.wrapJsForReason;
 
 module Router = {
   [@bs.get] external location : Dom.window => Dom.location = "";
-  [@bs.send] [@bs.send]
-  /* actually the cb is Dom.event => unit, but let's restrict the access for now */
-  external addEventListener :
-    (Dom.window, [@bs.string] [ | `popstate], unit => unit) => unit =
-    "";
   [@bs.send]
-  external removeEventListener :
-    (Dom.window, [@bs.string] [ | `popstate], unit => unit) => unit =
+  /* actually the cb is Dom.event => unit, but let's restrict the access for now */
+  external addEventListener : (Dom.window, string, unit => unit) => unit = "";
+  [@bs.send]
+  external removeEventListener : (Dom.window, string, unit => unit) => unit =
     "";
   [@bs.send] external dispatchEvent : (Dom.window, Dom.event) => unit = "";
   [@bs.get] external pathname : Dom.location => string = "";
@@ -944,8 +941,24 @@ module Router = {
     (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
     unit =
     "";
-  [@bs.new]
-  external makeEvent : ([@bs.string] [ | `popstate]) => Dom.event = "Event";
+  module SafeMakeEvent = {
+    [@bs.val] external event : 'a = "Event";
+    [@bs.new] external makeEvent : string => Dom.event = "Event";
+    [@bs.val] [@bs.scope "document"]
+    external createEvent : string => Dom.event = "createEvent";
+    [@bs.send]
+    external initEvent : (Dom.event, string, Js.boolean, Js.boolean) => unit =
+      "initEvent";
+    /* IE11-compatible makeEvent. */
+    let safeMakeEvent = eventName =>
+      if (Js.typeof(event) == "function") {
+        makeEvent(eventName);
+      } else {
+        let event = createEvent("Event");
+        initEvent(event, eventName, Js.true_, Js.true_);
+        event;
+      };
+  };
   /* This is copied from array.ml. We want to cut dependencies for ReasonReact so
      that it's friendlier to use in size-constrained codebases */
   let arrayToList = a => {
@@ -1013,7 +1026,7 @@ module Router = {
     | (_, None) => ()
     | (Some((history: Dom.history)), Some((window: Dom.window))) =>
       pushState(history, ~href=path);
-      dispatchEvent(window, makeEvent(`popstate));
+      dispatchEvent(window, SafeMakeEvent.safeMakeEvent("popstate"));
     };
   type url = {
     path: list(string),
@@ -1029,13 +1042,13 @@ module Router = {
     | None => (() => ())
     | Some((window: Dom.window)) =>
       let watcherID = () => callback(url());
-      addEventListener(window, `popstate, watcherID);
+      addEventListener(window, "popstate", watcherID);
       watcherID;
     };
   let unwatchUrl = watcherID =>
     switch ([%external window]) {
     | None => ()
     | Some((window: Dom.window)) =>
-      removeEventListener(window, `popstate, watcherID)
+      removeEventListener(window, "popstate", watcherID)
     };
 };
