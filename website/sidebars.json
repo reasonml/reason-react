@@ -54,5 +54,10 @@
       "community",
       "roadmap"
     ]
+  },
+  "try-menu": {
+    "Try": [
+      "playground"
+    ]
   }
 }

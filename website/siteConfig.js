@@ -66,6 +66,7 @@ const siteConfig = {
   projectName: "reason-react",
   headerLinks: [
     { doc: "installation", label: "Docs" },
+    { doc: "playground", label: "Try" },
     { doc: "simple", label: "Examples" },
     { doc: "community", label: "Community" },
     { blog: true, label: "Blog" },
