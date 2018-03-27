@@ -45,16 +45,16 @@
 <pre><code class="hljs css reason"><span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span>(<span class="hljs-selector-tag">MyReasonComponent</span><span class="hljs-selector-class">.make</span>(<span class="hljs-selector-attr">[||]</span>));
 </code></pre>
 <p>Le <code>make</code> ci-dessus est précisément la fonction <code>make</code> que vous avez vu dans la section précédente.</p>
-<p><strong>Notez comment <code>ref</code> et <code>key</code> ont été extraits de l'appel JSX pour être placés dans l'appel <code>ReasonReact.element</code></strong>. <code>ref</code> and <code>key</code> sont réservés en ReasonReact, tout comme en ReactJS. <strong>Ne les utilisez pas</strong> comme propriétés dans votre composant !</p>
+<p><strong>Notez comment <code>ref</code> et <code>key</code> ont été extraits de l'appel JSX pour être placés dans l'appel <code>ReasonReact.element</code></strong>. <code>ref</code> et <code>key</code> sont réservés en ReasonReact, tout comme en ReactJS. <strong>Ne les utilisez pas</strong> comme propriétés dans votre composant !</p>
 <h3><a class="anchor" aria-hidden="true" name="enfants"></a><a href="#enfants" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Enfants</h3>
-<p>Les enfants ReasonReact sont <strong>totalement typés</strong>, et vous pouvez passer n’importe quelle structure de données (du moment que le composant récepteur le permet). Lorsque vous écrivez :</p>
+<p>Les enfants en ReasonReact sont <strong>totalement typés</strong>. Vous pouvez passer n’importe quelle structure de données (du moment que le composant récepteur le permet). Lorsque vous écrivez :</p>
 <pre><code class="hljs css reason"><span class="hljs-section">&lt;MyReasonComponent&gt;</span> <span class="hljs-section">&lt;div /&gt;</span> <span class="hljs-section">&lt;div /&gt;</span> <span class="hljs-section">&lt;/MyReasonComponent&gt;</span>
 </code></pre>
 <p>Vous passez en fait le tableau <code>[| &lt;div /&gt;, &lt;div /&gt; |]</code> aux enfants de <code>MyReasonComponent</code>. Cela signifie aussi que ce qui suit ne fonctionnera pas :</p>
 <pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> |];
 <span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span>&gt;</span> theChildren <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
 </span></code></pre>
-<p>Because this actually translates to:</p>
+<p>Car en fait, cela se traduit par :</p>
 <pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="hljs-type">&lt;div</span> /&gt;, &lt;div /&gt; |<span class="hljs-type">];
 ReasonReact</span>.element(
   MyReasonComponent.make([|<span class="hljs-type">theChildren</span>|<span class="hljs-type">])
@@ -64,7 +64,7 @@ ReasonReact</span>.element(
 <pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span> |];
 <span class="hljs-tag">&lt;<span class="hljs-name">MyReasonComponent</span>&gt;</span> ...theChildren <span class="hljs-tag">&lt;/<span class="hljs-name">MyReasonComponent</span>&gt;</span>
 </span></code></pre>
-<p>This simply passes <code>theChildren</code> without array wrapping. It becomes:</p>
+<p>Cela passe simplement <code>theChildren</code> sans tableau autour et donne :</p>
 <pre><code class="hljs css reason"><span class="hljs-keyword">let</span> theChildren = [| <span class="hljs-type">&lt;div</span> /&gt;, &lt;div /&gt; |<span class="hljs-type">];
 ReasonReact</span>.element(
   MyReasonComponent.make(theChildren)
