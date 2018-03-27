@@ -83,13 +83,8 @@ and jsElementWrapped =
 and update('state, 'retainedProps, 'action) =
   | NoUpdate
   | Update('state)
-  | SilentUpdate('state)
   | SideEffects(self('state, 'retainedProps, 'action) => unit)
   | UpdateWithSideEffects(
-      'state,
-      self('state, 'retainedProps, 'action) => unit,
-    )
-  | SilentUpdateWithSideEffects(
       'state,
       self('state, 'retainedProps, 'action) => unit,
     )
@@ -161,16 +156,10 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       unit
     ),
   "jsPropsToReason":
-    option(jsPropsToReason('props, 'state, 'retainedProps, 'action)),
+    option(jsPropsToReason('props, 'state, 'retainedProps, 'action))
 }
 /***
- * `totalState` tracks all of the internal reason API bookkeeping, as well as
- * version numbers for state updates. Version numbers allows us to work
- * around limitations of legacy React APIs which don't let us prevent an
- * update from happening in callbacks. We build that capability into the
- * wrapping Reason API, and use React's `shouldComponentUpdate` hook to
- * analyze the version numbers, creating the effect of blocking an update in
- * the handlers.
+ * `totalState` tracks all of the internal reason API bookkeeping.
  *
  * Since we will mutate `totalState` in `shouldComponentUpdate`, and since
  * there's no guarantee that returning true from `shouldComponentUpdate`
@@ -180,22 +169,7 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
  * backup copies of `totalState`, our changes can be rolled back correctly
  * even when we mutate them.
  */
-and totalState('state, 'retainedProps, 'action) = {
-  .
-  "reasonState": 'state,
-  /*
-   * Be careful - integers may roll over. Taking up three integers is very
-   * wasteful. We should only consume one integer, and pack three counters
-   * within. They typically only need to count to (approx 10?).
-   */
-  /* Version of the reactState - as a result of updates or other. */
-  "reasonStateVersion": int,
-  /* Version of state that the subelements were computed from.
-   * `reasonStateVersion` can increase and
-   * `reasonStateVersionUsedToComputeSubelements` can lag behind if there has
-   * not yet been a chance to rerun the named arg factory function.  */
-  "reasonStateVersionUsedToComputeSubelements": int,
-};
+and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
 let lifecycleNoUpdate = (_) => NoUpdate;
 
@@ -285,59 +259,20 @@ let createClass =
        * `component`. React optimizes components that don't implement
        * lifecycles!
        */
-      /* For "Silent" updates, it's important that updates never change the
-       * component's "out of date"-ness. For silent updates, if the component
-       * was previously out of date, it needs to remain out of date. If not out
-       * of date, it should remain not out of date. The objective is to not
-       * trigger any *more* updates than would have already occured. The trick
-       * we use is to bump *both* versions simultaneously (reasonStateVersion,
-       * reasonStateVersionUsedToComputeSubelements).
-       */
       pub transitionNextTotalState = (curTotalState, reasonStateUpdate) =>
         switch (reasonStateUpdate) {
         | NoUpdate => (None, curTotalState)
         | Update(nextReasonState) => (
             None,
-            {
-              "reasonState": nextReasonState,
-              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-              "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-            },
-          )
-        | SilentUpdate(nextReasonState) => (
-            None,
-            {
-              "reasonState": nextReasonState,
-              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-              "reasonStateVersionUsedToComputeSubelements":
-                curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            },
+            {"reasonState": nextReasonState},
           )
         | SideEffects(performSideEffects) => (
             Some(performSideEffects),
-            {
-              "reasonState": curTotalState##reasonState,
-              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-              "reasonStateVersionUsedToComputeSubelements":
-                curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            },
+            curTotalState,
           )
         | UpdateWithSideEffects(nextReasonState, performSideEffects) => (
             Some(performSideEffects),
-            {
-              "reasonState": nextReasonState,
-              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-              "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
-            },
-          )
-        | SilentUpdateWithSideEffects(nextReasonState, performSideEffects) => (
-            Some(performSideEffects),
-            {
-              "reasonState": nextReasonState,
-              "reasonStateVersion": curTotalState##reasonStateVersion + 1,
-              "reasonStateVersionUsedToComputeSubelements":
-                curTotalState##reasonStateVersionUsedToComputeSubelements + 1,
-            },
+            {"reasonState": nextReasonState},
           )
         };
       pub getInitialState = () : totalState('state, 'retainedProps, 'action) => {
@@ -353,15 +288,7 @@ let createClass =
           );
         let Element(component) = convertedReasonProps;
         let initialReasonState = component.initialState();
-        {
-          "reasonState": Obj.magic(initialReasonState),
-          /***
-           * Initial version starts with state and subelement computation in
-           * sync, waiting to render the first time.
-           */
-          "reasonStateVersion": 1,
-          "reasonStateVersionUsedToComputeSubelements": 1,
-        };
+        {"reasonState": Obj.magic(initialReasonState)};
       };
       pub componentDidMount = () => {
         let thisJs:
@@ -395,11 +322,7 @@ let createClass =
           let reasonStateUpdate = Obj.magic(reasonStateUpdate);
           let (performSideEffects, nextTotalState) =
             this##transitionNextTotalState(curTotalState, reasonStateUpdate);
-          switch (
-            nextTotalState##reasonStateVersion
-            === curTotalState##reasonStateVersion,
-            performSideEffects,
-          ) {
+          switch (nextTotalState === curTotalState, performSideEffects) {
           | (false, Some(performSideEffects)) =>
             let nextTotalState = Obj.magic(nextTotalState);
             thisJs##setState(
@@ -573,7 +496,6 @@ let createClass =
           thisJs##setState(
             (curTotalState, _) => {
               let curReasonState = Obj.magic(curTotalState##reasonState);
-              let curReasonStateVersion = curTotalState##reasonStateVersion;
               let oldSelf =
                 Obj.magic(
                   this##self(
@@ -583,14 +505,9 @@ let createClass =
                 );
               let nextReasonState =
                 Obj.magic(newComponent.willReceiveProps(oldSelf));
-              let nextReasonStateVersion =
-                nextReasonState !== curReasonState ?
-                  curReasonStateVersion + 1 : curReasonStateVersion;
-              if (nextReasonStateVersion !== curReasonStateVersion) {
+              if (nextReasonState !== curTotalState) {
                 let nextTotalState: totalState(_) = {
                   "reasonState": nextReasonState,
-                  "reasonStateVersion": nextReasonStateVersion,
-                  "reasonStateVersionUsedToComputeSubelements": curTotalState##reasonStateVersionUsedToComputeSubelements,
                 };
                 let nextTotalState = Obj.magic(nextTotalState);
                 nextTotalState;
@@ -610,13 +527,6 @@ let createClass =
        * - "Should component have its componentWillUpdate method called,
        * followed by its render() method?",
        *
-       * TODO: This should also call the component.shouldUpdate hook, but only
-       * after we've done the appropriate filtering with version numbers.
-       * Version numbers filter out the state updates that should definitely
-       * not have triggered re-renders in the first place. (Due to returning
-       * things like NoUpdate from callbacks, or returning the previous
-       * state/subdescriptors from named argument factory functions.)
-       *
        * Therefore the component.shouldUpdate becomes a hook solely to perform
        * performance optimizations through.
        */
@@ -626,18 +536,13 @@ let createClass =
           "this"
         ];
         let curJsProps = thisJs##props;
-        let propsWarrantRerender = nextJsProps !== curJsProps;
 
         /***
          * Now, we inspect the next state that we are supposed to render, and ensure that
          * - We have enough information to answer "should update?"
          * - We have enough information to render() in the event that the answer is "true".
          *
-         * Typically the answer is "true", except we can detect some "next
-         * states" that were simply updates that we performed to work around
-         * legacy versions of React.
-         *
-         * If we can detect that props have changed or a non-silent update has occured,
+         * If we can detect that props have changed update has occured,
          * we ask the component's shouldUpdate if it would like to update - defaulting to true.
          */
         let oldConvertedReasonProps =
@@ -657,37 +562,25 @@ let createClass =
             );
         let Element(oldComponent) = oldConvertedReasonProps;
         let Element(newComponent) = newConvertedReasonProps;
-        let nextReasonStateVersion = nextState##reasonStateVersion;
-        let nextReasonStateVersionUsedToComputeSubelements = nextState##reasonStateVersionUsedToComputeSubelements;
-        let stateChangeWarrantsComputingSubelements =
-          nextReasonStateVersionUsedToComputeSubelements
-          !== nextReasonStateVersion;
-        let warrantsUpdate =
-          propsWarrantRerender || stateChangeWarrantsComputingSubelements;
         let nextReasonState = nextState##reasonState;
         let newSelf =
           this##self(nextReasonState, Obj.magic(newComponent.retainedProps));
-        let ret =
-          if (warrantsUpdate
-              && newComponent.shouldUpdate !== shouldUpdateDefault) {
-            let curState = thisJs##state;
-            let curReasonState = curState##reasonState;
-            let curReasonState = Obj.magic(curReasonState);
-            let newSelf = Obj.magic(newSelf);
-            /* bypass this##self call for small perf boost */
-            let oldSelf =
-              Obj.magic({
-                ...newSelf,
-                state: curReasonState,
-                retainedProps: oldComponent.retainedProps,
-              });
-            newComponent.shouldUpdate({oldSelf, newSelf});
-          } else {
-            warrantsUpdate;
-          };
-        /* Mark ourselves as all caught up! */
-        nextState##reasonStateVersionUsedToComputeSubelements#=nextReasonStateVersion;
-        ret;
+        if (newComponent.shouldUpdate !== shouldUpdateDefault) {
+          let curState = thisJs##state;
+          let curReasonState = curState##reasonState;
+          let curReasonState = Obj.magic(curReasonState);
+          let newSelf = Obj.magic(newSelf);
+          /* bypass this##self call for small perf boost */
+          let oldSelf =
+            Obj.magic({
+              ...newSelf,
+              state: curReasonState,
+              retainedProps: oldComponent.retainedProps,
+            });
+          newComponent.shouldUpdate({oldSelf, newSelf});
+        } else {
+          true;
+        };
       };
       pub registerMethod = subscription =>
         switch (Js.Null.toOption(this##subscriptions)) {
@@ -752,8 +645,7 @@ let createClass =
                   sideEffects.contents = performSideEffects
                 | None => ()
                 };
-                if (nextTotalState##reasonStateVersion
-                    !== curTotalState##reasonStateVersion) {
+                if (nextTotalState !== curTotalState) {
                   nextTotalState;
                 } else {
                   magicNull;
