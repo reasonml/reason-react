@@ -11,7 +11,8 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - either rename `willReceiveProps` to `propsReceived`, or keep the same name and make it take oldNew self bag
 - better modeling for `stateless` and `retainedProps` from `unit` to something else
 - expose `ReasonReact.publicComponentSpec state retainedProps action` for less cryptic component type annotation.
+- Get rid of implicit keys on a component (likely non-breaking)
 
 # 0.3.5
 
-- Get rid of implicit keys on a component (likely non-breaking)
+- Remove `SilentUpdate` and `SilentUpdateWithSideEffects`.
