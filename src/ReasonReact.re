@@ -926,39 +926,51 @@ let wrapJsForReason = WrapProps.wrapJsForReason;
 
 module Router = {
   [@bs.get] external location : Dom.window => Dom.location = "";
+
   [@bs.send]
   /* actually the cb is Dom.event => unit, but let's restrict the access for now */
   external addEventListener : (Dom.window, string, unit => unit) => unit = "";
+
   [@bs.send]
   external removeEventListener : (Dom.window, string, unit => unit) => unit =
     "";
+
   [@bs.send] external dispatchEvent : (Dom.window, Dom.event) => unit = "";
+
   [@bs.get] external pathname : Dom.location => string = "";
+
   [@bs.get] external hash : Dom.location => string = "";
+
   [@bs.get] external search : Dom.location => string = "";
+
   [@bs.send]
   external pushState :
     (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
     unit =
     "";
-  module SafeMakeEvent = {
-    [@bs.val] external event : 'a = "Event";
-    [@bs.new] external makeEvent : string => Dom.event = "Event";
-    [@bs.val] [@bs.scope "document"]
-    external createEvent : string => Dom.event = "createEvent";
-    [@bs.send]
-    external initEvent : (Dom.event, string, Js.boolean, Js.boolean) => unit =
-      "initEvent";
-    /* IE11-compatible makeEvent. */
-    let safeMakeEvent = eventName =>
-      if (Js.typeof(event) == "function") {
-        makeEvent(eventName);
-      } else {
-        let event = createEvent("Event");
-        initEvent(event, eventName, Js.true_, Js.true_);
-        event;
-      };
-  };
+
+  [@bs.val] external event : 'a = "Event";
+
+  [@bs.new] external makeEventIE11Compatible : string => Dom.event = "Event";
+
+  [@bs.val] [@bs.scope "document"]
+
+  external createEventNonIEBrowsers : string => Dom.event = "createEvent";
+
+  [@bs.send]
+  external initEventNonIEBrowsers :
+    (Dom.event, string, Js.boolean, Js.boolean) => unit =
+    "initEvent";
+
+  let safeMakeEvent = eventName =>
+    if (Js.typeof(event) == "function") {
+      makeEventIE11Compatible(eventName);
+    } else {
+      let event = createEventNonIEBrowsers("Event");
+      initEventNonIEBrowsers(event, eventName, Js.true_, Js.true_);
+      event;
+    };
+
   /* This is copied from array.ml. We want to cut dependencies for ReasonReact so
      that it's friendlier to use in size-constrained codebases */
   let arrayToList = a => {
@@ -1026,7 +1038,7 @@ module Router = {
     | (_, None) => ()
     | (Some((history: Dom.history)), Some((window: Dom.window))) =>
       pushState(history, ~href=path);
-      dispatchEvent(window, SafeMakeEvent.safeMakeEvent("popstate"));
+      dispatchEvent(window, safeMakeEvent("popstate"));
     };
   type url = {
     path: list(string),
