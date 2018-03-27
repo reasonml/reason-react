@@ -156,7 +156,7 @@ and self('state, 'retainedProps, 'action) = {
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,
-  register: (unit => unit) => unit,
+  onUnmount: (unit => unit) => unit,
 };
 
 type reactClassInternal;

@@ -140,7 +140,7 @@ and self('state, 'retainedProps, 'action) = {
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,
-  register: (unit => unit) => unit,
+  onUnmount: (unit => unit) => unit,
 }
 and oldNewSelf('state, 'retainedProps, 'action) = {
   oldSelf: self('state, 'retainedProps, 'action),
@@ -278,7 +278,7 @@ let createClass =
         reduce: Obj.magic(this##reduceMethod),
         state,
         retainedProps,
-        register: Obj.magic(this##registerMethod),
+        onUnmount: Obj.magic(this##registerMethod),
       };
       /***
        * TODO: Null out fields that aren't overridden beyond defaults in
