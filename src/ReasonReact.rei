@@ -9,8 +9,8 @@
 /***
  * TODO: Test Cases (Highest Priority First):
  * -------------------
- * 1. That a silent update will not block received props!
- * 2. That a silent update will not block another state update! (Two different
+ * 1. Unneeded? That a silent update will not block received props!
+ * 2. Unneeded? That a silent update will not block another state update! (Two different
  * DOM nodes having event handlers - one triggering silent, the other
  * triggering loud). Then switch which one is invoked first.
  * 3. Add tests for "handle()". (non state updating callback)
@@ -110,9 +110,6 @@ type update('state, 'retainedProps, 'action) =
   | NoUpdate
   /* Update the state with the given one. */
   | Update('state)
-  /* Update the state with the given one, but don't trigger a re-render.
-     Do not prevent a re-render either, if one was scheduled to happen. */
-  | SilentUpdate('state)
   /* Perform side effects without updating state, and don't trigger a re-render.
      Do not prevent a re-render either, if one was scheduled to happen.
      The side effects function is invoked when all the updates have completed. */
@@ -120,12 +117,6 @@ type update('state, 'retainedProps, 'action) =
   /* Update the state and perform side effects.
      The side effects function is invoked when all the updates have completed. */
   | UpdateWithSideEffects(
-      'state,
-      self('state, 'retainedProps, 'action) => unit,
-    )
-  /* Like UpdateWithSideEffects, but don't trigger a re-render.
-     Do not prevent a re-render either, if one was scheduled to happen. */
-  | SilentUpdateWithSideEffects(
       'state,
       self('state, 'retainedProps, 'action) => unit,
     )
