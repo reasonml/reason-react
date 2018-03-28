@@ -140,6 +140,7 @@ and self('state, 'retainedProps, 'action) = {
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,
+  onUnmount: (unit => unit) => unit,
 }
 and oldNewSelf('state, 'retainedProps, 'action) = {
   oldSelf: self('state, 'retainedProps, 'action),
@@ -247,6 +248,19 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
   };
 };
 
+/* This prepares us to remove our dependency on List, which shrinks
+   ReasonReact dramatically and makes it adoptible on some codebases with tightly enforced size constraints */
+let arrayOfList = l => {
+  let rec arrayOfList = (l, acc) =>
+    switch (l) {
+    | [] => Js.Array.reverseInPlace(acc)
+    | [head, ...rest] =>
+      ignore(Js.Array.push(head, acc));
+      arrayOfList(rest, acc);
+    };
+  arrayOfList(l, [||]);
+};
+
 let createClass =
     (type reasonState, type retainedProps, type action, debugName)
     : reactClass =>
@@ -254,7 +268,7 @@ let createClass =
     [@bs]
     {
       val displayName = debugName;
-      val mutable subscriptions = Js.Nullable.null;
+      val mutable subscriptions = Js.null;
       /***
        * TODO: Avoid allocating this every time we need it. Should be doable.
        */
@@ -264,6 +278,7 @@ let createClass =
         reduce: Obj.magic(this##reduceMethod),
         state,
         retainedProps,
+        onUnmount: Obj.magic(this##registerMethod),
       };
       /***
        * TODO: Null out fields that aren't overridden beyond defaults in
@@ -368,11 +383,12 @@ let createClass =
         if (component.subscriptions !== subscriptionsDefault) {
           let subscriptions =
             component.subscriptions(self)
-            |> List.map((Sub(subscribe, unsubscribe)) => {
+            |> arrayOfList
+            |> Js.Array.map((Sub(subscribe, unsubscribe)) => {
                  let token = subscribe();
                  () => unsubscribe(token);
                });
-          this##subscriptions#=(Js.Nullable.return(subscriptions));
+          this##subscriptions#=(Js.Null.return(subscriptions));
         };
         if (component.didMount !== didMountDefault) {
           let reasonStateUpdate = component.didMount(self);
@@ -470,10 +486,9 @@ let createClass =
           let self = Obj.magic(self);
           component.willUnmount(self);
         };
-        switch (Js.Nullable.toOption(this##subscriptions)) {
+        switch (Js.Null.toOption(this##subscriptions)) {
         | None => ()
-        | Some(subs) =>
-          List.rev(subs) |> List.iter(unsubscribe => unsubscribe())
+        | Some(subs) => Js.Array.forEach(unsubscribe => unsubscribe(), subs)
         };
       };
       /***
@@ -674,6 +689,11 @@ let createClass =
         nextState##reasonStateVersionUsedToComputeSubelements#=nextReasonStateVersion;
         ret;
       };
+      pub registerMethod = subscription =>
+        switch (Js.Null.toOption(this##subscriptions)) {
+        | None => this##subscriptions#=(Js.Null.return([|subscription|]))
+        | Some(subs) => ignore(Js.Array.push(subscription, subs))
+        };
       pub handleMethod = callback => {
         let thisJs:
           jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
