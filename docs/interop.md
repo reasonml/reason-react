@@ -57,7 +57,7 @@ Easy! Since other Reason components only need you to expose a `make` function, f
 let make = (~name: string, ~age: option(int)=?, children) =>
   ReasonReact.wrapJsForReason(
     ~reactClass=myJSReactClass,
-    ~props={"name": name, "age": Js.Nullable.from_opt(age)},
+    ~props={"name": name, "age": Js.Nullable.fromOption(age)},
     children
   );
 ```
