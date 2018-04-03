@@ -1,0 +1,68 @@
+<html><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/><title>Propiedad Personalizada Class/Component · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Propiedad Personalizada Class/Component · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="Tus componentes de ReactJS pueden tener propiedades extras:"/><link rel="shortcut icon" href="/reason-react/img/reason-react-red.svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/"><img class="logo" src="/reason-react/img/reason-react-white.svg"/><h2 class="headerTitle">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li><a href="/reason-react/docs/es-ES/installation.html" target="_self">Documentación</a></li><li><a href="/reason-react/docs/es-ES/playground.html" target="_self">Try</a></li><li><a href="/reason-react/docs/es-ES/simple.html" target="_self">Ejemplos</a></li><li><a href="/reason-react/docs/es-ES/community.html" target="_self">Comunidad</a></li><li><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>Español</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/en">English</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank">Ayúdanos a traducir</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(){
+          if(languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>ReactJS Idioms Equivalents</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Primeros pasos</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/what-and-why.html">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/installation.html">Instalación</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/intro-example.html">Ejemplo de introducción</a></li></ul></div><div class="navGroup navGroupActive"><h3>Núcleo</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/creation-props-self.html">Creación, Props y Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/jsx.html">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/render.html">Render</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/callback-handlers.html">Handlers de Callback</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/state-actions-reducer.html">Estado, Acciones y Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/lifecycles.html">Ciclos de vida</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/instance-variables.html">Variables de instancia</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/react-ref.html">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/interop.html">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/event.html">Evento</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/style.html">Estilo</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/clone-element.html">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/children.html">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/dom.html">Trabajar con el DOM</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/subscriptions-helper.html">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/router.html">Router</a></li></ul></div><div class="navGroup navGroupActive"><h3>Expresiones equivalentes de ReactJS</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/invalid-prop-name.html">Nombre de propiedad inválido</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/props-spread.html">Expansión de propiedades</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/component-as-prop.html">Componente como Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/ternary-shortcut.html">Atajo Ternario</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/context-mixins.html">¿Context y Mixins?</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/docs/es-ES/custom-class-component-property.html">Propiedad Personalizada Class/Component</a></li></ul></div><div class="navGroup navGroupActive"><h3>FAQ</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/im-having-a-type-error.html">Estoy teniendo un Type Error</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/record-field-send-handle-not-found.html">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/send-handle-callbacks-having-incompatible-types.html">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/i-really-need-feature-x-from-reactjs.html">Realmente necesito funcionalidad X de ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/element-type-is-invalid.html">Element Type is Invalid Runtime Error</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>Propiedad Personalizada Class/Component</h1></header><article><div><span><p>Tus componentes de ReactJS pueden tener propiedades extras:</p>
+<pre><code class="hljs css js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloMessage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">static</span> getRandomNumber() {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">4</span>;
+  };
+
+  getAnswerToLife() {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">42</span>;
+  };
+
+  render() {
+    ...
+  }
+}
+</code></pre>
+<p>Pero como los componentes en ReasonReact se crean a través de un record (que tiene campos fijos), no puedes añadir campos adicionales a él. Aquí están las soluciones a ese problema.</p>
+<h2><a class="anchor" aria-hidden="true" name="propiedades-estaticas-de-clase"></a><a href="#propiedades-estaticas-de-clase" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Propiedades Estáticas de Clase</h2>
+<p>Simplemente exporta una función o valor independiente:</p>
+<pre><code class="hljs css reason"><span class="hljs-attribute">let component</span> = ...;
+<span class="hljs-attribute">let make</span> = ...;
+
+<span class="hljs-attribute">let getRandomNumber</span> = () =&gt; 4;
+</code></pre>
+<p>Hazlo sencillo!</p>
+<h2><a class="anchor" aria-hidden="true" name="propiedades-de-instancia-de-clase"></a><a href="#propiedades-de-instancia-de-clase" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Propiedades de Instancia de Clase</h2>
+<p>Si una propiedad/método de componente no hace referencia a la instancia del componente (véase <code>this</code> en JS), entonces puede ser simplemente una propiedad estática de clase. En ese caso deberías exportarla con un <code>let</code> normal y corriente.</p>
+<p>Si aun así, conceptualmente, el componente <em>requiere</em> acceder a <code>this</code>, intenta de todos modos convertilo en un <code>let</code> que recibe un parámetro normal en vez de acceder a <code>this</code>.</p>
+<p><em>Si esta parte no está clara, o no funciona para tu caso en particular, por favor <a href="https://github.com/reasonml/reason-react/issues/new">crea una issue</a></em>!</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="context-mixins.html">← ¿Context y Mixins?</a><a class="docs-next button" href="im-having-a-type-error.html">Estoy teniendo un Type Error →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
