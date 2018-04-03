@@ -57,7 +57,7 @@
 let make = <span class="hljs-function"><span class="hljs-params">(~name: <span class="hljs-built_in">string</span>, ~age: option(int)=?, children)</span> =&gt;</span>
   ReasonReact.wrapJsForReason(
     ~reactClass=myJSReactClass,
-    ~props={<span class="hljs-string">"name"</span>: name, <span class="hljs-string">"age"</span>: Js.Nullable.from_opt(age)},
+    ~props={<span class="hljs-string">"name"</span>: name, <span class="hljs-string">"age"</span>: Js.Nullable.fromOption(age)},
     children
   );
 </code></pre>
