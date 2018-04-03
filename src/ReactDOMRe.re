@@ -363,7 +363,7 @@ external props :
     ~fontSize: string=?,
     ~fontSizeAdjust: string=?,
     ~fontStretch: string=?,
-    ~fotStyle: string=?,
+    ~fontStyle: string=?,
     ~fontVariant: string=?,
     ~fontWeight: string=?,
     ~fomat: string=?,
