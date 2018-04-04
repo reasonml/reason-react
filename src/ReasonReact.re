@@ -252,7 +252,7 @@ let createClass =
         reduce: Obj.magic(this##reduceMethod),
         state,
         retainedProps,
-        onUnmount: Obj.magic(this##registerMethod),
+        onUnmount: Obj.magic(this##onUnmountMethod),
       };
       /***
        * TODO: Null out fields that aren't overridden beyond defaults in
@@ -582,7 +582,7 @@ let createClass =
           true;
         };
       };
-      pub registerMethod = subscription =>
+      pub onUnmountMethod = subscription =>
         switch (Js.Null.toOption(this##subscriptions)) {
         | None => this##subscriptions#=(Js.Null.return([|subscription|]))
         | Some(subs) => ignore(Js.Array.push(subscription, subs))
