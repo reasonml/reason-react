@@ -849,7 +849,7 @@ module Style = {
       ~gridRowGap: string=?,
       ~gridRowStart: string=?,
       ~gridTemplate: string=?,
-      ~gridTempalteAreas: string=?,
+      ~gridTemplateAreas: string=?,
       ~gridTemplateColumns: string=?,
       ~gridTemplateRows: string=?,
       /* Will Change Level 1 - CR */
