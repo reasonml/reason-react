@@ -64,6 +64,8 @@ let make = (~name: string, ~age: option(int)=?, children) =>
 
 `ReasonReact.wrapJsForReason` is the helper we expose for this purpose. It takes in the `reactClass` you want to wrap, the `props` js object (of type `Js.t {. foo: bar}`) you'd pass to it (with values converted from Reason data structures to JS), and the mandatory children you'd forward to the JS side.
 
+`props` is mandatory. If you don't have any to pass, pass `~props=Js.Obj.empty()` instead.
+
 **We recommend** to type the `make` parameters, since they're passed to `props` into the JS side, which is untyped.
 
 **Note**: if your app successfully compiles, and you see the error "element type is invalid..." in your console, you might be hitting [this mistake](element-type-is-invalid.md).
@@ -76,29 +78,31 @@ Eeeeasy. We expose a helper for the other direction, `ReasonReact.wrapReasonForJ
 let component = ...;
 let make ...;
 
-let default =
+let jsComponent =
   ReasonReact.wrapReasonForJs(
     ~component,
     (jsProps) => make(~name=jsProps##name, ~age=?Js.Nullable.to_opt(jsProps##age), [||])
   );
 ```
 
-The function takes in the labeled reason `component` you've created, and a function that, given the JS props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to the name `default`. The JS side can then import it:
+The function takes in the labeled reason `component` you've created, and a function that, given the JS props, asks you to call `make` while passing in the correctly converted parameters. You'd assign the whole thing to the name `jsComponent`. The JS side can then import it:
 
 ```
-var MyReasonComponent = require('./myReasonComponent.bs');
+var MyReasonComponent = require('./myReasonComponent.bs').jsComponent;
 // make sure you're passing the correct data types!
 <MyReasonComponent name="John" />
 ```
 
-**Note**: `default` exports like the one above are supported for `BuckleScript >=1.8.2`. If that doesn't work, try a non-default export, like:
+**Note**: if you'd rather use a **default import** on the JS side, you can export such default from BuckleScript/ReasonReact:
 
 ```reason
-let jsComponent = ReasonReact.wrapReasonForJs(...)
+let default = ReasonReact.wrapReasonForJs(...)
 ```
 
 and then import it on the JS side with:
 
 ```
-var MyReasonComponent = require('./myReasonComponent.bs').jsComponent
+import MyReasonComponent from './myReasonComponent.bs';
 ```
+
+BuckleScript default exports **only** works when the JS side uses ES6 import/exports. [More info here](https://bucklescript.github.io/docs/en/import-export.html#export-an-es6-default-value).
