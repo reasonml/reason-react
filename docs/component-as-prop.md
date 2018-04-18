@@ -18,13 +18,7 @@ This also has some added advantages:
 
 --- 
 
-In practise, if you want a component that would accept children, you can do the following:
-
-```reason
-<RandomComponent wrapperFunc=((~children) => <div className="something-special"> ...children </div>) />
-```
-
-The associated definition of the `RandomComponent` could be something like:
+In practice, if you want a component that accepts children, you can do the following:
 
 ```reason
 let component = ReasonReact.statelessComponent("RandomComponent");
@@ -46,4 +40,10 @@ let make =
        
     </div>
 }
+```
+
+Then you can use it like this:
+
+```reason
+<RandomComponent wrapperFunc=((~children) => <div className="something-special"> ...children </div>) />
 ```
