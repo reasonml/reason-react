@@ -155,33 +155,19 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
  */
 and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
-let lifecycleNoUpdate = (_) => NoUpdate;
+let anyToNoUpdate = (_) => NoUpdate;
 
-let lifecyclePreviousNextUnit = (_) => ();
+let anyToUnit = (_) => ();
 
-let lifecyclePreviousCurrentReturnUnit = (_) => ();
+let anyToTrue = (_) => true;
 
-let lifecycleReturnUnit = (_) => ();
-
-let lifecycleReturnTrue = (_) => true;
-
-let didMountDefault = lifecycleNoUpdate;
-
-let didUpdateDefault = lifecyclePreviousCurrentReturnUnit;
-
-let shouldUpdateDefault = lifecycleReturnTrue;
-
-let willUnmountDefault = lifecycleReturnUnit;
-
-let willUpdateDefault = lifecyclePreviousNextUnit;
+let didMountDefault = anyToNoUpdate;
 
 let willReceivePropsDefault = ({state}) => state;
 
 let renderDefault = _self => stringToElement("RenderNotImplemented");
 
 let initialStateDefault = () => ();
-
-let retainedPropsDefault = ();
 
 let reducerDefault:
   ('action, 'state) => update('state, 'retainedProps, 'action) =
@@ -343,7 +329,7 @@ let createClass =
             debugName,
           );
         let Element(newComponent) = newConvertedReasonProps;
-        if (newComponent.didUpdate !== lifecyclePreviousCurrentReturnUnit) {
+        if (newComponent.didUpdate !== anyToUnit) {
           let oldConvertedReasonProps =
             prevProps === newJsProps ?
               newConvertedReasonProps :
@@ -386,7 +372,7 @@ let createClass =
         let Element(component) = convertedReasonProps;
         let curState = thisJs##state;
         let curReasonState = curState##reasonState;
-        if (component.willUnmount !== lifecycleReturnUnit) {
+        if (component.willUnmount !== anyToUnit) {
           let self =
             this##self(curReasonState, Obj.magic(component.retainedProps));
           let self = Obj.magic(self);
@@ -415,7 +401,7 @@ let createClass =
             debugName,
           );
         let Element(newComponent) = newConvertedReasonProps;
-        if (newComponent.willUpdate !== willUpdateDefault) {
+        if (newComponent.willUpdate !== anyToUnit) {
           let oldJsProps = thisJs##props;
           /* Avoid converting again the props that are just the same as curProps. */
           let oldConvertedReasonProps =
@@ -548,7 +534,7 @@ let createClass =
         let nextReasonState = nextState##reasonState;
         let newSelf =
           this##self(nextReasonState, Obj.magic(newComponent.retainedProps));
-        if (newComponent.shouldUpdate !== shouldUpdateDefault) {
+        if (newComponent.shouldUpdate !== anyToTrue) {
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
           let curReasonState = Obj.magic(curReasonState);
@@ -681,19 +667,19 @@ let basicComponent = debugName => {
     },
     didMount: didMountDefault,
     willReceiveProps: willReceivePropsDefault,
-    didUpdate: didUpdateDefault,
-    willUnmount: willUnmountDefault,
-    willUpdate: willUpdateDefault,
+    didUpdate: anyToUnit,
+    willUnmount: anyToUnit,
+    willUpdate: anyToUnit,
     /***
      * Called when component will certainly mount at some point - and may be
      * called on the sever for server side React rendering.
      */
-    shouldUpdate: shouldUpdateDefault,
+    shouldUpdate: anyToTrue,
     render: renderDefault,
     initialState: initialStateDefault,
     reducer: reducerDefault,
     jsElementWrapped: None,
-    retainedProps: retainedPropsDefault,
+    retainedProps: (),
     subscriptions: subscriptionsDefault,
   };
   componentTemplate;
