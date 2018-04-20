@@ -73,8 +73,6 @@ type actionless = unit;
 type subscription =
   | Sub(unit => 'token, 'token => unit): subscription;
 
-type reduce('payload, 'action) = ('payload => 'action, 'payload) => unit;
-
 /* Control how a state update is performed.
    The state can be updated of left unchanged.
    Side effects can be specified and are scheduled for later execution.
@@ -107,19 +105,6 @@ and self('state, 'retainedProps, 'action) = {
     'payload .
     (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
     unit,
-
-  /***
-   * Run the reducer function with the action returned by the fuction passed as first argument.
-   *
-   * The reducer lifecycle has two phases:
-   * Phase 1 is the fuction passed as first argument, which is called immediately with the payload.
-   * Phase 2 is the reducer function, which is called next with the returned action.
-   * Note: the fuction passed as first argument can perform immediate side effects.
-   * Note: The reducer function must not perform side effects, but a state update is scheduled,
-   * which can optionally specify delayed side effects.
-   *
-   */
-  reduce: 'payload .reduce('payload, 'action) /* ('payload => 'action) => Callback.t('payload) */,
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,

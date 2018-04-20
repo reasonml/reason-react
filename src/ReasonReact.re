@@ -111,18 +111,11 @@ and componentSpec(
 }
 and component('state, 'retainedProps, 'action) =
   componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action)
-/***
- * A reduced form of the `componentBag`. Better suited for a minimalist React
- * API.
- */
-and reduce('payload, 'action) = ('payload => 'action, 'payload) => unit
 and self('state, 'retainedProps, 'action) = {
   handle:
     'payload .
     (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
     unit,
-
-  reduce: 'payload .reduce('payload, 'action),
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,
@@ -240,7 +233,6 @@ let createClass =
       pub self = (state, retainedProps) => {
         handle: Obj.magic(this##handleMethod),
         send: Obj.magic(this##sendMethod),
-        reduce: Obj.magic(this##reduceMethod),
         state,
         retainedProps,
         onUnmount: Obj.magic(this##onUnmountMethod),
@@ -649,8 +641,6 @@ let createClass =
           );
         };
       };
-      pub reduceMethod = (callback: 'payload => 'action, payload) =>
-        this##sendMethod(callback(payload));
       /***
        * In order to ensure we always operate on freshest props / state, and to
        * support the API that "reduces" the next state along with the next
