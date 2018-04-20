@@ -66,29 +66,6 @@ type noRetainedProps;
 /*** An actionless component is a component with actions of type unit */
 type actionless = unit;
 
-module Callback: {
-
-  /***
-   Type for callbacks
-
-   This type can be left abstract to prevent calling the callback directly.
-   For example, calling `update handler event` would force an immediate
-   call of `handler` with the current state, and can be prevented by defining:
-
-     type t('payload);
-
-    However, we do want to support immediate calling of a handler, as an escape hatch for the existing async
-    setState reactJS pattern
-    */
-  type t('payload) = 'payload => unit;
-
-  /*** Default no-op callback */
-  let default: t('payload);
-
-  /*** Chain two callbacks by executing the first before the second one */
-  let chain: (t('payload), t('payload)) => t('payload);
-};
-
 /**
  * Subscriptions handle resources that need to be initialized and finalized.
  * Initialization returns a token, and finalization consumes a token.
@@ -96,8 +73,7 @@ module Callback: {
 type subscription =
   | Sub(unit => 'token, 'token => unit): subscription;
 
-type reduce('payload, 'action) =
-  ('payload => 'action) => Callback.t('payload);
+type reduce('payload, 'action) = ('payload => 'action, 'payload) => unit;
 
 /* Control how a state update is performed.
    The state can be updated of left unchanged.
@@ -129,8 +105,8 @@ and self('state, 'retainedProps, 'action) = {
    */
   handle:
     'payload .
-    (('payload, self('state, 'retainedProps, 'action)) => unit) =>
-    Callback.t('payload),
+    (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
+    unit,
 
   /***
    * Run the reducer function with the action returned by the fuction passed as first argument.

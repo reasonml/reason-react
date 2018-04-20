@@ -34,7 +34,7 @@ let createDomElement = (s, ~props, children) => {
   Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, vararg);
 };
 
-let magicNull = Obj.magic(Js.Nullable.null);
+[@bs.val] external magicNull : 'a = "null";
 
 type reactClassInternal = reactClass;
 
@@ -46,15 +46,6 @@ type stateless = unit;
 type noRetainedProps = unit;
 
 type actionless = unit;
-
-module Callback = {
-  type t('payload) = 'payload => unit;
-  let default = _event => ();
-  let chain = (handlerOne, handlerTwo, payload) => {
-    handlerOne(payload);
-    handlerTwo(payload);
-  };
-};
 
 type subscription =
   | Sub(unit => 'token, 'token => unit): subscription;
@@ -124,12 +115,12 @@ and component('state, 'retainedProps, 'action) =
  * A reduced form of the `componentBag`. Better suited for a minimalist React
  * API.
  */
-and reduce('payload, 'action) = ('payload => 'action) => Callback.t('payload)
+and reduce('payload, 'action) = ('payload => 'action, 'payload) => unit
 and self('state, 'retainedProps, 'action) = {
   handle:
     'payload .
-    (('payload, self('state, 'retainedProps, 'action)) => unit) =>
-    Callback.t('payload),
+    (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
+    unit,
 
   reduce: 'payload .reduce('payload, 'action),
   state: 'state,
@@ -156,7 +147,7 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       unit
     ),
   "jsPropsToReason":
-    option(jsPropsToReason('props, 'state, 'retainedProps, 'action))
+    option(jsPropsToReason('props, 'state, 'retainedProps, 'action)),
 }
 /***
  * `totalState` tracks all of the internal reason API bookkeeping.
