@@ -852,7 +852,7 @@ module Router = {
 
   [@bs.send]
   external initEventNonIEBrowsers :
-    (Dom.event, string, Js.boolean, Js.boolean) => unit =
+    (Dom.event, string, bool, bool) => unit =
     "initEvent";
 
   let safeMakeEvent = eventName =>
@@ -860,7 +860,7 @@ module Router = {
       makeEventIE11Compatible(eventName);
     } else {
       let event = createEventNonIEBrowsers("Event");
-      initEventNonIEBrowsers(event, eventName, Js.true_, Js.true_);
+      initEventNonIEBrowsers(event, eventName, true, true);
       event;
     };
 
