@@ -6,11 +6,20 @@ type reactElement;
 
 type reactRef;
 
-[@bs.val] external nullElement : reactElement = "null";
+[@deprecated "Please use ReasonReact.null instead"] [@bs.val]
+external nullElement : reactElement = "null";
 
+[@deprecated "Please use ReasonReact.string instead"]
 external stringToElement : string => reactElement = "%identity";
 
+[@deprecated "Please use ReasonReact.array instead"]
 external arrayToElement : array(reactElement) => reactElement = "%identity";
+
+[@bs.val] external null : reactElement = "null";
+
+external string : string => reactElement = "%identity";
+
+external array : array(reactElement) => reactElement = "%identity";
 
 external refToJsObj : reactRef => Js.t({..}) = "%identity";
 
@@ -95,9 +104,7 @@ and componentSpec(
   /* Keep here as a way to prove that the API may be implemented soundly */
   mutable handedOffState: ref(option('state)),
   willReceiveProps: self('state, 'retainedProps, 'action) => 'state,
-  didMount:
-    self('state, 'retainedProps, 'action) =>
-    update('state, 'retainedProps, 'action),
+  didMount: self('state, 'retainedProps, 'action) => unit,
   didUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
   willUnmount: self('state, 'retainedProps, 'action) => unit,
   willUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
@@ -155,17 +162,13 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
  */
 and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
-let anyToNoUpdate = (_) => NoUpdate;
-
 let anyToUnit = (_) => ();
 
 let anyToTrue = (_) => true;
 
-let didMountDefault = anyToNoUpdate;
-
 let willReceivePropsDefault = ({state}) => state;
 
-let renderDefault = _self => stringToElement("RenderNotImplemented");
+let renderDefault = _self => string("RenderNotImplemented");
 
 let initialStateDefault = () => ();
 
@@ -286,32 +289,8 @@ let createClass =
                });
           this##subscriptions#=(Js.Null.return(subscriptions));
         };
-        if (component.didMount !== didMountDefault) {
-          let reasonStateUpdate = component.didMount(self);
-          let reasonStateUpdate = Obj.magic(reasonStateUpdate);
-          let (performSideEffects, nextTotalState) =
-            this##transitionNextTotalState(curTotalState, reasonStateUpdate);
-          switch (nextTotalState === curTotalState, performSideEffects) {
-          | (false, Some(performSideEffects)) =>
-            let nextTotalState = Obj.magic(nextTotalState);
-            thisJs##setState(
-              nextTotalState,
-              Js.Nullable.return(
-                this##handleMethod(((), self) => performSideEffects(self)),
-              ),
-            );
-          | (true, Some(performSideEffects)) =>
-            thisJs##setState(
-              (_) => magicNull,
-              Js.Nullable.return(
-                this##handleMethod(((), self) => performSideEffects(self)),
-              ),
-            )
-          | (false, None) =>
-            let nextTotalState = Obj.magic(nextTotalState);
-            thisJs##setState(nextTotalState, Js.Nullable.null);
-          | (true, None) => ()
-          };
+        if (component.didMount !== anyToUnit) {
+          component.didMount(self);
         };
       };
       pub componentDidUpdate = (prevProps, prevState) => {
@@ -665,7 +644,7 @@ let basicComponent = debugName => {
     handedOffState: {
       contents: None,
     },
-    didMount: didMountDefault,
+    didMount: anyToUnit,
     willReceiveProps: willReceivePropsDefault,
     didUpdate: anyToUnit,
     willUnmount: anyToUnit,
@@ -837,8 +816,7 @@ module Router = {
   external createEventNonIEBrowsers : string => Dom.event = "createEvent";
 
   [@bs.send]
-  external initEventNonIEBrowsers :
-    (Dom.event, string, bool, bool) => unit =
+  external initEventNonIEBrowsers : (Dom.event, string, bool, bool) => unit =
     "initEvent";
 
   let safeMakeEvent = eventName =>

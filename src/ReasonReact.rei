@@ -30,11 +30,20 @@ type reactElement;
 
 type reactRef;
 
-[@bs.val] external nullElement : reactElement = "null";
+[@deprecated "Please use ReasonReact.null instead"] [@bs.val]
+external nullElement : reactElement = "null";
 
+[@deprecated "Please use ReasonReact.string instead"]
 external stringToElement : string => reactElement = "%identity";
 
+[@deprecated "Please use ReasonReact.array instead"]
 external arrayToElement : array(reactElement) => reactElement = "%identity";
+
+[@bs.val] external null : reactElement = "null";
+
+external string : string => reactElement = "%identity";
+
+external array : array(reactElement) => reactElement = "%identity";
 
 external refToJsObj : reactRef => Js.t({..}) = "%identity";
 
@@ -137,9 +146,7 @@ type componentSpec(
    * Note: this callback must not perform side effects.
    */
   willReceiveProps: self('state, 'retainedProps, 'action) => 'state,
-  didMount:
-    self('state, 'retainedProps, 'action) =>
-    update('state, 'retainedProps, 'action),
+  didMount: self('state, 'retainedProps, 'action) => unit,
   didUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
   willUnmount: self('state, 'retainedProps, 'action) => unit,
   willUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
