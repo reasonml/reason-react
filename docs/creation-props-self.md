@@ -91,5 +91,5 @@ It says "I understand that `age` is optional and that when I use the label I sho
 
 ## `self`
 
-You might have seen the `render: (self) => ...` part in `make`. The concept of JavaScript `this` doesn't exist in ReasonReact (but can exist in Reason, since it has an optional object system); the `this` equivalent is called `self`. It's a record that contains `state`, `retainedProps`, `handle` and `reduce`, which we pass around to the lifecycle events, `render` and a few others, when they need the bag of information. These concepts will be explained later on.
+You might have seen the `render: (self) => ...` part in `make`. The concept of JavaScript `this` doesn't exist in ReasonReact (but can exist in Reason, since it has an optional object system); the `this` equivalent is called `self`. It's a record that contains `state`, `handle` and `send`, which we pass around to the lifecycle events, `render` and a few others, when they need the bag of information. These concepts will be explained later on.
 

@@ -70,7 +70,7 @@ Notice that this is just normal [pattern matching](https://reasonml.github.io/do
 ```reason
 let component = ReasonReact.reducerComponent("TodoApp");
 
-let make = (_children) => {
+let make = _children => {
   ...component,
   reducer: (action, state) =>
     switch (action) {
@@ -80,24 +80,19 @@ let make = (_children) => {
     /* todo actions */
     | ChangeTodo(text) => ...
     },
-  subscriptions: (self) => [
-    Sub(
-      () =>
-        ReasonReact.Router.watchUrl(
-          url => {
-            switch (url.hash, MyAppStatus.isUserLoggedIn) {
-            | ("active", _) => self.send(ShowActive)
-            | ("completed", _) => self.send(ShowCompleted)
-            | ("shared", true) => self.send(ShowShared)
-            | ("shared", false) when isSpecialUser => ... /* handle this state */
-            | ("shared", false) => ... /* handle this state */
-            | _ => self.send(ShowAll)
-            }
-          }
-        ),
-      ReasonReact.Router.unwatchUrl
-    )
-  ],
+  didMount: self => {
+    let watcherID = ReasonReact.Router.watchUrl(url => {
+      switch (url.hash, MyAppStatus.isUserLoggedIn) {
+      | ("active", _) => self.send(ShowActive)
+      | ("completed", _) => self.send(ShowCompleted)
+      | ("shared", true) => self.send(ShowShared)
+      | ("shared", false) when isSpecialUser => ... /* handle this state */
+      | ("shared", false) => ... /* handle this state */
+      | _ => self.send(ShowAll)
+      }
+    });
+    self.onUnmount(() => ReasonReact.Router.unwatchUrl(watcherID));
+  },
   render: ...
 }
 ```

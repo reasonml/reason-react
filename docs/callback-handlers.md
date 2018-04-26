@@ -10,7 +10,7 @@ Two scenarios.
 
 ### Not Reading Into `self`
 
-_Reminder: `self` is ReasonReact's `this`. It's a record that contains things like `state`, `retainedProps` and others._
+_Reminder: `self` is ReasonReact's `this`. It's a record that contains things like `state`, `send` and others._
 
 If you're just forwarding a callback prop onto your child, you'd do exactly the same thing you'd have done in ReactJS:
 
@@ -41,7 +41,7 @@ let make = (~name, ~onClick, _children) => {
 
 ### Reading Into `self`
 
-To access `state`, `retainedProps` and the other items in `self` from a callback, you **need** to wrap the callback in an extra layer called `self.handle`:
+To access `state`, `send` and the other items in `self` from a callback, you **need** to wrap the callback in an extra layer called `self.handle`:
 
 ```reason
 let component = ...;

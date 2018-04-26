@@ -8,7 +8,7 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - Preparation for namespace
 - Set lifecycles to null when they do nothing. React skips over lifecycles that are set to null, we currently have wrappers around all of them, so things like didMount are enqueued for *every* component.
 - `ReactDOMRe.createElement` (usually used through the JSX `<div> foo </div>`) has a new implementation that fixes an inadvertent children key warning in the previous version.
-- either rename `willReceiveProps` to `propsReceived`, or keep the same name and make it take oldNew self bag
-- better modeling for `stateless` and `retainedProps` from `unit` to something else
-- expose `ReasonReact.publicComponentSpec state retainedProps action` for less cryptic component type annotation.
+- remove `retainedProps` and `willReceiveProps` in favour of `getDerivedStateFromProps`
+- better modeling for `ReasonReact.stateless` type from `unit` to something else
+- expose `ReasonReact.publicComponentSpec(state, action)` for less cryptic component type annotation.
 - Get rid of implicit keys on a component (likely non-breaking)

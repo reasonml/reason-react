@@ -13,14 +13,13 @@ type state = {
 
 let component = ReasonReact.reducerComponent("Todo");
 
-let make = (_children) => {
+let make = _children => {
   ...component,
   initialState: () => {timerId: ref(None)},
-  didMount: (self) => {
+  didMount: self => {
     self.state.timerId := Some(Js.Global.setInterval(() => Js.log("hello!"), 1000));
-    ReasonReact.NoUpdate
   },
-  willUnmount: (self) => {
+  willUnmount: self => {
     switch (self.state.timerId^) {
     | Some(id) => Js.Global.clearInterval(id);
     | None => ()
@@ -38,32 +37,45 @@ Notice a few things:
 
 For the last point, go search your codebase and see how many `setInterval` you have compared to the amount of `clearInterval`! We bet the ratio isn't 1 =). Likewise for `addEventListener` vs `removeEventListener`.
 
-To solve the above problems and to codify a good practice, ReasonReact provides a helper field in the component spec, called `subscriptions`. It asks for a callback of type `self => list(subscription)`.
-
-`subscription` itself is the type `Sub(unit => 'token, 'token => unit)`. In plain words, it means that it:
-
-- accepts a function that returns a subscription token (a timer id, event listener token, etc.)
-- accepts a second function that, given the token, does some side-effect (probably clear the subscription).
+To solve the above problems and to codify a good practice, ReasonReact provides a helper field in `self`, called `onUnmount`. It asks for a callback of type `unit => unit` in which you free your subscriptions. It'll be called before the component unmounts.
 
 Here's the previous example rewritten:
 
 ```reason
 let component = ReasonReact.statelessComponent("Todo");
 
-let make = (_children) => {
+let make = _children => {
   ...component,
-  subscriptions: (self) => [
-    Sub(
-      () => Js.Global.setInterval(() => Js.log("hello!"), 1000),
-      Js.Global.clearInterval
-    )
-  ],
+  didMount: self => {
+    let intervalId = Js.Global.setInterval(() => Js.log("hello!"), 1000);
+    self.onUnmount(() => Js.Global.clearInterval(intervalId));
+  },
   render: ...
-}
+};
 ```
 
 Now you won't ever forget to clear your timer!
 
-**Note**: `subscriptions` is called **once**, after the component is mounted. It's not re-evaluated every time the component updates.
+## Design Decisions
 
-**Note**: this is an **interop helper**. This isn't meant to be used as a shiny first-class feature for e.g. adding more flux stores into your app (for that purpose, please use our [local reducer](state-actions-reducer.md#actions-reducer)). Every time you use `subscriptions`, consider it as a simple, pragmatic and performant way to talk to the existing world.
+**Why not just put some logic in the willUnmount `lifecycle`**? Definitely do, whenever you could. But sometimes, folks forget to release their subscriptions inside callbacks:
+
+```js
+let make = _children => {
+  ...component,
+  reducer: (action, state) => {
+    switch (action) {
+    | Click => ReasonReact.SideEffects(self => {
+        fetchAsyncData(result => {
+          self.send(Data(result))
+        });
+      })
+    }
+  },
+  render: ...
+};
+```
+
+If the component unmounts and _then_ the `fetchAsyncData` calls the callback, it'll accidentally call `self.send`. Using `let cancel = fetchAsyncData(...); self.onUnmount(() => cancel())` is much easier.
+
+**Note**: this is an **interop helper**. This isn't meant to be used as a shiny first-class feature for e.g. adding more flux stores into your app (for that purpose, please use our [local reducer](state-actions-reducer.md#actions-reducer)). Every time you use `self.onUnmount`, consider it as a simple, pragmatic and performant way to talk to the existing world.
