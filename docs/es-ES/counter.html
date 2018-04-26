@@ -55,16 +55,14 @@ let component = ReasonReact.reducerComponent(<span class="hljs-string">"Counter"
 let make = _children =&gt; {
   ...component,
   initialState: () =&gt; {count: <span class="hljs-number">0</span>},
+  didMount: <span class="hljs-literal">self</span> =&gt; {
+    let intervalId = Js.Global.<span class="hljs-built_in">set</span>Interval(() =&gt; <span class="hljs-literal">self</span>.send(Tick), <span class="hljs-number">1000</span>);
+    <span class="hljs-literal">self</span>.<span class="hljs-keyword">on</span>Unmount(() =&gt; Js.Global.clearInterval(intervalId));
+  },
   reducer: (action, <span class="hljs-keyword">state</span>) =&gt;
     switch (action) {
     | Tick =&gt; ReasonReact.Update({count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
     },
-  subscriptions: <span class="hljs-literal">self</span> =&gt; [
-    Sub(
-      () =&gt; Js.Global.<span class="hljs-built_in">set</span>Interval(() =&gt; <span class="hljs-literal">self</span>.send(Tick), <span class="hljs-number">1000</span>),
-      Js.Global.clearInterval
-    )
-  ],
   render: ({<span class="hljs-keyword">state</span>}) =&gt;
     <span class="hljs-variable">&lt;div&gt;</span>{ReasonReact.stringToElement(string_of_int(<span class="hljs-keyword">state</span>.count))}&lt;/div&gt;
 };

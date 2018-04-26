@@ -15,18 +15,18 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank">Translate</a><h1>生命周期</h1></header><article><div><span><p>ReasonReact 有类似与 ReactJS 的生命周期事件。</p>
-<pre><code class="hljs css reason">didMount: <span class="hljs-literal">self</span> =&gt; update(<span class="hljs-keyword">state</span>)
+<pre><code class="hljs css reason"><span class="hljs-attribute">didMount</span>: self =&gt; unit
 
-willReceiveProps: <span class="hljs-literal">self</span> =&gt; <span class="hljs-keyword">state</span>
+<span class="http"><span class="hljs-attribute">willReceiveProps</span>: self =&gt; state
 
-shouldUpdate: oldAndNewSelf =&gt; bool
+<span class="http"><span class="hljs-attribute">shouldUpdate</span>: oldAndNewSelf =&gt; bool
 
-willUpdate: oldAndNewSelf =&gt; unit
+<span class="http"><span class="hljs-attribute">willUpdate</span>: oldAndNewSelf =&gt; unit
 
-didUpdate: oldAndNewSelf =&gt; unit
+<span class="http"><span class="hljs-attribute">didUpdate</span>: oldAndNewSelf =&gt; unit
 
-willUnmount: <span class="hljs-literal">self</span> =&gt; unit
-</code></pre>
+<span class="javascript">willUnmount: <span class="hljs-function"><span class="hljs-params">self</span> =&gt;</span> unit
+</span></span></span></span></span></code></pre>
 <p>注释：</p>
 <ul>
 <li>我们丢掉了 <code>component</code> 的所有前缀。</li>
@@ -35,7 +35,7 @@ willUnmount: <span class="hljs-literal">self</span> =&gt; unit
 <li>不支持 <code>willMount</code>，请使用 <code>didMount</code> 。</li>
 <li><code>didUpdate</code>, <code>willUpdate</code> 和 <code>shouldUpdate</code> 的输入是 <strong><code>oldAndNewSelf</code> record</strong>，类型是 <code>{oldSelf: self, newSelf: self}</code>. 这两个字段相当于ReactJS里面的 <code>componentDidUpdate</code>'的 <code>prevProps/prevState/</code> 结合了 <code>props/state</code>（通过self同时得到props和state）。 <code>willUpdate</code> 和 <code>shouldUpdate</code> 也是类似。</li>
 </ul>
-<p>**请注意，您应该尽可能从生命周期事件内返回 <code>ReasonReact.NoUpdate</code> **。 为了准备迎接React Fiber，我们会移除在生命周期里返回一个新的state的接口。 If you need to update state, simply send an action to <code>reducer</code> and handle it correspondingly: <code>self.send(DidMountUpdate)</code>.</p>
+<p>If you need to update state in a lifecycle event, simply <code>send</code> an action to <code>reducer</code> and handle it correspondingly: <code>self.send(DidMountUpdate)</code>.</p>
 <p><strong>有一些生命周期（和ReactJS相比会）表现不同，可以参考下面的内容。</strong></p>
 <h2><a class="anchor" aria-hidden="true" name="retainedprops"></a><a href="#retainedprops" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>获取下一个或者上一个属性：<code>retainedProps</code></h2>
 <p>在ReactJS里，我们有时会在组件的生命周期中使用 <code>prevProps</code>(<code>componentDidUpdate</code>) ，<code>nextProps</code>(componentWillUpdate) 之类的API。 ReasonReact并不会为你自动保留这些之前的属性。 为了满足这些功能，我们提供了 <code>retainedProps</code> API：</p>

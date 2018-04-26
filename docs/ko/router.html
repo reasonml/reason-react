@@ -68,7 +68,7 @@
 <p>Notice that this is just normal <a href="https://reasonml.github.io/docs/en/pattern-matching.html">pattern matching</a>. You can combine it with other features, such as tuple + ReasonReact features like <a href="/reason-react/docs/ko/subscriptions-helper.html">subscriptions</a> and reducer:</p>
 <pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ReasonReact.reducerComponent(<span class="hljs-string">"TodoApp"</span>);
 
-<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">_children</span>) =&gt;</span> {
+<span class="hljs-keyword">let</span> make = <span class="hljs-function"><span class="hljs-params">_children</span> =&gt;</span> {
   ...component,
   <span class="hljs-attr">reducer</span>: <span class="hljs-function">(<span class="hljs-params">action, state</span>) =&gt;</span>
     <span class="hljs-keyword">switch</span> (action) {
@@ -78,24 +78,19 @@
     <span class="hljs-comment">/* todo actions */</span>
     | ChangeTodo(text) =&gt; ...
     },
-  <span class="hljs-attr">subscriptions</span>: <span class="hljs-function">(<span class="hljs-params">self</span>) =&gt;</span> [
-    Sub(
-      <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
-        ReasonReact.Router.watchUrl(
-          <span class="hljs-function"><span class="hljs-params">url</span> =&gt;</span> {
-            <span class="hljs-keyword">switch</span> (url.hash, MyAppStatus.isUserLoggedIn) {
-            | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"active"</span>, _</span>) =&gt;</span> self.send(ShowActive)
-            | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"completed"</span>, _</span>) =&gt;</span> self.send(ShowCompleted)
-            | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"shared"</span>, <span class="hljs-literal">true</span></span>) =&gt;</span> self.send(ShowShared)
-            | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span>) when isSpecialUser =&gt; ... <span class="hljs-comment">/* handle this state */</span>
-            | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span></span>) =&gt;</span> ... <span class="hljs-comment">/* handle this state */</span>
-            | <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> self.send(ShowAll)
-            }
-          }
-        ),
-      ReasonReact.Router.unwatchUrl
-    )
-  ],
+  <span class="hljs-attr">didMount</span>: <span class="hljs-function"><span class="hljs-params">self</span> =&gt;</span> {
+    <span class="hljs-keyword">let</span> watcherID = ReasonReact.Router.watchUrl(<span class="hljs-function"><span class="hljs-params">url</span> =&gt;</span> {
+      <span class="hljs-keyword">switch</span> (url.hash, MyAppStatus.isUserLoggedIn) {
+      | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"active"</span>, _</span>) =&gt;</span> self.send(ShowActive)
+      | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"completed"</span>, _</span>) =&gt;</span> self.send(ShowCompleted)
+      | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"shared"</span>, <span class="hljs-literal">true</span></span>) =&gt;</span> self.send(ShowShared)
+      | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span>) when isSpecialUser =&gt; ... <span class="hljs-comment">/* handle this state */</span>
+      | <span class="hljs-function">(<span class="hljs-params"><span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span></span>) =&gt;</span> ... <span class="hljs-comment">/* handle this state */</span>
+      | <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> self.send(ShowAll)
+      }
+    });
+    self.onUnmount(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> ReasonReact.Router.unwatchUrl(watcherID));
+  },
   <span class="hljs-attr">render</span>: ...
 }
 </code></pre>

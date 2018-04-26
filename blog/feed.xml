@@ -17,7 +17,7 @@
             <link>https://reasonml.github.io/reason-react/blog/2018/01/09/subscriptions-send-router.html</link>
             <guid>https://reasonml.github.io/reason-react/blog/2018/01/09/subscriptions-send-router.html</guid>
             <pubDate>Tue, 09 Jan 2018 06:00:00 GMT</pubDate>
-            <description><![CDATA[Happy new year! We've got a new, non-breaking release for you =). As always, **[here](https://github.com/chenglou/upgrade-reason-react-to-031)'s the migration script** and [here](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#031)'s ]]></description>
+            <description><![CDATA[Happy new year! We've got a new, non-breaking release for you =). As always, **[here](https://github.com/chenglou/upgrade-reason-react)'s the migration script** and [here](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#031)'s the lis]]></description>
         </item>
         <item>
             <title><![CDATA[RR 0.3.0 - Power Children]]></title>
