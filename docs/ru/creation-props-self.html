@@ -26,7 +26,7 @@
 
 <span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
   ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
-  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
+  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.string(name)} &lt;/div&gt;
 };
 </code></pre>
 <p>The <code>make</code> function is what's called by ReasonReact's JSX, described later. For now, the JSX-less way of calling &amp; rendering a component is:</p>

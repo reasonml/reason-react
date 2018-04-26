@@ -23,9 +23,9 @@
 <p>In ReactJS, you can easily do: <code>&lt;div&gt; hello &lt;/div&gt;</code>, <code>&lt;div&gt; 1 &lt;/div&gt;</code>, <code>&lt;div&gt; null &lt;/div&gt;</code>, etc. In Reason, the type system restricts you from passing arbitrary data like so; you can only return <code>ReasonReact.reactElement</code> from <code>render</code>.</p>
 <p>Fortunately, we special-case a few special elements of the type <code>ReasonReact.reactElement</code>:</p>
 <ul>
-<li><p><code>ReasonReact.nullElement</code>: This is your <code>null</code> equivalent for <code>render</code>'s return value. Akin to <code>return null</code> in ReactJS render.</p></li>
-<li><p><code>ReasonReact.stringToElement</code>: Takes a string and converts it to a <code>reactElement</code>. You'd use <code>&lt;div&gt; {ReasonReact.stringToElement(string_of_int(10))} &lt;/div&gt;</code> to display an int.</p></li>
-<li><p><code>ReasonReact.arrayToElement</code>: Takes an array and converts it to a <code>reactElement</code>.</p></li>
+<li><p><code>ReasonReact.null</code>: This is your <code>null</code> equivalent for <code>render</code>'s return value. Akin to <code>return null</code> in ReactJS render.</p></li>
+<li><p><code>ReasonReact.string</code>: Takes a string and converts it to a <code>reactElement</code>. You'd use <code>&lt;div&gt; {ReasonReact.string(string_of_int(10))} &lt;/div&gt;</code> to display an int.</p></li>
+<li><p><code>ReasonReact.array</code>: Takes an array and converts it to a <code>reactElement</code>.</p></li>
 </ul>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="jsx.html">← JSX</a><a class="docs-next button" href="callback-handlers.html">处理回调 →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [

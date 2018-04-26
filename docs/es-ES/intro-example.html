@@ -15,12 +15,12 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>Ejemplo de introducción</h1></header><article><div><span><p>Antes de empezar veamos una pequeña muestra del la API de ReasonReact. No te preocupes si hay cosas que no entiendes, la documentación las cubrirá todas.</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
-/* guión bajo antes de un nombre de variable significa que no será usada. We name them <span class="hljs-keyword">for</span> clarity */
+/* guión bajo antes de un nombre de variable significa que no será usada. <span class="hljs-type">We</span> name them <span class="hljs-keyword">for</span> clarity */
 <span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
   ...component,
-  render: (_self) =&gt; &lt;button&gt; {ReasonReact.stringToElement(<span class="hljs-string">"Hola!"</span>)} &lt;/button&gt;
+  render: (_self) =&gt; &lt;button&gt; {<span class="hljs-type">ReasonReact</span>.<span class="hljs-built_in">string</span>(<span class="hljs-string">"Hello!"</span>)} &lt;/button&gt;
 };
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="installation.html">← Instalación</a><a class="docs-next button" href="creation-props-self.html">Creación, Props y Self →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({

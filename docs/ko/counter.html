@@ -44,7 +44,7 @@ let make = _children =&gt; {
     }
   },
   render: ({<span class="hljs-keyword">state</span>}) =&gt;
-    <span class="hljs-variable">&lt;div&gt;</span>{ReasonReact.stringToElement(string_of_int(<span class="hljs-keyword">state</span>.count))}&lt;/div&gt;
+    <span class="hljs-variable">&lt;div&gt;</span>{ReasonReact.string(string_of_int(<span class="hljs-keyword">state</span>.count))}&lt;/div&gt;
 };
 </code></pre>
 <p>Or, using the <a href="/reason-react/docs/ko/subscriptions-helper.html">subscriptions helper</a>:</p>
@@ -67,7 +67,7 @@ let make = _children =&gt; {
     | Tick =&gt; ReasonReact.Update({count: <span class="hljs-keyword">state</span>.count + <span class="hljs-number">1</span>})
     },
   render: ({<span class="hljs-keyword">state</span>}) =&gt;
-    <span class="hljs-variable">&lt;div&gt;</span>{ReasonReact.stringToElement(string_of_int(<span class="hljs-keyword">state</span>.count))}&lt;/div&gt;
+    <span class="hljs-variable">&lt;div&gt;</span>{ReasonReact.string(string_of_int(<span class="hljs-keyword">state</span>.count))}&lt;/div&gt;
 };
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="simple.html">← Simple</a><a class="docs-next button" href="retained-props.html">Retained Props →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({

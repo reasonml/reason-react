@@ -22,7 +22,7 @@
 <span class="hljs-keyword">let</span> make = (~message, _children) =&gt; {
   <span class="hljs-params">...</span>component,
   render: <span class="hljs-built_in">self</span> =&gt;
-    &lt;div onClick={<span class="hljs-built_in">self</span>.<span class="hljs-keyword">handle</span>(handleClick)}&gt;{ReasonReact.stringToElement(message)}&lt;/div&gt;
+    &lt;div onClick={<span class="hljs-built_in">self</span>.<span class="hljs-keyword">handle</span>(handleClick)}&gt;{ReasonReact.<span class="hljs-built_in">string</span>(message)}&lt;/div&gt;
 };
 </code></pre>
 <p>Usage in another file:</p>

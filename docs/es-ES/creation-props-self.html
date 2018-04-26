@@ -25,8 +25,8 @@
 <span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
 <span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
-  ...component, <span class="hljs-comment">/* expande los valores por defecto de component aquí  */</span>
-  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
+  ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
+  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.string(name)} &lt;/div&gt;
 };
 </code></pre>
 <p>La función <code>make</code> es llamada por la implementación de JSX de ReasonReact, la cual cubriremos más adelante. Por ahora, la forma sin JSX de llamar y renderear un componente es la siguiente:</p>

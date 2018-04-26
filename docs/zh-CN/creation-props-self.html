@@ -26,7 +26,7 @@
 
 <span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
   ...component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
-  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.stringToElement(name)} &lt;/div&gt;
+  render: <span class="hljs-attr">_self</span> =&gt; &lt;div&gt; {ReasonReact.string(name)} &lt;/div&gt;
 };
 </code></pre>
 <p><code>make</code> 是你在写ReasonReact JSX时会调用的函数（JSX会在稍后的内容中介绍）。现在，不使用JSX去调用一个组件的方法是：</p>

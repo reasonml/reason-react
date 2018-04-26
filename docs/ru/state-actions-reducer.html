@@ -53,14 +53,14 @@ let make = (~greeting, _children) =&gt; {
       <span class="hljs-string">"You've clicked this "</span> ++ string_of_int(<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.count) ++ <span class="hljs-string">" times(s)"</span>;
     <span class="hljs-variable">&lt;div&gt;</span>
       <span class="hljs-variable">&lt;button onClick=(_event =&gt;</span> <span class="hljs-literal">self</span>.send(Click))&gt;
-        (ReasonReact.stringToElement(message))
+        (ReasonReact.string(message))
       &lt;/button&gt;
       <span class="hljs-variable">&lt;button onClick=(_event =&gt;</span> <span class="hljs-literal">self</span>.send(Toggle))&gt;
-        (ReasonReact.stringToElement(<span class="hljs-string">"Toggle greeting"</span>))
+        (ReasonReact.string(<span class="hljs-string">"Toggle greeting"</span>))
       &lt;/button&gt;
       (
         <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.show ?
-          ReasonReact.stringToElement(greeting) : ReasonReact.nullElement
+          ReasonReact.string(greeting) : ReasonReact.null
       )
     &lt;/div&gt;;
   },

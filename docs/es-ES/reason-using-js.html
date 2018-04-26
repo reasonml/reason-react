@@ -40,8 +40,8 @@ let make = (~<span class="hljs-keyword">show, </span>~message, children) =&gt;
   ReasonReact.wrapJsForReason(
     ~reactClass=myBanner,
     ~props={
-      <span class="hljs-string">"show"</span>: <span class="hljs-keyword">Js.Boolean.to_js_boolean(show), </span><span class="hljs-comment">/* ^ don't forget to convert an OCaml bool into a JS boolean! */</span>
-      <span class="hljs-string">"message"</span>: message <span class="hljs-comment">/* OCaml string maps to JS string, no conversion needed here */</span>
+      <span class="hljs-string">"show"</span>: <span class="hljs-keyword">show
+</span>      <span class="hljs-string">"message"</span>: message <span class="hljs-comment">/* OCaml string maps to JS string, no conversion needed here */</span>
     },
     children
   )<span class="hljs-comment">;</span>
