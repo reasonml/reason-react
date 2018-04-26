@@ -16,6 +16,6 @@ let make = (~message, _children) => {
       /* do whatever sneaky imperative things here */
       Js.log("props `message` changed!")
     },
-  render: _self => <div>{ReasonReact.stringToElement(message)}</div>
+  render: _self => <div>{ReasonReact.string(message)}</div>
 };
 ```

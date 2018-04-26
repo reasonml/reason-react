@@ -34,7 +34,7 @@ let make = _children => {
     }
   },
   render: ({state}) =>
-    <div>{ReasonReact.stringToElement(string_of_int(state.count))}</div>
+    <div>{ReasonReact.string(string_of_int(state.count))}</div>
 };
 ```
 
@@ -60,6 +60,6 @@ let make = _children => {
     | Tick => ReasonReact.Update({count: state.count + 1})
     },
   render: ({state}) =>
-    <div>{ReasonReact.stringToElement(string_of_int(state.count))}</div>
+    <div>{ReasonReact.string(string_of_int(state.count))}</div>
 };
 ```

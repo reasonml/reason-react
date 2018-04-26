@@ -16,8 +16,8 @@ In ReactJS, you can easily do: `<div> hello </div>`, `<div> 1 </div>`, `<div> nu
 
 Fortunately, we special-case a few special elements of the type `ReasonReact.reactElement`:
 
-- `ReasonReact.nullElement`: This is your `null` equivalent for `render`'s return value. Akin to `return null` in ReactJS render.
+- `ReasonReact.null`: This is your `null` equivalent for `render`'s return value. Akin to `return null` in ReactJS render.
 
-- `ReasonReact.stringToElement`: Takes a string and converts it to a `reactElement`. You'd use `<div> {ReasonReact.stringToElement(string_of_int(10))} </div>` to display an int.
+- `ReasonReact.string`: Takes a string and converts it to a `reactElement`. You'd use `<div> {ReasonReact.string(string_of_int(10))} </div>` to display an int.
 
-- `ReasonReact.arrayToElement`: Takes an array and converts it to a `reactElement`.
+- `ReasonReact.array`: Takes an array and converts it to a `reactElement`.
