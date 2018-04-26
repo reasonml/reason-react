@@ -85,11 +85,6 @@ class HomeSplash extends React.Component {
             >
               <translate>Get Started</translate>
             </Button>
-            <Button
-              href="https://jaredforsyth.com/2017/07/05/a-reason-react-tutorial"
-            >
-              Tutorial
-            </Button>
           </div>
         </div>
       </div>;
