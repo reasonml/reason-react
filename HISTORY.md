@@ -1,3 +1,25 @@
+# 0.4.0
+
+**Requires** bs-platform `>=3.0.0`. Migration script is [here](https://github.com/chenglou/upgrade-reason-react).
+
+## Breaking Changes
+- Remove `SilentUpdate` and `SilentUpdateWithSideEffects`. These aren't used for a long time now.
+- `didMount` now returns `unit`, per our previous warnings in the docs. To trigger a state update, use `self.send(MyAction)`.
+- Remove `self.reduce` for real; use `self.send` (not to be confused with `reducer`, which is still around).
+- Remove `ReasonReact.Callback` module (undocumented and unused).
+
+## Deprecations
+- `ReasonReact.stringToElement`, `arrayToElement` and `nullElement` are now **deprecated** in favor of `ReasonReact.string`, `array` and `null`!
+- **Old `subscriptions` API is deprecated**. Please use the new `self.onUnmount`.
+- `willReceiveProps` deprecated. We'll transition to React 16 very soon and release our binding to `deriveStateFromProps`.
+
+## Improvements
+- Use `bool` instead of `Js.boolean` (thanks to BuckleScript 3.0.0).
+- Fix Router incompatibility with IE11 (#201).
+- Much more streamlined internals.
+- Prepare to transition to React 16.
+- **Did we mention** that `ReasonReact.stringToElement` is now `ReasonReact.string`, etc.?
+
 # 0.3.4
 
 This release **requires** bs-platform 2.2.2! If your app haven't upgraded to it, don't worry; you can still use ResonReact 0.3.2 just fine. Only two small changes.
@@ -12,7 +34,7 @@ This release **requires** bs-platform 2.2.2! If your app haven't upgraded to it,
 
 # 0.3.1
 
-No breaking change. **The migration script is [here](https://github.com/chenglou/upgrade-reason-react-to-031)**.
+No breaking change. **The migration script is [here](https://github.com/chenglou/upgrade-reason-react)**.
 
 - New [subscriptions helper](https://reasonml.github.io/reason-react/docs/en/subscriptions-helper.html).
 - [**Router** is here](https://reasonml.github.io/reason-react/docs/en/router.html)!

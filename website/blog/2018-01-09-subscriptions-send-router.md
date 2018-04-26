@@ -2,7 +2,7 @@
 title: Router and Subscriptions!
 ---
 
-Happy new year! We've got a new, non-breaking release for you =). As always, **[here](https://github.com/chenglou/upgrade-reason-react-to-031)'s the migration script** and [here](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#031)'s the list of changes.
+Happy new year! We've got a new, non-breaking release for you =). As always, **[here](https://github.com/chenglou/upgrade-reason-react)'s the migration script** and [here](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#031)'s the list of changes.
 
 V0.3.1 brings two important features, both super lightweight and performant, yet strike, we hope, a sweet spot in terms of usability:
 
