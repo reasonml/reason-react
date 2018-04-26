@@ -36,7 +36,7 @@ let make = (~name, _children) => {
   ...component,
   render: _self =>
     <button>
-      {ReasonReact.stringToElement("Hello!")}
+      {ReasonReact.string("Hello!")}
     </button>
 };
 ${pre}`;
@@ -48,7 +48,7 @@ let make = (~name, _children) => {
   ...component,
   render: _self =>
     <button>
-      {ReasonReact.stringToElement("Hello!")}
+      {ReasonReact.string("Hello!")}
     </button>
 };
 ${pre}`;
