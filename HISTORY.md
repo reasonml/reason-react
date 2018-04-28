@@ -1,3 +1,7 @@
+# 0.4.1
+
+- Restore `ReasonReact.Callback` module for now and put a deprecation warning on it. This way, at least your third-party dependencies can compile further.
+
 # 0.4.0
 
 **Requires** bs-platform `>=3.0.0`. Migration script is [here](https://github.com/chenglou/upgrade-reason-react).
