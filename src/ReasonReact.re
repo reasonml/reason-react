@@ -921,3 +921,12 @@ module Router = {
       removeEventListener(window, "popstate", watcherID)
     };
 };
+
+module Callback = {
+  type t('payload) = 'payload => unit;
+  let default = _event => ();
+  let chain = (handlerOne, handlerTwo, payload) => {
+    handlerOne(payload);
+    handlerTwo(payload);
+  };
+};

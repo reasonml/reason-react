@@ -274,3 +274,14 @@ module Router: {
       */
   let dangerouslyGetInitialUrl: unit => url;
 };
+
+module Callback: {
+  [@deprecated
+    "ReasonReact.Callback.t(foo) is equivalent to foo => unit. Please use the latter form"
+  ]
+  type t('payload) = 'payload => unit;
+  [@deprecated "Please directly use _event => ()"]
+  let default: 'payload => unit;
+  [@deprecated "Please chain your callbacks manually one after another"]
+  let chain: ('payload => unit, 'payload => unit) => 'payload => unit;
+};
