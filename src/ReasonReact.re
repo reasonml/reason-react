@@ -68,7 +68,7 @@ type subscription =
 type element =
   | Element(component('state, 'retainedProps, 'action)): element
 and jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
-  Js.t('jsProps) => component('state, 'retainedProps, 'action)
+  'jsProps => component('state, 'retainedProps, 'action)
 /***
  * Type of hidden field for Reason components that use JS components
  */
@@ -762,7 +762,7 @@ module WrapProps = {
       ) => {
     let props =
       Js.Obj.assign(
-        Js.Obj.assign(Js.Obj.empty(), props),
+        Js.Obj.assign(Js.Obj.empty(), Obj.magic(props)),
         {"ref": ref, "key": key},
       );
     let varargs =

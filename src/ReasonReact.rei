@@ -212,7 +212,7 @@ let element:
   reactElement;
 
 type jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
-  Js.t('jsProps) => component('state, 'retainedProps, 'action);
+  'jsProps => component('state, 'retainedProps, 'action);
 
 
 /***
@@ -242,7 +242,7 @@ let createDomElement:
  * Use for interop when Reason components use JS components
  */
 let wrapJsForReason:
-  (~reactClass: reactClass, ~props: Js.t({..}), 'a) =>
+  (~reactClass: reactClass, ~props: 'a, 'b) =>
   component(stateless, noRetainedProps, actionless);
 
 module Router: {

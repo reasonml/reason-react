@@ -1,6 +1,7 @@
 # 0.4.1
 
 - Restore `ReasonReact.Callback` module for now and put a deprecation warning on it. This way, at least your third-party dependencies can compile further.
+- Relax `wrapJsForReason` and `wrapReasonForJs` types so that we can use `bs.abstract` for interop instead of `Js.t` objects.
 
 # 0.4.0
 
