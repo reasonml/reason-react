@@ -16,7 +16,7 @@ Benefits: we can re-use all the flex-box, native view bindings, etc. that react-
 Downsides: that might come with some cruft as well.
 
 # Potential direction #2
-status: started (repo [here](https://github.com/pasmomusic/reason-react/pull/8))
+status: started (repo [here](https://github.com/briskml/brisk))
 
 Create a new implementation of React that's especially for Reason + Native
 - based off of [ReactMini](https://github.com/reasonml/reason-react/tree/master/ReactMini)
