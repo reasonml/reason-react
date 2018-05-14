@@ -25,7 +25,6 @@ let make = _children => {
   didMount: self => {
     self.state.timerId :=
       Some(Js.Global.setInterval(() => self.send(Tick), 1000));
-    ReasonReact.NoUpdate;
   },
   willUnmount: self => {
     switch (self.state.timerId^) {
