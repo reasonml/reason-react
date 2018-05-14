@@ -32,7 +32,6 @@ switch (action) {
 didMount: self =&gt; {
 self.state.timerId :=
 Some(Js.Global.setInterval(() =&gt; self.send(Tick), 1000));
-ReasonReact.NoUpdate;
 },
 willUnmount: self =&gt; {
 switch (self.state.timerId^) {

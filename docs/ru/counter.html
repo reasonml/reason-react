@@ -35,7 +35,6 @@ let make = _children =&gt; {
   didMount: <span class="hljs-literal">self</span> =&gt; {
     <span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.timerId :=
       Some(Js.Global.<span class="hljs-built_in">set</span>Interval(() =&gt; <span class="hljs-literal">self</span>.send(Tick), <span class="hljs-number">1000</span>));
-    ReasonReact.NoUpdate;
   },
   willUnmount: <span class="hljs-literal">self</span> =&gt; {
     switch (<span class="hljs-literal">self</span>.<span class="hljs-keyword">state</span>.timerId^) {
