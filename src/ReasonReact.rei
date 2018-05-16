@@ -285,3 +285,35 @@ module Callback: {
   [@deprecated "Please chain your callbacks manually one after another"]
   let chain: ('payload => unit, 'payload => unit) => 'payload => unit;
 };
+
+module type ContextConfig = {let debugName: string; type t; let value: t;};
+
+module CreateContext:
+  (C: ContextConfig) =>
+  {
+    type action =
+      | ChangeState(C.t);
+    let subscriptions: ref(array(C.t => unit));
+    module Provider: {
+      let make:
+        (~value: C.t=?, array(reactElement)) =>
+        componentSpec(
+          stateless,
+          stateless,
+          noRetainedProps,
+          noRetainedProps,
+          actionless,
+        );
+    };
+    module Consumer: {
+      let make:
+        (C.t => reactElement) =>
+        componentSpec(
+          C.t,
+          C.t,
+          noRetainedProps,
+          noRetainedProps,
+          action,
+        );
+    };
+  };
