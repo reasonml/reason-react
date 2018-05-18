@@ -1,3 +1,8 @@
+# 0.4.2
+
+- DOM components now support `aria-*` attributes without needing hacks: `<div ariaLabel="foo" />`. The camelCase `ariaStuff` will compile to `aria-stuff`.
+- For DOM props, instead of `_open`, `_type`, `_begin`, `_end`, `_in`, `_to`, use the new trailing underscore version for consistency: `open_`, `type_`, etc. The former leading underscore versions are now **deprecated**.
+
 # 0.4.1
 
 - Restore `ReasonReact.Callback` module for now and put a deprecation warning on it. This way, at least your third-party dependencies can compile further.
