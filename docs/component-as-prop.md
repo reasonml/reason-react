@@ -23,7 +23,7 @@ In practice, if you want a component that accepts children, you can do the follo
 ```reason
 let component = ReasonReact.statelessComponent("RandomComponent");
 
-let make = (~wrapperFunc, children) => {
+let make = (~wrapperFunc, _) => {
   ...component,
   render: _self =>
     <div> (wrapperFunc(~children=[|<span> (ReasonReact.string("Something")) </span>|])) </div>,
