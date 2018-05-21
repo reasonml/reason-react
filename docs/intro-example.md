@@ -20,6 +20,8 @@ let make = (~name, _children) => {
 
 ### An usage of the component
 
+(assuming there's a `div` on the page with id `greeting`)
+
 ```reason
 /* file: Index.re */
 
