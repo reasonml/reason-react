@@ -15,13 +15,22 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/fr" target="_blank">Translate</a><h1>Exemple d’introduction</h1></header><article><div><span><p>Avant de commencer, voici un petit aperçu de l’API ReasonReact. Pas de soucis si certains éléments ne vous sont pas familier ; la documentation couvre l’ensemble d'entre eux.</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+<h3><a class="anchor" aria-hidden="true" name="the-component-greeting"></a><a href="#the-component-greeting" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>The component &quot;Greeting&quot;</h3>
+<pre><code class="hljs css reason">/* file: Greeting.re */
+
+<span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
 /* underscores <span class="hljs-built_in">before</span> names indicate unused variables. We name them <span class="hljs-keyword">for</span> clarity */
 <span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
   ...component,
-  render: (_self) =&gt; &lt;button&gt; {ReasonReact.string(<span class="hljs-string">"Hello!"</span>)} &lt;/button&gt;
+  render: (_self) =&gt; &lt;button&gt; {ReasonReact.string(<span class="hljs-string">"Hello "</span> ++ name ++ <span class="hljs-string">"!"</span>)} &lt;/button&gt;
 };
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" name="an-usage-of-the-component"></a><a href="#an-usage-of-the-component" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>An usage of the component</h3>
+<p>(assuming there's a <code>div</code> on the page with id <code>greeting</code>)</p>
+<pre><code class="hljs css reason">/* <span class="hljs-built_in">file</span>: Index.re */
+
+ReactDOMRe.renderToElementWithId(&lt;Greeting <span class="hljs-built_in">name</span>=<span class="hljs-string">"John"</span> /&gt;, <span class="hljs-string">"greeting"</span>);
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="installation.html">← Installation</a><a class="docs-next button" href="creation-props-self.html">Creation, Props &amp; Self →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
