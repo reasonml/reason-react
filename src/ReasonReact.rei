@@ -291,16 +291,11 @@ module type ContextConfig = {let debugName: string; type t; let value: t;};
 module CreateContext:
   (C: ContextConfig) =>
   {
-    type action =
-      | ChangeState(C.t);
-    let subscriptions: ref(array(C.t => unit));
     module Provider: {
       let make:
-        (~value: C.t=?, array(reactElement)) =>
-        componentSpec(
+        (~value: C.t, array(reactElement)) =>
+        component(
           stateless,
-          stateless,
-          noRetainedProps,
           noRetainedProps,
           actionless,
         );
@@ -308,12 +303,10 @@ module CreateContext:
     module Consumer: {
       let make:
         (C.t => reactElement) =>
-        componentSpec(
-          C.t,
-          C.t,
+        component(
+          stateless,
           noRetainedProps,
-          noRetainedProps,
-          action,
+          actionless,
         );
     };
   };
