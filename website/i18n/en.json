@@ -34,7 +34,6 @@
     "reason-using-js": "ReasonReact using ReactJS",
     "record-field-send-handle-not-found": "Record Field send/handle Not Found",
     "render": "Render",
-    "retained-props": "Retained Props",
     "roadmap": "Roadmap & Contribution",
     "router": "Router",
     "send-handle-callbacks-having-incompatible-types": "send/handle callbacks having Incompatible Types",
