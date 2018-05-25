@@ -16,26 +16,26 @@
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>React Ref</h1></header><article><div><span><p><em>No estes confundido con Reason <code>ref</code>, la función de idioma que permite la mutación</em>.</p>
 <p>El A ReasonReact <code>ref</code> sera solo otra variable de instancia. Usted escribiría como <code>ReasonReact.reactRef</code>si se une a un componente personalizado, y <code>Dom.element</code> si se une a un elemento React DOM.</p>
-<pre><code class="hljs css reason">estado tipo = {
-  isOpen: <span class="hljs-built_in">bool</span>,
-  mySectionRef: <span class="hljs-built_in">ref</span>(<span class="hljs-built_in">option</span>(<span class="hljs-type">ReasonReact</span>.reactRef))
+<pre><code class="hljs css reason">type <span class="hljs-keyword">state</span> = {
+  isOpen: bool,
+  mySectionRef: ref(option(ReasonReact.reactRef))
 };
 
-<span class="hljs-keyword">let</span> setSectionRef = (theRef, {<span class="hljs-type">ReasonReact</span>.state}) =&gt; {
-  state.mySectionRef := <span class="hljs-type">Js</span>.<span class="hljs-type">Nullable</span>.to_opt(theRef);
-  /* wondering about <span class="hljs-type">Js</span>.<span class="hljs-type">Nullable</span>.to_opt? <span class="hljs-type">Vea</span> la nota siguiente  */
+let <span class="hljs-built_in">set</span>SectionRef = (theRef, {ReasonReact.<span class="hljs-keyword">state</span>}) =&gt; {
+  <span class="hljs-keyword">state</span>.mySectionRef := Js.Nullable.<span class="hljs-keyword">to</span>Option(theRef);
+  /* wondering about Js.Nullable.<span class="hljs-keyword">to</span>Option? Vea la nota siguiente  */
 };
 
-<span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.reducerComponent(<span class="hljs-string">"MyPanel"</span>);
+let component = ReasonReact.reducerComponent(<span class="hljs-string">"MyPanel"</span>);
 
-<span class="hljs-keyword">let</span> make = (~className=<span class="hljs-string">""</span>, _children) =&gt; {
+let make = (~className=<span class="hljs-string">""</span>, _children) =&gt; {
   ...component,
-  initialState: <span class="hljs-literal">()</span> =&gt; {isOpen: <span class="hljs-literal">false</span>, mySectionRef: <span class="hljs-built_in">ref</span>(<span class="hljs-type">None</span>)},
+  initialState: () =&gt; {isOpen: false, mySectionRef: ref(None)},
   reducer: ...,
-  render: (self) =&gt; &lt;<span class="hljs-type">Section1</span> <span class="hljs-built_in">ref</span>={self.<span class="hljs-keyword">handle</span>(setSectionRef)} /&gt;
+  render: (<span class="hljs-literal">self</span>) =&gt; <span class="hljs-variable">&lt;Section1 ref={self.handle(setSectionRef)} /&gt;</span>
 };
 </code></pre>
-<p>Uniendo a un elemento React DOM es la misma: <code>state.mySectionRef = {myDivRef: Js.Nullable.to_opt(theRef)}</code>.</p>
+<p>Attaching to a React DOM element looks the same: <code>state.mySectionRef = {myDivRef: Js.Nullable.toOption(theRef)}</code>.</p>
 <p><strong>Nota</strong> como <a href="https://github.com/facebook/react/issues/9328#issuecomment-298438237">referencias ReactJS pueden ser nulas</a>. Esa es la razón <code>theRef</code> y <code>myDivRef</code> se convierten a partir de una <a href="https://bucklescript.github.io/docs/en/null-undefined-option.html">JS nullable</a> en un OCaml <code>opción</code> (algunos/ningunos). ¡Cuando usted usa la referencia, Usted esta obligado a manejar el caso nulo a través de <code>switch</code>, que evita sutiles errores!</p>
 <p><strong>Usted debe seguir la convención de InstanceVars en le selección anterior para la referencia</strong>.</p>
 <p>ReasonReact ref only accept callbacks. The string <code>ref</code> from ReactJS is deprecated.</p>

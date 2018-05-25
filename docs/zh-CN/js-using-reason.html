@@ -8,38 +8,50 @@
             languagesDropDown.className = "hide";
           }
         });
-      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Code Snippets</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>代码示例</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/simple.html">Simple</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/counter.html">计时器</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/retained-props.html">Retained Props</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/reason-using-js.html">ReasonReact 使用 ReactJS</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/docs/zh-CN/js-using-reason.html">ReactJS 使用 ReasonReact</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/example-projects.html">示例项目</a></li></ul></div></div></section></div><script>
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Code Snippets</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>代码示例</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/simple.html">Simple</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/counter.html">计时器</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/reason-using-js.html">ReasonReact 使用 ReactJS</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/docs/zh-CN/js-using-reason.html">ReactJS 使用 ReasonReact</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/example-projects.html">示例项目</a></li></ul></div></div></section></div><script>
           var toggler = document.getElementById('navToggler');
           var nav = document.getElementById('docsNav');
           toggler.onclick = function() {
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank">Translate</a><h1>ReactJS 使用 ReasonReact</h1></header><article><div><span><p><code>PageReason.re</code>:</p>
-<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ReasonReact.statelessComponent(<span class="hljs-string">"PageReason"</span>);
+<pre><code class="hljs css reason"><span class="hljs-comment">/* ReasonReact used by ReactJS */</span>
+<span class="hljs-comment">/* This is just a normal stateless component. The only change you need to turn
+   it into a ReactJS-compatible component is the wrapReasonForJs call below */</span>
+<span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"PageReason"</span>);
 
-<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~message, ~extraGreeting=?, _children</span>) =&gt;</span> {
+<span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~message, ~<span class="hljs-attr">extraGreeting=?,</span> _children) =&gt; {
   ...component,
-  <span class="hljs-attr">render</span>: <span class="hljs-function">(<span class="hljs-params">_self</span>) =&gt;</span> {
-    <span class="hljs-keyword">let</span> greeting =
-      <span class="hljs-keyword">switch</span> (extraGreeting) {
-      | <span class="hljs-function"><span class="hljs-params">None</span> =&gt;</span> <span class="hljs-string">"How are you?"</span>
+  render: <span class="hljs-attr">_self</span> =&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-attr">greeting</span> =
+      switch (extraGreeting) {
+      | <span class="hljs-attr">None</span> =&gt; <span class="hljs-string">"How are you?"</span>
       | Some(g) =&gt; g
       };
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">MyBannerRe</span> <span class="hljs-attr">show</span>=<span class="hljs-string">true</span> <span class="hljs-attr">message</span>=<span class="hljs-string">{message</span> ++ " " ++ <span class="hljs-attr">greeting</span>} /&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  }
+    &lt;div&gt; &lt;MyBannerRe <span class="hljs-attr">show=true</span> <span class="hljs-attr">message={message</span> ++ <span class="hljs-string">" "</span> ++ greeting} /&gt; &lt;/div&gt;;
+  },
 };
 
-let jsComponent =
-  ReasonReact.wrapReasonForJs(
-    ~component,
-    (jsProps) =&gt;
-      make(
-        ~message=jsProps##message,
-        ~extraGreeting=?Js.Nullable.to_opt(jsProps##extraGreeting),
-        [||]
-      )
+<span class="hljs-comment">/* The following exposes a `jsComponent` that the ReactJS side can use as
+   require('greetingRe.js').jsComponent */</span>
+[@bs.deriving abstract]
+type <span class="hljs-attr">jsProps</span> = {
+  message: string,
+  extraGreeting: Js.nullable(string),
+};
+
+<span class="hljs-comment">/* if **you know what you're doing** and have
+   the correct babel/webpack setup, you can also do `let default = ...` and use it
+   on the JS side as a default export. */</span>
+<span class="hljs-keyword">let</span> <span class="hljs-attr">jsComponent</span> =
+  ReasonReact.wrapReasonForJs(~component, <span class="hljs-attr">jsProps</span> =&gt;
+    make(
+      ~<span class="hljs-attr">message=jsProps</span> |. message,
+      ~<span class="hljs-attr">extraGreeting=?Js.Nullable.toOption(jsProps</span> |. extraGreeting),
+      [||],
+    )
   );
-</span></code></pre>
+</code></pre>
 <p>Then use it on the JS side through</p>
 <pre><code class="hljs css javascript"><span class="hljs-keyword">var</span> PageReason = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path/to/PageReason.js'</span>).jsComponent;
 </code></pre>

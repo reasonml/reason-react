@@ -8,7 +8,7 @@
             languagesDropDown.className = "hide";
           }
         });
-      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Code Snippets</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Code Snippets</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/simple.html">Simple</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/counter.html">Counter</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/retained-props.html">Retained Props</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/docs/ja/reason-using-js.html">ReasonReact using ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/js-using-reason.html">ReactJS using ReasonReact</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/example-projects.html">Example Projects</a></li></ul></div></div></section></div><script>
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li><li><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Code Snippets</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Code Snippets</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/simple.html">Simple</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/counter.html">Counter</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/docs/ja/reason-using-js.html">ReasonReact using ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/js-using-reason.html">ReactJS using ReasonReact</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/example-projects.html">Example Projects</a></li></ul></div></div></section></div><script>
           var toggler = document.getElementById('navToggler');
           var nav = document.getElementById('docsNav');
           toggler.onclick = function() {
@@ -32,21 +32,26 @@
 <span class="hljs-built_in">module</span>.exports = App;
 </code></pre>
 <p><code>MyBannerRe.re</code></p>
-<pre><code class="hljs css reason"><span class="hljs-comment">/* Typing the MyBanner.js component's output as a `reactClass`. */</span>
-<span class="hljs-comment">/* Note that this file's JS output is located at reason-react-example/lib/js/src/interop/MyBannerRe.js; we're specifying the relative path to MyBanner.js in the string below */</span>
-[@<span class="hljs-keyword">bs.module] </span><span class="hljs-keyword">external </span>myBanner : ReasonReact.reactClass = <span class="hljs-string">"../../../../src/interop/MyBanner"</span><span class="hljs-comment">;</span>
+<pre><code class="hljs css reason"><span class="hljs-comment">/* ReactJS used by ReasonReact */</span>
+<span class="hljs-comment">/* This component wraps a ReactJS one, so that ReasonReact components can consume it */</span>
+<span class="hljs-comment">/* Typing the myBanner.js component's output as a `reactClass`. */</span>
+[@<span class="hljs-keyword">bs.module] </span><span class="hljs-keyword">external </span>myBanner : ReasonReact.reactClass = <span class="hljs-string">"./MyBanner"</span><span class="hljs-comment">;</span>
 
+[@<span class="hljs-keyword">bs.deriving </span>abstract]
+type <span class="hljs-keyword">jsProps </span>= {
+<span class="hljs-symbol">  show:</span> <span class="hljs-keyword">bool,
+</span><span class="hljs-symbol">  message:</span> string,
+}<span class="hljs-comment">;</span>
+
+<span class="hljs-comment">/* This is like declaring a normal ReasonReact component's `make` function, except the body is a the interop hook wrapJsForReason */</span>
 let make = (~<span class="hljs-keyword">show, </span>~message, children) =&gt;
   ReasonReact.wrapJsForReason(
     ~reactClass=myBanner,
-    ~props={
-      <span class="hljs-string">"show"</span>: <span class="hljs-keyword">show
-</span>      <span class="hljs-string">"message"</span>: message <span class="hljs-comment">/* OCaml string maps to JS string, no conversion needed here */</span>
-    },
-    children
+    ~props=<span class="hljs-keyword">jsProps(~show, </span>~message),
+    children,
   )<span class="hljs-comment">;</span>
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="retained-props.html">← Retained Props</a><a class="docs-next button" href="js-using-reason.html">ReactJS using ReasonReact →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="counter.html">← Counter</a><a class="docs-next button" href="js-using-reason.html">ReactJS using ReasonReact →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
             '.mainContainer, .docsNavContainer .toc .navWrapper',
