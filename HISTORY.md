@@ -1,5 +1,7 @@
 # 0.4.2
 
+**This release requires `bs-platform 3.1.4`**.
+
 - DOM components now support `aria-*` attributes without needing hacks: `<div ariaLabel="foo" />`. The camelCase `ariaStuff` will compile to `aria-stuff`.
 - For DOM props, instead of `_open`, `_type`, `_begin`, `_end`, `_in`, `_to`, use the new trailing underscore version for consistency: `open_`, `type_`, etc. The former leading underscore versions are now **deprecated**.
 
