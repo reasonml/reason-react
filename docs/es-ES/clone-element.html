@@ -15,18 +15,18 @@
             nav.classList.toggle('docsSliderActive');
           };
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank">Translate</a><h1>cloneElement</h1></header><article><div><span><p>Signatura: <code>let cloneElement: (reactElement, ~props: Js.t({..})=?, 'anyChildrenType) =&gt; reactElement</code></p>
-<p>Same as ReactJS' <a href="https://reactjs.org/docs/react-api.html#cloneelement">cloneElement</a>. However, adding extra props to a ReasonReact component doesn't make sense; you'd use a <a href="https://reactjs.org/docs/render-props.html"><strong>render prop</strong></a>. Por ello, <code>ReasonReact.cloneElement</code> solo se utiliza en casos muy específicos por cuestiones de interoperabilidad. Por ejemplo, los atributos <code>data-*</code> y <code>aria-*</code> no son sintácticamente válidos como etiquetas de función. El ejemplo siguiente no sería parseable:</p>
-<pre><code class="hljs css reason">&lt;div <span class="hljs-attribute">data-payload</span>=1 <span class="hljs-attribute">aria-label</span>=<span class="hljs-string">"click me"</span> <span class="hljs-attribute">className</span>=<span class="hljs-string">"foo"</span> /&gt;
+<p>Same as ReactJS' <a href="https://reactjs.org/docs/react-api.html#cloneelement">cloneElement</a>. However, adding extra props to a ReasonReact component doesn't make sense; you'd use a <a href="https://reactjs.org/docs/render-props.html"><strong>render prop</strong></a>. Por ello, <code>ReasonReact.cloneElement</code> solo se utiliza en casos muy específicos por cuestiones de interoperabilidad. For example, <code>data-*</code> attributes aren't syntactically valid as a function label. El ejemplo siguiente no sería parseable:</p>
+<pre><code class="hljs css reason">&lt;div <span class="hljs-attribute">data-payload</span>=1 <span class="hljs-attribute">className</span>=<span class="hljs-string">"foo"</span> /&gt;
 </code></pre>
 <p>Usarías <code>cloneElement</code> para sortear el problema de la siguiente forma:</p>
 <pre><code class="hljs css reason"><span class="hljs-keyword">let</span> myElement =
   ReasonReact.cloneElement(
     &lt;div className=<span class="hljs-string">"foo"</span> /&gt;,
-    ~props={<span class="hljs-string">"data-payload"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"aria-label"</span>: <span class="hljs-string">"click me"</span>},
+    ~props={<span class="hljs-string">"data-payload"</span>: <span class="hljs-number">1</span>},
     [<span class="hljs-meta">||</span>]
   );
 </code></pre>
-<p>Esto asignará las props <code>data-payload</code> y <code>aria-label</code> (<strong>ambas sin tipar</strong>, ten cuidado!) al <code>div</code>, mediante un uso inteligente y estáticamente correcto de las utilidades sintácticas de Reason's JS para <a href="https://bucklescript.github.io/docs/en/object.html#object-as-record">objetos de BuckleScript</a>.</p>
+<p>This will assign the extra <code>data-payload</code> props (<strong>untyped</strong>, be careful!) onto the <code>div</code>, through a clever, syntactically valid use of Reason's JS object sugar for <a href="https://bucklescript.github.io/docs/en/object.html#object-as-record">BuckleScript objects</a>.</p>
 <p>Para componentes que no sean del DOM, necesitas utilizar nombres de propiedad válidos.</p>
 <p>También puedes usar <code>cloneElement</code> para simular la <a href="/reason-react/docs/es-ES/props-spread.html">expansión de props</a>, pero no se recomienda en ReasonReact.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="style.html">← Estilo</a><a class="docs-next button" href="children.html">Children →</a></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script src="/reason-react/js/pjax-api.js"></script><script>window.foo = new Pjax({
