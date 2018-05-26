@@ -6,5 +6,9 @@
   "name" : "reason-react",
   "sources": "src",
   "refmt": 3,
-  "bsc-flags": ["-bs-no-version-header"]
+  "bsc-flags": ["-bs-no-version-header"],
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true,
+  }
 }
