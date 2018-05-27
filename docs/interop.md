@@ -67,6 +67,8 @@ type jsProps = {
 
 This will generate the getters and the JS object creation function (of the same name, `jsProps`) you'll need.
 
+**Note**: you do **not** declare `ref` and `key` (the two special ReactJS "props"). We handle that for you, just like ReactJS does. They're not really props.
+
 #### ReasonReact using ReactJS
 
 Easy! Since other Reason components only need you to expose a `make` function, fake one up:
