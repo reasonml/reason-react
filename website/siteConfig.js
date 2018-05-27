@@ -73,6 +73,7 @@ const siteConfig = {
     { languages: true },
     { search: true },
     { href: "https://github.com/reasonml/reason-react", label: "GitHub" },
+    { href: "https://reasonml.github.io/", label: "Reason" },
   ],
   users,
   examples,
