@@ -86,37 +86,6 @@ function createClass(debugName) {
                           /* onUnmount */$$this.onUnmountMethod
                         ];
                 }),
-              transitionNextTotalState: (function (curTotalState, reasonStateUpdate) {
-                  if (typeof reasonStateUpdate === "number") {
-                    return /* tuple */[
-                            /* None */0,
-                            curTotalState
-                          ];
-                  } else {
-                    switch (reasonStateUpdate.tag | 0) {
-                      case 0 : 
-                          return /* tuple */[
-                                  /* None */0,
-                                  {
-                                    reasonState: reasonStateUpdate[0]
-                                  }
-                                ];
-                      case 1 : 
-                          return /* tuple */[
-                                  /* Some */[reasonStateUpdate[0]],
-                                  curTotalState
-                                ];
-                      case 2 : 
-                          return /* tuple */[
-                                  /* Some */[reasonStateUpdate[1]],
-                                  {
-                                    reasonState: reasonStateUpdate[0]
-                                  }
-                                ];
-                      
-                    }
-                  }
-                }),
               getInitialState: (function () {
                   var thisJs = (this);
                   var convertedReasonProps = convertPropsIfTheyreFromJs(thisJs.props, thisJs.jsPropsToReason, debugName);
@@ -327,11 +296,28 @@ function createClass(debugName) {
                                   if (reasonStateUpdate === /* NoUpdate */0) {
                                     return null;
                                   } else {
-                                    var match = $$this.transitionNextTotalState(curTotalState, reasonStateUpdate);
-                                    var nextTotalState = match[1];
-                                    var performSideEffects = match[0];
-                                    if (performSideEffects) {
-                                      sideEffects[/* contents */0] = performSideEffects[0];
+                                    var nextTotalState;
+                                    if (typeof reasonStateUpdate === "number") {
+                                      nextTotalState = curTotalState;
+                                    } else {
+                                      switch (reasonStateUpdate.tag | 0) {
+                                        case 0 : 
+                                            nextTotalState = {
+                                              reasonState: reasonStateUpdate[0]
+                                            };
+                                            break;
+                                        case 1 : 
+                                            sideEffects[/* contents */0] = reasonStateUpdate[0];
+                                            nextTotalState = curTotalState;
+                                            break;
+                                        case 2 : 
+                                            sideEffects[/* contents */0] = reasonStateUpdate[1];
+                                            nextTotalState = {
+                                              reasonState: reasonStateUpdate[0]
+                                            };
+                                            break;
+                                        
+                                      }
                                     }
                                     if (nextTotalState !== curTotalState) {
                                       return nextTotalState;

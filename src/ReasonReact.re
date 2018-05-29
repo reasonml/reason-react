@@ -59,7 +59,6 @@ type actionless = unit;
 type subscription =
   | Sub(unit => 'token, 'token => unit): subscription;
 
-
 /***
  * Elements are what JSX blocks become. They represent the *potential* for a
  * component instance and state to be created / updated. They are not yet
@@ -123,6 +122,7 @@ and self('state, 'retainedProps, 'action) = {
     'payload .
     (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
     unit,
+
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,
@@ -162,9 +162,9 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
  */
 and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
-let anyToUnit = (_) => ();
+let anyToUnit = _ => ();
 
-let anyToTrue = (_) => true;
+let anyToTrue = _ => true;
 
 let willReceivePropsDefault = ({state}) => state;
 
@@ -214,6 +214,11 @@ let createClass =
   ReasonReactOptimizedCreateClass.createClass(.
     [@bs]
     {
+      /***
+       * TODO: Null out fields that aren't overridden beyond defaults in
+       * `component`. React optimizes components that don't implement
+       * lifecycles!
+       */
       val displayName = debugName;
       val mutable subscriptions = Js.null;
       /***
@@ -226,27 +231,6 @@ let createClass =
         retainedProps,
         onUnmount: Obj.magic(this##onUnmountMethod),
       };
-      /***
-       * TODO: Null out fields that aren't overridden beyond defaults in
-       * `component`. React optimizes components that don't implement
-       * lifecycles!
-       */
-      pub transitionNextTotalState = (curTotalState, reasonStateUpdate) =>
-        switch (reasonStateUpdate) {
-        | NoUpdate => (None, curTotalState)
-        | Update(nextReasonState) => (
-            None,
-            {"reasonState": nextReasonState},
-          )
-        | SideEffects(performSideEffects) => (
-            Some(performSideEffects),
-            curTotalState,
-          )
-        | UpdateWithSideEffects(nextReasonState, performSideEffects) => (
-            Some(performSideEffects),
-            {"reasonState": nextReasonState},
-          )
-        };
       pub getInitialState = () : totalState('state, 'retainedProps, 'action) => {
         let thisJs:
           jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
@@ -583,16 +567,19 @@ let createClass =
                 magicNull;
               } else {
                 let reasonStateUpdate = Obj.magic(reasonStateUpdate);
-                let (performSideEffects, nextTotalState) =
-                  this##transitionNextTotalState(
-                    curTotalState,
-                    reasonStateUpdate,
-                  );
-                switch (performSideEffects) {
-                | Some(performSideEffects) =>
-                  sideEffects.contents = performSideEffects
-                | None => ()
-                };
+                let nextTotalState =
+                  switch (reasonStateUpdate) {
+                  | NoUpdate => curTotalState
+                  | Update(nextReasonState) => {
+                      "reasonState": nextReasonState,
+                    }
+                  | SideEffects(performSideEffects) =>
+                    sideEffects.contents = performSideEffects;
+                    curTotalState;
+                  | UpdateWithSideEffects(nextReasonState, performSideEffects) =>
+                    sideEffects.contents = performSideEffects;
+                    {"reasonState": nextReasonState};
+                  };
                 if (nextTotalState !== curTotalState) {
                   nextTotalState;
                 } else {
@@ -701,7 +688,6 @@ let reducerComponentWithRetainedProps =
         'action,
       ) =>
   basicComponent(debugName);
-
 
 /***
  * Convenience for creating React elements before we have a better JSX transform.  Hopefully this makes it
@@ -812,7 +798,6 @@ module Router = {
   [@bs.new] external makeEventIE11Compatible : string => Dom.event = "Event";
 
   [@bs.val] [@bs.scope "document"]
-
   external createEventNonIEBrowsers : string => Dom.event = "createEvent";
 
   [@bs.send]
