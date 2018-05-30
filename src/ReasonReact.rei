@@ -6,24 +6,6 @@
  * )
  */
 
-/***
- * TODO: Test Cases (Highest Priority First):
- * -------------------
- * 1. Unneeded? That a silent update will not block received props!
- * 2. Unneeded? That a silent update will not block another state update! (Two different
- * DOM nodes having event handlers - one triggering silent, the other
- * triggering loud). Then switch which one is invoked first.
- * 3. Add tests for "handle()". (non state updating callback)
- * ------------Cutoff to replace the V1 bindings with V2 ----------------------
- * 4. Multiple setStates on didMount.
- *   - A deep nested component and higher-in-tree component both updating states.
- *     - Does the state change of the higher one flush down to the lower one
- *       and therefore effect the lower one's props in its didMount?
- *       - Perhaps it shouldn't. Maybe we can't make that even happen.
- * 5. updating only a portion of components.
- */
-/* TODOs below this point don't need to block the migration / switch to v2. They need to
- * be done before releasing widely and encouraging other devs to use v2. */
 type reactClass;
 
 type reactElement;

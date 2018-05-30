@@ -162,9 +162,9 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
  */
 and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
-let anyToUnit = _ => ();
+let anyToUnit = (_) => ();
 
-let anyToTrue = _ => true;
+let anyToTrue = (_) => true;
 
 let willReceivePropsDefault = ({state}) => state;
 
