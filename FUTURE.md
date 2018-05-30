@@ -1,5 +1,9 @@
 Like HISTORY.md, but for planned future versions and subject to change. The vocabulary here uses the past tense, to pretend that the versions are already published.
 
+# 0.4.3
+
+- Move artifacts generation back out-of-source. Sorry for the churn.
+
 # Medium/Long-term
 
 - Static tree (prevents top-level component switching, enables destructuring of owned tree).
