@@ -82,8 +82,8 @@ const siteConfig = {
   favicon: "img/reason-react-red-favicon.png",
   /* colors for website */
   colors: {
-    primaryColor: "#db4d3f",
-    secondaryColor: "#db4d3f",
+    primaryColor: "#48a9dc",
+    secondaryColor: "#48a9dc",
     codeColor:
       "rgba(243, 136, 136, 0.03)" /* primaryColor in rgba form, with 0.03 alpha */
   },
