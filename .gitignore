@@ -6,4 +6,4 @@ finalOutput/*.js
 /lib/ocaml/
 *.log
 .bsb.lock
-
+/src/*.js
