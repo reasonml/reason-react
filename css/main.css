@@ -71,7 +71,7 @@ article p img, article iframe {
 }
 
 a {
-  color: #db4d3f;
+  color: #48a9dc;
   text-decoration: none;
 }
 
@@ -117,7 +117,7 @@ blockquote {
 h1, h2, h3, h4 {
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
   font-weight: 300;
-  color: #db4d3f;
+  color: #48a9dc;
 }
 
 h4 {
@@ -131,7 +131,7 @@ header h2 {
 
 .homeContainer {
   background: #fff;
-  color: #db4d3f;
+  color: #48a9dc;
   text-align: center;
 }
 
@@ -235,7 +235,7 @@ header h2 {
   text-align: left;
 }
 .container .wrapper h2 {
-  color: #db4d3f;
+  color: #48a9dc;
   font-size: 22px;
   line-height: 1em;
   margin-top: 20px;
@@ -249,13 +249,13 @@ header h2 {
   padding: 10px 0;
 }
 .container .wrapper h3 {
-  color: #db4d3f;
+  color: #48a9dc;
   font-size: 18px;
   margin-top: 10px;
   padding: 10px 0;
 }
 .container .wrapper h4 {
-  color: #db4d3f;
+  color: #48a9dc;
   font-size: 16px;
   font-weight: 300;
   margin: 0;
@@ -335,7 +335,7 @@ header h2 {
   padding-top: 1em;
 }
 .mainContainer .wrapper .post .docPagination {
-  background: #db4d3f;
+  background: #48a9dc;
   bottom: 0px;
   left: 0px;
   position: absolute;
@@ -508,7 +508,7 @@ header h2 {
 }
 .fixedHeaderContainer {
   box-sizing: border-box;
-  background: #db4d3f;
+  background: #48a9dc;
   color: #fff;
   min-height: 50px;
   padding: 9px 0;
@@ -592,9 +592,9 @@ header h2 {
 }
 .button {
   margin: 4px;
-  border: 1px solid #db4d3f;
+  border: 1px solid #48a9dc;
   border-radius: 3px;
-  color: #db4d3f;
+  color: #48a9dc;
   display: inline-block;
   font-size: 14px;
   font-weight: 400;
@@ -605,7 +605,7 @@ header h2 {
   transition: background 0.3s, color 0.3s;
 }
 .button:hover {
-  background: #db4d3f;
+  background: #48a9dc;
   color: #fff;
 }
 
@@ -662,19 +662,19 @@ input[type="search"] {
   right: 0 !important;
 }
 .navSearchWrapper .aa-dropdown-menu .algolia-docsearch-suggestion--category-header {
-  background: #db4d3f;
+  background: #48a9dc;
   color: white;
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
   font-weight: 400;
   font-size: 14px;
 }
 .navSearchWrapper .aa-dropdown-menu .algolia-docsearch-suggestion--category-header .algolia-docsearch-suggestion--highlight {
-  background-color: #db4d3f;
+  background-color: #48a9dc;
   color: #fff;
 }
 .navSearchWrapper .aa-dropdown-menu .algolia-docsearch-suggestion--title .algolia-docsearch-suggestion--highlight,
 .navSearchWrapper .aa-dropdown-menu .algolia-docsearch-suggestion--subcategory-column .algolia-docsearch-suggestion--highlight {
-  color: #db4d3f;
+  color: #48a9dc;
 }
 .navSearchWrapper .aa-dropdown-menu .algolia-docsearch-suggestion__secondary,
 .navSearchWrapper .aa-dropdown-menu .algolia-docsearch-suggestion--subcategory-column {
@@ -736,7 +736,7 @@ pre code {
   display:block;
   margin: 20px 0;
   padding:0.5em;
-  border-left: 4px solid #db4d3f;
+  border-left: 4px solid #48a9dc;
   font-family: "SFMono-Regular",source-code-pro,Menlo,Monaco,Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Consolas,"Courier New",Courier,monospace;
   font-size: 13px;
   overflow-x:auto;
@@ -970,7 +970,7 @@ pre code {
   margin-top: 50px;
   width: 100%;
   padding: 0;
-  background: #db4d3f;
+  background: #48a9dc;
   color: #fff;
 }
 .navigationSlider .slidingNav.slidingNavActive ul {
@@ -983,7 +983,7 @@ pre code {
   margin: 0;
 }
 .navigationSlider .slidingNav ul li a {
-  color: #db4d3f;
+  color: #48a9dc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -998,7 +998,7 @@ pre code {
 }
 .navigationSlider .slidingNav ul li a:focus,
 .navigationSlider .slidingNav ul li a:hover {
-  background: #db4d3f;
+  background: #48a9dc;
 }
 
 .languages-icon {
@@ -1018,7 +1018,7 @@ pre code {
 }
 ul#languages-dropdown-items {
   display: flex;
-  background-color: #db4d3f;
+  background-color: #48a9dc;
   flex-direction: column;
   min-width: 120px;
   pointer-events: all;
@@ -1100,7 +1100,7 @@ ul#languages li {
     width: 100%;
   }
   .reactNavSearchWrapper input#search_input_react:focus, .reactNavSearchWrapper input#search_input_react:active {
-    background-color: #db4d3f;
+    background-color: #48a9dc;
     color: #fff;
   }
   .reactNavSearchWrapper .algolia-docsearch-suggestion--subcategory-inline {
@@ -1132,7 +1132,7 @@ ul#languages li {
 
   ul#languages-dropdown-items {
     display: flex;
-    background-color: #db4d3f;
+    background-color: #48a9dc;
     flex-direction: row;
   }
 }
@@ -1363,10 +1363,10 @@ nav.toc .toggleNav .navGroup h3 i:not(:empty) {
   transition: color 0.2s;
 }
 nav.toc .toggleNav .navGroup h3:hover {
-  color: #db4d3f;
+  color: #48a9dc;
 }
 nav.toc .toggleNav .navGroup h3:hover i:not(:empty) {
-  color: #db4d3f;
+  color: #48a9dc;
 }
 nav.toc .toggleNav .navGroup.navGroupActive {
   background: #e0e0e0;
@@ -1378,7 +1378,7 @@ nav.toc .toggleNav .navGroup.navGroupActive ul {
   padding-top: 10px;
 }
 nav.toc .toggleNav .navGroup.navGroupActive h3 {
-  background: #db4d3f;
+  background: #48a9dc;
   color: #fff;
 }
 nav.toc .toggleNav ul {
@@ -1401,10 +1401,10 @@ nav.toc .toggleNav ul li a {
   transition: color 0.3s;
 }
 nav.toc .toggleNav ul li a:hover, nav.toc .toggleNav ul li a:focus {
-  color: #db4d3f;
+  color: #48a9dc;
 }
 nav.toc .toggleNav ul li a.navItemActive {
-  color: #db4d3f;
+  color: #48a9dc;
 }
 .docsSliderActive nav.toc .navBreadcrumb {
   background: #c6c6c6;
@@ -1623,7 +1623,7 @@ h6:hover .header-link {
   padding-bottom: 80px;
 }
 .productShowcaseSection h2 {
-  color: #db4d3f;
+  color: #48a9dc;
   font-size: 30px;
   line-height: 1em;
   margin-top: 20px;
@@ -1667,7 +1667,7 @@ h6:hover .header-link {
   margin: 0 auto;
 }
 .showcaseSection .prose h1 {
-  color: #db4d3f;
+  color: #48a9dc;
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
   text-align: center;
   padding: 1.4em 0 0.4em;
@@ -2129,7 +2129,7 @@ pre code {
 }
 
 .getStarted {
-  background-color: #db4d3f;
+  background-color: #48a9dc;
   color: white;
   /* buttons have 10px margin. Make the right padding 10px too so that it looks nicely spaced beside the Tutorial button */
   margin: 0 10px 0 0;
