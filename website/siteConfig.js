@@ -36,9 +36,9 @@ const users = [
     pinned: true
   },
   {
-    caption: "ahrefs",
+    caption: "Ahrefs",
     image: "img/logos/ahrefs.svg",
-    infolink: "https://ahrefs.com",
+    infoLink: "https://ahrefs.com",
     pinned: true
   },
   {
