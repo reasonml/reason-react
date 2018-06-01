@@ -93,8 +93,6 @@ const siteConfig = {
   colors: {
     primaryColor: "#48a9dc",
     secondaryColor: "#48a9dc",
-    codeColor:
-      "rgba(243, 136, 136, 0.03)" /* primaryColor in rgba form, with 0.03 alpha */
   },
   highlight: {
     theme: 'arduino-light',
