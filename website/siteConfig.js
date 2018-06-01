@@ -83,7 +83,6 @@ const siteConfig = {
   users,
   examples,
   onPageNav: 'separate',
-  // <script src={this.props.config.baseUrl + 'js/pjax-api.min.js'}></script>
   scripts: ['/reason-react/js/pjax-api.min.js'],
   /* path to images for header/footer */
   headerIcon: "img/reason-react-white.svg",
