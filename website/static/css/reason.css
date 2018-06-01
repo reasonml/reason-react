@@ -36,6 +36,9 @@
 
 /* 2. Custom code block styling */
 /* code */
+pre code {
+  box-shadow: none;
+}
 .hljs {
   /* this -15px margin offsets the usual margin given to a page. This way it looks like this:
       |        |
