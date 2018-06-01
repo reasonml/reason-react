@@ -53,7 +53,7 @@ let make = (~message, _children) => {
 
 We expose `ReasonReact.statelessComponentWithRetainedProps` and `ReasonReact.reducerComponentWithRetainedProps`. Both work like their ordinary non-retained-props counterpart, and require you to specify a new field, `retainedProps` (of whatever type you'd like) in your component's spec in `make`.
 
-### `willReceiveProps`
+## `willReceiveProps`
 
 Traditional ReactJS `componentWillReceiveProps` takes in a `nextProps`. We don't have `nextProps`, since those are simply the labeled arguments in `make`, available to you in the scope. To access the _current_ props, however, you'd use the above `retainedProps` API:
 
@@ -77,7 +77,7 @@ let make = (~name, _children) => {
 };
 ```
 
-### `willUpdate`
+## `willUpdate`
 
 ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `make`, and "current props" (aka `this.props`) is the props you've copied into `retainedProps`, accessible via `{oldSelf}`:
 
@@ -88,10 +88,10 @@ ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `m
 }
 ```
 
-### `didUpdate`
+## `didUpdate`
 
 ReactJS' `prevProps` is what you've synced in `retainedProps`, under `oldSelf`.
 
-### `shouldUpdate`
+## `shouldUpdate`
 
 ReactJS' `shouldComponentUpdate` counterpart.

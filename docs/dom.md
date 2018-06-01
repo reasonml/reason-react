@@ -2,7 +2,7 @@
 title: Working with DOM
 ---
 
-### ReactDOM
+## ReactDOM
 
 ReasonReact's ReactDOM module is called `ReactDOMRe`. The module exposes helpers that work with familiar ReactJS idioms. For example, to access `event.target.value`, you can do `ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value`.
 
@@ -19,7 +19,7 @@ And 4 convenience utilities:
 - `renderToElementWithId` : `(ReasonReact.reactElement, string) => unit`: finds the element of the provided id and `render` to it.
 - `hydrateToElementWithClassName`, `hydrateToElementWithId`: same.
 
-### ReactDOMServer
+## ReactDOMServer
 
 ReasonReact's equivalent `ReactDOMServerRe` exposes:
 

@@ -2,7 +2,7 @@
 title: Talk to Existing ReactJS Code
 ---
 
-### Project Setup
+## Project Setup
 
 You can reuse the _same_ bsb setup (that you might have seen [here](installation.md#bsb))! Aka, put a `bsconfig.json` at the root of your ReactJS project:
 
@@ -47,7 +47,7 @@ Then add `bs-platform` to your package.json (`npm install --save-dev bs-platform
 
 Running `npm start` (or alias it to your favorite command) starts the `bsb` build watcher. **You don't have to touch your existing JavaScript build configuration**!
 
-### Usage
+## Usage
 
 A ReasonReact component **is not** a ReactJS component. We provide hooks to communicate between the two.
 
@@ -69,7 +69,7 @@ This will generate the getters and the JS object creation function (of the same 
 
 **Note**: you do **not** declare `ref` and `key` (the two special ReactJS "props"). We handle that for you, just like ReactJS does. They're not really props.
 
-#### ReasonReact using ReactJS
+### ReasonReact using ReactJS
 
 Easy! Since other Reason components only need you to expose a `make` function, fake one up:
 

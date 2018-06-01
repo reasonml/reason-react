@@ -4,7 +4,7 @@ title: Intro Example
 
 Here is a small overview of the ReasonReact API before we start. No worries if some of these are unfamiliar; the docs cover all of them.
 
-### The component "Greeting"
+## The component "Greeting"
 
 ```reason
 /* file: Greeting.re */
@@ -18,7 +18,7 @@ let make = (~name, _children) => {
 };
 ```
 
-### An usage of the component
+## An usage of the component
 
 (assuming there's a `div` on the page with id `greeting`)
 
