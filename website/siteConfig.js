@@ -88,7 +88,7 @@ const siteConfig = {
   /* path to images for header/footer */
   headerIcon: "img/reason-react-white.svg",
   footerIcon: "img/reason-react-white.svg",
-  favicon: "img/reason-react-red-favicon.png",
+  favicon: "img/reason-react-favicon.png",
   /* colors for website */
   colors: {
     primaryColor: "#48a9dc",
