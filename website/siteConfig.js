@@ -36,11 +36,17 @@ const users = [
     pinned: true
   },
   {
-    caption: "Ahrefs",
+    caption: "ahrefs",
     image: "img/logos/ahrefs.svg",
-    infoLink: "https://ahrefs.com",
+    infolink: "https://ahrefs.com",
     pinned: true
   },
+  {
+    caption: "Astrocoders",
+    image: "img/logos/astrocoders.svg",
+    infoLink: "https://astrocoders.com",
+    pinned: true
+  }
 ];
 
 const examples = [
