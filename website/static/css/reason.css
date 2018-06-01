@@ -1,34 +1,26 @@
 /* These should be upstreamed to Docusaurus */
 
-table {
-  border: 1px solid #eee
-}
-
-table thead {
-  border-bottom: 1px solid #eee;
-}
-
-table tr:nth-of-type(odd) {
-  background: $codeColor;
-}
-
-table tr th, table tr td {
-  border-right: 1px solid #eee;
-}
-
 /* Below are styles that should be global to all Reason-ecosystem sites
  but which we have no current plans to upstream to Docusaurus. */
 
 /* 1. Independent scrolling of docs sidebar menu (requires pjax) */
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 736px) {
   /* makes desktop nav scroll independently of content */
   #docsNav.container.docsNavContainer .toc {
     position: fixed;
     overflow-y: scroll;
     bottom: 0;
-    top: 0;
-    padding: 0;
-    padding-top: 90px;
+    /* 34 + 9 + 9 = 52. Page's header banner height */
+    top: 52px;
+    /*padding: 0;*/
+    /*margin: 90px 40px 0 0;*/
+    width: 180px;
+    /* same as .post padding-top (main content area) */
+    padding-top: 40px;
+    /* symmetry */
+    padding-bottom: 40px;
+    /* same as .docMainWrapper .wrapper padding, for symmetry */
+    padding-right: 20px;
   }
   /* safari fix */
   #docsNav.container.docsNavContainer {
@@ -36,12 +28,14 @@ table tr th, table tr td {
   }
 }
 
+@media only screen and (min-width: 900px) {
+  #docsNav.container.docsNavContainer .toc {
+    width: 220px;
+  }
+}
+
 /* 2. Custom code block styling */
 /* code */
-pre code {
-  background-color: unset;
-  box-shadow: none;
-}
 .hljs {
   /* this -15px margin offsets the usual margin given to a page. This way it looks like this:
       |        |
@@ -65,10 +59,7 @@ pre code {
   border: 1px solid #eee;
   border-radius: 6px;
   padding: 15px;
-  overflow: auto;
-  background-color: $codeColor;
   font-size: 15px;
-  line-height: 23px;
 
   /* respect the section's max width, from .mainContainer .wrapper p */
   max-width: 50rem;
@@ -150,18 +141,6 @@ pre code {
   line-height: 1.5em;
 }
 
-.homeThreePoints {
-  padding-top: 20px;
-}
-
-.quickStartAndExamples {
-  /* homeThreePoints + blockElement have 30 padding, so we should have 30 here too */
-  padding-top: 30px;
-  /* block padding of 80px is too huge */
-  padding-bottom: 30px;
-}
-
-
 .quickStartAndExamples .wrapper {
   display: flex;
   flex-direction: row;
@@ -175,18 +154,28 @@ pre code {
   }
 }
 
-/* companies page */
-.addCompanyButton {
-  margin-top: 2em;
+.projectTitle {
+  font-size: 50px;
+  font-weight: bold;
+  font-family: proxima-nova,sans-serif;
+}
+
+.button {
+  /* these buttons really shouldn't have any margin */
+  margin: 0;
+}
+.read-more {
+  /* ... the margin belongs to the wrapper */
+  margin: 20px 0 0 0;
+}
+.edit-page-link {
+  /* except that edit page link on every page. That one uses a padding which is also abused */
+  margin: 4px;
 }
 
 @media (max-width: 1024px) {
   .homeWrapperInner {
     flex-direction: column;
-  }
-
-  .projectTitle {
-    font-size: 40px;
   }
 }
 
@@ -225,6 +214,4 @@ pre code {
 .getStarted {
   background-color: $primaryColor;
   color: white;
-  /* buttons have 10px margin. Make the right padding 10px too so that it looks nicely spaced beside the Tutorial button */
-  margin: 0 10px 0 0;
 }

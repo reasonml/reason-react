@@ -32,7 +32,7 @@ class Users extends React.Component {
             </div>
             <a
               href="https://github.com/reasonml/reason-react/edit/master/website/siteConfig.js"
-              className="button addCompanyButton"
+              className="button"
             >
               Add yours
             </a>

@@ -29,10 +29,6 @@
   }
 }
 
-#docsNav.container.docsNavContainer .toc::-webkit-scrollbar {
-  display: none;
-}
-
 .spinner {
   margin: auto;
   position: absolute;
@@ -52,39 +48,6 @@
 @keyframes spin { 100% {transform:rotate(360deg); } }
 
 /* overrides. Most of these should be upstreamed into docusaurus */
-
-.button {
-  /* these buttons really shouldn't have any margin */
-  margin: 0;
-}
-.read-more {
-  /* ... the margin belongs to the wrapper */
-  margin: 20px 0 0 0;
-}
-.edit-page-link {
-  /* header H1 height at small size is 27, button is 34, center it (-3.5px) */
-  margin-top: -3.5px;
-}
-@media (min-width: 736px) {
-  .edit-page-link {
-    /* doc header H1 height at big size is 45, button is 34, center it (5.5px) */
-    margin-top: 5.5px;
-  }
-}
-
-.navPusher {
-  height: auto;
-}
-
-.navGroup {
-  background-color: #f6f4f4 !important;
-}
-
-.projectTitle {
-  font-size: 50px;
-  font-weight: bold;
-  font-family: proxima-nova,sans-serif;
-}
 
 .quickStartAndExamples .blockImage {
   max-width: 226px;

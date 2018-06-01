@@ -5,11 +5,10 @@ class Footer extends React.Component {
     return (
       <span>
         <script src={this.props.config.baseUrl + 'js/redirectBlog.js'}></script>
-        <script src={this.props.config.baseUrl + 'js/pjax-api.js'}></script>
         <script dangerouslySetInnerHTML={{__html: `window.foo = new Pjax({
           areas: [
             // try to use the first query.
-            '.mainContainer, .docsNavContainer .toc .navWrapper',
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
             // fallback
             'body'
           ],
