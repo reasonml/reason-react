@@ -41,6 +41,12 @@ const users = [
     infoLink: "https://ahrefs.com",
     pinned: true
   },
+  {
+    caption: "Astrocoders",
+    image: "img/logos/astrocoders.svg",
+    infoLink: "https://astrocoders.com",
+    pinned: true
+  }
 ];
 
 const examples = [
