@@ -147,16 +147,16 @@ class Index extends React.Component {
               align="center"
               contents={[
                 {
-                  title: "Safe and Sound",
-                  content: "It's Just Reason. We leverage the existing type system to create a library that types just right.",
+                  title: <translate>Safe and Sound</translate>,
+                  content: <translate>It's Just Reason. We leverage the existing type system to create a library that types just right.</translate>,
                 },
                 {
-                  title: "Playground for Future React",
-                  content: "Lightweight, first-class support for the ReactJS community idioms you've been using.",
+                  title: <translate>Playground for Future React</translate>,
+                  content: <translate>Lightweight, first-class support for the ReactJS community idioms you've been using.</translate>,
                 },
                 {
-                  title: "Drop In",
-                  content: "Easily integrate ReasonReact into your existing app. Convert a file, quickly see benefits.",
+                  title: <translate>Drop In</translate>,
+                  content: <translate>Easily integrate ReasonReact into your existing app. Convert a file, quickly see benefits.</translate>,
                 },
               ]}
               layout="threeColumn"
