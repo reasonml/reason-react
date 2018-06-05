@@ -53,7 +53,7 @@ let make = (~name, ~onClick, _children) => {
   {
     ...component,
     initialState: ...,
-    render: (self) => <button onClick={self.handle(click)} />
+    render: (self) => <button onClick=(self.handle(click)) />
   }
 };
 ```
