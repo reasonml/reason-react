@@ -80,7 +80,7 @@ external unmountComponentAtNode : Dom.element => unit =
   "unmountComponentAtNode";
 
 [@bs.val] [@bs.module "react-dom"]
-external findDOMNode : ReasonReact.reactRef => Js.Nullable.t(Dom.element) = "findDOMNode";
+external findDOMNode : ReasonReact.reactRef => Dom.element = "findDOMNode";
 
 external domElementToObj : Dom.element => Js.t({..}) = "%identity";
 
