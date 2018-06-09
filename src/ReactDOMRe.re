@@ -5,7 +5,7 @@
 /* It's like `let`, except you're pointing the implementation to the JS side. The compiler will inline these
    calls and add the appropriate `require("react-dom")` in the file calling this `render` */
 [@bs.val] [@bs.module "react-dom"]
-external render : (ReasonReact.reactElement, Dom.element) => unit = "render";
+external render : (React.reactElement, Dom.element) => unit = "render";
 
 [@bs.val]
 external _getElementsByClassName : string => array(Dom.element) =
@@ -42,7 +42,7 @@ let renderToElementWithId = (reactElement, id) =>
   };
 
 [@bs.val] [@bs.module "react-dom"]
-external hydrate : (ReasonReact.reactElement, Dom.element) => unit = "hydrate";
+external hydrate : (React.reactElement, Dom.element) => unit = "hydrate";
 
 let hydrateToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
@@ -72,7 +72,7 @@ let hydrateToElementWithId = (reactElement, id) =>
 
 [@bs.val] [@bs.module "react-dom"]
 external createPortal :
-  (ReasonReact.reactElement, Dom.element) => ReasonReact.reactElement =
+  (React.reactElement, Dom.element) => React.reactElement =
   "createPortal";
 
 [@bs.val] [@bs.module "react-dom"]
@@ -80,7 +80,7 @@ external unmountComponentAtNode : Dom.element => unit =
   "unmountComponentAtNode";
 
 [@bs.val] [@bs.module "react-dom"]
-external findDOMNode : ReasonReact.reactRef => Dom.element = "findDOMNode";
+external findDOMNode : React.reactRef => Dom.element = "findDOMNode";
 
 external domElementToObj : Dom.element => Js.t({..}) = "%identity";
 
@@ -617,8 +617,8 @@ external objToDOMProps : Js.t({..}) => props = "%identity";
 
 [@bs.splice] [@bs.val] [@bs.module "react"]
 external createElement :
-  (string, ~props: props=?, array(ReasonReact.reactElement)) =>
-  ReasonReact.reactElement =
+  (string, ~props: props=?, array(React.reactElement)) =>
+  React.reactElement =
   "createElement";
 
 module Style = {
