@@ -8,20 +8,20 @@ If you you run your app and see in the console the error:
 
 This likely means that:
 
-- You're wrapping a JS component for ReasonReact using with [`ReasonReact.wrapJsForReason`](interop.md#reasonreact-using-reactjs).
+- You're wrapping a JS component for ReasonReact using with [`React.wrapJsForReason`](interop.md#reasonreact-using-reactjs).
 - The JS component uses ES6 default export (`export default MyComponent`) (or, you forgot to export the component altogether!).
 - You're using Babel/Webpack to compile those ES6 modules.
 
 This is a common mistake. Please see BuckleScript's [Import an ES6 Default Value](https://bucklescript.github.io/docs/en/import-export.html#import-an-es6-default-value). Aka, instead of:
 
 ```reason
-[@bs.module] external myJSReactClass : ReasonReact.reactClass = "./myJSReactClass";
+[@bs.module] external myJSReactClass : React.reactClass = "./myJSReactClass";
 ```
 
 Use:
 
 ```reason
-[@bs.module "./myJSReactClass"] external myJSReactClass : ReasonReact.reactClass = "default";
+[@bs.module "./myJSReactClass"] external myJSReactClass : React.reactClass = "default";
 ```
 
 Remember that Reason doesn't have runtime type errors! So it _must_ have meant that your binding was written wrongly.

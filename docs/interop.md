@@ -74,10 +74,10 @@ This will generate the getters and the JS object creation function (of the same 
 Easy! Since other Reason components only need you to expose a `make` function, fake one up:
 
 ```reason
-[@bs.module] external myJSReactClass: ReasonReact.reactClass = "./myJSReactClass";
+[@bs.module] external myJSReactClass: React.reactClass = "./myJSReactClass";
 
 let make = (~className, ~type_, ~value=?, children) =>
-  ReasonReact.wrapJsForReason(
+  React.wrapJsForReason(
     ~reactClass=myJSReactClass,
     ~props=jsProps(
       ~className,
@@ -88,7 +88,7 @@ let make = (~className, ~type_, ~value=?, children) =>
   );
 ```
 
-`ReasonReact.wrapJsForReason` is the helper we expose for this purpose. It takes in:
+`React.wrapJsForReason` is the helper we expose for this purpose. It takes in:
 
 - The `reactClass` you want to wrap
 - The `props` js object you'd create through the generated `jsProps` function from the `jsProps` type you've declared above (with values **properly converted** from Reason data structures to JS)
@@ -100,7 +100,7 @@ let make = (~className, ~type_, ~value=?, children) =>
 
 ### ReactJS Using ReasonReact
 
-Eeeeasy. We expose a helper for the other direction, `ReasonReact.wrapReasonForJs`:
+Eeeeasy. We expose a helper for the other direction, `React.wrapReasonForJs`:
 
 ```reason
 let component = ...;
@@ -113,7 +113,7 @@ type jsProps = {
 };
 
 let jsComponent =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
+  React.wrapReasonForJs(~component, jsProps =>
     make(
       ~name=jsProps |. name,
       ~age=?Js.Nullable.toOption(jsProps |. age),
@@ -138,7 +138,7 @@ var MyReasonComponent = require('./myReasonComponent.bs').jsComponent;
 **Note**: if you'd rather use a **default import** on the JS side, you can export such default from BuckleScript/ReasonReact:
 
 ```reason
-let default = ReasonReact.wrapReasonForJs(...)
+let default = React.wrapReasonForJs(...)
 ```
 
 and then import it on the JS side with:

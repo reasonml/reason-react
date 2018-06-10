@@ -4,20 +4,20 @@ title: React Ref
 
 _Not to be confused with Reason `ref`, the language feature that enables mutation_.
 
-A ReasonReact `ref` would be just another instance variable. You'd type it as `ReasonReact.reactRef` if it's attached to a custom component, and `Dom.element` if it's attached to a React DOM element.
+A ReasonReact `ref` would be just another instance variable. You'd type it as `React.reactRef` if it's attached to a custom component, and `Dom.element` if it's attached to a React DOM element.
 
 ```reason
 type state = {
   isOpen: bool,
-  mySectionRef: ref(option(ReasonReact.reactRef))
+  mySectionRef: ref(option(React.reactRef))
 };
 
-let setSectionRef = (theRef, {ReasonReact.state}) => {
+let setSectionRef = (theRef, {React.state}) => {
   state.mySectionRef := Js.Nullable.toOption(theRef);
   /* wondering about Js.Nullable.toOption? See the note below */
 };
 
-let component = ReasonReact.reducerComponent("MyPanel");
+let component = React.reducerComponent("MyPanel");
 
 let make = (~className="", _children) => {
   ...component,
@@ -35,12 +35,12 @@ Attaching to a React DOM element looks the same: `state.mySectionRef = {myDivRef
 
 ReasonReact ref only accept callbacks. The string `ref` from ReactJS is deprecated.
 
-We also expose an escape hatch `ReasonReact.refToJsObj` of type `ReasonReact.reactRef => Js.t {..}`, which turns your ref into a JS object you can freely use; **this is only used to access ReactJS component class methods**.
+We also expose an escape hatch `React.refToJsObj` of type `React.reactRef => Js.t {..}`, which turns your ref into a JS object you can freely use; **this is only used to access ReactJS component class methods**.
 
 ```reason
 let handleClick = (event, self) =>
   switch (self.state.mySectionRef^) {
   | None => ()
-  | Some(r) => ReasonReact.refToJsObj(r)##someMethod(1, 2, 3) /* I solemnly swear that I am up to no good */
+  | Some(r) => React.refToJsObj(r)##someMethod(1, 2, 3) /* I solemnly swear that I am up to no good */
   };
 ```

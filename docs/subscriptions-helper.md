@@ -11,7 +11,7 @@ type state = {
   timerId: ref(option(Js.Global.intervalId))
 };
 
-let component = ReasonReact.reducerComponent("Todo");
+let component = React.reducerComponent("Todo");
 
 let make = _children => {
   ...component,
@@ -42,7 +42,7 @@ To solve the above problems and to codify a good practice, ReasonReact provides 
 Here's the previous example rewritten:
 
 ```reason
-let component = ReasonReact.statelessComponent("Todo");
+let component = React.statelessComponent("Todo");
 
 let make = _children => {
   ...component,
@@ -65,7 +65,7 @@ let make = _children => {
   ...component,
   reducer: (action, state) => {
     switch (action) {
-    | Click => ReasonReact.SideEffects(self => {
+    | Click => React.SideEffects(self => {
         fetchAsyncData(result => {
           self.send(Data(result))
         });

@@ -6,30 +6,30 @@ _The documentation assumes relative familiarity with ReactJS._
 
 ReasonReact doesn't use/need classes. The component creation API gives you a plain record, whose fields (like `render`) you can override.
 
-The component template is created through `ReasonReact.statelessComponent("TheComponentName")`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://reactjs.org/docs/react-component.html#displayname)).
+The component template is created through `React.statelessComponent("TheComponentName")`. The string being passed is for debugging purposes (the equivalent of ReactJS' [`displayName`](https://reactjs.org/docs/react-component.html#displayname)).
 
 As an example, here's the file `Greeting.re`:
 
 ```reason
-let component = ReasonReact.statelessComponent("Greeting");
+let component = React.statelessComponent("Greeting");
 ```
 
-**In ReactJS**, you'd create a component class and call it through JSX which transforms into `React.createElement(myClass, {prop1: 'hello'})` under the hood. **In ReasonReact**, instead of passing the whole "class" (aka component template) into a hypothetical `ReasonReact.createElement` function, you'd instead declare a `make` function:
+**In ReactJS**, you'd create a component class and call it through JSX which transforms into `React.createElement(myClass, {prop1: 'hello'})` under the hood. **In ReasonReact**, instead of passing the whole "class" (aka component template) into a hypothetical `React.createElement` function, you'd instead declare a `make` function:
 
 ```reason
 /* still in Greeting.re */
-let component = ReasonReact.statelessComponent("Greeting");
+let component = React.statelessComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component, /* spread the template's other defaults into here  */
-  render: _self => <div> {ReasonReact.string(name)} </div>
+  render: _self => <div> {React.string(name)} </div>
 };
 ```
 
 The `make` function is what's called by ReasonReact's JSX, described later. For now, the JSX-less way of calling & rendering a component is:
 
 ```reason
-ReasonReact.element(Greeting.make(~name="John", [||])) /* the `make` function in the module `Greeting` */
+React.element(Greeting.make(~name="John", [||])) /* the `make` function in the module `Greeting` */
 /* equivalent to <Greeting name="John" /> */
 ```
 
@@ -39,7 +39,7 @@ ReasonReact.element(Greeting.make(~name="John", [||])) /* the `make` function in
 
 ```reason
 let make = _children => {
-  ...(ReasonReact.statelessComponent("Greeting")),
+  ...(React.statelessComponent("Greeting")),
   render: self => blabla
 }
 ```

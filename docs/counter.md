@@ -13,14 +13,14 @@ type state = {
   timerId: ref(option(Js.Global.intervalId))
 };
 
-let component = ReasonReact.reducerComponent("Counter");
+let component = React.reducerComponent("Counter");
 
 let make = _children => {
   ...component,
   initialState: () => {count: 0, timerId: ref(None)},
   reducer: (action, state) =>
     switch (action) {
-    | Tick => ReasonReact.Update({...state, count: state.count + 1})
+    | Tick => React.Update({...state, count: state.count + 1})
     },
   didMount: self => {
     self.state.timerId :=
@@ -33,7 +33,7 @@ let make = _children => {
     }
   },
   render: ({state}) =>
-    <div>{ReasonReact.string(string_of_int(state.count))}</div>
+    <div>{React.string(string_of_int(state.count))}</div>
 };
 ```
 
@@ -45,7 +45,7 @@ type action =
 
 type state = {count: int};
 
-let component = ReasonReact.reducerComponent("Counter");
+let component = React.reducerComponent("Counter");
 
 let make = _children => {
   ...component,
@@ -56,9 +56,9 @@ let make = _children => {
   },
   reducer: (action, state) =>
     switch (action) {
-    | Tick => ReasonReact.Update({count: state.count + 1})
+    | Tick => React.Update({count: state.count + 1})
     },
   render: ({state}) =>
-    <div>{ReasonReact.string(string_of_int(state.count))}</div>
+    <div>{React.string(string_of_int(state.count))}</div>
 };
 ```

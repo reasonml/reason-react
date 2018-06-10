@@ -55,7 +55,7 @@ _Technically_, if you've written a component that accepts a tuple as `children`:
 
 ```reason
 /* MyForm.re */
-type tuple2Children = (ReasonReact.reactElement, ReasonReact.reactElement);
+type tuple2Children = (React.reactElement, React.reactElement);
 
 let make = (children: tuple2Children) => {
   ...component,
@@ -81,7 +81,7 @@ This, however, will give you a type error:
 This has type:
   array('a)
 But somewhere wanted:
-  tuple2Children (defined as (ReasonReact.reactElement, ReasonReact.reactElement))
+  tuple2Children (defined as (React.reactElement, React.reactElement))
 ```
 
 It means that `MyForm` is expecting the tuple, but you're giving `array` instead! What's happening? Well, look at what JSX is transformed into:
@@ -94,10 +94,10 @@ It means that `MyForm` is expecting the tuple, but you're giving `array` instead
 These actually become:
 
 ```reason
-ReasonReact.element(
+React.element(
   MyLayout.make([|a, b|])
 );
-ReasonReact.element(
+React.element(
   MyLayout.make([|a|])
 );
 ```
@@ -106,7 +106,7 @@ See how the second `MyLayout`'s children is also wrapped in an array? We can't s
 
 ### Children Spread
 
-Just use `<MyLayout> ...a </MyLayout>`. This will simply transform into `ReasonReact.element(MyLayout.make(a))`, aka without the array wrapping.
+Just use `<MyLayout> ...a </MyLayout>`. This will simply transform into `React.element(MyLayout.make(a))`, aka without the array wrapping.
 
 #### Tips & Tricks
 
@@ -142,5 +142,5 @@ let children = [| <div /> |];
 It _does_ work for custom components (upper-case), But it doesn't for DOM components (lower-cased). This is due to some bindings-related constraints; we'll make this better in the future! In the meantime, for passing to DOM element, e.g. `<div className=bar> ...children </div>` use the following:
 
 ```reason
-ReasonReact.createDomElement("div", ~props={"className": bar}, children);
+React.createDomElement("div", ~props={"className": bar}, children);
 ```

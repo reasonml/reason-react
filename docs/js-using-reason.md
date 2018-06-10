@@ -8,7 +8,7 @@ title: ReactJS using ReasonReact
 /* ReasonReact used by ReactJS */
 /* This is just a normal stateless component. The only change you need to turn
    it into a ReactJS-compatible component is the wrapReasonForJs call below */
-let component = ReasonReact.statelessComponent("PageReason");
+let component = React.statelessComponent("PageReason");
 
 let make = (~message, ~extraGreeting=?, _children) => {
   ...component,
@@ -34,7 +34,7 @@ type jsProps = {
    the correct babel/webpack setup, you can also do `let default = ...` and use it
    on the JS side as a default export. */
 let jsComponent =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
+  React.wrapReasonForJs(~component, jsProps =>
     make(
       ~message=jsProps |. message,
       ~extraGreeting=?Js.Nullable.toOption(jsProps |. extraGreeting),

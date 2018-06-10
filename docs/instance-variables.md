@@ -29,7 +29,7 @@ let make = (_children) => {
     /* mutate the value here */
     state.intervalId := Some(Js.Global.setInterval(...));
     /* no extra state update needed */
-    ReasonReact.NoUpdate
+    React.NoUpdate
   },
   render: ...
 };

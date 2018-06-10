@@ -13,6 +13,6 @@ Like HISTORY.md, but for planned future versions and subject to change. The voca
 - Set lifecycles to null when they do nothing. React skips over lifecycles that are set to null, we currently have wrappers around all of them, so things like didMount are enqueued for *every* component.
 - `ReactDOMRe.createElement` (usually used through the JSX `<div> foo </div>`) has a new implementation that fixes an inadvertent children key warning in the previous version.
 - remove `retainedProps` and `willReceiveProps` in favour of `getDerivedStateFromProps`
-- better modeling for `ReasonReact.stateless` type from `unit` to something else
-- expose `ReasonReact.publicComponentSpec(state, action)` for less cryptic component type annotation.
+- better modeling for `React.stateless` type from `unit` to something else
+- expose `React.publicComponentSpec(state, action)` for less cryptic component type annotation.
 - Get rid of implicit keys on a component (likely non-breaking)

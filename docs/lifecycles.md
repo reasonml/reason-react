@@ -37,7 +37,7 @@ One pattern that's sometimes used in ReactJS is accessing a lifecyle event's `pr
 ```reason
 type retainedProps = {message: string};
 
-let component = ReasonReact.statelessComponentWithRetainedProps("RetainedPropsExample");
+let component = React.statelessComponentWithRetainedProps("RetainedPropsExample");
 
 let make = (~message, _children) => {
   ...component,
@@ -51,7 +51,7 @@ let make = (~message, _children) => {
 };
 ```
 
-We expose `ReasonReact.statelessComponentWithRetainedProps` and `ReasonReact.reducerComponentWithRetainedProps`. Both work like their ordinary non-retained-props counterpart, and require you to specify a new field, `retainedProps` (of whatever type you'd like) in your component's spec in `make`.
+We expose `React.statelessComponentWithRetainedProps` and `React.reducerComponentWithRetainedProps`. Both work like their ordinary non-retained-props counterpart, and require you to specify a new field, `retainedProps` (of whatever type you'd like) in your component's spec in `make`.
 
 ## `willReceiveProps`
 
@@ -60,7 +60,7 @@ Traditional ReactJS `componentWillReceiveProps` takes in a `nextProps`. We don't
 ```reason
 type state = {someToggle: bool};
 
-let component = ReasonReact.reducerComponentWithRetainedProps("MyComponent");
+let component = React.reducerComponentWithRetainedProps("MyComponent");
 
 let make = (~name, _children) => {
   ...component,

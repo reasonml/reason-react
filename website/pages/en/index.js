@@ -30,25 +30,25 @@ const code = "`";
 // fake, static, responsive refmt, lol. See reason.css homeCodeSnippet logic
 const codeExampleSmallScreen =`${pre}reason
 let component =
-  ReasonReact.statelessComponent("Greeting");
+  React.statelessComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component,
   render: _self =>
     <button>
-      {ReasonReact.string("Hello!")}
+      {React.string("Hello!")}
     </button>
 };
 ${pre}`;
 
 const codeExampleLargeScreen =`${pre}reason
-let component = ReasonReact.statelessComponent("Greeting");
+let component = React.statelessComponent("Greeting");
 
 let make = (~name, _children) => {
   ...component,
   render: _self =>
     <button>
-      {ReasonReact.string("Hello!")}
+      {React.string("Hello!")}
     </button>
 };
 ${pre}`;

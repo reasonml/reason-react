@@ -6,7 +6,7 @@ Finally, we're getting onto stateful components!
 
 ReasonReact stateful components are like ReactJS stateful components, except with the concept of "reducer" (like [Redux](http://redux.js.org)) built in. If that word doesn't mean anything to you, just think of it as a state machine. If _that_ word doesn't mean anything to you, just think: "Woah this is great".
 
-To declare a stateful ReasonReact component, instead of `ReasonReact.statelessComponent("MyComponentName")`, use `ReasonReact.reducerComponent("MyComponentName")`.
+To declare a stateful ReasonReact component, instead of `React.statelessComponent("MyComponentName")`, use `React.reducerComponent("MyComponentName")`.
 
 Here's a complete, working, stateful ReasonReact component. We'll refer to it later on.
 
@@ -24,7 +24,7 @@ type action =
 
 /* Component template declaration.
    Needs to be **after** state and action declarations! */
-let component = ReasonReact.reducerComponent("Example");
+let component = React.reducerComponent("Example");
 
 /* greeting and children are props. `children` isn't used, therefore ignored.
    We ignore it by prepending it with an underscore */
@@ -37,8 +37,8 @@ let make = (~greeting, _children) => {
   /* State transitions */
   reducer: (action, state) =>
     switch (action) {
-    | Click => ReasonReact.Update({...state, count: state.count + 1})
-    | Toggle => ReasonReact.Update({...state, show: ! state.show})
+    | Click => React.Update({...state, count: state.count + 1})
+    | Toggle => React.Update({...state, show: ! state.show})
     },
 
   render: self => {
@@ -46,14 +46,14 @@ let make = (~greeting, _children) => {
       "You've clicked this " ++ string_of_int(self.state.count) ++ " times(s)";
     <div>
       <button onClick=(_event => self.send(Click))>
-        (ReasonReact.string(message))
+        (React.string(message))
       </button>
       <button onClick=(_event => self.send(Toggle))>
-        (ReasonReact.string("Toggle greeting"))
+        (React.string("Toggle greeting"))
       </button>
       (
         self.state.show ?
-          ReasonReact.string(greeting) : ReasonReact.null
+          React.string(greeting) : React.null
       )
     </div>;
   },
@@ -67,7 +67,7 @@ ReactJS' `getInitialState` is called `initialState` in ReasonReact. It takes `un
 ```reason
 type state = {count: int, show: bool};
 
-let component = ReasonReact.reducerComponent("Example");
+let component = React.reducerComponent("Example");
 
 let make = (~onClick, _children) => {
   ...component,
@@ -120,12 +120,12 @@ So, when a click on the dialog is triggered, we "send" the `Click` action to the
 
 ## State Update Through Reducer
 
-Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of returning a bare new state, we ask you to return the state wrapped in this "update" variant. Here are its possible values:
+Notice the return value of `reducer`? The `React.Update` part. Instead of returning a bare new state, we ask you to return the state wrapped in this "update" variant. Here are its possible values:
 
-- `ReasonReact.NoUpdate`: don't do a state update.
-- `ReasonReact.Update state`: update the state.
-- `ReasonReact.SideEffects(self => unit)`: no state update, but trigger a side-effect, e.g. `ReasonReact.SideEffects(_self => Js.log("hello!"))`.
-- `ReasonReact.UpdateWithSideEffects(state, self => unit)`: update the state, **then** trigger a side-effect.
+- `React.NoUpdate`: don't do a state update.
+- `React.Update state`: update the state.
+- `React.SideEffects(self => unit)`: no state update, but trigger a side-effect, e.g. `React.SideEffects(_self => Js.log("hello!"))`.
+- `React.UpdateWithSideEffects(state, self => unit)`: update the state, **then** trigger a side-effect.
 
 ### Important Notes
 
@@ -136,11 +136,11 @@ Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of 
 - `reducer` **must** be pure! Aka don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use `SideEffects` or `UpdateWithSideEffects` to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.
 - If you need to do e.g. `ReactEventRe.BlablaEvent.preventDefault(event)`, do it in `self.send`, before returning the action type. Again, `reducer` must be pure.
 - Feel free to trigger another action in `SideEffects` and `UpdateWithSideEffects`, e.g. `UpdateWithSideEffects(newState, (self) => self.send(Click))`.
-- If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.send`. You still needs to specify a `reducer` like so: `reducer: ((), _state) => ReasonReact.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
+- If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.send`. You still needs to specify a `reducer` like so: `reducer: ((), _state) => React.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
 
 ### Tip
 
-Cram as much as possible into `reducer`. Keep your actual callback handlers (the `self.send(Foo)` part) dumb and small. This makes all your state updates & side-effects (which itself should mostly only be inside `ReasonReact.SideEffects` and `ReasonReact.UpdateWithSideEffects`) much easier to scan through. Also more ReactJS fiber async-mode resilient.
+Cram as much as possible into `reducer`. Keep your actual callback handlers (the `self.send(Foo)` part) dumb and small. This makes all your state updates & side-effects (which itself should mostly only be inside `React.SideEffects` and `React.UpdateWithSideEffects`) much easier to scan through. Also more ReactJS fiber async-mode resilient.
 
 ## Async State Setting
 

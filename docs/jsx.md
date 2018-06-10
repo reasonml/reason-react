@@ -34,7 +34,7 @@ Which compiles to
 React.createElement('div', undefined)
 ```
 
-**Note that `ReactDOMRe.createElement` is intended for internal use by the JSX transform**. For escape-hatch scenarios, use `ReasonReact.createDomElement` instead, as outlined in the [children section](children.md).
+**Note that `ReactDOMRe.createElement` is intended for internal use by the JSX transform**. For escape-hatch scenarios, use `React.createDomElement` instead, as outlined in the [children section](children.md).
 
 ## Capitalized
 
@@ -45,7 +45,7 @@ React.createElement('div', undefined)
 transforms to
 
 ```reason
-ReasonReact.element(
+React.element(
   ~key=a,
   ~ref=b,
   MyReasonComponent.make(~foo=bar, ~baz=qux, [|child1, child2|])
@@ -55,12 +55,12 @@ ReasonReact.element(
 Prop-less `<MyReasonComponent />` transforms to:
 
 ```reason
-ReasonReact.element(MyReasonComponent.make([||]));
+React.element(MyReasonComponent.make([||]));
 ```
 
 The `make` above is exactly the `make` function you've seen in the previous section.
 
-**Note how `ref` and `key` have been lifted out of the JSX call into the `ReasonReact.element` call**. `ref` and `key` are reserved in ReasonReact, just like in ReactJS. **Don't** use them as props in your component!
+**Note how `ref` and `key` have been lifted out of the JSX call into the `React.element` call**. `ref` and `key` are reserved in ReasonReact, just like in ReactJS. **Don't** use them as props in your component!
 
 ## Children
 
@@ -81,7 +81,7 @@ Because this actually translates to:
 
 ```reason
 let theChildren = [| <div />, <div /> |];
-ReasonReact.element(
+React.element(
   MyReasonComponent.make([|theChildren|])
 );
 ```
@@ -97,7 +97,7 @@ This simply passes `theChildren` without array wrapping. It becomes:
 
 ```reason
 let theChildren = [| <div />, <div /> |];
-ReasonReact.element(
+React.element(
   MyReasonComponent.make(theChildren)
 );
 ```

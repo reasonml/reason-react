@@ -1,7 +1,7 @@
 /***
  * This API assumes that JSX will desugar <Foo key ref attr1=val1 attrn=valn /> into:
  *
- * ReasonReact.element(
+ * React.element(
  *   Foo.make(~key, ~ref, ~attr1=val1, ~attrn=valn, [| |]
  * )
  */
@@ -12,13 +12,13 @@ type reactElement;
 
 type reactRef;
 
-[@deprecated "Please use ReasonReact.null instead"] [@bs.val]
+[@deprecated "Please use React.null instead"] [@bs.val]
 external nullElement : reactElement = "null";
 
-[@deprecated "Please use ReasonReact.string instead"]
+[@deprecated "Please use React.string instead"]
 external stringToElement : string => reactElement = "%identity";
 
-[@deprecated "Please use ReasonReact.array instead"]
+[@deprecated "Please use React.array instead"]
 external arrayToElement : array(reactElement) => reactElement = "%identity";
 
 [@bs.val] external null : reactElement = "null";
@@ -47,7 +47,7 @@ type renderNotImplemented =
  * A stateless component is a component with state of type unit. This cannot be
  * abstract for now, because a stateless component's willReceiveProps needs to
  * return the state, aka unit. We can provide a helper
- * ReasonReact.statelessReturn that's of type `stateless`, but that's verbose
+ * React.statelessReturn that's of type `stateless`, but that's verbose
  */
 type stateless = unit;
 
@@ -259,7 +259,7 @@ module Router: {
 
 module Callback: {
   [@deprecated
-    "ReasonReact.Callback.t(foo) is equivalent to foo => unit. Please use the latter form"
+    "React.Callback.t(foo) is equivalent to foo => unit. Please use the latter form"
   ]
   type t('payload) = 'payload => unit;
   [@deprecated "Please directly use _event => ()"]

@@ -10,10 +10,10 @@ ReasonReact comes with a router! We've leveraged the language and library featur
 
 [Here's the documented public interface](https://github.com/reasonml/reason-react/blob/9e9e40ea4c7e8d55e56cba47a4d0188c26d0791e/src/ReasonReact.rei#L248-L276), repeated here:
 
-- `ReasonReact.Router.push(string)`: takes a new path and update the URL.
-- `ReasonReact.Router.watchUrl(f)`: start watching for URL changes. Returns a subscription token. Upon url change, calls the callback and passes it the `ReasonReact.Router.url` record.
-- `ReasonReact.Router.unwatchUrl(watcherID)`: stop watching for url changes.
-- `ReasonReact.Router.dangerouslyGetInitialUrl()`: get `url` record outside of `watchUrl`. Described later.
+- `React.Router.push(string)`: takes a new path and update the URL.
+- `React.Router.watchUrl(f)`: start watching for URL changes. Returns a subscription token. Upon url change, calls the callback and passes it the `React.Router.url` record.
+- `React.Router.unwatchUrl(watcherID)`: stop watching for url changes.
+- `React.Router.dangerouslyGetInitialUrl()`: get `url` record outside of `watchUrl`. Described later.
 
 ## Match a Route
 
@@ -43,7 +43,7 @@ So the url `www.hello.com/book/10/edit?name=Jane#author` is given back as:
 At this point, you can simply pattern match your way to glory!
 
 ```reason
-let watcherID = ReasonReact.Router.watchUrl(url => {
+let watcherID = React.Router.watchUrl(url => {
   switch (url.path) {
   | ["book", id, "edit"] => handleBookEdit(id)
   | ["book", id] => getBook(id)
@@ -58,7 +58,7 @@ let watcherID = ReasonReact.Router.watchUrl(url => {
 });
 
 /* some time later */
-ReasonReact.Router.unwatchUrl(watcherID);
+React.Router.unwatchUrl(watcherID);
 ```
 
 So you can match a path, match a subset of a path, defer part of a matching to a nested logic, etc.
@@ -68,20 +68,20 @@ So you can match a path, match a subset of a path, defer part of a matching to a
 Notice that this is just normal [pattern matching](https://reasonml.github.io/docs/en/pattern-matching.html). You can combine it with other features, such as tuple + ReasonReact features like [subscriptions](subscriptions-helper.md) and reducer:
 
 ```reason
-let component = ReasonReact.reducerComponent("TodoApp");
+let component = React.reducerComponent("TodoApp");
 
 let make = _children => {
   ...component,
   reducer: (action, state) =>
     switch (action) {
     /* router actions */
-    | ShowAll => ReasonReact.Update({...state, nowShowing: AllTodos})
+    | ShowAll => React.Update({...state, nowShowing: AllTodos})
     | ShowActive => ...
     /* todo actions */
     | ChangeTodo(text) => ...
     },
   didMount: self => {
-    let watcherID = ReasonReact.Router.watchUrl(url => {
+    let watcherID = React.Router.watchUrl(url => {
       switch (url.hash, MyAppStatus.isUserLoggedIn) {
       | ("active", _) => self.send(ShowActive)
       | ("completed", _) => self.send(ShowCompleted)
@@ -91,7 +91,7 @@ let make = _children => {
       | _ => self.send(ShowAll)
       }
     });
-    self.onUnmount(() => ReasonReact.Router.unwatchUrl(watcherID));
+    self.onUnmount(() => React.Router.unwatchUrl(watcherID));
   },
   render: ...
 }
@@ -107,7 +107,7 @@ In other words, you'd like to read from the `url` record once at the beginning o
 
 ## Push a New Route
 
-From anywhere in your app, just call e.g. `ReasonReact.Router.push("/books/10/edit#validated")`. This will trigger a URL change (without a page refresh) and `watchUrl`'s callback will be called again.
+From anywhere in your app, just call e.g. `React.Router.push("/books/10/edit#validated")`. This will trigger a URL change (without a page refresh) and `watchUrl`'s callback will be called again.
 
 We might provide better facilities for typed routing + payload carrying in the future!
 

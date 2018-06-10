@@ -5,14 +5,14 @@ title: Simple
 See https://github.com/reasonml-community/reason-react-example for examples you can clone and run. This page copy pastes a few from there for ease of reading.
 
 ```reason
-let component = ReasonReact.statelessComponent("Page");
+let component = React.statelessComponent("Page");
 
 let handleClick = (_event, _self) => Js.log("clicked!");
 
 let make = (~message, _children) => {
   ...component,
   render: self =>
-    <div onClick={self.handle(handleClick)}>{ReasonReact.string(message)}</div>
+    <div onClick={self.handle(handleClick)}>{React.string(message)}</div>
 };
 ```
 
@@ -25,5 +25,5 @@ ReactDOMRe.renderToElementWithId(<Page message="Hello!" />, "index");
 In the same file, you'd do:
 
 ```reason
-ReactDOMRe.renderToElementWithId(ReasonReact.element(make(~message="Hello!", [||])), "index");
+ReactDOMRe.renderToElementWithId(React.element(make(~message="Hello!", [||])), "index");
 ```
