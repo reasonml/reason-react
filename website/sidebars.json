@@ -42,7 +42,8 @@
   "examples": {
     "Code Snippets": [
       "simple",
-      "counter",
+      "click-counter",
+      "timer",
       "reason-using-js",
       "js-using-reason",
       "example-projects"
