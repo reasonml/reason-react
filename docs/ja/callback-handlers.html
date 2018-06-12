@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="ja"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Callback Handlers · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Callback Handlers · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="This section describes how ReactJS&#x27; `&lt;div onClick={this.handleClick} /&gt;` pattern translates into ReasonReact."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible doc separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/ja"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/ja/installation.html" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/ja/playground.html" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/ja/simple.html" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/ja/community.html" target="_self">Community</a></li><li class=""><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>日本語</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/en">English</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(){
+          if(languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Core</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Getting Started</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/what-and-why.html">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/installation.html">Installation</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/intro-example.html">Intro Example</a></li></ul></div><div class="navGroup navGroupActive"><h3>Core</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/creation-props-self.html">Creation, Props &amp; Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/jsx.html">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/render.html">Render</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/reason-react/docs/ja/callback-handlers.html">Callback Handlers</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/state-actions-reducer.html">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/lifecycles.html">Lifecycles</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/instance-variables.html">Instance Variables</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/react-ref.html">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/interop.html">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/event.html">Event</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/style.html">Style</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/clone-element.html">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/children.html">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/dom.html">Working with DOM</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/subscriptions-helper.html">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/router.html">Router</a></li></ul></div><div class="navGroup navGroupActive"><h3>ReactJS Idioms Equivalents</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/invalid-prop-name.html">Invalid Prop Name</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/props-spread.html">Props Spread</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/component-as-prop.html">Component as Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/ternary-shortcut.html">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/context-mixins.html">Context &amp; Mixins?</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/custom-class-component-property.html">Custom Class/Component Property</a></li></ul></div><div class="navGroup navGroupActive"><h3>FAQ</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/im-having-a-type-error.html">I&#x27;m Having a Type Error</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/record-field-send-handle-not-found.html">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/send-handle-callbacks-having-incompatible-types.html">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/i-really-need-feature-x-from-reactjs.html">I Really Need Feature X From ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/element-type-is-invalid.html">Element Type is Invalid Runtime Error</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ja" target="_blank" rel="noreferrer noopener">Translate</a><h1>Callback Handlers</h1></header><article><div><span><p>This section describes how ReactJS' <code>&lt;div onClick={this.handleClick} /&gt;</code> pattern translates into ReasonReact.</p>
+<h2><a class="anchor" aria-hidden="true" id="callback-without-state-update"></a><a href="#callback-without-state-update" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback Without State Update</h2>
+<p>Two scenarios.</p>
+<h3><a class="anchor" aria-hidden="true" id="not-reading-into-self"></a><a href="#not-reading-into-self" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Not Reading Into <code>self</code></h3>
+<p><em>Reminder: <code>self</code> is ReasonReact's <code>this</code>. It's a record that contains things like <code>state</code>, <code>send</code> and others.</em></p>
+<p>If you're just forwarding a callback prop onto your child, you'd do exactly the same thing you'd have done in ReactJS:</p>
+<pre><code class="hljs css reason">let component = ...;
+
+let make = <span class="hljs-function"><span class="hljs-params">(~name, ~onClick, _children)</span> =&gt;</span> {
+  ...component,
+  render: <span class="hljs-function"><span class="hljs-params">(self)</span> =&gt;</span> &lt;button onClick=onClick /&gt;
+};
+</code></pre>
+<p>No surprise here. Since Reason's JSX has <a href="https://reasonml.github.io/docs/en/jsx.html">punning syntax</a>, that <code>button</code> will format into <code>&lt;button onClick /&gt;</code>.</p>
+<p>Similarly, to pre-process a value before sending it back to the component's owner:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = ...;
+
+<span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">~name, ~onClick, _children</span>) =&gt;</span> {
+  <span class="hljs-keyword">let</span> click = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> onClick(name); <span class="hljs-comment">/* pass the name string up to the owner */</span>
+  {
+    ...component,
+    <span class="hljs-attr">render</span>: <span class="hljs-function">(<span class="hljs-params">self</span>) =&gt;</span> &lt;button onClick=click /&gt;
+  }
+};
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="reading-into-self"></a><a href="#reading-into-self" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reading Into <code>self</code></h3>
+<p>To access <code>state</code>, <code>send</code> and the other items in <code>self</code> from a callback, you <strong>need</strong> to wrap the callback in an extra layer called <code>self.handle</code>:</p>
+<pre><code class="hljs css reason"><span class="hljs-keyword">let</span> component = <span class="hljs-params">...</span>;
+<span class="hljs-keyword">let</span> make = (~name, ~onClick, _children) =&gt; {
+  <span class="hljs-keyword">let</span> click = (event, <span class="hljs-built_in">self</span>) =&gt; {
+    onClick(event);
+    Js.<span class="hljs-keyword">log</span>(<span class="hljs-built_in">self</span>.state);
+  };
+  {
+    <span class="hljs-params">...</span>component,
+    initialState: <span class="hljs-params">...</span>,
+    render: (<span class="hljs-built_in">self</span>) =&gt; &lt;button onClick={<span class="hljs-built_in">self</span>.<span class="hljs-keyword">handle</span>(click)} /&gt;
+  }
+};
+</code></pre>
+<p><strong>Note</strong> how your <code>click</code> callback now takes the extra argument <code>self</code>. Formally, <code>self.handle</code> expects a callback that</p>
+<ul>
+<li>accepts the <strong>single</strong> payload you'd normally directly pass to e.g. <code>handleClick</code>,</li>
+<li>plus the argument <code>self</code>,</li>
+<li>returns &quot;nothing&quot; (aka, <code>()</code>, aka, <code>unit</code>).</li>
+</ul>
+<p><strong>Note 2</strong>: sometimes you might be forwarding <code>handle</code> to some helper functions. Pass the whole <code>self</code> instead and <strong>annotate it</strong>. This avoids a complex <code>self</code> record type behavior. See <a href="/reason-react/docs/ja/record-field-send-handle-not-found.html">Record Field <code>send</code>/<code>handle</code> Not Found</a>.</p>
+<h4><a class="anchor" aria-hidden="true" id="explanation"></a><a href="#explanation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Explanation</h4>
+<p>In reality, <code>self.handle</code> is just a regular function accepting two arguments, the first being the callback in question, and the second one being the payload that's intended to be passed to the callback.</p>
+<p>Get it? Through Reason's natural language-level currying, we usually only ask you to pass the first argument. This returns a new function that takes in the second argument and executes the function body. The second argument being passed by the caller, aka the component you're rendering!</p>
+<h4><a class="anchor" aria-hidden="true" id="callback-receiving-multiple-arguments"></a><a href="#callback-receiving-multiple-arguments" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback Receiving Multiple Arguments</h4>
+<p>Sometimes, the component you're calling is from JavaScript (using the <a href="/reason-react/docs/ja/interop.html">ReasonReact&lt;-&gt;ReactJS interop</a>), and its callback prop asks you to pass a callback that receives more than one argument. In ReactJS, it'd look like:</p>
+<pre><code class="hljs css javascript">handleSubmit: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">username, password, event</span>) </span>{
+  <span class="hljs-keyword">this</span>.setState(...)
+}
+...
+&lt;MyForm onUserClickedSubmit={<span class="hljs-keyword">this</span>.handleSubmit} /&gt;
+</code></pre>
+<p>You cannot write such <code>handleSubmit</code> in ReasonReact, as <code>handle</code> expects to wrap around a function that only takes <strong>one</strong> argument. Here's the workaround:</p>
+<pre><code class="hljs css reason">let handleSubmitEscapeHatch = <span class="hljs-function"><span class="hljs-params">(username, password, event)</span> =&gt;</span>
+  self.handle(
+    <span class="hljs-function"><span class="hljs-params">(tupleOfThreeItems, self)</span> =&gt;</span> doSomething(tupleOfThreeItems, self),
+    (username, password, event),
+  );
+...
+&lt;MyForm onUserClickedSubmit=(handleSubmitEscapeHatch) /&gt;
+</code></pre>
+<p>Basically, you write a normal callback that:</p>
+<ul>
+<li>takes those many arguments from the JS component callback prop,</li>
+<li>packs them into a tuple and call <code>self.handle</code>,</li>
+<li>pass to <code>handle</code> the usual function that expects a single argument,</li>
+<li>finish calling <code>self.handle</code> by passing the tuple directly yourself.</li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="callback-with-state-update"></a><a href="#callback-with-state-update" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Callback With State Update</h2>
+<p>You can't update state in <code>self.handle</code>; you need to use <code>self.send</code> instead. See the next section.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="render.html">← Render</a><a class="docs-next button" href="state-actions-reducer.html">State, Actions &amp; Reducer →</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#callback-without-state-update">Callback Without State Update</a><ul class="toc-headings"><li><a href="#not-reading-into-self">Not Reading Into <code>self</code></a></li><li><a href="#reading-into-self">Reading Into <code>self</code></a></li></ul></li><li><a href="#callback-with-state-update">Callback With State Update</a></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:ja"]}
+              });
+            </script></body></html>
