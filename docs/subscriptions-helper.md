@@ -60,7 +60,7 @@ Now you won't ever forget to clear your timer!
 
 **Why not just put some logic in the willUnmount `lifecycle`**? Definitely do, whenever you could. But sometimes, folks forget to release their subscriptions inside callbacks:
 
-```js
+```reason
 let make = _children => {
   ...component,
   reducer: (action, state) => {
