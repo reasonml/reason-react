@@ -42,7 +42,6 @@ external cloneElement :
 type renderNotImplemented =
   | RenderNotImplemented;
 
-
 /***
  * A stateless component is a component with state of type unit. This cannot be
  * abstract for now, because a stateless component's willReceiveProps needs to
@@ -52,7 +51,6 @@ type renderNotImplemented =
 type stateless = unit;
 
 type noRetainedProps;
-
 
 /*** An actionless component is a component with actions of type unit */
 type actionless = unit;
@@ -96,6 +94,7 @@ and self('state, 'retainedProps, 'action) = {
     'payload .
     (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
     unit,
+
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,
@@ -103,7 +102,6 @@ and self('state, 'retainedProps, 'action) = {
 };
 
 type reactClassInternal;
-
 
 /*** For internal use only */
 type jsElementWrapped;
@@ -113,9 +111,7 @@ type oldNewSelf('state, 'retainedProps, 'action) = {
   newSelf: self('state, 'retainedProps, 'action),
 };
 
-type didCatchInfo = {
-  componentStack: string
-};
+type didCatchInfo = {componentStack: string};
 
 type componentSpec(
   'state,
@@ -136,7 +132,8 @@ type componentSpec(
   didUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
   willUnmount: self('state, 'retainedProps, 'action) => unit,
   willUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
-  didCatch: (self('state, 'retainedProps, 'action), Js.Exn.t, didCatchInfo) => unit,
+  didCatch:
+    (self('state, 'retainedProps, 'action), Js.Exn.t, didCatchInfo) => unit,
   shouldUpdate: oldNewSelf('state, 'retainedProps, 'action) => bool,
   render: self('state, 'retainedProps, 'action) => reactElement,
   initialState: unit => 'initialState,
@@ -159,7 +156,6 @@ type componentSpec(
 }
 and component('state, 'retainedProps, 'action) =
   componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action);
-
 
 /*** Create a stateless component: i.e. a component where state has type stateless. */
 let statelessComponent:
@@ -200,7 +196,6 @@ let element:
 
 type jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
   'jsProps => component('state, 'retainedProps, 'action);
-
 
 /***
  * We *under* constrain the kind of component spec this accepts because we actually extend the *originally*
@@ -270,5 +265,5 @@ module Callback: {
   [@deprecated "Please directly use _event => ()"]
   let default: 'payload => unit;
   [@deprecated "Please chain your callbacks manually one after another"]
-  let chain: ('payload => unit, 'payload => unit) => 'payload => unit;
+  let chain: ('payload => unit, 'payload => unit, 'payload) => unit;
 };
