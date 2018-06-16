@@ -64,6 +64,12 @@ type subscription =
  * component instance and state to be created / updated. They are not yet
  * instances.
  */
+
+[@bs.deriving jsConverter]
+type didCatchInfo = {
+  componentStack: string
+};
+
 type element =
   | Element(component('state, 'retainedProps, 'action)): element
 and jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
@@ -107,6 +113,7 @@ and componentSpec(
   didUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
   willUnmount: self('state, 'retainedProps, 'action) => unit,
   willUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
+  didCatch: (self('state, 'retainedProps, 'action), Js.Exn.t, didCatchInfo) => unit,
   shouldUpdate: oldNewSelf('state, 'retainedProps, 'action) => bool,
   render: self('state, 'retainedProps, 'action) => reactElement,
   initialState: unit => 'initialState,
@@ -163,6 +170,7 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
 and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
 let anyToUnit = (_) => ();
+let anyToUnit3 = (_, _, _) => ();
 
 let anyToTrue = (_) => true;
 
@@ -221,6 +229,7 @@ let createClass =
        */
       val displayName = debugName;
       val mutable subscriptions = Js.null;
+      val mutable componentDidCatch = Js.undefined;
       /***
        * TODO: Avoid allocating this every time we need it. Should be doable.
        */
@@ -244,6 +253,23 @@ let createClass =
           );
         let Element(component) = convertedReasonProps;
         let initialReasonState = component.initialState();
+        if (component.didCatch !== anyToUnit3) {
+          this##componentDidCatch#=(Js.Undefined.return((error, info) => {
+            let convertedReasonProps =
+              convertPropsIfTheyreFromJs(
+                thisJs##props,
+                thisJs##jsPropsToReason,
+                debugName,
+              );
+            let Element(component) = convertedReasonProps;
+            let curTotalState = thisJs##state;
+            let curReasonState = curTotalState##reasonState;
+            let self =
+              this##self(curReasonState, Obj.magic(component.retainedProps));
+            let self = Obj.magic(self);
+            component.didCatch(self, error, didCatchInfoFromJs(info))
+          }));
+        };
         {"reasonState": Obj.magic(initialReasonState)};
       };
       pub componentDidMount = () => {
@@ -636,6 +662,7 @@ let basicComponent = debugName => {
     didUpdate: anyToUnit,
     willUnmount: anyToUnit,
     willUpdate: anyToUnit,
+    didCatch: anyToUnit3,
     /***
      * Called when component will certainly mount at some point - and may be
      * called on the sever for server side React rendering.

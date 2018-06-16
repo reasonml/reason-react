@@ -113,6 +113,10 @@ type oldNewSelf('state, 'retainedProps, 'action) = {
   newSelf: self('state, 'retainedProps, 'action),
 };
 
+type didCatchInfo = {
+  componentStack: string
+};
+
 type componentSpec(
   'state,
   'initialState,
@@ -132,6 +136,7 @@ type componentSpec(
   didUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
   willUnmount: self('state, 'retainedProps, 'action) => unit,
   willUpdate: oldNewSelf('state, 'retainedProps, 'action) => unit,
+  didCatch: (self('state, 'retainedProps, 'action), Js.Exn.t, didCatchInfo) => unit,
   shouldUpdate: oldNewSelf('state, 'retainedProps, 'action) => bool,
   render: self('state, 'retainedProps, 'action) => reactElement,
   initialState: unit => 'initialState,
