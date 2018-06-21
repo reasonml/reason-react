@@ -25,5 +25,5 @@ let make = (~name, _children) => {
 ```reason
 /* file: Index.re */
 
-ReactDOMRe.renderToElementWithId(<Greeting name="John" />, "greeting");
+ReactDOMRe.render(<Greeting name="John" />, Selector("#greeting"));
 ```

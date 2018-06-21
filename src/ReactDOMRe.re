@@ -5,70 +5,59 @@
 /* It's like `let`, except you're pointing the implementation to the JS side. The compiler will inline these
    calls and add the appropriate `require("react-dom")` in the file calling this `render` */
 [@bs.val] [@bs.module "react-dom"]
-external render : (ReasonReact.reactElement, Dom.element) => unit = "render";
-
-[@bs.val]
-external _getElementsByClassName : string => array(Dom.element) =
-  "document.getElementsByClassName";
+external _render : (ReasonReact.reactElement, Dom.element) => unit = "render";
 
 [@bs.val] [@bs.return nullable]
-external _getElementById : string => option(Dom.element) =
-  "document.getElementById";
+external _querySelector : string => option(Dom.element) =
+  "document.querySelector";
 
-let renderToElementWithClassName = (reactElement, className) =>
-  switch (_getElementsByClassName(className)) {
-  | [||] =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.renderToElementWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      ),
-    )
-  | elements => render(reactElement, Array.unsafe_get(elements, 0))
-  };
+type container =
+  | Element(Dom.element)
+  | Selector(string);
 
-let renderToElementWithId = (reactElement, id) =>
-  switch (_getElementById(id)) {
-  | None =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.renderToElementWithId : no element of id "
-        ++ id
-        ++ " found in the HTML.",
-      ),
-    )
-  | Some(element) => render(reactElement, element)
-  };
+let render = (reactElement, container: container) => {
+  let element =
+    switch (container) {
+    | Element(element) => element
+    | Selector(selector) =>
+      switch (_querySelector(selector)) {
+      | Some(element) => element
+      | None =>
+        raise(
+          Invalid_argument(
+            "ReactDOMRe.render: no element for the selector "
+            ++ selector
+            ++ " found in the HTML.",
+          ),
+        )
+      }
+    };
+  _render(reactElement, element);
+};
 
 [@bs.val] [@bs.module "react-dom"]
-external hydrate : (ReasonReact.reactElement, Dom.element) => unit = "hydrate";
+external _hydrate : (ReasonReact.reactElement, Dom.element) => unit =
+  "hydrate";
 
-let hydrateToElementWithClassName = (reactElement, className) =>
-  switch (_getElementsByClassName(className)) {
-  | [||] =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.hydrateToElementWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      ),
-    )
-  | elements => hydrate(reactElement, Array.unsafe_get(elements, 0))
-  };
-
-let hydrateToElementWithId = (reactElement, id) =>
-  switch (_getElementById(id)) {
-  | None =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.hydrateToElementWithId : no element of id "
-        ++ id
-        ++ " found in the HTML.",
-      ),
-    )
-  | Some(element) => hydrate(reactElement, element)
-  };
+let hydrate = (reactElement, container: container) => {
+  let element =
+    switch (container) {
+    | Element(element) => element
+    | Selector(selector) =>
+      switch (_querySelector(selector)) {
+      | Some(element) => element
+      | None =>
+        raise(
+          Invalid_argument(
+            "ReactDOMRe.hydrate: no element for the selector "
+            ++ selector
+            ++ " found in the HTML.",
+          ),
+        )
+      }
+    };
+  _hydrate(reactElement, element);
+};
 
 [@bs.val] [@bs.module "react-dom"]
 external createPortal :

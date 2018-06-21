@@ -19,11 +19,11 @@ let make = (~message, _children) => {
 Usage in another file:
 
 ```reason
-ReactDOMRe.renderToElementWithId(<Page message="Hello!" />, "index");
+ReactDOMRe.render(<Page message="Hello!" />, Selector("#index"));
 ```
 
 In the same file, you'd do:
 
 ```reason
-ReactDOMRe.renderToElementWithId(ReasonReact.element(make(~message="Hello!", [||])), "index");
+ReactDOMRe.render(ReasonReact.element(make(~message="Hello!", [||])), Selector("#index"));
 ```
