@@ -80,7 +80,7 @@ class HomeSplash extends React.Component {
                 siteConfig.baseUrl +
                 "docs/" +
                 this.props.language +
-                "/installation.html"
+                "/installation"
               }
             >
               <translate>Get Started</translate>
@@ -197,7 +197,7 @@ class Index extends React.Component {
             <div className="more-users">
               <a
                 className="button"
-                href={`${siteConfig.baseUrl}${this.props.language}/built-with-reason-react.html`}
+                href={`${siteConfig.baseUrl}${this.props.language}/built-with-reason-react`}
               >
                 <translate>See Full List</translate>
               </a>
