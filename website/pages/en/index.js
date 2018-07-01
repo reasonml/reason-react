@@ -165,13 +165,13 @@ class Index extends React.Component {
 
           <Container background="light" className="quickStartAndExamples homeCodeSnippet">
             <div>
-              <h2>Quick Start</h2>
+              <h2><translate>QuickStart</translate></h2>
               <MarkdownBlock>
                 {quickStart}
               </MarkdownBlock>
             </div>
             <div>
-              <h2>Examples</h2>
+              <h2><translate>Examples</translate></h2>
               <GridBlock
                 className="examples"
                 align="center"
@@ -182,7 +182,6 @@ class Index extends React.Component {
                   imageAlign: "top",
                   content: "",
                 }))}
-                layout="twoColumn"
               />
           </div>
           </Container>

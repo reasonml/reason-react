@@ -1,0 +1,10 @@
+.fixedHeaderContainer header > a > img {
+  /* spinning logo */
+  transition: 3s;
+  /* make sure it's a square. Spins at the center */
+  height: 34px;
+  width: 34px;
+}
+.fixedHeaderContainer header > a:hover > img {
+  transform: rotate(1080deg);
+}

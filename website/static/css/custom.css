@@ -1,34 +1,3 @@
-.fixedHeaderContainer header > a > img {
-  /* spinning logo */
-  transition: 3s;
-  /* make sure it's a square. Spins at the center */
-  height: 34px;
-  width: 34px;
-}
-.fixedHeaderContainer header > a:hover > img {
-  transform: rotate(1080deg);
-}
-
-/* only show language icon */
-#languages-menu {
-  font-size: 0px;
-  padding: 0;
-}
-#languages-menu .languages-icon {
-  margin: 0;
-  padding: 6px 10px;
-}
-#languages-dropdown {
-  width: auto;
-  right: 0;
-}
-@media only screen and (min-width: 1024px) {
-  /* only targets language dropdown li, i swear */
-  .nav-site > span > li {
-    position: relative;
-  }
-}
-
 .spinner {
   margin: auto;
   position: absolute;
@@ -47,20 +16,42 @@
 
 @keyframes spin { 100% {transform:rotate(360deg); } }
 
+/* community examples page */
+.community-examples-grid {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: space-evenly;
+}
+
+.community-examples-grid > a > div {
+  text-align: center;
+}
+
+.productShowcaseSection .logos img {
+  max-height: 70px;
+  width: 70px;
+}
+
+
 /* overrides. Most of these should be upstreamed into docusaurus */
 
 .quickStartAndExamples .blockImage {
   max-width: 226px;
   box-shadow: 0px 0 20px lightgrey;
-  margin: 0;
+  margin-bottom: 0;
 }
 
 .quickStartAndExamples .blockContent h2 {
-  margin: 0;
+  margin: 8px 0 0 0;
+}
+
+.quickStartAndExamples .examples {
+  margin-left: 0px;
 }
 
 .quickStartAndExamples .blockimage img {
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 /* end override */

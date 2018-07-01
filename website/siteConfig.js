@@ -97,10 +97,13 @@ const siteConfig = {
   /* colors for website */
   colors: {
     primaryColor: "#48a9dc",
-    secondaryColor: "#48a9dc",
+    // darkened 10%
+    secondaryColor: "#2F90C3",
   },
+  // no .html suffix needed
+  cleanUrl: true,
   highlight: {
-    theme: 'arduino-light',
+    theme: 'atom-one-light',
     hljs: function(hljs) {
       hljs.registerLanguage('reason', function(hljs) {
         var SWIFT_KEYWORDS = {
@@ -219,7 +222,7 @@ const siteConfig = {
     apiKey: "55156da6520de795d3a2c2d23786f08e",
     indexName: "react-reason",
     algoliaOptions: {
-      facetFilters: ["lang:LANGUAGE"] 
+      facetFilters: ["lang:LANGUAGE"]
     }
   },
   cleanUrl: true,

@@ -3,6 +3,7 @@
 /* Below are styles that should be global to all Reason-ecosystem sites
  but which we have no current plans to upstream to Docusaurus. */
 
+/* 1. Custom code block styling */
 .hljs {
   /* this -15px margin offsets the usual margin given to a page. This way it looks like this:
       |        |
@@ -54,8 +55,7 @@ table .hljs {
   }
 }
 
-
-/* 3. Homepage changes */
+/* 2. Homepage changes */
 #redirectMessage {
   font-size: 30px;
   line-height: 30px;
@@ -134,10 +134,6 @@ table .hljs {
 .read-more {
   /* ... the margin belongs to the wrapper */
   margin: 20px 0 0 0;
-}
-.edit-page-link {
-  /* except that edit page link on every page. That one uses a padding which is also abused */
-  margin: 4px;
 }
 
 @media (max-width: 1024px) {
