@@ -222,6 +222,7 @@ const siteConfig = {
       facetFilters: ["lang:LANGUAGE"] 
     }
   },
+  cleanUrl: true,
 };
 
 module.exports = siteConfig;

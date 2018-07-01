@@ -17,7 +17,7 @@
     "url": "git+https://github.com/reasonml/reason-react.git"
   },
   "dependencies": {
-    "docusaurus": "1.1.5"
+    "docusaurus": "1.3.0"
   },
   "devDependencies": {
     "pjax-api": "^3.23.0"

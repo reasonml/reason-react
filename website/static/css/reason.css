@@ -3,42 +3,6 @@
 /* Below are styles that should be global to all Reason-ecosystem sites
  but which we have no current plans to upstream to Docusaurus. */
 
-/* 1. Independent scrolling of docs sidebar menu (requires pjax) */
-@media only screen and (min-width: 736px) {
-  /* makes desktop nav scroll independently of content */
-  #docsNav.container.docsNavContainer .toc {
-    position: fixed;
-    overflow-y: scroll;
-    bottom: 0;
-    /* 34 + 9 + 9 = 52. Page's header banner height */
-    top: 52px;
-    /*padding: 0;*/
-    /*margin: 90px 40px 0 0;*/
-    width: 180px;
-    /* same as .post padding-top (main content area) */
-    padding-top: 40px;
-    /* symmetry */
-    padding-bottom: 40px;
-    /* same as .docMainWrapper .wrapper padding, for symmetry */
-    padding-right: 20px;
-  }
-  /* safari fix */
-  #docsNav.container.docsNavContainer {
-    position: static;
-  }
-}
-
-@media only screen and (min-width: 900px) {
-  #docsNav.container.docsNavContainer .toc {
-    width: 220px;
-  }
-}
-
-/* 2. Custom code block styling */
-/* code */
-pre code {
-  box-shadow: none;
-}
 .hljs {
   /* this -15px margin offsets the usual margin given to a page. This way it looks like this:
       |        |
@@ -72,6 +36,10 @@ pre code {
 }
 .hljs .comment {
   opacity: 0.7;
+}
+table .hljs {
+  border: none;
+  background: none;
 }
 @media (max-width: 736px) {
   .hljs {
@@ -163,10 +131,6 @@ pre code {
   font-family: proxima-nova,sans-serif;
 }
 
-.button {
-  /* these buttons really shouldn't have any margin */
-  margin: 0;
-}
 .read-more {
   /* ... the margin belongs to the wrapper */
   margin: 20px 0 0 0;
