@@ -1,0 +1,327 @@
+open Migrate_parsetree
+open Ast_404
+module To_current = ((Convert)(OCaml_404))(OCaml_current)
+let nolabel = Ast_404.Asttypes.Nolabel
+let labelled str = ((Ast_404.Asttypes.Labelled (str))[@explicit_arity ])
+let argIsKeyRef =
+  function
+  | (((Asttypes.Labelled (("key"|"ref")))[@explicit_arity ]), _)
+    |(((Asttypes.Optional (("key"|"ref")))[@explicit_arity ]), _) -> true
+  | _ -> false
+let constantString ~loc  str =
+  Ast_helper.Exp.constant ~loc ((Parsetree.Pconst_string (str, None))
+    [@explicit_arity ])
+open Ast_helper
+open Ast_mapper
+open Asttypes
+open Parsetree
+open Longident
+let makeStaticJsx ~loc  lst =
+  match lst with
+  | [] ->
+      Exp.construct ~loc
+        { loc; txt = ((Lident ("Empty"))[@explicit_arity ]) } None
+  | hd::[] ->
+      Exp.construct ~loc { loc; txt = ((Lident ("One"))[@explicit_arity ]) }
+        ((Some (hd))[@explicit_arity ])
+  | hd::hdHd::[] ->
+      Exp.construct ~loc { loc; txt = ((Lident ("Two"))[@explicit_arity ]) }
+        ((Some ((Exp.tuple [hd; hdHd])))[@explicit_arity ])
+  | hd::hdHd::hdHdHd::[] ->
+      Exp.construct ~loc
+        { loc; txt = ((Lident ("Three"))[@explicit_arity ]) }
+        ((Some ((Exp.tuple [hd; hdHd; hdHdHd])))[@explicit_arity ])
+  | hd::hdHd::hdHdHd::hdHdHdHd::[] ->
+      Exp.construct ~loc { loc; txt = ((Lident ("Four"))[@explicit_arity ]) }
+        ((Some ((Exp.tuple [hd; hdHd; hdHdHd; hdHdHdHd])))[@explicit_arity ])
+  | hd::hdHd::hdHdHd::hdHdHdHd::tl ->
+      Exp.construct ~loc
+        { loc; txt = ((Lident ("Sequence"))[@explicit_arity ]) }
+        ((Some ((Exp.tuple [hd; hdHd; hdHdHd; hdHdHdHd])))[@explicit_arity ])
+let transformChildren ~loc  ~mapper  theList =
+  let rec transformChildren' theList accum =
+    match theList with
+    | {
+        pexp_desc = ((Pexp_construct
+          ({ txt = ((Lident ("[]"))[@explicit_arity ]) }, None))[@explicit_arity
+                                                                  ])
+        } -> makeStaticJsx ~loc (List.rev accum)
+    | {
+        pexp_desc = ((Pexp_construct
+          ({ txt = ((Lident ("::"))[@explicit_arity ]) }, ((Some
+           ({ pexp_desc = ((Pexp_tuple (v::acc::[]))[@explicit_arity ]) }))
+           [@explicit_arity ])))[@explicit_arity ])
+        } -> transformChildren' acc ((mapper.expr mapper v) :: accum)
+    | notAList -> mapper.expr mapper notAList in
+  transformChildren' theList []
+let extractChildrenForDOMElements ?(removeLastPositionUnit= false)  ~loc 
+  propsAndChildren =
+  let rec allButLast_ lst acc =
+    match lst with
+    | [] -> []
+    | (Nolabel,
+       {
+         pexp_desc = ((Pexp_construct
+           ({ txt = ((Lident ("()"))[@explicit_arity ]) }, None))[@explicit_arity
+                                                                   ])
+         })::[]
+        -> acc
+    | (Nolabel, _)::rest ->
+        raise
+          ((Invalid_argument
+              ("JSX: found non-labelled argument before the last position"))
+          [@explicit_arity ])
+    | arg::rest -> allButLast_ rest (arg :: acc) in
+  let allButLast lst = (allButLast_ lst []) |> List.rev in
+  match List.partition (fun (label, expr) -> label = (labelled "children"))
+          propsAndChildren
+  with
+  | ((label, childrenExpr)::[], props) ->
+      (childrenExpr,
+        (if removeLastPositionUnit then allButLast props else props))
+  | ([], props) ->
+      ((Exp.construct ~loc { loc; txt = ((Lident ("[]"))[@explicit_arity ]) }
+          None),
+        (if removeLastPositionUnit then allButLast props else props))
+  | (moreThanOneChild, props) ->
+      raise
+        ((Invalid_argument
+            ("JSX: somehow there's more than one `children` label"))
+        [@explicit_arity ])
+let jsxMapper () =
+  let jsxTransformV3 modulePath mapper loc attrs callExpression callArguments
+    =
+    let (children, argsWithLabels) =
+      extractChildrenForDOMElements ~loc ~removeLastPositionUnit:true
+        callArguments in
+    let (argsKeyRef, argsForMake) = List.partition argIsKeyRef argsWithLabels in
+    let childrenExpr = transformChildren ~loc ~mapper children in
+    let recursivelyTransformedArgsForMake =
+      argsForMake |>
+        (List.map
+           (fun (label, expression) ->
+              (label, (mapper.expr mapper expression)))) in
+    let args = recursivelyTransformedArgsForMake @ [(nolabel, childrenExpr)] in
+    let wrapWithReasonReactElement e =
+      Exp.apply ~loc
+        (Exp.ident ~loc
+           {
+             loc;
+             txt =
+               ((Ldot
+                   (((Lident ("ReasonReact"))[@explicit_arity ]), "element"))
+               [@explicit_arity ])
+           }) (argsKeyRef @ [(nolabel, e)]) in
+    (Exp.apply ~loc ~attrs
+       (Exp.ident ~loc
+          { loc; txt = ((Ldot (modulePath, "render"))[@explicit_arity ]) })
+       args)
+      |> wrapWithReasonReactElement in
+  let jsxTransformV2 modulePath mapper loc attrs callExpression callArguments
+    =
+    let (children, argsWithLabels) =
+      extractChildrenForDOMElements ~loc ~removeLastPositionUnit:true
+        callArguments in
+    let (argsKeyRef, argsForMake) = List.partition argIsKeyRef argsWithLabels in
+    let childrenExpr = transformChildren ~loc ~mapper children in
+    let recursivelyTransformedArgsForMake =
+      argsForMake |>
+        (List.map
+           (fun (label, expression) ->
+              (label, (mapper.expr mapper expression)))) in
+    let args = recursivelyTransformedArgsForMake @ [(nolabel, childrenExpr)] in
+    let wrapWithReasonReactElement e =
+      Exp.apply ~loc
+        (Exp.ident ~loc
+           {
+             loc;
+             txt =
+               ((Ldot
+                   (((Lident ("ReasonReact"))[@explicit_arity ]), "element"))
+               [@explicit_arity ])
+           }) (argsKeyRef @ [(nolabel, e)]) in
+    (Exp.apply ~loc ~attrs
+       (Exp.ident ~loc
+          { loc; txt = ((Ldot (modulePath, "make"))[@explicit_arity ]) })
+       args)
+      |> wrapWithReasonReactElement in
+  let lowercaseCaller mapper loc attrs callArguments id =
+    let (children, propsWithLabels) =
+      extractChildrenForDOMElements ~loc callArguments in
+    let componentNameExpr = constantString ~loc id in
+    let childrenExpr = transformChildren ~loc ~mapper children in
+    let args =
+      match propsWithLabels with
+      | theUnitArgumentAtEnd::[] ->
+          [(nolabel, componentNameExpr); (nolabel, childrenExpr)]
+      | nonEmptyProps ->
+          let propsCall =
+            Exp.apply ~loc
+              (Exp.ident ~loc
+                 {
+                   loc;
+                   txt =
+                     ((Ldot
+                         (((Lident ("ReactDOMRe"))[@explicit_arity ]),
+                           "props"))[@explicit_arity ])
+                 })
+              (nonEmptyProps |>
+                 (List.map
+                    (fun (label, expression) ->
+                       (label, (mapper.expr mapper expression))))) in
+          [(nolabel, componentNameExpr);
+          ((labelled "props"), propsCall);
+          (nolabel, childrenExpr)] in
+    Exp.apply ~loc ~attrs
+      (Exp.ident ~loc
+         {
+           loc;
+           txt =
+             ((Ldot
+                 (((Lident ("ReactDOMRe"))[@explicit_arity ]),
+                   "createElement"))[@explicit_arity ])
+         }) args in
+  let jsxVersion = ref None in
+  let structure mapper structure =
+    match structure with
+    | { pstr_loc;
+        pstr_desc = ((Pstr_attribute
+          ((({ txt = "bs.config" } as bsConfigLabel), ((PStr
+            (({
+                pstr_desc = ((Pstr_eval
+                  (({
+                      pexp_desc = ((Pexp_record
+                        (recordFields, b))[@explicit_arity ])
+                      } as innerConfigRecord),
+                   a))[@explicit_arity ])
+                } as configRecord)::[]))[@explicit_arity ]))))[@explicit_arity
+                                                                ])
+        }::restOfStructure ->
+        let (jsxField, recordFieldsWithoutJsx) =
+          recordFields |>
+            (List.partition
+               (fun ({ txt }, _) ->
+                  txt = ((Lident ("jsx"))[@explicit_arity ]))) in
+        (match (jsxField, recordFieldsWithoutJsx) with
+         | ([], _) -> default_mapper.structure mapper structure
+         | ((_,
+             {
+               pexp_desc = ((Pexp_constant
+                 (((Pconst_integer (version, _))[@explicit_arity ])))
+                 [@explicit_arity ])
+               })::rest,
+            recordFieldsWithoutJsx) ->
+             ((match version with
+               | "2" -> jsxVersion := ((Some (2))[@explicit_arity ])
+               | "3" -> jsxVersion := ((Some (3))[@explicit_arity ])
+               | _ ->
+                   raise
+                     ((Invalid_argument
+                         ("JSX: the file-level bs.config's jsx version must be either 2 or 3"))
+                     [@explicit_arity ]));
+              (match recordFieldsWithoutJsx with
+               | [] -> default_mapper.structure mapper restOfStructure
+               | fields ->
+                   default_mapper.structure mapper
+                     ({
+                        pstr_loc;
+                        pstr_desc =
+                          ((Pstr_attribute
+                              ((bsConfigLabel,
+                                 ((PStr
+                                     ([{
+                                         configRecord with
+                                         pstr_desc =
+                                           ((Pstr_eval
+                                               ({
+                                                  innerConfigRecord with
+                                                  pexp_desc =
+                                                    ((Pexp_record (fields, b))
+                                                    [@explicit_arity ])
+                                                }, a))[@explicit_arity ])
+                                       }]))[@explicit_arity ]))))
+                          [@explicit_arity ])
+                      } :: restOfStructure)))
+         | (_, recordFieldsWithoutJsx) ->
+             raise
+               ((Invalid_argument
+                   ("JSX: the file-level bs.config's {jsx: ...} config accepts only a version number"))
+               [@explicit_arity ]))
+    | _ -> default_mapper.structure mapper structure in
+  let transformJsxCall mapper callExpression callArguments attrs =
+    match callExpression.pexp_desc with
+    | ((Pexp_ident (caller))[@explicit_arity ]) ->
+        (match caller with
+         | { txt = ((Lident ("createElement"))[@explicit_arity ]) } ->
+             raise
+               ((Invalid_argument
+                   ("JSX: `createElement` should be preceeded by a module name."))
+               [@explicit_arity ])
+         | { loc;
+             txt = ((Ldot
+               (modulePath, ("createElement"|"make")))[@explicit_arity ])
+             } ->
+             let f =
+               match !jsxVersion with
+               | ((Some (2))[@explicit_arity ]) -> jsxTransformV2 modulePath
+               | ((Some (3))[@explicit_arity ]) -> jsxTransformV3 modulePath
+               | Some _ ->
+                   raise
+                     ((Invalid_argument
+                         ("JSX: the JSX version must be either 2 or 3"))
+                     [@explicit_arity ])
+               | None -> jsxTransformV3 modulePath in
+             f mapper loc attrs callExpression callArguments
+         | { loc; txt = ((Lident (id))[@explicit_arity ]) } ->
+             lowercaseCaller mapper loc attrs callArguments id
+         | {
+             txt = ((Ldot
+               (_, anythingNotCreateElementOrMake))[@explicit_arity ])
+             } ->
+             raise
+               ((Invalid_argument
+                   (("JSX: the JSX attribute should be attached to a `YourModuleName.createElement` or `YourModuleName.make` call. We saw `"
+                       ^ (anythingNotCreateElementOrMake ^ "` instead"))))
+               [@explicit_arity ])
+         | { txt = Lapply _ } ->
+             raise
+               ((Invalid_argument
+                   ("JSX: encountered a weird case while processing the code. Please report this!"))
+               [@explicit_arity ]))
+    | anythingElseThanIdent ->
+        raise
+          ((Invalid_argument
+              ("JSX: `createElement` should be preceeded by a simple, direct module name."))
+          [@explicit_arity ]) in
+  let hasJSX attrs = attrs |> (List.exists (fun (at, _) -> at.txt = "JSX")) in
+  let expr mapper expression =
+    match expression with
+    | { pexp_loc; pexp_attributes;
+        pexp_desc = ((Pexp_construct
+          ({ txt = ((Lident ("::"))[@explicit_arity ]) }, _))[@explicit_arity
+                                                               ])
+        } when hasJSX pexp_attributes ->
+        transformChildren ~loc:pexp_loc ~mapper expression
+    | { pexp_loc; pexp_attributes;
+        pexp_desc = ((Pexp_construct
+          ({ txt = ((Lident ("[]"))[@explicit_arity ]) }, None))[@explicit_arity
+                                                                  ])
+        } when hasJSX pexp_attributes ->
+        Exp.construct ~loc:pexp_loc
+          { loc = pexp_loc; txt = ((Lident ("Empty"))[@explicit_arity ]) }
+          None
+    | {
+        pexp_desc = ((Pexp_apply
+          (callExpression, callArguments))[@explicit_arity ]);
+        pexp_attributes } ->
+        let (jsxAttribute, nonJSXAttributes) =
+          List.partition (fun (attribute, _) -> attribute.txt = "JSX")
+            pexp_attributes in
+        (match (jsxAttribute, nonJSXAttributes) with
+         | ([], _) -> default_mapper.expr mapper expression
+         | (_, nonJSXAttributes) ->
+             transformJsxCall mapper callExpression callArguments
+               nonJSXAttributes)
+    | e -> default_mapper.expr mapper e in
+  To_current.copy_mapper { default_mapper with structure; expr }
+let () = Compiler_libs.Ast_mapper.register "JSX" (fun _argv -> jsxMapper ())

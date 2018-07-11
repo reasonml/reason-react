@@ -1,0 +1,39 @@
+#! /bin/bash
+if [ "$1" == "jsc" ]; then
+  echo "Running JSC (NO JIT) Benchmarks"
+  /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Resources/jsc --useJIT=false -e "console = {log:print}; process = {argv: [0, 'a.out']}; " -f ./_build/default/bin/react-app/Main.bc.js
+  exit 0
+fi
+
+if [ "$1" == "v8" ]; then
+  echo "Running V8 Benchmarks"
+  node ./_build/default/bin/react-app/Main.bc.js
+  exit 0
+fi
+
+if [ "$1" == "jscWithJit" ]; then
+  echo "Running JSC+JIT Benchmarks"
+  /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Resources/jsc --useJIT=true -e "console = {log:print}; process = {argv: [0, 'a.out']}; " -f ./_build/default/bin/react-app/Main.bc.js
+  exit 0
+fi
+
+if [ "$1" == "byte" ]; then
+  echo "Running Byte Code Benchmarks"
+  ./_build/default/bin/react-app/Main.bc
+  exit 0
+fi
+
+if [ "$1" == "native" ]; then
+  echo "Running Native Benchmarks"
+  ./_build/default/bin/react-app/Main.exe
+  exit 0
+fi
+
+
+echo "Usage: Run bench in one of the following forms:"
+echo ""
+echo " bench jsc"
+echo " bench v8"
+echo " bench jscWithJit"
+echo " bench byte"
+echo " bench native"

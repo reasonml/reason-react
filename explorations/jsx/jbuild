@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(executables
+ ((names (reactjs_jsx_ppx_v4))
+  (public_names (reactjs_jsx_ppx_v4))
+  (libraries
+   (reason ocaml-migrate-parsetree ))))

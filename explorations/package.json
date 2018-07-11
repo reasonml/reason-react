@@ -1,0 +1,31 @@
+
+{
+  "name": "static-react",
+  "version": "0.0.1",
+  "dependencies": {
+    "@opam/ocaml-migrate-parsetree": "*",
+    "@esy-ocaml/esy-installer": "^0.0.0",
+    "@esy-ocaml/substs": "^0.0.1",
+    "@opam/ocamlfind": "",
+    "@esy-ocaml/reason": "^3.0.0",
+    "refmterr": "3.1.5"
+  },
+  "esy": {
+    "build": [
+      [ "refmterr", "jbuilder", "build", "./jsx/reactjs_jsx_ppx_v4.exe"],
+      [ "refmterr", "jbuilder", "build", "./bin/react-app/Main.exe"],
+      [ "refmterr", "jbuilder", "build", "@install"]
+    ],
+    "install": [
+      "esy-installer"
+    ],
+    "buildsInSource": "_build"
+  },
+  "peerDependencies": {
+    "ocaml": "~4.6.0"
+  },
+  "devDependencies": {
+    "@esy-ocaml/merlin": "3.0.5005",
+    "ocaml": "~4.6.0"
+  }
+}

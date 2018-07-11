@@ -1,0 +1,8 @@
+(jbuild_version 1)
+
+(executable
+ ((name Main)
+  (ocamlc_flags (-ppx ./jsx/reactjs_jsx_ppx_v4.exe ))
+  (ocamlopt_flags (-ppx ./jsx/reactjs_jsx_ppx_v4.exe -unsafe -inline 100))
+  (public_name ReactApp.exe)
+  (libraries (ReactLib))))

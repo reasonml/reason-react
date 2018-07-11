@@ -1,0 +1,12 @@
+a.out
+*.class
+/**/java/out/*
+/**/.idea/workspace.xml
+/node_modules/
+npm-debug.log
+_build
+_dist
+*.install
+src/.DS_Store
+.DS_Store
+*.merlin
