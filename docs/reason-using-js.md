@@ -9,9 +9,13 @@ var ReactDOM = require('react-dom');
 var React = require('react');
 
 var MyBanner = function(props) {
-  return React.createElement('div', null,
-    props.show ? props.message : 'No message here!'
-  );
+   if (props.show) {
+    return React.createElement('div', null,
+      'Here\'s the message from the owner: ' + props.message
+    );
+  } else {
+    return null;
+  }
 };
 
 module.exports = MyBanner;
