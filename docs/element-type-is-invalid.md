@@ -2,7 +2,7 @@
 title: Element Type is Invalid Runtime Error
 ---
 
-If you you run your app and see in the console the error:
+If you run your app and see in the console the error:
 
 > "element type is invalid... You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports"
 
