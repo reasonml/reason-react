@@ -166,6 +166,46 @@ module Touch = {
   [@bs.get] external touches : t => Js.t({..}) = ""; /* Should return Dom.touchList */
 };
 
+module Pointer = {
+  type tag;
+  type t = synthetic(tag);
+  include
+    MakeSyntheticWrapper(
+      {
+        type nonrec t = t;
+      },
+    );
+
+  /* Extends Mouse */
+  [@bs.get] external altKey : t => bool = "";
+  [@bs.get] external button : t => int = "";
+  [@bs.get] external buttons : t => int = "";
+  [@bs.get] external clientX : t => int = "";
+  [@bs.get] external clientY : t => int = "";
+  [@bs.get] external ctrlKey : t => bool = "";
+  [@bs.send.pipe: t] external getModifierState : string => bool = "";
+  [@bs.get] external metaKey : t => bool = "";
+  [@bs.get] external pageX : t => int = "";
+  [@bs.get] external pageY : t => int = "";
+  [@bs.get] external relatedTarget : t => Dom.element = ""; /* Should return Dom.eventTarget */
+  [@bs.get] external screenX : t => int = "";
+  [@bs.get] external screenY : t => int = "";
+  [@bs.get] external shiftKey : t => bool = "";
+  
+  /* Additional properties */
+  [@bs.get] external pointerId : t => int = "";
+  [@bs.get] external width : t => int = "";
+  [@bs.get] external height : t => int = "";
+  [@bs.get] external pressure : t => int = "";
+  [@bs.get] external tangentialPressure : t => int = "";
+  [@bs.get] external tiltX : t => int = "";
+  [@bs.get] external tiltY : t => int = "";
+  [@bs.get] external twist : t => int = "";
+  [@bs.get] external pointerType : t => string = "";
+  [@bs.get] external isPrimary : t => bool = "";
+  /* [@bs.send.pipe: t] external getCoalescedEvents : t => List.t(Pointer.t); */
+};
+
 module UI = {
   type tag;
   type t = synthetic(tag);

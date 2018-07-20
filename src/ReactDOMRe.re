@@ -313,6 +313,17 @@ type props = {
   [@bs.optional] onTouchEnd: ReactEventRe.Touch.t => unit,
   [@bs.optional] onTouchMove: ReactEventRe.Touch.t => unit,
   [@bs.optional] onTouchStart: ReactEventRe.Touch.t => unit,
+  /* Pointer events */
+  [@bs.optional] onPointerDown: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onPointerMove: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onPointerUp: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onPointerCancel: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onGotPointerCapture: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onLostPointerCapture: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onPointerEnter: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onPointerLeave: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onPointerOver: ReactEventRe.Pointer.t => unit,
+  [@bs.optional] onPointerOut: ReactEventRe.Pointer.t => unit,
   /* UI events */
   [@bs.optional] onScroll: ReactEventRe.UI.t => unit,
   /* Wheel events */
