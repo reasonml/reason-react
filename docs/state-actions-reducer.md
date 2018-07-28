@@ -111,10 +111,10 @@ A few things:
 - There's a user-defined type called **`action`**, named so by convention. It's a variant of all the possible state transitions in your component. _In state machine terminology, this'd be a "token"_.
 - A user-defined `state` type, and an `initialState`. Nothing special.
 - The current `state` value is accessible through `self.state`, whenever `self` is passed to you as an argument of some function.
-- A "**reducer**"! This [pattern-matches](https://reasonml.github.io/docs/en/pattern-matching.html) on the possible actions and specify what state update each action corresponds to. _In state machine terminology, this'd be a "state transition"_.
+- A "**reducer**"! This [pattern-matches](https://reasonml.github.io/docs/en/pattern-matching.html) on the possible actions and specifies what state update each action corresponds to. _In state machine terminology, this'd be a "state transition"_.
 - In `render`, instead of `self.handle` (which doesn't allow state updates), you'd use `self.send`. `send` takes an action.
 
-So, when a click on the dialog is triggered, we "send" the `Click` action to the reducer, which handles the `Click` case by returning the new state that increment a counter. ReasonReact takes the state and updates the component.
+So, when a click on the dialog is triggered, we "send" the `Click` action to the reducer, which handles the `Click` case by returning the new state that increments a counter. ReasonReact takes the state and updates the component.
 
 **Note**: just like for `self.handle`, sometimes you might be forwarding `send` to some helper functions. Pass the whole `self` instead and **annotate it**. This avoids a complex `self` record type behavior. See [Record Field `send`/`handle` Not Found](record-field-send-handle-not-found.md).
 
@@ -131,12 +131,12 @@ Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of 
 
 **Please read through all these points**, if you want to fully take advantage of `reducer` and avoid future ReactJS Fiber race condition problems.
 
-- The `action` type's variants can carry a payload: `onClick={data => self.send(Click(data.foo))}`.
+- The `action` type's variants can carry a payload: `onClick=(data => self.send(Click(data.foo)))`.
 - Don't pass the whole event into the action variant's payload. ReactJS events are pooled; by the time you intercept the action in the `reducer`, the event's already recycled.
 - `reducer` **must** be pure! Aka don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use `SideEffects` or `UpdateWithSideEffects` to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.
 - If you need to do e.g. `ReactEventRe.BlablaEvent.preventDefault(event)`, do it in `self.send`, before returning the action type. Again, `reducer` must be pure.
 - Feel free to trigger another action in `SideEffects` and `UpdateWithSideEffects`, e.g. `UpdateWithSideEffects(newState, (self) => self.send(Click))`.
-- If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.send`. You still needs to specify a `reducer` like so: `reducer: ((), _state) => ReasonReact.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
+- If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.send`. You still need to specify a `reducer` like so: `reducer: ((), _state) => ReasonReact.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
 
 ### Tip
 
