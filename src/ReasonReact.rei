@@ -12,15 +12,6 @@ type reactElement;
 
 type reactRef;
 
-[@deprecated "Please use ReasonReact.null instead"] [@bs.val]
-external nullElement : reactElement = "null";
-
-[@deprecated "Please use ReasonReact.string instead"]
-external stringToElement : string => reactElement = "%identity";
-
-[@deprecated "Please use ReasonReact.array instead"]
-external arrayToElement : array(reactElement) => reactElement = "%identity";
-
 [@bs.val] external null : reactElement = "null";
 
 external string : string => reactElement = "%identity";
@@ -29,6 +20,21 @@ external array : array(reactElement) => reactElement = "%identity";
 
 external refToJsObj : reactRef => Js.t({..}) = "%identity";
 
+/* This should _not_ be used directly, unless you're passing a class like this:
+
+switch (actionsClass) {
+| Some(actions) =>
+    ReasonReact.createElement(
+      actions,
+      ~props={
+        "className": "hi"
+      },
+      [|whatever|],
+    )
+}
+
+In every other case, you should be using the JSX
+*/
 [@bs.splice] [@bs.val] [@bs.module "react"]
 external createElement :
   (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
@@ -56,13 +62,6 @@ type noRetainedProps;
 
 /*** An actionless component is a component with actions of type unit */
 type actionless = unit;
-
-/**
- * Subscriptions handle resources that need to be initialized and finalized.
- * Initialization returns a token, and finalization consumes a token.
- */
-type subscription =
-  | Sub(unit => 'token, 'token => unit): subscription;
 
 /* Control how a state update is performed.
    The state can be updated of left unchanged.
@@ -147,9 +146,6 @@ type componentSpec(
    * side-effectful function specified in the returned update.
    */
   reducer: ('action, 'state) => update('state, 'retainedProps, 'action),
-  /* read onto only once at the beginning */
-  /* not opening this to the public yet */
-  subscriptions: self('state, 'retainedProps, 'action) => list(subscription),
   jsElementWrapped,
 }
 and component('state, 'retainedProps, 'action) =
@@ -216,6 +212,9 @@ let wrapReasonForJs:
   ) =>
   reactClass;
 
+[@deprecated "
+Were you using this because you needed to pass a children array reference to a DOM element?  We now support children spread for DOM elements: `<div> ...children </div>`.
+Alternatively, if you're using this because the prop name contains a hyphen, please use `ReactDOMRe.createElementVariadic` instead."]
 let createDomElement:
   (string, ~props: Js.t({..}), array(reactElement)) => reactElement;
 
@@ -257,13 +256,4 @@ module Router: {
   let dangerouslyGetInitialUrl: unit => url;
 };
 
-module Callback: {
-  [@deprecated
-    "ReasonReact.Callback.t(foo) is equivalent to foo => unit. Please use the latter form"
-  ]
-  type t('payload) = 'payload => unit;
-  [@deprecated "Please directly use _event => ()"]
-  let default: 'payload => unit;
-  [@deprecated "Please chain your callbacks manually one after another"]
-  let chain: ('payload => unit, 'payload => unit) => 'payload => unit;
-};
+[@bs.module "react"] external fragment: 'a = "Fragment";

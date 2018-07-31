@@ -230,7 +230,6 @@ type props = {
   [@bs.optional] name: string,
   [@bs.optional] nonce: string,
   [@bs.optional] noValidate: bool,
-  [@bs.optional] _open: bool,
   [@bs.optional] [@bs.as "open"] open_: bool, /* use this one. Previous one is deprecated */
   [@bs.optional] optimum: int,
   [@bs.optional] pattern: string, /* valid Js RegExp */
@@ -262,7 +261,6 @@ type props = {
   [@bs.optional] step: float,
   [@bs.optional] summary: string, /* deprecated */
   [@bs.optional] target: string,
-  [@bs.optional] _type: string, /* has a fixed but large-ish set of possible values */
   [@bs.optional] [@bs.as "type"] type_: string, /* has a fixed but large-ish set of possible values */ /* use this one. Previous one is deprecated */
   [@bs.optional] useMap: string,
   [@bs.optional] value: string,
@@ -367,7 +365,6 @@ type props = {
   [@bs.optional] baseProfile: string,
   [@bs.optional] baselineShift: string,
   [@bs.optional] bbox: string,
-  [@bs.optional] _begin: string,
   [@bs.optional] [@bs.as "begin"] begin_: string, /* use this one. Previous one is deprecated */
   [@bs.optional] bias: string,
   [@bs.optional] by: string,
@@ -400,7 +397,6 @@ type props = {
   [@bs.optional] edgeMode: string,
   [@bs.optional] elevation: string,
   [@bs.optional] enableBackground: string,
-  [@bs.optional] _end: string,
   [@bs.optional] [@bs.as "end"] end_: string, /* use this one. Previous one is deprecated */
   [@bs.optional] exponent: string,
   [@bs.optional] externalResourcesRequired: string,
@@ -437,7 +433,6 @@ type props = {
   [@bs.optional] horizOriginX: string,
   [@bs.optional] ideographic: string,
   [@bs.optional] imageRendering: string,
-  [@bs.optional] _in: string,
   [@bs.optional] [@bs.as "in"] in_: string, /* use this one. Previous one is deprecated */
   [@bs.optional] in2: string,
   [@bs.optional] intercept: string,
@@ -545,7 +540,6 @@ type props = {
   [@bs.optional] textDecoration: string,
   [@bs.optional] textLength: string,
   [@bs.optional] textRendering: string,
-  [@bs.optional] _to: string,
   [@bs.optional] [@bs.as "to"] to_: string, /* use this one. Previous one is deprecated */
   [@bs.optional] transform: string,
   [@bs.optional] u1: string,
@@ -620,6 +614,26 @@ external createElement :
   (string, ~props: props=?, array(ReasonReact.reactElement)) =>
   ReasonReact.reactElement =
   "createElement";
+
+/* Only wanna expose createElementVariadic here. Don't wanna write an interface file */
+include ({
+  [@bs.val] [@bs.module "react"]
+  external createElementInternalHack : 'a = "createElement";
+  [@bs.send]
+  external apply :
+    ('theFunction, 'theContext, 'arguments) => 'returnTypeOfTheFunction =
+    "";
+
+  let createElementVariadic = (domClassName, ~props=?, children) => {
+    let variadicArguments =
+      [|Obj.magic(domClassName), Obj.magic(props)|]
+      |> Js.Array.concat(children);
+    /* Use varargs to avoid the ReactJS warning for duplicate keys in children */
+    createElementInternalHack |. apply(Js.Nullable.null, variadicArguments);
+  };
+}: {
+  let createElementVariadic: (string, ~props: props=?, array(ReasonReact.reactElement)) => ReasonReact.reactElement;
+});
 
 module Style = {
   type t = style;

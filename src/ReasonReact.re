@@ -6,15 +6,6 @@ type reactElement;
 
 type reactRef;
 
-[@deprecated "Please use ReasonReact.null instead"] [@bs.val]
-external nullElement : reactElement = "null";
-
-[@deprecated "Please use ReasonReact.string instead"]
-external stringToElement : string => reactElement = "%identity";
-
-[@deprecated "Please use ReasonReact.array instead"]
-external arrayToElement : array(reactElement) => reactElement = "%identity";
-
 [@bs.val] external null : reactElement = "null";
 
 external string : string => reactElement = "%identity";
@@ -55,9 +46,6 @@ type stateless = unit;
 type noRetainedProps = unit;
 
 type actionless = unit;
-
-type subscription =
-  | Sub(unit => 'token, 'token => unit): subscription;
 
 /***
  * Elements are what JSX blocks become. They represent the *potential* for a
@@ -112,7 +100,6 @@ and componentSpec(
   initialState: unit => 'initialState,
   retainedProps: 'initialRetainedProps,
   reducer: ('action, 'state) => update('state, 'retainedProps, 'action),
-  subscriptions: self('state, 'retainedProps, 'action) => list(subscription),
   jsElementWrapped,
 }
 and component('state, 'retainedProps, 'action) =
@@ -176,8 +163,6 @@ let reducerDefault:
   ('action, 'state) => update('state, 'retainedProps, 'action) =
   (_action, _state) => NoUpdate;
 
-let subscriptionsDefault = _self => [];
-
 let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
   let props = Obj.magic(props);
   switch (Js.Nullable.toOption(props##reasonProps), jsPropsToReason) {
@@ -193,19 +178,6 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
       ),
     )
   };
-};
-
-/* This prepares us to remove our dependency on List, which shrinks
-   ReasonReact dramatically and makes it adoptible on some codebases with tightly enforced size constraints */
-let arrayOfList = l => {
-  let rec arrayOfList = (l, acc) =>
-    switch (l) {
-    | [] => Js.Array.reverseInPlace(acc)
-    | [head, ...rest] =>
-      ignore(Js.Array.push(head, acc));
-      arrayOfList(rest, acc);
-    };
-  arrayOfList(l, [||]);
 };
 
 let createClass =
@@ -263,16 +235,6 @@ let createClass =
         let self =
           this##self(curReasonState, Obj.magic(component.retainedProps));
         let self = Obj.magic(self);
-        if (component.subscriptions !== subscriptionsDefault) {
-          let subscriptions =
-            component.subscriptions(self)
-            |> arrayOfList
-            |> Js.Array.map((Sub(subscribe, unsubscribe)) => {
-                 let token = subscribe();
-                 () => unsubscribe(token);
-               });
-          this##subscriptions#=(Js.Null.return(subscriptions));
-        };
         if (component.didMount !== anyToUnit) {
           component.didMount(self);
         };
@@ -646,7 +608,6 @@ let basicComponent = debugName => {
     reducer: reducerDefault,
     jsElementWrapped: None,
     retainedProps: (),
-    subscriptions: subscriptionsDefault,
   };
   componentTemplate;
 };
@@ -767,6 +728,8 @@ module WrapProps = {
 };
 
 let wrapJsForReason = WrapProps.wrapJsForReason;
+
+[@bs.module "react"] external fragment : 'a = "Fragment";
 
 module Router = {
   [@bs.get] external location : Dom.window => Dom.location = "";
@@ -905,13 +868,4 @@ module Router = {
     | Some((window: Dom.window)) =>
       removeEventListener(window, "popstate", watcherID)
     };
-};
-
-module Callback = {
-  type t('payload) = 'payload => unit;
-  let default = _event => ();
-  let chain = (handlerOne, handlerTwo, payload) => {
-    handlerOne(payload);
-    handlerTwo(payload);
-  };
 };
