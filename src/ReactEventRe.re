@@ -1,4 +1,4 @@
-type synthetic('a);
+type synthetic('a) = ReactEvent.synthetic('a);
 
 module MakeSyntheticWrapper = (Type: {type t;}) => {
   [@bs.get] external bubbles : Type.t => bool = "";
@@ -19,8 +19,8 @@ module MakeSyntheticWrapper = (Type: {type t;}) => {
 };
 
 module Synthetic = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Synthetic.tag;
+  type t = ReactEvent.Synthetic.t;
   [@bs.get] external bubbles : synthetic('a) => bool = "";
   [@bs.get] external cancelable : synthetic('a) => bool = "";
   [@bs.get] external currentTarget : synthetic('a) => Dom.element = ""; /* Should return Dom.evetTarget */
@@ -42,8 +42,8 @@ module Synthetic = {
 external toSyntheticEvent : synthetic('a) => Synthetic.t = "%identity";
 
 module Clipboard = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Clipboard.tag;
+  type t = ReactEvent.Clipboard.t;
   include
     MakeSyntheticWrapper(
       {
@@ -54,8 +54,8 @@ module Clipboard = {
 };
 
 module Composition = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Composition.tag;
+  type t = ReactEvent.Composition.t;
   include
     MakeSyntheticWrapper(
       {
@@ -66,8 +66,8 @@ module Composition = {
 };
 
 module Keyboard = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Keyboard.tag;
+  type t = ReactEvent.Keyboard.t;
   include
     MakeSyntheticWrapper(
       {
@@ -89,8 +89,8 @@ module Keyboard = {
 };
 
 module Focus = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Focus.tag;
+  type t = ReactEvent.Focus.t;
   include
     MakeSyntheticWrapper(
       {
@@ -101,8 +101,8 @@ module Focus = {
 };
 
 module Form = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Form.tag;
+  type t = ReactEvent.Form.t;
   include
     MakeSyntheticWrapper(
       {
@@ -112,8 +112,8 @@ module Form = {
 };
 
 module Mouse = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Mouse.tag;
+  type t = ReactEvent.Mouse.t;
   include
     MakeSyntheticWrapper(
       {
@@ -137,8 +137,8 @@ module Mouse = {
 };
 
 module Selection = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Selection.tag;
+  type t = ReactEvent.Selection.t;
   include
     MakeSyntheticWrapper(
       {
@@ -148,8 +148,8 @@ module Selection = {
 };
 
 module Touch = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Touch.tag;
+  type t = ReactEvent.Touch.t;
   include
     MakeSyntheticWrapper(
       {
@@ -167,8 +167,8 @@ module Touch = {
 };
 
 module UI = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.UI.tag;
+  type t = ReactEvent.UI.t;
   include
     MakeSyntheticWrapper(
       {
@@ -180,8 +180,8 @@ module UI = {
 };
 
 module Wheel = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Wheel.tag;
+  type t = ReactEvent.Wheel.t;
   include
     MakeSyntheticWrapper(
       {
@@ -195,8 +195,8 @@ module Wheel = {
 };
 
 module Media = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Media.tag;
+  type t = ReactEvent.Media.t;
   include
     MakeSyntheticWrapper(
       {
@@ -206,8 +206,8 @@ module Media = {
 };
 
 module Image = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Image.tag;
+  type t = ReactEvent.Image.t;
   include
     MakeSyntheticWrapper(
       {
@@ -217,8 +217,8 @@ module Image = {
 };
 
 module Animation = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Animation.tag;
+  type t = ReactEvent.Animation.t;
   include
     MakeSyntheticWrapper(
       {
@@ -231,8 +231,8 @@ module Animation = {
 };
 
 module Transition = {
-  type tag;
-  type t = synthetic(tag);
+  type tag = ReactEvent.Transition.tag;
+  type t = ReactEvent.Transition.t;
   include
     MakeSyntheticWrapper(
       {

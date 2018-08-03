@@ -1,391 +1,660 @@
-/* This is the whole synthetic event system of ReactJS/ReasonReact. The first module `Synthetic` represents
-   the generic synthetic event. The rest are the specific ones.
-
-   In each module, the type `t` commonly means "the type of that module" (OCaml convention). In our case, e.g.
-   `ReactEventRe.Mouse.t` represents a ReactJS synthetic mouse event. You'd use it to type your props:
-
-   ```
-   type props = {
-     onClick: ReactEventRe.Mouse.t => unit
-   };
-   ```
-
-   All the methods and properties of a type of event are in the module, as seen below.
-
-   Each module also has a `tag` type. You can ignore it; they're only needed by their `t` type. This way, we
-   get to allow a base `Synthetic` event module with generic methods. So e.g. even a mouse event (`Mouse.t`)
-   get to be passed to a generic handler:
-
-   ```
-   let handleClick = ({state, props}, event) => {
-     ReactEventRe.Mouse.preventDefault(event);
-     ...
-   };
-   let handleSubmit = ({state, props}, event) => {
-     /* this handler can be triggered by either a Keyboard or a Mouse event; conveniently use the generic
-        preventDefault */
-     ReactEventRe.Synthetic.preventDefault(event);
-     ...
-   };
-
-   let render = (_) => <Foo onSubmit=handleSubmit onEnter=handleSubmit .../>;
-   ```
-
-   How to translate idioms from ReactJS:
-
-   1. myMouseEvent.preventDefault() -> ReactEventRe.Mouse.preventDefault(myMouseEvent)
-   2. myKeyboardEvent.which -> ReactEventRe.Keyboard.which(myMouseEvent)
-   */
-type synthetic('a);
+/* Old code. See ReactEvent.re for documentation. */
+[@deprecated "Please use ReactEvent.synthetic"]
+type synthetic('a) = ReactEvent.synthetic('a);
 
 module Synthetic: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : synthetic('a) => bool = "";
-  [@bs.get] external cancelable : synthetic('a) => bool = "";
-  [@bs.get] external currentTarget : synthetic('a) => Dom.element = "";
-  [@bs.get] external defaultPrevented : synthetic('a) => bool = "";
-  [@bs.get] external eventPhase : synthetic('a) => int = "";
-  [@bs.get] external isTrusted : synthetic('a) => bool = "";
-  [@bs.get] external nativeEvent : synthetic('a) => Js.t({..}) = "";
-  [@bs.send.pipe: synthetic('a)] external preventDefault : unit = "";
-  [@bs.send.pipe: synthetic('a)] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: synthetic('a)] external stopPropagation : unit = "";
-  [@bs.send.pipe: synthetic('a)] external isPropagationStopped : bool = "";
-  [@bs.get] external target : synthetic('a) => Dom.element = "";
-  [@bs.get] external timeStamp : synthetic('a) => float = "";
-  [@bs.get] external _type : synthetic('a) => string = "type";
-  [@bs.send.pipe: synthetic('a)] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Synthetic.tag"]
+  type tag = ReactEvent.Synthetic.tag;
+  [@deprecated "Please use ReactEvent.Synthetic.t"]
+  type t = ReactEvent.Synthetic.t;
+  [@deprecated "Please use ReactEvent.Synthetic.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.synthetic('a) => bool = "";
+  [@deprecated "Please use ReactEvent.Synthetic.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.synthetic('a) => bool = "";
+  [@deprecated "Please use ReactEvent.Synthetic.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.synthetic('a) => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Synthetic.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.synthetic('a) => bool = "";
+  [@deprecated "Please use ReactEvent.Synthetic.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.synthetic('a) => int = "";
+  [@deprecated "Please use ReactEvent.Synthetic.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.synthetic('a) => bool = "";
+  [@deprecated "Please use ReactEvent.Synthetic.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.synthetic('a) => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Synthetic.preventDefault"]
+  [@bs.send.pipe: ReactEvent.synthetic('a)] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Synthetic.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.synthetic('a)] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Synthetic.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.synthetic('a)] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Synthetic.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.synthetic('a)] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Synthetic.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.synthetic('a) => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Synthetic.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.synthetic('a) => float = "";
+  [@deprecated "Please use ReactEvent.Synthetic.type_"]
+  [@bs.get] external _type : ReactEvent.synthetic('a) => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Synthetic.persist"]
+  [@bs.send.pipe: ReactEvent.synthetic('a)] external persist : unit = "";
 };
 
 /* Cast any event type to the general synthetic type. This is safe, since synthetic is more general */
-external toSyntheticEvent : synthetic('a) => Synthetic.t = "%identity";
+[@deprecated "Please use ReactEvent.toSyntheticEvent"]
+external toSyntheticEvent : ReactEvent.synthetic('a) => ReactEvent.Synthetic.t = "%identity";
 
 module Clipboard: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external clipboardData : t => Js.t({..}) = ""; /* Should return Dom.dataTransfer */
+  [@deprecated "Please use ReactEvent.Clipboard.tag"]
+  type tag = ReactEvent.Clipboard.tag;
+  [@deprecated "Please use ReactEvent.Clipboard.tag"]
+  type t = ReactEvent.Clipboard.t;
+  [@deprecated "Please use ReactEvent.Clipboard.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Clipboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Clipboard.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Clipboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Clipboard.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Clipboard.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Clipboard.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Clipboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Clipboard.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Clipboard.t => int = "";
+  [@deprecated "Please use ReactEvent.Clipboard.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Clipboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Clipboard.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Clipboard.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Clipboard.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Clipboard.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Clipboard.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Clipboard.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Clipboard.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Clipboard.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Clipboard.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Clipboard.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Clipboard.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Clipboard.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Clipboard.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Clipboard.t => float = "";
+  [@deprecated "Please use ReactEvent.Clipboard.type_"]
+  [@bs.get] external _type : ReactEvent.Clipboard.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Clipboard.persist"]
+  [@bs.send.pipe: ReactEvent.Clipboard.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Clipboard.clipboardData"]
+  [@bs.get] external clipboardData : ReactEvent.Clipboard.t => Js.t({..}) = ""; /* Should return Dom.dataTransfer */
 };
 
 module Composition: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external data : t => string = "";
+  [@deprecated "Please use ReactEvent.Composition.tag"]
+  type tag = ReactEvent.Composition.tag;
+  [@deprecated "Please use ReactEvent.Composition.t"]
+  type t = ReactEvent.Composition.t;
+  [@deprecated "Please use ReactEvent.Composition.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Composition.t => bool = "";
+  [@deprecated "Please use ReactEvent.Composition.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Composition.t => bool = "";
+  [@deprecated "Please use ReactEvent.Composition.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Composition.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Composition.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Composition.t => bool = "";
+  [@deprecated "Please use ReactEvent.Composition.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Composition.t => int = "";
+  [@deprecated "Please use ReactEvent.Composition.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Composition.t => bool = "";
+  [@deprecated "Please use ReactEvent.Composition.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Composition.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Composition.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Composition.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Composition.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Composition.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Composition.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Composition.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Composition.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Composition.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Composition.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Composition.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Composition.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Composition.t => float = "";
+  [@deprecated "Please use ReactEvent.Composition.type_"]
+  [@bs.get] external _type : ReactEvent.Composition.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Composition.persist"]
+  [@bs.send.pipe: ReactEvent.Composition.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Composition.data"]
+  [@bs.get] external data : ReactEvent.Composition.t => string = "";
 };
 
 module Keyboard: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external altKey : t => bool = "";
-  [@bs.get] external charCode : t => int = "";
-  [@bs.get] external ctrlKey : t => bool = "";
-  [@bs.send.pipe: t] external getModifierState : string => bool = "";
-  [@bs.get] external key : t => string = "";
-  [@bs.get] external keyCode : t => int = "";
-  [@bs.get] external locale : t => string = "";
-  [@bs.get] external location : t => int = "";
-  [@bs.get] external metaKey : t => bool = "";
-  [@bs.get] external repeat : t => bool = "";
-  [@bs.get] external shiftKey : t => bool = "";
-  [@bs.get] external which : t => int = "";
+  [@deprecated "Please use ReactEvent.Keyboard.tag"]
+  type tag = ReactEvent.Keyboard.tag;
+  [@deprecated "Please use ReactEvent.Keyboard.t"]
+  type t = ReactEvent.Keyboard.t;
+  [@deprecated "Please use ReactEvent.Keyboard.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Keyboard.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Keyboard.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Keyboard.t => int = "";
+  [@deprecated "Please use ReactEvent.Keyboard.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Keyboard.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Keyboard.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Keyboard.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Keyboard.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Keyboard.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Keyboard.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Keyboard.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Keyboard.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Keyboard.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Keyboard.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Keyboard.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Keyboard.t => float = "";
+  [@deprecated "Please use ReactEvent.Keyboard.type_"]
+  [@bs.get] external _type : ReactEvent.Keyboard.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Keyboard.persist"]
+  [@bs.send.pipe: ReactEvent.Keyboard.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Keyboard.altKey"]
+  [@bs.get] external altKey : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.charCode"]
+  [@bs.get] external charCode : ReactEvent.Keyboard.t => int = "";
+  [@deprecated "Please use ReactEvent.Keyboard.ctrlKey"]
+  [@bs.get] external ctrlKey : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Keyboard.getModifierState"]
+  [@bs.send.pipe: ReactEvent.Keyboard.t] external getModifierState : string => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.key"]
+  [@bs.get] external key : ReactEvent.Keyboard.t => string = "";
+  [@deprecated "Please use ReactEvent.Keyboard.keyCode"]
+  [@bs.get] external keyCode : ReactEvent.Keyboard.t => int = "";
+  [@deprecated "Please use ReactEvent.Keyboard.locale"]
+  [@bs.get] external locale : ReactEvent.Keyboard.t => string = "";
+  [@deprecated "Please use ReactEvent.Keyboard.location"]
+  [@bs.get] external location : ReactEvent.Keyboard.t => int = "";
+  [@deprecated "Please use ReactEvent.Keyboard.metaKey"]
+  [@bs.get] external metaKey : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.repeat"]
+  [@bs.get] external repeat : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.shiftKey"]
+  [@bs.get] external shiftKey : ReactEvent.Keyboard.t => bool = "";
+  [@deprecated "Please use ReactEvent.Keyboard.which"]
+  [@bs.get] external which : ReactEvent.Keyboard.t => int = "";
 };
 
 module Focus: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external relatedTarget : t => Dom.element = ""; /* Should return Dom.eventTarget */
+  [@deprecated "Please use ReactEvent.Focus.tag"]
+  type tag = ReactEvent.Focus.tag;
+  [@deprecated "Please use ReactEvent.Focus.t"]
+  type t = ReactEvent.Focus.t;
+  [@deprecated "Please use ReactEvent.Focus.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Focus.t => bool = "";
+  [@deprecated "Please use ReactEvent.Focus.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Focus.t => bool = "";
+  [@deprecated "Please use ReactEvent.Focus.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Focus.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Focus.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Focus.t => bool = "";
+  [@deprecated "Please use ReactEvent.Focus.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Focus.t => int = "";
+  [@deprecated "Please use ReactEvent.Focus.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Focus.t => bool = "";
+  [@deprecated "Please use ReactEvent.Focus.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Focus.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Focus.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Focus.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Focus.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Focus.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Focus.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Focus.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Focus.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Focus.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Focus.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Focus.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Focus.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Focus.t => float = "";
+  [@deprecated "Please use ReactEvent.Focus.type_"]
+  [@bs.get] external _type : ReactEvent.Focus.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Focus.persist"]
+  [@bs.send.pipe: ReactEvent.Focus.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Focus.relatedTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external relatedTarget : ReactEvent.Focus.t => Dom.element = ""; /* Should return Dom.eventTarget */
 };
 
 module Form: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Form.tag"]
+  type tag = ReactEvent.Form.tag;
+  [@deprecated "Please use ReactEvent.Form.t"]
+  type t = ReactEvent.Form.t;
+  [@deprecated "Please use ReactEvent.Form.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Form.t => bool = "";
+  [@deprecated "Please use ReactEvent.Form.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Form.t => bool = "";
+  [@deprecated "Please use ReactEvent.Form.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Form.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Form.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Form.t => bool = "";
+  [@deprecated "Please use ReactEvent.Form.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Form.t => int = "";
+  [@deprecated "Please use ReactEvent.Form.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Form.t => bool = "";
+  [@deprecated "Please use ReactEvent.Form.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Form.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Form.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Form.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Form.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Form.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Form.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Form.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Form.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Form.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Form.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Form.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Form.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Form.t => float = "";
+  [@deprecated "Please use ReactEvent.Form.type_"]
+  [@bs.get] external _type : ReactEvent.Form.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Form.persist"]
+  [@bs.send.pipe: ReactEvent.Form.t] external persist : unit = "";
 };
 
 module Mouse: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external altKey : t => bool = "";
-  [@bs.get] external button : t => int = "";
-  [@bs.get] external buttons : t => int = "";
-  [@bs.get] external clientX : t => int = "";
-  [@bs.get] external clientY : t => int = "";
-  [@bs.get] external ctrlKey : t => bool = "";
-  [@bs.send.pipe: t] external getModifierState : string => bool = "";
-  [@bs.get] external metaKey : t => bool = "";
-  [@bs.get] external pageX : t => int = "";
-  [@bs.get] external pageY : t => int = "";
-  [@bs.get] external relatedTarget : t => Dom.element = ""; /* Should return Dom.eventTarget */
-  [@bs.get] external screenX : t => int = "";
-  [@bs.get] external screenY : t => int = "";
-  [@bs.get] external shiftKey : t => bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.tag"]
+  type tag = ReactEvent.Mouse.tag;
+  [@deprecated "Please use ReactEvent.Mouse.t"]
+  type t = ReactEvent.Mouse.t;
+  [@deprecated "Please use ReactEvent.Mouse.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Mouse.t => bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Mouse.t => bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Mouse.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Mouse.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Mouse.t => bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Mouse.t => bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Mouse.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Mouse.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Mouse.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Mouse.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Mouse.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Mouse.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Mouse.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Mouse.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Mouse.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Mouse.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Mouse.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Mouse.t => float = "";
+  [@deprecated "Please use ReactEvent.Mouse.type_"]
+  [@bs.get] external _type : ReactEvent.Mouse.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Mouse.persist"]
+  [@bs.send.pipe: ReactEvent.Mouse.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Mouse.altKey"]
+  [@bs.get] external altKey : ReactEvent.Mouse.t => bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.button"]
+  [@bs.get] external button : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.buttons"]
+  [@bs.get] external buttons : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.clientX"]
+  [@bs.get] external clientX : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.clientY"]
+  [@bs.get] external clientY : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.ctrlKey"]
+  [@bs.get] external ctrlKey : ReactEvent.Mouse.t => bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Mouse.getModifierState"]
+  [@bs.send.pipe: ReactEvent.Mouse.t] external getModifierState : string => bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.metaKey"]
+  [@bs.get] external metaKey : ReactEvent.Mouse.t => bool = "";
+  [@deprecated "Please use ReactEvent.Mouse.pageX"]
+  [@bs.get] external pageX : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.pageY"]
+  [@bs.get] external pageY : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.relatedTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external relatedTarget : ReactEvent.Mouse.t => Dom.element = ""; /* Should return Dom.eventTarget */
+  [@deprecated "Please use ReactEvent.Mouse.screenX"]
+  [@bs.get] external screenX : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.screenY"]
+  [@bs.get] external screenY : ReactEvent.Mouse.t => int = "";
+  [@deprecated "Please use ReactEvent.Mouse.shiftKey"]
+  [@bs.get] external shiftKey : ReactEvent.Mouse.t => bool = "";
 };
 
 module Selection: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Selection.tag"]
+  type tag = ReactEvent.Selection.tag;
+  [@deprecated "Please use ReactEvent.Selection.t"]
+  type t = ReactEvent.Selection.t;
+  [@deprecated "Please use ReactEvent.Selection.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Selection.t => bool = "";
+  [@deprecated "Please use ReactEvent.Selection.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Selection.t => bool = "";
+  [@deprecated "Please use ReactEvent.Selection.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Selection.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Selection.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Selection.t => bool = "";
+  [@deprecated "Please use ReactEvent.Selection.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Selection.t => int = "";
+  [@deprecated "Please use ReactEvent.Selection.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Selection.t => bool = "";
+  [@deprecated "Please use ReactEvent.Selection.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Selection.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Selection.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Selection.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Selection.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Selection.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Selection.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Selection.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Selection.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Selection.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Selection.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Selection.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Selection.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Selection.t => float = "";
+  [@deprecated "Please use ReactEvent.Selection.type_"]
+  [@bs.get] external _type : ReactEvent.Selection.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Selection.persist"]
+  [@bs.send.pipe: ReactEvent.Selection.t] external persist : unit = "";
 };
 
 module Touch: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external altKey : t => bool = "";
-  [@bs.get] external changedTouches : t => Js.t({..}) = ""; /* Should return Dom.touchList */
-  [@bs.get] external ctrlKey : t => bool = "";
-  [@bs.send.pipe: t] external getModifierState : string => bool = "";
-  [@bs.get] external metaKey : t => bool = "";
-  [@bs.get] external shiftKey : t => bool = "";
-  [@bs.get] external targetTouches : t => Js.t({..}) = ""; /* Should return Dom.touchList */
-  [@bs.get] external touches : t => Js.t({..}) = ""; /* Should return Dom.touchList */
+  [@deprecated "Please use ReactEvent.Touch.tag"]
+  type tag = ReactEvent.Touch.tag;
+  [@deprecated "Please use ReactEvent.Touch.t"]
+  type t = ReactEvent.Touch.t;
+  [@deprecated "Please use ReactEvent.Touch.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Touch.t => bool = "";
+  [@deprecated "Please use ReactEvent.Touch.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Touch.t => bool = "";
+  [@deprecated "Please use ReactEvent.Touch.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Touch.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Touch.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Touch.t => bool = "";
+  [@deprecated "Please use ReactEvent.Touch.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Touch.t => int = "";
+  [@deprecated "Please use ReactEvent.Touch.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Touch.t => bool = "";
+  [@deprecated "Please use ReactEvent.Touch.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Touch.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Touch.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Touch.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Touch.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Touch.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Touch.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Touch.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Touch.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Touch.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Touch.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Touch.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Touch.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Touch.t => float = "";
+  [@deprecated "Please use ReactEvent.Touch.type_"]
+  [@bs.get] external _type : ReactEvent.Touch.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Touch.persist"]
+  [@bs.send.pipe: ReactEvent.Touch.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Touch.altKey"]
+  [@bs.get] external altKey : ReactEvent.Touch.t => bool = "";
+  [@deprecated "Please use ReactEvent.Touch.changedTouches"]
+  [@bs.get] external changedTouches : ReactEvent.Touch.t => Js.t({..}) = ""; /* Should return Dom.touchList */
+  [@deprecated "Please use ReactEvent.Touch.ctrlKey"]
+  [@bs.get] external ctrlKey : ReactEvent.Touch.t => bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Touch.getModifierState"]
+  [@bs.send.pipe: ReactEvent.Touch.t] external getModifierState : string => bool = "";
+  [@deprecated "Please use ReactEvent.Touch.metaKey"]
+  [@bs.get] external metaKey : ReactEvent.Touch.t => bool = "";
+  [@deprecated "Please use ReactEvent.Touch.shiftKey"]
+  [@bs.get] external shiftKey : ReactEvent.Touch.t => bool = "";
+  [@deprecated "Please use ReactEvent.Touch.targetTouches"]
+  [@bs.get] external targetTouches : ReactEvent.Touch.t => Js.t({..}) = ""; /* Should return Dom.touchList */
+  [@deprecated "Please use ReactEvent.Touch.touches"]
+  [@bs.get] external touches : ReactEvent.Touch.t => Js.t({..}) = ""; /* Should return Dom.touchList */
 };
 
 module UI: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external detail : t => int = "";
-  [@bs.get] external view : t => Dom.window = ""; /* Should return DOMAbstractView/WindowProxy */
+  [@deprecated "Please use ReactEvent.UI.tag"]
+  type tag = ReactEvent.UI.tag;
+  [@deprecated "Please use ReactEvent.UI.t"]
+  type t = ReactEvent.UI.t;
+  [@deprecated "Please use ReactEvent.UI.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.UI.t => bool = "";
+  [@deprecated "Please use ReactEvent.UI.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.UI.t => bool = "";
+  [@deprecated "Please use ReactEvent.UI.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.UI.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.UI.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.UI.t => bool = "";
+  [@deprecated "Please use ReactEvent.UI.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.UI.t => int = "";
+  [@deprecated "Please use ReactEvent.UI.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.UI.t => bool = "";
+  [@deprecated "Please use ReactEvent.UI.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.UI.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.UI.preventDefault"]
+  [@bs.send.pipe: ReactEvent.UI.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.UI.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.UI.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.UI.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.UI.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.UI.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.UI.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.UI.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.UI.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.UI.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.UI.t => float = "";
+  [@deprecated "Please use ReactEvent.UI.type_"]
+  [@bs.get] external _type : ReactEvent.UI.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.UI.persist"]
+  [@bs.send.pipe: ReactEvent.UI.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.UI.detail"]
+  [@bs.get] external detail : ReactEvent.UI.t => int = "";
+  [@deprecated "Please use ReactEvent.UI.view"]
+  [@bs.get] external view : ReactEvent.UI.t => Dom.window = ""; /* Should return DOMAbstractView/WindowProxy */
 };
 
 module Wheel: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external deltaMode : t => int = "";
-  [@bs.get] external deltaX : t => float = "";
-  [@bs.get] external deltaY : t => float = "";
-  [@bs.get] external deltaZ : t => float = "";
+  [@deprecated "Please use ReactEvent.Wheel.tag"]
+  type tag = ReactEvent.Wheel.tag;
+  [@deprecated "Please use ReactEvent.Wheel.t"]
+  type t = ReactEvent.Wheel.t;
+  [@deprecated "Please use ReactEvent.Wheel.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Wheel.t => bool = "";
+  [@deprecated "Please use ReactEvent.Wheel.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Wheel.t => bool = "";
+  [@deprecated "Please use ReactEvent.Wheel.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Wheel.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Wheel.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Wheel.t => bool = "";
+  [@deprecated "Please use ReactEvent.Wheel.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Wheel.t => int = "";
+  [@deprecated "Please use ReactEvent.Wheel.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Wheel.t => bool = "";
+  [@deprecated "Please use ReactEvent.Wheel.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Wheel.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Wheel.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Wheel.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Wheel.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Wheel.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Wheel.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Wheel.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Wheel.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Wheel.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Wheel.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Wheel.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Wheel.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Wheel.t => float = "";
+  [@deprecated "Please use ReactEvent.Wheel.type_"]
+  [@bs.get] external _type : ReactEvent.Wheel.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Wheel.persist"]
+  [@bs.send.pipe: ReactEvent.Wheel.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Wheel.deltaMode"]
+  [@bs.get] external deltaMode : ReactEvent.Wheel.t => int = "";
+  [@deprecated "Please use ReactEvent.Wheel.deltaX"]
+  [@bs.get] external deltaX : ReactEvent.Wheel.t => float = "";
+  [@deprecated "Please use ReactEvent.Wheel.deltaY"]
+  [@bs.get] external deltaY : ReactEvent.Wheel.t => float = "";
+  [@deprecated "Please use ReactEvent.Wheel.deltaZ"]
+  [@bs.get] external deltaZ : ReactEvent.Wheel.t => float = "";
 };
 
 module Media: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Media.tag"]
+  type tag = ReactEvent.Media.tag;
+  [@deprecated "Please use ReactEvent.Media.t"]
+  type t = ReactEvent.Media.t;
+  [@deprecated "Please use ReactEvent.Media.bubbles"]
+  [@bs.get] external bubbles :ReactEvent.Media.t => bool = "";
+  [@deprecated "Please use ReactEvent.Media.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Media.t => bool = "";
+  [@deprecated "Please use ReactEvent.Media.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Media.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Media.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Media.t => bool = "";
+  [@deprecated "Please use ReactEvent.Media.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Media.t => int = "";
+  [@deprecated "Please use ReactEvent.Media.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Media.t => bool = "";
+  [@deprecated "Please use ReactEvent.Media.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Media.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Media.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Media.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Media.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Media.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Media.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Media.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Media.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Media.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Media.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Media.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Media.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Media.t => float = "";
+  [@deprecated "Please use ReactEvent.Media.type_"]
+  [@bs.get] external _type : ReactEvent.Media.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Media.persist"]
+  [@bs.send.pipe: ReactEvent.Media.t] external persist : unit = "";
 };
 
 module Image: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Image.tag"]
+  type tag = ReactEvent.Image.tag;
+  [@deprecated "Please use ReactEvent.Image.t"]
+  type t = ReactEvent.Image.t;
+  [@deprecated "Please use ReactEvent.Image.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Image.t => bool = "";
+  [@deprecated "Please use ReactEvent.Image.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Image.t => bool = "";
+  [@deprecated "Please use ReactEvent.Image.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Image.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Image.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Image.t => bool = "";
+  [@deprecated "Please use ReactEvent.Image.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Image.t => int = "";
+  [@deprecated "Please use ReactEvent.Image.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Image.t => bool = "";
+  [@deprecated "Please use ReactEvent.Image.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Image.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Image.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Image.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Image.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Image.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Image.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Image.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Image.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Image.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Image.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Image.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Image.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Image.t => float = "";
+  [@deprecated "Please use ReactEvent.Image.type_"]
+  [@bs.get] external _type : ReactEvent.Image.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Image.persist"]
+  [@bs.send.pipe: ReactEvent.Image.t] external persist : unit = "";
 };
 
 module Animation: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external animationName : t => string = "";
-  [@bs.get] external pseudoElement : t => string = "";
-  [@bs.get] external elapsedTime : t => float = "";
+  [@deprecated "Please use ReactEvent.Animation.tag"]
+  type tag = ReactEvent.Animation.tag;
+  [@deprecated "Please use ReactEvent.Animation.t"]
+  type t = ReactEvent.Animation.t;
+  [@deprecated "Please use ReactEvent.Animation.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Animation.t => bool = "";
+  [@deprecated "Please use ReactEvent.Animation.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Animation.t => bool = "";
+  [@deprecated "Please use ReactEvent.Animation.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Animation.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Animation.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Animation.t => bool = "";
+  [@deprecated "Please use ReactEvent.Animation.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Animation.t => int = "";
+  [@deprecated "Please use ReactEvent.Animation.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Animation.t => bool = "";
+  [@deprecated "Please use ReactEvent.Animation.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Animation.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Animation.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Animation.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Animation.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Animation.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Animation.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Animation.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Animation.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Animation.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Animation.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Animation.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Animation.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Animation.t => float = "";
+  [@deprecated "Please use ReactEvent.Animation.type_"]
+  [@bs.get] external _type : ReactEvent.Animation.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Animation.persist"]
+  [@bs.send.pipe: ReactEvent.Animation.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Animation.animationName"]
+  [@bs.get] external animationName : ReactEvent.Animation.t => string = "";
+  [@deprecated "Please use ReactEvent.Animation.pseudoElement"]
+  [@bs.get] external pseudoElement : ReactEvent.Animation.t => string = "";
+  [@deprecated "Please use ReactEvent.Animation.elapsedTime"]
+  [@bs.get] external elapsedTime : ReactEvent.Animation.t => float = "";
 };
 
 module Transition: {
-  type tag;
-  type t = synthetic(tag);
-  [@bs.get] external bubbles : t => bool = "";
-  [@bs.get] external cancelable : t => bool = "";
-  [@bs.get] external currentTarget : t => Dom.element = "";
-  [@bs.get] external defaultPrevented : t => bool = "";
-  [@bs.get] external eventPhase : t => int = "";
-  [@bs.get] external isTrusted : t => bool = "";
-  [@bs.get] external nativeEvent : t => Js.t({..}) = "";
-  [@bs.send.pipe: t] external preventDefault : unit = "";
-  [@bs.send.pipe: t] external isDefaultPrevented : bool = "";
-  [@bs.send.pipe: t] external stopPropagation : unit = "";
-  [@bs.send.pipe: t] external isPropagationStopped : bool = "";
-  [@bs.get] external target : t => Dom.element = "";
-  [@bs.get] external timeStamp : t => float = "";
-  [@bs.get] external _type : t => string = "type";
-  [@bs.send.pipe: t] external persist : unit = "";
-  [@bs.get] external propertyName : t => string = "";
-  [@bs.get] external pseudoElement : t => string = "";
-  [@bs.get] external elapsedTime : t => float = "";
+  [@deprecated "Please use ReactEvent.Transition.tag"]
+  type tag = ReactEvent.Transition.tag;
+  [@deprecated "Please use ReactEvent.Transition.t"]
+  type t = ReactEvent.Transition.t;
+  [@deprecated "Please use ReactEvent.Transition.bubbles"]
+  [@bs.get] external bubbles : ReactEvent.Transition.t => bool = "";
+  [@deprecated "Please use ReactEvent.Transition.cancelable"]
+  [@bs.get] external cancelable : ReactEvent.Transition.t => bool = "";
+  [@deprecated "Please use ReactEvent.Transition.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external currentTarget : ReactEvent.Transition.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Transition.defaultPrevented"]
+  [@bs.get] external defaultPrevented : ReactEvent.Transition.t => bool = "";
+  [@deprecated "Please use ReactEvent.Transition.eventPhase"]
+  [@bs.get] external eventPhase : ReactEvent.Transition.t => int = "";
+  [@deprecated "Please use ReactEvent.Transition.isTrusted"]
+  [@bs.get] external isTrusted : ReactEvent.Transition.t => bool = "";
+  [@deprecated "Please use ReactEvent.Transition.nativeEvent"]
+  [@bs.get] external nativeEvent : ReactEvent.Transition.t => Js.t({..}) = "";
+  [@deprecated "Please use myEvent->ReactEvent.Transition.preventDefault"]
+  [@bs.send.pipe: ReactEvent.Transition.t] external preventDefault : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Transition.isDefaultPrevented"]
+  [@bs.send.pipe: ReactEvent.Transition.t] external isDefaultPrevented : bool = "";
+  [@deprecated "Please use myEvent->ReactEvent.Transition.stopPropagation"]
+  [@bs.send.pipe: ReactEvent.Transition.t] external stopPropagation : unit = "";
+  [@deprecated "Please use myEvent->ReactEvent.Transition.isPropagationStopped"]
+  [@bs.send.pipe: ReactEvent.Transition.t] external isPropagationStopped : bool = "";
+  [@deprecated "Please use ReactEvent.Transition.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@bs.get] external target : ReactEvent.Transition.t => Dom.element = "";
+  [@deprecated "Please use ReactEvent.Transition.timeStamp"]
+  [@bs.get] external timeStamp : ReactEvent.Transition.t => float = "";
+  [@deprecated "Please use ReactEvent.Transition.type_"]
+  [@bs.get] external _type : ReactEvent.Transition.t => string = "type";
+  [@deprecated "Please use myEvent->ReactEvent.Transition.persist"]
+  [@bs.send.pipe: ReactEvent.Transition.t] external persist : unit = "";
+  [@deprecated "Please use ReactEvent.Transition.propertyName"]
+  [@bs.get] external propertyName : ReactEvent.Transition.t => string = "";
+  [@deprecated "Please use ReactEvent.Transition.pseudoElement"]
+  [@bs.get] external pseudoElement : ReactEvent.Transition.t => string = "";
+  [@deprecated "Please use ReactEvent.Transition.elapsedTime"]
+  [@bs.get] external elapsedTime : ReactEvent.Transition.t => float = "";
 };
