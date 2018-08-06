@@ -1,0 +1,14 @@
+<svg id="ai_logo" data-name="Aesthetic Integration" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 212 226">
+  <defs>
+    <linearGradient id="linear-gradient" x1="29.2" y1="272.21" x2="272.71" y2="17.95" gradientUnits="userSpaceOnUse">
+      <stop offset="0.42" stop-color="#0080ff"/>
+      <stop offset="1" stop-color="#00cacb"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="-31.38" y1="214.29" x2="212.09" y2="-39.92" xlink:href="#linear-gradient"/>
+  </defs>
+  <title>Aesthetic Intrgration Logo</title>
+  <g id="AI">
+    <polygon id="aesthetic" points="107.19 197.75 42.69 28.24 68.19 28.24 68.19 0 0 0 47.94 131.07 10.22 131.07 10.43 161.42 59.13 161.42 72.33 197.75 47.53 197.75 47.53 226 131.27 226 131.27 197.75 107.19 197.75" style="fill: url(#linear-gradient-2)"/>
+    <polygon id="integration" points="212 0 151.37 0 151.37 28.25 181.59 28.25 181.59 197.75 150.72 197.75 150.72 226 212 226 212 0" style="fill: url(#linear-gradient)"/>
+  </g>
+</svg>
