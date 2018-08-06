@@ -52,6 +52,12 @@ const users = [
     image: "img/logos/appier.svg",
     infoLink: "https://appier.com",
     pinned: true
+  },
+  {
+    caption: "Aesthetic Integration",
+    image: "img/logos/aesthetic-integration.svg",
+    infoLink: "https://www.imandra.ai",
+    pinned: true
   }
 ];
 
