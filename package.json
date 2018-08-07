@@ -1,6 +1,6 @@
 {
   "name": "reason-react",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "React bindings for Reason",
   "main": "index.js",
   "scripts": {

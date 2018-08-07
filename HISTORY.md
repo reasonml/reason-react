@@ -1,4 +1,4 @@
-# 0.5.0
+# 0.5.1
 
 **This release requires `bs-platform 4.0.3`**.
 
