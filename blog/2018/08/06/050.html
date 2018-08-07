@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>ReasonReact 0.5.0: Fragment, Event, Cleanups · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="It&#x27;s been a while since the last blog post! Note that we&#x27;ve been updating ReasonReact, just that we didn&#x27;t want to drown you with too many blog posts when unnecessary. As we&#x27;ve said in our [ReasonConf video](https://twitter.com/reasonconf/status/1002152653718245376), we wanted the ReasonReact community to catch up and settle down a bit before showering it with another batch of changes."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="ReasonReact 0.5.0: Fragment, Event, Cleanups · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/blog/2018/08/06/050"/><meta property="og:description" content="It&#x27;s been a while since the last blog post! Note that we&#x27;ve been updating ReasonReact, just that we didn&#x27;t want to drown you with too many blog posts when unnecessary. As we&#x27;ve said in our [ReasonConf video](https://twitter.com/reasonconf/status/1002152653718245376), we wanted the ReasonReact community to catch up and settle down a bit before showering it with another batch of changes."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/en"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/en/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/en/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/en/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/en/community" target="_self">Community</a></li><li class="siteNavGroupActive"><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(){
+          if(languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Recent Posts</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/blog/2018/08/06/050">ReasonReact 0.5.0: Fragment, Event, Cleanups</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2018/01/09/subscriptions-send-router">Router and Subscriptions!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/11/17/power-children">RR 0.3.0 - Power Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/10/02/new-docs-site">New Docs Site</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2017/09/01/reducers">Reducers Are Here!</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2018/08/06/050">ReasonReact 0.5.0: Fragment, Event, Cleanups</a></h1><p class="post-meta">August 6, 2018</p><div class="authorBlock"></div></header><div><span><p>It's been a while since the last blog post! Note that we've been updating ReasonReact, just that we didn't want to drown you with too many blog posts when unnecessary. As we've said in our <a href="https://twitter.com/reasonconf/status/1002152653718245376">ReasonConf video</a>, we wanted the ReasonReact community to catch up and settle down a bit before showering it with another batch of changes.</p>
+<p>As usual, the proper list of changes are in <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#050">HISTORY.md</a>, likewise for the <a href="https://github.com/chenglou/upgrade-reason-react#installation">migration script</a>. Major highlights:</p>
+<ul>
+<li>Fragment support.</li>
+<li><code>ReactEventRe</code> -&gt; <code>ReactEvent</code> revamp.</li>
+<li>General cleanups that removes a bunch of already deprecated features.</li>
+</ul>
+<p>There are also many other quality-of-life improvements that, combined together, should reduce the arbitrary newcomer frictions in some places.</p>
+<p>See you next time!</p>
+</span></div></div><div class="blogSocialSection"></div></div><div class="blog-recent"><a class="button" href="/reason-react/blog">Recent Posts</a></div></div></div><nav class="onPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:en"]}
+              });
+            </script></body></html>
