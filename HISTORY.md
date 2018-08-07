@@ -1,3 +1,52 @@
+# 0.5.0
+
+**This release requires `bs-platform 4.0.3`**.
+
+Small breaking change (only if you haven't upgraded for a while). **The migration/upgrade script**, as always, is [here](https://github.com/chenglou/upgrade-reason-react#installation).
+
+## Event Changes
+
+`ReactEventRe` is now deprecated in favor of `ReactEvent`. They're similar but the latter comes with the big quality-of-life improvement of turning our old:
+
+```reason
+ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value
+```
+
+into:
+
+```reason
+event->ReactEvent.Form.target##value
+```
+
+Aka, you can use the `->` fast pipe now (`|.` in OCaml syntax), and we've changed the definition of `target` in the various `ReactEvent` modules to directly give you back a `Js.t` object instead of `Dom.element`. Same applies to other such attributes.
+
+We've also changed things like `ReactEventRe.Mouse._type` into `ReactEventRe.Mouse.type_` to abide by the Reason idiom.
+
+Lastly, `bs.send.pipe` is informally deprecated, so we've removed the usafe of those too. Instead of `e |> ReactEventRe.Mouse.preventDefault`, use either `e->ReactEventRe.Mouse.preventDefault` or `ReactEventRe.Mouse.preventDefault(e)`. `bs.send.pipe` is, all things considered, the **heaviest** BuckleScript special annotation. If your library uses it, please consider removing it too. Thanks!
+
+## JSX
+
+**Fragment** has landed! `<> child1 child2 </>`. For more info, check [ReactJS' docs on Fragment](https://reactjs.org/docs/fragments.html). Note that we currently don't support:
+
+- Keyed fragment.
+- Fragment with ref.
+- Fragment spread (ReasonReact-specific): `<> ...children </>`.
+
+The latter will be supported next. **Fragment requires React 16**.
+
+Additionally, DOM component children spread `<div>...foo</div>` now works. No more need to use the `ReasonReact.createDomElement` fallback!
+
+## Removal of Previously Deprecated Features
+
+- The DOM props `_type`, `_open`, and others (see 0.4.2 release notes below) are officially removed. Use `type_`, `open_`, etc.
+- The field `subscriptions` was deprecated and is now removed completely. Please use the new [subscriptions helper](https://reasonml.github.io/reason-react/docs/en/subscriptions-helper) instead.
+- `ReasonReact.stringToElement`, `nullElement`, `arrayToElement` are also gone for good. Use `ReasonReact.string`, `null`, `array`. The previous migration script in `0.4.0` already took care of this.
+- `ReasonReact.Callback` module removed.
+
+## Deprecations
+
+- `ReasonReact.createDomElement` is changed in favor of `ReactDOMRe.createElementVariadic`. This is more consistent with `ReactDOMRe.createElement`. Both are used by the JSX transform; the latter, when it's a children spread for DOM elements (mentioned above) and has a small perf cost.
+
 # 0.4.2
 
 **This release requires `bs-platform 3.1.4`**.
