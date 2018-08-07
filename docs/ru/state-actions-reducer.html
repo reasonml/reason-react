@@ -142,7 +142,7 @@ let make = (~greeting, _children) =&gt; {
 <li>The <code>action</code> type's variants can carry a payload: <code>onClick=(data =&gt; self.send(Click(data.foo)))</code>.</li>
 <li>Don't pass the whole event into the action variant's payload. ReactJS events are pooled; by the time you intercept the action in the <code>reducer</code>, the event's already recycled.</li>
 <li><code>reducer</code> <strong>must</strong> be pure! Aka don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use <code>SideEffects</code> or <code>UpdateWithSideEffects</code> to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.</li>
-<li>If you need to do e.g. <code>ReactEventRe.BlablaEvent.preventDefault(event)</code>, do it in <code>self.send</code>, before returning the action type. Again, <code>reducer</code> must be pure.</li>
+<li>If you need to do e.g. <code>ReactEvent.BlablaEvent.preventDefault(event)</code>, do it in <code>self.send</code>, before returning the action type. Again, <code>reducer</code> must be pure.</li>
 <li>Feel free to trigger another action in <code>SideEffects</code> and <code>UpdateWithSideEffects</code>, e.g. <code>UpdateWithSideEffects(newState, (self) =&gt; self.send(Click))</code>.</li>
 <li>If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains <code>self.handle</code>, no <code>self.send</code>. You still need to specify a <code>reducer</code> like so: <code>reducer: ((), _state) =&gt; ReasonReact.NoUpdate</code>. Otherwise you'll get a <code>variable cannot be generalized</code> type error.</li>
 </ul>

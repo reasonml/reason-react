@@ -32,20 +32,16 @@
               }
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">cloneElement</h1></header><article><div><span><p>Signature: <code>let cloneElement: (reactElement, ~props: Js.t({..})=?, 'anyChildrenType) =&gt; reactElement</code></p>
-<p>Same as ReactJS' <a href="https://reactjs.org/docs/react-api.html#cloneelement">cloneElement</a>. However, adding extra props to a ReasonReact component doesn't make sense; you'd use a <a href="https://reactjs.org/docs/render-props.html"><strong>render prop</strong></a>. 因此，<code>ReasonReact.cloneElement</code> 只用于处理一些特殊的情况。 For example, <code>data-*</code> attributes aren't syntactically valid as a function label. 下面这样写不能被正确编译：</p>
-<pre><code class="hljs css languages- reason">&lt;div <span class="hljs-attribute">data-payload</span>=1 <span class="hljs-attribute">className</span>=<span class="hljs-string">"foo"</span> /&gt;
-</code></pre>
-<p>你可以使用 <code>cloneElement</code> 来绕过这个情况：</p>
-<pre><code class="hljs css languages- reason"><span class="hljs-keyword">let</span> myElement =
+<p>Same as ReactJS' <a href="https://reactjs.org/docs/react-api.html#cloneelement">cloneElement</a>. However, adding extra props to a ReasonReact component doesn't make sense; you'd use a <a href="https://reactjs.org/docs/render-props.html"><strong>render prop</strong></a>. Therefore, <code>ReasonReact.cloneElement</code> is only used in edge-cases to convert over existing code.</p>
+<pre><code class="hljs css languages- reason"><span class="hljs-keyword">let</span> clonedElement =
   ReasonReact.cloneElement(
     &lt;div className=<span class="hljs-string">"foo"</span> /&gt;,
-    ~props={<span class="hljs-string">"data-payload"</span>: <span class="hljs-number">1</span>},
+    ~props={<span class="hljs-string">"payload"</span>: <span class="hljs-number">1</span>},
     [<span class="hljs-meta">||</span>]
   );
 </code></pre>
-<p>This will assign the extra <code>data-payload</code> props (<strong>untyped</strong>, be careful!) onto the <code>div</code>, through a clever, syntactically valid use of Reason's JS object sugar for <a href="https://bucklescript.github.io/docs/en/object.html#object-as-record">BuckleScript objects</a>.</p>
-<p>对于非 DOM 组件, 你需要使用有效的 prop 命名。</p>
-<p>你也可以使用 <code>cloneElement</code> 来模拟 <a href="/reason-react/docs/zh-CN/props-spread"> prop spread </a>, 但这在 ReasonReact 中是不鼓励的。</p>
+<p>The <code>props</code> value is unsafe, be careful!</p>
+<p>You can also use <code>cloneElement</code> to simulate <a href="/reason-react/docs/zh-CN/props-spread">prop spreading</a>, but this is discouraged in ReasonReact.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/zh-CN/style">← Style</a><a class="docs-next button" href="/reason-react/docs/zh-CN/children">Children →</a></div></div></div><nav class="onPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.

@@ -33,7 +33,13 @@
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Nombre de propiedad inválido</h1></header><article><div><span><p>Los nombres de <em>prop</em> como <code>type</code> (véase <code>&lt;input type=&quot;text&quot; /&gt;</code>) no son sintácticamente válidos; <code>type</code> es una palabra reservada en Reason/OCaml. Use <code>&lt;input type_=&quot;text&quot; /&gt;</code> instead. Esto es acorde a las <a href="https://bucklescript.github.io/docs/en/object.html#invalid-field-names">reglas de traducción de nombres</a> de Bucklescript.</p>
 <p>For <code>aria-*</code>: use the camelCased <code>ariaFoo</code>. E.g. <code>ariaLabel</code>. For DOM components, we'll translate it to <code>aria-label</code> under the hood.</p>
-<p>For <code>data-*</code>, this is a bit trickier; words with <code>-</code> in them aren't valid in Reason/OCaml. When you do want to write them, e.g. <code>&lt;div data-name=&quot;click me&quot; /&gt;</code>, use <a href="/reason-react/docs/es-ES/clone-element"><code>cloneElement</code></a> as a workaround.</p>
+<p>For <code>data-*</code>, this is a bit trickier; words with <code>-</code> in them aren't valid in Reason/OCaml. When you do want to write them, e.g. <code>&lt;div data-name=&quot;click me&quot; /&gt;</code>, use the following:</p>
+<pre><code class="hljs css languages- reason">ReactDOMRe.createElementVariadic(
+  <span class="hljs-string">"div"</span>,
+  <span class="hljs-symbol">~props=(ReactDOMRe.objToDOMProps({"data-name"</span>: <span class="hljs-string">"click me"</span>})),
+  [<span class="hljs-string">||]</span>
+)
+</code></pre>
 <p>For non-DOM components, you need to pick valid prop names.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/es-ES/router">← Router</a><a class="docs-next button" href="/reason-react/docs/es-ES/props-spread">Expansión de propiedades →</a></div></div></div><nav class="onPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
           areas: [
