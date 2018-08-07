@@ -48,14 +48,14 @@ module Synthetic: {
   [@bs.get] external eventPhase : synthetic('a) => int = "";
   [@bs.get] external isTrusted : synthetic('a) => bool = "";
   [@bs.get] external nativeEvent : synthetic('a) => Js.t({..}) = "";
-  [@bs.send] external preventDefault : synthetic('a)=> unit = "";
-  [@bs.send] external isDefaultPrevented : synthetic('a)=> bool = "";
-  [@bs.send] external stopPropagation : synthetic('a)=> unit = "";
-  [@bs.send] external isPropagationStopped : synthetic('a)=> bool = "";
+  [@bs.send] external preventDefault : synthetic('a) => unit = "";
+  [@bs.send] external isDefaultPrevented : synthetic('a) => bool = "";
+  [@bs.send] external stopPropagation : synthetic('a) => unit = "";
+  [@bs.send] external isPropagationStopped : synthetic('a) => bool = "";
   [@bs.get] external target : synthetic('a) => Js.t({..}) = "";
   [@bs.get] external timeStamp : synthetic('a) => float = "";
   [@bs.get] external type_ : synthetic('a) => string = "type";
-  [@bs.send] external persist : synthetic('a)=> unit = "";
+  [@bs.send] external persist : synthetic('a) => unit = "";
 };
 
 /* Cast any event type to the general synthetic type. This is safe, since synthetic is more general */

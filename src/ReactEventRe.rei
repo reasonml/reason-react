@@ -11,7 +11,7 @@ module Synthetic: {
   [@bs.get] external bubbles : ReactEvent.synthetic('a) => bool = "";
   [@deprecated "Please use ReactEvent.Synthetic.cancelable"]
   [@bs.get] external cancelable : ReactEvent.synthetic('a) => bool = "";
-  [@deprecated "Please use ReactEvent.Synthetic.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Synthetic.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.synthetic('a) => Dom.element = "";
   [@deprecated "Please use ReactEvent.Synthetic.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.synthetic('a) => bool = "";
@@ -29,7 +29,7 @@ module Synthetic: {
   [@bs.send.pipe: ReactEvent.synthetic('a)] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Synthetic.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.synthetic('a)] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Synthetic.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Synthetic.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.synthetic('a) => Dom.element = "";
   [@deprecated "Please use ReactEvent.Synthetic.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.synthetic('a) => float = "";
@@ -52,7 +52,7 @@ module Clipboard: {
   [@bs.get] external bubbles : ReactEvent.Clipboard.t => bool = "";
   [@deprecated "Please use ReactEvent.Clipboard.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Clipboard.t => bool = "";
-  [@deprecated "Please use ReactEvent.Clipboard.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Clipboard.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Clipboard.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Clipboard.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Clipboard.t => bool = "";
@@ -70,7 +70,7 @@ module Clipboard: {
   [@bs.send.pipe: ReactEvent.Clipboard.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Clipboard.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Clipboard.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Clipboard.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Clipboard.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Clipboard.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Clipboard.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Clipboard.t => float = "";
@@ -91,7 +91,7 @@ module Composition: {
   [@bs.get] external bubbles : ReactEvent.Composition.t => bool = "";
   [@deprecated "Please use ReactEvent.Composition.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Composition.t => bool = "";
-  [@deprecated "Please use ReactEvent.Composition.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Composition.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Composition.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Composition.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Composition.t => bool = "";
@@ -109,7 +109,7 @@ module Composition: {
   [@bs.send.pipe: ReactEvent.Composition.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Composition.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Composition.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Composition.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Composition.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Composition.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Composition.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Composition.t => float = "";
@@ -130,7 +130,7 @@ module Keyboard: {
   [@bs.get] external bubbles : ReactEvent.Keyboard.t => bool = "";
   [@deprecated "Please use ReactEvent.Keyboard.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Keyboard.t => bool = "";
-  [@deprecated "Please use ReactEvent.Keyboard.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Keyboard.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Keyboard.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Keyboard.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Keyboard.t => bool = "";
@@ -148,7 +148,7 @@ module Keyboard: {
   [@bs.send.pipe: ReactEvent.Keyboard.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Keyboard.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Keyboard.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Keyboard.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Keyboard.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Keyboard.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Keyboard.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Keyboard.t => float = "";
@@ -191,7 +191,7 @@ module Focus: {
   [@bs.get] external bubbles : ReactEvent.Focus.t => bool = "";
   [@deprecated "Please use ReactEvent.Focus.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Focus.t => bool = "";
-  [@deprecated "Please use ReactEvent.Focus.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Focus.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Focus.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Focus.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Focus.t => bool = "";
@@ -209,7 +209,7 @@ module Focus: {
   [@bs.send.pipe: ReactEvent.Focus.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Focus.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Focus.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Focus.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Focus.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Focus.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Focus.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Focus.t => float = "";
@@ -217,7 +217,7 @@ module Focus: {
   [@bs.get] external _type : ReactEvent.Focus.t => string = "type";
   [@deprecated "Please use myEvent->ReactEvent.Focus.persist"]
   [@bs.send.pipe: ReactEvent.Focus.t] external persist : unit = "";
-  [@deprecated "Please use ReactEvent.Focus.relatedTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Focus.relatedTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external relatedTarget : ReactEvent.Focus.t => Dom.element = ""; /* Should return Dom.eventTarget */
 };
 
@@ -230,7 +230,7 @@ module Form: {
   [@bs.get] external bubbles : ReactEvent.Form.t => bool = "";
   [@deprecated "Please use ReactEvent.Form.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Form.t => bool = "";
-  [@deprecated "Please use ReactEvent.Form.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Form.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Form.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Form.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Form.t => bool = "";
@@ -248,7 +248,7 @@ module Form: {
   [@bs.send.pipe: ReactEvent.Form.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Form.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Form.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Form.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Form.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Form.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Form.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Form.t => float = "";
@@ -267,7 +267,7 @@ module Mouse: {
   [@bs.get] external bubbles : ReactEvent.Mouse.t => bool = "";
   [@deprecated "Please use ReactEvent.Mouse.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Mouse.t => bool = "";
-  [@deprecated "Please use ReactEvent.Mouse.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Mouse.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Mouse.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Mouse.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Mouse.t => bool = "";
@@ -285,7 +285,7 @@ module Mouse: {
   [@bs.send.pipe: ReactEvent.Mouse.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Mouse.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Mouse.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Mouse.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Mouse.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Mouse.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Mouse.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Mouse.t => float = "";
@@ -313,7 +313,7 @@ module Mouse: {
   [@bs.get] external pageX : ReactEvent.Mouse.t => int = "";
   [@deprecated "Please use ReactEvent.Mouse.pageY"]
   [@bs.get] external pageY : ReactEvent.Mouse.t => int = "";
-  [@deprecated "Please use ReactEvent.Mouse.relatedTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Mouse.relatedTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external relatedTarget : ReactEvent.Mouse.t => Dom.element = ""; /* Should return Dom.eventTarget */
   [@deprecated "Please use ReactEvent.Mouse.screenX"]
   [@bs.get] external screenX : ReactEvent.Mouse.t => int = "";
@@ -332,7 +332,7 @@ module Selection: {
   [@bs.get] external bubbles : ReactEvent.Selection.t => bool = "";
   [@deprecated "Please use ReactEvent.Selection.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Selection.t => bool = "";
-  [@deprecated "Please use ReactEvent.Selection.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Selection.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Selection.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Selection.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Selection.t => bool = "";
@@ -350,7 +350,7 @@ module Selection: {
   [@bs.send.pipe: ReactEvent.Selection.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Selection.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Selection.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Selection.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Selection.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Selection.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Selection.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Selection.t => float = "";
@@ -369,7 +369,7 @@ module Touch: {
   [@bs.get] external bubbles : ReactEvent.Touch.t => bool = "";
   [@deprecated "Please use ReactEvent.Touch.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Touch.t => bool = "";
-  [@deprecated "Please use ReactEvent.Touch.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Touch.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Touch.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Touch.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Touch.t => bool = "";
@@ -387,7 +387,7 @@ module Touch: {
   [@bs.send.pipe: ReactEvent.Touch.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Touch.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Touch.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Touch.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Touch.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Touch.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Touch.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Touch.t => float = "";
@@ -422,7 +422,7 @@ module UI: {
   [@bs.get] external bubbles : ReactEvent.UI.t => bool = "";
   [@deprecated "Please use ReactEvent.UI.cancelable"]
   [@bs.get] external cancelable : ReactEvent.UI.t => bool = "";
-  [@deprecated "Please use ReactEvent.UI.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.UI.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.UI.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.UI.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.UI.t => bool = "";
@@ -440,7 +440,7 @@ module UI: {
   [@bs.send.pipe: ReactEvent.UI.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.UI.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.UI.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.UI.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.UI.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.UI.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.UI.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.UI.t => float = "";
@@ -463,7 +463,7 @@ module Wheel: {
   [@bs.get] external bubbles : ReactEvent.Wheel.t => bool = "";
   [@deprecated "Please use ReactEvent.Wheel.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Wheel.t => bool = "";
-  [@deprecated "Please use ReactEvent.Wheel.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Wheel.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Wheel.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Wheel.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Wheel.t => bool = "";
@@ -481,7 +481,7 @@ module Wheel: {
   [@bs.send.pipe: ReactEvent.Wheel.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Wheel.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Wheel.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Wheel.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Wheel.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Wheel.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Wheel.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Wheel.t => float = "";
@@ -508,7 +508,7 @@ module Media: {
   [@bs.get] external bubbles :ReactEvent.Media.t => bool = "";
   [@deprecated "Please use ReactEvent.Media.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Media.t => bool = "";
-  [@deprecated "Please use ReactEvent.Media.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Media.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Media.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Media.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Media.t => bool = "";
@@ -526,7 +526,7 @@ module Media: {
   [@bs.send.pipe: ReactEvent.Media.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Media.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Media.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Media.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Media.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Media.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Media.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Media.t => float = "";
@@ -545,7 +545,7 @@ module Image: {
   [@bs.get] external bubbles : ReactEvent.Image.t => bool = "";
   [@deprecated "Please use ReactEvent.Image.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Image.t => bool = "";
-  [@deprecated "Please use ReactEvent.Image.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Image.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Image.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Image.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Image.t => bool = "";
@@ -563,7 +563,7 @@ module Image: {
   [@bs.send.pipe: ReactEvent.Image.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Image.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Image.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Image.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Image.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Image.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Image.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Image.t => float = "";
@@ -582,7 +582,7 @@ module Animation: {
   [@bs.get] external bubbles : ReactEvent.Animation.t => bool = "";
   [@deprecated "Please use ReactEvent.Animation.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Animation.t => bool = "";
-  [@deprecated "Please use ReactEvent.Animation.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Animation.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Animation.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Animation.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Animation.t => bool = "";
@@ -600,7 +600,7 @@ module Animation: {
   [@bs.send.pipe: ReactEvent.Animation.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Animation.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Animation.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Animation.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Animation.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Animation.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Animation.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Animation.t => float = "";
@@ -625,7 +625,7 @@ module Transition: {
   [@bs.get] external bubbles : ReactEvent.Transition.t => bool = "";
   [@deprecated "Please use ReactEvent.Transition.cancelable"]
   [@bs.get] external cancelable : ReactEvent.Transition.t => bool = "";
-  [@deprecated "Please use ReactEvent.Transition.currentTarget and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Transition.currentTarget and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external currentTarget : ReactEvent.Transition.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Transition.defaultPrevented"]
   [@bs.get] external defaultPrevented : ReactEvent.Transition.t => bool = "";
@@ -643,7 +643,7 @@ module Transition: {
   [@bs.send.pipe: ReactEvent.Transition.t] external stopPropagation : unit = "";
   [@deprecated "Please use myEvent->ReactEvent.Transition.isPropagationStopped"]
   [@bs.send.pipe: ReactEvent.Transition.t] external isPropagationStopped : bool = "";
-  [@deprecated "Please use ReactEvent.Transition.target and remove the ReactDOMRe.domElementToObj wrapper (no longer needed)"]
+  [@deprecated "Please use ReactEvent.Transition.target and remove the surrounding ReactDOMRe.domElementToObj wrapper if any (no longer needed)"]
   [@bs.get] external target : ReactEvent.Transition.t => Dom.element = "";
   [@deprecated "Please use ReactEvent.Transition.timeStamp"]
   [@bs.get] external timeStamp : ReactEvent.Transition.t => float = "";
