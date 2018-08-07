@@ -134,7 +134,7 @@ Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of 
 - The `action` type's variants can carry a payload: `onClick=(data => self.send(Click(data.foo)))`.
 - Don't pass the whole event into the action variant's payload. ReactJS events are pooled; by the time you intercept the action in the `reducer`, the event's already recycled.
 - `reducer` **must** be pure! Aka don't do side-effects in them directly. You'll thank us when we enable the upcoming concurrent React (Fiber). Use `SideEffects` or `UpdateWithSideEffects` to enqueue a side-effect. The side-effect (the callback) will be executed after the state setting, but before the next render.
-- If you need to do e.g. `ReactEventRe.BlablaEvent.preventDefault(event)`, do it in `self.send`, before returning the action type. Again, `reducer` must be pure.
+- If you need to do e.g. `ReactEvent.BlablaEvent.preventDefault(event)`, do it in `self.send`, before returning the action type. Again, `reducer` must be pure.
 - Feel free to trigger another action in `SideEffects` and `UpdateWithSideEffects`, e.g. `UpdateWithSideEffects(newState, (self) => self.send(Click))`.
 - If your state only holds instance variables, it also means (by the convention in the instance variables section) that your component only contains `self.handle`, no `self.send`. You still need to specify a `reducer` like so: `reducer: ((), _state) => ReasonReact.NoUpdate`. Otherwise you'll get a `variable cannot be generalized` type error.
 

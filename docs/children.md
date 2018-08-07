@@ -129,18 +129,3 @@ Here are some use-cases for children spread + Reason built-in data structures:
   ```reason
   <Layout> ...(ThreeRows(<div />, child2, child3)) </Layout>
   ```
-
-### Pitfall
-
-Following the above section's reasoning, this code should work:
-
-```reason
-let children = [| <div /> |];
-<div> ...children </div>; /* <--- this line */
-```
-
-It _does_ work for custom components (upper-case), But it doesn't for DOM components (lower-cased). This is due to some bindings-related constraints; we'll make this better in the future! In the meantime, for passing to DOM element, e.g. `<div className=bar> ...children </div>` use the following:
-
-```reason
-ReasonReact.createDomElement("div", ~props={"className": bar}, children);
-```
