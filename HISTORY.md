@@ -22,7 +22,7 @@ Aka, you can use the `->` fast pipe now (`|.` in OCaml syntax), and we've change
 
 We've also changed things like `ReactEventRe.Mouse._type` into `ReactEventRe.Mouse.type_` to abide by the Reason idiom.
 
-Lastly, `bs.send.pipe` is informally deprecated, so we've removed the usafe of those too. Instead of `e |> ReactEventRe.Mouse.preventDefault`, use either `e->ReactEventRe.Mouse.preventDefault` or `ReactEventRe.Mouse.preventDefault(e)`. `bs.send.pipe` is, all things considered, the **heaviest** BuckleScript special annotation. If your library uses it, please consider removing it too. Thanks!
+Lastly, `bs.send.pipe` is informally deprecated, so we've removed the usage of those too. Instead of `e |> ReactEventRe.Mouse.preventDefault`, use either `e->ReactEventRe.Mouse.preventDefault` or `ReactEventRe.Mouse.preventDefault(e)`. `bs.send.pipe` is, all things considered, the **heaviest** BuckleScript special annotation. If your library uses it, please consider removing it too. Thanks!
 
 ## JSX
 
@@ -46,6 +46,8 @@ Additionally, DOM component children spread `<div>...foo</div>` now works. No mo
 ## Deprecations
 
 - `ReasonReact.createDomElement` is changed in favor of `ReactDOMRe.createElementVariadic`. This is more consistent with `ReactDOMRe.createElement`. Both are used by the JSX transform; the latter, when it's a children spread for DOM elements (mentioned above) and has a small perf cost.
+
+Thanks for the wait, and enjoy!
 
 # 0.4.2
 
