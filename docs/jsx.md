@@ -22,7 +22,7 @@ which compiles to the JS code:
 React.createElement('div', {foo: bar}, child1, child2)
 ```
 
-Prop-less `<div />` transforms to:
+Prop-less `<div />` transforms into
 
 ```reason
 ReactDOMRe.createElement("div", [||]);
@@ -42,7 +42,7 @@ React.createElement('div', undefined)
 <MyReasonComponent key={a} ref={b} foo={bar} baz={qux}> {child1} {child2} </MyReasonComponent>
 ```
 
-transforms to
+transforms into
 
 ```reason
 ReasonReact.element(
@@ -52,7 +52,7 @@ ReasonReact.element(
 );
 ```
 
-Prop-less `<MyReasonComponent />` transforms to:
+Prop-less `<MyReasonComponent />` transforms into
 
 ```reason
 ReasonReact.element(MyReasonComponent.make([||]));
@@ -61,6 +61,24 @@ ReasonReact.element(MyReasonComponent.make([||]));
 The `make` above is exactly the `make` function you've seen in the previous section.
 
 **Note how `ref` and `key` have been lifted out of the JSX call into the `ReasonReact.element` call**. `ref` and `key` are reserved in ReasonReact, just like in ReactJS. **Don't** use them as props in your component!
+
+## Fragment
+
+```reason
+<> child1 child2 </>;
+```
+
+transforms into
+
+```reason
+ReactDOMRe.createElement(ReasonReact.fragment, [|child1, child2|]);
+```
+
+Which compiles to
+
+```js
+React.createElement(React.Fragment, undefined, null);
+```
 
 ## Children
 
