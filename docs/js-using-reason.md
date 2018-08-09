@@ -36,8 +36,8 @@ type jsProps = {
 let jsComponent =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
-      ~message=jsProps |. message,
-      ~extraGreeting=?Js.Nullable.toOption(jsProps |. extraGreeting),
+      ~message=jsProps->messageGet,
+      ~extraGreeting=?Js.Nullable.toOption(jsProps->extraGreetingGet),
       [||],
     )
   );
