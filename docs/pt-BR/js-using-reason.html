@@ -63,8 +63,8 @@ type <span class="hljs-attr">jsProps</span> = {
 <span class="hljs-keyword">let</span> <span class="hljs-attr">jsComponent</span> =
   ReasonReact.wrapReasonForJs(~component, <span class="hljs-attr">jsProps</span> =&gt;
     make(
-      ~<span class="hljs-attr">message=jsProps</span> |. message,
-      ~<span class="hljs-attr">extraGreeting=?Js.Nullable.toOption(jsProps</span> |. extraGreeting),
+      ~<span class="hljs-attr">message=jsProps-&gt;messageGet,</span>
+      ~<span class="hljs-attr">extraGreeting=?Js.Nullable.toOption(jsProps-&gt;extraGreetingGet),</span>
       [||],
     )
   );
