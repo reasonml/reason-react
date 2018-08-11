@@ -19,7 +19,6 @@
   var gettingStarted = {
     '#getting-started': 'installation.html',
     '#getting-started-bsb': 'installation.html#bsb',
-    '#getting-started-reason-scripts': 'installation.html#reason-scripts',
     default: 'installation.html'
   };
   // redirects[page][hash] => new page;
