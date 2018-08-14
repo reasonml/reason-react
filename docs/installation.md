@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-**Note**: for general Reason + BuckleScript editor setup, see [here](https://reasonml.github.io/docs/en/global-installation.html).
+**Note**: for general Reason + BuckleScript editor setup, see [here](https://reasonml.github.io/docs/en/editor-plugins).
 
 To easily try ReasonReact, we offer two solutions.
 
