@@ -22,7 +22,7 @@ Aka, you can use the `->` fast pipe now (`|.` in OCaml syntax), and we've change
 
 We've also changed things like `ReactEventRe.Mouse._type` into `ReactEventRe.Mouse.type_` to abide by the Reason idiom.
 
-Lastly, `bs.send.pipe` is informally deprecated, so we've removed the usage of those too. Instead of `e |> ReactEventRe.Mouse.preventDefault`, use either `e->ReactEventRe.Mouse.preventDefault` or `ReactEventRe.Mouse.preventDefault(e)`. `bs.send.pipe` is, all things considered, the **heaviest** BuckleScript special annotation. If your library uses it, please consider removing it too. Thanks!
+Lastly, `bs.send.pipe` is informally deprecated, so we've removed the usage of those too. Instead of `e |> ReactEventRe.Mouse.preventDefault`, use either `e->ReactEvent.Mouse.preventDefault` or `ReactEvent.Mouse.preventDefault(e)`. `bs.send.pipe` is, all things considered, the **heaviest** BuckleScript special annotation. If your library uses it, please consider removing it too. Thanks!
 
 ## JSX
 
