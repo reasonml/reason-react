@@ -2,7 +2,7 @@
 title: Lifecycles
 ---
 
-ReasonReact supports the familiar ReactJS lifecycle events.
+ReasonReact supports a considered subset of ReactJS lifecycle events to make it easier to follow changes in future ReactJS releases.
 
 ```reason
 didMount: self => unit
@@ -18,21 +18,21 @@ didUpdate: oldAndNewSelf => unit
 willUnmount: self => unit
 ```
 
-Note:
+Notes:
 
-- We've dropped the `component` prefix from all these.
-- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. not `NoUpdate/Update/SideEffects/UpdateWithSideEffects`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
+- We've dropped the `component` prefix from all events.
+- `willReceiveProps` requires the return type to be `state` and not `update(state)` (i.e. not `NoUpdate/Update/SideEffects/UpdateWithSideEffects`). We presume you'd want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
 - `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
 - `willMount` is unsupported. Use `didMount` instead.
 - `didUpdate`, `willUpdate` and `shouldUpdate` take in a **`oldAndNewSelf` record**, of type `{oldSelf: self, newSelf: self}`. These two fields are the equivalent of ReactJS' `componentDidUpdate`'s `prevProps/prevState/` in conjunction with `props/state`. Likewise for `willUpdate` and `shouldUpdate`.
 
-If you need to update state in a lifecycle event, simply `send` an action to `reducer` and handle it correspondingly: `self.send(DidMountUpdate)`.
+If you need to update state in a lifecycle event other than `willReceiveProps`, simply `send` an action to the `reducer` and handle it accordingly, e.g. `self.send(DidMountUpdate)`.
 
 **Some new lifecyle methods act differently**. Described below.
 
 ## Access next or previous props: `retainedProps`
 
-One pattern that's sometimes used in ReactJS is accessing a lifecyle event's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous props for you. We provide the `retainedProps` API for this purpose:
+In a ReactJS lifecyle event, you may need to access the component's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous props for you. For stateless components, we provide the `retainedProps` API for this purpose:
 
 ```reason
 type retainedProps = {message: string};
@@ -51,26 +51,33 @@ let make = (~message, _children) => {
 };
 ```
 
-We expose `ReasonReact.statelessComponentWithRetainedProps` and `ReasonReact.reducerComponentWithRetainedProps`. Both work like their ordinary non-retained-props counterpart, and require you to specify a new field, `retainedProps` (of whatever type you'd like) in your component's spec in `make`.
+We expose `ReasonReact.statelessComponentWithRetainedProps` which works like its ordinary counterpart without retained props, but requires you to specify a new field, `retainedProps` in your component's spec in `make`. `retainedProps` can be of whatever type you require.
+
+`ReasonReact.reducerComponentWithRetainedProps` has been deprecated. Instead, you may make use of `willReceiveProps` for a `reducerComponent`.
 
 ## `willReceiveProps`
 
-Traditional ReactJS `componentWillReceiveProps` takes in a `nextProps`. We don't have `nextProps`, since those are simply the labeled arguments in `make`, available to you in the scope. To access the _current_ props, however, you'd use the above `retainedProps` API:
+In the traditional ReactJS lifecycle event `componentWillReceiveProps`, you have access to `nextProps` and `props`. In `reason-react`, `nextProps` are the labeled arguments of the `make` statement and are available to you in this scope. _Current_ props (`props`) however are not available unless you have already persisted them in the component's state in a previous lifecycle method.
 
 ```reason
-type state = {someToggle: bool};
+type state = {someToggle: bool, somePropRetained: int};
 
-let component = ReasonReact.reducerComponentWithRetainedProps("MyComponent");
+let component = ReasonReact.reducerComponent("MyComponent");
 
-let make = (~name, _children) => {
+let make = (~someProp, _children) => {
   ...component,
-  initialState: () => {someToggle: false},
-  /* just like state, the retainedProps field can return anything! Here it retained the `name` prop's value */
-  retainedProps: name,
-  willReceiveProps: (self) => {
-    if (self.retainedProps === name) {
+  initialState: () => {someToggle: false, someProp: someProp},
+  willReceiveProps: ({state}) => {
+    if (state.someProp !== someProp) {
+      /* ReactJS analogue would be: if (props.someProp === nextProps.someProp) */
+      /* perform your logic here */
       ...
-      /* previous ReactJS logic would be: if (props.name === nextProps.name) */
+      /* persist the new value of the prop when returning the state */
+      {...state, someProp: someProp}
+    } else {
+      /* perform your logic here */
+      /* if you would not update the state, simply return it here */
+      state
     };
     ...
   }
@@ -79,7 +86,7 @@ let make = (~name, _children) => {
 
 ## `willUpdate`
 
-ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `make`, and "current props" (aka `this.props`) is the props you've copied into `retainedProps`, accessible via `{oldSelf}`:
+The traditional ReactJS lifecycle event `componentWillUpdate` receives `nextProps` and `nextState`. In `reason-react`, `nextProps` are the labeled arguments of the `make` statement and are available to you in this scope. If you would refer to the previous value of some prop persisted in state, you could refer to `oldSelf.state`. Similarly, the counterpart to `nextState` is `newSelf.state`.
 
 ```reason
 {
@@ -90,8 +97,14 @@ ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `m
 
 ## `didUpdate`
 
-ReactJS' `prevProps` is what you've synced in `retainedProps`, under `oldSelf`.
+The counterpart to `prevProps` of traditional ReactJs lifecycle events, is to refer to `oldSelf.state` for props persisted in state.
+```reason
+{
+  ...component,
+  didUpdate: {oldSelf, newSelf} => ...
+}
+```
 
 ## `shouldUpdate`
 
-ReactJS' `shouldComponentUpdate` counterpart.
+Counterpart to ReactJS lifecycle event `shouldComponentUpdate`.

@@ -639,17 +639,6 @@ let reducerComponent =
       ) =>
   basicComponent(debugName);
 
-let reducerComponentWithRetainedProps =
-    debugName
-    : componentSpec(
-        'state,
-        stateless,
-        'retainedProps,
-        noRetainedProps,
-        'action,
-      ) =>
-  basicComponent(debugName);
-
 /***
  * Convenience for creating React elements before we have a better JSX transform.  Hopefully this makes it
  * usable to build some components while waiting to migrate the JSX transform to the next API.

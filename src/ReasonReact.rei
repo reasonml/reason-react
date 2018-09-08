@@ -177,10 +177,6 @@ let reducerComponent:
   string =>
   componentSpec('state, stateless, noRetainedProps, noRetainedProps, 'action);
 
-let reducerComponentWithRetainedProps:
-  string =>
-  componentSpec('state, stateless, 'retainedProps, noRetainedProps, 'action);
-
 let element:
   (
     ~key: string=?,
