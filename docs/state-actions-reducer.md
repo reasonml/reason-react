@@ -123,7 +123,7 @@ So, when a click on the dialog is triggered, we "send" the `Click` action to the
 Notice the return value of `reducer`? The `ReasonReact.Update` part. Instead of returning a bare new state, we ask you to return the state wrapped in this "update" variant. Here are its possible values:
 
 - `ReasonReact.NoUpdate`: don't do a state update.
-- `ReasonReact.Update state`: update the state.
+- `ReasonReact.Update(state)`: update the state.
 - `ReasonReact.SideEffects(self => unit)`: no state update, but trigger a side-effect, e.g. `ReasonReact.SideEffects(_self => Js.log("hello!"))`.
 - `ReasonReact.UpdateWithSideEffects(state, self => unit)`: update the state, **then** trigger a side-effect.
 
