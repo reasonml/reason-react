@@ -1,8 +1,10 @@
-<!DOCTYPE html><html lang="ru"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Children · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself."/><meta name="docsearch:language" content="ru"/><meta property="og:title" content="Children · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/ru"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/ru/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/ru/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/ru/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/ru/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>Русский</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/children">日本語</a></li><li><a href="/reason-react/docs/en/children">English</a></li><li><a href="/reason-react/docs/es-ES/children">Español</a></li><li><a href="/reason-react/docs/fr/children">Français</a></li><li><a href="/reason-react/docs/ko/children">한국어</a></li><li><a href="/reason-react/docs/pt-BR/children">Português (Brasil)</a></li><li><a href="/reason-react/docs/zh-CN/children">中文</a></li><li><a href="/reason-react/docs/zh-Hant/children">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+<!DOCTYPE html><html lang="ru"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Children · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself."/><meta name="docsearch:language" content="ru"/><meta property="og:title" content="Children · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/ru"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/ru/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/ru/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/ru/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/ru/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>Русский</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/children">日本語</a></li><li><a href="/reason-react/docs/en/children">English</a></li><li><a href="/reason-react/docs/es-ES/children">Español</a></li><li><a href="/reason-react/docs/fr/children">Français</a></li><li><a href="/reason-react/docs/ko/children">한국어</a></li><li><a href="/reason-react/docs/pt-BR/children">Português (Brasil)</a></li><li><a href="/reason-react/docs/zh-CN/children">中文</a></li><li><a href="/reason-react/docs/zh-Hant/children">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
         const languagesMenuItem = document.getElementById("languages-menu");
         const languagesDropDown = document.getElementById("languages-dropdown");
-        languagesMenuItem.addEventListener("click", function(){
-          if(languagesDropDown.className == "hide") {
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
             languagesDropDown.className = "visible";
           } else {
             languagesDropDown.className = "hide";
@@ -24,6 +26,10 @@
                 var toggler = document.querySelector(togglerSelector);
                 var target = document.querySelector(targetSelector);
 
+                if (!toggler) {
+                  return;
+                }
+
                 toggler.onclick = function(event) {
                   event.preventDefault();
 
@@ -31,16 +37,16 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ru" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Children</h1></header><article><div><span><p>ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself.</p>
+        </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ru" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Children</h1></header><article><div><span><p>ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself.</p>
 <p>Let's say people are using your component like so: <code>&lt;Animation&gt;&lt;div /&gt;&lt;/Animation&gt;</code>. In the <code>Animation</code> component, you'd want to constrain the <code>children</code> being passed to you (the <code>div</code> here) as a single child. Aka, you'd like to error on this: <code>&lt;Animation&gt;&lt;div /&gt;&lt;div /&gt;&lt;/Animation&gt;</code>.</p>
 <p>ReactJS provides such helper:</p>
-<pre><code class="hljs css languages- js"><span class="hljs-comment">// inside Animation.js</span>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// inside Animation.js</span>
 render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.children);
 }
 </code></pre>
 <p>Or, maybe you made a Layout component and accepts exactly two children (e.g. <code>&lt;Layout&gt;&lt;MyColumn /&gt;&lt;MyColumn /&gt;&lt;/Layout&gt;</code>):</p>
-<pre><code class="hljs css languages- js"><span class="hljs-comment">// Layout.js</span>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// Layout.js</span>
 render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">if</span> (React.Children.count(<span class="hljs-keyword">this</span>.props.children) !== <span class="hljs-number">2</span>) {
     <span class="hljs-comment">// ... error</span>
@@ -55,7 +61,7 @@ render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</s
 }
 </code></pre>
 <p>Or maybe you mandate a children callback:</p>
-<pre><code class="hljs css languages- js">&lt;br /&gt;render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<pre><code class="hljs css language-js">&lt;br /&gt;render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.props.children(<span class="hljs-string">'hello'</span>));
 }
 </code></pre>
@@ -67,22 +73,22 @@ render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</s
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="syntax-constraint"></a><a href="#syntax-constraint" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Syntax Constraint</h2>
 <p><em>Technically</em>, if you've written a component that accepts a tuple as <code>children</code>:</p>
-<pre><code class="hljs css languages- reason"><span class="hljs-comment">/* MyForm.re */</span>
-type tuple2Children = (ReasonReact.reactElement, ReasonReact.reactElement);
+<pre><code class="hljs css language-reason"><span class="hljs-comment">/* MyForm.re */</span>
+<span class="hljs-keyword">type</span> tuple2Children = (<span class="hljs-type">ReasonReact</span>.reactElement, <span class="hljs-type">ReasonReact</span>.reactElement);
 
-<span class="hljs-built_in">let</span> make = (<span class="hljs-built_in">children</span>: tuple2Children) =&gt; {
+<span class="hljs-keyword">let</span> make = (children: tuple2Children) =&gt; {
   ...component,
-  <span class="hljs-built_in">render</span>: _self =&gt; {
+  render: _self =&gt; {
     &lt;div&gt;
-      {fst(<span class="hljs-built_in">children</span>)}
-      &lt;Separator /&gt;
-      {snd(<span class="hljs-built_in">children</span>)}
+      {fst(children)}
+      &lt;<span class="hljs-type">Separator</span> /&gt;
+      {snd(children)}
     &lt;/div&gt;
   }
 };
 </code></pre>
 <p>Then you can expect the user to pass you a tuple:</p>
-<pre><code class="hljs css languages- reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> (<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyForm</span>&gt; (&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-type">MyForm</span>&gt;
 </code></pre>
 <p>This, however, will give you a type error:</p>
 <pre><code class="hljs">This has type:
@@ -91,15 +97,15 @@ But somewhere wanted:
   tuple2Children (defined as (ReasonReact.reactElement, ReasonReact.reactElement))
 </code></pre>
 <p>It means that <code>MyForm</code> is expecting the tuple, but you're giving <code>array</code> instead! What's happening? Well, look at what JSX is transformed into:</p>
-<pre><code class="hljs css languages- reason">&lt;MyLayout&gt; <span class="hljs-selector-tag">a</span> <span class="hljs-selector-tag">b</span> &lt;/MyLayout&gt;
-&lt;MyLayout&gt; <span class="hljs-selector-tag">a</span> &lt;/MyLayout&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyLayout</span>&gt; a b &lt;/<span class="hljs-type">MyLayout</span>&gt;
+&lt;<span class="hljs-type">MyLayout</span>&gt; a &lt;/<span class="hljs-type">MyLayout</span>&gt;
 </code></pre>
 <p>These actually become:</p>
-<pre><code class="hljs css languages- reason"><span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span>(
-  <span class="hljs-selector-tag">MyLayout</span><span class="hljs-selector-class">.make</span>(<span class="hljs-selector-attr">[|a, b|]</span>)
+<pre><code class="hljs css language-reason"><span class="hljs-type">ReasonReact</span>.element(
+  <span class="hljs-type">MyLayout</span>.make([|a, b|])
 );
-<span class="hljs-selector-tag">ReasonReact</span><span class="hljs-selector-class">.element</span>(
-  <span class="hljs-selector-tag">MyLayout</span><span class="hljs-selector-class">.make</span>(<span class="hljs-selector-attr">[|a|]</span>)
+<span class="hljs-type">ReasonReact</span>.element(
+  <span class="hljs-type">MyLayout</span>.make([|a|])
 );
 </code></pre>
 <p>See how the second <code>MyLayout</code>'s children is also wrapped in an array? We can't special-case <code>&lt;MyLayout&gt; a &lt;/MyLayout&gt;</code> to pass <code>a</code> without the array wrapping (it'd give even more confusing errors). Since children is usually an array, we've decided to always wrap it with an array, no matter how many items we visually see in the JSX. But what if you really want to pass unwrapped data?</p>
@@ -109,16 +115,16 @@ But somewhere wanted:
 <p>Here are some use-cases for children spread + Reason built-in data structures:</p>
 <ul>
 <li><p>A layout component that mandates a tuple of 2 react element and shows them side-by-side:</p>
-<pre><code class="hljs css languages- reason"><span class="hljs-tag">&lt;<span class="hljs-name">MyForm</span>&gt;</span> ...(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">MyForm</span>&gt;</span>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyForm</span>&gt; ...(&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-type">MyForm</span>&gt;
 </code></pre></li>
 <li><p>A component that mandates a callback, no need for ReactJS' <code>React.Children.only</code> runtime check:</p>
-<pre><code class="hljs css languages- reason"><span class="hljs-tag">&lt;<span class="hljs-name">Motion</span>&gt;</span> ...((name) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">name</span> /&gt;</span>) <span class="hljs-tag">&lt;/<span class="hljs-name">Motion</span>&gt;</span>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">Motion</span>&gt; ...((name) =&gt; &lt;div className=name /&gt;) &lt;/<span class="hljs-type">Motion</span>&gt;
 </code></pre></li>
 <li><p>A layout helper that accepts a variant of <code>TwoRows | ThreeRows | FourColumns</code></p>
-<pre><code class="hljs css languages- reason"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span> ...(ThreeRows(<span class="hljs-tag">&lt;<span class="hljs-name">div</span> /&gt;</span>, child2, child3)) <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">Layout</span>&gt; ...(<span class="hljs-type">ThreeRows</span>(&lt;div /&gt;, child2, child3)) &lt;/<span class="hljs-type">Layout</span>&gt;
 </code></pre></li>
 </ul>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/ru/clone-element">← cloneElement</a><a class="docs-next button" href="/reason-react/docs/ru/dom">Working with DOM →</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#syntax-constraint">Syntax Constraint</a><ul class="toc-headings"><li><a href="#children-spread">Children Spread</a></li></ul></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/ru/clone-element"><span class="arrow-prev">← </span><span>Previous</span></a><a class="docs-next button" href="/reason-react/docs/ru/dom"><span>Next</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"><ul class="toc-headings"><li><a href="#syntax-constraint">Syntax Constraint</a><ul class="toc-headings"><li><a href="#children-spread">Children Spread</a></li></ul></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
             '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',

@@ -1,31 +1,33 @@
-<!DOCTYPE html><html lang="es-ES"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>ReasonReact · Todo tu conocimiento sobre ReactJS, codificado.</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Todo tu conocimiento sobre ReactJS, codificado."/><meta name="docsearch:language" content="es-ES"/><meta property="og:title" content="ReasonReact · Todo tu conocimiento sobre ReactJS, codificado."/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="Todo tu conocimiento sobre ReactJS, codificado."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/es-ES"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/es-ES/installation" target="_self">Documentación</a></li><li class=""><a href="/reason-react/docs/es-ES/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/es-ES/simple" target="_self">Ejemplos</a></li><li class=""><a href="/reason-react/docs/es-ES/community" target="_self">Comunidad</a></li><li class=""><a href="/reason-react/blog" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg"/>Español</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/en">English</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Ayúdanos a traducir</a></li></ul></div></li><script>
+<!DOCTYPE html><html lang="es-ES"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>ReasonReact · Todo tu conocimiento sobre ReactJS, codificado.</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Todo tu conocimiento sobre ReactJS, codificado."/><meta name="docsearch:language" content="es-ES"/><meta property="og:title" content="ReasonReact · Todo tu conocimiento sobre ReactJS, codificado."/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="Todo tu conocimiento sobre ReactJS, codificado."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/es-ES"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/es-ES/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/es-ES/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/es-ES/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/es-ES/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>Español</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/en">English</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Ayúdanos a traducir</a></li></ul></div></li><script>
         const languagesMenuItem = document.getElementById("languages-menu");
         const languagesDropDown = document.getElementById("languages-dropdown");
-        languagesMenuItem.addEventListener("click", function(){
-          if(languagesDropDown.className == "hide") {
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
             languagesDropDown.className = "visible";
           } else {
             languagesDropDown.className = "hide";
           }
         });
-      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div><div class="homeContainer"><div id="redirectBanner"><div>Hello! This particular page hash has moved to <a id="redirectLink"></a>. Please update the URLs to reflect it. Thanks!</div></div><div class="homeWrapperWrapper"><img src="/reason-react/img/reason-react-white.svg" class="spinner"/><div class="wrapper homeWrapper"><div class="projectTitle">ReasonReact</div><div class="homeWrapperInner"><div class="homeTagLine">All your ReactJS knowledge, codified.</div><div class="homeCodeSnippet"><div><span><pre><code class="hljs css languages- reason"><span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> =
-  ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div><div class="homeContainer"><div id="redirectBanner"><div>Hello! This particular page hash has moved to <a id="redirectLink"></a>. Please update the URLs to reflect it. Thanks!</div></div><div class="homeWrapperWrapper"><img src="/reason-react/img/reason-react-white.svg" class="spinner"/><div class="wrapper homeWrapper"><div class="projectTitle">ReasonReact</div><div class="homeWrapperInner"><div class="homeTagLine">All your ReactJS knowledge, codified.</div><div class="homeCodeSnippet"><div><span><pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component =
+  <span class="hljs-type">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
-<span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
+<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
   ...component,
-  render: <span class="hljs-attr">_self</span> =&gt;
+  render: _self =&gt;
     &lt;button&gt;
-      {ReasonReact.string(<span class="hljs-string">"Hello!"</span>)}
+      {<span class="hljs-type">ReasonReact</span>.string(<span class="hljs-string">"Hello!"</span>)}
     &lt;/button&gt;
 };
 </code></pre>
-</span></div><div><span><pre><code class="hljs css languages- reason"><span class="hljs-keyword">let</span> <span class="hljs-attr">component</span> = ReasonReact.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+</span></div><div><span><pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Greeting"</span>);
 
-<span class="hljs-keyword">let</span> <span class="hljs-attr">make</span> = (~name, _children) =&gt; {
+<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
   ...component,
-  render: <span class="hljs-attr">_self</span> =&gt;
+  render: _self =&gt;
     &lt;button&gt;
-      {ReasonReact.string(<span class="hljs-string">"Hello!"</span>)}
+      {<span class="hljs-type">ReasonReact</span>.string(<span class="hljs-string">"Hello!"</span>)}
     &lt;/button&gt;
 };
 </code></pre>
@@ -35,13 +37,13 @@
 </span></div></h2><div><span><p>Lightweight, first-class support for the ReactJS community idioms you've been using.</p>
 </span></div></div></div><div class="blockElement alignCenter threeByGridBlock"><div class="blockContent"><h2><div><span><p>Drop In</p>
 </span></div></h2><div><span><p>Easily integrate ReasonReact into your existing app. Convert a file, quickly see benefits.</p>
-</span></div></div></div></div></div></div><div class="container quickStartAndExamples homeCodeSnippet lightBackground"><div class="wrapper"><div><h2>QuickStart</h2><div><span><pre><code class="hljs css languages- bash">npm install -g bs-platform
+</span></div></div></div></div></div></div><div class="container quickStartAndExamples homeCodeSnippet lightBackground"><div class="wrapper"><div><h2>QuickStart</h2><div><span><pre><code class="hljs css language-bash">npm install -g bs-platform
 bsb -init my-react-app -theme react
 <span class="hljs-built_in">cd</span> my-react-app
 npm install &amp;&amp; npm start
 </code></pre>
 <p>Then open another tab and do:</p>
-<pre><code class="hljs css languages- bash">npm run webpack
+<pre><code class="hljs css language-bash">npm run webpack
 </code></pre>
 <p>Your apps are the html files inside <code>src/</code></p>
 </span></div></div><div><h2>Examples</h2><div class="gridBlock"><div class="blockElement examples alignCenter imageAlignTop twoByGridBlock"><div class="blockImage"><a href="https://github.com/reasonml-community/reason-react-hacker-news"><img src="/reason-react/img/examples/hn.png"/></a></div><div class="blockContent"><h2><div><span><p>Hacker News</p>

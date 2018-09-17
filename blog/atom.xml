@@ -13,8 +13,7 @@
         <link href="https://reasonml.github.io/reason-react/reason-react/blog/2018/08/06/050.html">
         </link>
         <updated>2018-08-06T06:00:00Z</updated>
-        <summary type="html"><![CDATA[<p>It's been a while since the last blog post! Note that we've been updating ReasonReact, just that we didn't want to drown you with too many blog posts when unnecessary. As we've said in our [ReasonConf video](<a href="https://twitter.com/reasonconf/status/1002">https://twitter.com/reasonconf/status/1002</a></p>
-]]></summary>
+        <summary type="html"><![CDATA[<p>It's been a while since the last blog post! Note that we've been updating ReasonReact, just that we didn't want to drown you with too many blog posts when unnecessary. As we've said in our <a href="https://twitter.com/reasonconf/status/1002152653718245376">ReasonConf video</a>, we wanted the ReasonReact community to catc...</p>]]></summary>
         <author>
         </author>
     </entry>
@@ -24,8 +23,7 @@
         <link href="https://reasonml.github.io/reason-react/reason-react/blog/2018/01/09/subscriptions-send-router.html">
         </link>
         <updated>2018-01-09T06:00:00Z</updated>
-        <summary type="html"><![CDATA[<p>Happy new year! We've got a new, non-breaking release for you =). As always, <strong><a href="https://github.com/chenglou/upgrade-reason-react">here</a>'s the migration script</strong> and <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#031">here</a>'s the lis</p>
-]]></summary>
+        <summary type="html"><![CDATA[<p>Happy new year! We've got a new, non-breaking release for you =). As always, <strong><a href="https://github.com/chenglou/upgrade-reason-react">here</a>'s the migration script</strong> and <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#031">here</a>'s the list of changes.</p> <p>V0.3.1 brings two important features, both super lightweight and performant, yet strike, we hope, a sweet spot in ...</p>]]></summary>
         <author>
         </author>
     </entry>
@@ -35,8 +33,7 @@
         <link href="https://reasonml.github.io/reason-react/reason-react/blog/2017/11/17/power-children.html">
         </link>
         <updated>2017-11-17T06:00:00Z</updated>
-        <summary type="html"><![CDATA[<p>0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030">HISTORY.md</a>. We've been <em>really</em> careful with breaking changes). Stay tuned for</p>
-]]></summary>
+        <summary type="html"><![CDATA[<p>0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030">HISTORY.md</a>. We've been <em>really</em> careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In th...</p>]]></summary>
         <author>
         </author>
     </entry>
@@ -46,9 +43,7 @@
         <link href="https://reasonml.github.io/reason-react/reason-react/blog/2017/10/02/new-docs-site.html">
         </link>
         <updated>2017-10-02T06:00:00Z</updated>
-        <summary type="html"><![CDATA[<p><em>The ReactJS doc site has also been updated last friday <strong>by pure coincidence</strong>. No conspiracy theory!</em></p>
-<p>Do you like the new look? There's been quite a bit of iterations on the new docs, with an eye toward settings up site templates for our future li</p>
-]]></summary>
+        <summary type="html"><![CDATA[<p><em>The ReactJS doc site has also been updated last friday <strong>by pure coincidence</strong>. No conspiracy theory!</em></p> <p>Do you like the new look? There's been quite a bit of iterations on the new docs, with an eye toward settings up site templates for our future libraries ...</p>]]></summary>
         <author>
         </author>
     </entry>
@@ -71,8 +66,7 @@
         <link href="https://reasonml.github.io/reason-react/reason-react/blog/2017/07/05/021.html">
         </link>
         <updated>2017-07-05T06:00:00Z</updated>
-        <summary type="html"><![CDATA[<p>Small new breaking release! We've provided <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#021">a migration script</a>. No big change except a better (and much demanded) <code>self</code> API. Enjoy!</p>
-]]></summary>
+        <summary type="html"><![CDATA[<p>Small new breaking release! We've provided <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#021">a migration script</a>. No big change except a better (and much demanded) <code>self</code> API. Enjoy!</p> ]]></summary>
         <author>
         </author>
     </entry>
@@ -82,8 +76,7 @@
         <link href="https://reasonml.github.io/reason-react/reason-react/blog/2017/06/21/015.html">
         </link>
         <updated>2017-06-21T06:00:00Z</updated>
-        <summary type="html"><![CDATA[<p>Thanks for the wait! Head over to <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#015">HISTORY.md</a> to see the changes. This is a small non-breaking release, though we did fix a ref-related issue that can cause type errors. The fix is</p>
-]]></summary>
+        <summary type="html"><![CDATA[<p>Thanks for the wait! Head over to <a href="https://github.com/reasonml/reason-react/blob/master/HISTORY.md#015">HISTORY.md</a> to see the changes. This is a small non-breaking release, though we did fix a ref-related issue that can cause type errors. The fix is trivial; see the notes.</p> <p>We've batched together non-breaking features f...</p>]]></summary>
         <author>
         </author>
     </entry>
