@@ -132,7 +132,7 @@ let make = (~greeting, _children) =&gt; {
 <p>Notice the return value of <code>reducer</code>? The <code>ReasonReact.Update</code> part. Instead of returning a bare new state, we ask you to return the state wrapped in this &quot;update&quot; variant. Here are its possible values:</p>
 <ul>
 <li><code>ReasonReact.NoUpdate</code>: don't do a state update.</li>
-<li><code>ReasonReact.Update state</code>: update the state.</li>
+<li><code>ReasonReact.Update(state)</code>: update the state.</li>
 <li><code>ReasonReact.SideEffects(self =&gt; unit)</code>: no state update, but trigger a side-effect, e.g. <code>ReasonReact.SideEffects(_self =&gt; Js.log(&quot;hello!&quot;))</code>.</li>
 <li><code>ReasonReact.UpdateWithSideEffects(state, self =&gt; unit)</code>: update the state, <strong>then</strong> trigger a side-effect.</li>
 </ul>
