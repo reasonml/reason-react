@@ -1,0 +1,66 @@
+aliases:
+  - &restore-yarn-cache
+    keys:
+      - v1-yarn-{{ .Branch }}-{{ checksum "website/yarn.lock" }}
+      # Fallback in case checksum fails
+      - v1-yarn-{{ .Branch }}-
+
+  - &save-yarn-cache
+    paths:
+      - node_modules
+      - ~/.cache/yarn
+    key: v1-yarn-{{ .Branch }}-{{ checksum "website/yarn.lock" }}
+
+  - &filter-only-master
+    branches:
+      only:
+        - master
+
+  - &yarn
+    |
+      yarn install --non-interactive --cache-folder ~/.cache/yarn
+
+version: 2
+jobs:
+  # The CIRCLE_ variables are defined during the CircleCI build process
+  # https://circleci.com/docs/1.0/environment-variables/
+  deploy-website:
+    docker:
+      - image: circleci/node:8
+
+    steps:
+      - checkout
+      - restore-cache: *restore-yarn-cache
+      - run: *yarn
+      - save-cache: *save-yarn-cache
+      - run:
+          name: Configure GitHub Bot
+          command: |
+            git config --global user.email "chenglou@users.noreply.github.com"
+            git config --global user.name "Website Deployment Script"
+            echo "machine github.com login chenglou password $GITHUB_TOKEN" > ~/.netrc
+      - run:
+          name: Deploying to GitHub Pages
+          command: |
+            cd website
+            yarn && yarn run docusaurus-write-translations
+            # install Crowdin
+            sudo apt-get update
+            sudo apt-get install default-jre
+            wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb
+            sudo dpkg -i crowdin.deb
+            sleep 5
+            # upload translation strings and download translations
+            export CROWDIN_DOCUSAURUS_PROJECT_ID="reason-react"
+            export CROWDIN_DOCUSAURUS_API_KEY=$RR_CROWDIN_API_KEY
+            crowdin --config ../crowdin.yaml upload sources --auto-update -b master
+            crowdin --config ../crowdin.yaml download -b master
+            GIT_USER=chenglou USE_SSH=false yarn run docusaurus-publish
+# Workflows enables us to run multiple jobs in parallel
+workflows:
+  version: 2
+
+  website:
+    jobs:
+      - deploy-website:
+          filters: *filter-only-master

@@ -3,11 +3,7 @@
   "scripts": {
     "start": "docusaurus-start",
     "build": "docusaurus-build",
-    "publish-gh-pages": "docusaurus-publish",
-    "examples": "docusaurus-examples",
-    "write-translations": "docusaurus-write-translations",
-    "crowdin-upload": "export CROWDIN_DOCUSAURUS_PROJECT_ID=\"reason-react\"; export CROWDIN_DOCUSAURUS_API_KEY=$RR_CROWDIN_API_KEY; crowdin --config ../crowdin.yaml upload sources --auto-update -b master",
-    "crowdin-download": "export CROWDIN_DOCUSAURUS_PROJECT_ID=\"reason-react\"; export CROWDIN_DOCUSAURUS_API_KEY=$RR_CROWDIN_API_KEY; crowdin --config ../crowdin.yaml download -b master"
+    "write-translations": "docusaurus-write-translations"
   },
   "keywords": [],
   "author": "",
@@ -17,9 +13,10 @@
     "url": "git+https://github.com/reasonml/reason-react.git"
   },
   "dependencies": {
-    "docusaurus": "1.3.0"
+    "docusaurus": "chenglou/Docusaurus#bade05e408bef8d94a6ba3281fdb3f6295c30284"
   },
   "devDependencies": {
-    "pjax-api": "^3.23.0"
+    "pjax-api": "^3.23.0",
+    "reason-highlightjs": "^0.1.1"
   }
 }

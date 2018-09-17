@@ -1,0 +1,23 @@
+# CircleCI by default tests every push to every branch. This mean automated release from source to master will trigger CI testing master.
+# we disable that. Piece and quiet.
+# this also prevents pull requests from triggering the CI and thrashing e.g. the crowdin translation logic in our main circle.yml
+# gh-pages is cleared out on every push, so we can't manually put a circle.yml there. So we piggy back off static/ being copied over to master during deployment.
+version: 2
+jobs:
+  dummy:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - run:
+          name: Ignore everything
+          command: exit 0
+
+workflows:
+  version: 2
+
+  ignore-everything-from-gh-pages:
+    jobs:
+      - dummy:
+          filters:
+            branches:
+              ignore: gh-pages
