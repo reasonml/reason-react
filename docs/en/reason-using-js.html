@@ -40,19 +40,18 @@
         </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/reason-using-js.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">ReasonReact using ReactJS</h1></header><article><div><span><p><code>MyBanner.js:</code></p>
 <pre><code class="hljs css language-javascript"><span class="hljs-keyword">var</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
 <span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
-<span class="hljs-keyword">var</span> App = React.createClass({
-  <span class="hljs-attr">displayName</span>: <span class="hljs-string">"MyBanner"</span>,
-  <span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.props.show) {
-      <span class="hljs-keyword">return</span> React.createElement(<span class="hljs-string">'div'</span>, <span class="hljs-literal">null</span>,
-        <span class="hljs-keyword">this</span>.props.message
-      );
-    } <span class="hljs-keyword">else</span> {
-      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
-    }
+
+<span class="hljs-keyword">var</span> MyBanner = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">props</span>) </span>{
+   <span class="hljs-keyword">if</span> (props.show) {
+    <span class="hljs-keyword">return</span> React.createElement(<span class="hljs-string">'div'</span>, <span class="hljs-literal">null</span>,
+      <span class="hljs-string">'Here\'s the message from the owner: '</span> + props.message
+    );
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
   }
-});
-<span class="hljs-built_in">module</span>.exports = App;
+};
+
+<span class="hljs-built_in">module</span>.exports = MyBanner;
 </code></pre>
 <p><code>MyBannerRe.re</code></p>
 <pre><code class="hljs css language-reason"><span class="hljs-comment">/* ReactJS used by ReasonReact */</span>
