@@ -7,3 +7,5 @@ finalOutput/*.js
 *.log
 .bsb.lock
 /src/*.js
+*.bs.js
+*.bundle.js
