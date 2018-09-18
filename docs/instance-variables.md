@@ -20,18 +20,21 @@ type state = {
   intervalId: ref(option(int))
 };
 
-let component = ...; /* remember, `component` needs to be close to `make`, and after `state` type declaration! */
+let component = /* ... */; /* remember, `component` needs to be close to `make`, and after `state` type declaration! */
 
 let make = (_children) => {
   ...component,
-  initialState: () => {someRandomState: Some("hello"), intervalId: ref(None)},
+  initialState: () => {
+    someRandomState: Some("hello"),
+    intervalId: ref(None),
+  },
   didMount: ({state}) => {
     /* mutate the value here */
-    state.intervalId := Some(Js.Global.setInterval(...));
+    state.intervalId := Some(Js.Global.setInterval(/* ... */));
     /* no extra state update needed */
     ReasonReact.NoUpdate
   },
-  render: ...
+  render: /* ... */
 };
 ```
 

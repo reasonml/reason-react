@@ -15,7 +15,7 @@ _Reminder: `self` is ReasonReact's `this`. It's a record that contains things li
 If you're just forwarding a callback prop onto your child, you'd do exactly the same thing you'd have done in ReactJS:
 
 ```reason
-let component = ...;
+let component = /* ... */;
 
 let make = (~name, ~onClick, _children) => {
   ...component,
@@ -28,7 +28,7 @@ No surprise here. Since Reason's JSX has [punning syntax](https://reasonml.githu
 Similarly, to pre-process a value before sending it back to the component's owner:
 
 ```reason
-let component = ...;
+let component = /* ... */;
 
 let make = (~name, ~onClick, _children) => {
   let click = (event) => onClick(name); /* pass the name string up to the owner */
@@ -44,7 +44,8 @@ let make = (~name, ~onClick, _children) => {
 To access `state`, `send` and the other items in `self` from a callback, you **need** to wrap the callback in an extra layer called `self.handle`:
 
 ```reason
-let component = ...;
+let component = /* ... */;
+
 let make = (~name, ~onClick, _children) => {
   let click = (event, self) => {
     onClick(event);
@@ -52,7 +53,7 @@ let make = (~name, ~onClick, _children) => {
   };
   {
     ...component,
-    initialState: ...,
+    initialState: /* ... */,
     render: (self) => <button onClick={self.handle(click)} />
   }
 };

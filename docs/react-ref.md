@@ -21,8 +21,11 @@ let component = ReasonReact.reducerComponent("MyPanel");
 
 let make = (~className="", _children) => {
   ...component,
-  initialState: () => {isOpen: false, mySectionRef: ref(None)},
-  reducer: ...,
+  initialState: () => {
+    isOpen: false,
+    mySectionRef: ref(None),
+  },
+  reducer: /* ... */,
   render: (self) => <Section1 ref={self.handle(setSectionRef)} />
 };
 ```

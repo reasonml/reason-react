@@ -25,7 +25,7 @@ let make = _children => {
     | None => ()
     }
   },
-  render: ...
+  render: /* ... */
 };
 ```
 
@@ -50,7 +50,7 @@ let make = _children => {
     let intervalId = Js.Global.setInterval(() => Js.log("hello!"), 1000);
     self.onUnmount(() => Js.Global.clearInterval(intervalId));
   },
-  render: ...
+  render: /* ... */
 };
 ```
 
@@ -72,7 +72,7 @@ let make = _children => {
       })
     }
   },
-  render: ...
+  render: /* ... */
 };
 ```
 

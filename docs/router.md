@@ -76,9 +76,9 @@ let make = _children => {
     switch (action) {
     /* router actions */
     | ShowAll => ReasonReact.Update({...state, nowShowing: AllTodos})
-    | ShowActive => ...
+    | ShowActive => /* ... */
     /* todo actions */
-    | ChangeTodo(text) => ...
+    | ChangeTodo(text) => /* ... */
     },
   didMount: self => {
     let watcherID = ReasonReact.Router.watchUrl(url => {
@@ -86,8 +86,8 @@ let make = _children => {
       | ("active", _) => self.send(ShowActive)
       | ("completed", _) => self.send(ShowCompleted)
       | ("shared", true) => self.send(ShowShared)
-      | ("shared", false) when isSpecialUser => ... /* handle this state */
-      | ("shared", false) => ... /* handle this state */
+      | ("shared", false) when isSpecialUser => /* handle this state please */
+      | ("shared", false) => /* handle this state please */
       | _ => self.send(ShowAll)
       }
     });

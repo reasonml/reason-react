@@ -15,13 +15,13 @@ This likely means that:
 This is a common mistake. Please see BuckleScript's [Import an ES6 Default Value](https://bucklescript.github.io/docs/en/import-export.html#import-an-es6-default-value). Aka, instead of:
 
 ```reason
-[@bs.module] external myJSReactClass : ReasonReact.reactClass = "./myJSReactClass";
+[@bs.module] external myJSReactClass: ReasonReact.reactClass = "./myJSReactClass";
 ```
 
 Use:
 
 ```reason
-[@bs.module "./myJSReactClass"] external myJSReactClass : ReasonReact.reactClass = "default";
+[@bs.module "./myJSReactClass"] external myJSReactClass: ReasonReact.reactClass = "default";
 ```
 
 Remember that Reason doesn't have runtime type errors! So it _must_ have meant that your binding was written wrongly.

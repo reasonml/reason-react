@@ -5,9 +5,9 @@ title: Render
 `render` needs to return a `ReasonReact.reactElement`: `<div />`, `<MyComponent />`, etc. Render takes the argument `self`:
 
 ```reason
-...
+/* ... */
     render: (self) => <div />
-...
+/* ... */
 ```
 
 What if you want to return `null` from a `render`? Or pass a string to a DOM component like `div` which only allows `ReasonReact.reactElement`s?

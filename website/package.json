@@ -2,8 +2,7 @@
   "name": "reason-react-site",
   "scripts": {
     "start": "docusaurus-start",
-    "build": "docusaurus-build",
-    "write-translations": "docusaurus-write-translations"
+    "build": "docusaurus-build"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +16,6 @@
   },
   "devDependencies": {
     "pjax-api": "^3.23.0",
-    "reason-highlightjs": "^0.1.1"
+    "reason-highlightjs": "0.2.0"
   }
 }

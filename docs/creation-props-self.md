@@ -48,7 +48,7 @@ Since `make` is called at every JSX invocation, you'd be accidentally creating a
 
 ## Props
 
-Props are just the labeled arguments of the `make` function, seen above. They can also be optional and/or have defaults, e.g. `let make = (~name, ~age=?, ~className="box", _children) => ...`.
+Props are just the labeled arguments of the `make` function, seen above. They can also be optional and/or have defaults, e.g. `let make = (~name, ~age=?, ~className="box", _children) => /* ... */`.
 
 The last prop **must** be `children`. If you don't use it, simply ignore it by naming it `_` or `_children`. Names starting with underscore don't trigger compiler warnings if they're unused.
 

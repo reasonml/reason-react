@@ -3997,9 +3997,9 @@ readable-stream@~1.1.9:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-reason-highlightjs@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/reason-highlightjs/-/reason-highlightjs-0.1.1.tgz#40d2c94b692a5f60208a31f306a4d55c7969201e"
+reason-highlightjs@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/reason-highlightjs/-/reason-highlightjs-0.2.0.tgz#275583ef73ec79d8bfd1d9940431162094d196c2"
 
 rechoir@^0.6.2:
   version "0.6.2"

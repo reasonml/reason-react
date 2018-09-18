@@ -35,9 +35,6 @@
 .hljs.javascript {
   background-color: rgba(247, 223, 30, 0.03);
 }
-.hljs .comment {
-  opacity: 0.7;
-}
 table .hljs {
   border: none;
   background: none;
@@ -53,6 +50,20 @@ table .hljs {
     border-left: none;
     border-right: none;
   }
+}
+
+/* tweaks to syntax highlighting, assuming atom-one-light theme */
+.hljs-operator {
+  color: #a626a4;
+}
+.hljs-character {
+  color: #50a14f;
+}
+.hljs-module-identifier {
+  color: #4078f2;
+}
+.hljs-constructor {
+  color: #e45649;
 }
 
 /* 2. Homepage changes */

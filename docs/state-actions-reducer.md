@@ -38,7 +38,7 @@ let make = (~greeting, _children) => {
   reducer: (action, state) =>
     switch (action) {
     | Click => ReasonReact.Update({...state, count: state.count + 1})
-    | Toggle => ReasonReact.Update({...state, show: ! state.show})
+    | Toggle => ReasonReact.Update({...state, show: !state.show})
     },
 
   render: self => {
@@ -52,8 +52,9 @@ let make = (~greeting, _children) => {
         (ReasonReact.string("Toggle greeting"))
       </button>
       (
-        self.state.show ?
-          ReasonReact.string(greeting) : ReasonReact.null
+        self.state.show
+          ? ReasonReact.string(greeting)
+          : ReasonReact.null
       )
     </div>;
   },

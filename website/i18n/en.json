@@ -4,56 +4,142 @@
     "next": "Next",
     "previous": "Previous",
     "tagline": "All your ReactJS knowledge, codified.",
-    "callback-handlers": "Callback Handlers",
-    "children": "Children",
-    "clone-element": "cloneElement",
-    "community": "Community",
-    "component-as-prop": "Component as Prop",
-    "context-mixins": "Context & Mixins?",
-    "counter": "Counter",
-    "creation-props-self": "Creation, Props & Self",
-    "custom-class-component-property": "Custom Class/Component Property",
-    "dom": "Working with DOM",
-    "element-type-is-invalid": "Element Type is Invalid Runtime Error",
-    "event": "Event",
-    "example-projects": "Example Projects",
-    "functional-component": "Functional Component",
-    "i-really-need-feature-x-from-reactjs": "I Really Need Feature X From ReactJS",
-    "im-having-a-type-error": "I'm Having a Type Error",
-    "installation": "Installation",
-    "instance-variables": "Instance Variables",
-    "interop": "Talk to Existing ReactJS Code",
-    "intro-example": "Intro Example",
-    "invalid-prop-name": "Invalid Prop Name",
-    "js-using-reason": "ReactJS using ReasonReact",
-    "jsx": "JSX",
-    "lifecycles": "Lifecycles",
-    "playground": "Playground",
-    "props-spread": "Props Spread",
-    "react-ref": "React Ref",
-    "reason-using-js": "ReasonReact using ReactJS",
-    "record-field-send-handle-not-found": "Record Field send/handle Not Found",
-    "render": "Render",
-    "roadmap": "Roadmap & Contribution",
-    "router": "Router",
-    "send-handle-callbacks-having-incompatible-types": "send/handle callbacks having Incompatible Types",
-    "simple": "Simple",
-    "state-actions-reducer": "State, Actions & Reducer",
-    "style": "Style",
-    "subscriptions-helper": "Subscriptions Helper",
-    "ternary-shortcut": "Ternary Shortcut",
-    "what-and-why": "What & Why",
-    "Docs": "Docs",
-    "Try": "Try",
-    "Examples": "Examples",
-    "Community": "Community",
-    "Blog": "Blog",
-    "GitHub": "GitHub",
-    "Getting Started": "Getting Started",
-    "Core": "Core",
-    "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
-    "FAQ": "FAQ",
-    "Code Snippets": "Code Snippets"
+    "docs": {
+      "callback-handlers": {
+        "title": "Callback Handlers"
+      },
+      "children": {
+        "title": "Children"
+      },
+      "clone-element": {
+        "title": "cloneElement"
+      },
+      "community": {
+        "title": "Community"
+      },
+      "component-as-prop": {
+        "title": "Component as Prop"
+      },
+      "context-mixins": {
+        "title": "Context & Mixins?"
+      },
+      "counter": {
+        "title": "Counter"
+      },
+      "creation-props-self": {
+        "title": "Creation, Props & Self"
+      },
+      "custom-class-component-property": {
+        "title": "Custom Class/Component Property"
+      },
+      "dom": {
+        "title": "Working with DOM"
+      },
+      "element-type-is-invalid": {
+        "title": "Element Type is Invalid Runtime Error"
+      },
+      "event": {
+        "title": "Event"
+      },
+      "example-projects": {
+        "title": "Example Projects"
+      },
+      "functional-component": {
+        "title": "Functional Component"
+      },
+      "i-really-need-feature-x-from-reactjs": {
+        "title": "I Really Need Feature X From ReactJS"
+      },
+      "im-having-a-type-error": {
+        "title": "I'm Having a Type Error"
+      },
+      "installation": {
+        "title": "Installation"
+      },
+      "instance-variables": {
+        "title": "Instance Variables"
+      },
+      "interop": {
+        "title": "Talk to Existing ReactJS Code"
+      },
+      "intro-example": {
+        "title": "Intro Example"
+      },
+      "invalid-prop-name": {
+        "title": "Invalid Prop Name"
+      },
+      "js-using-reason": {
+        "title": "ReactJS using ReasonReact"
+      },
+      "jsx": {
+        "title": "JSX"
+      },
+      "lifecycles": {
+        "title": "Lifecycles"
+      },
+      "playground": {
+        "title": "Playground"
+      },
+      "props-spread": {
+        "title": "Props Spread"
+      },
+      "react-ref": {
+        "title": "React Ref"
+      },
+      "reason-using-js": {
+        "title": "ReasonReact using ReactJS"
+      },
+      "record-field-send-handle-not-found": {
+        "title": "Record Field send/handle Not Found"
+      },
+      "render": {
+        "title": "Render"
+      },
+      "roadmap": {
+        "title": "Roadmap & Contribution"
+      },
+      "router": {
+        "title": "Router"
+      },
+      "send-handle-callbacks-having-incompatible-types": {
+        "title": "send/handle callbacks having Incompatible Types"
+      },
+      "simple": {
+        "title": "Simple"
+      },
+      "state-actions-reducer": {
+        "title": "State, Actions & Reducer"
+      },
+      "style": {
+        "title": "Style"
+      },
+      "subscriptions-helper": {
+        "title": "Subscriptions Helper"
+      },
+      "ternary-shortcut": {
+        "title": "Ternary Shortcut"
+      },
+      "what-and-why": {
+        "title": "What & Why"
+      }
+    },
+    "links": {
+      "Docs": "Docs",
+      "Try": "Try",
+      "Examples": "Examples",
+      "Community": "Community",
+      "Blog": "Blog",
+      "GitHub": "GitHub"
+    },
+    "categories": {
+      "Getting Started": "Getting Started",
+      "Core": "Core",
+      "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
+      "FAQ": "FAQ",
+      "Code Snippets": "Code Snippets",
+      "Community": "Community",
+      "Try": "Try"
+    }
   },
   "pages-strings": {
     "Built With ReasonReact|no description given": "Built With ReasonReact",

@@ -47,7 +47,7 @@ let make = (~message, _children) => {
       /* do whatever sneaky imperative things here */
       Js.log("props `message` changed!")
     },
-  render: (_self) => ...
+  render: (_self) => /* ... */
 };
 ```
 
@@ -69,10 +69,10 @@ let make = (~name, _children) => {
   retainedProps: name,
   willReceiveProps: (self) => {
     if (self.retainedProps === name) {
-      ...
+      /* ... */
       /* previous ReactJS logic would be: if (props.name === nextProps.name) */
     };
-    ...
+    /* ... */
   }
 };
 ```
@@ -84,7 +84,7 @@ ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `m
 ```reason
 {
   ...component,
-  willUpdate: {oldSelf, newSelf} => ...
+  willUpdate: {oldSelf, newSelf} => /* ... */
 }
 ```
 

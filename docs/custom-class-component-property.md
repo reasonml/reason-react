@@ -27,8 +27,8 @@ Since ReasonReact components are created from a record (which has fixed fields),
 Just export a standalone value/function:
 
 ```reason
-let component = ...;
-let make = ...;
+let component = /* ... */;
+let make = /* ... */;
 
 let getRandomNumber = () => 4;
 ```
