@@ -42,30 +42,30 @@
 <pre><code class="hljs css language-reason">&lt;div foo={bar}&gt; {child1} {child2} &lt;/div&gt;
 </code></pre>
 <p>transforms into</p>
-<pre><code class="hljs css language-reason"><span class="hljs-type">ReactDOMRe</span>.createElement(<span class="hljs-string">"div"</span>, ~props=<span class="hljs-type">ReactDOMRe</span>.props(~foo=bar, ()), [|child1, child2|]);
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.createElement(<span class="hljs-string">"div"</span>, ~props=<span class="hljs-module-identifier">ReactDOMRe</span>.props(~foo=bar, ()), <span class="hljs-literal">[|</span>child1, child2<span class="hljs-literal">|]</span>);
 </code></pre>
 <p>which compiles to the JS code:</p>
 <pre><code class="hljs css language-js">React.createElement(<span class="hljs-string">'div'</span>, {<span class="hljs-attr">foo</span>: bar}, child1, child2)
 </code></pre>
 <p>Prop-less <code>&lt;div /&gt;</code> transforms into</p>
-<pre><code class="hljs css language-reason"><span class="hljs-type">ReactDOMRe</span>.createElement(<span class="hljs-string">"div"</span>, [||]);
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.createElement(<span class="hljs-string">"div"</span>, <span class="hljs-literal">[|</span><span class="hljs-literal">|]</span>);
 </code></pre>
 <p>Which compiles to</p>
 <pre><code class="hljs css language-js">React.createElement(<span class="hljs-string">'div'</span>, <span class="hljs-literal">undefined</span>)
 </code></pre>
 <p><strong>Note that <code>ReactDOMRe.createElement</code> is intended for internal use by the JSX transform</strong>. For escape-hatch scenarios, use <code>ReasonReact.createDomElement</code> instead, as outlined in the <a href="/reason-react/docs/en/children">children section</a>.</p>
 <h2><a class="anchor" aria-hidden="true" id="capitalized"></a><a href="#capitalized" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Capitalized</h2>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyReasonComponent</span> key={a} <span class="hljs-keyword">ref</span>={b} foo={bar} baz={qux}&gt; {child1} {child2} &lt;/<span class="hljs-type">MyReasonComponent</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyReasonComponent</span> key={a} ref={b} foo={bar} baz={qux}&gt; {child1} {child2} &lt;/<span class="hljs-module-identifier">MyReasonComponent</span>&gt;
 </code></pre>
 <p>transforms into</p>
-<pre><code class="hljs css language-reason"><span class="hljs-type">ReasonReact</span>.element(
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReasonReact</span>.element(
   ~key=a,
-  ~<span class="hljs-keyword">ref</span>=b,
-  <span class="hljs-type">MyReasonComponent</span>.make(~foo=bar, ~baz=qux, [|child1, child2|])
+  ~ref=b,
+  <span class="hljs-module-identifier">MyReasonComponent</span>.make(~foo=bar, ~baz=qux, <span class="hljs-literal">[|</span>child1, child2<span class="hljs-literal">|]</span>)
 );
 </code></pre>
 <p>Prop-less <code>&lt;MyReasonComponent /&gt;</code> transforms into</p>
-<pre><code class="hljs css language-reason"><span class="hljs-type">ReasonReact</span>.element(<span class="hljs-type">MyReasonComponent</span>.make([||]));
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReasonReact</span>.element(<span class="hljs-module-identifier">MyReasonComponent</span>.make(<span class="hljs-literal">[|</span><span class="hljs-literal">|]</span>));
 </code></pre>
 <p>The <code>make</code> above is exactly the <code>make</code> function you've seen in the previous section.</p>
 <p><strong>Note how <code>ref</code> and <code>key</code> have been lifted out of the JSX call into the <code>ReasonReact.element</code> call</strong>. <code>ref</code> and <code>key</code> are reserved in ReasonReact, just like in ReactJS. <strong>Don't</strong> use them as props in your component!</p>
@@ -73,33 +73,33 @@
 <pre><code class="hljs css language-reason">&lt;&gt; child1 child2 &lt;/&gt;;
 </code></pre>
 <p>transforms into</p>
-<pre><code class="hljs css language-reason"><span class="hljs-type">ReactDOMRe</span>.createElement(<span class="hljs-type">ReasonReact</span>.fragment, [|child1, child2|]);
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.createElement(<span class="hljs-module-identifier">ReasonReact</span>.fragment, <span class="hljs-literal">[|</span>child1, child2<span class="hljs-literal">|]</span>);
 </code></pre>
 <p>Which compiles to</p>
 <pre><code class="hljs css language-js">React.createElement(React.Fragment, <span class="hljs-literal">undefined</span>, <span class="hljs-literal">null</span>);
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="children"></a><a href="#children" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Children</h2>
 <p>ReasonReact children are <strong>fully typed</strong>, and you can pass any data structure to it (as long as the receiver component permits it). When you write:</p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyReasonComponent</span>&gt; &lt;div /&gt; &lt;div /&gt; &lt;/<span class="hljs-type">MyReasonComponent</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyReasonComponent</span>&gt; &lt;div /&gt; &lt;div /&gt; &lt;/<span class="hljs-module-identifier">MyReasonComponent</span>&gt;
 </code></pre>
 <p>You're effectively passing the array <code>[| &lt;div /&gt;, &lt;div /&gt; |]</code> to <code>MyReasonComponent</code>'s children. But this also means that the following wouldn't work:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> theChildren = [| &lt;div /&gt;, &lt;div /&gt; |];
-&lt;<span class="hljs-type">MyReasonComponent</span>&gt; theChildren &lt;/<span class="hljs-type">MyReasonComponent</span>&gt;
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> theChildren = <span class="hljs-literal">[|</span> &lt;div /&gt;, &lt;div /&gt; <span class="hljs-literal">|]</span>;
+&lt;<span class="hljs-module-identifier">MyReasonComponent</span>&gt; theChildren &lt;/<span class="hljs-module-identifier">MyReasonComponent</span>&gt;
 </code></pre>
 <p>Because this actually translates to:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> theChildren = [| &lt;div /&gt;, &lt;div /&gt; |];
-<span class="hljs-type">ReasonReact</span>.element(
-  <span class="hljs-type">MyReasonComponent</span>.make([|theChildren|])
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> theChildren = <span class="hljs-literal">[|</span> &lt;div /&gt;, &lt;div /&gt; <span class="hljs-literal">|]</span>;
+<span class="hljs-module-identifier">ReasonReact</span>.element(
+  <span class="hljs-module-identifier">MyReasonComponent</span>.make(<span class="hljs-literal">[|</span>theChildren<span class="hljs-literal">|]</span>)
 );
 </code></pre>
 <p>Which wraps the already wrapped <code>theChildren</code> in another layer of array. To solve this issue, Reason has a special <a href="https://reasonml.github.io/docs/en/jsx.html#children-spread">children spread syntax</a>:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> theChildren = [| &lt;div /&gt;, &lt;div /&gt; |];
-&lt;<span class="hljs-type">MyReasonComponent</span>&gt; ...theChildren &lt;/<span class="hljs-type">MyReasonComponent</span>&gt;
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> theChildren = <span class="hljs-literal">[|</span> &lt;div /&gt;, &lt;div /&gt; <span class="hljs-literal">|]</span>;
+&lt;<span class="hljs-module-identifier">MyReasonComponent</span>&gt; <span class="hljs-operator">...</span>theChildren &lt;/<span class="hljs-module-identifier">MyReasonComponent</span>&gt;
 </code></pre>
 <p>This simply passes <code>theChildren</code> without array wrapping. It becomes:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> theChildren = [| &lt;div /&gt;, &lt;div /&gt; |];
-<span class="hljs-type">ReasonReact</span>.element(
-  <span class="hljs-type">MyReasonComponent</span>.make(theChildren)
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> theChildren = <span class="hljs-literal">[|</span> &lt;div /&gt;, &lt;div /&gt; <span class="hljs-literal">|]</span>;
+<span class="hljs-module-identifier">ReasonReact</span>.element(
+  <span class="hljs-module-identifier">MyReasonComponent</span>.make(theChildren)
 );
 </code></pre>
 <p>For more creative way of leveraging Reason's type system, data structures and performance to use <code>children</code> to its full potential, see the <a href="/reason-react/docs/en/children">Children section</a>!</p>

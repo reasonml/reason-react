@@ -40,24 +40,24 @@
         </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ja" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Subscriptions Helper</h1></header><article><div><span><p>In a large, heterogeneous app, you might often have legacy or interop data sources that come from outside of the React/ReasonReact tree, or a timer, or some browser event handling. You'd listen and react to these changes by, say, updating the state.</p>
 <p>For example, Here's what you're probably doing currently, for setting up a timer event:</p>
 <pre><code class="hljs css language-reason"><span class="hljs-keyword">type</span> state = {
-  timerId: <span class="hljs-keyword">ref</span>(option(<span class="hljs-type">Js</span>.<span class="hljs-type">Global</span>.intervalId))
+  timerId: ref(option(<span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.intervalId))
 };
 
-<span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.reducerComponent(<span class="hljs-string">"Todo"</span>);
+<span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.reducerComponent(<span class="hljs-string">"Todo"</span>);
 
 <span class="hljs-keyword">let</span> make = _children =&gt; {
-  ...component,
-  initialState: () =&gt; {timerId: <span class="hljs-keyword">ref</span>(<span class="hljs-type">None</span>)},
-  didMount: <span class="hljs-keyword">self</span> =&gt; {
-    <span class="hljs-keyword">self</span>.state.timerId := <span class="hljs-type">Some</span>(<span class="hljs-type">Js</span>.<span class="hljs-type">Global</span>.setInterval(() =&gt; <span class="hljs-type">Js</span>.log(<span class="hljs-string">"hello!"</span>), <span class="hljs-number">1000</span>));
+  <span class="hljs-operator">...</span>component,
+  initialState: () =&gt; {timerId: ref(<span class="hljs-constructor">None</span>)},
+  didMount: self =&gt; {
+    self.state.timerId <span class="hljs-operator">:=</span> <span class="hljs-constructor">Some</span>(<span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.setInterval(() =&gt; <span class="hljs-module-identifier">Js</span>.log(<span class="hljs-string">"hello!"</span>), <span class="hljs-number">1000</span>));
   },
-  willUnmount: <span class="hljs-keyword">self</span> =&gt; {
-    <span class="hljs-keyword">switch</span> (<span class="hljs-keyword">self</span>.state.timerId^) {
-    | <span class="hljs-type">Some</span>(id) =&gt; <span class="hljs-type">Js</span>.<span class="hljs-type">Global</span>.clearInterval(id);
-    | <span class="hljs-type">None</span> =&gt; ()
+  willUnmount: self =&gt; {
+    <span class="hljs-keyword">switch</span> (self.state.timerId<span class="hljs-operator">^</span>) {
+    | <span class="hljs-constructor">Some</span>(id) =&gt; <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.clearInterval(id);
+    | <span class="hljs-constructor">None</span> =&gt; ()
     }
   },
-  render: ...
+  render: <span class="hljs-comment">/* ... */</span>
 };
 </code></pre>
 <p>Notice a few things:</p>
@@ -69,32 +69,32 @@
 <p>For the last point, go search your codebase and see how many <code>setInterval</code> you have compared to the amount of <code>clearInterval</code>! We bet the ratio isn't 1 =). Likewise for <code>addEventListener</code> vs <code>removeEventListener</code>.</p>
 <p>To solve the above problems and to codify a good practice, ReasonReact provides a helper field in <code>self</code>, called <code>onUnmount</code>. It asks for a callback of type <code>unit =&gt; unit</code> in which you free your subscriptions. It'll be called before the component unmounts.</p>
 <p>Here's the previous example rewritten:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Todo"</span>);
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Todo"</span>);
 
 <span class="hljs-keyword">let</span> make = _children =&gt; {
-  ...component,
-  didMount: <span class="hljs-keyword">self</span> =&gt; {
-    <span class="hljs-keyword">let</span> intervalId = <span class="hljs-type">Js</span>.<span class="hljs-type">Global</span>.setInterval(() =&gt; <span class="hljs-type">Js</span>.log(<span class="hljs-string">"hello!"</span>), <span class="hljs-number">1000</span>);
-    <span class="hljs-keyword">self</span>.onUnmount(() =&gt; <span class="hljs-type">Js</span>.<span class="hljs-type">Global</span>.clearInterval(intervalId));
+  <span class="hljs-operator">...</span>component,
+  didMount: self =&gt; {
+    <span class="hljs-keyword">let</span> intervalId = <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.setInterval(() =&gt; <span class="hljs-module-identifier">Js</span>.log(<span class="hljs-string">"hello!"</span>), <span class="hljs-number">1000</span>);
+    self.onUnmount(() =&gt; <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.clearInterval(intervalId));
   },
-  render: ...
+  render: <span class="hljs-comment">/* ... */</span>
 };
 </code></pre>
 <p>Now you won't ever forget to clear your timer!</p>
 <h2><a class="anchor" aria-hidden="true" id="design-decisions"></a><a href="#design-decisions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Design Decisions</h2>
 <p><strong>Why not just put some logic in the willUnmount <code>lifecycle</code></strong>? Definitely do, whenever you could. But sometimes, folks forget to release their subscriptions inside callbacks:</p>
 <pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> make = _children =&gt; {
-  ...component,
+  <span class="hljs-operator">...</span>component,
   reducer: (action, state) =&gt; {
     <span class="hljs-keyword">switch</span> (action) {
-    | <span class="hljs-type">Click</span> =&gt; <span class="hljs-type">ReasonReact</span>.<span class="hljs-type">SideEffects</span>(<span class="hljs-keyword">self</span> =&gt; {
+    | <span class="hljs-constructor">Click</span> =&gt; <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-constructor">SideEffects</span>(self =&gt; {
         fetchAsyncData(result =&gt; {
-          <span class="hljs-keyword">self</span>.send(<span class="hljs-type">Data</span>(result))
+          self.send(<span class="hljs-constructor">Data</span>(result))
         });
       })
     }
   },
-  render: ...
+  render: <span class="hljs-comment">/* ... */</span>
 };
 </code></pre>
 <p>If the component unmounts and <em>then</em> the <code>fetchAsyncData</code> calls the callback, it'll accidentally call <code>self.send</code>. Using <code>let cancel = fetchAsyncData(...); self.onUnmount(() =&gt; cancel())</code> is much easier.</p>

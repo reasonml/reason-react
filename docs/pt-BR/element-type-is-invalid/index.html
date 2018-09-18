@@ -48,10 +48,10 @@
 <li>You're using Babel/Webpack to compile those ES6 modules.</li>
 </ul>
 <p>This is a common mistake. Please see BuckleScript's <a href="https://bucklescript.github.io/docs/en/import-export.html#import-an-es6-default-value">Import an ES6 Default Value</a>. Aka, instead of:</p>
-<pre><code class="hljs css language-reason">[@bs.<span class="hljs-keyword">module</span>] external myJSReactClass : <span class="hljs-type">ReasonReact</span>.reactClass = <span class="hljs-string">"./myJSReactClass"</span>;
+<pre><code class="hljs css language-reason"><span class="hljs-attribute">[@bs.module]</span> <span class="hljs-keyword">external</span> myJSReactClass: <span class="hljs-module-identifier">ReasonReact</span>.reactClass = <span class="hljs-string">"./myJSReactClass"</span>;
 </code></pre>
 <p>Use:</p>
-<pre><code class="hljs css language-reason">[@bs.<span class="hljs-keyword">module</span> <span class="hljs-string">"./myJSReactClass"</span>] external myJSReactClass : <span class="hljs-type">ReasonReact</span>.reactClass = <span class="hljs-string">"default"</span>;
+<pre><code class="hljs css language-reason"><span class="hljs-attribute">[@bs.module "./myJSReactClass"]</span> <span class="hljs-keyword">external</span> myJSReactClass: <span class="hljs-module-identifier">ReasonReact</span>.reactClass = <span class="hljs-string">"default"</span>;
 </code></pre>
 <p>Remember that Reason doesn't have runtime type errors! So it <em>must</em> have meant that your binding was written wrongly.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/pt-BR/i-really-need-feature-x-from-reactjs"><span class="arrow-prev">← </span><span>Previous</span></a></div></div></div><nav class="onPageNav docOnPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({

@@ -73,13 +73,13 @@
 <p>What does this unlock? Crazy tricks like these:</p>
 <ul>
 <li><p>A form component that mandates a tuple of 2 react element and shows them side-by-side:</p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyForm</span>&gt; ...(&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-type">MyForm</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyForm</span>&gt; <span class="hljs-operator">...</span>(&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-module-identifier">MyForm</span>&gt;
 </code></pre></li>
 <li><p>A component that mandates a callback, no need for ReactJS' <code>React.Children.only</code> runtime check:</p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">Motion</span>&gt; ...((name) =&gt; &lt;div className=name /&gt;) &lt;/<span class="hljs-type">Motion</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">Motion</span>&gt; <span class="hljs-operator">...</span>((name) =&gt; &lt;div className=name /&gt;) &lt;/<span class="hljs-module-identifier">Motion</span>&gt;
 </code></pre></li>
 <li><p>A layout helper that accepts a variant of <code>TwoRows | ThreeRows | FourColumns</code></p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">Layout</span>&gt; ...(<span class="hljs-type">ThreeRows</span>(&lt;div /&gt;, child2, child3)) &lt;/<span class="hljs-type">Layout</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">Layout</span>&gt; <span class="hljs-operator">...</span>(<span class="hljs-constructor">ThreeRows</span>(&lt;div /&gt;, child2, child3)) &lt;/<span class="hljs-module-identifier">Layout</span>&gt;
 </code></pre></li>
 </ul>
 <p>The type system will ensure that the data you're passing matches its usage inside these component. No need to explicitly annotate them unless you want to.</p>

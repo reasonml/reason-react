@@ -40,10 +40,10 @@
         </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/clone-element.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">cloneElement</h1></header><article><div><span><p>Signature: <code>let cloneElement: (reactElement, ~props: Js.t({..})=?, 'anyChildrenType) =&gt; reactElement</code></p>
 <p>Same as ReactJS' <a href="https://reactjs.org/docs/react-api.html#cloneelement">cloneElement</a>. However, adding extra props to a ReasonReact component doesn't make sense; you'd use a <a href="https://reactjs.org/docs/render-props.html"><strong>render prop</strong></a>. Therefore, <code>ReasonReact.cloneElement</code> is only used in edge-cases to convert over existing code.</p>
 <pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> clonedElement =
-  <span class="hljs-type">ReasonReact</span>.cloneElement(
+  <span class="hljs-module-identifier">ReasonReact</span>.cloneElement(
     &lt;div className=<span class="hljs-string">"foo"</span> /&gt;,
     ~props={<span class="hljs-string">"payload"</span>: <span class="hljs-number">1</span>},
-    [||]
+    <span class="hljs-literal">[|</span><span class="hljs-literal">|]</span>
   );
 </code></pre>
 <p>The <code>props</code> value is unsafe, be careful!</p>

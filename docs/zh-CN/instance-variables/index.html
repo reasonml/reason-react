@@ -47,21 +47,24 @@
 <p>实际上，这么做你同样是改变了这个组件的 &quot;state&quot;，只是不触发 re-render， ReasonReact asks you to correctly put these instance variables into your component's <code>state</code>, into Reason <a href="https://reasonml.github.io/docs/en/mutation.html"><code>ref</code>s</a>.</p>
 <pre><code class="hljs css language-reason"><span class="hljs-keyword">type</span> state = {
   someRandomState: option(string),
-  intervalId: <span class="hljs-keyword">ref</span>(option(int))
+  intervalId: ref(option(int))
 };
 
-<span class="hljs-keyword">let</span> component = ...; <span class="hljs-comment">/* remember, `component` needs to be close to `make`, and after `state` type declaration! */</span>
+<span class="hljs-keyword">let</span> component = <span class="hljs-comment">/* ... */</span>; <span class="hljs-comment">/* remember, `component` needs to be close to `make`, and after `state` type declaration! */</span>
 
 <span class="hljs-keyword">let</span> make = (_children) =&gt; {
-  ...component,
-  initialState: () =&gt; {someRandomState: <span class="hljs-type">Some</span>(<span class="hljs-string">"hello"</span>), intervalId: <span class="hljs-keyword">ref</span>(<span class="hljs-type">None</span>)},
+  <span class="hljs-operator">...</span>component,
+  initialState: () =&gt; {
+    someRandomState: <span class="hljs-constructor">Some</span>(<span class="hljs-string">"hello"</span>),
+    intervalId: ref(<span class="hljs-constructor">None</span>),
+  },
   didMount: ({state}) =&gt; {
     <span class="hljs-comment">/* mutate the value here */</span>
-    state.intervalId := <span class="hljs-type">Some</span>(<span class="hljs-type">Js</span>.<span class="hljs-type">Global</span>.setInterval(...));
+    state.intervalId <span class="hljs-operator">:=</span> <span class="hljs-constructor">Some</span>(<span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.setInterval(<span class="hljs-comment">/* ... */</span>));
     <span class="hljs-comment">/* no extra state update needed */</span>
-    <span class="hljs-type">ReasonReact</span>.<span class="hljs-type">NoUpdate</span>
+    <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-constructor">NoUpdate</span>
   },
-  render: ...
+  render: <span class="hljs-comment">/* ... */</span>
 };
 </code></pre>
 <p><strong>所有的实例变量 (subscriptions, refs, etc.) 都必须在 state 里面标记成 <code>ref</code></strong>， 不要在 state record 上直接使用 <code>mutable</code>， 使用一个不可变的字段去指向一个 Reason <code>ref</code>。 为什么要这样约束？ 为了更好的管理 side-effects 和 mutations 来准备 concurrent React。 More details <a href="https://reasonml.github.io/try.html?reason=C4TwDgpgBAzlC8UDeBDAXFAlgO2AGlgHsBbCASWxmBWwGMIA1FAJw2YgDMAKHYASgC+AbgBQAegBUUbIQDuUCWJEAbCMFjVg0REhFQo6KAEY8eoqQpUa9JqyjtuAJj4jh4qRGIBXZSi1QAAystAINaehg4DmYSKFplQhgvdgA6KAAVAAtodhQAEyhCDkDgiFDiTABzTPUAI2grVShakChgbLbMUixgAHI4CAAPCFovLTyMRXcoDi9sZFKBBAA+GbmoLj4VqAAlCBQYQmw9lFpgFIBVMDy-aCQUh9KCWt8lqdV1UscEZAeUp4MGAAzG5JM0xlBvJpMEdCsUgpoytIIBA8nBgIRmjlOKozqisPMEbdHKEqJhlMoAIQKJSlf4kciUah0RgsKBoRAAFlEYJgmUIPgK9SgnJpIgAUjAUglKlwvvSLEzrKzmAA9Pg8qTtTBwWQC5R5bC9dR65gAaywxVk0DymNAkAMCFQGF4BChKBeDQZlmZNhYLtwbzEQA">here</a> if you're ever interested.</p>

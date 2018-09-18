@@ -63,58 +63,58 @@
 </code></pre>
 <p>So the url <code>www.hello.com/book/10/edit?name=Jane#author</code> is given back as:</p>
 <pre><code class="hljs css language-reason">{
-  path: [<span class="hljs-string">"book"</span>, <span class="hljs-string">"10"</span>, <span class="hljs-string">"edit"</span>],
+  path: <span class="hljs-literal">[</span><span class="hljs-string">"book"</span>, <span class="hljs-string">"10"</span>, <span class="hljs-string">"edit"</span><span class="hljs-literal">]</span>,
   hash: <span class="hljs-string">"author"</span>,
   search: <span class="hljs-string">"name=Jane"</span>
 }
 </code></pre>
 <p>At this point, you can simply pattern match your way to glory!</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> watcherID = <span class="hljs-type">ReasonReact</span>.<span class="hljs-type">Router</span>.watchUrl(url =&gt; {
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> watcherID = <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-module-identifier">Router</span>.watchUrl(url =&gt; {
   <span class="hljs-keyword">switch</span> (url.path) {
-  | [<span class="hljs-string">"book"</span>, id, <span class="hljs-string">"edit"</span>] =&gt; handleBookEdit(id)
-  | [<span class="hljs-string">"book"</span>, id] =&gt; getBook(id)
-  | [<span class="hljs-string">"book"</span>, id, <span class="hljs-number">_</span>] =&gt; noSuchBookOperation()
-  | [] =&gt; showMainPage()
-  | [<span class="hljs-string">"shop"</span>] | [<span class="hljs-string">"shop"</span>, <span class="hljs-string">"index"</span>] =&gt; showShoppingPage()
-  | [<span class="hljs-string">"shop"</span>, ...rest] =&gt;
+  | <span class="hljs-literal">[</span><span class="hljs-string">"book"</span>, id, <span class="hljs-string">"edit"</span><span class="hljs-literal">]</span> =&gt; handleBookEdit(id)
+  | <span class="hljs-literal">[</span><span class="hljs-string">"book"</span>, id<span class="hljs-literal">]</span> =&gt; getBook(id)
+  | <span class="hljs-literal">[</span><span class="hljs-string">"book"</span>, id, _<span class="hljs-literal">]</span> =&gt; noSuchBookOperation()
+  | <span class="hljs-literal">[</span><span class="hljs-literal">]</span> =&gt; showMainPage()
+  | <span class="hljs-literal">[</span><span class="hljs-string">"shop"</span><span class="hljs-literal">]</span> | <span class="hljs-literal">[</span><span class="hljs-string">"shop"</span>, <span class="hljs-string">"index"</span><span class="hljs-literal">]</span> =&gt; showShoppingPage()
+  | <span class="hljs-literal">[</span><span class="hljs-string">"shop"</span>, <span class="hljs-operator">...</span>rest<span class="hljs-literal">]</span> =&gt;
      <span class="hljs-comment">/* e.g. "shop/cart/10", but let "cart/10" be handled by another function */</span>
     nestedMatch(rest)
-  | <span class="hljs-number">_</span> =&gt; showNotFoundPage()
+  | _ =&gt; showNotFoundPage()
   }
 });
 
 <span class="hljs-comment">/* some time later */</span>
-<span class="hljs-type">ReasonReact</span>.<span class="hljs-type">Router</span>.unwatchUrl(watcherID);
+<span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-module-identifier">Router</span>.unwatchUrl(watcherID);
 </code></pre>
 <p>So you can match a path, match a subset of a path, defer part of a matching to a nested logic, etc.</p>
 <h3><a class="anchor" aria-hidden="true" id="tips-tricks"></a><a href="#tips-tricks" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tips &amp; Tricks</h3>
 <p>Notice that this is just normal <a href="https://reasonml.github.io/docs/en/pattern-matching.html">pattern matching</a>. You can combine it with other features, such as tuple + ReasonReact features like <a href="/reason-react/docs/ko/subscriptions-helper">subscriptions</a> and reducer:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.reducerComponent(<span class="hljs-string">"TodoApp"</span>);
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.reducerComponent(<span class="hljs-string">"TodoApp"</span>);
 
 <span class="hljs-keyword">let</span> make = _children =&gt; {
-  ...component,
+  <span class="hljs-operator">...</span>component,
   reducer: (action, state) =&gt;
     <span class="hljs-keyword">switch</span> (action) {
     <span class="hljs-comment">/* router actions */</span>
-    | <span class="hljs-type">ShowAll</span> =&gt; <span class="hljs-type">ReasonReact</span>.<span class="hljs-type">Update</span>({...state, nowShowing: <span class="hljs-type">AllTodos</span>})
-    | <span class="hljs-type">ShowActive</span> =&gt; ...
+    | <span class="hljs-constructor">ShowAll</span> =&gt; <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-constructor">Update</span>({<span class="hljs-operator">...</span>state, nowShowing: <span class="hljs-constructor">AllTodos</span>})
+    | <span class="hljs-constructor">ShowActive</span> =&gt; <span class="hljs-comment">/* ... */</span>
     <span class="hljs-comment">/* todo actions */</span>
-    | <span class="hljs-type">ChangeTodo</span>(text) =&gt; ...
+    | <span class="hljs-constructor">ChangeTodo</span>(text) =&gt; <span class="hljs-comment">/* ... */</span>
     },
-  didMount: <span class="hljs-keyword">self</span> =&gt; {
-    <span class="hljs-keyword">let</span> watcherID = <span class="hljs-type">ReasonReact</span>.<span class="hljs-type">Router</span>.watchUrl(url =&gt; {
-      <span class="hljs-keyword">switch</span> (url.hash, <span class="hljs-type">MyAppStatus</span>.isUserLoggedIn) {
-      | (<span class="hljs-string">"active"</span>, <span class="hljs-number">_</span>) =&gt; <span class="hljs-keyword">self</span>.send(<span class="hljs-type">ShowActive</span>)
-      | (<span class="hljs-string">"completed"</span>, <span class="hljs-number">_</span>) =&gt; <span class="hljs-keyword">self</span>.send(<span class="hljs-type">ShowCompleted</span>)
-      | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">true</span>) =&gt; <span class="hljs-keyword">self</span>.send(<span class="hljs-type">ShowShared</span>)
-      | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span>) when isSpecialUser =&gt; ... <span class="hljs-comment">/* handle this state */</span>
-      | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span>) =&gt; ... <span class="hljs-comment">/* handle this state */</span>
-      | <span class="hljs-number">_</span> =&gt; <span class="hljs-keyword">self</span>.send(<span class="hljs-type">ShowAll</span>)
+  didMount: self =&gt; {
+    <span class="hljs-keyword">let</span> watcherID = <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-module-identifier">Router</span>.watchUrl(url =&gt; {
+      <span class="hljs-keyword">switch</span> (url.hash, <span class="hljs-module-identifier">MyAppStatus</span>.isUserLoggedIn) {
+      | (<span class="hljs-string">"active"</span>, _) =&gt; self.send(<span class="hljs-constructor">ShowActive</span>)
+      | (<span class="hljs-string">"completed"</span>, _) =&gt; self.send(<span class="hljs-constructor">ShowCompleted</span>)
+      | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">true</span>) =&gt; self.send(<span class="hljs-constructor">ShowShared</span>)
+      | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span>) when isSpecialUser =&gt; <span class="hljs-comment">/* handle this state please */</span>
+      | (<span class="hljs-string">"shared"</span>, <span class="hljs-literal">false</span>) =&gt; <span class="hljs-comment">/* handle this state please */</span>
+      | _ =&gt; self.send(<span class="hljs-constructor">ShowAll</span>)
       }
     });
-    <span class="hljs-keyword">self</span>.onUnmount(() =&gt; <span class="hljs-type">ReasonReact</span>.<span class="hljs-type">Router</span>.unwatchUrl(watcherID));
+    self.onUnmount(() =&gt; <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-module-identifier">Router</span>.unwatchUrl(watcherID));
   },
-  render: ...
+  render: <span class="hljs-operator">...</span>
 }
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="directly-get-a-route"></a><a href="#directly-get-a-route" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Directly Get a Route</h2>

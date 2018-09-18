@@ -38,21 +38,21 @@
               }
             });
         </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/simple.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Simple</h1></header><article><div><span><p>See <a href="https://github.com/reasonml-community/reason-react-example">https://github.com/reasonml-community/reason-react-example</a> for examples you can clone and run. This page copy pastes a few from there for ease of reading.</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-type">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Page"</span>);
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Page"</span>);
 
-<span class="hljs-keyword">let</span> handleClick = (_event, _self) =&gt; <span class="hljs-type">Js</span>.log(<span class="hljs-string">"clicked!"</span>);
+<span class="hljs-keyword">let</span> handleClick = (_event, _self) =&gt; <span class="hljs-module-identifier">Js</span>.log(<span class="hljs-string">"clicked!"</span>);
 
 <span class="hljs-keyword">let</span> make = (~message, _children) =&gt; {
-  ...component,
-  render: <span class="hljs-keyword">self</span> =&gt;
-    &lt;div onClick={<span class="hljs-keyword">self</span>.handle(handleClick)}&gt;{<span class="hljs-type">ReasonReact</span>.string(message)}&lt;/div&gt;
+  <span class="hljs-operator">...</span>component,
+  render: self =&gt;
+    &lt;div onClick={self.handle(handleClick)}&gt;{<span class="hljs-module-identifier">ReasonReact</span>.string(message)}&lt;/div&gt;
 };
 </code></pre>
 <p>Usage in another file:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-type">ReactDOMRe</span>.renderToElementWithId(&lt;<span class="hljs-type">Page</span> message=<span class="hljs-string">"Hello!"</span> /&gt;, <span class="hljs-string">"index"</span>);
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.renderToElementWithId(&lt;<span class="hljs-module-identifier">Page</span> message=<span class="hljs-string">"Hello!"</span> /&gt;, <span class="hljs-string">"index"</span>);
 </code></pre>
 <p>In the same file, you'd do:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-type">ReactDOMRe</span>.renderToElementWithId(<span class="hljs-type">ReasonReact</span>.element(make(~message=<span class="hljs-string">"Hello!"</span>, [||])), <span class="hljs-string">"index"</span>);
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.renderToElementWithId(<span class="hljs-module-identifier">ReasonReact</span>.element(make(~message=<span class="hljs-string">"Hello!"</span>, <span class="hljs-literal">[|</span><span class="hljs-literal">|]</span>)), <span class="hljs-string">"index"</span>);
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="/reason-react/docs/en/counter"><span>Next</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
           areas: [

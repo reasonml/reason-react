@@ -74,21 +74,21 @@ render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</s
 <h2><a class="anchor" aria-hidden="true" id="limitacion-sintactica"></a><a href="#limitacion-sintactica" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Limitación Sintáctica</h2>
 <p><em>Técnicamente</em>, si has escrito un component que acepta una tupla como <code>children</code>:</p>
 <pre><code class="hljs css language-reason"><span class="hljs-comment">/* MyForm.re */</span>
-<span class="hljs-keyword">type</span> tuple2Children = (<span class="hljs-type">ReasonReact</span>.reactElement, <span class="hljs-type">ReasonReact</span>.reactElement);
+<span class="hljs-keyword">type</span> tuple2Children = (<span class="hljs-module-identifier">ReasonReact</span>.reactElement, <span class="hljs-module-identifier">ReasonReact</span>.reactElement);
 
 <span class="hljs-keyword">let</span> make = (children: tuple2Children) =&gt; {
-  ...component,
+  <span class="hljs-operator">...</span>component,
   render: _self =&gt; {
     &lt;div&gt;
       {fst(children)}
-      &lt;<span class="hljs-type">Separator</span> /&gt;
+      &lt;<span class="hljs-module-identifier">Separator</span> /&gt;
       {snd(children)}
     &lt;/div&gt;
   }
 };
 </code></pre>
 <p>Then you can expect the user to pass you a tuple:</p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyForm</span>&gt; (&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-type">MyForm</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyForm</span>&gt; (&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-module-identifier">MyForm</span>&gt;
 </code></pre>
 <p>Sin embargo esto daría un error:</p>
 <pre><code class="hljs">This has type:
@@ -97,15 +97,15 @@ But somewhere wanted:
   tuple2Children (defined as (ReasonReact.reactElement, ReasonReact.reactElement))
 </code></pre>
 <p>Significa que <code>MyForm</code> espera una tupla, ¡pero le estás pasando un <code>array</code> en su lugar! Qué está ocurriendo? Bueno, si observamos qué ocurre durante la transformación de JSX vemos que:</p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyLayout</span>&gt; a b &lt;/<span class="hljs-type">MyLayout</span>&gt;
-&lt;<span class="hljs-type">MyLayout</span>&gt; a &lt;/<span class="hljs-type">MyLayout</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyLayout</span>&gt; a b &lt;/<span class="hljs-module-identifier">MyLayout</span>&gt;
+&lt;<span class="hljs-module-identifier">MyLayout</span>&gt; a &lt;/<span class="hljs-module-identifier">MyLayout</span>&gt;
 </code></pre>
 <p>Se transforma en realidad en:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-type">ReasonReact</span>.element(
-  <span class="hljs-type">MyLayout</span>.make([|a, b|])
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReasonReact</span>.element(
+  <span class="hljs-module-identifier">MyLayout</span>.make(<span class="hljs-literal">[|</span>a, b<span class="hljs-literal">|]</span>)
 );
-<span class="hljs-type">ReasonReact</span>.element(
-  <span class="hljs-type">MyLayout</span>.make([|a|])
+<span class="hljs-module-identifier">ReasonReact</span>.element(
+  <span class="hljs-module-identifier">MyLayout</span>.make(<span class="hljs-literal">[|</span>a<span class="hljs-literal">|]</span>)
 );
 </code></pre>
 <p>¿Ves como los <code>children</code> del segundo <code>MyLayout</code> también están dentro de un array? No podemos especializar el caso de <code>&lt;MyLayout&gt; a &lt;/MyLayout&gt;</code> y pasar <code>a</code> sin estar dentro de un array (eso llevaría a crear errores incluso más confusos). Ya que <code>children</code> suele ser un array. Hemos decidido pasarlo siempre como array, independientemente de la cantidad de items que haya el el JSX. Pero, ¿qué ocurre si de verdad quieres pasar datos sin estar dentro de un array?</p>
@@ -115,13 +115,13 @@ But somewhere wanted:
 <p>A continuación se muestran algunos casos de uso para la expansión de hijos <code>...a</code> junto a las estructuras de datos incluidas en Reason:</p>
 <ul>
 <li><p>Un componente layout que requiere una tupla de 2 elementos React y los muestra adyacentemente:</p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">MyForm</span>&gt; ...(&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-type">MyForm</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyForm</span>&gt; <span class="hljs-operator">...</span>(&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-module-identifier">MyForm</span>&gt;
 </code></pre></li>
 <li><p>Un componente que requiere un callback, sin necesidad de usar <code>React.Children.only</code>:</p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">Motion</span>&gt; ...((name) =&gt; &lt;div className=name /&gt;) &lt;/<span class="hljs-type">Motion</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">Motion</span>&gt; <span class="hljs-operator">...</span>((name) =&gt; &lt;div className=name /&gt;) &lt;/<span class="hljs-module-identifier">Motion</span>&gt;
 </code></pre></li>
 <li><p>Una función de utilidad de layout que acepta una variante de <code>TwoRows | ThreeRows | FourColumns</code></p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-type">Layout</span>&gt; ...(<span class="hljs-type">ThreeRows</span>(&lt;div /&gt;, child2, child3)) &lt;/<span class="hljs-type">Layout</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">Layout</span>&gt; <span class="hljs-operator">...</span>(<span class="hljs-constructor">ThreeRows</span>(&lt;div /&gt;, child2, child3)) &lt;/<span class="hljs-module-identifier">Layout</span>&gt;
 </code></pre></li>
 </ul>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/es-ES/clone-element"><span class="arrow-prev">← </span><span>Anterior</span></a><a class="docs-next button" href="/reason-react/docs/es-ES/dom"><span>Siguiente</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"><ul class="toc-headings"><li><a href="#limitacion-sintactica">Limitación Sintáctica</a><ul class="toc-headings"><li><a href="#expansion-de-hijos">Expansión de hijos</a></li></ul></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
