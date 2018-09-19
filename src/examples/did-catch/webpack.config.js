@@ -3,7 +3,10 @@ var path = require("path");
 module.exports = {
   mode: "development",
   entry: {
-    "DidCatch.bundle": path.join(__dirname, "DidCatch.bs.js")
+    "DidCatchAlternativeSyntax.bundle": path.join(
+      __dirname,
+      "DidCatchAlternativeSyntax.bs.js"
+    )
   },
   output: {
     path: __dirname
