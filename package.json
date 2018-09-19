@@ -23,11 +23,11 @@
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
     "bs-platform": "^4.0.3",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "webpack": "^4.19.1"
   },
   "dependencies": {
     "react": ">=15.0.0 || >=16.0.0",
-    "react-dom": ">=15.0.0 || >=16.0.0",
-    "webpack": "^4.19.1"
+    "react-dom": ">=15.0.0 || >=16.0.0"
   }
 }
