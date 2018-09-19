@@ -140,25 +140,20 @@ and statelessComponent = {
   render: statelessSelf => reactElement,
 };
 
-type component('a) =
-  | Stateless(statelessComponent): component(statelessComponent)
-  | Reducer(reducerComponent('state, 'action))
-    : component(reducerComponent('state, 'action));
-
 type jsPropsToReason('component, 'props) = 'props => 'component
 and jsComponent('component, 'props) = {
   .
-  "props": {. "reasonProps": Js.Nullable.t(component('component))},
+  "props": {. "reasonProps": Js.Nullable.t('component)},
   "constructor": jsConstructor('component, 'props),
 }
 and totalState('state, 'action) = {. "reasonState": 'state}
 and jsConstructor('component, 'props) = {
   .
-  "jsPropsToReason": option(jsPropsToReason(component('component), 'props)),
+  "jsPropsToReason": option(jsPropsToReason('component, 'props)),
 }
 and jsThis('component, 'props, 'state, 'action) = {
   .
-  "props": {. "reasonProps": Js.Nullable.t(component('component))},
+  "props": {. "reasonProps": Js.Nullable.t('component)},
   "state": totalState('state, 'action),
   "setState":
     [@bs.meth] (
@@ -175,23 +170,15 @@ and jsThis('component, 'props, 'state, 'action) = {
 let convertPropsIfTheyreFromJs:
   type spec.
     (
-      {. "reasonProps": Js.Nullable.t(component(spec))},
-      option(jsPropsToReason(component(spec), 'props)),
+      {. "reasonProps": Js.Nullable.t(spec)},
+      option(jsPropsToReason(spec, 'props)),
       string
     ) =>
     spec =
   (props, jsPropsToReason, debugName) =>
     switch (props##reasonProps->Js.Nullable.toOption, jsPropsToReason) {
-    | (Some(props), _) =>
-      switch (props) {
-      | Stateless(spec) => spec
-      | Reducer(spec) => spec
-      }
-    | (None, Some(toReasonProps)) =>
-      switch (toReasonProps()) {
-      | Stateless(spec) => spec
-      | Reducer(spec) => spec
-      }
+    | (Some(props), _) => props
+    | (None, Some(toReasonProps)) => toReasonProps()
     | (None, None) =>
       raise(
         Invalid_argument(
@@ -203,23 +190,12 @@ let convertPropsIfTheyreFromJs:
     };
 
 let wrapReasonForJs:
-  type spec.
-    (
-      ~component: component(spec),
-      jsPropsToReason(component(spec), 'props)
-    ) =>
-    reactClass =
-  (~component, jsPropsToReason) =>
-    switch (component) {
-    | Stateless(statelessComponent) =>
-      let reactClassInternal = statelessComponent.reactClassInternal;
-      reactClassInternal->Obj.magic##jsPropsToReason #= Some(jsPropsToReason);
-      reactClassInternal;
-    | Reducer(reducerComponent) =>
-      let reactClassInternal = reducerComponent.reactClassInternal;
-      reactClassInternal->Obj.magic##jsPropsToReason #= Some(jsPropsToReason);
-      reactClassInternal;
-    };
+  type spec. (~component: spec, jsPropsToReason(spec, 'props)) => reactClass =
+  (~component, jsPropsToReason) => {
+    let reactClassInternal = Obj.repr(component)->Obj.field(0)->Obj.magic;
+    reactClassInternal##jsPropsToReason #= Some(jsPropsToReason);
+    reactClassInternal;
+  };
 
 module Component = {
   let anyToUnit = _ => ();
@@ -715,11 +691,7 @@ let reducerComponent = Component.Reducer.make;
 
 let element:
   type spec.
-    (
-      ~key: string=?,
-      ~ref: Js.nullable(reactRef) => unit=?,
-      component(spec)
-    ) =>
+    (~key: string=?, ~ref: Js.nullable(reactRef) => unit=?, spec) =>
     reactElement =
   (
     ~key=Obj.magic(Js.Nullable.undefined),
@@ -733,20 +705,13 @@ let element:
         ~ref=Js.Nullable.return(ref),
       )
     | None =>
-      switch (element) {
-      | Stateless(statelessComponent) =>
-        createElement(
-          statelessComponent.reactClassInternal,
-          ~props={"key": key, "ref": ref, "reasonProps": element},
-          [||],
-        )
-      | Reducer(reducerComponent) =>
-        createElement(
-          reducerComponent.reactClassInternal,
-          ~props={"key": key, "ref": ref, "reasonProps": element},
-          [||],
-        )
-      }
+      let reactClassInternal: reactClass =
+        element->Obj.repr->Obj.field(0)->Obj.magic;
+      createElement(
+        reactClassInternal,
+        ~props={"key": key, "ref": ref, "reasonProps": element},
+        [||],
+      );
     };
 
 module WrapProps = {

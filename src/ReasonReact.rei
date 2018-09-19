@@ -71,23 +71,13 @@ and statelessComponent = {
 };
 type jsPropsToReason('component, 'props) = 'props => 'component;
 
-type component('a) =
-  | Stateless(statelessComponent): component(statelessComponent)
-  | Reducer(reducerComponent('state, 'action))
-    : component(reducerComponent('state, 'action));
-
 let wrapReasonForJs:
-  (
-    ~component: component('spec),
-    jsPropsToReason(component('spec), 'props)
-  ) =>
-  reactClass;
+  (~component: 'spec, jsPropsToReason('spec, 'props)) => reactClass;
 
 let statelessComponent: string => statelessComponent;
 let reducerComponent: string => reducerComponent('a, 'b);
 let element:
-  (~key: string=?, ~ref: Js.nullable(reactRef) => unit=?, component('a)) =>
-  reactElement;
+  (~key: string=?, ~ref: Js.nullable(reactRef) => unit=?, 'a) => reactElement;
 module WrapProps: {
   let wrapProps:
     (
