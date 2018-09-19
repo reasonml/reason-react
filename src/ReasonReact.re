@@ -35,13 +35,22 @@ let createClassFactory = [%bs.raw
   {|
 function createClass(ReactComponent, spec) {
   var prototype = Object.create(ReactComponent.prototype);
-  var statics = {"getDerivedStateFromProps": 1};
+  var statics = { getDerivedStateFromProps: 1, displayName: 1 };
+  var lifecycle = {
+    componentDidMount: 1,
+    componentDidUpdate: 1,
+    componentWillUpdate: 1,
+    shouldComponentUpdate: 1,
+    componentDidCatch: 1,
+    componentWillUnmount: 1,
+    render: 1
+  };
   var specKeys = Object.keys(spec);
   function Component(props, context, updater) {
     ReactComponent.call(this, props, context, updater);
     this.state = this.getInitialState ? this.getInitialState() : null;
-    specKeys.forEach(function(key) {
-      if (typeof this[key] === "function") {
+    Object.keys(Component.prototype).forEach(function(key) {
+      if (typeof this[key] === "function" && !lifecycle[key]) {
         this[key] = this[key].bind(this);
       }
     }, this);
@@ -49,17 +58,16 @@ function createClass(ReactComponent, spec) {
   specKeys.forEach(function(key) {
     if (statics[key]) {
       Component[key] = spec[key];
-      if(typeof Component[key] === "function") {
-        Component[key] = Component[key].bind(Component);
-      }
     } else {
       prototype[key] = spec[key];
     }
   });
   Component.prototype = prototype;
   Component.prototype.constructor = Component;
-  return Component
+  Component.prototype.__defined = false;
+  return Component;
 }
+
 |}
 ];
 
@@ -143,6 +151,7 @@ and statelessComponent = {
 type jsPropsToReason('component, 'props) = 'props => 'component
 and jsComponent('component, 'props) = {
   .
+  "__defined": bool,
   "props": {. "reasonProps": Js.Nullable.t('component)},
   "constructor": jsConstructor('component, 'props),
 }
@@ -153,6 +162,7 @@ and jsConstructor('component, 'props) = {
 }
 and jsThis('component, 'props, 'state, 'action) = {
   .
+  "__defined": bool,
   "props": {. "reasonProps": Js.Nullable.t('component)},
   "state": totalState('state, 'action),
   "setState":
@@ -248,9 +258,16 @@ module Component = {
       external thisJs:
         jsThis(reducerComponent('state, 'action), 'props, 'state, 'action) =
         "this";
-      let make =
-          (spec: reducerComponent('state, 'action))
-          : jsStatefulComponent('state, 'action, 'payload, 'jsProps, 'jsState) => {
+      [@bs.set]
+      external setDefined:
+        (
+          jsThis(reducerComponent('state, 'action), 'props, 'state, 'action),
+          bool
+        ) =>
+        unit =
+        "__defined";
+      let make = (spec: reducerComponent('state, 'action)): reactClass => {
+        let reactClass = ref(None);
         let handleMethod = (callback, callbackPayload): unit =>
           callback(
             callbackPayload,
@@ -298,6 +315,13 @@ module Component = {
             Js.Array.push(subscription, subscriptions)->ignore
           | None => addSubscription(this, Js.Null.return([|subscription|]))
           };
+        let self = state => {
+          handle: this##handleMethod->Obj.magic,
+          onUnmount: this##onUnmountMethod,
+          state,
+          send: this##sendMethod->Obj.magic,
+        };
+
         let getInitialState = () => {
           let component: reducerComponent('state, 'action) =
             convertPropsIfTheyreFromJs(
@@ -305,181 +329,216 @@ module Component = {
               thisJs##constructor##jsPropsToReason,
               spec.debugName,
             );
+
+          if (!thisJs##__defined) {
+            setDefined(thisJs, true);
+            let componentDidMount =
+              component.didMount === anyToUnit ?
+                Js.Undefined.empty :
+                Js.Undefined.return(() => {
+                  let component: reducerComponent('state, 'action) =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.didMount(
+                    {
+                      let self = this##self;
+                      self();
+                    },
+                  );
+                });
+            let componentDidUpdate =
+              component.didUpdate === anyToUnit ?
+                Js.Undefined.empty :
+                Js.Undefined.return((_prevProps, prevState) => {
+                  let component: reducerComponent('state, 'action) =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.didUpdate({
+                    newSelf: {
+                      let self = this##self;
+                      self(thisJs##state##reasonState);
+                    },
+                    oldSelf: {
+                      let self = this##self;
+                      self(prevState##reasonState);
+                    },
+                  });
+                });
+            let componentWillUpdate =
+              component.willUpdate === anyToUnit ?
+                Js.Undefined.empty :
+                Js.Undefined.return((_nextProps, nextState) => {
+                  let component: reducerComponent('state, 'action) =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.willUpdate({
+                    newSelf: {
+                      let self = this##self;
+                      self(nextState##reasonState);
+                    },
+                    oldSelf: {
+                      let self = this##self;
+                      self(thisJs##state##reasonState);
+                    },
+                  });
+                });
+            let componentDidCatch =
+              component.didCatch === defaultDidCatch ?
+                Js.Undefined.empty :
+                Js.Undefined.return((exn, jsInfo) => {
+                  let component: reducerComponent('state, 'action) =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.didCatch(
+                    {
+                      let self = this##self;
+                      self(thisJs##state##reasonState);
+                    },
+                    exn,
+                    jsInfo->didCatchInfoFromJs,
+                  );
+                });
+            let getDerivedStateFromProps =
+              component.getDerivedStateFromProps
+              === defaultGetDerivedStateFromProps ?
+                None :
+                Some(
+                  (props, state) => {
+                    let component: reducerComponent('state, 'action) =
+                      convertPropsIfTheyreFromJs(
+                        props,
+                        staticThis##jsPropsToReason,
+                        spec.debugName,
+                      );
+                    let reasonState =
+                      component.getDerivedStateFromProps(state##reasonState);
+                    {"reasonState": reasonState};
+                  },
+                );
+            let componentWillUnmount = () => {
+              let component: reducerComponent('state, 'action) =
+                convertPropsIfTheyreFromJs(
+                  thisJs##props,
+                  thisJs##constructor##jsPropsToReason,
+                  spec.debugName,
+                );
+              if (component.willUnmount !== anyToUnit) {
+                component.willUnmount(
+                  {
+                    let self = this##self;
+                    self();
+                  },
+                );
+              };
+              switch (this##subscriptions->Js.Null.toOption) {
+              | Some(subscriptions) =>
+                Js.Array.forEach(unsubscribe => unsubscribe(), subscriptions)
+              | None => ()
+              };
+            };
+            let shouldComponentUpdate =
+              component.shouldUpdate === anyToTrue ?
+                Js.Undefined.empty :
+                Js.Undefined.return((_nextProps, nextState) => {
+                  let component: reducerComponent('state, 'action) =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.shouldUpdate({
+                    newSelf: {
+                      let self = this##self;
+                      self(nextState##reasonState);
+                    },
+                    oldSelf: {
+                      let self = this##self;
+                      self(thisJs##state##reasonState);
+                    },
+                  });
+                });
+            let render = () => {
+              let component: reducerComponent('state, 'action) =
+                convertPropsIfTheyreFromJs(
+                  thisJs##props,
+                  thisJs##constructor##jsPropsToReason,
+                  spec.debugName,
+                );
+              component.render(
+                {
+                  let self = this##self;
+                  self(thisJs##state##reasonState);
+                },
+              );
+            };
+
+            switch (reactClass^) {
+            | Some(reactClass) =>
+              let extensibleReactClass = Obj.magic(reactClass);
+              extensibleReactClass##prototype##componentDidMount
+              #= componentDidMount;
+              extensibleReactClass##prototype##componentDidUpdate
+              #= componentDidUpdate;
+              extensibleReactClass##prototype##componentDidCatch
+              #= componentDidCatch;
+              extensibleReactClass##getDerivedStateFromProps
+              #= (
+                   switch (getDerivedStateFromProps) {
+                   | Some(getDerivedStateFromProps) =>
+                     Obj.magic(getDerivedStateFromProps)##bind(
+                       extensibleReactClass,
+                     )
+                     ->Js.Undefined.return
+                   | None => Js.Undefined.empty
+                   }
+                 );
+              extensibleReactClass##prototype##componentWillUnmount
+              #= componentWillUnmount;
+              extensibleReactClass##prototype##componentWillUpdate
+              #= componentWillUpdate;
+              extensibleReactClass##prototype##shouldComponentUpdate
+              #= shouldComponentUpdate;
+              extensibleReactClass##prototype##render #= render;
+            | None => ()
+            };
+          };
           let initialReasonState = component.initialState();
           {"reasonState": initialReasonState};
         };
-        let componentDidMount =
-          spec.didMount === anyToUnit ?
-            Js.Undefined.empty :
-            Js.Undefined.return(() => {
-              let component: reducerComponent('state, 'action) =
-                convertPropsIfTheyreFromJs(
-                  thisJs##props,
-                  thisJs##constructor##jsPropsToReason,
-                  spec.debugName,
-                );
-              component.didMount(
-                {
-                  let self = this##self;
-                  self();
-                },
-              );
-            });
-        let componentDidUpdate =
-          spec.didUpdate === anyToUnit ?
-            Js.Undefined.empty :
-            Js.Undefined.return((_prevProps, prevState) => {
-              let component: reducerComponent('state, 'action) =
-                convertPropsIfTheyreFromJs(
-                  thisJs##props,
-                  thisJs##constructor##jsPropsToReason,
-                  spec.debugName,
-                );
-              component.didUpdate({
-                newSelf: {
-                  let self = this##self;
-                  self(thisJs##state##reasonState);
-                },
-                oldSelf: {
-                  let self = this##self;
-                  self(prevState##reasonState);
-                },
-              });
-            });
-        let componentWillUpdate =
-          spec.willUpdate === anyToUnit ?
-            Js.Undefined.empty :
-            Js.Undefined.return((_nextProps, nextState) => {
-              let component: reducerComponent('state, 'action) =
-                convertPropsIfTheyreFromJs(
-                  thisJs##props,
-                  thisJs##constructor##jsPropsToReason,
-                  spec.debugName,
-                );
-              component.willUpdate({
-                newSelf: {
-                  let self = this##self;
-                  self(nextState##reasonState);
-                },
-                oldSelf: {
-                  let self = this##self;
-                  self(thisJs##state##reasonState);
-                },
-              });
-            });
-        let componentDidCatch =
-          spec.didCatch === defaultDidCatch ?
-            Js.Undefined.empty :
-            Js.Undefined.return((exn, jsInfo) => {
-              let component: reducerComponent('state, 'action) =
-                convertPropsIfTheyreFromJs(
-                  thisJs##props,
-                  thisJs##constructor##jsPropsToReason,
-                  spec.debugName,
-                );
-              component.didCatch(
-                {
-                  let self = this##self;
-                  self(thisJs##state##reasonState);
-                },
-                exn,
-                jsInfo->didCatchInfoFromJs,
-              );
-            });
-        let getDerivedStateFromProps =
-          spec.getDerivedStateFromProps === anyToUnit ?
-            Js.Undefined.empty :
-            Js.Undefined.return((props, state) => {
-              let component: reducerComponent('state, 'action) =
-                convertPropsIfTheyreFromJs(
-                  props,
-                  staticThis##jsPropsToReason,
-                  spec.debugName,
-                );
-              let reasonState =
-                component.getDerivedStateFromProps(state##reasonState);
-              {"reasonState": reasonState};
-            });
-        let componentWillUnmount = () => {
-          let component: reducerComponent('state, 'action) =
-            convertPropsIfTheyreFromJs(
-              thisJs##props,
-              thisJs##constructor##jsPropsToReason,
-              spec.debugName,
-            );
-          if (component.willUnmount !== anyToUnit) {
-            component.willUnmount(
-              {
-                let self = this##self;
-                self();
-              },
-            );
-          };
-          switch (this##subscriptions->Js.Null.toOption) {
-          | Some(subscriptions) =>
-            Js.Array.forEach(unsubscribe => unsubscribe(), subscriptions)
-          | None => ()
-          };
-        };
-        let shouldComponentUpdate =
-          spec.shouldUpdate === anyToTrue ?
-            Js.Undefined.empty :
-            Js.Undefined.return((_nextProps, nextState) => {
-              let component: reducerComponent('state, 'action) =
-                convertPropsIfTheyreFromJs(
-                  thisJs##props,
-                  thisJs##constructor##jsPropsToReason,
-                  spec.debugName,
-                );
-              component.shouldUpdate({
-                newSelf: {
-                  let self = this##self;
-                  self(nextState##reasonState);
-                },
-                oldSelf: {
-                  let self = this##self;
-                  self(thisJs##state##reasonState);
-                },
-              });
-            });
-        let render = () => {
-          let component: reducerComponent('state, 'action) =
-            convertPropsIfTheyreFromJs(
-              thisJs##props,
-              thisJs##constructor##jsPropsToReason,
-              spec.debugName,
-            );
-          component.render(
-            {
-              let self = this##self;
-              self(thisJs##state##reasonState);
-            },
+        reactClass :=
+          Some(
+            createClass({
+              "displayName": spec.debugName,
+              "subscriptions": Js.Null.empty,
+              "self": self,
+              "handleMethod": handleMethod,
+              "sendMethod": sendMethod,
+              "onUnmountMethod": onUnmountMethod,
+              /* lifecycle */
+              "getInitialState": getInitialState,
+              "componentDidMount": Js.Undefined.empty,
+              "componentDidUpdate": Js.Undefined.empty,
+              "componentDidCatch": Js.Undefined.empty,
+              "getDerivedStateFromProps": Js.Undefined.empty,
+              "componentWillUnmount": Js.Undefined.empty,
+              "componentWillUpdate": Js.Undefined.empty,
+              "shouldComponentUpdate": Js.Undefined.empty,
+              "render": Js.Undefined.empty,
+            }),
           );
-        };
-        let self = state => {
-          handle: this##handleMethod->Obj.magic,
-          onUnmount: this##onUnmountMethod,
-          state,
-          send: this##sendMethod->Obj.magic,
-        };
-        {
-          "displayName": spec.debugName,
-          "subscriptions": Js.Null.empty,
-          "self": self,
-          "handleMethod": handleMethod,
-          "sendMethod": sendMethod,
-          "onUnmountMethod": onUnmountMethod,
-          /* lifecycle */
-          "getInitialState": getInitialState,
-          "componentDidMount": componentDidMount,
-          "componentDidUpdate": componentDidUpdate,
-          "componentDidCatch": componentDidCatch,
-          "getDerivedStateFromProps": getDerivedStateFromProps,
-          "componentWillUnmount": componentWillUnmount,
-          "componentWillUpdate": componentWillUpdate,
-          "shouldComponentUpdate": shouldComponentUpdate,
-          "render": render,
-        };
+        Obj.magic(reactClass^);
       };
     };
 
@@ -499,10 +558,7 @@ module Component = {
         shouldUpdate: anyToTrue,
         render: defaultRender,
       };
-      {
-        ...spec,
-        reactClassInternal: createClass(JsSpec.make(spec)->Obj.magic),
-      };
+      {...spec, reactClassInternal: JsSpec.make(spec)};
     };
   };
   module Stateless = {
@@ -514,6 +570,7 @@ module Component = {
         "self": unit => statelessSelf,
         "handleMethod": (('payload, statelessSelf) => unit, 'payload) => unit,
         "onUnmountMethod": subscription => unit,
+        "getInitialState": unit => Js.Null.t(unit),
         "componentDidMount": Js.Undefined.t(unit => unit),
         "componentDidUpdate": Js.Undefined.t(unit => unit),
         "componentWillUnmount": unit => unit,
@@ -528,7 +585,12 @@ module Component = {
         "subscriptions";
       [@bs.val]
       external thisJs: jsComponent(statelessComponent, 'props) = "this";
-      let make = (spec: statelessComponent): jsStatelessSpec('payload) => {
+      [@bs.set]
+      external setDefined:
+        (jsComponent(statelessComponent, 'props), bool) => unit =
+        "__defined";
+      let make = (spec: statelessComponent): reactClass => {
+        let reactClass = ref(None);
         let handleMethod = (callback, callbackPayload): unit =>
           callback(
             callbackPayload,
@@ -544,127 +606,158 @@ module Component = {
           | None => addSubscription(this, Js.Null.return([|subscription|]))
           };
 
-        let componentDidMount =
-          spec.didMount === anyToUnit ?
-            Js.Undefined.empty :
-            Js.Undefined.return(() => {
-              let component: statelessComponent =
-                convertPropsIfTheyreFromJs(
-                  thisJs##props,
-                  thisJs##constructor##jsPropsToReason,
-                  spec.debugName,
-                );
-              component.didMount(
-                {
-                  let self = this##self;
-                  self();
-                },
-              );
-            });
-        let componentDidUpdate =
-          spec.didUpdate === anyToUnit ?
-            Js.Undefined.empty :
-            Js.Undefined.return(() => {
-              let component: statelessComponent =
-                convertPropsIfTheyreFromJs(
-                  thisJs##props,
-                  thisJs##constructor##jsPropsToReason,
-                  spec.debugName,
-                );
-              component.didUpdate(
-                {
-                  let self = this##self;
-                  self();
-                },
-              );
-            });
-        let componentWillUpdate =
-          spec.willUpdate === anyToUnit ?
-            Js.Undefined.empty :
-            Js.Undefined.return(() => {
-              let component: statelessComponent =
-                convertPropsIfTheyreFromJs(
-                  thisJs##props,
-                  thisJs##constructor##jsPropsToReason,
-                  spec.debugName,
-                );
-              component.willUpdate(
-                {
-                  let self = this##self;
-                  self();
-                },
-              );
-            });
-        let componentWillUnmount = () => {
+        let getInitialState = () => {
           let component: statelessComponent =
             convertPropsIfTheyreFromJs(
               thisJs##props,
               thisJs##constructor##jsPropsToReason,
               spec.debugName,
             );
-          if (component.willUnmount !== anyToUnit) {
-            component.willUnmount(
-              {
-                let self = this##self;
-                self();
-              },
-            );
-          };
-          switch (this##subscriptions->Js.Null.toOption) {
-          | Some(subscriptions) =>
-            Js.Array.forEach(unsubscribe => unsubscribe(), subscriptions)
-          | None => ()
-          };
-        };
-        let shouldComponentUpdate =
-          spec.shouldUpdate === anyToTrue ?
-            Js.Undefined.empty :
-            Js.Undefined.return(() => {
+          if (!thisJs##__defined) {
+            setDefined(thisJs, true);
+            let componentDidMount =
+              component.didMount === anyToUnit ?
+                Js.Undefined.empty :
+                Js.Undefined.return(() => {
+                  let component: statelessComponent =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.didMount(
+                    {
+                      let self = this##self;
+                      self();
+                    },
+                  );
+                });
+            let componentDidUpdate =
+              component.didUpdate === anyToUnit ?
+                Js.Undefined.empty :
+                Js.Undefined.return(() => {
+                  let component: statelessComponent =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.didUpdate(
+                    {
+                      let self = this##self;
+                      self();
+                    },
+                  );
+                });
+            let componentWillUpdate =
+              component.willUpdate === anyToUnit ?
+                Js.Undefined.empty :
+                Js.Undefined.return(() => {
+                  let component: statelessComponent =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.willUpdate(
+                    {
+                      let self = this##self;
+                      self();
+                    },
+                  );
+                });
+            let componentWillUnmount = () => {
               let component: statelessComponent =
                 convertPropsIfTheyreFromJs(
                   thisJs##props,
                   thisJs##constructor##jsPropsToReason,
                   spec.debugName,
                 );
-              component.shouldUpdate(
+              if (component.willUnmount !== anyToUnit) {
+                component.willUnmount(
+                  {
+                    let self = this##self;
+                    self();
+                  },
+                );
+              };
+              switch (this##subscriptions->Js.Null.toOption) {
+              | Some(subscriptions) =>
+                Js.Array.forEach(unsubscribe => unsubscribe(), subscriptions)
+              | None => ()
+              };
+            };
+            let shouldComponentUpdate =
+              component.shouldUpdate === anyToTrue ?
+                Js.Undefined.empty :
+                Js.Undefined.return(() => {
+                  let component: statelessComponent =
+                    convertPropsIfTheyreFromJs(
+                      thisJs##props,
+                      thisJs##constructor##jsPropsToReason,
+                      spec.debugName,
+                    );
+                  component.shouldUpdate(
+                    {
+                      let self = this##self;
+                      self();
+                    },
+                  );
+                });
+            let render = () => {
+              let component: statelessComponent =
+                convertPropsIfTheyreFromJs(
+                  thisJs##props,
+                  thisJs##constructor##jsPropsToReason,
+                  spec.debugName,
+                );
+              component.render(
                 {
                   let self = this##self;
                   self();
                 },
               );
-            });
-        let render = () => {
-          let component: statelessComponent =
-            convertPropsIfTheyreFromJs(
-              thisJs##props,
-              thisJs##constructor##jsPropsToReason,
-              spec.debugName,
-            );
-          component.render(
-            {
-              let self = this##self;
-              self();
-            },
-          );
+            };
+
+            switch (reactClass^) {
+            | Some(reactClass) =>
+              let extensibleReactClass = Obj.magic(reactClass);
+              extensibleReactClass##prototype##componentDidMount
+              #= componentDidMount;
+              extensibleReactClass##prototype##componentDidUpdate
+              #= componentDidUpdate;
+              extensibleReactClass##prototype##componentWillUnmount
+              #= componentWillUnmount;
+              extensibleReactClass##prototype##componentWillUpdate
+              #= componentWillUpdate;
+              extensibleReactClass##prototype##shouldComponentUpdate
+              #= shouldComponentUpdate;
+              extensibleReactClass##prototype##render #= render;
+            | None => ()
+            };
+          };
         };
         let self = () => {
           handle: this##handleMethod->Obj.magic,
           onUnmount: this##onUnmountMethod,
         };
-        {
-          "displayName": spec.debugName,
-          "subscriptions": Js.Null.empty,
-          "self": self,
-          "handleMethod": handleMethod,
-          "onUnmountMethod": onUnmountMethod,
-          /* lifecycle */
-          "componentDidMount": componentDidMount,
-          "componentDidUpdate": componentDidUpdate,
-          "componentWillUnmount": componentWillUnmount,
-          "componentWillUpdate": componentWillUpdate,
-          "shouldComponentUpdate": shouldComponentUpdate,
-          "render": render,
-        };
+        reactClass :=
+          Some({
+            "displayName": spec.debugName,
+            "subscriptions": Js.Null.empty,
+            "self": self,
+            "handleMethod": handleMethod,
+            "onUnmountMethod": onUnmountMethod,
+            "getInitialState": getInitialState,
+            /* lifecycle */
+            "componentDidMount": Js.Undefined.empty,
+            "componentDidUpdate": Js.Undefined.empty,
+            "componentWillUnmount": Js.Undefined.empty,
+            "componentWillUpdate": Js.Undefined.empty,
+            "shouldComponentUpdate": Js.Undefined.empty,
+            "render": Js.Undefined.empty,
+          });
+        Obj.magic(reactClass^);
       };
     };
     let make = debugName => {
