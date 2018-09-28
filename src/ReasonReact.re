@@ -756,6 +756,12 @@ module Router = {
     unit =
     "";
 
+  [@bs.send]
+  external replaceState :
+    (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
+    unit =
+    "";
+
   [@bs.val] external event : 'a = "Event";
 
   [@bs.new] external makeEventIE11Compatible : string => Dom.event = "Event";
@@ -843,6 +849,14 @@ module Router = {
     | (_, None) => ()
     | (Some((history: Dom.history)), Some((window: Dom.window))) =>
       pushState(history, ~href=path);
+      dispatchEvent(window, safeMakeEvent("popstate"));
+    };
+  let replace = path =>
+    switch ([%external history], [%external window]) {
+    | (None, _)
+    | (_, None) => ()
+    | (Some((history: Dom.history)), Some((window: Dom.window))) =>
+      replaceState(history, ~href=path);
       dispatchEvent(window, safeMakeEvent("popstate"));
     };
   type url = {
