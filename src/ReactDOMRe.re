@@ -223,7 +223,7 @@ type props = {
   [@bs.optional] media: string, /* a valid media query */
   [@bs.optional] mediaGroup: string,
   [@bs.optional] method: string, /* "post" or "get" */
-  [@bs.optional] min: int,
+  [@bs.optional] min: string,
   [@bs.optional] minLength: int,
   [@bs.optional] multiple: bool,
   [@bs.optional] muted: bool,
