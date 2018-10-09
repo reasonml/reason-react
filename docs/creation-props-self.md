@@ -87,6 +87,8 @@ Cumbersome. Fortunately, here's a better way to explicitly pass an optional valu
 <Foo name="Reason" age=?ageFromProps />
 ```
 
+To clarify, `fromProps` **is not** the feature, its the `?` in front of it. `ageFromProps` can be `style` or `className`, etc.
+
 It says "I understand that `age` is optional and that when I use the label I should pass an int. But I'd like to forward an `option` value explicitly". This isn't a JSX trick we've made up; it's just a language feature! See the section on "Explicitly Passed Optional" in the [Reason docs](https://reasonml.github.io/docs/en/function.html#explicitly-passed-optional).
 
 ## `self`
