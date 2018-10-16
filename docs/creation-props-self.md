@@ -66,28 +66,30 @@ Sometimes in ReactJS, you're being given a prop from the owner that you'd like t
 
 This is a source of bugs, because `this.props.age` might be accidentally changed to a nullable number while `Foo` doesn't expect it to be so, or vice-versa; it might be nullable before, and now it's not and `Foo` is left with a useless null check somewhere in the render.
 
-In Reason, if you want to explicitly pass an optional `ageFromProps` (whose type is `option int`, aka `None | Some int`), the following wouldn't work:
+In Reason, if you want to explicitly pass an optional `myAge` (whose type is `option(int)`, aka `None | Some(int)`), the following wouldn't work:
 
 ```reason
-<Foo name="Reason" age=ageFromProps />
+<Foo name="Reason" age=myAge />
 ```
 
-Because `age` expects a normal `int` when you do call `Foo` with it, not an `option int`! Naively, you'd be forced to solve this like so:
+Because the `age` label expects a normal `int` when you do call `Foo` with it, not an `option(int)`! Naively, you'd be forced to solve this like so:
 
 ```reason
-switch (ageFromProps) {
+switch (myAge) {
 | None => <Foo name="Reason" />
-| Some(nonNullableAge) => <Foo name="Reason" age=nonNullableAge />
+| Some(nonOptionalAge) => <Foo name="Reason" age=nonOptionalAge />
 }
 ```
 
 Cumbersome. Fortunately, here's a better way to explicitly pass an optional value:
 
 ```reason
-<Foo name="Reason" age=?myOptionalAgeProp />
+<Foo name="Reason" age=?myAge />
 ```
 
-It says "I understand that `age` is optional and that when I use the label I should pass an int. But I'd like to forward an `option` value explicitly". This isn't a JSX trick we've made up; it's just a language feature! See the section on "Explicitly Passed Optional" in the [Reason docs](https://reasonml.github.io/docs/en/function.html#explicitly-passed-optional).
+It says "I understand that `myAge` is optional and that I should either use the label `age` and pass an `int`, or not use the label at all. But I'd like to forward an `option`al value explicitly to avoid the verbose `switch`".
+
+This isn't a JSX trick we've made up; it's just a language feature! See the section on "Explicitly Passed Optional" in the [Reason docs](https://reasonml.github.io/docs/en/function.html#explicitly-passed-optional).
 
 ## `self`
 
