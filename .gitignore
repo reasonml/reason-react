@@ -7,3 +7,6 @@ finalOutput/*.js
 *.log
 .bsb.lock
 /src/*.js
+
+# Editor
+/.idea/
