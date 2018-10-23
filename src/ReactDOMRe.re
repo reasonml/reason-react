@@ -184,7 +184,7 @@ type props = {
   [@bs.optional] charSet: string,
   [@bs.optional] checked: bool,
   [@bs.optional] cite: string, /* uri */
-  [@bs.optional] crossorigin: bool,
+  [@bs.optional] crossOrigin: string,  /* anonymous, use-credentials */
   [@bs.optional] cols: int,
   [@bs.optional] colSpan: int,
   [@bs.optional] content: string,
