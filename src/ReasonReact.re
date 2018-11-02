@@ -729,7 +729,14 @@ module WrapProps = {
 
 let wrapJsForReason = WrapProps.wrapJsForReason;
 
+/* kept for compat as ReasonReact.fragment */
 [@bs.module "react"] external fragment : 'a = "Fragment";
+
+/* ReasonReact.Fragment allows keyed fragment */
+/* https://github.com/reasonml/reason-react/issues/293 */
+module Fragment = {
+  let make = fragment;
+}
 
 module Router = {
   [@bs.get] external location : Dom.window => Dom.location = "";

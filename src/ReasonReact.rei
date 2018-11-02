@@ -256,4 +256,12 @@ module Router: {
   let dangerouslyGetInitialUrl: unit => url;
 };
 
+/* kept for compat as ReasonReact.fragment */
 [@bs.module "react"] external fragment: 'a = "Fragment";
+
+/* ReasonReact.Fragment allows keyed fragment */
+/* https://github.com/reasonml/reason-react/issues/293 */
+module Fragment: {
+  let make: reactClass;
+}
+
