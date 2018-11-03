@@ -55,7 +55,7 @@ type actionless = unit;
 type element =
   | Element(component('state, 'retainedProps, 'action)): element
 and jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
-  'jsProps => component('state, 'retainedProps, 'action)
+  (. 'jsProps) => component('state, 'retainedProps, 'action)
 /***
  * Type of hidden field for Reason components that use JS components
  */
@@ -167,8 +167,7 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
   let props = Obj.magic(props);
   switch (Js.Nullable.toOption(props##reasonProps), jsPropsToReason) {
   | (Some(props), _) => props
-  /* TODO: annotate with BS to avoid curry overhead */
-  | (None, Some(toReasonProps)) => Element(toReasonProps(props))
+  | (None, Some(toReasonProps)) => Element(toReasonProps(. props))
   | (None, None) =>
     raise(
       Invalid_argument(

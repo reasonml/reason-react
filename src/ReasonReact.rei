@@ -190,7 +190,7 @@ let element:
   reactElement;
 
 type jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
-  'jsProps => component('state, 'retainedProps, 'action);
+  (. 'jsProps) => component('state, 'retainedProps, 'action);
 
 
 /***
