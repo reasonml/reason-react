@@ -192,9 +192,6 @@ let element:
 type jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
   'jsProps => component('state, 'retainedProps, 'action);
 
-type uncurriedJsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
-  (. 'jsProps) => component('state, 'retainedProps, 'action);
-
 
 /***
  * We *under* constrain the kind of component spec this accepts because we actually extend the *originally*
