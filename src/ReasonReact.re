@@ -55,6 +55,8 @@ type actionless = unit;
 type element =
   | Element(component('state, 'retainedProps, 'action)): element
 and jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
+  'jsProps => component('state, 'retainedProps, 'action)
+and uncurriedJsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
   (. 'jsProps) => component('state, 'retainedProps, 'action)
 /***
  * Type of hidden field for Reason components that use JS components
@@ -134,7 +136,7 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       unit
     ),
   "jsPropsToReason":
-    option(jsPropsToReason('props, 'state, 'retainedProps, 'action)),
+    option(uncurriedJsPropsToReason('props, 'state, 'retainedProps, 'action)),
 }
 /***
  * `totalState` tracks all of the internal reason API bookkeeping.
@@ -687,9 +689,11 @@ let wrapReasonForJs =
   let jsPropsToReason:
     jsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     Obj.magic(jsPropsToReason) /* cast 'jsProps to jsProps */;
+  let uncurriedJsPropsToReason: uncurriedJsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
+    (. jsProps) => jsPropsToReason(jsProps);
   Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason#=(
                                                                     Some(
-                                                                    jsPropsToReason,
+                                                                    uncurriedJsPropsToReason,
                                                                     )
                                                                     );
   component.reactClassInternal;
