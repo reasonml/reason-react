@@ -56,6 +56,8 @@ type element =
   | Element(component('state, 'retainedProps, 'action)): element
 and jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
   'jsProps => component('state, 'retainedProps, 'action)
+and uncurriedJsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
+  (. 'jsProps) => component('state, 'retainedProps, 'action)
 /***
  * Type of hidden field for Reason components that use JS components
  */
@@ -134,7 +136,7 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       unit
     ),
   "jsPropsToReason":
-    option(jsPropsToReason('props, 'state, 'retainedProps, 'action)),
+    option(uncurriedJsPropsToReason('props, 'state, 'retainedProps, 'action)),
 }
 /***
  * `totalState` tracks all of the internal reason API bookkeeping.
@@ -167,8 +169,7 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
   let props = Obj.magic(props);
   switch (Js.Nullable.toOption(props##reasonProps), jsPropsToReason) {
   | (Some(props), _) => props
-  /* TODO: annotate with BS to avoid curry overhead */
-  | (None, Some(toReasonProps)) => Element(toReasonProps(props))
+  | (None, Some(toReasonProps)) => Element(toReasonProps(. props))
   | (None, None) =>
     raise(
       Invalid_argument(
@@ -688,9 +689,11 @@ let wrapReasonForJs =
   let jsPropsToReason:
     jsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     Obj.magic(jsPropsToReason) /* cast 'jsProps to jsProps */;
+  let uncurriedJsPropsToReason: uncurriedJsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
+    (. jsProps) => jsPropsToReason(jsProps);
   Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason#=(
                                                                     Some(
-                                                                    jsPropsToReason,
+                                                                    uncurriedJsPropsToReason,
                                                                     )
                                                                     );
   component.reactClassInternal;
