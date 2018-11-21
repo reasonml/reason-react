@@ -18,9 +18,9 @@ const users = [
     pinned: true
   },
   {
-    caption: "BeOpinion",
-    image: "img/logos/beopinion.svg",
-    infoLink: "https://beopinion.com",
+    caption: "BeOp",
+    image: "img/logos/beop.svg",
+    infoLink: "https://beop.io",
     pinned: true
   },
   {
