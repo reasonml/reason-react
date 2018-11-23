@@ -178,6 +178,7 @@ type props = {
   [@bs.optional] alt: string,
   [@bs.optional] async: bool,
   [@bs.optional] autoComplete: string, /* has a fixed, but large-ish, set of possible values */
+  [@bs.optional] autoCapitalize: string, /* Mobile Safari specific */
   [@bs.optional] autoFocus: bool,
   [@bs.optional] autoPlay: bool,
   [@bs.optional] challenge: string,
