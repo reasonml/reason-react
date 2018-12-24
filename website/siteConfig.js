@@ -58,6 +58,12 @@ const users = [
     image: "img/logos/aesthetic-integration.svg",
     infoLink: "https://www.imandra.ai",
     pinned: true
+  },
+  {
+    caption: "Literal",
+    image: "img/logos/literal.svg",
+    infoLink: "https://literal.io",
+    pinned: true
   }
 ];
 
