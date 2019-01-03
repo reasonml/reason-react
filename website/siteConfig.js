@@ -58,6 +58,12 @@ const users = [
     image: "img/logos/aesthetic-integration.svg",
     infoLink: "https://www.imandra.ai",
     pinned: true
+  },
+  {
+    caption: "SV.CO Digital Learning Platform",
+    image: "img/logos/svco.svg",
+    infoLink: "https://www.sv.co",
+    pinned: true
   }
 ];
 
