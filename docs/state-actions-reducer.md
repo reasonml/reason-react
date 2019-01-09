@@ -53,7 +53,7 @@ let make = (~greeting, _children) => {
       </button>
       (
         self.state.show
-          ? ReasonReact.string(greeting)
+          ? ReasonReact.string(message)
           : ReasonReact.null
       )
     </div>;
