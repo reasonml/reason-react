@@ -66,7 +66,7 @@ ${pre}bash
 npm run webpack
 ${pre}
 
-Your apps are the html files inside ${code}src/${code}`;
+Your apps are the html files inside ${code}build/${code}`;
 
 class HomeSplash extends React.Component {
   render() {
