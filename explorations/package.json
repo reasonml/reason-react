@@ -13,7 +13,6 @@
   },
   "esy": {
     "build": [
-      [ "refmterr", "jbuilder", "build", "./jsx/reactjs_jsx_ppx_v4.exe"],
       [ "refmterr", "jbuilder", "build", "./bin/react-app/Main.exe"],
       [ "refmterr", "jbuilder", "build", "@install"]
     ],
