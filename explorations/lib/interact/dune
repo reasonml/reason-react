@@ -1,7 +1,8 @@
 (library
  ; Namespace
- (name ReactLib)
- (public_name static-react.reactlib)
+ (name Interact)
+ (public_name static-react.interact)
  (flags (-w -30 -w -40 -w +26))
  (ocamlopt_flags (-unsafe -inline 100))
+ (libraries static-react.graphics)
 )

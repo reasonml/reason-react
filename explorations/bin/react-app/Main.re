@@ -1,5 +1,7 @@
 open ReactLib;
 
+module TapIneraction = TapInteraction;
+
 print_string("HELLO");
 
 print_newline();

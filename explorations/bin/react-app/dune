@@ -3,4 +3,4 @@
  (ocamlopt_flags -unsafe -inline 100)
  (preprocess (pps reactjs_jsx_ppx_v4))
  (public_name ReactApp.exe)
- (libraries ReactLib))
+ (libraries static-react.reactlib static-react.interact))

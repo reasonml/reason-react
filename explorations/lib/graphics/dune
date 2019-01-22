@@ -1,7 +1,7 @@
 (library
  ; Namespace
- (name ReactLib)
- (public_name static-react.reactlib)
+ (name Graphics)
+ (public_name static-react.graphics)
  (flags (-w -30 -w -40 -w +26))
  (ocamlopt_flags (-unsafe -inline 100))
 )
