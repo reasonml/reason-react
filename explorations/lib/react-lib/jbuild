@@ -1,7 +1,0 @@
-(jbuild_version 1)
-
-(library
- ((name ReactLib)
-  (flags (-w -40 -w +26))
-  (ocamlopt_flags (-unsafe -inline 100))
-  (libraries ())))

@@ -7,3 +7,4 @@ finalOutput/*.js
 *.log
 .bsb.lock
 /src/*.js
+_esy
