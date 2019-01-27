@@ -110,6 +110,8 @@ module Mouse = {
   [@bs.get] external ctrlKey : t => bool = "";
   [@bs.send] external getModifierState : (t, string) => bool = "";
   [@bs.get] external metaKey : t => bool = "";
+  [@bs.get] external movementX : t => int = "";
+  [@bs.get] external movementY : t => int = "";
   [@bs.get] external pageX : t => int = "";
   [@bs.get] external pageY : t => int = "";
   [@bs.get] external relatedTarget : t => Js.t({..}) = ""; /* Should return Dom.eventTarget */
