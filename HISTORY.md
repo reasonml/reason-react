@@ -272,7 +272,7 @@ Replaced with the new `make` (previously `createElement`) call which takes in la
 How to access `props` in the `update`/`handle` callbacks now? You'd move these callback definitions into the `make` function body.
 
 ### `componentBag.state`
-Now passed to you as an argument in callbacks and lifecyle events.
+Now passed to you as an argument in callbacks and lifecycle events.
 
 ### `componentBag.instanceVars`
 No longer needed. In ReactJS, attaching instance variables onto a component has always been a sly way of introducing 1. mutative state that 2. doesn't trigger re-render. This whole concept is now replaced by putting your value into `state` and using [`ReasonReact.SilentUpdate`](https://reasonml.github.io/reason-react/docs/en/callback-handlers.html) (doesn't trigger re-render, but does update state) in callbacks & lifecycles.
