@@ -12,42 +12,41 @@ type reactElement;
 
 type reactRef;
 
-[@bs.val] external null : reactElement = "null";
+[@bs.val] external null: reactElement = "null";
 
-external string : string => reactElement = "%identity";
+external string: string => reactElement = "%identity";
 
-external array : array(reactElement) => reactElement = "%identity";
+external array: array(reactElement) => reactElement = "%identity";
 
-external refToJsObj : reactRef => Js.t({..}) = "%identity";
+external refToJsObj: reactRef => Js.t({..}) = "%identity";
 
 /* This should _not_ be used directly, unless you're passing a class like this:
 
-switch (actionsClass) {
-| Some(actions) =>
-    ReasonReact.createElement(
-      actions,
-      ~props={
-        "className": "hi"
-      },
-      [|whatever|],
-    )
-}
+   switch (actionsClass) {
+   | Some(actions) =>
+       ReasonReact.createElement(
+         actions,
+         ~props={
+           "className": "hi"
+         },
+         [|whatever|],
+       )
+   }
 
-In every other case, you should be using the JSX
-*/
+   In every other case, you should be using the JSX
+   */
 [@bs.splice] [@bs.val] [@bs.module "react"]
-external createElement :
+external createElement:
   (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "createElement";
 
 [@bs.splice] [@bs.module "react"]
-external cloneElement :
+external cloneElement:
   (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "cloneElement";
 
 type renderNotImplemented =
   | RenderNotImplemented;
-
 
 /***
  * A stateless component is a component with state of type unit. This cannot be
@@ -58,7 +57,6 @@ type renderNotImplemented =
 type stateless = unit;
 
 type noRetainedProps;
-
 
 /*** An actionless component is a component with actions of type unit */
 type actionless = unit;
@@ -92,9 +90,10 @@ and self('state, 'retainedProps, 'action) = {
    * Note: the callback typically performs side effects, since it returns nothing.
    */
   handle:
-    'payload .
+    'payload.
     (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
     unit,
+
   state: 'state,
   retainedProps: 'retainedProps,
   send: 'action => unit,
@@ -102,7 +101,6 @@ and self('state, 'retainedProps, 'action) = {
 };
 
 type reactClassInternal;
-
 
 /*** For internal use only */
 type jsElementWrapped;
@@ -151,7 +149,6 @@ type componentSpec(
 and component('state, 'retainedProps, 'action) =
   componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action);
 
-
 /*** Create a stateless component: i.e. a component where state has type stateless. */
 let statelessComponent:
   string =>
@@ -192,7 +189,6 @@ let element:
 type jsPropsToReason('jsProps, 'state, 'retainedProps, 'action) =
   'jsProps => component('state, 'retainedProps, 'action);
 
-
 /***
  * We *under* constrain the kind of component spec this accepts because we actually extend the *originally*
  * defined component. It uses mutation on the original component, so that even if it is extended with
@@ -212,9 +208,11 @@ let wrapReasonForJs:
   ) =>
   reactClass;
 
-[@deprecated "
+[@deprecated
+  "
 Were you using this because you needed to pass a children array reference to a DOM element?  We now support children spread for DOM elements: `<div> ...children </div>`.
-Alternatively, if you're using this because the prop name contains a hyphen, please use `ReactDOMRe.createElementVariadic` instead."]
+Alternatively, if you're using this because the prop name contains a hyphen, please use `ReactDOMRe.createElementVariadic` instead."
+]
 let createDomElement:
   (string, ~props: Js.t({..}), array(reactElement)) => reactElement;
 
@@ -259,3 +257,7 @@ module Router: {
 };
 
 [@bs.module "react"] external fragment: 'a = "Fragment";
+
+let useRecordApi:
+  componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action) =>
+  reactElement;
