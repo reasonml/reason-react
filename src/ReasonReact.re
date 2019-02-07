@@ -2,7 +2,7 @@ type reactClass;
 
 type jsProps;
 
-type reactElement;
+type reactElement = React.element;
 
 type reactRef;
 
