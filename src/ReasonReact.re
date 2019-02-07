@@ -6,26 +6,26 @@ type reactElement;
 
 type reactRef;
 
-[@bs.val] external null : reactElement = "null";
+[@bs.val] external null: reactElement = "null";
 
-external string : string => reactElement = "%identity";
+external string: string => reactElement = "%identity";
 
-external array : array(reactElement) => reactElement = "%identity";
+external array: array(reactElement) => reactElement = "%identity";
 
-external refToJsObj : reactRef => Js.t({..}) = "%identity";
+external refToJsObj: reactRef => Js.t({..}) = "%identity";
 
 [@bs.splice] [@bs.val] [@bs.module "react"]
-external createElement :
+external createElement:
   (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "createElement";
 
 [@bs.splice] [@bs.module "react"]
-external cloneElement :
+external cloneElement:
   (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "cloneElement";
 
 [@bs.val] [@bs.module "react"]
-external createElementVerbatim : 'a = "createElement";
+external createElementVerbatim: 'a = "createElement";
 
 let createDomElement = (s, ~props, children) => {
   let vararg =
@@ -34,7 +34,7 @@ let createDomElement = (s, ~props, children) => {
   Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, vararg);
 };
 
-[@bs.val] external magicNull : 'a = "null";
+[@bs.val] external magicNull: 'a = "null";
 
 type reactClassInternal = reactClass;
 
@@ -108,7 +108,7 @@ and component('state, 'retainedProps, 'action) =
   componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action)
 and self('state, 'retainedProps, 'action) = {
   handle:
-    'payload .
+    'payload.
     (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
     unit,
 
@@ -136,7 +136,9 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       unit
     ),
   "jsPropsToReason":
-    option(uncurriedJsPropsToReason('props, 'state, 'retainedProps, 'action)),
+    option(
+      uncurriedJsPropsToReason('props, 'state, 'retainedProps, 'action),
+    ),
 }
 /***
  * `totalState` tracks all of the internal reason API bookkeeping.
@@ -151,9 +153,9 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
  */
 and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
-let anyToUnit = (_) => ();
+let anyToUnit = _ => ();
 
-let anyToTrue = (_) => true;
+let anyToTrue = _ => true;
 
 let willReceivePropsDefault = ({state}) => state;
 
@@ -182,8 +184,7 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
 };
 
 let createClass =
-    (type reasonState, type retainedProps, type action, debugName)
-    : reactClass =>
+    (type reasonState, type retainedProps, type action, debugName): reactClass =>
   ReasonReactOptimizedCreateClass.createClass(.
     [@bs]
     {
@@ -204,7 +205,7 @@ let createClass =
         retainedProps,
         onUnmount: Obj.magic(this##onUnmountMethod),
       };
-      pub getInitialState = () : totalState('state, 'retainedProps, 'action) => {
+      pub getInitialState = (): totalState('state, 'retainedProps, 'action) => {
         let thisJs:
           jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
@@ -479,7 +480,7 @@ let createClass =
       };
       pub onUnmountMethod = subscription =>
         switch (Js.Null.toOption(this##subscriptions)) {
-        | None => this##subscriptions#=(Js.Null.return([|subscription|]))
+        | None => this##subscriptions #= Js.Null.return([|subscription|])
         | Some(subs) => ignore(Js.Array.push(subscription, subs))
         };
       pub handleMethod = callback => {
@@ -614,8 +615,7 @@ let basicComponent = debugName => {
 };
 
 let statelessComponent =
-    debugName
-    : component(stateless, noRetainedProps, actionless) =>
+    debugName: component(stateless, noRetainedProps, actionless) =>
   basicComponent(debugName);
 
 let statelessComponentWithRetainedProps =
@@ -689,13 +689,11 @@ let wrapReasonForJs =
   let jsPropsToReason:
     jsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     Obj.magic(jsPropsToReason) /* cast 'jsProps to jsProps */;
-  let uncurriedJsPropsToReason: uncurriedJsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
+  let uncurriedJsPropsToReason:
+    uncurriedJsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     (. jsProps) => jsPropsToReason(jsProps);
-  Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason#=(
-                                                                    Some(
-                                                                    uncurriedJsPropsToReason,
-                                                                    )
-                                                                    );
+  Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason
+  #= Some(uncurriedJsPropsToReason);
   component.reactClassInternal;
 };
 
@@ -732,29 +730,29 @@ module WrapProps = {
 
 let wrapJsForReason = WrapProps.wrapJsForReason;
 
-[@bs.module "react"] external fragment : 'a = "Fragment";
+[@bs.module "react"] external fragment: 'a = "Fragment";
 
 module Router = {
-  [@bs.get] external location : Dom.window => Dom.location = "";
+  [@bs.get] external location: Dom.window => Dom.location = "";
 
   [@bs.send]
   /* actually the cb is Dom.event => unit, but let's restrict the access for now */
-  external addEventListener : (Dom.window, string, unit => unit) => unit = "";
+  external addEventListener: (Dom.window, string, unit => unit) => unit = "";
 
   [@bs.send]
-  external removeEventListener : (Dom.window, string, unit => unit) => unit =
+  external removeEventListener: (Dom.window, string, unit => unit) => unit =
     "";
 
-  [@bs.send] external dispatchEvent : (Dom.window, Dom.event) => unit = "";
+  [@bs.send] external dispatchEvent: (Dom.window, Dom.event) => unit = "";
 
-  [@bs.get] external pathname : Dom.location => string = "";
+  [@bs.get] external pathname: Dom.location => string = "";
 
-  [@bs.get] external hash : Dom.location => string = "";
+  [@bs.get] external hash: Dom.location => string = "";
 
-  [@bs.get] external search : Dom.location => string = "";
+  [@bs.get] external search: Dom.location => string = "";
 
   [@bs.send]
-  external pushState :
+  external pushState:
     (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
     unit =
     "";
@@ -767,13 +765,13 @@ module Router = {
 
   [@bs.val] external event : 'a = "Event";
 
-  [@bs.new] external makeEventIE11Compatible : string => Dom.event = "Event";
+  [@bs.new] external makeEventIE11Compatible: string => Dom.event = "Event";
 
   [@bs.val] [@bs.scope "document"]
-  external createEventNonIEBrowsers : string => Dom.event = "createEvent";
+  external createEventNonIEBrowsers: string => Dom.event = "createEvent";
 
   [@bs.send]
-  external initEventNonIEBrowsers : (Dom.event, string, bool, bool) => unit =
+  external initEventNonIEBrowsers: (Dom.event, string, bool, bool) => unit =
     "initEvent";
 
   let safeMakeEvent = eventName =>
@@ -885,4 +883,99 @@ module Router = {
     | Some((window: Dom.window)) =>
       removeEventListener(window, "popstate", watcherID)
     };
+};
+
+type sidEffectualState('state, 'retainedProps, 'action) = {
+  sideEffects: array(self('state, 'retainedProps, 'action) => unit),
+  state: 'state,
+};
+
+let useRecordApi = componentSpec => {
+  let initialState = React.useMemo0(componentSpec.initialState);
+  let unmountSideEffects = React.useRef([||]);
+  let ({sideEffects, state}, send) =
+    React.useReducer(
+      (fullState, action) => {
+        let recordApiStateReturn =
+          componentSpec.reducer(action, fullState.state);
+        switch (recordApiStateReturn) {
+        | NoUpdate => fullState /* useReducer returns of the same value will not rerender the component */
+        | Update(state) => {sideEffects: [||], state}
+        | SideEffects(sideEffect) => {
+            ...fullState,
+            sideEffects:
+              Js.Array.concat(fullState.sideEffects, [|sideEffect|]),
+          }
+        | UpdateWithSideEffects(state, sideEffect) => {
+            sideEffects:
+              Js.Array.concat(fullState.sideEffects, [|sideEffect|]),
+            state,
+          }
+        };
+      },
+      {sideEffects: [||], state: initialState},
+    );
+
+  let rec self = {
+    handle: (fn, payload) => fn(payload, self),
+    retainedProps: componentSpec.retainedProps,
+    send,
+    state,
+    onUnmount: sideEffect =>
+      Js.Array.push(sideEffect, unmountSideEffects##current)->ignore,
+  };
+
+  let state = componentSpec.willReceiveProps(self);
+
+  let rec self = {
+    handle: (fn, payload) => fn(payload, self),
+    retainedProps: componentSpec.retainedProps,
+    send,
+    state,
+    onUnmount: sideEffect =>
+      Js.Array.push(sideEffect, unmountSideEffects##current)->ignore,
+  };
+
+  let oldSelf = React.useRef(self);
+
+  let hasBeenCalled = React.useRef(false);
+
+  let _mountUnmountEffect =
+    React.useLayoutEffect0(() => {
+      componentSpec.didMount(self);
+      Some(
+        () => {
+          Js.Array.forEach(fn => fn(), unmountSideEffects##current);
+          /* shouldn't be needed but like - better safe than sorry? */
+          unmountSideEffects##current #= [||];
+          componentSpec.willUnmount(self);
+        },
+      );
+    });
+  let _didUpdateEffect =
+    React.useLayoutEffect(() => {
+      if (!hasBeenCalled##current) {
+        componentSpec.didUpdate({oldSelf: oldSelf##current, newSelf: self});
+      } else {
+        hasBeenCalled##current #= true;
+      };
+      Js.Array.forEach(fn => fn(self), sideEffects);
+
+      oldSelf##current #= self;
+      None;
+    });
+
+  let mostRecentAllowedRender =
+    React.useRef(React.useMemo0(() => componentSpec.render(self)));
+
+  if (hasBeenCalled##current
+      && oldSelf##current.state !== self.state
+      && componentSpec.shouldUpdate({
+           oldSelf: oldSelf##current,
+           newSelf: self,
+         })) {
+    componentSpec.willUpdate({oldSelf: oldSelf##current, newSelf: self});
+    mostRecentAllowedRender##current #= componentSpec.render(self);
+  };
+  mostRecentAllowedRender##current;
 };
