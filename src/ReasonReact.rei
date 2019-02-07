@@ -8,7 +8,7 @@
 
 type reactClass;
 
-type reactElement;
+type reactElement = React.element;
 
 type reactRef;
 
