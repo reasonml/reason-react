@@ -891,7 +891,18 @@ type sidEffectualState('state, 'retainedProps, 'action) = {
   sideEffects: array(self('state, 'retainedProps, 'action) => unit),
   state: 'state,
 };
+/*
+let make = (~foo, ~bar, _) => {
+  ...component,
+  render: (_) => <div/>
+};
 
+[@react.component]
+let make = (~foo, ~bar, _) => React.useRecordApi({
+  ...component,
+  render: _ => <div />
+});
+*/
 let useRecordApi = componentSpec => {
   let initialState = React.useMemo0(componentSpec.initialState);
   let unmountSideEffects = React.useRef([||]);
