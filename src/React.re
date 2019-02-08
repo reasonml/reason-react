@@ -1,9 +1,3 @@
-/**
- * Copyright 2004-present Facebook. All Rights Reserved.
- *
- * @emails oncall+reason
- */;
-
 type element;
 
 type component('props) = 'props => element;
