@@ -160,7 +160,7 @@ let jsxMapper () =
           ] in
         [(Labelled "children", Exp.apply
           ~loc
-          (Exp.ident ~loc {loc; txt = Ldot (Lident "React", "createElement")})
+          (Exp.ident ~loc {loc; txt = Ldot (Lident "ReactDOMRe", "createElement")})
           args)])
       @ [(Nolabel, Exp.construct ~loc {loc; txt = Lident "()"} None)] in
     let isCap str = let first = String.sub str 0 1 in let capped = String.uppercase first in first = capped in
