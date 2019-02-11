@@ -22,10 +22,38 @@
   },
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
-    "bs-platform": "^4.0.6"
+    "bs-platform": "^4.0.6",
+    "@opam/merlin": "*",
+    "ocaml": "~4.2.0"
   },
   "dependencies": {
     "react": "16.8.1",
-    "react-dom": "16.8.1"
+    "react-dom": "16.8.1",
+    "@opam/ocamlfind": "*",
+    "@opam/merlin-extend": " >= 0.3",
+    "@opam/result": "*",
+    "@opam/ocaml-migrate-parsetree": "*",
+    "@opam/dune": "*",
+    "ocaml": "~4.2.0"
+  },
+  "bin": {
+    "reactjs_jsx_ppx_v3.exe": "./_build/default/jsx_ppx/reactjs_jsx_ppx_v3.exe"
+  },
+  "esy": {
+    "buildsInSource": "_build",
+    "build": [
+      [
+        "dune",
+        "build",
+        "-p",
+        "reactjs_jsx_ppx_v3"
+      ]
+    ],
+    "install": [
+      [
+        "esy-installer",
+        "react_jsx_ppx_v3.install"
+      ]
+    ]
   }
 }
