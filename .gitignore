@@ -2,6 +2,7 @@
 /node_modules*
 finalOutput/*.js
 .merlin
+.install
 /lib/bs/
 /lib/ocaml/
 *.log
