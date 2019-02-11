@@ -8,6 +8,8 @@ finalOutput/*.js
 *.log
 .bsb.lock
 /src/*.js
+_esy
+_build
 
 # Editor
 /.idea/

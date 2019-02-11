@@ -1,0 +1,22 @@
+opam-version: "2.0"
+license: "MIT"
+homepage: "https://github.com/reasonml/reason-react"
+doc: "http://reasonml.github.io/reason-react"
+bug-reports: "https://github.com/reasonml/reason-react/issues"
+dev-repo: "git://github.com/reasonml/reason-react.git"
+tags: [ "syntax" ]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "ocaml"         {"4.02"}
+  "dune"          {build & >= "1.4"}
+  "ocamlfind"     {build}
+  "menhir"        {>= "20170418"}
+  "merlin-extend" {>= "0.3"}
+  "ocaml-migrate-parsetree"
+]
+synopsis: "ReactJS JSX PPX"
+description: """
+TBD."""
