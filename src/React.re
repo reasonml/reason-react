@@ -1,5 +1,9 @@
 type element;
 
+external string: string => element = "%identity";
+
+external array: array(element) => element = "%identity";
+
 type component('props) = 'props => element;
 
 [@bs.module "react"]
