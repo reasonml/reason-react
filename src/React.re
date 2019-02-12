@@ -35,6 +35,9 @@ external forwardRef:
   (('props, option(Ref.t('a))) => element) => component('props) =
   "";
 
+[@bs.module "react"]
+external memo: component('props) => component('props) = "";
+
 /* HOOKS */
 
 /*
