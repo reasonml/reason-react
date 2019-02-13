@@ -53,7 +53,7 @@ willUnmount: self =&gt; unit
 <p>Nota:</p>
 <ul>
 <li>Hemos eliminado el prefijo <code>component</code> en todos ellos.</li>
-<li><code>willReceiveProps</code> requiere devolver un valor de tipo <code>state</code>, no <code>update state</code> (i.e. no <code>NoUpdate/Update/SideEffects/UpdateWithSideEffects</code>). Se sobreentiende que siempre se actualizará el estado en este ciclo de vida. Si ese no es el caso, simplemente devuelve el <code>state</code> anterior que <code>&lt;code&gt;willReceiveProps</code></code> recibe como argumento.</li>
+<li><code>willReceiveProps</code> asks for the return type to be <code>state</code>, not <code>update state</code> (i.e. not <code>NoUpdate/Update/SideEffects/UpdateWithSideEffects</code>). Se sobreentiende que siempre se actualizará el estado en este ciclo de vida. Si ese no es el caso, simplemente devuelve el <code>state</code> anterior que <code>&lt;code&gt;willReceiveProps</code></code> recibe como argumento.</li>
 <li><code>didUpdate</code>, <code>willUnmount</code> y <code>willUpdate</code> no permiten devolver un nuevo <code>state</code> para ser actualizado, para prevenir loops infinitos.</li>
 <li><code>willMount</code> no está soportado. Usa <code>didMount</code> en su lugar.</li>
 <li><code>didUpdate</code>, <code>willUpdate</code> y <code>shouldUpdate</code> toman <strong><code>oldAndNewSelf</code> record</strong>, de tipo <code>{oldSelf: self, newSelf: self}</code>. Estas dos propiedades son equivalentes a <code>componentDidUpdate</code>, <code>prevProps/prevState</code> junto a <code>props/state</code> en ReactJS. Esto es así también en el caso de <code>willUpdate</code> y <code>shouldUpdate</code>.</li>
