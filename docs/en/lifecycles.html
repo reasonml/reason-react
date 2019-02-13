@@ -53,7 +53,7 @@ willUnmount: self =&gt; unit
 <p>Note:</p>
 <ul>
 <li>We've dropped the <code>component</code> prefix from all these.</li>
-<li><code>willReceiveProps</code> asks, for the return type, to be <code>state</code>, not <code>update state</code> (i.e. not <code>NoUpdate/Update/SideEffects/UpdateWithSideEffects</code>). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous <code>state</code> exposed in the lifecycle argument.</li>
+<li><code>willReceiveProps</code> asks for the return type to be <code>state</code>, not <code>update state</code> (i.e. not <code>NoUpdate/Update/SideEffects/UpdateWithSideEffects</code>). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous <code>state</code> exposed in the lifecycle argument.</li>
 <li><code>didUpdate</code>, <code>willUnmount</code> and <code>willUpdate</code> don't allow you to return a new state to be updated, to prevent infinite loops.</li>
 <li><code>willMount</code> is unsupported. Use <code>didMount</code> instead.</li>
 <li><code>didUpdate</code>, <code>willUpdate</code> and <code>shouldUpdate</code> take in a <strong><code>oldAndNewSelf</code> record</strong>, of type <code>{oldSelf: self, newSelf: self}</code>. These two fields are the equivalent of ReactJS' <code>componentDidUpdate</code>'s <code>prevProps/prevState/</code> in conjunction with <code>props/state</code>. Likewise for <code>willUpdate</code> and <code>shouldUpdate</code>.</li>
