@@ -84,7 +84,7 @@ ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `m
 ```reason
 {
   ...component,
-  willUpdate: {oldSelf, newSelf} => /* ... */
+  willUpdate: ({oldSelf, newSelf}) => /* ... */
 }
 ```
 
