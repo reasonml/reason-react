@@ -28,11 +28,11 @@ Note:
 
 If you need to update state in a lifecycle event, simply `send` an action to `reducer` and handle it correspondingly: `self.send(DidMountUpdate)`.
 
-**Some new lifecyle methods act differently**. Described below.
+**Some new lifecycle methods act differently**. Described below.
 
 ## Access next or previous props: `retainedProps`
 
-One pattern that's sometimes used in ReactJS is accessing a lifecyle event's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous props for you. We provide the `retainedProps` API for this purpose:
+One pattern that's sometimes used in ReactJS is accessing a lifecycle event's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous props for you. We provide the `retainedProps` API for this purpose:
 
 ```reason
 type retainedProps = {message: string};
