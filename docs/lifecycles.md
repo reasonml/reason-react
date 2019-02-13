@@ -21,7 +21,7 @@ willUnmount: self => unit
 Note:
 
 - We've dropped the `component` prefix from all these.
-- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. not `NoUpdate/Update/SideEffects/UpdateWithSideEffects`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
+- `willReceiveProps` asks for the return type to be `state`, not `update state` (i.e. not `NoUpdate/Update/SideEffects/UpdateWithSideEffects`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
 - `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
 - `willMount` is unsupported. Use `didMount` instead.
 - `didUpdate`, `willUpdate` and `shouldUpdate` take in a **`oldAndNewSelf` record**, of type `{oldSelf: self, newSelf: self}`. These two fields are the equivalent of ReactJS' `componentDidUpdate`'s `prevProps/prevState/` in conjunction with `props/state`. Likewise for `willUpdate` and `shouldUpdate`.
