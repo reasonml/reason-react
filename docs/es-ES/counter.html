@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="es-ES"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Counter · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Muestra cómo llamar a `setState&lt;code&gt; de forma asíncrona.&lt;/p&gt;"/><meta name="docsearch:language" content="es-ES"/><meta property="og:title" content="Counter · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="Muestra cómo llamar a `setState&lt;code&gt; de forma asíncrona.&lt;/p&gt;"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/es-ES"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/es-ES/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/es-ES/playground" target="_self">Try</a></li><li class="siteNavGroupActive"><a href="/reason-react/docs/es-ES/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/es-ES/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>Español</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/counter">日本語</a></li><li><a href="/reason-react/docs/en/counter">English</a></li><li><a href="/reason-react/docs/fr/counter">Français</a></li><li><a href="/reason-react/docs/ko/counter">한국어</a></li><li><a href="/reason-react/docs/pt-BR/counter">Português (Brasil)</a></li><li><a href="/reason-react/docs/ru/counter">Русский</a></li><li><a href="/reason-react/docs/zh-CN/counter">中文</a></li><li><a href="/reason-react/docs/zh-Hant/counter">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Ayúdanos a traducir</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Code Snippets</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Code Snippets</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/simple">Simple</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/docs/es-ES/counter">Counter</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/reason-using-js">ReasonReact using ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/js-using-reason">ReactJS using ReasonReact</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/es-ES/example-projects">Example Projects</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/es-ES" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Counter</h1></header><article><div><span><p>Muestra cómo llamar a `setState<code> de forma asíncrona.</p></p>
+<pre><code class="reason">type action =
+  | Tick;
+<p>type state = {
+count: int,
+timerId: ref(option(Js.Global.intervalId))
+};</p>
+<p>let component = ReasonReact.reducerComponent(&quot;Counter&quot;);</p>
+<p>let make = _children =&gt; {
+...component,
+initialState: () =&gt; {count: 0, timerId: ref(None)},
+reducer: (action, state) =&gt;
+switch (action) {
+| Tick =&gt; ReasonReact.Update({...state, count: state.count + 1})
+},
+didMount: self =&gt; {
+self.state.timerId :=
+Some(Js.Global.setInterval(() =&gt; self.send(Tick), 1000));
+},
+willUnmount: self =&gt; {
+switch (self.state.timerId^) {
+| Some(id) =&gt; Js.Global.clearInterval(id)
+| None =&gt; ()
+}
+},
+render: ({state}) =&gt;
+<div>{ReasonReact.string(string_of_int(state.count))}</div>
+};
+`</pre></p>
+<p>O, usando la <a href="/reason-react/docs/es-ES/subscriptions-helper">utilidad para subscripciones</a>:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">type</span> action =
+  | <span class="hljs-constructor">Tick</span>;
+
+<span class="hljs-keyword">type</span> state = {count: int};
+
+<span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.reducerComponent(<span class="hljs-string">"Counter"</span>);
+
+<span class="hljs-keyword">let</span> make = _children =&gt; {
+  <span class="hljs-operator">...</span>component,
+  initialState: () =&gt; {count: <span class="hljs-number">0</span>},
+  didMount: self =&gt; {
+    <span class="hljs-keyword">let</span> intervalId = <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.setInterval(() =&gt; self.send(<span class="hljs-constructor">Tick</span>), <span class="hljs-number">1000</span>);
+    self.onUnmount(() =&gt; <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.clearInterval(intervalId));
+  },
+  reducer: (action, state) =&gt;
+    <span class="hljs-keyword">switch</span> (action) {
+    | <span class="hljs-constructor">Tick</span> =&gt; <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-constructor">Update</span>({count: state.count <span class="hljs-operator">+</span> <span class="hljs-number">1</span>})
+    },
+  render: ({state}) =&gt;
+    &lt;div&gt;{<span class="hljs-module-identifier">ReasonReact</span>.string(string_of_int(state.count))}&lt;/div&gt;
+};
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/es-ES/simple"><span class="arrow-prev">← </span><span>Anterior</span></a><a class="docs-next button" href="/reason-react/docs/es-ES/reason-using-js"><span>Siguiente</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:es-ES"]}
+              });
+            </script></body></html>
