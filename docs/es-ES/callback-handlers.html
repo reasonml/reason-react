@@ -50,7 +50,7 @@
   render: (self) =&gt; &lt;button onClick=onClick /&gt;
 };
 </code></pre>
-<p>Sin novedad por aquí. Como JSX en Reason implementa <a href="https://reasonml.github.io/docs/en/jsx.html">abreviación sintáctica</a>, ese <code>button</code> se transformaría en <code>&lt;button onClick /&gt;</code>.</p>
+<p>No surprise here. Since Reason's JSX has <a href="https://reasonml.github.io/docs/en/jsx.html#punning">punning syntax</a>, that <code>button</code> will format into <code>&lt;button onClick /&gt;</code>.</p>
 <p>Del mismo modo, para preprocesar un valor antes de mandarlo de vuelta al consumidor del componente:</p>
 <pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-comment">/* ... */</span>;
 
