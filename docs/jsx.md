@@ -77,7 +77,7 @@ ReactDOMRe.createElement(ReasonReact.fragment, [|child1, child2|]);
 Which compiles to
 
 ```js
-React.createElement(React.Fragment, undefined, null);
+React.createElement(React.Fragment, undefined, child1, child2);
 ```
 
 ## Children
