@@ -23,7 +23,7 @@ let make = (~name, ~onClick, _children) => {
 };
 ```
 
-No surprise here. Since Reason's JSX has [punning syntax](https://reasonml.github.io/docs/en/jsx.html), that `button` will format into `<button onClick />`.
+No surprise here. Since Reason's JSX has [punning syntax](https://reasonml.github.io/docs/en/jsx.html#punning), that `button` will format into `<button onClick />`.
 
 Similarly, to pre-process a value before sending it back to the component's owner:
 

@@ -229,6 +229,8 @@ let wrapJsForReason:
 module Router: {
   /** update the url with the string path. Example: `push("/book/1")`, `push("/books#title")` */
   let push: string => unit;
+  /** update the url with the string path. modifies the current history entry instead of creating a new one. Example: `replace("/book/1")`, `replace("/books#title")` */
+  let replace: string => unit;
   type watcherID;
   type url = {
     /* path takes window.location.path, like "/book/title/edit" and turns it into `["book", "title", "edit"]` */

@@ -2,7 +2,7 @@
 title: Component as Prop
 ---
 
-In ReactJS, `<Menu banner=MyBanner />` is easy; in ReasonReact, we can't trivially pass the whole component module (it wouldn't even be syntactically valid. A module resides in another layer of language. [Explanations](https://reasonml.github.io/docs/en/module.html)). Solution:
+In ReactJS, `<Menu banner=MyBanner />` is easy; in ReasonReact, we can't trivially pass the whole component module (it wouldn't even be syntactically valid because a module resides in [another layer of the language](https://reasonml.github.io/docs/en/module.html)). Solution:
 
 ```reason
 let bannerCallback = (prop1, prop2) => <MyBanner message=prop1 count=prop2 />;
