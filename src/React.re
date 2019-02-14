@@ -4,7 +4,9 @@ external string: string => element = "%identity";
 
 external array: array(element) => element = "%identity";
 
-type component('props) = 'props => element;
+type componentLike('props, 'return) = 'props => 'return;
+
+type component('props) = componentLike('props, element);
 
 [@bs.module "react"]
 external createElement: (component('props), 'props) => element = "";
