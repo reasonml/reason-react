@@ -60,6 +60,12 @@ const users = [
     pinned: true
   },
   {
+    caption: "Literal",
+    image: "img/logos/literal.svg",
+    infoLink: "https://literal.io",
+    pinned: true,
+  },
+  {
     caption: "SV.CO Digital Learning Platform",
     image: "img/logos/svco.svg",
     infoLink: "https://www.sv.co",
