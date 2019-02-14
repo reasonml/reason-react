@@ -497,7 +497,11 @@ let jsxMapper () =
       pstr_loc,
       None
     ) :: List.map pluckLabelAndLoc propTypes) retPropsType in
-    let newExternalType = Ptyp_arrow (Nolabel, retPropsType, innerType) in
+    (* can't be an arrow because it will defensively uncurry *)
+    let newExternalType = Ptyp_constr (
+      {loc = pstr_loc; txt = Ldot ((Lident "React"), "componentLike")},
+      [retPropsType; innerType]
+    ) in
     let newStructure = {
       pstr with pstr_desc = Pstr_primitive {
         pstr_desc with pval_type = {
@@ -729,7 +733,11 @@ let jsxMapper () =
       psig_loc,
       None
     ) :: List.map pluckLabelAndLoc propTypes) retPropsType in
-    let newExternalType = Ptyp_arrow (Nolabel, retPropsType, innerType) in
+        (* can't be an arrow because it will defensively uncurry *)
+    let newExternalType = Ptyp_constr (
+      {loc = psig_loc; txt = Ldot ((Lident "React"), "componentLike")},
+      [retPropsType; innerType]
+    ) in
     let newStructure = {
       psig with psig_desc = Psig_value {
         psig_desc with pval_type = {
