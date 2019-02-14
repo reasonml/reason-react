@@ -1,7 +1,8 @@
 
 
-let%component foo = () => 1;
-
-
-[%%component external foo: int => unit = ""];
+[@react.component]
+let make = (~a, ~b, _) => {
+    Js.log("This function should be named `Test`");
+    <div />
+};
 

@@ -396,7 +396,7 @@ let jsxMapper () =
         }, _)}::_rest
         )) ->
         List.fold_left getAttributeValues defaultProps recordFields
-    | Some(PStr(_)) -> raise (Invalid_argument ("react.component accepts a record config with props and forwardRef as options."))
+    | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props and forwardRef as options."))
     | _ -> defaultProps
   in
 
