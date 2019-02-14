@@ -20,6 +20,9 @@ module Ref = {
 
   type refForRecordAPI = Js.nullable(Dom.element) => unit;
 
+  type componentWithRef('props, 'refType) =
+    ('props, option(t('refType))) => element;
+
   /* These are both hacky internop things because React has n different ways of dealing with refs */
   external refForRecordAPI: domRef => refForRecordAPI = "%identity";
   external refForHooks: refForRecordAPI => domRef = "%identity";
@@ -30,11 +33,8 @@ type context('a);
 [@bs.module "react"] external createContext: 'a => context('a) = "";
 
 [@bs.module "react"]
-[@deprecated
-  "Please use the `[@react.component {forwardRef: ref}]` api. Calling forwardRef by itself can lead to confusing compile and runtime errors."
-]
 external forwardRef:
-  (('props, option(Ref.t('a))) => element) => component('props) =
+  Ref.componentWithRef('props, 'refType) => component('props) =
   "";
 
 [@bs.module "react"]
