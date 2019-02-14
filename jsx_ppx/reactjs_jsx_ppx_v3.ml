@@ -76,7 +76,6 @@ open Longident
 
 type 'a children = | ListLiteral of 'a | Exact of 'a
 type componentConfig = {
-  displayName: Ast_404.Parsetree.expression option;
   propsName: string;
   forwardRef: string option;
 }
@@ -383,14 +382,13 @@ let jsxMapper () =
 
   let getAttributeValues acc (loc, exp) =
     match (loc, exp) with
-    | ({ txt = Lident "displayName" }, exp) -> { acc with displayName = Some exp }
     | ({ txt = Lident "props" }, { pexp_desc = Pexp_ident {txt = Lident str} }) -> { acc with propsName = str }
     | ({ txt = Lident "forwardRef" }, { pexp_desc = Pexp_ident {txt = Lident str} }) -> { acc with forwardRef = Some str }
-    | ({ txt }, _) -> raise (Invalid_argument ("react.component only accepts props and displayName as options, given: " ^ Longident.last txt))
+    | ({ txt }, _) -> raise (Invalid_argument ("react.component only accepts props and forwardRef as options, given: " ^ Longident.last txt))
   in
 
   let getAttrProps payload =
-    let defaultProps = {displayName = None; propsName = "Props"; forwardRef = None} in
+    let defaultProps = {propsName = "Props"; forwardRef = None} in
     match payload with
     | Some(PStr(
       {pstr_desc = Pstr_eval ({
@@ -398,9 +396,7 @@ let jsxMapper () =
         }, _)}::_rest
         )) ->
         List.fold_left getAttributeValues defaultProps recordFields
-    | Some(PStr(
-      {pstr_desc = Pstr_eval (expression, _)}::_rest
-      )) -> { defaultProps with displayName = Some expression }
+    | Some(PStr(_)) -> raise (Invalid_argument ("react.component accepts a record config with props and forwardRef as options."))
     | _ -> defaultProps
   in
 
@@ -520,6 +516,11 @@ let jsxMapper () =
         valueBindings
       )
     } ->
+      let fileName = pstr_loc.loc_start.pos_fname  in
+      let fileName = try
+          Filename.chop_extension (Filename.basename fileName)
+        with | Invalid_argument _-> fileName in
+      let fileName = String.capitalize fileName in
       let hasAttrOnBinding {pvb_attributes} = match (find_opt hasAttr pvb_attributes) with | Some(_) -> true | None -> false in
       let filterAttrOnBinding binding = {binding with pvb_attributes = List.filter otherAttrsPure binding.pvb_attributes} in
       let mapBinding binding = if (hasAttrOnBinding binding) then
@@ -555,16 +556,6 @@ let jsxMapper () =
         | Some (_loc, payload) -> Some payload
         | None -> None in
         let props = getAttrProps payload in
-        let props = {props with displayName = match props.displayName with
-        | Some displayName ->
-          let loc = displayName.pexp_loc in
-          Some (
-            Ast_404.Ast_helper.Exp.apply ~loc
-            (Ast_404.Ast_helper.Exp.ident ~loc { loc; txt = Ldot (Lident "React", "setDisplayName")})
-            [ (Nolabel, Ast_404.Ast_helper.Exp.ident ~loc { loc; txt = Lident fnName }); (Nolabel, displayName)]
-          )
-        | None -> None
-        } in
         (* do stuff here! *)
         let (innerFunctionExpression, namedArgList) = recursivelyTransformNamedArgsForMake mapper expression [] in
 
@@ -640,7 +631,7 @@ let jsxMapper () =
           },
           innerExpressionWithRef
         )) in
-        let fullExpression = match props.forwardRef with
+        let wrapExpressionWithForwardRef fullExpression = match props.forwardRef with
         | Some ref -> Pexp_apply (
           (Exp.ident
             ~loc:pstr_loc
@@ -655,40 +646,53 @@ let jsxMapper () =
               pstr_loc;
             }]))]
             {loc = pstr_loc; txt = Ldot (Lident "React", "forwardRef")}),
-          [(Nolabel, {binding.pvb_expr with pexp_desc = fullExpression})]
-        )
-        | None -> fullExpression
+            [(Nolabel, fullExpression)]
+          )
+        | None -> fullExpression.pexp_desc
+        in
+        let fullExpression = match (fileName, fnName) with
+        | ("", _) -> wrapExpressionWithForwardRef (Exp.mk ~loc:pstr_loc fullExpression)
+        | (txt, "make") -> Pexp_let (
+            Nonrecursive,
+            [Ast_404.Ast_helper.Vb.mk
+              ~loc:pstr_loc
+              (Ast_404.Ast_helper.Pat.var ~loc:pstr_loc {loc = pstr_loc; txt})
+              (Ast_404.Ast_helper.Exp.mk ~loc:pstr_loc fullExpression)
+            ],
+            (Exp.mk ~loc:pstr_loc @@ wrapExpressionWithForwardRef (Ast_404.Ast_helper.Exp.ident ~loc:pstr_loc {loc = pstr_loc; txt = Lident txt}))
+          )
+        (* TODO: I know this doesn't handle nested modules. We can do that in a future update *)
+        | (txt, fnName) -> let txt = txt ^ "$" ^ fnName in
+          Pexp_let (
+            Nonrecursive,
+            [Ast_404.Ast_helper.Vb.mk
+              ~loc:pstr_loc
+              (Ast_404.Ast_helper.Pat.var ~loc:pstr_loc {loc = pstr_loc; txt})
+              (Ast_404.Ast_helper.Exp.mk ~loc:pstr_loc fullExpression)
+            ],
+            (Exp.mk ~loc:pstr_loc  @@ wrapExpressionWithForwardRef (Ast_404.Ast_helper.Exp.ident ~loc:pstr_loc {loc = pstr_loc; txt = Lident txt}))
+          )
         in
         let newBinding = bindingWrapper fullExpression in
-        (Some externalDecl, newBinding, props.displayName)
+        (Some externalDecl, newBinding)
       else
-        (None, binding, None)
+        (None, binding)
       in
       let structuresAndBinding = List.map mapBinding valueBindings in
-      let otherStructures (extern, binding, name) (externs, bindings, names) =
-        let names = match name with
-        | Some name ->
-        {
-          pstr_loc = name.pexp_loc;
-          pstr_desc = Pstr_eval (
-            name,
-            []
-          )
-        } :: names
-        | None -> names in
+      let otherStructures (extern, binding) (externs, bindings) =
         let externs = match extern with
         | Some extern -> extern :: externs
         | None -> externs in
-        (externs, binding :: bindings, names)
+        (externs, binding :: bindings)
       in
-      let (externs, bindings, names) = List.fold_right otherStructures structuresAndBinding ([], [], []) in
+      let (externs, bindings) = List.fold_right otherStructures structuresAndBinding ([], []) in
       externs @ {
         pstr_loc;
         pstr_desc = Pstr_value (
           recFlag,
           bindings
         )
-      } :: names @ returnStructures
+      } :: returnStructures
     | structure -> structure :: returnStructures in
 
   let reactComponentTransform mapper structures =

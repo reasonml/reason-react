@@ -9,6 +9,7 @@ finalOutput/*.js
 /src/*.js
 _esy
 _build
+*.install
 
 # Editor
 /.idea/
