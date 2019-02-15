@@ -34,7 +34,7 @@ module type X_int = {
 
 module Func = (M: X_int) => {
     let x = M.x + 1;
-    [@react.component {forwardRef: ref}]
+    [@react.component forwardRef]
     let make = (~a, ~b, _) => {
         Js.log("This function should be named `Test$Func`", M.x);
         <div />
