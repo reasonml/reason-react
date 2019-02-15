@@ -465,6 +465,7 @@ let jsxMapper () =
     | _ -> types
   in
 
+  let nestedModules = ref([]) in
   let transformComponentDefinition mapper structure returnStructures = match structure with
   (* external *)
   | ({
@@ -654,9 +655,16 @@ let jsxMapper () =
           )
         | None -> fullExpression.pexp_desc
         in
-        let fullExpression = match (fileName, fnName) with
-        | ("", _) -> wrapExpressionWithForwardRef (Exp.mk ~loc:pstr_loc fullExpression)
-        | (txt, "make") -> Pexp_let (
+        let fullModuleName = match (fileName, !nestedModules, fnName) with
+        | ("", nestedModules, "make") -> nestedModules
+        | ("", nestedModules, fnName) -> List.rev (fnName :: nestedModules)
+        | (fileName, nestedModules, "make") -> fileName :: (List.rev nestedModules)
+        | (fileName, nestedModules, fnName) -> fileName :: (List.rev (fnName :: nestedModules))
+        in
+        let fullModuleName = String.concat "$" fullModuleName in
+        let fullExpression = match (fullModuleName) with
+        | ("") -> wrapExpressionWithForwardRef (Exp.mk ~loc:pstr_loc fullExpression)
+        | (txt) -> Pexp_let (
             Nonrecursive,
             [Ast_404.Ast_helper.Vb.mk
               ~loc:pstr_loc
@@ -664,17 +672,6 @@ let jsxMapper () =
               (Ast_404.Ast_helper.Exp.mk ~loc:pstr_loc fullExpression)
             ],
             (Exp.mk ~loc:pstr_loc @@ wrapExpressionWithForwardRef (Ast_404.Ast_helper.Exp.ident ~loc:pstr_loc {loc = pstr_loc; txt = Lident txt}))
-          )
-        (* TODO: I know this doesn't handle nested modules. We can do that in a future update *)
-        | (txt, fnName) -> let txt = txt ^ "$" ^ fnName in
-          Pexp_let (
-            Nonrecursive,
-            [Ast_404.Ast_helper.Vb.mk
-              ~loc:pstr_loc
-              (Ast_404.Ast_helper.Pat.var ~loc:pstr_loc {loc = pstr_loc; txt})
-              (Ast_404.Ast_helper.Exp.mk ~loc:pstr_loc fullExpression)
-            ],
-            (Exp.mk ~loc:pstr_loc  @@ wrapExpressionWithForwardRef (Ast_404.Ast_helper.Exp.ident ~loc:pstr_loc {loc = pstr_loc; txt = Lident txt}))
           )
         in
         let newBinding = bindingWrapper fullExpression in
@@ -907,8 +904,16 @@ let jsxMapper () =
        (* Delegate to the default mapper, a deep identity traversal *)
        | e -> default_mapper.expr mapper e) in
 
+  let module_binding =
+    (fun mapper module_binding ->
+      let _ = nestedModules := module_binding.pmb_name.txt :: !nestedModules in
+      let mapped = default_mapper.module_binding mapper module_binding in
+      let _ = nestedModules := List.tl !nestedModules in
+      mapped
+    ) in
+
 (* #if defined BS_NO_COMPILER_PATCH then *)
-  To_current.copy_mapper { default_mapper with structure; expr; signature }
+  To_current.copy_mapper { default_mapper with structure; expr; signature; module_binding; }
 (* #else
   { default_mapper with structure; expr }
 #end *)

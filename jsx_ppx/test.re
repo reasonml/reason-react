@@ -15,3 +15,28 @@ module Foo = {
 
 <Foo.component a=1 b="1" />;
 
+module Bar = {
+    [@react.component]
+    let make = (~a, ~b, _) => {
+        Js.log("This function should be named `Test$Bar`");
+        <div />
+    };
+    [@react.component]
+    let component = (~a, ~b, _) => {
+        Js.log("This function should be named `Test$Bar$component`");
+        <div />
+    };
+}
+
+module type X_int = {
+    let x: int;
+};
+
+module Func = (M: X_int) => {
+    let x = M.x + 1;
+    [@react.component {forwardRef: ref}]
+    let make = (~a, ~b, _) => {
+        Js.log("This function should be named `Test$Func`", M.x);
+        <div />
+    };
+};
