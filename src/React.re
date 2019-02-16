@@ -1,5 +1,7 @@
 type element;
 
+[@bs.val] external null: element = "null";
+
 external string: string => element = "%identity";
 
 external array: array(element) => element = "%identity";
