@@ -34,6 +34,27 @@ type context('a);
 
 [@bs.module "react"] external createContext: 'a => context('a) = "";
 
+module Context = {
+  module Provider = (C: {
+                       type t;
+                       let context: context(t);
+                     }) => {
+    type props = {
+      .
+      "value": C.t,
+      "children": element,
+    };
+
+    [@bs.get]
+    external provider: context(C.t) => component(props) = "Provider";
+
+    [@bs.obj]
+    external makeProps: (~value: C.t, ~children: element, unit) => props = "";
+
+    let make: props => element = C.context->provider;
+  };
+};
+
 [@bs.module "react"]
 [@deprecated
   "Please use the `[@react.component {forwardRef: ref}]` api. Calling forwardRef by itself can lead to confusing compile and runtime errors."
