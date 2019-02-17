@@ -254,6 +254,8 @@ module Router: {
       for an example.
       */
   let dangerouslyGetInitialUrl: unit => url;
+  /** hook for watching url changes */
+  let useUrl: unit => url;
 };
 
 [@bs.module "react"] external fragment: 'a = "Fragment";
