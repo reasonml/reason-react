@@ -889,13 +889,10 @@ module Router = {
   let useUrl = () => {
     let (url, setUrl) = React.useState(dangerouslyGetInitialUrl);
 
-    React.useLayoutEffect1(
-      () => {
-        let watcherId = watchUrl(url => setUrl(_ => url));
-        Some(() => unwatchUrl(watcherId));
-      },
-      [||],
-    );
+    React.useLayoutEffect0(() => {
+      let watcherId = watchUrl(url => setUrl(_ => url));
+      Some(() => unwatchUrl(watcherId));
+    });
 
     url;
   };
