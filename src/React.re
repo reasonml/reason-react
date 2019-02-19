@@ -16,13 +16,16 @@ external createElement: (component('props), 'props) => element = "";
 [@bs.module "react"] external fragment: string = "Fragment";
 
 module Ref = {
-  type t('value) = {. [@bs.set] "current": 'value};
+  type t('value);
+
+  [@bs.get] external current: t('value) => 'value = "current";
+  [@bs.set] external setCurrent: (t('value), 'value) => unit = "current";
 
   type domRef = t(Js.nullable(Dom.element));
 
   type refForRecordAPI = Js.nullable(Dom.element) => unit;
 
-  /* These are both hacky internop things because React has n different ways of dealing with refs */
+  /* These are both hacky interop things because React has n different ways of dealing with refs */
   external refForRecordAPI: domRef => refForRecordAPI = "%identity";
   external refForHooks: refForRecordAPI => domRef = "%identity";
 };
