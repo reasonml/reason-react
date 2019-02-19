@@ -883,6 +883,17 @@ module Router = {
     | Some((window: Dom.window)) =>
       removeEventListener(window, "popstate", watcherID)
     };
+
+  let useUrl = () => {
+    let (url, setUrl) = React.useState(dangerouslyGetInitialUrl);
+
+    React.useLayoutEffect0(() => {
+      let watcherId = watchUrl(url => setUrl(_ => url));
+      Some(() => unwatchUrl(watcherId));
+    });
+
+    url;
+  };
 };
 
 type sidEffectualState('state, 'retainedProps, 'action) = {
