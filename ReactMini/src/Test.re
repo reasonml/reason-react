@@ -155,7 +155,7 @@ module UpdateAlternateClicks = {
 };
 
 module TestUtils = {
-  open React;
+  open ReasonReact;
   let logMsg = (~msg) => logString("\n" ++ (msg ++ "\n-------------------"));
   let startTest = (~msg) => {
     GlobalState.reset();
@@ -309,8 +309,8 @@ module TestDeepMove = {
 module TestStaticKeys = {
   open TestUtils;
   startTest(~msg="Test With Static Keys");
-  let key1 = React.Key.create();
-  let key2 = React.Key.create();
+  let key1 = ReasonReact.Key.create();
+  let key2 = ReasonReact.Key.create();
   let rendered0 =
     renderAndPrint(
       ~msg="Initial Boxes",
