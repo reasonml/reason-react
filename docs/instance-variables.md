@@ -31,8 +31,6 @@ let make = (_children) => {
   didMount: ({state}) => {
     /* mutate the value here */
     state.intervalId := Some(Js.Global.setInterval(/* ... */));
-    /* no extra state update needed */
-    ReasonReact.NoUpdate
   },
   render: /* ... */
 };
