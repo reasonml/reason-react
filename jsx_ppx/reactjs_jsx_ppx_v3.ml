@@ -321,7 +321,7 @@ let jsxMapper () =
       | {ppat_desc = Ppat_any} -> "_"
       | _ -> alias) in
       let type_ = (match pattern with
-      | {ppat_desc = Ppat_constraint (_, type_)} -> Some type_.ptyp_desc
+      | {ppat_desc = Ppat_constraint (_, type_)} -> Some type_
       | _ -> None) in
       recursivelyTransformNamedArgsForMake mapper expression ((arg, default, None, alias, pattern.ppat_loc, type_) :: list)
     | Pexp_fun (Nolabel, _, { ppat_desc = (Ppat_construct ({txt = Lident "()"}, _) | Ppat_any)}, expression) ->
@@ -334,16 +334,17 @@ let jsxMapper () =
     recursivelyMakeNamedArgsForExternal tl (Ast_404.Ast_helper.Typ.arrow
     ~loc
     label
-    {
-      ptyp_desc = (match (label, type_) with
-      | (_, None) -> Ptyp_var (safeTypeFromValue
-        (match label with | Labelled str |  Optional str -> str | _ -> raise (Invalid_argument "This should never happen."))
-      )
-      | (Optional _, Some (Ptyp_constr ({txt = Lident "option"}, [type_]))) -> type_.ptyp_desc
-      | (_, Some type_) -> type_);
+    (match (label, type_) with
+    | (_, None) -> {
+      ptyp_desc = Ptyp_var (safeTypeFromValue
+      (match label with | Labelled str |  Optional str -> str | _ -> raise (Invalid_argument "This should never happen.")));
       ptyp_loc = loc;
       ptyp_attributes = [];
-    } args)
+    }
+    | (Optional _, Some ({ptyp_desc = Ptyp_constr ({txt = Lident "option"}, [type_])})) -> type_
+    | (_, Some type_) -> type_
+    )
+    args)
   | [] -> args
   in
 
@@ -356,11 +357,7 @@ let jsxMapper () =
     (* | (Some (Ptyp_constr ({txt = Lident "option"}, [type_])), Optional name) ->
       (name, [], type_) :: types *)
     | (Some type_, (Optional name | Labelled name)) ->
-      (name, [], {
-        ptyp_desc = type_;
-        ptyp_loc = loc;
-        ptyp_attributes = [];
-        }) :: types
+      (name, [], type_) :: types
     | (None, Optional name) ->
       (name, [], {
         ptyp_desc = Ptyp_constr ({loc; txt=Lident "option"}, [{
@@ -449,20 +446,12 @@ let jsxMapper () =
   let argToConcreteType types (name, loc, type_) = match name with
     | Optional name ->
     (name, [], {
-      ptyp_desc = Ptyp_constr ({loc; txt=Lident "option"}, [{
-        ptyp_desc = type_;
-        ptyp_loc = loc;
-        ptyp_attributes = [];
-      }]);
+      ptyp_desc = Ptyp_constr ({loc; txt=Lident "option"}, [type_]);
       ptyp_loc = loc;
       ptyp_attributes = [];
       }) :: types
     | Labelled name ->
-    (name, [], {
-      ptyp_desc = type_;
-      ptyp_loc = loc;
-      ptyp_attributes = [];
-      }) :: types
+    (name, [], type_) :: types
     (* return value *)
     | _ -> types
   in
@@ -484,11 +473,11 @@ let jsxMapper () =
     let rec getPropTypes types ({ptyp_loc; ptyp_desc} as fullType) =
       (match ptyp_desc with
       | Ptyp_arrow (Labelled _ | Optional _ as name, type_, ({ptyp_desc = Ptyp_arrow _} as rest)) ->
-        getPropTypes ((name, ptyp_loc, type_.ptyp_desc)::types) rest
+        getPropTypes ((name, ptyp_loc, type_)::types) rest
       | Ptyp_arrow (Nolabel, _type, rest) ->
         getPropTypes types rest
       | Ptyp_arrow (Labelled _ | Optional _ as name, type_, returnValue) ->
-        (returnValue, (name, returnValue.ptyp_loc, type_.ptyp_desc)::types)
+        (returnValue, (name, returnValue.ptyp_loc, type_)::types)
       | _ -> (fullType, types))
     in
     let (innerType, propTypes) = getPropTypes [] pval_type in
@@ -716,11 +705,11 @@ let jsxMapper () =
     let rec getPropTypes types ({ptyp_loc; ptyp_desc} as fullType) =
       (match ptyp_desc with
       | Ptyp_arrow (Labelled _ | Optional _ as name, type_, ({ptyp_desc = Ptyp_arrow _} as rest)) ->
-        getPropTypes ((name, ptyp_loc, type_.ptyp_desc)::types) rest
+        getPropTypes ((name, ptyp_loc, type_)::types) rest
       | Ptyp_arrow (Nolabel, _type, rest) ->
         getPropTypes types rest
       | Ptyp_arrow (Labelled _ | Optional _ as name, type_, returnValue) ->
-        (returnValue, (name, returnValue.ptyp_loc, type_.ptyp_desc)::types)
+        (returnValue, (name, returnValue.ptyp_loc, type_)::types)
       | _ -> (fullType, types))
     in
     let (innerType, propTypes) = getPropTypes [] pval_type in
