@@ -30,41 +30,59 @@ module Ref = {
   external refForHooks: refForRecordAPI => domRef = "%identity";
 };
 
-type context('a);
-
-[@bs.module "react"] external createContext: 'a => context('a) = "";
-
 module Context = {
-  module Provider = (C: {
-                       type t;
-                       let context: context(t);
-                     }) => {
-    type props = {
-      .
-      "value": C.t,
-      "children": element,
-    };
+  type t('props);
 
-    [@bs.get]
-    external provider: context(C.t) => component(props) = "Provider";
-
-    [@bs.obj]
-    external makeProps: (~value: C.t, ~children: element, unit) => props = "";
-
-    let make: props => element = C.context->provider;
-  };
+  [@bs.get]
+  external provider: t('props) => component({. "value": 'props}) =
+    "Provider";
 };
+
+[@bs.module "react"] external createContext: 'a => Context.t('a) = "";
 
 [@bs.module "react"]
 [@deprecated
   "Please use the `[@react.component {forwardRef: ref}]` api. Calling forwardRef by itself can lead to confusing compile and runtime errors."
 ]
 external forwardRef:
-  (('props, option(Ref.t('a))) => element) => component('props) =
+  (('props, Js.Nullable.t(Ref.t('a))) => element) => component('props) =
   "";
 
 [@bs.module "react"]
 external memo: component('props) => component('props) = "";
+
+[@bs.module "react"]
+external memoCustomCompareProps:
+  (component('props), (. 'props, 'props) => bool) => component('props) =
+  "memo";
+
+module Suspense = {
+  [@bs.obj]
+  external makeProps:
+    (
+      ~children: element=?,
+      ~fallback: element=?,
+      ~maxDuration: int=?,
+      ~key: 'key=?,
+      unit
+    ) =>
+    {
+      .
+      "children": option(element),
+      "fallback": option(element),
+      "maxDuration": option(int),
+    } =
+    "";
+  [@bs.module "react"]
+  external make:
+    component({
+      .
+      "children": option(element),
+      "fallback": option(element),
+      "maxDuration": option(int),
+    }) =
+    "Suspense";
+};
 
 /* HOOKS */
 
@@ -101,6 +119,12 @@ external useEffect1: (unit => option(unit => unit), array('a)) => unit =
 [@bs.module "react"]
 external useEffect2: (unit => option(unit => unit), ('a, 'b)) => unit =
   "useEffect";
+[@bs.module "react"]
+external useEffect3: (unit => option(unit => unit), ('a, 'b, 'c)) => unit =
+  "useEffect";
+[@bs.module "react"]
+external useEffect4: (unit => option(unit => unit), ('a, 'b, 'c, 'd)) => unit =
+  "useEffect";
 
 [@bs.module "react"]
 external useLayoutEffect: (unit => option(unit => unit)) => unit =
@@ -124,6 +148,14 @@ external useMemo0: (unit => 'any, [@bs.as {json|[]|json}] _) => 'any =
 external useMemo1: (unit => 'any, array('a)) => 'any = "useMemo";
 [@bs.module "react"]
 external useMemo2: (unit => 'any, ('a, 'b)) => 'any = "useMemo";
+[@bs.module "react"]
+external useMemo3: (unit => 'any, ('a, 'b, 'c)) => 't = "useMemo";
+[@bs.module "react"]
+external useMemo4: (unit => 'any, ('a, 'b, 'c, 'd)) => 't = "useMemo";
+[@bs.module "react"]
+external useMemo5: (unit => 'any, ('a, 'b, 'c, 'd, 'e)) => 't = "useMemo";
+[@bs.module "react"]
+external useMemo6: (unit => 'any, ('a, 'b, 'c, 'd, 'e, 'f)) => 't = "useMemo";
 
 type callback('input, 'output) = 'input => 'output;
 
@@ -149,7 +181,7 @@ external useCallback3:
   (callback('intput, 'output), ('a, 'b, 'c)) => callback('intput, 'output) =
   "useCallback";
 
-[@bs.module "react"] external useContext: context('any) => 'any = "";
+[@bs.module "react"] external useContext: Context.t('any) => 'any = "";
 
 [@bs.module "react"] external useRef: 'value => Ref.t('value) = "";
 
