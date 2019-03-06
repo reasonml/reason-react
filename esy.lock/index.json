@@ -1,12 +1,12 @@
 {
-  "checksum": "dee3b6a379e159ef69d44296ea7590a2",
-  "root": "reason-react@link-dev:./esy.json",
+  "checksum": "752444c31af14984b3808ddb48eda256",
+  "root": "reason-react@link:./esy.json",
   "node": {
-    "reason-react@link-dev:./esy.json": {
-      "id": "reason-react@link-dev:./esy.json",
+    "reason-react@link:./esy.json": {
+      "id": "reason-react@link:./esy.json",
       "name": "reason-react",
-      "version": "link-dev:./esy.json",
-      "source": { "type": "link-dev", "path": ".", "manifest": "esy.json" },
+      "version": "link:./esy.json",
+      "source": { "type": "link", "path": ".", "manifest": "esy.json" },
       "overrides": [],
       "dependencies": [
         "ocaml@4.2.3007@d41d8cd9", "@opam/result@opam:1.3@bee8bf2e",

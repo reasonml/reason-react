@@ -152,14 +152,18 @@ let jsxMapper () =
         | Exact children -> [(Labelled "children", children)]
         | ListLiteral ({ pexp_desc = Pexp_array list }) when list = [] -> []
         | ListLiteral expression ->
-          let fragment = Exp.ident ~loc {loc; txt = Ldot (Lident "React", "fragment")} in
+          let fragment = Exp.ident ~loc {loc; txt = Ldot (Ldot (Lident "React", "Fragment"), "make")} in
           let args = [
             (nolabel, fragment);
+            (nolabel, Exp.apply
+              ~loc
+              (Exp.ident ~loc {loc; txt = Ldot (Ldot (Lident "React", "Fragment"), "makeProps")})
+              [(nolabel, Exp.construct ~loc {loc; txt = Lident "()"} None)]);
             (nolabel, expression)
           ] in
         [(Labelled "children", Exp.apply
           ~loc
-          (Exp.ident ~loc {loc; txt = Ldot (Lident "ReactDOMRe", "createElement")})
+          (Exp.ident ~loc {loc; txt = Ldot (Lident "React", "createElementVariadic")})
           args)])
       @ [(Nolabel, Exp.construct ~loc {loc; txt = Lident "()"} None)] in
     let isCap str = let first = String.sub str 0 1 in let capped = String.uppercase first in first = capped in
@@ -325,8 +329,10 @@ let jsxMapper () =
       | _ -> None) in
       recursivelyTransformNamedArgsForMake mapper expression ((arg, default, None, alias, pattern.ppat_loc, type_) :: list)
     | Pexp_fun (Nolabel, _, { ppat_desc = (Ppat_construct ({txt = Lident "()"}, _) | Ppat_any)}, expression) ->
-        (expression.pexp_desc, list)
-    | innerExpression -> (innerExpression, list)
+        (expression.pexp_desc, list, None)
+    | Pexp_fun (Nolabel, _, { ppat_desc = Ppat_var ({txt})}, expression) ->
+        (expression.pexp_desc, list, Some txt)
+    | innerExpression -> (innerExpression, list, None)
   in
 
   let rec recursivelyMakeNamedArgsForExternal list args = match list with
@@ -354,8 +360,6 @@ let jsxMapper () =
     loc.txt <> "react.component" in
 
   let argToType types (name, _default, _noLabelName, _alias, loc, type_) = match (type_, name) with
-    (* | (Some (Ptyp_constr ({txt = Lident "option"}, [type_])), Optional name) ->
-      (name, [], type_) :: types *)
     | (Some type_, (Optional name | Labelled name)) ->
       (name, [], type_) :: types
     | (None, Optional name) ->
@@ -380,8 +384,7 @@ let jsxMapper () =
   let getAttributeValues acc (loc, exp) =
     match (loc, exp) with
     | ({ txt = Lident "props" }, { pexp_desc = Pexp_ident {txt = Lident str} }) -> { acc with propsName = str }
-    | ({ txt = Lident "forwardRef" }, { pexp_desc = Pexp_ident {txt = Lident str} }) -> { acc with forwardRef = Some str }
-    | ({ txt }, _) -> raise (Invalid_argument ("react.component only accepts props and forwardRef as options, given: " ^ Longident.last txt))
+    | ({ txt }, _) -> raise (Invalid_argument ("react.component only accepts props as an option, given: " ^ Longident.last txt))
   in
 
   let getAttrProps payload =
@@ -393,9 +396,8 @@ let jsxMapper () =
         }, _)}::_rest
         )) ->
         List.fold_left getAttributeValues defaultProps recordFields
-    | Some(PStr({pstr_desc = Pstr_eval ({pexp_desc = Pexp_ident {txt = Lident "forwardRef"}}, _)}::_rest)) -> {defaultProps with forwardRef = Some "forwardRef"}
     | Some(PStr({pstr_desc = Pstr_eval ({pexp_desc = Pexp_ident {txt = Lident "props"}}, _)}::_rest)) -> {defaultProps with propsName = "props"}
-    | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props and forwardRef as options."))
+    | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props as an options."))
     | _ -> defaultProps
   in
 
@@ -512,11 +514,6 @@ let jsxMapper () =
         valueBindings
       )
     } ->
-      let fileName = pstr_loc.loc_start.pos_fname  in
-      let fileName = try
-          Filename.chop_extension (Filename.basename fileName)
-        with | Invalid_argument _-> fileName in
-      let fileName = String.capitalize fileName in
       let hasAttrOnBinding {pvb_attributes} = match (find_opt hasAttr pvb_attributes) with | Some(_) -> true | None -> false in
       let filterAttrOnBinding binding = {binding with pvb_attributes = List.filter otherAttrsPure binding.pvb_attributes} in
       let mapBinding binding = if (hasAttrOnBinding binding) then
@@ -529,21 +526,34 @@ let jsxMapper () =
           let expression = binding.pvb_expr in
           let wrapExpressionWithBinding expressionFn expression = {(filterAttrOnBinding binding) with pvb_expr = expressionFn expression} in
           let rec spelunkForFunExpression expression = (match expression with
+          (* let make = (~prop) => ... *)
           | {
             pexp_desc = Pexp_fun _
           } -> ((fun expressionDesc -> {expression with pexp_desc = expressionDesc}), expression)
+          (* let make = {let foo = bar in (~prop) => ...} *)
           | {
               pexp_desc = Pexp_let (recursive, vbs, returnExpression)
             } ->
             (* here's where we spelunk! *)
             let (wrapExpression, realReturnExpression) = spelunkForFunExpression returnExpression in
             ((fun expressionDesc -> {expression with pexp_desc = Pexp_let (recursive, vbs, wrapExpression expressionDesc)}), realReturnExpression)
-          | _ -> raise (Invalid_argument "react.component calls can only be on function definitions.")
+          (* let make = React.forwardRef((~prop) => ...) *)
+          | {
+              pexp_desc = Pexp_apply (wrapperExpression, [(Nolabel, innerFunctionExpression)])
+            } ->
+            let (wrapExpression, realReturnExpression) = spelunkForFunExpression innerFunctionExpression in
+            ((fun expressionDesc -> {
+              expression with pexp_desc =
+                Pexp_apply (wrapperExpression, [(Nolabel, wrapExpression expressionDesc)])
+              }),
+              realReturnExpression
+            )
+          | _ -> raise (Invalid_argument "react.component calls can only be on function definitions or component wrappers (forwardRef, memo).")
           ) in
           let (wrapExpression, expression) = spelunkForFunExpression expression in
           (wrapExpressionWithBinding wrapExpression, expression)
         in
-        let (bindingWrapper, expression) = (modifiedBinding) binding in
+        let (bindingWrapper, expression) = modifiedBinding binding in
         let reactComponentAttribute = try
           Some(List.find hasAttr binding.pvb_attributes)
         with | Not_found -> None in
@@ -553,7 +563,8 @@ let jsxMapper () =
         | None -> None in
         let props = getAttrProps payload in
         (* do stuff here! *)
-        let (innerFunctionExpression, namedArgList) = recursivelyTransformNamedArgsForMake mapper expression [] in
+        let (innerFunctionExpression, namedArgList, forwardRef) = recursivelyTransformNamedArgsForMake mapper expression [] in
+        let props = {props with forwardRef = forwardRef} in
 
         let namedArgListWithKeyAndRef = (Optional("key"), None, None, "key", pstr_loc, None) :: namedArgList in
         let namedArgListWithKeyAndRef = match props.forwardRef with
@@ -627,25 +638,14 @@ let jsxMapper () =
           },
           innerExpressionWithRef
         )) in
-        let wrapExpressionWithForwardRef fullExpression = match props.forwardRef with
-        | Some ref -> Pexp_apply (
-          (Exp.ident
-            ~loc:pstr_loc
-            (* intentionally circumventing our own warning because we know that
-             * this will work statically *)
-            ~attrs:[(({txt = "warning"; loc = pstr_loc}, PStr [{
-              pstr_desc = Pstr_eval ({
-                pexp_desc = Pexp_constant (Pconst_string ("-3", None));
-                pexp_loc = pstr_loc;
-                pexp_attributes = [];
-              }, []);
-              pstr_loc;
-            }]))]
-            {loc = pstr_loc; txt = Ldot (Lident "React", "forwardRef")}),
-            [(Nolabel, fullExpression)]
-          )
-        | None -> fullExpression.pexp_desc
+        let fileName = match pstr_loc.loc_start.pos_fname with
+        | "" -> !Location.input_name
+        | fileName -> fileName
         in
+        let fileName = try
+            Filename.chop_extension (Filename.basename fileName)
+          with | Invalid_argument _-> fileName in
+        let fileName = String.capitalize fileName in
         let fullModuleName = match (fileName, !nestedModules, fnName) with
         | ("", nestedModules, "make") -> nestedModules
         | ("", nestedModules, fnName) -> List.rev (fnName :: nestedModules)
@@ -654,7 +654,7 @@ let jsxMapper () =
         in
         let fullModuleName = String.concat "$" fullModuleName in
         let fullExpression = match (fullModuleName) with
-        | ("") -> wrapExpressionWithForwardRef (Exp.mk ~loc:pstr_loc fullExpression)
+        | ("") -> fullExpression
         | (txt) -> Pexp_let (
             Nonrecursive,
             [Ast_404.Ast_helper.Vb.mk
@@ -662,7 +662,7 @@ let jsxMapper () =
               (Ast_404.Ast_helper.Pat.var ~loc:pstr_loc {loc = pstr_loc; txt})
               (Ast_404.Ast_helper.Exp.mk ~loc:pstr_loc fullExpression)
             ],
-            (Exp.mk ~loc:pstr_loc @@ wrapExpressionWithForwardRef (Ast_404.Ast_helper.Exp.ident ~loc:pstr_loc {loc = pstr_loc; txt = Lident txt}))
+            (Ast_404.Ast_helper.Exp.ident ~loc:pstr_loc {loc = pstr_loc; txt = Lident txt})
           )
         in
         let newBinding = bindingWrapper fullExpression in
