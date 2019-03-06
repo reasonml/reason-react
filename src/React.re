@@ -34,7 +34,13 @@ module Context = {
   type t('props);
 
   [@bs.get]
-  external provider: t('props) => component({. "value": 'props}) =
+  external provider:
+    t('props) =>
+    component({
+      .
+      "value": 'props,
+      "children": element,
+    }) =
     "Provider";
 };
 
