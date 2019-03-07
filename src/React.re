@@ -202,26 +202,26 @@ type callback('input, 'output) = 'input => 'output;
 
 [@bs.module "react"]
 external useCallback:
-  ([@bs.uncurry] ('input => 'output)) => callback('intput, 'output) =
+  ([@bs.uncurry] ('input => 'output)) => callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback0:
   ([@bs.uncurry] ('input => 'output), [@bs.as {json|[]|json}] _) =>
-  callback('intput, 'output) =
+  callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback1:
   ([@bs.uncurry] ('input => 'output), array('a)) =>
-  callback('intput, 'output) =
+  callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback2:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b)) => callback('intput, 'output) =
+  ([@bs.uncurry] ('input => 'output), ('a, 'b)) => callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback3:
   ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
-  callback('intput, 'output) =
+  callback('input, 'output) =
   "useCallback";
 
 [@bs.module "react"] external useContext: Context.t('any) => 'any = "";
