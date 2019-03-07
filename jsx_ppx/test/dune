@@ -1,0 +1,18 @@
+(executable
+ (name pp)
+ (modules pp)
+ (libraries reactjs_jsx_ppx_v3_lib ocaml-migrate-parsetree))
+
+(rule
+ (targets pp.result)
+ (deps test.re)
+ (action (setenv PPX_GETENV2 foobar (run ./pp.exe --impl %{deps} -o %{targets}))))
+
+(alias
+ (name runtest)
+ (action (diff pp.expected pp.result)))
+
+(test
+ (name test)
+ (modules test)
+ (preprocess (pps reactjs_jsx_ppx_v3_lib)))
