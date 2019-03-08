@@ -67,11 +67,10 @@ external memoCustomCompareProps:
 module Fragment = {
   [@bs.obj]
   external makeProps:
-    (~children: element=?, ~key: 'key=?, unit) =>
-    {. "children": option(element)} =
+    (~children: element, ~key: 'key=?, unit) => {. "children": element} =
     "";
   [@bs.module "react"]
-  external make: component({. "children": option(element)}) = "Fragment";
+  external make: component({. "children": element}) = "Fragment";
 };
 
 module Suspense = {
