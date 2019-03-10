@@ -129,3 +129,28 @@ Here are some use-cases for children spread + Reason built-in data structures:
   ```reason
   <Layout> ...(ThreeRows(<div />, child2, child3)) </Layout>
   ```
+
+- Component accepts an array of children
+
+  This is useful when defining components meant to have an arbitrary number of child elements.
+
+  ```reason
+  module Button {
+    let component = ReasonReact.statelessComponent("Button");
+    let make = (~className="", ~onClick, children) => {
+      ...component,
+      render: _self => {
+        <button className=("button " ++ className) onClick>
+          ...children
+        </button>
+      }
+    }
+  }
+  
+  let deleteButton = delete => (
+    <Button className="button-delete" onClick={_ => delete()}>
+      <span className="icon-x"/>
+      <span>{string("Delete")}</span>
+    </Button>
+  )
+  ```
