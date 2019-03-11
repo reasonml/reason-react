@@ -70,6 +70,12 @@ const users = [
     image: "img/logos/svco.svg",
     infoLink: "https://www.sv.co",
     pinned: true
+  },
+  {
+    caption: "Atvero DMS",
+    image: "img/logos/atvero.svg",
+    infoLink: "https://www.atvero.com",
+    pinned: true
   }
 ];
 
@@ -124,7 +130,7 @@ const siteConfig = {
   cleanUrl: true,
   highlight: {
     theme: 'atom-one-light',
-    hljs: function(hljs) {
+    hljs: function (hljs) {
       hljs.registerLanguage('reason', reasonHighlightJs)
     }
   },
