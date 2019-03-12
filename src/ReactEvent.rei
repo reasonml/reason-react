@@ -34,7 +34,7 @@
    How to translate idioms from ReactJS:
 
    1. myMouseEvent.preventDefault() -> ReactEvent.Mouse.preventDefault(myMouseEvent)
-   2. myKeyboardEvent.which -> ReactEvent.Keyboard.which(myMouseEvent)
+   2. myKeyboardEvent.which -> ReactEvent.Keyboard.which(myKeyboardEvent)
    */
 type synthetic('a);
 
