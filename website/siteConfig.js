@@ -24,12 +24,6 @@ const users = [
     pinned: true
   },
   {
-    caption: "Mesopo",
-    image: "img/logos/mesopo.svg",
-    infoLink: "https://mesopo.ai",
-    pinned: true
-  },
-  {
     caption: "Social Tables",
     image: "img/logos/socialtables.svg",
     infoLink: "https://www.socialtables.com",
