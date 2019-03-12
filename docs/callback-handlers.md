@@ -8,7 +8,7 @@ This section describes how ReactJS' `<div onClick={this.handleClick} />` pattern
 
 Two scenarios.
 
-### Not Reading Into `self`
+### Without Reading From `self`
 
 _Reminder: `self` is ReasonReact's `this`. It's a record that contains things like `state`, `send` and others._
 
@@ -39,7 +39,7 @@ let make = (~name, ~onClick, _children) => {
 };
 ```
 
-### Reading Into `self`
+### Reading From `self`
 
 To access `state`, `send` and the other items in `self` from a callback, you **need** to wrap the callback in an extra layer called `self.handle`:
 
