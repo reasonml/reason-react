@@ -147,24 +147,15 @@ let jsxMapper () =
     let argsForMake = argsWithLabels in
     let childrenExpr = transformChildrenIfListUpper ~loc ~mapper children in
     let recursivelyTransformedArgsForMake = argsForMake |> List.map (fun (label, expression) -> (label, mapper.expr mapper expression)) in
+    let childrenArg = ref None in
     let args = recursivelyTransformedArgsForMake
       @ (match childrenExpr with
         | Exact children -> [(Labelled "children", children)]
         | ListLiteral ({ pexp_desc = Pexp_array list }) when list = [] -> []
         | ListLiteral expression ->
-          let fragment = Exp.ident ~loc {loc; txt = Ldot (Ldot (Lident "React", "Fragment"), "make")} in
-          let args = [
-            (nolabel, fragment);
-            (nolabel, Exp.apply
-              ~loc
-              (Exp.ident ~loc {loc; txt = Ldot (Ldot (Lident "React", "Fragment"), "makeProps")})
-              [(nolabel, Exp.construct ~loc {loc; txt = Lident "()"} None)]);
-            (nolabel, expression)
-          ] in
-        [(Labelled "children", Exp.apply
-          ~loc
-          (Exp.ident ~loc {loc; txt = Ldot (Lident "React", "createElementVariadic")})
-          args)])
+        (* this is a hack to support react components that introspect into their children *)
+        (childrenArg := Some expression;
+        [(Labelled "children", Exp.ident ~loc {loc; txt = Ldot (Lident "React", "null")})]))
       @ [(Nolabel, Exp.construct ~loc {loc; txt = Lident "()"} None)] in
     let isCap str = let first = String.sub str 0 1 in let capped = String.uppercase first in first = capped in
     let ident = match modulePath with
@@ -179,14 +170,27 @@ let jsxMapper () =
     Exp.apply ~attrs ~loc (Exp.ident ~loc {loc; txt = propsIdent}) args in
     (* handle key, ref, children *)
       (* React.createElement(Component.make, props, ...children) *)
-      Exp.apply
+    match (!childrenArg) with
+    | None ->
+      (Exp.apply
         ~loc
         ~attrs
         (Exp.ident ~loc {loc; txt = Ldot (Lident "React", "createElement")})
         ([
           (nolabel, Exp.ident ~loc {txt = ident; loc});
           (nolabel, props)
-        ]) in
+        ]))
+     | Some children ->
+       (Exp.apply
+         ~loc
+         ~attrs
+         (Exp.ident ~loc {loc; txt = Ldot (Lident "React", "createElementVariadic")})
+         ([
+           (nolabel, Exp.ident ~loc {txt = ident; loc});
+           (nolabel, props);
+           (nolabel, children)
+         ]))
+     in
 
     let transformLowercaseCall3 mapper loc attrs callArguments id =
       let (children, nonChildrenProps) = extractChildren ~loc callArguments in
@@ -198,7 +202,7 @@ let jsxMapper () =
             pexp_desc =
              Pexp_construct ({txt = Lident "::"}, Some {pexp_desc = Pexp_tuple _ })
              | Pexp_construct ({txt = Lident "[]"}, None)
-          } -> "createElement"
+          } -> "createDOMElementVariadic"
         (* [@JSX] div(~children= value), coming from <div> ...(value) </div> *)
         | _ -> raise (Invalid_argument "A spread as a DOM element's \
           children don't make sense written together. You can simply remove the spread.")
@@ -215,7 +219,7 @@ let jsxMapper () =
           let propsCall =
             Exp.apply
               ~loc
-              (Exp.ident ~loc {loc; txt = Ldot (Lident "ReactDOMRe", "props")})
+              (Exp.ident ~loc {loc; txt = Ldot (Lident "ReactDOMRe", "domProps")})
               (nonEmptyProps |> List.map (fun (label, expression) -> (label, mapper.expr mapper expression)))
           in
           [
