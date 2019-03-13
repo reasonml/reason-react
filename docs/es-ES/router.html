@@ -46,6 +46,7 @@
 <p><a href="https://github.com/reasonml/reason-react/blob/9e9e40ea4c7e8d55e56cba47a4d0188c26d0791e/src/ReasonReact.rei#L248-L276">Here's the documented public interface</a>, repeated here:</p>
 <ul>
 <li><code>ReasonReact.Router.push(string)</code>: takes a new path and update the URL.</li>
+<li><code>ReasonReact.Router.replace(string)</code>: like <code>push</code>, but replaces the current URL.</li>
 <li><code>ReasonReact.Router.watchUrl(f)</code>: start watching for URL changes. Returns a subscription token. Upon url change, calls the callback and passes it the <code>ReasonReact.Router.url</code> record.</li>
 <li><code>ReasonReact.Router.unwatchUrl(watcherID)</code>: stop watching for url changes.</li>
 <li><code>ReasonReact.Router.dangerouslyGetInitialUrl()</code>: get <code>url</code> record outside of <code>watchUrl</code>. Described later.</li>
