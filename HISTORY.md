@@ -8,8 +8,8 @@ Mini release before a surprise release next time (shhhhh) =).
 
 ## Improvements
 
-- Fix issue with react-hot-loader (#298)
-- `ReasonReact.Router.replace` to replace state
+- Fix issue with react-hot-loader (#298).
+- `ReasonReact.Router.replace` to replace state.
 
 # 0.5.0
 
