@@ -111,7 +111,8 @@ module Suspense = {
  * only way to safely have any type of state and be able to update it correctly.
  */
 [@bs.module "react"]
-external useState: (unit => 'state) => ('state, ('state => 'state) => unit) =
+external useState:
+  ([@bs.uncurry] (unit => 'state)) => ('state, ('state => 'state) => unit) =
   "";
 
 [@bs.module "react"]
@@ -227,6 +228,36 @@ external useCallback3:
 [@bs.module "react"] external useContext: Context.t('any) => 'any = "";
 
 [@bs.module "react"] external useRef: 'value => Ref.t('value) = "";
+
+[@bs.module "react"]
+external useImperativeHandle0:
+  (
+    Js.Nullable.t(Ref.t('value)),
+    [@bs.uncurry] (unit => 'value),
+    [@bs.as {json|[]|json}] _
+  ) =>
+  unit =
+  "useImperativeHandle";
+
+[@bs.module "react"]
+external useImperativeHandle1:
+  (
+    Js.Nullable.t(Ref.t('value)),
+    [@bs.uncurry] (unit => 'value),
+    array('a)
+  ) =>
+  unit =
+  "useImperativeHandle";
+
+[@bs.module "react"]
+external useImperativeHandle2:
+  (
+    Js.Nullable.t(Ref.t('value)),
+    [@bs.uncurry] (unit => 'value),
+    ('a, 'b)
+  ) =>
+  unit =
+  "useImperativeHandle";
 
 [@bs.set]
 external setDisplayName: (component('props), string) => unit = "displayName";
