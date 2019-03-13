@@ -1,3 +1,16 @@
+# 0.6.0
+
+Mini release before a surprise release next time (shhhhh) =).
+
+## Breaking
+
+- The DOM prop `crossorigin` is now correctly named `crossOrigin`. This is a tiny breaking change, thus the version bump (#290).
+
+## Improvements
+
+- Fix issue with react-hot-loader (#298)
+- `ReasonReact.Router.replace` to replace state
+
 # 0.5.0
 
 **This release requires `bs-platform 4.0.3`**.
