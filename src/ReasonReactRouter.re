@@ -149,7 +149,7 @@ let unwatchUrl = watcherID =>
   };
 
 let useUrl = () => {
-  let (url, setUrl) = React.useState(dangerouslyGetInitialUrl);
+  let (url, setUrl) = React.useState(() => dangerouslyGetInitialUrl());
 
   React.useEffect0(() => {
     let watcherId = watchUrl(url => setUrl(_ => url));
