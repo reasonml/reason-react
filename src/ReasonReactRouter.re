@@ -149,15 +149,20 @@ let unwatchUrl = watcherID =>
   };
 
 let useUrl = () => {
-  let (url, setUrl) = React.useState(dangerouslyGetInitialUrl);
+  let (url, setUrl) = React.useState(() => dangerouslyGetInitialUrl());
 
   React.useEffect0(() => {
     let watcherId = watchUrl(url => setUrl(_ => url));
+
     /**
       * check for updates that may have occured between
       * the initial state and the subscribe above
       */
-    setUrl(_ => dangerouslyGetInitialUrl());
+    let newUrl = dangerouslyGetInitialUrl();
+    if (newUrl !== url) {
+      setUrl(_ => newUrl);
+    };
+
     Some(() => unwatchUrl(watcherId));
   });
 
