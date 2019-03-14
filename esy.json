@@ -27,5 +27,8 @@
     "buildsInSource": "_build",
     "build": [ [ "dune", "build", "-p", "reactjs_jsx_ppx_v3" ] ],
     "install": [ [ "esy-installer", "reactjs_jsx_ppx_v3.install" ] ]
+  },
+  "scripts": {
+    "test": "esy x ocamlc -dsource -ppx reactjs_jsx_ppx_v3 -pp 'refmt --print binary --parse re' -impl './jsx_ppx/test.re'"
   }
 }
