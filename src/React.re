@@ -184,17 +184,17 @@ external useMemo1: ([@bs.uncurry] (unit => 'any), array('a)) => 'any =
 external useMemo2: ([@bs.uncurry] (unit => 'any), ('a, 'b)) => 'any =
   "useMemo";
 [@bs.module "react"]
-external useMemo3: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c)) => 't =
+external useMemo3: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c)) => 'any =
   "useMemo";
 [@bs.module "react"]
-external useMemo4: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd)) => 't =
+external useMemo4: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd)) => 'any =
   "useMemo";
 [@bs.module "react"]
-external useMemo5: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e)) => 't =
+external useMemo5: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e)) => 'any =
   "useMemo";
 [@bs.module "react"]
 external useMemo6:
-  ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f)) => 't =
+  ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f)) => 'any =
   "useMemo";
 
 /* This is used as return values  */
