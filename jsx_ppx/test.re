@@ -26,7 +26,28 @@ module Bar = {
         Js.log("This function should be named `Test$Bar$component`");
         <div />
     };
-}
+
+    module Baz = {
+        [@react.component default]
+        let something = (~a, ~b, _) => {
+            Js.log("This function should be named `Test$Bar$Baz`");
+            <div />
+        };
+
+        module Buzz = {
+            [@react.component default]
+            let something = (~a, ~b, _) => {
+                Js.log("This function should be named `Test$Bar$Baz`");
+                <div />
+            };
+        }
+    };
+};
+
+<Bar a=1 b="1" />;
+<Bar.component a=1 b="1" />;
+<Bar.Baz a=1 b="1" />;
+<Bar.Baz.Buzz a=1 b="1" />;
 
 module type X_int = {
     let x: int;

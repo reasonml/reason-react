@@ -78,6 +78,7 @@ type 'a children = | ListLiteral of 'a | Exact of 'a
 type componentConfig = {
   propsName: string;
   forwardRef: string option;
+  isDefault: bool;
 }
 
 (* if children is a list, convert it to an array while mapping each element. If not, just map over it, as usual *)
@@ -137,10 +138,37 @@ let extractChildren ?(removeLastPositionUnit=false) ~loc propsAndChildren =
     (childrenExpr, if removeLastPositionUnit then allButLast props else props)
   | _ -> raise (Invalid_argument "JSX: somehow there's more than one `children` label")
 
+let fileNameFromLoc ({loc_start}: Location.t) =
+  let fileName = match loc_start.pos_fname with
+  | "" -> !Location.input_name
+  | fileName -> fileName
+  in
+  let fileName = try
+      Filename.chop_extension (Filename.basename fileName)
+    with | Invalid_argument _-> fileName in
+  let fileName = String.capitalize fileName in
+  fileName
+
+module MutableMap =
+  struct
+    module M = Map.Make(String)
+
+    let empty = ref M.empty
+
+    let add key value map =
+      map := M.add key value !map
+
+    let find key map =
+      try (M.find key !map) with
+      | Not_found -> "make"
+  end
+
 (* TODO: some line number might still be wrong *)
 let jsxMapper () =
 
   let jsxVersion = ref None in
+
+  let defaultNames = MutableMap.empty in
 
   let transformUppercaseCall3 modulePath mapper loc attrs _ callArguments =
     let (children, argsWithLabels) = extractChildren ~loc ~removeLastPositionUnit:true callArguments in
@@ -157,10 +185,17 @@ let jsxMapper () =
         (childrenArg := Some expression;
         [(Labelled "children", Exp.ident ~loc {loc; txt = Ldot (Lident "React", "null")})]))
       @ [(Nolabel, Exp.construct ~loc {loc; txt = Lident "()"} None)] in
+    let fileName = fileNameFromLoc(loc) in
     let isCap str = let first = String.sub str 0 1 in let capped = String.uppercase first in first = capped in
     let ident = match modulePath with
-    | Lident _ -> Ldot (modulePath, "make")
-    | (Ldot (modulePath, value) as fullPath) when isCap value -> Ldot (fullPath, "make")
+    | Lident lookup ->
+      let key = String.concat "$" [fileName; lookup] in
+      let name = MutableMap.find key defaultNames in
+      Ldot (modulePath, name)
+    | (Ldot (modulePath, value) as fullPath) when isCap value ->
+      let key = String.concat "$" (fileName :: Longident.flatten fullPath) in
+      let name = MutableMap.find key defaultNames in
+      Ldot (fullPath, name)
     | modulePath -> modulePath in
     let propsIdent = match ident with
     | Lident path -> Lident (path ^ "Props")
@@ -392,7 +427,7 @@ let jsxMapper () =
   in
 
   let getAttrProps payload =
-    let defaultProps = {propsName = "Props"; forwardRef = None} in
+    let defaultProps = {propsName = "Props"; forwardRef = None; isDefault = false} in
     match payload with
     | Some(PStr(
       {pstr_desc = Pstr_eval ({
@@ -401,6 +436,7 @@ let jsxMapper () =
         )) ->
         List.fold_left getAttributeValues defaultProps recordFields
     | Some(PStr({pstr_desc = Pstr_eval ({pexp_desc = Pexp_ident {txt = Lident "props"}}, _)}::_rest)) -> {defaultProps with propsName = "props"}
+    | Some(PStr({pstr_desc = Pstr_eval ({pexp_desc = Pexp_ident {txt = Lident "default"}}, _)}::_rest)) -> {defaultProps with isDefault = true}
     | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props as an options."))
     | _ -> defaultProps
   in
@@ -642,21 +678,11 @@ let jsxMapper () =
           },
           innerExpressionWithRef
         )) in
-        let fileName = match pstr_loc.loc_start.pos_fname with
-        | "" -> !Location.input_name
-        | fileName -> fileName
-        in
-        let fileName = try
-            Filename.chop_extension (Filename.basename fileName)
-          with | Invalid_argument _-> fileName in
-        let fileName = String.capitalize fileName in
-        let fullModuleName = match (fileName, !nestedModules, fnName) with
-        | ("", nestedModules, "make") -> nestedModules
-        | ("", nestedModules, fnName) -> List.rev (fnName :: nestedModules)
-        | (fileName, nestedModules, "make") -> fileName :: (List.rev nestedModules)
-        | (fileName, nestedModules, fnName) -> fileName :: (List.rev (fnName :: nestedModules))
-        in
-        let fullModuleName = String.concat "$" fullModuleName in
+        let fileName = fileNameFromLoc(pstr_loc) in
+        (* It doesn't seem like the empty filename is possible to hit so I removed the match *)
+        let fullModulePath = String.concat "$" (fileName :: (List.rev !nestedModules)) in
+        let () = if props.isDefault then MutableMap.add fullModulePath fnName defaultNames in
+        let fullModuleName = String.concat "$" [fullModulePath; fnName] in
         let fullExpression = match (fullModuleName) with
         | ("") -> fullExpression
         | (txt) -> Pexp_let (
