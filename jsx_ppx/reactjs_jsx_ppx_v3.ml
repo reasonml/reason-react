@@ -77,7 +77,6 @@ open Longident
 type 'a children = | ListLiteral of 'a | Exact of 'a
 type componentConfig = {
   propsName: string;
-  forwardRef: string option;
 }
 
 (* if children is a list, convert it to an array while mapping each element. If not, just map over it, as usual *)
@@ -136,6 +135,51 @@ let extractChildren ?(removeLastPositionUnit=false) ~loc propsAndChildren =
   | ([(_, childrenExpr)], props) ->
     (childrenExpr, if removeLastPositionUnit then allButLast props else props)
   | _ -> raise (Invalid_argument "JSX: somehow there's more than one `children` label")
+
+(* Helper method to look up the [@react.component] attribute *)
+let hasAttr (loc, _) =
+  loc.txt = "react.component"
+
+(* Helper method to filter out any attribute that isn't [@react.component] *)
+let otherAttrsPure (loc, _) =
+  loc.txt <> "react.component"
+
+(* Iterate over the attributes and try to find the [@react.component] attribute *)
+let hasAttrOnBinding {pvb_attributes} =
+  match (find_opt hasAttr pvb_attributes) with
+  | Some(_) -> true
+  | None -> false
+
+(* Filter the [@react.component] attribute and immutably replace them on the binding *)
+let filterAttrOnBinding binding = {binding with pvb_attributes = List.filter otherAttrsPure binding.pvb_attributes}
+
+(* Finds the name of the variable the binding is assigned to, otherwise raises Invalid_argument *)
+let getFnName binding =
+  match binding with
+  | {pvb_pat = {
+      ppat_desc = Ppat_var {txt}
+    }} -> txt
+  | _ -> raise (Invalid_argument "react.component calls cannot be destructured.")
+
+(* Lookup the value of `props` otherwise raise Invalid_argument error *)
+let getPropsNameValue acc (loc, exp) =
+    match (loc, exp) with
+    | ({ txt = Lident "props" }, { pexp_desc = Pexp_ident {txt = Lident str} }) -> { propsName = str }
+    | ({ txt }, _) -> raise (Invalid_argument ("react.component only accepts props as an option, given: " ^ Longident.last txt))
+
+(* Lookup the `props` record or string as part of [@react.component] and store the name for use when rewriting *)
+let getPropsAttr payload =
+  let defaultProps = {propsName = "Props"} in
+  match payload with
+  | Some(PStr(
+    {pstr_desc = Pstr_eval ({
+      pexp_desc = Pexp_record (recordFields, None)
+      }, _)}::_rest
+      )) ->
+      List.fold_left getPropsNameValue defaultProps recordFields
+  | Some(PStr({pstr_desc = Pstr_eval ({pexp_desc = Pexp_ident {txt = Lident "props"}}, _)}::_rest)) -> {propsName = "props"}
+  | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props as an options."))
+  | _ -> defaultProps
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper () =
@@ -358,11 +402,6 @@ let jsxMapper () =
   | [] -> args
   in
 
-  let hasAttr (loc, _) =
-    loc.txt = "react.component" in
-  let otherAttrsPure (loc, _) =
-    loc.txt <> "react.component" in
-
   let argToType types (name, _default, _noLabelName, _alias, loc, type_) = match (type_, name) with
     | (Some type_, (Optional name | Labelled name)) ->
       (name, [], type_) :: types
@@ -383,26 +422,6 @@ let jsxMapper () =
         ptyp_attributes = [];
         }) :: types
     | _ -> types
-  in
-
-  let getAttributeValues acc (loc, exp) =
-    match (loc, exp) with
-    | ({ txt = Lident "props" }, { pexp_desc = Pexp_ident {txt = Lident str} }) -> { acc with propsName = str }
-    | ({ txt }, _) -> raise (Invalid_argument ("react.component only accepts props as an option, given: " ^ Longident.last txt))
-  in
-
-  let getAttrProps payload =
-    let defaultProps = {propsName = "Props"; forwardRef = None} in
-    match payload with
-    | Some(PStr(
-      {pstr_desc = Pstr_eval ({
-        pexp_desc = Pexp_record (recordFields, None)
-        }, _)}::_rest
-        )) ->
-        List.fold_left getAttributeValues defaultProps recordFields
-    | Some(PStr({pstr_desc = Pstr_eval ({pexp_desc = Pexp_ident {txt = Lident "props"}}, _)}::_rest)) -> {defaultProps with propsName = "props"}
-    | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props as an options."))
-    | _ -> defaultProps
   in
 
   let makePropsType loc namedTypeList =
@@ -518,14 +537,8 @@ let jsxMapper () =
         valueBindings
       )
     } ->
-      let hasAttrOnBinding {pvb_attributes} = match (find_opt hasAttr pvb_attributes) with | Some(_) -> true | None -> false in
-      let filterAttrOnBinding binding = {binding with pvb_attributes = List.filter otherAttrsPure binding.pvb_attributes} in
       let mapBinding binding = if (hasAttrOnBinding binding) then
-        let fnName = match binding with
-        | {pvb_pat = {
-            ppat_desc = Ppat_var {txt}
-          }} -> txt
-        | _ -> raise (Invalid_argument "react.component calls cannot be destructured.") in
+        let fnName = getFnName binding in
         let modifiedBinding binding =
           let expression = binding.pvb_expr in
           let wrapExpressionWithBinding expressionFn expression = {(filterAttrOnBinding binding) with pvb_expr = expressionFn expression} in
@@ -565,13 +578,11 @@ let jsxMapper () =
         (* TODO: in some cases this is a better loc than pstr_loc *)
         | Some (_loc, payload) -> Some payload
         | None -> None in
-        let props = getAttrProps payload in
+        let props = getPropsAttr payload in
         (* do stuff here! *)
         let (innerFunctionExpression, namedArgList, forwardRef) = recursivelyTransformNamedArgsForMake mapper expression [] in
-        let props = {props with forwardRef = forwardRef} in
-
         let namedArgListWithKeyAndRef = (Optional("key"), None, None, "key", pstr_loc, None) :: namedArgList in
-        let namedArgListWithKeyAndRef = match props.forwardRef with
+        let namedArgListWithKeyAndRef = match forwardRef with
         | Some(_) ->  (Optional("ref"), None, None, "ref", pstr_loc, None) :: namedArgListWithKeyAndRef
         | None -> namedArgListWithKeyAndRef
         in
@@ -610,7 +621,7 @@ let jsxMapper () =
              expression in
           Ast_404.Ast_helper.Exp.let_ ~loc Nonrecursive [letExpression] innerExpression in
         let innerExpression = List.fold_left makeLet (Ast_404.Ast_helper.Exp.mk innerFunctionExpression) namedArgList in
-        let innerExpressionWithRef = match (props.forwardRef) with
+        let innerExpressionWithRef = match (forwardRef) with
         | Some txt ->
           {innerExpression with pexp_desc = Pexp_fun (Nolabel, None, {
             ppat_desc = Ppat_var { txt; loc = pstr_loc };
