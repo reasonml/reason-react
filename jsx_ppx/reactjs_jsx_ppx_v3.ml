@@ -196,6 +196,18 @@ let filenameFromLoc (pstr_loc: Location.t) =
   let fileName = String.capitalize fileName in
   fileName
 
+(* Build a string representation of a module name with segments separated by $ *)
+let makeModuleName fileName nestedModules fnName =
+  let fullModuleName = match (fileName, nestedModules, fnName) with
+  (* TODO: is this even reachable? It seems like the fileName always exists *)
+  | ("", nestedModules, "make") -> nestedModules
+  | ("", nestedModules, fnName) -> List.rev (fnName :: nestedModules)
+  | (fileName, nestedModules, "make") -> fileName :: (List.rev nestedModules)
+  | (fileName, nestedModules, fnName) -> fileName :: (List.rev (fnName :: nestedModules))
+  in
+  let fullModuleName = String.concat "$" fullModuleName in
+  fullModuleName
+
 (*
   AST node builders
 
@@ -258,8 +270,16 @@ let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
     psig_desc = Psig_value (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
   }
 
+(* Build an AST node for the props name when converted to a Js.t inside the function signature  *)
+let makePropsName ~loc name =
+  {
+    ppat_desc = Ppat_var {txt = name; loc};
+    ppat_loc = loc;
+    ppat_attributes = [];
+  }
+
 (* Build an AST node representing a "closed" Js.t object representing a component's props *)
-let makePropsType loc namedTypeList =
+let makePropsType ~loc namedTypeList =
   Ast_404.Ast_helper.Typ.mk ~loc (
     Ptyp_constr({txt= Ldot (Lident("Js"), "t"); loc}, [{
         ptyp_desc = Ptyp_object(namedTypeList, Closed);
@@ -274,7 +294,7 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
     fnName
     loc
     (List.map pluckLabelLocType namedArgListWithKeyAndRef)
-    (makePropsType loc namedTypeList)
+    (makePropsType ~loc namedTypeList)
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper () =
@@ -541,7 +561,7 @@ let jsxMapper () =
     let (innerType, propTypes) = getPropTypes [] pval_type in
     let namedTypeList = List.fold_left argToConcreteType [] propTypes in
     let pluckLabelAndLoc (label, loc, type_) = (label, loc, Some type_) in
-    let retPropsType = makePropsType pstr_loc namedTypeList in
+    let retPropsType = makePropsType ~loc:pstr_loc namedTypeList in
     let externalPropsDecl = makePropsExternal fnName pstr_loc ((
       Optional "key",
       pstr_loc,
@@ -662,18 +682,8 @@ let jsxMapper () =
           None,
           {
             ppat_desc = Ppat_constraint (
-              {
-                ppat_desc = Ppat_var {txt = props.propsName; loc = pstr_loc};
-                ppat_loc = pstr_loc;
-                ppat_attributes = [];
-              },
-              (Ast_404.Ast_helper.Typ.mk(
-                Ptyp_constr({txt= Ldot (Lident("Js"), "t"); loc= pstr_loc}, [{
-                    ptyp_desc = Ptyp_object(namedTypeList, Closed);
-                    ptyp_loc = pstr_loc;
-                    ptyp_attributes = [];
-                  }])
-                ))
+              makePropsName ~loc:pstr_loc props.propsName,
+              makePropsType ~loc:pstr_loc namedTypeList
             );
             ppat_loc = pstr_loc;
             ppat_attributes = [];
@@ -681,13 +691,7 @@ let jsxMapper () =
           innerExpressionWithRef
         )) in
         let fileName = filenameFromLoc pstr_loc in
-        let fullModuleName = match (fileName, !nestedModules, fnName) with
-        | ("", nestedModules, "make") -> nestedModules
-        | ("", nestedModules, fnName) -> List.rev (fnName :: nestedModules)
-        | (fileName, nestedModules, "make") -> fileName :: (List.rev nestedModules)
-        | (fileName, nestedModules, fnName) -> fileName :: (List.rev (fnName :: nestedModules))
-        in
-        let fullModuleName = String.concat "$" fullModuleName in
+        let fullModuleName = makeModuleName fileName !nestedModules fnName in
         let fullExpression = match (fullModuleName) with
         | ("") -> fullExpression
         | (txt) -> Pexp_let (
@@ -750,7 +754,7 @@ let jsxMapper () =
     let (innerType, propTypes) = getPropTypes [] pval_type in
     let namedTypeList = List.fold_left argToConcreteType [] propTypes in
     let pluckLabelAndLoc (label, loc, type_) = (label, loc, Some type_) in
-    let retPropsType = makePropsType psig_loc namedTypeList in
+    let retPropsType = makePropsType ~loc:psig_loc namedTypeList in
     let externalPropsDecl = makePropsExternalSig fnName psig_loc ((
       Optional "key",
       psig_loc,
