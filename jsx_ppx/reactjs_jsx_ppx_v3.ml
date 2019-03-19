@@ -181,6 +181,101 @@ let getPropsAttr payload =
   | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props as an options."))
   | _ -> defaultProps
 
+(* Plucks the label, loc, and type_ from an AST node *)
+let pluckLabelLocType (label, _, _, _, loc, type_) = (label, loc, type_)
+
+(* Lookup the filename from the location information on the AST node and turn it into a valid module identifier *)
+let filenameFromLoc (pstr_loc: Location.t) =
+  let fileName = match pstr_loc.loc_start.pos_fname with
+  | "" -> !Location.input_name
+  | fileName -> fileName
+  in
+  let fileName = try
+      Filename.chop_extension (Filename.basename fileName)
+    with | Invalid_argument _-> fileName in
+  let fileName = String.capitalize fileName in
+  fileName
+
+(*
+  AST node builders
+
+  These functions help us build AST nodes that are needed when transforming a [@react.component] into a
+  constructor and a props external
+*)
+
+(* Build an AST node representing all named args for the `external` definition for a component's props *)
+let rec recursivelyMakeNamedArgsForExternal list args =
+  match list with
+  | (label, loc, type_)::tl ->
+    recursivelyMakeNamedArgsForExternal tl (Ast_404.Ast_helper.Typ.arrow
+    ~loc
+    label
+    (match (label, type_) with
+    | (_, None) -> {
+      ptyp_desc = Ptyp_var (safeTypeFromValue
+      (match label with | Labelled str | Optional str -> str | _ -> raise (Invalid_argument "This should never happen.")));
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+    }
+    | (Optional _, Some ({ptyp_desc = Ptyp_constr ({txt = Lident "option"}, [type_])})) -> type_
+    | (_, Some type_) -> type_
+    )
+    args)
+  | [] -> args
+
+(* Build an AST node for the [@bs.obj] representing props for a component *)
+let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
+  let propsName = fnName ^ "Props" in {
+  pval_name = {txt = propsName; loc};
+  pval_type =
+      recursivelyMakeNamedArgsForExternal
+        namedArgListWithKeyAndRef
+        (Ast_404.Ast_helper.Typ.arrow
+          Nolabel
+          {
+            ptyp_desc = Ptyp_constr ({txt= Lident("unit"); loc}, []);
+            ptyp_loc = loc;
+            ptyp_attributes = [];
+          }
+          propsType
+        );
+  pval_prim = [""];
+  pval_attributes = [({txt = "bs.obj"; loc = loc}, PStr [])];
+  pval_loc = loc;
+}
+
+(* Build an AST node representing an `external` with the definition of the [@bs.obj] *)
+let makePropsExternal fnName loc namedArgListWithKeyAndRef propsType =
+  {
+    pstr_loc = loc;
+    pstr_desc = Pstr_primitive (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
+  }
+
+(* Build an AST node for the signature of the `external` definition *)
+let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
+  {
+    psig_loc = loc;
+    psig_desc = Psig_value (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
+  }
+
+(* Build an AST node representing a "closed" Js.t object representing a component's props *)
+let makePropsType loc namedTypeList =
+  Ast_404.Ast_helper.Typ.mk ~loc (
+    Ptyp_constr({txt= Ldot (Lident("Js"), "t"); loc}, [{
+        ptyp_desc = Ptyp_object(namedTypeList, Closed);
+        ptyp_loc = loc;
+        ptyp_attributes = [];
+      }])
+    )
+
+(* Builds an AST node for the entire `external` definition of props *)
+let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
+  makePropsExternal
+    fnName
+    loc
+    (List.map pluckLabelLocType namedArgListWithKeyAndRef)
+    (makePropsType loc namedTypeList)
+
 (* TODO: some line number might still be wrong *)
 let jsxMapper () =
 
@@ -383,24 +478,6 @@ let jsxMapper () =
     | innerExpression -> (innerExpression, list, None)
   in
 
-  let rec recursivelyMakeNamedArgsForExternal list args = match list with
-  | (label, loc, type_)::tl ->
-    recursivelyMakeNamedArgsForExternal tl (Ast_404.Ast_helper.Typ.arrow
-    ~loc
-    label
-    (match (label, type_) with
-    | (_, None) -> {
-      ptyp_desc = Ptyp_var (safeTypeFromValue
-      (match label with | Labelled str |  Optional str -> str | _ -> raise (Invalid_argument "This should never happen.")));
-      ptyp_loc = loc;
-      ptyp_attributes = [];
-    }
-    | (Optional _, Some ({ptyp_desc = Ptyp_constr ({txt = Lident "option"}, [type_])})) -> type_
-    | (_, Some type_) -> type_
-    )
-    args)
-  | [] -> args
-  in
 
   let argToType types (name, _default, _noLabelName, _alias, loc, type_) = match (type_, name) with
     | (Some type_, (Optional name | Labelled name)) ->
@@ -422,50 +499,6 @@ let jsxMapper () =
         ptyp_attributes = [];
         }) :: types
     | _ -> types
-  in
-
-  let makePropsType loc namedTypeList =
-    Ast_404.Ast_helper.Typ.mk ~loc (
-      Ptyp_constr({txt= Ldot (Lident("Js"), "t"); loc}, [{
-          ptyp_desc = Ptyp_object(namedTypeList, Closed);
-          ptyp_loc = loc;
-          ptyp_attributes = [];
-        }])
-      )
-  in
-
-  let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
-    let propsName = fnName ^ "Props" in {
-    pval_name = {txt = propsName; loc};
-    pval_type =
-       recursivelyMakeNamedArgsForExternal
-         namedArgListWithKeyAndRef
-         (Ast_404.Ast_helper.Typ.arrow
-           Nolabel
-           {
-             ptyp_desc = Ptyp_constr ({txt= Lident("unit"); loc}, []);
-             ptyp_loc = loc;
-             ptyp_attributes = [];
-           }
-           propsType
-         );
-    pval_prim = [""];
-    pval_attributes = [({txt = "bs.obj"; loc = loc}, PStr [])];
-    pval_loc = loc;
-  } in
-
-  let makePropsExternal fnName loc namedArgListWithKeyAndRef propsType =
-    {
-      pstr_loc = loc;
-      pstr_desc = Pstr_primitive (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
-    }
-  in
-
-  let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
-    {
-      psig_loc = loc;
-      psig_desc = Psig_value (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
-    }
   in
 
   let argToConcreteType types (name, loc, type_) = match name with
@@ -587,13 +620,7 @@ let jsxMapper () =
         | None -> namedArgListWithKeyAndRef
         in
         let namedTypeList = List.fold_left argToType [] namedArgList in
-        let pluckLabelAndLoc (label, _, _, _, loc, type_) = (label, loc, type_) in
-        let externalDecl = makePropsExternal
-          fnName
-          pstr_loc
-          (List.map pluckLabelAndLoc namedArgListWithKeyAndRef)
-          (makePropsType pstr_loc namedTypeList)
-        in
+        let externalDecl = makeExternalDecl fnName pstr_loc namedArgListWithKeyAndRef namedTypeList in
         let makeLet innerExpression (label, default, _, alias, loc, _type) =
           let labelString = (match label with | Labelled label | Optional label -> label | _ -> raise (Invalid_argument "This should never happen")) in
           let expression = (Ast_404.Ast_helper.Exp.apply ~loc
@@ -653,14 +680,7 @@ let jsxMapper () =
           },
           innerExpressionWithRef
         )) in
-        let fileName = match pstr_loc.loc_start.pos_fname with
-        | "" -> !Location.input_name
-        | fileName -> fileName
-        in
-        let fileName = try
-            Filename.chop_extension (Filename.basename fileName)
-          with | Invalid_argument _-> fileName in
-        let fileName = String.capitalize fileName in
+        let fileName = filenameFromLoc pstr_loc in
         let fullModuleName = match (fileName, !nestedModules, fnName) with
         | ("", nestedModules, "make") -> nestedModules
         | ("", nestedModules, fnName) -> List.rev (fnName :: nestedModules)
