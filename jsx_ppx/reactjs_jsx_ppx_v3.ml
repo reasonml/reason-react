@@ -77,7 +77,6 @@ open Longident
 type 'a children = | ListLiteral of 'a | Exact of 'a
 type componentConfig = {
   propsName: string;
-  forwardRef: string option;
 }
 
 (* if children is a list, convert it to an array while mapping each element. If not, just map over it, as usual *)
@@ -136,6 +135,166 @@ let extractChildren ?(removeLastPositionUnit=false) ~loc propsAndChildren =
   | ([(_, childrenExpr)], props) ->
     (childrenExpr, if removeLastPositionUnit then allButLast props else props)
   | _ -> raise (Invalid_argument "JSX: somehow there's more than one `children` label")
+
+(* Helper method to look up the [@react.component] attribute *)
+let hasAttr (loc, _) =
+  loc.txt = "react.component"
+
+(* Helper method to filter out any attribute that isn't [@react.component] *)
+let otherAttrsPure (loc, _) =
+  loc.txt <> "react.component"
+
+(* Iterate over the attributes and try to find the [@react.component] attribute *)
+let hasAttrOnBinding {pvb_attributes} =
+  match (find_opt hasAttr pvb_attributes) with
+  | Some(_) -> true
+  | None -> false
+
+(* Filter the [@react.component] attribute and immutably replace them on the binding *)
+let filterAttrOnBinding binding = {binding with pvb_attributes = List.filter otherAttrsPure binding.pvb_attributes}
+
+(* Finds the name of the variable the binding is assigned to, otherwise raises Invalid_argument *)
+let getFnName binding =
+  match binding with
+  | {pvb_pat = {
+      ppat_desc = Ppat_var {txt}
+    }} -> txt
+  | _ -> raise (Invalid_argument "react.component calls cannot be destructured.")
+
+(* Lookup the value of `props` otherwise raise Invalid_argument error *)
+let getPropsNameValue acc (loc, exp) =
+    match (loc, exp) with
+    | ({ txt = Lident "props" }, { pexp_desc = Pexp_ident {txt = Lident str} }) -> { propsName = str }
+    | ({ txt }, _) -> raise (Invalid_argument ("react.component only accepts props as an option, given: " ^ Longident.last txt))
+
+(* Lookup the `props` record or string as part of [@react.component] and store the name for use when rewriting *)
+let getPropsAttr payload =
+  let defaultProps = {propsName = "Props"} in
+  match payload with
+  | Some(PStr(
+    {pstr_desc = Pstr_eval ({
+      pexp_desc = Pexp_record (recordFields, None)
+      }, _)}::_rest
+      )) ->
+      List.fold_left getPropsNameValue defaultProps recordFields
+  | Some(PStr({pstr_desc = Pstr_eval ({pexp_desc = Pexp_ident {txt = Lident "props"}}, _)}::_rest)) -> {propsName = "props"}
+  | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props as an options."))
+  | _ -> defaultProps
+
+(* Plucks the label, loc, and type_ from an AST node *)
+let pluckLabelLocType (label, _, _, _, loc, type_) = (label, loc, type_)
+
+(* Lookup the filename from the location information on the AST node and turn it into a valid module identifier *)
+let filenameFromLoc (pstr_loc: Location.t) =
+  let fileName = match pstr_loc.loc_start.pos_fname with
+  | "" -> !Location.input_name
+  | fileName -> fileName
+  in
+  let fileName = try
+      Filename.chop_extension (Filename.basename fileName)
+    with | Invalid_argument _-> fileName in
+  let fileName = String.capitalize fileName in
+  fileName
+
+(* Build a string representation of a module name with segments separated by $ *)
+let makeModuleName fileName nestedModules fnName =
+  let fullModuleName = match (fileName, nestedModules, fnName) with
+  (* TODO: is this even reachable? It seems like the fileName always exists *)
+  | ("", nestedModules, "make") -> nestedModules
+  | ("", nestedModules, fnName) -> List.rev (fnName :: nestedModules)
+  | (fileName, nestedModules, "make") -> fileName :: (List.rev nestedModules)
+  | (fileName, nestedModules, fnName) -> fileName :: (List.rev (fnName :: nestedModules))
+  in
+  let fullModuleName = String.concat "$" fullModuleName in
+  fullModuleName
+
+(*
+  AST node builders
+
+  These functions help us build AST nodes that are needed when transforming a [@react.component] into a
+  constructor and a props external
+*)
+
+(* Build an AST node representing all named args for the `external` definition for a component's props *)
+let rec recursivelyMakeNamedArgsForExternal list args =
+  match list with
+  | (label, loc, type_)::tl ->
+    recursivelyMakeNamedArgsForExternal tl (Ast_404.Ast_helper.Typ.arrow
+    ~loc
+    label
+    (match (label, type_) with
+    | (_, None) -> {
+      ptyp_desc = Ptyp_var (safeTypeFromValue
+      (match label with | Labelled str | Optional str -> str | _ -> raise (Invalid_argument "This should never happen.")));
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+    }
+    | (Optional _, Some ({ptyp_desc = Ptyp_constr ({txt = Lident "option"}, [type_])})) -> type_
+    | (_, Some type_) -> type_
+    )
+    args)
+  | [] -> args
+
+(* Build an AST node for the [@bs.obj] representing props for a component *)
+let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
+  let propsName = fnName ^ "Props" in {
+  pval_name = {txt = propsName; loc};
+  pval_type =
+      recursivelyMakeNamedArgsForExternal
+        namedArgListWithKeyAndRef
+        (Ast_404.Ast_helper.Typ.arrow
+          Nolabel
+          {
+            ptyp_desc = Ptyp_constr ({txt= Lident("unit"); loc}, []);
+            ptyp_loc = loc;
+            ptyp_attributes = [];
+          }
+          propsType
+        );
+  pval_prim = [""];
+  pval_attributes = [({txt = "bs.obj"; loc = loc}, PStr [])];
+  pval_loc = loc;
+}
+
+(* Build an AST node representing an `external` with the definition of the [@bs.obj] *)
+let makePropsExternal fnName loc namedArgListWithKeyAndRef propsType =
+  {
+    pstr_loc = loc;
+    pstr_desc = Pstr_primitive (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
+  }
+
+(* Build an AST node for the signature of the `external` definition *)
+let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
+  {
+    psig_loc = loc;
+    psig_desc = Psig_value (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
+  }
+
+(* Build an AST node for the props name when converted to a Js.t inside the function signature  *)
+let makePropsName ~loc name =
+  {
+    ppat_desc = Ppat_var {txt = name; loc};
+    ppat_loc = loc;
+    ppat_attributes = [];
+  }
+
+(* Build an AST node representing a "closed" Js.t object representing a component's props *)
+let makePropsType ~loc namedTypeList =
+  Ast_404.Ast_helper.Typ.mk ~loc (
+    Ptyp_constr({txt= Ldot (Lident("Js"), "t"); loc}, [{
+        ptyp_desc = Ptyp_object(namedTypeList, Closed);
+        ptyp_loc = loc;
+        ptyp_attributes = [];
+      }])
+    )
+
+(* Builds an AST node for the entire `external` definition of props *)
+let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
+  makePropsExternal
+    fnName
+    loc
+    (List.map pluckLabelLocType namedArgListWithKeyAndRef)
+    (makePropsType ~loc namedTypeList)
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper () =
@@ -339,29 +498,6 @@ let jsxMapper () =
     | innerExpression -> (innerExpression, list, None)
   in
 
-  let rec recursivelyMakeNamedArgsForExternal list args = match list with
-  | (label, loc, type_)::tl ->
-    recursivelyMakeNamedArgsForExternal tl (Ast_404.Ast_helper.Typ.arrow
-    ~loc
-    label
-    (match (label, type_) with
-    | (_, None) -> {
-      ptyp_desc = Ptyp_var (safeTypeFromValue
-      (match label with | Labelled str |  Optional str -> str | _ -> raise (Invalid_argument "This should never happen.")));
-      ptyp_loc = loc;
-      ptyp_attributes = [];
-    }
-    | (Optional _, Some ({ptyp_desc = Ptyp_constr ({txt = Lident "option"}, [type_])})) -> type_
-    | (_, Some type_) -> type_
-    )
-    args)
-  | [] -> args
-  in
-
-  let hasAttr (loc, _) =
-    loc.txt = "react.component" in
-  let otherAttrsPure (loc, _) =
-    loc.txt <> "react.component" in
 
   let argToType types (name, _default, _noLabelName, _alias, loc, type_) = match (type_, name) with
     | (Some type_, (Optional name | Labelled name)) ->
@@ -383,70 +519,6 @@ let jsxMapper () =
         ptyp_attributes = [];
         }) :: types
     | _ -> types
-  in
-
-  let getAttributeValues acc (loc, exp) =
-    match (loc, exp) with
-    | ({ txt = Lident "props" }, { pexp_desc = Pexp_ident {txt = Lident str} }) -> { acc with propsName = str }
-    | ({ txt }, _) -> raise (Invalid_argument ("react.component only accepts props as an option, given: " ^ Longident.last txt))
-  in
-
-  let getAttrProps payload =
-    let defaultProps = {propsName = "Props"; forwardRef = None} in
-    match payload with
-    | Some(PStr(
-      {pstr_desc = Pstr_eval ({
-        pexp_desc = Pexp_record (recordFields, None)
-        }, _)}::_rest
-        )) ->
-        List.fold_left getAttributeValues defaultProps recordFields
-    | Some(PStr({pstr_desc = Pstr_eval ({pexp_desc = Pexp_ident {txt = Lident "props"}}, _)}::_rest)) -> {defaultProps with propsName = "props"}
-    | Some(PStr({pstr_desc = Pstr_eval (_, _)}::_rest)) -> raise (Invalid_argument ("react.component accepts a record config with props as an options."))
-    | _ -> defaultProps
-  in
-
-  let makePropsType loc namedTypeList =
-    Ast_404.Ast_helper.Typ.mk ~loc (
-      Ptyp_constr({txt= Ldot (Lident("Js"), "t"); loc}, [{
-          ptyp_desc = Ptyp_object(namedTypeList, Closed);
-          ptyp_loc = loc;
-          ptyp_attributes = [];
-        }])
-      )
-  in
-
-  let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
-    let propsName = fnName ^ "Props" in {
-    pval_name = {txt = propsName; loc};
-    pval_type =
-       recursivelyMakeNamedArgsForExternal
-         namedArgListWithKeyAndRef
-         (Ast_404.Ast_helper.Typ.arrow
-           Nolabel
-           {
-             ptyp_desc = Ptyp_constr ({txt= Lident("unit"); loc}, []);
-             ptyp_loc = loc;
-             ptyp_attributes = [];
-           }
-           propsType
-         );
-    pval_prim = [""];
-    pval_attributes = [({txt = "bs.obj"; loc = loc}, PStr [])];
-    pval_loc = loc;
-  } in
-
-  let makePropsExternal fnName loc namedArgListWithKeyAndRef propsType =
-    {
-      pstr_loc = loc;
-      pstr_desc = Pstr_primitive (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
-    }
-  in
-
-  let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
-    {
-      psig_loc = loc;
-      psig_desc = Psig_value (makePropsValue fnName loc namedArgListWithKeyAndRef propsType)
-    }
   in
 
   let argToConcreteType types (name, loc, type_) = match name with
@@ -489,7 +561,7 @@ let jsxMapper () =
     let (innerType, propTypes) = getPropTypes [] pval_type in
     let namedTypeList = List.fold_left argToConcreteType [] propTypes in
     let pluckLabelAndLoc (label, loc, type_) = (label, loc, Some type_) in
-    let retPropsType = makePropsType pstr_loc namedTypeList in
+    let retPropsType = makePropsType ~loc:pstr_loc namedTypeList in
     let externalPropsDecl = makePropsExternal fnName pstr_loc ((
       Optional "key",
       pstr_loc,
@@ -518,14 +590,8 @@ let jsxMapper () =
         valueBindings
       )
     } ->
-      let hasAttrOnBinding {pvb_attributes} = match (find_opt hasAttr pvb_attributes) with | Some(_) -> true | None -> false in
-      let filterAttrOnBinding binding = {binding with pvb_attributes = List.filter otherAttrsPure binding.pvb_attributes} in
       let mapBinding binding = if (hasAttrOnBinding binding) then
-        let fnName = match binding with
-        | {pvb_pat = {
-            ppat_desc = Ppat_var {txt}
-          }} -> txt
-        | _ -> raise (Invalid_argument "react.component calls cannot be destructured.") in
+        let fnName = getFnName binding in
         let modifiedBinding binding =
           let expression = binding.pvb_expr in
           let wrapExpressionWithBinding expressionFn expression = {(filterAttrOnBinding binding) with pvb_expr = expressionFn expression} in
@@ -565,24 +631,16 @@ let jsxMapper () =
         (* TODO: in some cases this is a better loc than pstr_loc *)
         | Some (_loc, payload) -> Some payload
         | None -> None in
-        let props = getAttrProps payload in
+        let props = getPropsAttr payload in
         (* do stuff here! *)
         let (innerFunctionExpression, namedArgList, forwardRef) = recursivelyTransformNamedArgsForMake mapper expression [] in
-        let props = {props with forwardRef = forwardRef} in
-
         let namedArgListWithKeyAndRef = (Optional("key"), None, None, "key", pstr_loc, None) :: namedArgList in
-        let namedArgListWithKeyAndRef = match props.forwardRef with
+        let namedArgListWithKeyAndRef = match forwardRef with
         | Some(_) ->  (Optional("ref"), None, None, "ref", pstr_loc, None) :: namedArgListWithKeyAndRef
         | None -> namedArgListWithKeyAndRef
         in
         let namedTypeList = List.fold_left argToType [] namedArgList in
-        let pluckLabelAndLoc (label, _, _, _, loc, type_) = (label, loc, type_) in
-        let externalDecl = makePropsExternal
-          fnName
-          pstr_loc
-          (List.map pluckLabelAndLoc namedArgListWithKeyAndRef)
-          (makePropsType pstr_loc namedTypeList)
-        in
+        let externalDecl = makeExternalDecl fnName pstr_loc namedArgListWithKeyAndRef namedTypeList in
         let makeLet innerExpression (label, default, _, alias, loc, _type) =
           let labelString = (match label with | Labelled label | Optional label -> label | _ -> raise (Invalid_argument "This should never happen")) in
           let expression = (Ast_404.Ast_helper.Exp.apply ~loc
@@ -610,7 +668,7 @@ let jsxMapper () =
              expression in
           Ast_404.Ast_helper.Exp.let_ ~loc Nonrecursive [letExpression] innerExpression in
         let innerExpression = List.fold_left makeLet (Ast_404.Ast_helper.Exp.mk innerFunctionExpression) namedArgList in
-        let innerExpressionWithRef = match (props.forwardRef) with
+        let innerExpressionWithRef = match (forwardRef) with
         | Some txt ->
           {innerExpression with pexp_desc = Pexp_fun (Nolabel, None, {
             ppat_desc = Ppat_var { txt; loc = pstr_loc };
@@ -624,39 +682,16 @@ let jsxMapper () =
           None,
           {
             ppat_desc = Ppat_constraint (
-              {
-                ppat_desc = Ppat_var {txt = props.propsName; loc = pstr_loc};
-                ppat_loc = pstr_loc;
-                ppat_attributes = [];
-              },
-              (Ast_404.Ast_helper.Typ.mk(
-                Ptyp_constr({txt= Ldot (Lident("Js"), "t"); loc= pstr_loc}, [{
-                    ptyp_desc = Ptyp_object(namedTypeList, Closed);
-                    ptyp_loc = pstr_loc;
-                    ptyp_attributes = [];
-                  }])
-                ))
+              makePropsName ~loc:pstr_loc props.propsName,
+              makePropsType ~loc:pstr_loc namedTypeList
             );
             ppat_loc = pstr_loc;
             ppat_attributes = [];
           },
           innerExpressionWithRef
         )) in
-        let fileName = match pstr_loc.loc_start.pos_fname with
-        | "" -> !Location.input_name
-        | fileName -> fileName
-        in
-        let fileName = try
-            Filename.chop_extension (Filename.basename fileName)
-          with | Invalid_argument _-> fileName in
-        let fileName = String.capitalize fileName in
-        let fullModuleName = match (fileName, !nestedModules, fnName) with
-        | ("", nestedModules, "make") -> nestedModules
-        | ("", nestedModules, fnName) -> List.rev (fnName :: nestedModules)
-        | (fileName, nestedModules, "make") -> fileName :: (List.rev nestedModules)
-        | (fileName, nestedModules, fnName) -> fileName :: (List.rev (fnName :: nestedModules))
-        in
-        let fullModuleName = String.concat "$" fullModuleName in
+        let fileName = filenameFromLoc pstr_loc in
+        let fullModuleName = makeModuleName fileName !nestedModules fnName in
         let fullExpression = match (fullModuleName) with
         | ("") -> fullExpression
         | (txt) -> Pexp_let (
@@ -719,7 +754,7 @@ let jsxMapper () =
     let (innerType, propTypes) = getPropTypes [] pval_type in
     let namedTypeList = List.fold_left argToConcreteType [] propTypes in
     let pluckLabelAndLoc (label, loc, type_) = (label, loc, Some type_) in
-    let retPropsType = makePropsType psig_loc namedTypeList in
+    let retPropsType = makePropsType ~loc:psig_loc namedTypeList in
     let externalPropsDecl = makePropsExternalSig fnName psig_loc ((
       Optional "key",
       psig_loc,
