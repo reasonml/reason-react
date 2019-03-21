@@ -13,7 +13,6 @@
   "dependencies": {
     "@opam/dune": "*",
     "@opam/merlin-extend": " >= 0.3",
-    "@opam/ocaml-migrate-parsetree": "*",
     "@opam/ocamlfind": "*",
     "@opam/reason": "3.4.0",
     "@opam/result": "*",
