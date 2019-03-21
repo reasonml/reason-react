@@ -40,3 +40,16 @@ module Func = (M: X_int) => {
         <div ref />
     });
 };
+
+
+
+[@react.component]
+let make = (~a=1, ~b=?, _) => {
+    Js.log("This function should be named `Test`");
+    <div />
+};
+
+
+[@react.component]
+[@bs.module "Foo"]
+external component: (~a:int=?, ~b:string, ~c:Js.Nullable.t(Js.t(foo))=?, _) => React.element = ""; 
