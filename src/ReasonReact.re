@@ -6,26 +6,26 @@ type reactElement;
 
 type reactRef;
 
-[@bs.val] external null : reactElement = "null";
+[@bs.val] external null: reactElement = "null";
 
-external string : string => reactElement = "%identity";
+external string: string => reactElement = "%identity";
 
-external array : array(reactElement) => reactElement = "%identity";
+external array: array(reactElement) => reactElement = "%identity";
 
-external refToJsObj : reactRef => Js.t({..}) = "%identity";
+external refToJsObj: reactRef => Js.t({..}) = "%identity";
 
 [@bs.splice] [@bs.val] [@bs.module "react"]
-external createElement :
+external createElement:
   (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "createElement";
 
 [@bs.splice] [@bs.module "react"]
-external cloneElement :
+external cloneElement:
   (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "cloneElement";
 
 [@bs.val] [@bs.module "react"]
-external createElementVerbatim : 'a = "createElement";
+external createElementVerbatim: 'a = "createElement";
 
 let createDomElement = (s, ~props, children) => {
   let vararg =
@@ -34,7 +34,7 @@ let createDomElement = (s, ~props, children) => {
   Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, vararg);
 };
 
-[@bs.val] external magicNull : 'a = "null";
+[@bs.val] external magicNull: 'a = "null";
 
 type reactClassInternal = reactClass;
 
@@ -108,7 +108,7 @@ and component('state, 'retainedProps, 'action) =
   componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action)
 and self('state, 'retainedProps, 'action) = {
   handle:
-    'payload .
+    'payload.
     (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
     unit,
 
@@ -136,7 +136,9 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       unit
     ),
   "jsPropsToReason":
-    option(uncurriedJsPropsToReason('props, 'state, 'retainedProps, 'action)),
+    option(
+      uncurriedJsPropsToReason('props, 'state, 'retainedProps, 'action),
+    ),
 }
 /***
  * `totalState` tracks all of the internal reason API bookkeeping.
@@ -151,9 +153,9 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
  */
 and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
-let anyToUnit = (_) => ();
+let anyToUnit = _ => ();
 
-let anyToTrue = (_) => true;
+let anyToTrue = _ => true;
 
 let willReceivePropsDefault = ({state}) => state;
 
@@ -182,8 +184,7 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
 };
 
 let createClass =
-    (type reasonState, type retainedProps, type action, debugName)
-    : reactClass =>
+    (type reasonState, type retainedProps, type action, debugName): reactClass =>
   ReasonReactOptimizedCreateClass.createClass(.
     [@bs]
     {
@@ -204,7 +205,7 @@ let createClass =
         retainedProps,
         onUnmount: Obj.magic(this##onUnmountMethod),
       };
-      pub getInitialState = () : totalState('state, 'retainedProps, 'action) => {
+      pub getInitialState = (): totalState('state, 'retainedProps, 'action) => {
         let thisJs:
           jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
@@ -479,7 +480,7 @@ let createClass =
       };
       pub onUnmountMethod = subscription =>
         switch (Js.Null.toOption(this##subscriptions)) {
-        | None => this##subscriptions#=(Js.Null.return([|subscription|]))
+        | None => this##subscriptions #= Js.Null.return([|subscription|])
         | Some(subs) => ignore(Js.Array.push(subscription, subs))
         };
       pub handleMethod = callback => {
@@ -614,8 +615,7 @@ let basicComponent = debugName => {
 };
 
 let statelessComponent =
-    debugName
-    : component(stateless, noRetainedProps, actionless) =>
+    debugName: component(stateless, noRetainedProps, actionless) =>
   basicComponent(debugName);
 
 let statelessComponentWithRetainedProps =
@@ -689,13 +689,11 @@ let wrapReasonForJs =
   let jsPropsToReason:
     jsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     Obj.magic(jsPropsToReason) /* cast 'jsProps to jsProps */;
-  let uncurriedJsPropsToReason: uncurriedJsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
+  let uncurriedJsPropsToReason:
+    uncurriedJsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     (. jsProps) => jsPropsToReason(jsProps);
-  Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason#=(
-                                                                    Some(
-                                                                    uncurriedJsPropsToReason,
-                                                                    )
-                                                                    );
+  Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason
+  #= Some(uncurriedJsPropsToReason);
   component.reactClassInternal;
 };
 
@@ -732,48 +730,50 @@ module WrapProps = {
 
 let wrapJsForReason = WrapProps.wrapJsForReason;
 
-[@bs.module "react"] external fragment : 'a = "Fragment";
+[@bs.module "react"] external fragment: 'a = "Fragment";
 
 module Router = {
-  [@bs.get] external location : Dom.window => Dom.location = "";
+  [@bs.get] external location: Dom.window => Dom.location = "location";
 
   [@bs.send]
   /* actually the cb is Dom.event => unit, but let's restrict the access for now */
-  external addEventListener : (Dom.window, string, unit => unit) => unit = "";
+  external addEventListener: (Dom.window, string, unit => unit) => unit =
+    "addEventListener";
 
   [@bs.send]
-  external removeEventListener : (Dom.window, string, unit => unit) => unit =
+  external removeEventListener: (Dom.window, string, unit => unit) => unit =
     "";
 
-  [@bs.send] external dispatchEvent : (Dom.window, Dom.event) => unit = "";
+  [@bs.send]
+  external dispatchEvent: (Dom.window, Dom.event) => unit = "dispatchEvent";
 
-  [@bs.get] external pathname : Dom.location => string = "";
+  [@bs.get] external pathname: Dom.location => string = "pathname";
 
-  [@bs.get] external hash : Dom.location => string = "";
+  [@bs.get] external hash: Dom.location => string = "hash";
 
-  [@bs.get] external search : Dom.location => string = "";
+  [@bs.get] external search: Dom.location => string = "search";
 
   [@bs.send]
-  external pushState :
+  external pushState:
     (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
     unit =
     "";
 
   [@bs.send]
-  external replaceState :
+  external replaceState:
     (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
     unit =
     "";
 
-  [@bs.val] external event : 'a = "Event";
+  [@bs.val] external event: 'a = "Event";
 
-  [@bs.new] external makeEventIE11Compatible : string => Dom.event = "Event";
+  [@bs.new] external makeEventIE11Compatible: string => Dom.event = "Event";
 
   [@bs.val] [@bs.scope "document"]
-  external createEventNonIEBrowsers : string => Dom.event = "createEvent";
+  external createEventNonIEBrowsers: string => Dom.event = "createEvent";
 
   [@bs.send]
-  external initEventNonIEBrowsers : (Dom.event, string, bool, bool) => unit =
+  external initEventNonIEBrowsers: (Dom.event, string, bool, bool) => unit =
     "initEvent";
 
   let safeMakeEvent = eventName =>
