@@ -1,4 +1,5 @@
 (executable
  (name reactjs_jsx_ppx_v3)
  (public_name reactjs_jsx_ppx_v3)
+ (libraries compiler-libs.common)
  (flags (:standard -w -9)))
