@@ -151,8 +151,14 @@ let unwatchUrl = watcherID =>
     removeEventListener(window, "popstate", watcherID)
   };
 
-let useUrl = () => {
-  let (url, setUrl) = React.useState(() => dangerouslyGetInitialUrl());
+let useUrl = (~serverUrl=?, ()) => {
+  let (url, setUrl) =
+    React.useState(() =>
+      switch (serverUrl) {
+      | Some(url) => url
+      | None => dangerouslyGetInitialUrl()
+      }
+    );
 
   React.useEffect0(() => {
     let watcherId = watchUrl(url => setUrl(_ => url));

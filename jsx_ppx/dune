@@ -1,5 +1,4 @@
 (executable
  (name reactjs_jsx_ppx_v3)
  (public_name reactjs_jsx_ppx_v3)
- (flags (:standard -w -9))
- (libraries ocaml-migrate-parsetree))
+ (flags (:standard -w -9)))
