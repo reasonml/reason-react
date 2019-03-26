@@ -28,4 +28,4 @@ let unwatchUrl: watcherID => unit;
       */
 let dangerouslyGetInitialUrl: unit => url;
 /** hook for watching url changes */
-let useUrl: unit => url;
+let useUrl: (~staticUrl: url=?, unit) => url;
