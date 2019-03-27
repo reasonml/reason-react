@@ -10,8 +10,9 @@
 *)
 
 (*
-  The actual transform:
+  There are two different transforms that can be selected in this file (v2 and v3):
 
+  v2:
   transform `[@JSX] div(~props1=a, ~props2=b, ~children=[foo, bar], ())` into
   `ReactDOMRe.createElement("div", ~props={"props1": 1, "props2": b}, [|foo,
   bar|])`.
@@ -22,6 +23,21 @@
   transform the upper-cased case
   `[@JSX] Foo.createElement(~key=a, ~ref=b, ~foo=bar, ~children=[], ())` into
   `ReasonReact.element(~key=a, ~ref=b, Foo.make(~foo=bar, [||]))`
+
+  transform `[@JSX] [foo]` into
+  `ReactDOMRe.createElement(ReasonReact.fragment, [|foo|])`
+
+  v3:
+  transform `[@JSX] div(~props1=a, ~props2=b, ~children=[foo, bar], ())` into
+  `ReactDOMRe.createDOMElementVariadic("div", ReactDOMRe.domProps(~props1=1, ~props2=b), [|foo, bar|])`.
+
+  transform the upper-cased case
+  `[@JSX] Foo.createElement(~key=a, ~ref=b, ~foo=bar, ~children=[], ())` into
+  `React.createElement(Foo.make, Foo.makeProps(~key=a, ~ref=b, ~foo=bar, ()))`
+
+  transform the upper-cased case
+  `[@JSX] Foo.createElement(~foo=bar, ~children=[foo, bar], ())` into
+  `React.createElementVariadic(Foo.make, Foo.makeProps(~foo=bar, ~children=React.null, ()), [|foo, bar|])`
 
   transform `[@JSX] [foo]` into
   `ReactDOMRe.createElement(ReasonReact.fragment, [|foo|])`
