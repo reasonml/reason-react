@@ -24,7 +24,7 @@
   "devDependencies": {
     "bs-platform": "5.0.3"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": ">=16.8.1",
     "react-dom": ">=16.8.1"
   }
