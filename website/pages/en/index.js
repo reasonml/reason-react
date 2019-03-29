@@ -29,28 +29,19 @@ const code = "`";
 
 // fake, static, responsive refmt, lol. See reason.css homeCodeSnippet logic
 const codeExampleSmallScreen =`${pre}reason
-let component =
-  ReasonReact.statelessComponent("Greeting");
-
-let make = (~name, _children) => {
-  ...component,
-  render: _self =>
+[@react.component]
+let make = (~name) =>
     <button>
-      {ReasonReact.string("Hello!")}
-    </button>
-};
+      {React.string("Hello!")}
+    </button>;
 ${pre}`;
 
 const codeExampleLargeScreen =`${pre}reason
-let component = ReasonReact.statelessComponent("Greeting");
-
-let make = (~name, _children) => {
-  ...component,
-  render: _self =>
+[@react.component]
+let make = (~name) =>
     <button>
-      {ReasonReact.string("Hello!")}
-    </button>
-};
+      {React.string("Hello!")}
+    </button>;
 ${pre}`;
 
 const quickStart = `${pre}bash

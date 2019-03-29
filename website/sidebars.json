@@ -6,8 +6,14 @@
       "intro-example"
     ],
     "Core": [
-      "creation-props-self",
       "jsx",
+      "event",
+      "style",
+      "router"
+    ],
+    "Record API": [
+      "jsx-2",
+      "creation-props-self",
       "render",
       "callback-handlers",
       "state-actions-reducer",
@@ -15,13 +21,10 @@
       "instance-variables",
       "react-ref",
       "interop",
-      "event",
-      "style",
       "clone-element",
       "children",
       "dom",
-      "subscriptions-helper",
-      "router"
+      "subscriptions-helper"
     ],
     "ReactJS Idioms Equivalents": [
       "invalid-prop-name",

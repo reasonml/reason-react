@@ -71,6 +71,9 @@
       "js-using-reason": {
         "title": "ReactJS using ReasonReact"
       },
+      "jsx-2": {
+        "title": "JSX Record API"
+      },
       "jsx": {
         "title": "JSX"
       },
@@ -134,6 +137,7 @@
     "categories": {
       "Getting Started": "Getting Started",
       "Core": "Core",
+      "Record API": "Record API",
       "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
       "FAQ": "FAQ",
       "Code Snippets": "Code Snippets",
