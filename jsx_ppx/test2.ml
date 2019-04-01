@@ -1,32 +1,29 @@
-(* [@@@bs.config { jsx = 3 }]
-let handleClick _event =
-  Js.log (("clicked!")[@reason.raw_literal "clicked!"])
-let make ~message  () =
-  React.useEffect
-    (fun ()  -> Js.log (("Hey!")[@reason.raw_literal "Hey!"]); None);
-  ((button ~onClick:handleClick ~children:[ReasonReact.string message] ())
-  [@JSX ])[@@react.component ]
-module A =
-  struct
-    let make ~className  ~children  =
-      ((div ~className ~children:[children] ())[@JSX ])[@@react.component ]
-  end
-module B =
-  struct
-    let make () =
-      ((A.createElement ~className:(("test")[@reason.raw_literal "test"])
-          ~children:[((div ~children:[] ())[@JSX ]);
-                    ((div ~children:[] ())[@JSX ])] ())[@JSX ])[@@react.component
-                                                                 ]
-  end *)
-
-
-  module Suspense =
-  struct
-    external make :
-      ?children:element -> ?fallback:element -> ?maxDuration:int -> element =
-        "Suspense"[@@react.component ][@@bs.module
-                                        (("React")[@reason.raw_literal
-                                                    "React"])]
-  end
-  
+external make :
+  ?accessible:bool ->
+    ?accessibilityHint:string ->
+      ?accessibilityLabel:string ->
+        ?allowFontScaling:bool ->
+          ?ellipsizeMode:(([ `clip  | `head  | `middle  | `tail ])[@bs.string
+                                                                    ])
+            ->
+            ?numberOfLines:int ->
+              ?onLayout:(Event.NativeLayoutEvent.t -> unit) ->
+                ?onLongPress:(unit -> unit) ->
+                  ?onPress:(unit -> unit) ->
+                    ?pressRetentionOffset:Types.insets ->
+                      ?selectable:bool ->
+                        ?style:Style.t ->
+                          ?testID:string ->
+                            ?selectionColor:string ->
+                              ?textBreakStrategy:(([ `simple  | `highQuality 
+                                                   | `balanced ])[@bs.string
+                                                                   ])
+                                ->
+                                ?adjustsFontSizeToFit:bool ->
+                                  ?minimumFontScale:float ->
+                                    ?suppressHighlighting:bool ->
+                                      ?value:string ->
+                                        ?children:React.element ->
+                                          React.element = "Text"[@@bs.module
+                                                                    "react-native"][@@react.component
+                                                                  ]
