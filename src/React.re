@@ -20,17 +20,10 @@ external createElementVariadic:
 
 module Ref = {
   type t('value);
+  type callbackRef('a) = 'a => unit;
 
   [@bs.get] external current: t('value) => 'value = "current";
   [@bs.set] external setCurrent: (t('value), 'value) => unit = "current";
-
-  type domRef = t(Js.nullable(Dom.element));
-
-  type refForRecordAPI = Js.nullable(Dom.element) => unit;
-
-  /* These are both hacky interop things because React has n different ways of dealing with refs */
-  external refForRecordAPI: domRef => refForRecordAPI = "%identity";
-  external refForHooks: refForRecordAPI => domRef = "%identity";
 };
 
 module Context = {
@@ -152,6 +145,10 @@ external useEffect3: (unit => option(unit => unit), ('a, 'b, 'c)) => unit =
 [@bs.module "react"]
 external useEffect4: (unit => option(unit => unit), ('a, 'b, 'c, 'd)) => unit =
   "useEffect";
+[@bs.module "react"]
+external useEffect5:
+  (unit => option(unit => unit), ('a, 'b, 'c, 'd, 'e)) => unit =
+  "useEffect";
 
 [@bs.module "react"]
 external useLayoutEffect:
@@ -190,7 +187,8 @@ external useMemo3: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c)) => 'any =
 external useMemo4: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd)) => 'any =
   "useMemo";
 [@bs.module "react"]
-external useMemo5: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e)) => 'any =
+external useMemo5:
+  ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e)) => 'any =
   "useMemo";
 [@bs.module "react"]
 external useMemo6:
@@ -211,8 +209,7 @@ external useCallback0:
   "useCallback";
 [@bs.module "react"]
 external useCallback1:
-  ([@bs.uncurry] ('input => 'output), array('a)) =>
-  callback('input, 'output) =
+  ([@bs.uncurry] ('input => 'output), array('a)) => callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback2:

@@ -86,6 +86,18 @@ external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 
 type style;
 
+type domRef;
+
+module Ref = {
+  type t = domRef;
+  type currentDomRef = React.Ref.t(Js.nullable(Dom.element));
+  type callbackDomRef =
+    React.Ref.callbackRef(Js.nullable(Dom.element)) => unit;
+
+  external domRef: currentDomRef => domRef = "%identity";
+  external callbackDomRef: callbackDomRef => domRef = "%identity";
+};
+
 /* This list isn't exhaustive. We'll add more as we go. */
 /*
  * Watch out! There are two props types and the only difference is the type of ref.
@@ -96,7 +108,7 @@ type domProps = {
   [@bs.optional]
   key: string,
   [@bs.optional]
-  ref: React.Ref.domRef,
+  ref: domRef,
   /* accessibility */
   /* https://www.w3.org/TR/wai-aria-1.1/ */
   /* https://accessibilityresources.org/<aria-tag> is a great resource for these */
