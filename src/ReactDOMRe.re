@@ -107,7 +107,8 @@ type domProps = {
   ariaDisabled: bool,
   [@bs.optional] [@bs.as "aria-hidden"]
   ariaHidden: bool,
-  /* [@bs.optional] [@bs.as "aria-invalid"] ariaInvalid: grammar|false|spelling|true, */
+  [@bs.optional] [@bs.as "aria-invalid"] 
+  ariaInvalid: string,
   [@bs.optional] [@bs.as "aria-keyshortcuts"]
   ariaKeyshortcuts: string,
   [@bs.optional] [@bs.as "aria-label"]
@@ -116,7 +117,8 @@ type domProps = {
   ariaRoledescription: string,
   /* Widget Attributes */
   /* [@bs.optional] [@bs.as "aria-autocomplete"] ariaAutocomplete: inline|list|both|none, */
-  /* [@bs.optional] [@bs.as "aria-checked"] ariaChecked: true|false|mixed, /* https://www.w3.org/TR/wai-aria-1.1/#valuetype_tristate */ */
+  [@bs.optional] [@bs.as "aria-checked"]
+  ariaChecked: string, /* https://www.w3.org/TR/wai-aria-1.1/#valuetype_tristate */
   [@bs.optional] [@bs.as "aria-expanded"]
   ariaExpanded: bool,
   /* [@bs.optional] [@bs.as "aria-haspopup"] ariaHaspopup: false|true|menu|listbox|tree|grid|dialog, */
@@ -1110,7 +1112,8 @@ type props = {
   ariaDisabled: bool,
   [@bs.optional] [@bs.as "aria-hidden"]
   ariaHidden: bool,
-  /* [@bs.optional] [@bs.as "aria-invalid"] ariaInvalid: grammar|false|spelling|true, */
+  [@bs.optional] [@bs.as "aria-invalid"]
+  ariaInvalid: string,
   [@bs.optional] [@bs.as "aria-keyshortcuts"]
   ariaKeyshortcuts: string,
   [@bs.optional] [@bs.as "aria-label"]
@@ -1119,7 +1122,8 @@ type props = {
   ariaRoledescription: string,
   /* Widget Attributes */
   /* [@bs.optional] [@bs.as "aria-autocomplete"] ariaAutocomplete: inline|list|both|none, */
-  /* [@bs.optional] [@bs.as "aria-checked"] ariaChecked: true|false|mixed, /* https://www.w3.org/TR/wai-aria-1.1/#valuetype_tristate */ */
+  [@bs.optional] [@bs.as "aria-checked"]
+  ariaChecked: string, /* https://www.w3.org/TR/wai-aria-1.1/#valuetype_tristate */
   [@bs.optional] [@bs.as "aria-expanded"]
   ariaExpanded: bool,
   /* [@bs.optional] [@bs.as "aria-haspopup"] ariaHaspopup: false|true|menu|listbox|tree|grid|dialog, */
