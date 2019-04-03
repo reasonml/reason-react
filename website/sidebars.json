@@ -6,6 +6,7 @@
       "intro-example"
     ],
     "Core": [
+      "components",
       "jsx",
       "event",
       "style",

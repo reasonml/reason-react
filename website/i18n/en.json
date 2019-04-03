@@ -20,6 +20,9 @@
       "component-as-prop": {
         "title": "Component as Prop"
       },
+      "components": {
+        "title": "Components"
+      },
       "context-mixins": {
         "title": "Context & Mixins?"
       },
