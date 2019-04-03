@@ -45,7 +45,7 @@ It has added a new function with `Props` as a suffix which uses [`[@bs.obj]`](ht
 
 The next thing you might notice looking at this example is the use of hooks (`useState`). ReasonReact binds to [all of the hooks that React provides](https://reactjs.org/docs/hooks-intro.html) with only minor API differences. Please refer to their excellent documentation for more information on how hooks work and for best practices.
 
-The differences that you'll notice are mostly around listing dependencies. In React you can they are managed by using a tuple of varying length as the final argument to the hook. Reason instead asks you to also list the number of elements you care about. So `useEffect(effect, [dep1, dep2])` becomes `useEffect2(effect, (dep1, dep2))`. Reason also always opts for the safest form of a given hook as well. So `React.useState` in JS can take an intial value or a function that returns an initial value. The former cannot be used safely in all situations, so ReasonReact only supports the second form which takes a function and uses the return.
+The differences that you'll notice are mostly around listing dependencies. In React they are managed by using a tuple of varying length as the final argument to the hook. Reason instead asks you to also list the number of elements you care about. So `useEffect(effect, [dep1, dep2])` becomes `useEffect2(effect, (dep1, dep2))`. Reason also always opts for the safest form of a given hook as well. So `React.useState` in JS can take an intial value or a function that returns an initial value. The former cannot be used safely in all situations, so ReasonReact only supports the second form which takes a function and uses the return.
 
 ## Hand-writing components
 

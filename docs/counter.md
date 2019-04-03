@@ -24,7 +24,7 @@ let make = () => {
 
   React.useEffect0(() => {
     let timerId = Js.Global.setInterval(() => self.send(Tick), 1000);
-    Some(() => Js.Global.clearInterval(id))
+    Some(() => Js.Global.clearInterval(timerId))
   });
   
   <div>{ReasonReact.string(string_of_int(state.count))}</div>;
