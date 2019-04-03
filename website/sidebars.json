@@ -12,6 +12,14 @@
       "style",
       "router"
     ],
+    "ReactJS Idioms Equivalents": [
+      "invalid-prop-name",
+      "props-spread",
+      "component-as-prop",
+      "ternary-shortcut",
+      "context-mixins",
+      "custom-class-component-property"
+    ],
     "Record API": [
       "jsx-2",
       "creation-props-self",
@@ -26,14 +34,6 @@
       "children",
       "dom",
       "subscriptions-helper"
-    ],
-    "ReactJS Idioms Equivalents": [
-      "invalid-prop-name",
-      "props-spread",
-      "component-as-prop",
-      "ternary-shortcut",
-      "context-mixins",
-      "custom-class-component-property"
     ],
     "FAQ": [
       "im-having-a-type-error",

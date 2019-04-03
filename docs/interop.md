@@ -49,7 +49,7 @@ Running `npm start` (or alias it to your favorite command) starts the `bsb` buil
 
 ## Usage
 
-A ReasonReact component **is not** a ReactJS component. We provide hooks to communicate between the two.
+A ReasonReact record component **is not** a ReactJS component. We provide hooks to communicate between the two.
 
 Whether you're using an existing ReactJS component or providing a ReasonReact component for consumption on the JS side, you need to establish the type of the JS props you'd convert from/to, by using [BuckleScript's `bs.deriving abstract`](https://bucklescript.github.io/docs/en/object.html):
 
