@@ -14,7 +14,7 @@ type state = {
 
 [@react.component]
 let make = () => {
-  let (state, send) = React.useReducer(
+  let (state, dispatch) = React.useReducer(
     (state, action) =>
       switch (action) {
       | Tick => {count: state.count + 1}
@@ -23,7 +23,7 @@ let make = () => {
   );
 
   React.useEffect0(() => {
-    let timerId = Js.Global.setInterval(() => self.send(Tick), 1000);
+    let timerId = Js.Global.setInterval(() => dispatch(Tick), 1000);
     Some(() => Js.Global.clearInterval(timerId))
   });
   

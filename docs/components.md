@@ -10,9 +10,9 @@ let make = (~name) => {
   let (count, setCount) = React.useState(() => 0);
 
   <div>
-    <p> React.string(name ++ " clicked " ++ string_of_int(count) ++ " times") </p>
+    <p> {React.string(name ++ " clicked " ++ string_of_int(count) ++ " times")} </p>
     <button onClick={() => setCount(count + 1)}>
-      React.string("Click me")
+      {React.string("Click me")}
     </button>
   </div>
 };
@@ -32,7 +32,7 @@ let make = (Props) => {
 
   <div>
     <p> {React.string(name ++ " clicked " ++ string_of_int(count) ++ " times")} </p>
-    <button onClick={_ => setCount(count => count + 1)}>
+    <button onClick={_evt => setCount(count => count + 1)}>
       {React.string("Click me")}
     </button>
   </div>
@@ -82,7 +82,7 @@ external make: ({. "name": string}) => React.element = "";
 
 ## Component Naming
 
-Because componets are actually a pair of functions, they have to belong to a module to be used in [JSX](jsx.md). It makes sense to use these modules for identification purposes as well. `[@react.component]` automatically adds the name for you based on the module you are in.
+Because components are actually a pair of functions, they have to belong to a module to be used in [JSX](jsx.md). It makes sense to use these modules for identification purposes as well. `[@react.component]` automatically adds the name for you based on the module you are in.
 
 ```reason
 /* File.re */

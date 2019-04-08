@@ -8,7 +8,7 @@ See https://github.com/reasonml-community/reason-react-example for examples you 
 let handleClick = (_event) => Js.log("clicked!");
 
 let make = (~message) =>
-  <div onClick={handleClick}>{ReasonReact.string(message)}</div>;
+  <div onClick={handleClick}>{React.string(message)}</div>;
 ```
 
 Usage in another file:
