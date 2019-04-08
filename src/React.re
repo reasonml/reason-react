@@ -20,7 +20,6 @@ external createElementVariadic:
 
 module Ref = {
   type t('value);
-  type callbackRef('a) = 'a => unit;
 
   [@bs.get] external current: t('value) => 'value = "current";
   [@bs.set] external setCurrent: (t('value), 'value) => unit = "current";

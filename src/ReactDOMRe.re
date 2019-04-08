@@ -91,8 +91,7 @@ type domRef;
 module Ref = {
   type t = domRef;
   type currentDomRef = React.Ref.t(Js.nullable(Dom.element));
-  type callbackDomRef =
-    React.Ref.callbackRef(Js.nullable(Dom.element)) => unit;
+  type callbackDomRef = Js.nullable(Dom.element) => unit;
 
   external domRef: currentDomRef => domRef = "%identity";
   external callbackDomRef: callbackDomRef => domRef = "%identity";
