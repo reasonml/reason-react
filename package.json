@@ -27,25 +27,5 @@
   "dependencies": {
     "react": ">=16.8.1",
     "react-dom": ">=16.8.1"
-  },
-  "bin": {
-    "reactjs_jsx_ppx_v3.exe": "./_build/default/jsx_ppx/reactjs_jsx_ppx_v3.exe"
-  },
-  "esy": {
-    "buildsInSource": "_build",
-    "build": [
-      [
-        "dune",
-        "build",
-        "-p",
-        "reactjs_jsx_ppx_v3"
-      ]
-    ],
-    "install": [
-      [
-        "esy-installer",
-        "react_jsx_ppx_v3.install"
-      ]
-    ]
   }
 }
