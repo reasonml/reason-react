@@ -4,10 +4,12 @@ title: Installation
 
 **Note**: for general Reason + BuckleScript editor setup, see [here](https://reasonml.github.io/docs/en/editor-plugins).
 
-## Bsb
+## BuckleScript
+
+[BuckleScript](http://bucklescript.github.io/) compiles ReasonML code to JavaScript. You can get it with:
 
 ```sh
-npm install -g bs-platform
+npm install --global bs-platform
 bsb -init my-react-app -theme react
 cd my-react-app && npm install && npm start
 # in another tab
