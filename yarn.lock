@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-bs-platform@^4.0.6:
-  version "4.0.18"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-4.0.18.tgz#d17b8693ba1f714d9b27e0ddb365f2069ba4b8a0"
-  integrity sha512-BwzW0iYHvREqUZIgQxJmdJrxexppLvJxYQ4LLexbhCp7uZU5DIZ5ub4ZHpkCkc8fn8bsXWc+Rrejb3csi+BoAQ==
+bs-platform@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-5.0.1.tgz#0e7a50a1b51896d3ff4e1df6e79d32530ba062f5"
+  integrity sha512-k3b0G9JIlavtooyQukQNCyhnE6p400vR4Nx3pdKwQpo4xlnOrUOeHV+9TBj/XAuSRRDOOgw2H57iGTCPpLxjMg==
 
 "js-tokens@^3.0.0 || ^4.0.0":
   version "4.0.0"
