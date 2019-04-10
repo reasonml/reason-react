@@ -42,54 +42,23 @@
   | Tick;
 <p>type state = {
 count: int,
-timerId: ref(option(Js.Global.intervalId))
 };</p>
-<p>let component = ReasonReact.reducerComponent(&quot;Counter&quot;);</p>
-<p>let make = _children =&gt; {
-...component,
-initialState: () =&gt; {count: 0, timerId: ref(None)},
-reducer: (action, state) =&gt;
+<p>[@react.component]
+let make = () =&gt; {
+let (state, dispatch) = React.useReducer(
+(state, action) =&gt;
 switch (action) {
-| Tick =&gt; ReasonReact.Update({...state, count: state.count + 1})
+| Tick =&gt; {count: state.count + 1}
 },
-didMount: self =&gt; {
-self.state.timerId :=
-Some(Js.Global.setInterval(() =&gt; self.send(Tick), 1000));
-},
-willUnmount: self =&gt; {
-switch (self.state.timerId^) {
-| Some(id) =&gt; Js.Global.clearInterval(id)
-| None =&gt; ()
-}
-},
-render: ({state}) =&gt;
-<div>{ReasonReact.string(string_of_int(state.count))}</div>
+{count: 0}
+);</p>
+<p>React.useEffect0(() =&gt; {
+let timerId = Js.Global.setInterval(() =&gt; dispatch(Tick), 1000);
+Some(() =&gt; Js.Global.clearInterval(timerId))
+});</p>
+  <div>{ReasonReact.string(string_of_int(state.count))}</div>;
 };
-`</pre></p>
-<p>O, usando la <a href="/reason-react/docs/es-ES/subscriptions-helper">utilidad para subscripciones</a>:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">type</span> action =
-  | <span class="hljs-constructor">Tick</span>;
-
-<span class="hljs-keyword">type</span> state = {count: int};
-
-<span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.reducerComponent(<span class="hljs-string">"Counter"</span>);
-
-<span class="hljs-keyword">let</span> make = _children =&gt; {
-  <span class="hljs-operator">...</span>component,
-  initialState: () =&gt; {count: <span class="hljs-number">0</span>},
-  didMount: self =&gt; {
-    <span class="hljs-keyword">let</span> intervalId = <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.setInterval(() =&gt; self.send(<span class="hljs-constructor">Tick</span>), <span class="hljs-number">1000</span>);
-    self.onUnmount(() =&gt; <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.clearInterval(intervalId));
-  },
-  reducer: (action, state) =&gt;
-    <span class="hljs-keyword">switch</span> (action) {
-    | <span class="hljs-constructor">Tick</span> =&gt; <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-constructor">Update</span>({count: state.count <span class="hljs-operator">+</span> <span class="hljs-number">1</span>})
-    },
-  render: ({state}) =&gt;
-    &lt;div&gt;{<span class="hljs-module-identifier">ReasonReact</span>.string(string_of_int(state.count))}&lt;/div&gt;
-};
-</code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/es-ES/simple"><span class="arrow-prev">← </span><span>Anterior</span></a><a class="docs-next button" href="/reason-react/docs/es-ES/reason-using-js"><span>Siguiente</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+`</pre></span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/es-ES/simple"><span class="arrow-prev">← </span><span>Anterior</span></a><a class="docs-next button" href="/reason-react/docs/es-ES/reason-using-js"><span>Siguiente</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
             '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',

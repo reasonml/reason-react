@@ -2,11 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://reasonml.github.io/reason-react/reason-react/blog</id>
     <title>ReasonReact Blog</title>
-    <updated>2019-03-12T06:00:00Z</updated>
+    <updated>2019-04-10T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
     <link rel="alternate" href="https://reasonml.github.io/reason-react/reason-react/blog"/>
     <subtitle>The best place to stay up-to-date with the latest ReasonReact news and events.</subtitle>
     <logo>https://reasonml.github.io/reason-react/reason-react/img/reason-react-white.svg</logo>
+    <entry>
+        <title type="html"><![CDATA[ReasonReact 0.7.0: Support for React Hooks]]></title>
+        <id>https://reasonml.github.io/reason-react/reason-react/blog/2019/04/10/react-hooks.html</id>
+        <link href="https://reasonml.github.io/reason-react/reason-react/blog/2019/04/10/react-hooks.html">
+        </link>
+        <updated>2019-04-10T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>Version 0.7.0 of ReasonReact adds support for the <a href="https://reactjs.org/docs/hooks-intro.html">React Hooks API</a>. This allows for writing function components with state and complex interactions.</p> <p>You can now write components like</p> <pre><code class="hljs css language-reason"><span class="hljs-attribute">[@react.component]</span> <span class="hljs-keyword">let</span> make = (~className, ~text) =&gt; &lt;div clas...</code></pre>]]></summary>
+        <author>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ReasonReact 0.6.0 (Small Release)]]></title>
         <id>https://reasonml.github.io/reason-react/reason-react/blog/2019/03/12/small-release.html</id>
