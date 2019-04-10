@@ -3,7 +3,7 @@ title: Talk to Existing ReactJS Code
 ---
 
 <aside class="warning">
-The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/docs/en/components">function componenents</a>.
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
 </aside>
 
 ## Project Setup

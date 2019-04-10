@@ -3,7 +3,7 @@ title: JSX Record API
 ---
 
 <aside class="warning">
-The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/docs/en/components">function componenents</a>.
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
 </aside>
 
 In addition to the [primary JSX transform](jsx.md), you can also use JSX to call older Record components. To do so you can add a `[@bs.config {jsx: 2}];` configuration attribute at the top of a file. Within that file all JSX tags will desugar to the form described here.
