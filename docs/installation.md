@@ -10,7 +10,7 @@ title: Installation
 
 ```sh
 npm install --global bs-platform
-bsb -init my-react-app -theme react
+bsb -init my-react-app -theme react-hooks
 cd my-react-app && npm install && npm start
 # in another tab
 npm run webpack
