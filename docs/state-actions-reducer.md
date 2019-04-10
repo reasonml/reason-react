@@ -2,6 +2,10 @@
 title: State, Actions & Reducer
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/docs/en/components">function componenents</a>.
+</aside>
+
 Finally, we're getting onto stateful components!
 
 ReasonReact stateful components are like ReactJS stateful components, except with the concept of "reducer" (like [Redux](http://redux.js.org)) built in. If that word doesn't mean anything to you, just think of it as a state machine. If _that_ word does mean something to you, just think: "Woah this is great".

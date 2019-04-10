@@ -2,6 +2,10 @@
 title: Creation, Props & Self
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/docs/en/components">function componenents</a>.
+</aside>
+
 _The documentation assumes relative familiarity with ReactJS._
 
 ReasonReact doesn't use/need classes. The component creation API gives you a plain record, whose fields (like `render`) you can override.

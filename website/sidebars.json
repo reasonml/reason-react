@@ -10,7 +10,8 @@
       "jsx",
       "event",
       "style",
-      "router"
+      "router",
+      "dom"
     ],
     "ReactJS Idioms Equivalents": [
       "invalid-prop-name",
@@ -20,7 +21,7 @@
       "context-mixins",
       "custom-class-component-property"
     ],
-    "Record API": [
+    "Record API [deprecated]": [
       "jsx-2",
       "creation-props-self",
       "render",
@@ -32,8 +33,8 @@
       "interop",
       "clone-element",
       "children",
-      "dom",
-      "subscriptions-helper"
+      "subscriptions-helper",
+      "router-2"
     ],
     "FAQ": [
       "im-having-a-type-error",
