@@ -2,6 +2,10 @@
 title: Lifecycles
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/docs/en/components">function componenents</a>.
+</aside>
+
 ReasonReact supports the familiar ReactJS lifecycle events.
 
 ```reason

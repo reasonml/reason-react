@@ -2,6 +2,10 @@
 title: Talk to Existing ReactJS Code
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/docs/en/components">function componenents</a>.
+</aside>
+
 ## Project Setup
 
 You can reuse the _same_ bsb setup (that you might have seen [here](installation.md#bsb))! Aka, put a `bsconfig.json` at the root of your ReactJS project:
@@ -49,7 +53,7 @@ Running `npm start` (or alias it to your favorite command) starts the `bsb` buil
 
 ## Usage
 
-A ReasonReact component **is not** a ReactJS component. We provide hooks to communicate between the two.
+A ReasonReact record component **is not** a ReactJS component. We provide hooks to communicate between the two.
 
 Whether you're using an existing ReactJS component or providing a ReasonReact component for consumption on the JS side, you need to establish the type of the JS props you'd convert from/to, by using [BuckleScript's `bs.deriving abstract`](https://bucklescript.github.io/docs/en/object.html):
 

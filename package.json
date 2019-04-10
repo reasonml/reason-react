@@ -1,6 +1,6 @@
 {
   "name": "reason-react",
-  "version": "0.7.0",
+  "version": "0.7.0-alpha.0",
   "description": "React bindings for Reason",
   "main": "lib/js/src/ReasonReact.js",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
-    "bs-platform": "^4.0.6"
+    "bs-platform": "^5.0.1"
   },
   "dependencies": {
     "react": ">=16.8.1",

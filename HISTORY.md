@@ -1,3 +1,25 @@
+# 0.7.0
+
+Support for [React Hooks API](https://reactjs.org/docs/hooks-intro.html). Allows for writing function components with state and complex interactions.
+
+You can now write components like
+
+```reason
+[@react.component]
+let make = (~className, ~text) => <div className> {text} </div>;
+```
+
+which will compile to a 0-cost React component that looks like
+
+```js
+let make = ({className, text}) => <div className> {text} </div>;
+```
+
+These components use a new PPX shipped with BuckleScript 5.0.0+. Please read the documentation for more.
+
+There is no breaking change here, but if you're interested in migrating some components the upgrade script is [provided](https://github.com/rickyvetter/upgrade-reason-react#installation). It will wrap existing ReasonReact components as if they are Hooks components.
+
+
 # 0.6.0
 
 Mini release before a surprise release next time (shhhhh) =).

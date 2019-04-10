@@ -2,6 +2,10 @@
 title: Callback Handlers
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/docs/en/components">function componenents</a>.
+</aside>
+
 This section describes how ReactJS' `<div onClick={this.handleClick} />` pattern translates into ReasonReact.
 
 ## Callback Without State Update

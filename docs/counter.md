@@ -10,55 +10,23 @@ type action =
 
 type state = {
   count: int,
-  timerId: ref(option(Js.Global.intervalId))
 };
 
-let component = ReasonReact.reducerComponent("Counter");
+[@react.component]
+let make = () => {
+  let (state, dispatch) = React.useReducer(
+    (state, action) =>
+      switch (action) {
+      | Tick => {count: state.count + 1}
+      },
+    {count: 0}
+  );
 
-let make = _children => {
-  ...component,
-  initialState: () => {count: 0, timerId: ref(None)},
-  reducer: (action, state) =>
-    switch (action) {
-    | Tick => ReasonReact.Update({...state, count: state.count + 1})
-    },
-  didMount: self => {
-    self.state.timerId :=
-      Some(Js.Global.setInterval(() => self.send(Tick), 1000));
-  },
-  willUnmount: self => {
-    switch (self.state.timerId^) {
-    | Some(id) => Js.Global.clearInterval(id)
-    | None => ()
-    }
-  },
-  render: ({state}) =>
-    <div>{ReasonReact.string(string_of_int(state.count))}</div>
-};
-```
-
-Or, using the [subscriptions helper](subscriptions-helper.md):
-
-```reason
-type action =
-  | Tick;
-
-type state = {count: int};
-
-let component = ReasonReact.reducerComponent("Counter");
-
-let make = _children => {
-  ...component,
-  initialState: () => {count: 0},
-  didMount: self => {
-    let intervalId = Js.Global.setInterval(() => self.send(Tick), 1000);
-    self.onUnmount(() => Js.Global.clearInterval(intervalId));
-  },
-  reducer: (action, state) =>
-    switch (action) {
-    | Tick => ReasonReact.Update({count: state.count + 1})
-    },
-  render: ({state}) =>
-    <div>{ReasonReact.string(string_of_int(state.count))}</div>
+  React.useEffect0(() => {
+    let timerId = Js.Global.setInterval(() => dispatch(Tick), 1000);
+    Some(() => Js.Global.clearInterval(timerId))
+  });
+  
+  <div>{ReasonReact.string(string_of_int(state.count))}</div>;
 };
 ```

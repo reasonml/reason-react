@@ -20,6 +20,9 @@
       "component-as-prop": {
         "title": "Component as Prop"
       },
+      "components": {
+        "title": "Components"
+      },
       "context-mixins": {
         "title": "Context & Mixins?"
       },
@@ -71,6 +74,9 @@
       "js-using-reason": {
         "title": "ReactJS using ReasonReact"
       },
+      "jsx-2": {
+        "title": "JSX Record API"
+      },
       "jsx": {
         "title": "JSX"
       },
@@ -97,6 +103,9 @@
       },
       "roadmap": {
         "title": "Roadmap & Contribution"
+      },
+      "router-2": {
+        "title": "Router"
       },
       "router": {
         "title": "Router"
@@ -135,6 +144,7 @@
       "Getting Started": "Getting Started",
       "Core": "Core",
       "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
+      "Record API [deprecated]": "Record API [deprecated]",
       "FAQ": "FAQ",
       "Code Snippets": "Code Snippets",
       "Community": "Community",

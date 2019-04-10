@@ -2,6 +2,10 @@
 title: React Ref
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/docs/en/components">function componenents</a>.
+</aside>
+
 _Not to be confused with Reason `ref`, the language feature that enables mutation_.
 
 A ReasonReact `ref` would be just another instance variable. You'd type it as `ReasonReact.reactRef` if it's attached to a custom component, and `Dom.element` if it's attached to a React DOM element.
