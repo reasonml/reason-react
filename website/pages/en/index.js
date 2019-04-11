@@ -46,7 +46,7 @@ ${pre}`;
 
 const quickStart = `${pre}bash
 npm install -g bs-platform
-bsb -init my-react-app -theme react
+bsb -init my-react-app -theme react-hooks
 cd my-react-app
 npm install && npm start
 ${pre}
