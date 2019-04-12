@@ -44,7 +44,7 @@
 
   &lt;div&gt;
     &lt;p&gt; {<span class="hljs-module-identifier">React</span>.string(name <span class="hljs-operator">++</span> <span class="hljs-string">" clicked "</span> <span class="hljs-operator">++</span> string_of_int(count) <span class="hljs-operator">++</span> <span class="hljs-string">" times"</span>)} &lt;/p&gt;
-    &lt;button onClick={() =&gt; setCount(count <span class="hljs-operator">+</span> <span class="hljs-number">1</span>)}&gt;
+    &lt;button onClick={_ =&gt; setCount(_ =&gt; count <span class="hljs-operator">+</span> <span class="hljs-number">1</span>)}&gt;
       {<span class="hljs-module-identifier">React</span>.string(<span class="hljs-string">"Click me"</span>)}
     &lt;/button&gt;
   &lt;/div&gt;
