@@ -59,3 +59,13 @@ external component: (~a:int=?, ~b:string, ~c:Js.Nullable.t(Js.t(foo))=?, _) => R
 let make = (~a=1, ~b=?, _) => {
     <div />
 };
+
+
+
+module Issue369 = {
+  [@react.component]
+  let make = (~prop: string="") => React.null;
+
+  [@react.component]
+  let make = (~prop: option(string)="") => React.null;
+};
