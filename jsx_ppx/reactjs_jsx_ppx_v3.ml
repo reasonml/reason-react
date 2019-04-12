@@ -171,7 +171,7 @@ let getPropsAttr payload =
   | _ -> defaultProps
 
 (* Plucks the label, loc, and type_ from an AST node *)
-let pluckLabelLocType (label, _, _, _, loc, type_) = (label, loc, type_)
+let pluckLabelDefaultLocType (label, default, _, _, loc, type_) = (label, default, loc, type_)
 
 (* Lookup the filename from the location information on the AST node and turn it into a valid module identifier *)
 let filenameFromLoc (pstr_loc: Location.t) =
@@ -207,12 +207,12 @@ let makeModuleName fileName nestedModules fnName =
 (* Build an AST node representing all named args for the `external` definition for a component's props *)
 let rec recursivelyMakeNamedArgsForExternal list args =
   match list with
-  | (label, loc, type_)::tl ->
+  | (label, default, loc, type_)::tl ->
     recursivelyMakeNamedArgsForExternal tl (Typ.arrow
     ~loc
     label
-    (match (label, type_) with
-    | (label, None) when isOptional label -> {
+    (match (label, type_, default) with
+    | (label, None, _) when isOptional label -> {
         ptyp_loc = loc;
         ptyp_attributes = [];
         ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [{
@@ -221,23 +221,37 @@ let rec recursivelyMakeNamedArgsForExternal list args =
           ptyp_attributes = [];
         }]);
       }
-    | (label, None) when isLabelled label -> {
+    | (label, None, Some _) -> {
+        ptyp_loc = loc;
+        ptyp_attributes = [];
+        ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [{
+          ptyp_desc = Ptyp_var (safeTypeFromValue label);
+          ptyp_loc = loc;
+          ptyp_attributes = [];
+        }]);
+      }
+    | (label, Some type_, Some _) -> {
+        ptyp_loc = loc;
+        ptyp_attributes = [];
+        ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
+      }
+    | (label, None, _) when isLabelled label -> {
       ptyp_desc = Ptyp_var (safeTypeFromValue label);
       ptyp_loc = loc;
       ptyp_attributes = [];
     }
-    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=optionIdent}, _)} as type_)) when isOptional label ->
+    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=optionIdent}, _)} as type_), _) when isOptional label ->
       type_
-    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])})) when isOptional label -> {
+    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])}), _) when isOptional label -> {
       type_ with
       ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
     }
-    | (label, Some (type_)) when isOptional label -> {
+    | (label, Some (type_), _) when isOptional label -> {
       type_ with
       ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
     }
-    | (_, Some type_) -> type_
-    | (_, None) -> raise (Invalid_argument "This should never happen..")
+    | (_, Some type_, _) -> type_
+    | (_, None, _) -> raise (Invalid_argument "This should never happen..")
     )
     args)
   | [] -> args
@@ -300,7 +314,7 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
   makePropsExternal
     fnName
     loc
-    (List.map pluckLabelLocType namedArgListWithKeyAndRef)
+    (List.map pluckLabelDefaultLocType namedArgListWithKeyAndRef)
     (makePropsType ~loc namedTypeList)
 
 (* TODO: some line number might still be wrong *)
@@ -505,10 +519,22 @@ let jsxMapper () =
   in
 
 
-  let argToType types (name, _default, _noLabelName, _alias, loc, type_) = match (type_, name) with
-    | (Some type_, name) when isLabelled name || isOptional name ->
+  let argToType types (name, default, _noLabelName, _alias, loc, type_) = match (type_, name, default) with
+    | (Some type_, name, _) when isOptional name ->
+      (getLabel name, [], {
+      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+      }) :: types
+    | (Some type_, name, Some default) ->
+      (getLabel name, [], {
+      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+      }) :: types
+    | (Some type_, name, _) when isLabelled name ->
       (getLabel name, [], type_) :: types
-    | (None, name) when isOptional name ->
+    | (None, name, _) when isOptional name ->
       (getLabel name, [], {
         ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [{
           ptyp_desc = Ptyp_var (safeTypeFromValue name);
@@ -518,7 +544,7 @@ let jsxMapper () =
         ptyp_loc = loc;
         ptyp_attributes = [];
         }) :: types
-    | (None, name) when isLabelled name ->
+    | (None, name, _) when isLabelled name ->
       (getLabel name, [], {
         ptyp_desc = Ptyp_var (safeTypeFromValue name);
         ptyp_loc = loc;
@@ -560,10 +586,11 @@ let jsxMapper () =
     in
     let (innerType, propTypes) = getPropTypes [] pval_type in
     let namedTypeList = List.fold_left argToConcreteType [] propTypes in
-    let pluckLabelAndLoc (label, loc, type_) = (label, loc, Some type_) in
+    let pluckLabelAndLoc (label, loc, type_) = (label, None (* default *), loc, Some type_) in
     let retPropsType = makePropsType ~loc:pstr_loc namedTypeList in
     let externalPropsDecl = makePropsExternal fnName pstr_loc ((
       optional "key",
+      None,
       pstr_loc,
       Some(keyType pstr_loc)
     ) :: List.map pluckLabelAndLoc propTypes) retPropsType in
@@ -753,10 +780,11 @@ let jsxMapper () =
     in
     let (innerType, propTypes) = getPropTypes [] pval_type in
     let namedTypeList = List.fold_left argToConcreteType [] propTypes in
-    let pluckLabelAndLoc (label, loc, type_) = (label, loc, Some type_) in
+    let pluckLabelAndLoc (label, loc, type_) = (label, None, loc, Some type_) in
     let retPropsType = makePropsType ~loc:psig_loc namedTypeList in
     let externalPropsDecl = makePropsExternalSig fnName psig_loc ((
       optional "key",
+      None,
       psig_loc,
       Some(keyType psig_loc)
     ) :: List.map pluckLabelAndLoc propTypes) retPropsType in
