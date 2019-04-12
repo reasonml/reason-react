@@ -230,6 +230,10 @@ let rec recursivelyMakeNamedArgsForExternal list args =
           ptyp_attributes = [];
         }]);
       }
+    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])}), _) -> {
+        type_ with
+        ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
+      }
     | (label, Some type_, Some _) -> {
         ptyp_loc = loc;
         ptyp_attributes = [];

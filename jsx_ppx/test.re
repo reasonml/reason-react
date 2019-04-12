@@ -13,7 +13,7 @@ module Foo = {
     external component: (~a:int, ~b:string, _) => React.element = "";
 };
 
-<Foo.component a=1 b="1" />;
+// <Foo.component a=1 b="1" />;
 
 module Bar = {
     [@react.component]
@@ -60,12 +60,29 @@ let make = (~a=1, ~b=?, _) => {
     <div />
 };
 
+module Issue369Optionals = {
+  module One = {
+    [@react.component]
+    let make = (~prop: string="") => React.null;
+  };
 
+  module Two = {
+    [@react.component]
+    let make = (~prop: option(string)="") => React.null;
+  };
 
-module Issue369 = {
-  [@react.component]
-  let make = (~prop: string="") => React.null;
+  module All = {
+    [@react.component]
+    let make = (
+      ~labelled,
+      ~labelledT: string,
+      ~optional=?,
+      ~optionalT: option(string)=?,
+      ~default="",
+      ~defaultT: string="",
+    ) => React.null;
+  };
 
-  [@react.component]
-  let make = (~prop: option(string)="") => React.null;
+  let one = <One prop="foo" />;
+  let two = <Two prop=Some("foo") />;
 };

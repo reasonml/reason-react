@@ -9,7 +9,11 @@
     "url": "git+https://github.com/reasonml/reason-react.git"
   },
   "homepage": "https://reasonml.github.io/reason-react/",
-  "devDependencies": { "@opam/merlin": "*", "ocaml": "~4.2.0" },
+  "devDependencies": {
+    "@opam/merlin": "*",
+    "@opam/ppx_tools": "~4.2.0",
+    "ocaml": "~4.2.0"
+  },
   "dependencies": {
     "@opam/dune": "*",
     "@opam/merlin-extend": " >= 0.3",
@@ -28,6 +32,8 @@
     "install": [ [ "esy-installer", "reactjs_jsx_ppx_v3.install" ] ]
   },
   "scripts": {
-    "test": "esy x ocamlc -dsource -ppx reactjs_jsx_ppx_v3 -pp 'refmt --print binary --parse re' -impl './jsx_ppx/test.re'"
+    "test": "yarn test",
+    "dsource": "esy x ocamlc -dsource -ppx reactjs_jsx_ppx_v3 -pp 'refmt --print binary --parse re' -impl './jsx_ppx/test.re'",
+    "dparsetree": "esy x ocamlc -dparsetree -ppx reactjs_jsx_ppx_v3 -pp 'refmt --print binary --parse re' -impl './jsx_ppx/test.re'"
   }
 }
