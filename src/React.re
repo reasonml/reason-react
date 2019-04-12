@@ -25,6 +25,8 @@ module Ref = {
   [@bs.set] external setCurrent: (t('value), 'value) => unit = "current";
 };
 
+[@bs.module "react"] external createRef: unit => Ref.t(Js.nullable('a)) = "";
+
 module Context = {
   type t('props);
 
