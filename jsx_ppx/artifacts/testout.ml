@@ -118,7 +118,7 @@ module Issue369Optionals =
         let make =
           let Test$Issue369Optionals$One
             (Props : < prop :string ( *predef* ).option  > Js.t) =
-            let prop =
+            let (prop :string)=
               match ## Props prop with | Some prop -> prop | None  -> "" in
             React.null in
           Test$Issue369Optionals$One
@@ -133,7 +133,7 @@ module Issue369Optionals =
         let make =
           let Test$Issue369Optionals$Two
             (Props : < prop :string option ( *predef* ).option  > Js.t) =
-            let prop =
+            let (prop :string option)=
               match ## Props prop with | Some prop -> prop | None  -> "" in
             React.null in
           Test$Issue369Optionals$Two
@@ -176,14 +176,14 @@ module Issue369Optionals =
                 defaultT :string ( *predef* ).option  > Js.t)
             =
             let labelled = ## Props labelled in
-            let labelledT = ## Props labelledT in
+            let (labelledT :string)= ## Props labelledT in
             let optional = ## Props optional in
-            let optionalT = ## Props optionalT in
+            let (optionalT :string option)= ## Props optionalT in
             let default =
               match ## Props default with
               | Some default -> default
               | None  -> "" in
-            let defaultT =
+            let (defaultT :string)=
               match ## Props defaultT with
               | Some defaultT -> defaultT
               | None  -> "" in
@@ -194,4 +194,62 @@ module Issue369Optionals =
     let two =
       React.createElement Two.make
         (Two.makeProps ~prop:((Some "foo")[@explicit_arity ]) ())
+  end
+module Recursive =
+  struct
+    module One =
+      struct
+        external makeProps :
+          prop1:'prop1 ->
+            prop2:'prop2 ->
+              ?key:string -> unit -> < prop1 :'prop1 ;prop2 :'prop2  > Js.t =
+            ""[@@bs.obj ]
+        external componentProps :
+          prop1:'prop1 ->
+            prop2:'prop2 ->
+              ?key:string -> unit -> < prop1 :'prop1 ;prop2 :'prop2  > Js.t =
+            ""[@@bs.obj ]
+        let rec make =
+          let Test$Recursive$One
+            (Props : < prop1 :'prop1 ;prop2 :'prop2  > Js.t) =
+            let prop1 = ## Props prop1 in
+            let prop2 = ## Props prop2 in
+            match prop2 with
+            | true  ->
+                ReactDOMRe.createDOMElementVariadic "div"
+                  ~props:(ReactDOMRe.domProps
+                            ~onClick:(fun _  -> prop1 prop2) ())
+                  [|(React.string "Cities")|]
+            | false  ->
+                React.createElement component
+                  (componentProps ~prop1 ~prop2 ()) in
+          Test$Recursive$One
+        and component =
+          let Test$Recursive$One$component
+            (Props : < prop1 :'prop1 ;prop2 :'prop2  > Js.t) =
+            let prop1 = ## Props prop1 in
+            let prop2 = ## Props prop2 in
+            ReactDOMRe.createDOMElementVariadic "div"
+              ~props:(ReactDOMRe.domProps ~onClick:(fun _  -> prop1 prop2) ())
+              [|(React.string "Cities")|] in
+          Test$Recursive$One$component
+      end
+    let one =
+      React.createElement One.make
+        (One.makeProps ~prop:(fun _  -> ()) ~prop2:false ())
+  end
+module Issue378Destructuring =
+  struct
+    module One =
+      struct
+        external makeProps :
+          tuple:'tuple -> ?key:string -> unit -> < tuple :'tuple  > Js.t = ""
+        [@@bs.obj ]
+        let make =
+          let Test$Issue378Destructuring$One
+            (Props : < tuple :'tuple  > Js.t) =
+            let (a,b) = ## Props tuple in React.null in
+          Test$Issue378Destructuring$One
+      end
+    let one = React.createElement One.make (One.makeProps ~tuple:(1, 2) ())
   end
