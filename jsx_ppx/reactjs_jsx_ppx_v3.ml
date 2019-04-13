@@ -239,19 +239,19 @@ let rec recursivelyMakeNamedArgsForExternal list args =
         ptyp_attributes = [];
         ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
       }
-    | (label, None, _) when isLabelled label -> {
+    | (label, None, None) when isLabelled label -> {
       ptyp_desc = Ptyp_var (safeTypeFromValue label);
       ptyp_loc = loc;
       ptyp_attributes = [];
     }
     | (label, Some ({ptyp_desc = Ptyp_constr ({txt=optionIdent}, _)} as type_), _) when isOptional label ->
       type_
-    | (label, Some (type_), _) when isOptional label -> {
+    | (label, Some (type_), None) when isOptional label -> {
       type_ with
       ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
     }
     | (_, Some type_, _) -> type_
-    | (_, None, _) -> raise (Invalid_argument "This should never happen..")
+    | (_, None, None) -> raise (Invalid_argument "This should never happen..")
     )
     args)
   | [] -> args
