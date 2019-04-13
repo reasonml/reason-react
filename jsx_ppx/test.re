@@ -86,3 +86,30 @@ module Issue369Optionals = {
   let one = <One prop="foo" />;
   let two = <Two prop=Some("foo") />;
 };
+
+
+module Recursive = {
+  module One = {
+    [@react.component]
+    let rec make = (~prop1, ~prop2) => {
+      prop2
+      ? <div onClick={_ => prop1(prop2)}> {React.string("Cities")} </div>
+      : React.createElement(component, componentProps(~prop1, ~prop2, ()));
+    }
+    [@react.component]
+    and component = (~prop1, ~prop2) => {
+      <div onClick={_ => prop1(prop2)}> {React.string("Cities")} </div>;
+    };
+  };
+
+  let one = <One prop=(_ => ()) prop2=false />;
+};
+
+module Issue378Destructuring = {
+  module One = {
+    [@react.component]
+    let make = (~tuple as (a, b)) => React.null;
+  };
+
+  let one = <One tuple={(1, 2)} />;
+};

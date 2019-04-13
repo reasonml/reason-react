@@ -232,7 +232,7 @@ let rec recursivelyMakeNamedArgsForExternal list args =
       }
     | (label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])}), _) -> {
         type_ with
-        ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
+        ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
       }
     | (label, Some type_, Some _) -> {
         ptyp_loc = loc;
@@ -246,10 +246,6 @@ let rec recursivelyMakeNamedArgsForExternal list args =
     }
     | (label, Some ({ptyp_desc = Ptyp_constr ({txt=optionIdent}, _)} as type_), _) when isOptional label ->
       type_
-    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])}), _) when isOptional label -> {
-      type_ with
-      ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
-    }
     | (label, Some (type_), _) when isOptional label -> {
       type_ with
       ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
@@ -514,7 +510,8 @@ let jsxMapper () =
       let type_ = (match pattern with
       | {ppat_desc = Ppat_constraint (_, type_)} -> Some type_
       | _ -> None) in
-      recursivelyTransformNamedArgsForMake mapper expression ((arg, default, None, alias, pattern.ppat_loc, type_) :: list)
+
+      recursivelyTransformNamedArgsForMake mapper expression ((arg, default, pattern, alias, pattern.ppat_loc, type_) :: list)
     | Pexp_fun (nolabel, _, { ppat_desc = (Ppat_construct ({txt = Lident "()"}, _) | Ppat_any)}, expression) ->
         (expression.pexp_desc, list, None)
     | Pexp_fun (nolabel, _, { ppat_desc = Ppat_var ({txt})}, expression) ->
@@ -665,14 +662,14 @@ let jsxMapper () =
         let props = getPropsAttr payload in
         (* do stuff here! *)
         let (innerFunctionExpression, namedArgList, forwardRef) = recursivelyTransformNamedArgsForMake mapper expression [] in
-        let namedArgListWithKeyAndRef = (optional("key"), None, None, "key", pstr_loc, Some(keyType pstr_loc)) :: namedArgList in
+        let namedArgListWithKeyAndRef = (optional("key"), None, Pat.var {txt = "key"; loc = pstr_loc}, "key", pstr_loc, Some(keyType pstr_loc)) :: namedArgList in
         let namedArgListWithKeyAndRef = match forwardRef with
-        | Some(_) ->  (optional("ref"), None, None, "ref", pstr_loc, None) :: namedArgListWithKeyAndRef
+        | Some(_) ->  (optional("ref"), None, Pat.var {txt = "key"; loc = pstr_loc}, "ref", pstr_loc, None) :: namedArgListWithKeyAndRef
         | None -> namedArgListWithKeyAndRef
         in
         let namedTypeList = List.fold_left argToType [] namedArgList in
         let externalDecl = makeExternalDecl fnName pstr_loc namedArgListWithKeyAndRef namedTypeList in
-        let makeLet innerExpression (label, default, _, alias, loc, _type) =
+        let makeLet innerExpression (label, default, pattern, alias, loc, _type) =
           let labelString = (match label with | label when isOptional label || isLabelled label -> getLabel label | _ -> raise (Invalid_argument "This should never happen")) in
           let expression = (Exp.apply ~loc
             (Exp.ident ~loc {txt = (Lident "##"); loc })
@@ -695,8 +692,8 @@ let jsxMapper () =
           ]
           | None -> expression in
           let letExpression = Vb.mk
-            (Pat.var ~loc {txt = alias; loc})
-             expression in
+            pattern
+            expression in
           Exp.let_ ~loc Nonrecursive [letExpression] innerExpression in
         let innerExpression = List.fold_left makeLet (Exp.mk innerFunctionExpression) namedArgList in
         let innerExpressionWithRef = match (forwardRef) with
