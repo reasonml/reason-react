@@ -127,12 +127,11 @@ module Issue369Optionals =
       struct
         external makeProps :
           ?prop:string ->
-            ?key:string ->
-              unit -> < prop :string option ( *predef* ).option  > Js.t = ""
-        [@@bs.obj ]
+            ?key:string -> unit -> < prop :string ( *predef* ).option  > Js.t
+            = ""[@@bs.obj ]
         let make =
           let Test$Issue369Optionals$Two
-            (Props : < prop :string option ( *predef* ).option  > Js.t) =
+            (Props : < prop :string ( *predef* ).option  > Js.t) =
             let (prop :string option)=
               match ## Props prop with | Some prop -> prop | None  -> "" in
             React.null in
@@ -155,12 +154,13 @@ module Issue369Optionals =
                                                                     (
                                                                     *predef*
                                                                     ).option ;
-                            optionalT :string option ( *predef* ).option ;
-                            default :'default ( *predef* ).option ;defaultT
-                                                                    :string (
+                            optionalT :string ( *predef* ).option ;default
+                                                                    :'default
+                                                                    (
                                                                     *predef*
-                                                                    ).option 
-                            > Js.t = ""[@@bs.obj ]
+                                                                    ).option ;
+                            defaultT :string ( *predef* ).option  > Js.t = ""
+        [@@bs.obj ]
         let make =
           let Test$Issue369Optionals$All
             (Props :
@@ -169,10 +169,9 @@ module Issue369Optionals =
                                                           :'optional (
                                                              *predef*
                                                              ).option ;
-                optionalT :string option ( *predef* ).option ;default
-                                                                :'default (
-                                                                   *predef*
-                                                                   ).option ;
+                optionalT :string ( *predef* ).option ;default
+                                                         :'default ( *predef*
+                                                            ).option ;
                 defaultT :string ( *predef* ).option  > Js.t)
             =
             let labelled = ## Props labelled in
