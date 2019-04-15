@@ -113,3 +113,16 @@ module Issue378Destructuring = {
 
   let one = <One tuple={(1, 2)} />;
 };
+
+module Blocks = {
+  module One = {
+    [@react.component]
+    let make = {
+      let foo = 1;
+      Js.log(foo);
+      (~prop) => React.null;
+    };
+  };
+
+  let one = <One prop=1 />;
+};
