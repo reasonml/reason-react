@@ -252,3 +252,19 @@ module Issue378Destructuring =
       end
     let one = React.createElement One.make (One.makeProps ~tuple:(1, 2) ())
   end
+module Blocks =
+  struct
+    module One =
+      struct
+        external makeProps :
+          prop:'prop -> ?key:string -> unit -> < prop :'prop  > Js.t = ""
+        [@@bs.obj ]
+        let make =
+          let foo = 1 in
+          Js.log foo;
+          (let Test$Blocks$One (Props : < prop :'prop  > Js.t) =
+             let prop = ## Props prop in React.null in
+           Test$Blocks$One)
+      end
+    let one = React.createElement One.make (One.makeProps ~prop:1 ())
+  end
