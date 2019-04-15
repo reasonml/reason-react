@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="ko"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>React Ref · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;aside class=&quot;warning&quot;&gt;"/><meta name="docsearch:language" content="ko"/><meta property="og:title" content="React Ref · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="&lt;aside class=&quot;warning&quot;&gt;"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/ko"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/ko/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/ko/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/ko/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/ko/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>한국어</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/react-ref">日本語</a></li><li><a href="/reason-react/docs/en/react-ref">English</a></li><li><a href="/reason-react/docs/es-ES/react-ref">Español</a></li><li><a href="/reason-react/docs/fr/react-ref">Français</a></li><li><a href="/reason-react/docs/pt-BR/react-ref">Português (Brasil)</a></li><li><a href="/reason-react/docs/ru/react-ref">Русский</a></li><li><a href="/reason-react/docs/zh-CN/react-ref">中文</a></li><li><a href="/reason-react/docs/zh-Hant/react-ref">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Record API [deprecated]</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/what-and-why">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/installation">Installation</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/intro-example">Intro Example</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Core</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/components">Components</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/jsx">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/event">Event</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/style">Style</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/router">Router</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/dom">Working with DOM</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">ReactJS Idioms Equivalents</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/invalid-prop-name">Invalid Prop Name</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/props-spread">Props Spread</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/component-as-prop">Component as Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/ternary-shortcut">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/context-mixins">Context &amp; Mixins?</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/custom-class-component-property">Custom Class/Component Property</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Record API [deprecated]</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/jsx-2">JSX Record API</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/creation-props-self">Creation, Props &amp; Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/render">Render</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/callback-handlers">Callback Handlers</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/state-actions-reducer">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/lifecycles">Lifecycles</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/instance-variables">Instance Variables</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/docs/ko/react-ref">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/interop">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/clone-element">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/children">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/subscriptions-helper">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/router-2">Router</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/im-having-a-type-error">I&#x27;m Having a Type Error</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/record-field-send-handle-not-found">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/send-handle-callbacks-having-incompatible-types">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/i-really-need-feature-x-from-reactjs">I Really Need Feature X From ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ko/element-type-is-invalid">Element Type is Invalid Runtime Error</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ko" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">React Ref</h1></header><article><div><span><aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
+</aside>
+<p><em>Not to be confused with Reason <code>ref</code>, the language feature that enables mutation</em>.</p>
+<p>A ReasonReact <code>ref</code> would be just another instance variable. You'd type it as <code>ReasonReact.reactRef</code> if it's attached to a custom component, and <code>Dom.element</code> if it's attached to a React DOM element.</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">type</span> state = {
+  isOpen: bool,
+  mySectionRef: ref(option(<span class="hljs-module-identifier">ReasonReact</span>.reactRef))
+};
+
+<span class="hljs-keyword">let</span> setSectionRef = (theRef, {<span class="hljs-module-identifier">ReasonReact</span>.state}) =&gt; {
+  state.mySectionRef <span class="hljs-operator">:=</span> <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Nullable</span>.toOption(theRef);
+  <span class="hljs-comment">/* wondering about Js.Nullable.toOption? See the note below */</span>
+};
+
+<span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.reducerComponent(<span class="hljs-string">"MyPanel"</span>);
+
+<span class="hljs-keyword">let</span> make = (~className=<span class="hljs-string">""</span>, _children) =&gt; {
+  <span class="hljs-operator">...</span>component,
+  initialState: () =&gt; {
+    isOpen: <span class="hljs-literal">false</span>,
+    mySectionRef: ref(<span class="hljs-constructor">None</span>),
+  },
+  reducer: <span class="hljs-comment">/* ... */</span>,
+  render: (self) =&gt; &lt;<span class="hljs-module-identifier">Section1</span> ref={self.handle(setSectionRef)} /&gt;
+};
+</code></pre>
+<p>Attaching to a React DOM element looks the same: <code>state.mySectionRef = {myDivRef: Js.Nullable.toOption(theRef)}</code>.</p>
+<p><strong>Note</strong> how <a href="https://github.com/facebook/react/issues/9328#issuecomment-298438237">ReactJS refs can be null</a>. Which is why <code>theRef</code> and <code>myDivRef</code> are converted from a <a href="https://bucklescript.github.io/docs/en/null-undefined-option.html">JS nullable</a> to an OCaml <code>option</code> (Some/None). When you use the ref, you'll be forced to handle the null case through a <code>switch</code>, which prevents subtle errors!</p>
+<p><strong>You must follow the instanceVars convention in the previous section for ref</strong>.</p>
+<p>ReasonReact ref only accept callbacks. The string <code>ref</code> from ReactJS is deprecated.</p>
+<p>We also expose an escape hatch <code>ReasonReact.refToJsObj</code> of type <code>ReasonReact.reactRef =&gt; Js.t {..}</code>, which turns your ref into a JS object you can freely use; <strong>this is only used to access ReactJS component class methods</strong>.</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> handleClick = (event, self) =&gt;
+  <span class="hljs-keyword">switch</span> (self.state.mySectionRef<span class="hljs-operator">^</span>) {
+  | <span class="hljs-constructor">None</span> =&gt; ()
+  | <span class="hljs-constructor">Some</span>(r) =&gt; <span class="hljs-module-identifier">ReasonReact</span>.refToJsObj(r)##someMethod(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) <span class="hljs-comment">/* I solemnly swear that I am up to no good */</span>
+  };
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/ko/instance-variables"><span class="arrow-prev">← </span><span>Previous</span></a><a class="docs-next button" href="/reason-react/docs/ko/interop"><span>Next</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:ko"]}
+              });
+            </script></body></html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Creation, Props &amp; Self · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;aside class=&quot;warning&quot;&gt;"/><meta name="docsearch:language" content="zh-CN"/><meta property="og:title" content="Creation, Props &amp; Self · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="&lt;aside class=&quot;warning&quot;&gt;"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/zh-CN"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/zh-CN/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/zh-CN/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/zh-CN/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/zh-CN/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>中文</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/creation-props-self">日本語</a></li><li><a href="/reason-react/docs/en/creation-props-self">English</a></li><li><a href="/reason-react/docs/es-ES/creation-props-self">Español</a></li><li><a href="/reason-react/docs/fr/creation-props-self">Français</a></li><li><a href="/reason-react/docs/ko/creation-props-self">한국어</a></li><li><a href="/reason-react/docs/pt-BR/creation-props-self">Português (Brasil)</a></li><li><a href="/reason-react/docs/ru/creation-props-self">Русский</a></li><li><a href="/reason-react/docs/zh-Hant/creation-props-self">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">帮助翻译</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Record API [deprecated]</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/what-and-why">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/installation">Installation</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/intro-example">Intro Example</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Core</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/components">Components</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/jsx">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/event">Event</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/style">Style</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/router">Router</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/dom">Working with DOM</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">ReactJS Idioms Equivalents</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/invalid-prop-name">Invalid Prop Name</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/props-spread">Props Spread</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/component-as-prop">Component as Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/ternary-shortcut">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/context-mixins">Context &amp; Mixins?</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/custom-class-component-property">Custom Class/Component Property</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Record API [deprecated]</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/jsx-2">JSX Record API</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/docs/zh-CN/creation-props-self">Creation, Props &amp; Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/render">Render</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/callback-handlers">Callback Handlers</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/state-actions-reducer">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/lifecycles">Lifecycles</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/instance-variables">Instance Variables</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/react-ref">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/interop">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/clone-element">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/children">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/subscriptions-helper">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/router-2">Router</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/im-having-a-type-error">I&#x27;m Having a Type Error</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/record-field-send-handle-not-found">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/send-handle-callbacks-having-incompatible-types">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/i-really-need-feature-x-from-reactjs">I Really Need Feature X From ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/element-type-is-invalid">Element Type is Invalid Runtime Error</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Creation, Props &amp; Self</h1></header><article><div><span><aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
+</aside>
+<p><em>进一步阅读我们的文档内容，请务必先大致了解 ReactJS。</em></p>
+<p>ReasonReact 不使用类去声明组件。组件声明的 API 会返回一个Record(注释：Reason的一个数据类型)，你只要改写其中的<code>render</code>的内容就可以了。</p>
+<p>The component template is created through <code>ReasonReact.statelessComponent(&quot;TheComponentName&quot;)</code>. The string being passed is for debugging purposes (the equivalent of ReactJS' <a href="https://reactjs.org/docs/react-component.html#displayname"><code>displayName</code></a>).</p>
+<p>举个例子，这里是 <code>Greeting.re</code> 文件：</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+</code></pre>
+<p><strong>在 ReactJS</strong>中，你会创建一个Component Class然后再JSX中去调用它，这样的过程实际会编译成<code>React.createElement (myClass，{prop1: 'hello'})</code>。 <strong>在 ReasonReact</strong>中，不同于将整个“类”（也可以说是组件模板）传入一个假想的<code>ReasonReact.createElement</code>函数中，我们会用一个<code>make</code>函数：</p>
+<pre><code class="hljs css language-reason"><span class="hljs-comment">/* still in Greeting.re */</span>
+<span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Greeting"</span>);
+
+<span class="hljs-keyword">let</span> make = (~name, _children) =&gt; {
+  <span class="hljs-operator">...</span>component, <span class="hljs-comment">/* spread the template's other defaults into here  */</span>
+  render: _self =&gt; &lt;div&gt; {<span class="hljs-module-identifier">ReasonReact</span>.string(name)} &lt;/div&gt;
+};
+</code></pre>
+<p><code>make</code> 是你在写ReasonReact JSX时会调用的函数（JSX会在稍后的内容中介绍）。现在，不使用JSX去调用一个组件的方法是：</p>
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReasonReact</span>.element(<span class="hljs-module-identifier">Greeting</span>.make(~name=<span class="hljs-string">"John"</span>, <span class="hljs-literal">[|</span><span class="hljs-literal">|]</span>)) <span class="hljs-comment">/* the `make` function in the module `Greeting` */</span>
+<span class="hljs-comment">/* equivalent to &lt;Greeting name="John" /&gt; */</span>
+</code></pre>
+<p><code>make</code> 函数将会返回一个预定义好的Component Record。 你只要改写其中一些字段，比如熟悉的 <code>render</code>、 <code>initialState</code>、 <code>didMount</code> 等，所有的生命周期会在后面介绍。</p>
+<p><strong>Note</strong>: <strong>不要</strong> 在<code>make</code>函数内使用 <code>let component</code> ：</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> make = _children =&gt; {
+  <span class="hljs-operator">...</span>(<span class="hljs-module-identifier">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Greeting"</span>)),
+  render: self =&gt; blabla
+}
+</code></pre>
+<p>因为<code>make</code>函数会在每次JSX调用时被调用一遍，所以你会每一次都创建一个新的组件（而造成不必要的浪费）。</p>
+<h2><a class="anchor" aria-hidden="true" id="props"></a><a href="#props" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Props</h2>
+<p>像上面看到的，Props只是<code>make</code>函数中的一些 labeled arguments。（可以参考<a href="https://reasonml.github.io/guide/language/function#labeled-arguments">这里</a>） They can also be optional and/or have defaults, e.g. <code>let make = (~name, ~age=?, ~className=&quot;box&quot;, _children) =&gt; /* ... */</code>.</p>
+<p>最后一个props<strong>必须</strong>是<code>children</code>。 如果你不需要用到它，只要将它命名为<code>_</code>或者<code>_children</code>就可以了。 用下划线开头的命名如果没有被使用的话，不会触发编译器报错。</p>
+<p>属性名称不能是ref或者key，和在React JS里面一样，它们是保留关键词。</p>
+<p>根据示例，你可以在另外一个文件里面用<code>&lt;Foo name=&quot;Reason&quot; /&gt;</code>来生成组件。 如果没有指定，<code>className</code>默认值为 &quot;box&quot;。 <code>age</code>的默认值是<code>None</code>。 如果你想要传递一个<code>age</code>属性，只要像这样：<code>&lt;Foo name=&quot;Reason&quot; age=20 /&gt;</code></p>
+<h3><a class="anchor" aria-hidden="true" id="关于传递props"></a><a href="#关于传递props" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>关于传递Props</h3>
+<p>在ReactJS中，有时你会在一些组件中得到一个prop，并想把这个prop传递给自己的children:</p>
+<pre><code class="hljs">&lt;Foo name=&quot;Reason&quot; age={this.props.age} /&gt;
+</code></pre>
+<p>这是潜在的bug的来源，因为<code>this.props.age</code>可能突然变成一个null但是<code>Foo</code>并不能处理这种情况，反过来也是一样，这个值可能是一个null，但是现在它一直不会是null，这样<code>Foo</code>组件中形成了不必要的检查。</p>
+<p>In Reason, if you want to explicitly pass an optional <code>myAge</code> (whose type is <code>option(int)</code>, aka <code>None | Some(int)</code>), the following wouldn't work:</p>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">Foo</span> name=<span class="hljs-string">"Reason"</span> age=myAge /&gt;
+</code></pre>
+<p>Because the <code>age</code> label expects a normal <code>int</code> when you do call <code>Foo</code> with it, not an <code>option(int)</code>! Naively, you'd be forced to solve this like so:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">switch</span> (myAge) {
+| <span class="hljs-constructor">None</span> =&gt; &lt;<span class="hljs-module-identifier">Foo</span> name=<span class="hljs-string">"Reason"</span> /&gt;
+| <span class="hljs-constructor">Some</span>(nonOptionalAge) =&gt; &lt;<span class="hljs-module-identifier">Foo</span> name=<span class="hljs-string">"Reason"</span> age=nonOptionalAge /&gt;
+}
+</code></pre>
+<p>很繁琐。不过很幸运的是，这里有一个更好的方式：</p>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">Foo</span> name=<span class="hljs-string">"Reason"</span> age=?myAge /&gt;
+</code></pre>
+<p>It says &quot;I understand that <code>myAge</code> is optional and that I should either use the label <code>age</code> and pass an <code>int</code>, or not use the label at all. But I'd like to forward an <code>option</code>al value explicitly to avoid the verbose <code>switch</code>&quot;.</p>
+<p>This isn't a JSX trick we've made up; it's just a language feature! See the section on &quot;Explicitly Passed Optional&quot; in the <a href="https://reasonml.github.io/docs/en/function.html#explicitly-passed-optional">Reason docs</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="self"></a><a href="#self" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>self</code></h2>
+<p>You might have seen the <code>render: (self) =&gt; ...</code> part in <code>make</code>. The concept of JavaScript <code>this</code> doesn't exist in ReasonReact (but can exist in Reason, since it has an optional object system); the <code>this</code> equivalent is called <code>self</code>. It's a record that contains <code>state</code>, <code>handle</code> and <code>send</code>, which we pass around to the lifecycle events, <code>render</code> and a few others, when they need the bag of information. These concepts will be explained later on.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/zh-CN/jsx-2"><span class="arrow-prev">← </span><span>上一页</span></a><a class="docs-next button" href="/reason-react/docs/zh-CN/render"><span>下一页</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"><ul class="toc-headings"><li><a href="#props">Props</a><ul class="toc-headings"><li><a href="#关于传递props">关于传递Props</a></li></ul></li><li><a href="#self"><code>self</code></a></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:zh-CN"]}
+              });
+            </script></body></html>

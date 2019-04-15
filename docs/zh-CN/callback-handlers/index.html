@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Callback Handlers · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;aside class=&quot;warning&quot;&gt;"/><meta name="docsearch:language" content="zh-CN"/><meta property="og:title" content="Callback Handlers · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="&lt;aside class=&quot;warning&quot;&gt;"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/zh-CN"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/zh-CN/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/zh-CN/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/zh-CN/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/zh-CN/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>中文</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/callback-handlers">日本語</a></li><li><a href="/reason-react/docs/en/callback-handlers">English</a></li><li><a href="/reason-react/docs/es-ES/callback-handlers">Español</a></li><li><a href="/reason-react/docs/fr/callback-handlers">Français</a></li><li><a href="/reason-react/docs/ko/callback-handlers">한국어</a></li><li><a href="/reason-react/docs/pt-BR/callback-handlers">Português (Brasil)</a></li><li><a href="/reason-react/docs/ru/callback-handlers">Русский</a></li><li><a href="/reason-react/docs/zh-Hant/callback-handlers">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">帮助翻译</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Record API [deprecated]</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/what-and-why">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/installation">Installation</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/intro-example">Intro Example</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Core</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/components">Components</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/jsx">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/event">Event</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/style">Style</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/router">Router</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/dom">Working with DOM</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">ReactJS Idioms Equivalents</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/invalid-prop-name">Invalid Prop Name</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/props-spread">Props Spread</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/component-as-prop">Component as Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/ternary-shortcut">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/context-mixins">Context &amp; Mixins?</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/custom-class-component-property">Custom Class/Component Property</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Record API [deprecated]</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/jsx-2">JSX Record API</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/creation-props-self">Creation, Props &amp; Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/render">Render</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/docs/zh-CN/callback-handlers">Callback Handlers</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/state-actions-reducer">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/lifecycles">Lifecycles</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/instance-variables">Instance Variables</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/react-ref">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/interop">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/clone-element">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/children">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/subscriptions-helper">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/router-2">Router</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/im-having-a-type-error">I&#x27;m Having a Type Error</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/record-field-send-handle-not-found">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/send-handle-callbacks-having-incompatible-types">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/i-really-need-feature-x-from-reactjs">I Really Need Feature X From ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/zh-CN/element-type-is-invalid">Element Type is Invalid Runtime Error</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Callback Handlers</h1></header><article><div><span><aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
+</aside>
+<p>这个章节描述了像 ReactJS 中<code>&lt;div onClick={this.handleClick} /&gt;</code> 的代码在ReasonReact中是如何处理的。</p>
+<h2><a class="anchor" aria-hidden="true" id="没有state更新的回调"></a><a href="#没有state更新的回调" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>没有State更新的回调</h2>
+<p>两个场景</p>
+<h3><a class="anchor" aria-hidden="true" id="without-reading-from-self"></a><a href="#without-reading-from-self" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Without Reading From <code>self</code></h3>
+<p><em>Reminder: <code>self</code> is ReasonReact's <code>this</code>. It's a record that contains things like <code>state</code>, <code>send</code> and others.</em></p>
+<p>如果你只是要传递一个回调方法到某个child上面，你需要做的和在ReactJS中是一样的：</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-comment">/* ... */</span>;
+
+<span class="hljs-keyword">let</span> make = (~name, ~onClick, _children) =&gt; {
+  <span class="hljs-operator">...</span>component,
+  render: (self) =&gt; &lt;button onClick=onClick /&gt;
+};
+</code></pre>
+<p>No surprise here. Since Reason's JSX has <a href="https://reasonml.github.io/docs/en/jsx.html#punning">punning syntax</a>, that <code>button</code> will format into <code>&lt;button onClick /&gt;</code>.</p>
+<p>同样的，如果需要预处理某个值再传递给调用组件的地方：</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-comment">/* ... */</span>;
+
+<span class="hljs-keyword">let</span> make = (~name, ~onClick, _children) =&gt; {
+  <span class="hljs-keyword">let</span> click = (event) =&gt; onClick(name); <span class="hljs-comment">/* pass the name string up to the owner */</span>
+  {
+    <span class="hljs-operator">...</span>component,
+    render: (self) =&gt; &lt;button onClick=click /&gt;
+  }
+};
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="reading-from-self"></a><a href="#reading-from-self" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reading From <code>self</code></h3>
+<p>To access <code>state</code>, <code>send</code> and the other items in <code>self</code> from a callback, you <strong>need</strong> to wrap the callback in an extra layer called <code>self.handle</code>:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> component = <span class="hljs-comment">/* ... */</span>;
+
+<span class="hljs-keyword">let</span> make = (~name, ~onClick, _children) =&gt; {
+  <span class="hljs-keyword">let</span> click = (event, self) =&gt; {
+    onClick(event);
+    <span class="hljs-module-identifier">Js</span>.log(self.state);
+  };
+  {
+    <span class="hljs-operator">...</span>component,
+    initialState: <span class="hljs-comment">/* ... */</span>,
+    render: (self) =&gt; &lt;button onClick={self.handle(click)} /&gt;
+  }
+};
+</code></pre>
+<p><strong>注意</strong> 你的 <code>click</code> 方法现在接受另外一个 <code>self</code> 参数。 一般来收， <code>self.handle</code> 需要具有如下特性的回调方法：</p>
+<ul>
+<li>接受<strong>一个</strong>直接传递进来的参数（payload），比如：<code>handleClick</code>.</li>
+<li>参数最后会多一个<code>self</code>.</li>
+<li>没有返回值（返回类型是<code>()</code>或者<code>unit</code>）</li>
+</ul>
+<p>**注意 2 **: 有时候你可能会想将 <code>handle</code> 传递给一些别的函数， 这时请传递整个<code>self</code>并标记它的类型。 这可以避免<code>self</code>里复杂的类型标记行为。 See <a href="/reason-react/docs/zh-CN/record-field-send-handle-not-found">Record Field <code>send</code>/<code>handle</code> Not Found</a>.</p>
+<h4><a class="anchor" aria-hidden="true" id="说明"></a><a href="#说明" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>说明</h4>
+<p>事实上， <code>self.handle</code> 只是一个普通的函数，它接受两个参数，第一个是回调函数本身，第二个参数是要传给回调函数的那个数据（payload）。</p>
+<p>明白了吗？ 由于Reason语言天然的柯里化属性，我们通常只要你传递第一个参数。 然后这会返回一个新的函数，新的函数会接受第二个参数，然后执行函数体。 第二个参数（回调里的self）是由函数的caller传进来的，就是你正在rendering的组件本身！</p>
+<h4><a class="anchor" aria-hidden="true" id="接受多个参数的回调"></a><a href="#接受多个参数的回调" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>接受多个参数的回调</h4>
+<p>有时候，你在调用的组件是写在JS代码里的（可以参考 <a href="/reason-react/docs/zh-CN/interop">ReasonReact&lt;-&gt;ReactJS interop</a>），它可能需要在回调的方法里接收不止一个参数。 在 ReactJS中，它会看起来像：</p>
+<pre><code class="hljs css language-javascript">handleSubmit: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">username, password, event</span>) </span>{
+  <span class="hljs-keyword">this</span>.setState(...)
+}
+...
+&lt;MyForm onUserClickedSubmit={<span class="hljs-keyword">this</span>.handleSubmit} /&gt;
+</code></pre>
+<p>你不能直接在ReasonReact里面写<code>handleSubmit</code>这样的方法，因为 <code>handle</code> 包裹的函数只能接收<strong>一个</strong>参数。下面是处理这种情况的方法:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> handleSubmitEscapeHatch = (username, password, event) =&gt;
+  self.handle(
+    (tupleOfThreeItems, self) =&gt; doSomething(tupleOfThreeItems, self),
+    (username, password, event),
+  );
+<span class="hljs-operator">...</span>
+&lt;<span class="hljs-module-identifier">MyForm</span> onUserClickedSubmit=(handleSubmitEscapeHatch) /&gt;
+</code></pre>
+<p>总的来说，我们写的回调方法需要：</p>
+<ul>
+<li>接受从JS component方法里传来的若干参数</li>
+<li>把接受的参数包装成一个 tuple 然后调用 <code>self.handle</code></li>
+<li>构造另一个普通函数（接受一个 tuple）传递给 <code>handle</code></li>
+<li>调用一次 <code>self.handle</code> （第一个参数是接受一个 tuple 的函数，第二个参数是我们手工pass进去的 tuple）</li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="具有state更新的回调"></a><a href="#具有state更新的回调" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>具有State更新的回调</h2>
+<p>You can't update state in <code>self.handle</code>; you need to use <code>self.send</code> instead. See the next section.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/zh-CN/render"><span class="arrow-prev">← </span><span>上一页</span></a><a class="docs-next button" href="/reason-react/docs/zh-CN/state-actions-reducer"><span>下一页</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"><ul class="toc-headings"><li><a href="#没有state更新的回调">没有State更新的回调</a><ul class="toc-headings"><li><a href="#without-reading-from-self">Without Reading From <code>self</code></a></li><li><a href="#reading-from-self">Reading From <code>self</code></a></li></ul></li><li><a href="#具有state更新的回调">具有State更新的回调</a></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:zh-CN"]}
+              });
+            </script></body></html>
