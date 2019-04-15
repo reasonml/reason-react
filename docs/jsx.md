@@ -173,11 +173,11 @@ let make = (~id) => {
 
 Then `Profile` and `UserDetails` components will have to be compatible with the version 3 of JSX. Or alternatively, if they are using version 2, they can be wrapped with the function `ReasonReactCompat.wrapReasonReactForReact`.
 
-### From primitives to more complex components
+#### From primitives to more complex components
 
-As all usages of any component in a file need to be migrated to the same version of JSX, one natural way to tackle large migrations is to start converting the most primitive components to version 3, as they generally render few children, or they render host element like `<div />`. Once the most simple components are done, one can proceed with the most complex ones.
+As all usages of any component in a file need to be migrated to the same version of JSX, one natural way to tackle large migrations at the file level is to start converting the most primitive components to version 3, as they generally render elements of a reduced number of components, or host elements like `<div />`. Once the most simple components are done, one can proceed with the most complex ones.
 
-While this process is ongoing, both versions need to be used in parallel. For example, a component `Banner` compatible with version 2 might need to use a component `Image` that is compatible with version 3. `Image` can be made compatible by leveraging `
+While this process is ongoing, both versions of JSX need to coexist. For example, a component `Banner` compatible with version 2 might need to use a component `Image` that is compatible with version 3. `Image` can be made compatible by leveraging `ReasonReactCompat.wrapReactForReasonReact`:
 
 ```reason
 /* In Image.re */
@@ -189,19 +189,23 @@ let make = (~src) => <img src />;
 module Jsx2 = {
   let component = ReasonReact.statelessComponent("Image");
   let make = (~src, children) =>
-    ReasonReactCompat.wrapReactForReasonReact(make, makeProps(~src), children);
+    ReasonReactCompat.wrapReactForReasonReact(
+      make,
+      makeProps(~src, ()),
+      children,
+    );
 };
 ```
 
-Which can be then consumed from `Banner`:
+Then, `Image` can be used from `Banner`:
 
 ```reason
 /* In Banner.re */
 let component = ReasonReact.statelessComponent("Banner");
 
-let make = (_children) => {
+let make = _children => {
   ...component,
-  render: _self => <Image.Jsx2 src="./cat.gif">
+  render: _self => <Image.Jsx2 src="./cat.gif" />,
 };
 ```
 
