@@ -9,6 +9,7 @@ Here is a small overview of the ReasonReact API before we start. No worries if s
 ```reason
 /* file: Greeting.re */
 
+[@react.component]
 let make = (~name) =>
   <button> {ReasonReact.string("Hello " ++ name ++ "!")} </button>;
 ```
