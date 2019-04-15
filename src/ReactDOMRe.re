@@ -5,7 +5,7 @@
 /* It's like `let`, except you're pointing the implementation to the JS side. The compiler will inline these
    calls and add the appropriate `require("react-dom")` in the file calling this `render` */
 [@bs.val] [@bs.module "react-dom"]
-external render: (ReasonReact.reactElement, Dom.element) => unit = "render";
+external render: (React.element, Dom.element) => unit = "render";
 
 [@bs.val]
 external _getElementsByClassName: string => array(Dom.element) =
@@ -42,7 +42,7 @@ let renderToElementWithId = (reactElement, id) =>
   };
 
 [@bs.val] [@bs.module "react-dom"]
-external hydrate: (ReasonReact.reactElement, Dom.element) => unit = "hydrate";
+external hydrate: (React.element, Dom.element) => unit = "hydrate";
 
 let hydrateToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
@@ -72,7 +72,7 @@ let hydrateToElementWithId = (reactElement, id) =>
 
 [@bs.val] [@bs.module "react-dom"]
 external createPortal:
-  (ReasonReact.reactElement, Dom.element) => ReasonReact.reactElement =
+  (React.element, Dom.element) => React.element =
   "createPortal";
 
 [@bs.val] [@bs.module "react-dom"]
@@ -1096,8 +1096,8 @@ type domProps = {
 
 [@bs.splice] [@bs.module "react"]
 external createDOMElementVariadic:
-  (string, ~props: domProps=?, array(ReasonReact.reactElement)) =>
-  ReasonReact.reactElement =
+  (string, ~props: domProps=?, array(React.element)) =>
+  React.element =
   "createElement";
 
 /* This list isn't exhaustive. We'll add more as we go. */
@@ -2104,8 +2104,8 @@ type reactDOMProps = props;
 
 [@bs.splice] [@bs.val] [@bs.module "react"]
 external createElement:
-  (string, ~props: props=?, array(ReasonReact.reactElement)) =>
-  ReasonReact.reactElement =
+  (string, ~props: props=?, array(React.element)) =>
+  React.element =
   "createElement";
 
 /* Only wanna expose createElementVariadic here. Don't wanna write an interface file */
@@ -2133,8 +2133,8 @@ include (
             };
           }: {
             let createElementVariadic:
-              (string, ~props: props=?, array(ReasonReact.reactElement)) =>
-              ReasonReact.reactElement;
+              (string, ~props: props=?, array(React.element)) =>
+              React.element;
           }
         );
 
