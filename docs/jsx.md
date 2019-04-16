@@ -154,7 +154,7 @@ This approach requires that all components in the application must be made compa
 
 For larger applications, it might not be possible to migrate all components at once. In these cases, a per-file migration is also possible.
 
-A file can be configured to use version 3 of the transform by adding `[@bs.config {jsx: 3}]` at the top of the file.
+A file can be configured to use version 3 of the transform by adding `[@bs.config {jsx: 3}];` at the top of the file.
 
 The per-file configuration allows to mix, in the same application, components compatible with either of both versions of the JSX transforms. However, the restriction is that all the components used in a file will have to be compatible with the JSX version specified for that file.
 
@@ -162,7 +162,8 @@ For example, if a file contains the following code:
 
 ```reason
 /* User.re */
-[@bs.config {jsx: 3}]
+[@bs.config {jsx: 3}];
+
 [@react.component]
 let make = (~id) => {
   <Profile>
@@ -210,7 +211,7 @@ let make = _children => {
 };
 ```
 
-Once all components are using version 3, there is no more need to keep the `[@bs.config {jsx: 3}]` annotations at the top of each file, and they can be replaced by bumping the JSX version in the `bsconfig.json` file to `{"reason": {"react-jsx": 3}`.
+Once all components are using version 3, there is no more need to keep the `[@bs.config {jsx: 3}];` annotations at the top of each file, and they can be replaced by bumping the JSX version in the `bsconfig.json` file to `{"reason": {"react-jsx": 3}`.
 
 ### Upgrade script
 
