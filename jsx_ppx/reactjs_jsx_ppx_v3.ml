@@ -625,6 +625,9 @@ let jsxMapper () =
     } ->
       let mapBinding binding = if (hasAttrOnBinding binding) then
         let fnName = getFnName binding in
+        let fileName = filenameFromLoc pstr_loc in
+        let fullModuleName = makeModuleName fileName !nestedModules fnName in
+        let emptyLoc = Location.in_file fileName in
         let modifiedBinding binding =
           let expression = binding.pvb_expr in
           let wrapExpressionWithBinding expressionFn expression = {(filterAttrOnBinding binding) with pvb_expr = expressionFn expression} in
@@ -671,20 +674,19 @@ let jsxMapper () =
         let reactComponentAttribute = try
           Some(List.find hasAttr binding.pvb_attributes)
         with | Not_found -> None in
-        let payload = match reactComponentAttribute with
-        (* TODO: in some cases this is a better loc than pstr_loc *)
-        | Some (_loc, payload) -> Some payload
-        | None -> None in
+        let (attr_loc, payload) = match reactComponentAttribute with
+        | Some (loc, payload) -> (loc.loc, Some payload)
+        | None -> (emptyLoc, None) in
         let props = getPropsAttr payload in
         (* do stuff here! *)
         let (innerFunctionExpression, namedArgList, forwardRef) = recursivelyTransformNamedArgsForMake mapper expression [] in
-        let namedArgListWithKeyAndRef = (optional("key"), None, Pat.var {txt = "key"; loc = pstr_loc}, "key", pstr_loc, Some(keyType pstr_loc)) :: namedArgList in
+        let namedArgListWithKeyAndRef = (optional("key"), None, Pat.var {txt = "key"; loc = emptyLoc}, "key", emptyLoc, Some(keyType emptyLoc)) :: namedArgList in
         let namedArgListWithKeyAndRef = match forwardRef with
-        | Some(_) ->  (optional("ref"), None, Pat.var {txt = "key"; loc = pstr_loc}, "ref", pstr_loc, None) :: namedArgListWithKeyAndRef
+        | Some(_) ->  (optional("ref"), None, Pat.var {txt = "key"; loc = emptyLoc}, "ref", emptyLoc, None) :: namedArgListWithKeyAndRef
         | None -> namedArgListWithKeyAndRef
         in
         let namedTypeList = List.fold_left argToType [] namedArgList in
-        let externalDecl = makeExternalDecl fnName pstr_loc namedArgListWithKeyAndRef namedTypeList in
+        let externalDecl = makeExternalDecl fnName attr_loc namedArgListWithKeyAndRef namedTypeList in
         let makeLet innerExpression (label, default, pattern, alias, loc, _type) =
           let labelString = (match label with | label when isOptional label || isLabelled label -> getLabel label | _ -> raise (Invalid_argument "This should never happen")) in
           let expression = (Exp.apply ~loc
@@ -715,8 +717,8 @@ let jsxMapper () =
         let innerExpressionWithRef = match (forwardRef) with
         | Some txt ->
           {innerExpression with pexp_desc = Pexp_fun (nolabel, None, {
-            ppat_desc = Ppat_var { txt; loc = pstr_loc };
-            ppat_loc = pstr_loc;
+            ppat_desc = Ppat_var { txt; loc = emptyLoc };
+            ppat_loc = emptyLoc;
             ppat_attributes = [];
           }, innerExpression)}
         | None -> innerExpression
@@ -726,26 +728,24 @@ let jsxMapper () =
           None,
           {
             ppat_desc = Ppat_constraint (
-              makePropsName ~loc:pstr_loc props.propsName,
-              makePropsType ~loc:pstr_loc namedTypeList
+              makePropsName ~loc:emptyLoc props.propsName,
+              makePropsType ~loc:emptyLoc namedTypeList
             );
-            ppat_loc = pstr_loc;
+            ppat_loc = emptyLoc;
             ppat_attributes = [];
           },
           innerExpressionWithRef
         )) in
-        let fileName = filenameFromLoc pstr_loc in
-        let fullModuleName = makeModuleName fileName !nestedModules fnName in
         let fullExpression = match (fullModuleName) with
         | ("") -> fullExpression
         | (txt) -> Pexp_let (
             Nonrecursive,
             [Vb.mk
-              ~loc:pstr_loc
-              (Pat.var ~loc:pstr_loc {loc = pstr_loc; txt})
-              (Exp.mk ~loc:pstr_loc fullExpression)
+              ~loc:emptyLoc
+              (Pat.var ~loc:emptyLoc {loc = emptyLoc; txt})
+              (Exp.mk ~loc:emptyLoc fullExpression)
             ],
-            (Exp.ident ~loc:pstr_loc {loc = pstr_loc; txt = Lident txt})
+            (Exp.ident ~loc:emptyLoc {loc = emptyLoc; txt = Lident txt})
           )
         in
         let newBinding = bindingWrapper fullExpression in
