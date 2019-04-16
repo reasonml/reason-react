@@ -126,3 +126,15 @@ module Blocks = {
 
   let one = <One prop=1 />;
 };
+
+module Error = {
+  module MiniHelmetJsCompat = {
+    [@bs.module "react-helmet"]
+    external make: (~title: string=?) => React.element = "default";
+  };
+
+  [@react.component]
+  let make = (~title: string=?) => {
+    MiniHelmetJsCompat.make(~title);
+  };
+};

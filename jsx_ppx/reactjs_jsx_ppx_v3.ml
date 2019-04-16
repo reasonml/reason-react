@@ -244,7 +244,7 @@ let rec recursivelyMakeNamedArgsForExternal list args =
       ptyp_loc = loc;
       ptyp_attributes = [];
     }
-    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=optionIdent}, _)} as type_), _) when isOptional label ->
+    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=Ldot (Lident "*predef*","option")}, _)} as type_), _) when isOptional label ->
       type_
     | (label, Some (type_), None) when isOptional label -> {
       type_ with
@@ -526,19 +526,13 @@ let jsxMapper () =
         type_ with
         ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
       }) :: types
-    | (Some type_, name, _) when isOptional name ->
-      (getLabel name, [], {
-      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
-      ptyp_loc = loc;
-      ptyp_attributes = [];
-      }) :: types
     | (Some type_, name, Some default) ->
       (getLabel name, [], {
       ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
       ptyp_loc = loc;
       ptyp_attributes = [];
       }) :: types
-    | (Some type_, name, _) when isLabelled name ->
+    | (Some type_, name, _) ->
       (getLabel name, [], type_) :: types
     | (None, name, _) when isOptional name ->
       (getLabel name, [], {

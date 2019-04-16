@@ -268,3 +268,18 @@ module Blocks =
       end
     let one = React.createElement One.make (One.makeProps ~prop:1 ())
   end
+module Error =
+  struct
+    module MiniHelmetJsCompat =
+      struct
+        external make : ?title:string -> React.element = "default"[@@bs.module
+                                                                    "react-helmet"]
+      end
+    external makeProps :
+      ?title:string -> ?key:string -> unit -> < title :string  > Js.t = ""
+    [@@bs.obj ]
+    let make =
+      let Test$Error (Props : < title :string  > Js.t) =
+        let (title :string)= ## Props title in MiniHelmetJsCompat.make ~title in
+      Test$Error
+  end
