@@ -21,7 +21,7 @@
       "context-mixins",
       "custom-class-component-property"
     ],
-    "Record API [deprecated]": [
+    "Record API [frozen api]": [
       "jsx-2",
       "creation-props-self",
       "render",
