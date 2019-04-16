@@ -1,5 +1,22 @@
+(rule
+ (targets reactjs_jsx_ppx_v3.ml)
+ (deps
+  (:dep reactjs_jsx_ppx_v3.cppo.ml))
+ (action
+  (run %{bin:cppo} -V OCAML:%{ocaml_version} -U BS_COMPILER_IN_BROWSER %{dep}
+    -o %{targets})))
+
+(rule
+ (targets reactjs_jsx_ppx_v3.mli)
+ (deps
+  (:dep reactjs_jsx_ppx_v3.cppo.mli))
+ (action
+  (run %{bin:cppo} -V OCAML:%{ocaml_version} -D BS_NO_COMPILER_PATCH %{dep}
+    -o %{targets})))
+
 (executable
  (name reactjs_jsx_ppx_v3)
  (public_name reactjs_jsx_ppx_v3)
  (libraries compiler-libs.common)
- (flags (:standard -w -9)))
+ (flags
+  (:standard -w -9)))

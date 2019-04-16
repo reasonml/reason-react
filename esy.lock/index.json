@@ -1,5 +1,5 @@
 {
-  "checksum": "ed700ffb3d07a55ba29df8c4c2ae9313",
+  "checksum": "d4db4ada6575b1289296a8f036c4b931",
   "root": "reason-react@link-dev:./esy.json",
   "node": {
     "reason-react@link-dev:./esy.json": {
@@ -13,12 +13,9 @@
         "@opam/reason@opam:3.4.0@9dac40ad",
         "@opam/ocamlfind@opam:1.8.0@f744a0c5",
         "@opam/merlin-extend@opam:0.3@0af73a50",
-        "@opam/dune@opam:1.9.1@61bdaadf"
+        "@opam/dune@opam:1.9.1@61bdaadf", "@opam/cppo@opam:1.6.5@bec3dbd9"
       ],
-      "devDependencies": [
-        "ocaml@4.2.3007@d41d8cd9", "@opam/ppx_tools@opam:4.02.3@3df89f8f",
-        "@opam/merlin@opam:3.2.2@829ee6dd"
-      ]
+      "devDependencies": [ "@opam/merlin@opam:3.2.2@829ee6dd" ]
     },
     "ocaml@4.2.3007@d41d8cd9": {
       "id": "ocaml@4.2.3007@d41d8cd9",
@@ -129,31 +126,6 @@
         "@opam/ocaml-migrate-parsetree@opam:1.2.0@23e55f71",
         "@opam/merlin-extend@opam:0.3@0af73a50",
         "@opam/menhir@opam:20181113@0c8257a8"
-      ]
-    },
-    "@opam/ppx_tools@opam:4.02.3@3df89f8f": {
-      "id": "@opam/ppx_tools@opam:4.02.3@3df89f8f",
-      "name": "@opam/ppx_tools",
-      "version": "opam:4.02.3",
-      "source": {
-        "type": "install",
-        "source": [
-          "archive:https://opam.ocaml.org/cache/md5/47/47b1fb5681b2bcfa9cdaee45a899dfe9#md5:47b1fb5681b2bcfa9cdaee45a899dfe9",
-          "archive:https://github.com/alainfrisch/ppx_tools/archive/v4.02.3.tar.gz#md5:47b1fb5681b2bcfa9cdaee45a899dfe9"
-        ],
-        "opam": {
-          "name": "ppx_tools",
-          "version": "4.02.3",
-          "path": "esy.lock/opam/ppx_tools.4.02.3"
-        }
-      },
-      "overrides": [],
-      "dependencies": [
-        "ocaml@4.2.3007@d41d8cd9", "@opam/ocamlfind@opam:1.8.0@f744a0c5",
-        "@esy-ocaml/substs@0.0.1@d41d8cd9"
-      ],
-      "devDependencies": [
-        "ocaml@4.2.3007@d41d8cd9", "@opam/ocamlfind@opam:1.8.0@f744a0c5"
       ]
     },
     "@opam/ppx_derivers@opam:1.2.1@0b458500": {
