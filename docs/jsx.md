@@ -188,6 +188,7 @@ let make = (~src) => <img src />;
 
 module Jsx2 = {
   let component = ReasonReact.statelessComponent("Image");
+  /* `children` is not labelled, as it is a regular parameter in version 2 of JSX */
   let make = (~src, children) =>
     ReasonReactCompat.wrapReactForReasonReact(
       make,
