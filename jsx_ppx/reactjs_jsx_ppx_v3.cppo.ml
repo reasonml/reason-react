@@ -232,12 +232,13 @@ let makeModuleName fileName nestedModules fnName =
 (* Build an AST node representing all named args for the `external` definition for a component's props *)
 let rec recursivelyMakeNamedArgsForExternal list args =
   match list with
-  | (label, default, loc, type_)::tl ->
+  | (label, default, loc, interiorType)::tl ->
     recursivelyMakeNamedArgsForExternal tl (Typ.arrow
     ~loc
     label
-    (match (label, type_, default) with
-    | (label, None, _) when isOptional label ->
+    (match (label, interiorType, default) with
+    (* ~foo=1 *)
+    | (label, None, Some _) ->
 #if OCAML_VERSION >= (4,3,0)
     {
       ptyp_desc = Ptyp_var (safeTypeFromValue label);
@@ -255,56 +256,57 @@ let rec recursivelyMakeNamedArgsForExternal list args =
       }]);
     }
 #endif
-    | (label, None, _) when isLabelled label ->
-#if OCAML_VERSION >= (4,3,0)
-    {
-      ptyp_desc = Ptyp_var (safeTypeFromValue label);
-      ptyp_loc = loc;
-      ptyp_attributes = [];
-    }
-#else
-    {
-      ptyp_desc = Ptyp_var (safeTypeFromValue label);
-      ptyp_loc = loc;
-      ptyp_attributes = [];
-    }
-#endif
-    | (_label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])}), _) -> 
+    (* ~foo: int=1 *)
+    | (label, Some type_, Some _) ->
 #if OCAML_VERSION >= (4,3,0)
     type_
 #else
     {
       type_ with
-      ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
+      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
     }
 #endif
-    | (_label, Some type_, Some _) ->
+    (* ~foo: option(int)=? *)
+    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])}), _)
+    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=(Ldot (Lident "*predef*", "option"))}, [type_])}), _) 
+    (* ~foo: int=? - note this isnt valid. but we want to get a type error *)
+    | (label, Some type_, _) when isOptional label ->
 #if OCAML_VERSION >= (4,3,0)
     type_
 #else
     {
-      ptyp_loc = loc;
-      ptyp_attributes = [];
+      type_ with
       ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
     }
 #endif
-    | (label, Some type_, None) when isOptional label ->
+    (* ~foo=? *)
+    | (label, None, _) when isOptional label -> 
 #if OCAML_VERSION >= (4,3,0)
-    type_
+    {
+      ptyp_desc = Ptyp_var (safeTypeFromValue label);
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+    }
 #else
     {
       ptyp_loc = loc;
       ptyp_attributes = [];
-      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
+      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [{
+        ptyp_desc = Ptyp_var (safeTypeFromValue label);
+        ptyp_loc = loc;
+        ptyp_attributes = [];
+      }]);
     }
 #endif
-#if OCAML_VERSION >= (4,3,0)
-    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=Lident "option"}, _)} as type_), _) when isOptional label ->
-#else
-    | (label, Some ({ptyp_desc = Ptyp_constr ({txt=Ldot (Lident "*predef*","option")}, _)} as type_), _) when isOptional label ->
-#endif
-      type_
-    | (_, Some type_, _) -> type_
+    (* ~foo *)
+    | (label, None, _) -> 
+    {
+      ptyp_desc = Ptyp_var (safeTypeFromValue label);
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+    }
+    | (label, Some type_, _) -> 
+    type_
     )
     args)
   | [] -> args

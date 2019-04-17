@@ -80,6 +80,8 @@ module Issue369Optionals = {
       ~optionalT: option(string)=?,
       ~default="",
       ~defaultT: string="",
+      ~nonOptionalOptionT: option(string),
+      ~nonOptionalDefaultT: option(string)=None,
     ) => React.null;
   };
 
@@ -126,7 +128,7 @@ module Blocks = {
 
   let one = <One prop=1 />;
 };
-
+/*
 module Error = {
   module MiniHelmetJsCompat = {
     [@bs.module "react-helmet"]
@@ -137,4 +139,4 @@ module Error = {
   let make = (~title: string=?) => {
     MiniHelmetJsCompat.make(~title);
   };
-};
+};*/
