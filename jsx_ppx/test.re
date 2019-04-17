@@ -52,7 +52,7 @@ let make = (~a=1, ~b=?, _) => {
 
 [@react.component]
 [@bs.module "Foo"]
-external component: (~a:int=?, ~b:string, ~c:Js.Nullable.t(Js.t(foo))=?, _) => React.element = ""; 
+external component: (~a:int=?, ~b:string, ~c:option(Js.Nullable.t(Js.t(foo)))=?, _) => React.element = ""; 
 
 
 [@react.component]

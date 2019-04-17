@@ -9,41 +9,31 @@
     "url": "git+https://github.com/reasonml/reason-react.git"
   },
   "homepage": "https://reasonml.github.io/reason-react/",
-  "devDependencies": {
-    "@opam/merlin": "*"
-  },
+  "devDependencies": { "@opam/merlin": "*" },
   "dependencies": {
+    "@opam/cppo": "*",
     "@opam/dune": "*",
     "@opam/merlin-extend": " >= 0.3",
     "@opam/ocamlfind": "*",
+    "@opam/ppx_tools": "5.0+4.02.0",
     "@opam/reason": "3.4.0",
     "@opam/result": "*",
-    "@opam/cppo": "*",
     "ocaml": "~4.2.0"
   },
   "bin": {
-    "reactjs_jsx_ppx_v3.exe": "./_build/default/jsx_ppx/reactjs_jsx_ppx_v3.exe"
+    "reactjs_jsx_ppx_v3.exe":
+      "./_build/default/jsx_ppx/reactjs_jsx_ppx_v3.exe"
   },
   "esy": {
     "buildsInSource": "_build",
-    "build": [
-      [
-        "dune",
-        "build",
-        "-p",
-        "reactjs_jsx_ppx_v3"
-      ]
-    ],
-    "install": [
-      [
-        "esy-installer",
-        "reactjs_jsx_ppx_v3.install"
-      ]
-    ]
+    "build": [ [ "dune", "build", "-p", "reactjs_jsx_ppx_v3" ] ],
+    "install": [ [ "esy-installer", "reactjs_jsx_ppx_v3.install" ] ]
   },
   "scripts": {
     "test": "yarn test",
-    "dsource": "esy x ocamlc -dsource -ppx reactjs_jsx_ppx_v3 -pp 'refmt --print binary --parse re' -impl './jsx_ppx/test.re'",
-    "dparsetree": "esy x ocamlc -dparsetree -ppx reactjs_jsx_ppx_v3 -pp 'refmt --print binary --parse re' -impl './jsx_ppx/test.re'"
+    "dsource":
+      "esy x ocamlc -dsource -ppx reactjs_jsx_ppx_v3 -pp 'refmt --print binary --parse re' -impl './jsx_ppx/test.re'",
+    "dparsetree":
+      "esy x ocamlc -dparsetree -ppx reactjs_jsx_ppx_v3 -pp 'refmt --print binary --parse re' -impl './jsx_ppx/test.re'"
   }
 }

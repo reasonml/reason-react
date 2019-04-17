@@ -237,50 +237,74 @@ let rec recursivelyMakeNamedArgsForExternal list args =
     ~loc
     label
     (match (label, type_, default) with
-    | (label, None, _) when isOptional label -> {
-        ptyp_loc = loc;
-        ptyp_attributes = [];
-        ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [{
-          ptyp_desc = Ptyp_var (safeTypeFromValue label);
-          ptyp_loc = loc;
-          ptyp_attributes = [];
-        }]);
-      }
-    | (label, None, Some _) -> {
-        ptyp_loc = loc;
-        ptyp_attributes = [];
-        ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [{
-          ptyp_desc = Ptyp_var (safeTypeFromValue label);
-          ptyp_loc = loc;
-          ptyp_attributes = [];
-        }]);
-      }
-    | (_label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])}), _) -> {
-        type_ with
-        ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
-      }
-    | (_label, Some type_, Some _) -> {
-        ptyp_loc = loc;
-        ptyp_attributes = [];
-        ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
-      }
-    | (label, None, None) when isLabelled label -> {
+    | (label, None, _) when isOptional label ->
+#if OCAML_VERSION >= (4,3,0)
+    {
       ptyp_desc = Ptyp_var (safeTypeFromValue label);
       ptyp_loc = loc;
       ptyp_attributes = [];
     }
+#else
+    {
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [{
+        ptyp_desc = Ptyp_var (safeTypeFromValue label);
+        ptyp_loc = loc;
+        ptyp_attributes = [];
+      }]);
+    }
+#endif
+    | (label, None, _) when isLabelled label ->
+#if OCAML_VERSION >= (4,3,0)
+    {
+      ptyp_desc = Ptyp_var (safeTypeFromValue label);
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+    }
+#else
+    {
+      ptyp_desc = Ptyp_var (safeTypeFromValue label);
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+    }
+#endif
+    | (_label, Some ({ptyp_desc = Ptyp_constr ({txt=(Lident "option")}, [type_])}), _) -> 
+#if OCAML_VERSION >= (4,3,0)
+    type_
+#else
+    {
+      type_ with
+      ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
+    }
+#endif
+    | (_label, Some type_, Some _) ->
+#if OCAML_VERSION >= (4,3,0)
+    type_
+#else
+    {
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
+    }
+#endif
+    | (label, Some type_, None) when isOptional label ->
+#if OCAML_VERSION >= (4,3,0)
+    type_
+#else
+    {
+      ptyp_loc = loc;
+      ptyp_attributes = [];
+      ptyp_desc = Ptyp_constr ({loc; txt=optionIdent}, [type_]);
+    }
+#endif
 #if OCAML_VERSION >= (4,3,0)
     | (label, Some ({ptyp_desc = Ptyp_constr ({txt=Lident "option"}, _)} as type_), _) when isOptional label ->
 #else
     | (label, Some ({ptyp_desc = Ptyp_constr ({txt=Ldot (Lident "*predef*","option")}, _)} as type_), _) when isOptional label ->
 #endif
       type_
-    | (label, Some (type_), None) when isOptional label -> {
-      type_ with
-      ptyp_desc = Ptyp_constr ({loc=type_.ptyp_loc; txt=optionIdent}, [type_]);
-    }
     | (_, Some type_, _) -> type_
-    | (_, None, None) -> raise (Invalid_argument "This should never happen..")
     )
     args)
   | [] -> args

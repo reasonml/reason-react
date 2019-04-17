@@ -7,7 +7,8 @@
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "esy x refmt --parse re --print ml ./jsx_ppx/test.re > ./jsx_ppx/artifacts/test.ml && esy x ocamlfind ppx_tools/rewriter reactjs_jsx_ppx_v3 ./jsx_ppx/artifacts/test.ml > ./jsx_ppx/artifacts/testout.ml && rm ./jsx_ppx/artifacts/test.ml"
+    "test": "esy x refmt --parse re --print ml ./jsx_ppx/test.re > ./jsx_ppx/artifacts/test.ml && esy x ocamlfind ppx_tools/rewriter reactjs_jsx_ppx_v3 ./jsx_ppx/artifacts/test.ml > ./jsx_ppx/artifacts/testout.ml && rm ./jsx_ppx/artifacts/test.ml",
+    "test-406": "esy @406 x refmt --parse re --print ml ./jsx_ppx/test.re > ./jsx_ppx/artifacts/test.ml && esy @406 x ocamlfind ppx_tools/rewriter reactjs_jsx_ppx_v3 ./jsx_ppx/artifacts/test.ml > ./jsx_ppx/artifacts/testout.ml && rm ./jsx_ppx/artifacts/test.ml"
   },
   "keywords": [
     "reasonml",
