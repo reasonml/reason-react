@@ -12,12 +12,6 @@ const users = [
     pinned: true
   },
   {
-    caption: "WOW air",
-    image: "img/logos/wowair.svg",
-    infoLink: "https://wowair.com",
-    pinned: true
-  },
-  {
     caption: "BeOp",
     image: "img/logos/beop.svg",
     infoLink: "https://beop.io",
@@ -130,7 +124,7 @@ const siteConfig = {
   cleanUrl: true,
   highlight: {
     theme: "atom-one-light",
-    hljs: function(hljs) {
+    hljs: function (hljs) {
       hljs.registerLanguage("reason", reasonHighlightJs);
     }
   },
