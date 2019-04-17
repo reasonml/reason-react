@@ -32,7 +32,7 @@ module Ref = {
 
 module Children = {
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
-  external map: (element, element => element) => array(element) = "map";
+  external map: (element, element => element) => element = "map";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external forEach: (element, element => unit) => unit = "forEach";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
