@@ -13,6 +13,9 @@ type component('props) = componentLike('props, element);
 [@bs.module "react"]
 external createElement: (component('props), 'props) => element = "";
 
+[@bs.module "react"]
+external cloneElement: (component('props), 'props) => element = "";
+
 [@bs.splice] [@bs.module "react"]
 external createElementVariadic:
   (component('props), 'props, array(element)) => element =
@@ -26,6 +29,19 @@ module Ref = {
 };
 
 [@bs.module "react"] external createRef: unit => Ref.t(Js.nullable('a)) = "";
+
+module Children = {
+  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  external map: (element, element => element) => element = "map";
+  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  external forEach: (element, element => unit) => unit = "forEach";
+  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  external count: element => int = "count";
+  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  external only: element => element = "only";
+  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  external toArray: element => array(element) = "toArray";
+};
 
 module Context = {
   type t('props);
