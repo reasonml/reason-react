@@ -41,6 +41,30 @@ let make = (Props) => {
 
 It has added a new function with `Props` as a suffix which uses [`[@bs.obj]`](https://bucklescript.github.io/docs/en/object-2#function) to create your props object. This function gets compiled away by BuckleScript and will be replaced by object literals when used.
 
+### A note on `children`
+
+Like React, `children` is just another prop that is passed to the component. Therefore, using the children in a component is no different than using any other prop! For example:
+
+```reason
+module ComponentTakesChildren = {
+  [@react.component]
+  let make = (~name, ~children) => {
+    <div>
+      <p> {React.string("Hello, " ++ name)} </p>
+      children
+    </div>
+  };
+};
+```
+
+The component above could be called like this:
+
+```reason
+<ComponentTakesChildren>
+  <div> {React.string("Effectively the child.")} </div>
+</ComponentTakesChildren>
+```
+
 ## Hooks
 
 The next thing you might notice looking at this example is the use of hooks (`useState`). ReasonReact binds to [all of the hooks that React provides](https://reactjs.org/docs/hooks-intro.html) with only minor API differences. Please refer to their excellent documentation for more information on how hooks work and for best practices.
