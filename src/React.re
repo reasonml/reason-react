@@ -86,18 +86,11 @@ module Fragment = {
 module Suspense = {
   [@bs.obj]
   external makeProps:
-    (
-      ~children: element=?,
-      ~fallback: element=?,
-      ~maxDuration: int=?,
-      ~key: 'key=?,
-      unit
-    ) =>
+    (~children: element=?, ~fallback: element=?, ~key: 'key=?, unit) =>
     {
       .
       "children": option(element),
       "fallback": option(element),
-      "maxDuration": option(int),
     } =
     "";
   [@bs.module "react"]
@@ -106,7 +99,6 @@ module Suspense = {
       .
       "children": option(element),
       "fallback": option(element),
-      "maxDuration": option(int),
     }) =
     "Suspense";
 };
