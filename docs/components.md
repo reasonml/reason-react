@@ -91,7 +91,7 @@ Using a component written in JS requires a single external to annotate the types
 
 ```reason
 [@bs.module "./path/to/Component.js"][@react.component]
-external make: (~name: string) => React.element = "";
+external make: (~name: string) => React.element = "default";
 ```
 
 This `[@react.component]` annotation will, again, generate both `make` and `makeProps` functions for you with the correct types. Here's an example of what this desugars to without `[@react.component]`:
@@ -101,7 +101,7 @@ This `[@react.component]` annotation will, again, generate both `make` and `make
 external makeProps: (~name: 'name, ~key: string=?, unit) => {. "name": 'name} = "";
 
 [@bs.module "./path/to/Component.js"]
-external make: ({. "name": string}) => React.element = "";
+external make: ({. "name": string}) => React.element = "default";
 ```
 
 ## Component Naming
