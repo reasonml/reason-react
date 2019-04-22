@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="ru"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Что это и для чего нужно · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="ReasonReact это более безопасный и простой способ разработки [React](https://reactjs.org/) компонентов, с использованием [Reason](http://reasonml.github.io/)."/><meta name="docsearch:language" content="ru"/><meta property="og:title" content="Что это и для чего нужно · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="ReasonReact это более безопасный и простой способ разработки [React](https://reactjs.org/) компонентов, с использованием [Reason](http://reasonml.github.io/)."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/ru"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/ru/installation" target="_self">Документация</a></li><li class=""><a href="/reason-react/docs/ru/playground" target="_self">Попробовать</a></li><li class=""><a href="/reason-react/docs/ru/simple" target="_self">Примеры</a></li><li class=""><a href="/reason-react/docs/ru/community" target="_self">Сообщество</a></li><li class=""><a href="/reason-react/blog/" target="_self">Блог</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>Русский</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/what-and-why">日本語</a></li><li><a href="/reason-react/docs/en/what-and-why">English</a></li><li><a href="/reason-react/docs/es-ES/what-and-why">Español</a></li><li><a href="/reason-react/docs/fr/what-and-why">Français</a></li><li><a href="/reason-react/docs/ko/what-and-why">한국어</a></li><li><a href="/reason-react/docs/pt-BR/what-and-why">Português (Brasil)</a></li><li><a href="/reason-react/docs/zh-CN/what-and-why">中文</a></li><li><a href="/reason-react/docs/zh-Hant/what-and-why">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Помочь в переводе</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Начало работы</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Начало работы</h3><ul><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/docs/ru/what-and-why">Что это и для чего нужно</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/installation">Установка</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/intro-example">Введение</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Core</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/components">Components</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/jsx">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/event">Событие</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/style">Стили</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/router">Router</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/dom">Работа с DOM</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">ReactJS Idioms Equivalents</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/invalid-prop-name">Недопустимое Prop имя</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/props-spread">Props Spread</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/component-as-prop">Компоненты и Свойства</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/ternary-shortcut">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/context-mixins">Context &amp; Mixins?</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/custom-class-component-property">Custom Class/Component свойство</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Record API [frozen api]</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/jsx-2">JSX Record API</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/creation-props-self">Создание, Props и Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/render">Render</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/callback-handlers">Callback обработчики</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/state-actions-reducer">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/lifecycles">Жизненный цикл</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/instance-variables">Instance Variables</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/react-ref">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/interop">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/clone-element">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/children">Потомки</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/subscriptions-helper">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/router-2">Router</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Вопросы и ответы</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/im-having-a-type-error">I&#x27;m Having a Type Error</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/record-field-send-handle-not-found">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/send-handle-callbacks-having-incompatible-types">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/i-really-need-feature-x-from-reactjs">Мне действительно нужна Особенность X из ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ru/element-type-is-invalid">Element Type is Invalid Runtime Error</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ru" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Что это и для чего нужно</h1></header><article><div><span><p>ReasonReact это более безопасный и простой способ разработки <a href="https://reactjs.org/">React</a> компонентов, с использованием <a href="http://reasonml.github.io/">Reason</a>.</p>
+<p>При поддержке самой последней системы типизации, выразительных особенностей языка и отличной совместимости с JS, ReasonReact дополняет своё API чертами ReactJS, такими как:</p>
+<ul>
+<li>Надёжность и статическая типизация</li>
+<li>Простота и краткость</li>
+<li>Знакомый код и простота встраивания в существующий ReactJS проект</li>
+<li>Хорошая продуманность (разработано создателями самого ReactJS)</li>
+</ul>
+<p>Часто говорят, что писать ReactJS по ощущениям, как &quot;просто использовать JavaScript&quot;. Это же применимо и к ReasonReact, но мы пошли дальше; написание путей (routing), управление данными, композиция компонентов и написание самих компонентов ощущается как &quot;просто использование Reason&quot;.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="/reason-react/docs/ru/installation"><span>Далее</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:ru"]}
+              });
+            </script></body></html>

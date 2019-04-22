@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="ja"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>JSX · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact has two different transforms that you can use for your components. This doc covers Version 3 of the transform which is very similar to how [the ReactJS JSX transform](https://reactjs.org/docs/introducing-jsx.html) works. To use it, put `{&quot;reason&quot;: {&quot;react-jsx&quot;: 3}` in your [`bsconfig.json`](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json))."/><meta name="docsearch:language" content="ja"/><meta property="og:title" content="JSX · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/index.html"/><meta property="og:description" content="Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact has two different transforms that you can use for your components. This doc covers Version 3 of the transform which is very similar to how [the ReactJS JSX transform](https://reactjs.org/docs/introducing-jsx.html) works. To use it, put `{&quot;reason&quot;: {&quot;react-jsx&quot;: 3}` in your [`bsconfig.json`](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json))."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/ja"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/ja/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/ja/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/ja/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/ja/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>日本語</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/en/jsx">English</a></li><li><a href="/reason-react/docs/es-ES/jsx">Español</a></li><li><a href="/reason-react/docs/fr/jsx">Français</a></li><li><a href="/reason-react/docs/ko/jsx">한국어</a></li><li><a href="/reason-react/docs/pt-BR/jsx">Português (Brasil)</a></li><li><a href="/reason-react/docs/ru/jsx">Русский</a></li><li><a href="/reason-react/docs/zh-CN/jsx">中文</a></li><li><a href="/reason-react/docs/zh-Hant/jsx">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Core</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/what-and-why">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/installation">Installation</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/intro-example">Intro Example</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Core</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/components">Components</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/docs/ja/jsx">JSX</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/event">Event</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/style">Style</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/router">Router</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/dom">Working with DOM</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">ReactJS Idioms Equivalents</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/invalid-prop-name">Invalid Prop Name</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/props-spread">Props Spread</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/component-as-prop">Component as Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/ternary-shortcut">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/context-mixins">Context &amp; Mixins?</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/custom-class-component-property">Custom Class/Component Property</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Record API [frozen api]</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/jsx-2">JSX Record API</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/creation-props-self">Creation, Props &amp; Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/render">Render</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/callback-handlers">Callback Handlers</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/state-actions-reducer">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/lifecycles">Lifecycles</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/instance-variables">Instance Variables</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/react-ref">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/interop">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/clone-element">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/children">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/subscriptions-helper">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/router-2">Router</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/im-having-a-type-error">I&#x27;m Having a Type Error</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/record-field-send-handle-not-found">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/send-handle-callbacks-having-incompatible-types">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/i-really-need-feature-x-from-reactjs">I Really Need Feature X From ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/ja/element-type-is-invalid">Element Type is Invalid Runtime Error</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/ja" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">JSX</h1></header><article><div><span><p>Reason comes with the <a href="https://reasonml.github.io/docs/en/jsx.html">JSX</a> syntax! ReasonReact has two different transforms that you can use for your components. This doc covers Version 3 of the transform which is very similar to how <a href="https://reactjs.org/docs/introducing-jsx.html">the ReactJS JSX transform</a> works. To use it, put <code>{&quot;reason&quot;: {&quot;react-jsx&quot;: 3}</code> in your <a href="https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt"><code>bsconfig.json</code></a> (schema <a href="http://bucklescript.github.io/bucklescript/docson/#build-schema.json">here</a>).</p>
+<p><a href="/reason-react/docs/ja/jsx-2">Version 2</a> is used to render Reducer style components which require special interop to handle the ways they differ from ReactJS components. If you are starting a new project you can stick to version 3 all the time.</p>
+<p>For help to migrate from version 2 to version 3, check the section <a href="https://reasonml.github.io/reason-react/docs/en/jsx.html#migrating-from-version-2-to-version-3">below</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="uncapitalized"></a><a href="#uncapitalized" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Uncapitalized</h2>
+<pre><code class="hljs css language-reason">&lt;div foo={bar}&gt; {child1} {child2} &lt;/div&gt;
+</code></pre>
+<p>transforms into</p>
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.createDOMElementVariadic(
+  <span class="hljs-string">"div"</span>,
+  ~props=<span class="hljs-module-identifier">ReactDOMRe</span>.domProps(~foo=bar, ()),
+  <span class="hljs-literal">[|</span>child1, child2<span class="hljs-literal">|]</span>
+);
+</code></pre>
+<p>which compiles to the JS code:</p>
+<pre><code class="hljs css language-js">React.createElement(<span class="hljs-string">'div'</span>, {<span class="hljs-attr">foo</span>: bar}, child1, child2)
+</code></pre>
+<p>Prop-less <code>&lt;div /&gt;</code> transforms into</p>
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.createDOMElementVariadic(
+  <span class="hljs-string">"div"</span>,
+  ~props=<span class="hljs-module-identifier">ReactDOMRe</span>.domProps(),
+  <span class="hljs-literal">[|</span><span class="hljs-literal">|]</span>
+);
+</code></pre>
+<p>Which compiles to</p>
+<pre><code class="hljs css language-js">React.createElement(<span class="hljs-string">'div'</span>, {})
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="todo-should-you-use-the-above-outside-the-ppx-probs-not"></a><a href="#todo-should-you-use-the-above-outside-the-ppx-probs-not" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>TODO - should you use the above outside the ppx? Probs not.</h2>
+<h2><a class="anchor" aria-hidden="true" id="capitalized"></a><a href="#capitalized" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Capitalized</h2>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyReasonComponent</span> key={a} ref={b} foo={bar} baz={qux}&gt; {child1} {child2} &lt;/<span class="hljs-module-identifier">MyReasonComponent</span>&gt;
+</code></pre>
+<p>transforms into</p>
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">React</span>.createElementVariadic(
+  <span class="hljs-module-identifier">MyReasonComponent</span>.make,
+  <span class="hljs-module-identifier">MyReasonComponent</span>.makeProps(
+    ~key=a,
+    ~ref=b,
+    ~foo=bar,
+    ~baz=qux,
+    ~children=<span class="hljs-module-identifier">React</span>.null,
+    ()
+  ),
+  <span class="hljs-literal">[|</span>child1, child2<span class="hljs-literal">|]</span>
+);
+</code></pre>
+<p>which compiles to</p>
+<pre><code class="hljs css language-js">React.createElement(
+  MyReasonComponent.make,
+  {
+    <span class="hljs-attr">key</span>: a,
+    <span class="hljs-attr">ref</span>: b,
+    <span class="hljs-attr">foo</span>: bar,
+    <span class="hljs-attr">baz</span>: qux,
+    <span class="hljs-attr">children</span>: <span class="hljs-literal">null</span>,
+  },
+  child1,
+  child2,
+);
+</code></pre>
+<p>Prop-less <code>&lt;MyReasonComponent /&gt;</code> transforms into</p>
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">React</span>.createElement(<span class="hljs-module-identifier">MyReasonComponent</span>.make, <span class="hljs-module-identifier">MyReasonComponent</span>.makeProps());
+</code></pre>
+<p>which compiles to</p>
+<pre><code class="hljs css language-js">React.createElement(MyReasonComponent.make, {});
+</code></pre>
+<p>The <code>make</code> above is exactly the same <code>make</code> function you've seen in the previous section.</p>
+<p><strong>Note how <code>ref</code> and <code>key</code> have been lifted out of the JSX call into the <code>ReasonReact.element</code> call</strong>. <code>ref</code> and <code>key</code> are reserved in ReasonReact, just like in ReactJS. <strong>Don't</strong> use them as props in your component!</p>
+<h2><a class="anchor" aria-hidden="true" id="fragment"></a><a href="#fragment" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Fragment</h2>
+<pre><code class="hljs css language-reason">&lt;&gt; child1 child2 &lt;/&gt;;
+</code></pre>
+<p>transforms into</p>
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.createElement(<span class="hljs-module-identifier">ReasonReact</span>.fragment, <span class="hljs-literal">[|</span>child1, child2<span class="hljs-literal">|]</span>);
+</code></pre>
+<p>Which compiles to</p>
+<pre><code class="hljs css language-js">React.createElement(React.Fragment, <span class="hljs-literal">undefined</span>, child1, child2);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="children"></a><a href="#children" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Children</h2>
+<p>ReasonReact children are <strong>fully typed</strong>, and you can pass any data structure to it (as long as the receiver component permits it). When you write:</p>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyReasonComponent</span>&gt; &lt;div /&gt; &lt;div /&gt; &lt;/<span class="hljs-module-identifier">MyReasonComponent</span>&gt;
+</code></pre>
+<p>You're effectively passing the array <code>[| &lt;div /&gt;, &lt;div /&gt; |]</code> to <code>MyReasonComponent</code>'s children. If you pass a single child like so:</p>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyReasonComponent</span>&gt; &lt;div /&gt; &lt;/<span class="hljs-module-identifier">MyReasonComponent</span>&gt;
+</code></pre>
+<p>We unwrap this for you automatically to just <code>&lt;div /&gt;</code> instead of an array of a single element.</p>
+<h2><a class="anchor" aria-hidden="true" id="migrating-from-version-2-to-version-3"></a><a href="#migrating-from-version-2-to-version-3" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Migrating from version 2 to version 3</h2>
+<p>There are many ReasonReact applications, so it is hard to define &quot;The One True&quot; migration strategy for them all.</p>
+<p>Depending on the size and nature of your application there are two options available to migrate from JSX version 2 to version 3.</p>
+<h3><a class="anchor" aria-hidden="true" id="application-level"></a><a href="#application-level" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Application level</h3>
+<p>By adding <code>{&quot;reason&quot;: {&quot;react-jsx&quot;: 3}</code> in your <a href="https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt"><code>bsconfig.json</code></a>.</p>
+<p>This approach requires that all components in the application must be made compatible with version 3 of JSX at once, so it will be a better fit for smaller apps with a reduced number of components, where all of them can be migrated to version 3 in one fell swoop.</p>
+<h3><a class="anchor" aria-hidden="true" id="file-level"></a><a href="#file-level" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>File level</h3>
+<p>For larger applications, it might not be possible to migrate all components at once. In these cases, a per-file migration is also possible.</p>
+<p>A file can be configured to use version 3 of the transform by adding <code>[@bs.config {jsx: 3}];</code> at the top of the file.</p>
+<p>The per-file configuration allows to mix, in the same application, components compatible with either of both versions of the JSX transforms. However, the restriction is that all the components used in a file will have to be compatible with the JSX version specified for that file.</p>
+<p>For example, if a file contains the following code:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-comment">/* User.re */</span>
+<span class="hljs-attribute">[@bs.config {jsx: 3}]</span>;
+
+<span class="hljs-attribute">[@react.component]</span>
+<span class="hljs-keyword">let</span> make = (~id) =&gt; {
+  &lt;<span class="hljs-module-identifier">Profile</span>&gt;
+    &lt;<span class="hljs-module-identifier">UserDetails</span> id /&gt;
+  &lt;/<span class="hljs-module-identifier">Profile</span>&gt;;
+};
+</code></pre>
+<p>Then <code>Profile</code> and <code>UserDetails</code> components will have to be compatible with the version 3 of JSX. Or alternatively, if they are using version 2, they can be wrapped with the function <code>ReasonReactCompat.wrapReasonReactForReact</code>.</p>
+<h4><a class="anchor" aria-hidden="true" id="from-primitives-to-more-complex-components"></a><a href="#from-primitives-to-more-complex-components" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>From primitives to more complex components</h4>
+<p>As all usages of any component in a file need to be migrated to the same version of JSX, one natural way to tackle large migrations at the file level is to start converting the most primitive components to version 3, as they generally render elements of a reduced number of components, or host elements like <code>&lt;div /&gt;</code>. Once the most simple components are done, one can proceed with the most complex ones.</p>
+<p>While this process is ongoing, both versions of JSX need to coexist. For example, a component <code>Banner</code> compatible with version 2 might need to use a component <code>Image</code> that is compatible with version 3. <code>Image</code> can be made compatible by leveraging <code>ReasonReactCompat.wrapReactForReasonReact</code>:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-comment">/* In Image.re */</span>
+<span class="hljs-attribute">[@bs.config {jsx: 3}]</span>;
+
+<span class="hljs-attribute">[@react.component]</span>
+<span class="hljs-keyword">let</span> make = (~src) =&gt; &lt;img src /&gt;;
+
+<span class="hljs-keyword">module</span> <span class="hljs-module-identifier">Jsx2</span> = {
+  <span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Image"</span>);
+  <span class="hljs-comment">/* `children` is not labelled, as it is a regular parameter in version 2 of JSX */</span>
+  <span class="hljs-keyword">let</span> make = (~src, children) =&gt;
+    <span class="hljs-module-identifier">ReasonReactCompat</span>.wrapReactForReasonReact(
+      make,
+      makeProps(~src, ()),
+      children,
+    );
+};
+</code></pre>
+<p>Then, <code>Image</code> can be used from <code>Banner</code>:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-comment">/* In Banner.re */</span>
+<span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.statelessComponent(<span class="hljs-string">"Banner"</span>);
+
+<span class="hljs-keyword">let</span> make = _children =&gt; {
+  <span class="hljs-operator">...</span>component,
+  render: _self =&gt; &lt;<span class="hljs-module-identifier">Image</span>.<span class="hljs-constructor">Jsx2</span> src=<span class="hljs-string">"./cat.gif"</span> /&gt;,
+};
+</code></pre>
+<p>Once all components are using version 3, there is no more need to keep the <code>[@bs.config {jsx: 3}];</code> annotations at the top of each file, and they can be replaced by bumping the JSX version in the <code>bsconfig.json</code> file to <code>{&quot;reason&quot;: {&quot;react-jsx&quot;: 3}</code>.</p>
+<h3><a class="anchor" aria-hidden="true" id="upgrade-script"></a><a href="#upgrade-script" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Upgrade script</h3>
+<p>A migration script <a href="https://github.com/chenglou/upgrade-reason-react#installation">is provided</a> to facilitate the task to convert components to version 3. It will wrap existing ReasonReact components as if they are Hooks components. This script will not attempt to re-write your logic as hooks because this is often a complicated process and it is not guaranteed to be correct. Please always inspect and test the work of the migration script to make sure it does what you are expecting.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/ja/components"><span class="arrow-prev">← </span><span>Previous</span></a><a class="docs-next button" href="/reason-react/docs/ja/event"><span>Next</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav docOnPageNav"><ul class="toc-headings"><li><a href="#uncapitalized">Uncapitalized</a></li><li><a href="#todo-should-you-use-the-above-outside-the-ppx-probs-not">TODO - should you use the above outside the ppx? Probs not.</a></li><li><a href="#capitalized">Capitalized</a></li><li><a href="#fragment">Fragment</a></li><li><a href="#children">Children</a></li><li><a href="#migrating-from-version-2-to-version-3">Migrating from version 2 to version 3</a><ul class="toc-headings"><li><a href="#application-level">Application level</a></li><li><a href="#file-level">File level</a></li><li><a href="#upgrade-script">Upgrade script</a></li></ul></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:ja"]}
+              });
+            </script></body></html>
