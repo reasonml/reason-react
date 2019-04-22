@@ -126,4 +126,4 @@ module Nested = {
 };
 ```
 
-If you need a dynamic name for higher-order components or you would like to set your own name you can use `React.setDisplayName(make, "NameThatThisShouldBeInDevTools");`.
+If you need a dynamic name for higher-order components or you would like to set your own name you can use `React.setDisplayName(make, "NameThatShouldBeInDevTools");`.
