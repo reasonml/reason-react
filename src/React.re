@@ -166,6 +166,14 @@ external useEffect4: (unit => option(unit => unit), ('a, 'b, 'c, 'd)) => unit =
 external useEffect5:
   (unit => option(unit => unit), ('a, 'b, 'c, 'd, 'e)) => unit =
   "useEffect";
+[@bs.module "react"]
+external useEffect6:
+  (unit => option(unit => unit), ('a, 'b, 'c, 'd, 'e, 'f)) => unit =
+  "useEffect";
+[@bs.module "react"]
+external useEffect7:
+  (unit => option(unit => unit), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => unit =
+  "useEffect";
 
 [@bs.module "react"]
 external useLayoutEffect:
@@ -183,6 +191,32 @@ external useLayoutEffect1:
 [@bs.module "react"]
 external useLayoutEffect2:
   ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
+  "useLayoutEffect";
+[@bs.module "react"]
+external useLayoutEffect3:
+  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
+  "useLayoutEffect";
+[@bs.module "react"]
+external useLayoutEffect4:
+  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
+  "useLayoutEffect";
+[@bs.module "react"]
+external useLayoutEffect5:
+  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
+  unit =
+  "useLayoutEffect";
+[@bs.module "react"]
+external useLayoutEffect6:
+  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+  unit =
+  "useLayoutEffect";
+[@bs.module "react"]
+external useLayoutEffect7:
+  (
+    [@bs.uncurry] (unit => option(unit => unit)),
+    ('a, 'b, 'c, 'd, 'e, 'f, 'g)
+  ) =>
+  unit =
   "useLayoutEffect";
 
 [@bs.module "react"]
@@ -211,6 +245,10 @@ external useMemo5:
 external useMemo6:
   ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f)) => 'any =
   "useMemo";
+[@bs.module "react"]
+external useMemo7:
+  ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'any =
+  "useMemo";
 
 /* This is used as return values  */
 type callback('input, 'output) = 'input => 'output;
@@ -235,6 +273,26 @@ external useCallback2:
 [@bs.module "react"]
 external useCallback3:
   ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
+  callback('input, 'output) =
+  "useCallback";
+[@bs.module "react"]
+external useCallback4:
+  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
+  callback('input, 'output) =
+  "useCallback";
+[@bs.module "react"]
+external useCallback5:
+  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
+  callback('input, 'output) =
+  "useCallback";
+[@bs.module "react"]
+external useCallback6:
+  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+  callback('input, 'output) =
+  "useCallback";
+[@bs.module "react"]
+external useCallback7:
+  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
   callback('input, 'output) =
   "useCallback";
 
@@ -268,6 +326,56 @@ external useImperativeHandle2:
     Js.Nullable.t(Ref.t('value)),
     [@bs.uncurry] (unit => 'value),
     ('a, 'b)
+  ) =>
+  unit =
+  "useImperativeHandle";
+
+[@bs.module "react"]
+external useImperativeHandle3:
+  (
+    Js.Nullable.t(Ref.t('value)),
+    [@bs.uncurry] (unit => 'value),
+    ('a, 'b, 'c)
+  ) =>
+  unit =
+  "useImperativeHandle";
+
+[@bs.module "react"]
+external useImperativeHandle4:
+  (
+    Js.Nullable.t(Ref.t('value)),
+    [@bs.uncurry] (unit => 'value),
+    ('a, 'b, 'c, 'd)
+  ) =>
+  unit =
+  "useImperativeHandle";
+
+[@bs.module "react"]
+external useImperativeHandle5:
+  (
+    Js.Nullable.t(Ref.t('value)),
+    [@bs.uncurry] (unit => 'value),
+    ('a, 'b, 'c, 'd, 'e)
+  ) =>
+  unit =
+  "useImperativeHandle";
+
+[@bs.module "react"]
+external useImperativeHandle6:
+  (
+    Js.Nullable.t(Ref.t('value)),
+    [@bs.uncurry] (unit => 'value),
+    ('a, 'b, 'c, 'd, 'e, 'f)
+  ) =>
+  unit =
+  "useImperativeHandle";
+
+[@bs.module "react"]
+external useImperativeHandle7:
+  (
+    Js.Nullable.t(Ref.t('value)),
+    [@bs.uncurry] (unit => 'value),
+    ('a, 'b, 'c, 'd, 'e, 'f, 'g)
   ) =>
   unit =
   "useImperativeHandle";
