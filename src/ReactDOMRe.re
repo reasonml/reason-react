@@ -37,6 +37,41 @@ let renderToElementWithId = (reactElement, id) =>
   | Some(element) => render(reactElement, element)
   };
 
+module Unstable = {
+  type root;
+
+  [@bs.module "react-dom"]
+  external createRoot: Dom.element => root = "unstable_createRoot";
+
+  [@bs.send] external render: (root, React.element) => unit = "";
+
+  let createRootWithClassName = className =>
+    switch (_getElementsByClassName(className)) {
+    | [||] =>
+      raise(
+        Invalid_argument(
+          "ReactDOMRe.Unstable.createRootWithClassName: no element of class "
+          ++ className
+          ++ " found in the HTML.",
+        ),
+      )
+    | elements => createRoot(Array.unsafe_get(elements, 0))
+    };
+
+  let createRootWithId = id =>
+    switch (_getElementById(id)) {
+    | None =>
+      raise(
+        Invalid_argument(
+          "ReactDOMRe.Unstable.createRootWithId: no element of id "
+          ++ id
+          ++ " found in the HTML.",
+        ),
+      )
+    | Some(element) => createRoot(element)
+    };
+};
+
 [@bs.val] [@bs.module "react-dom"]
 external hydrate: (React.element, Dom.element) => unit = "hydrate";
 
