@@ -27,6 +27,15 @@ yarn add bs-platform --dev --exact
 yarn add reason-react --exact
 ```
 
+Add scripts to package.json:
+
+```json
+"scripts": {
+  "re:build": "bsb -make-world -clean-world",
+  "re:watch": "bsb -make-world -clean-world -w"
+}
+```
+
 Create a bsconfig.json file in the root of your project with the following. You camn change the name.
 
 ```json
