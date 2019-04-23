@@ -22,6 +22,8 @@ It compiles to straightforward JS files, so you can open `index.html` directly f
 
 ## Adding Reason + Bucklescript to an existing project
 
+Install the following dependencies:
+
 ```sh
 yarn add bs-platform --dev --exact
 yarn add reason-react --exact
