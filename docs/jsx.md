@@ -213,6 +213,43 @@ let make = _children => {
 
 Once all components are using version 3, there is no more need to keep the `[@bs.config {jsx: 3}];` annotations at the top of each file, and they can be replaced by bumping the JSX version in the `bsconfig.json` file to `{"reason": {"react-jsx": 3}`.
 
+### Children
+
+Some components pass down `children` transparently, like:
+
+```reason
+/* In SomeButton.re */
+[@react.component]
+let make = (~children) => <button> children </button>;
+```
+
+If this kind of components need to expose a `Jsx2` module for backwards compatibility, like seen above, you might run into errors like:
+
+```
+This expression has type array('a)
+but an expression was expected of type
+ReasonReact.reactElement = React.element
+```
+
+In these cases, it is helpful to  wrap `children` with `React.array` inside the `Jsx2` module, like:
+
+```reason
+/* In SomeButton.re */
+module Jsx2 = {
+  let component = ReasonReact.statelessComponent(__MODULE__);
+  let make = children => {
+    let children = React.array(children);
+    ReasonReactCompat.wrapReactForReasonReact(
+      make,
+      makeProps(~children, ()),
+      children,
+    );
+  };
+};
+```
+
+The reason behind those errors is that version 3 of JSX doesn't automatically wrap the `children` passed to an element in an array, like version 2 used to do. Using `React.array` in the `Jsx2` module is a way to provide a consistent behavior for usages of the component in both versions of the JSX transform.
+
 ### Upgrade script
 
 A migration script [is provided](https://github.com/chenglou/upgrade-reason-react#installation) to facilitate the task to convert components to version 3. It will wrap existing ReasonReact components as if they are Hooks components. This script will not attempt to re-write your logic as hooks because this is often a complicated process and it is not guaranteed to be correct. Please always inspect and test the work of the migration script to make sure it does what you are expecting.
