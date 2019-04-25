@@ -56,7 +56,7 @@
 <span class="hljs-keyword">external</span> makeProps: (~name: 'name, ~key: string=?, unit) =&gt; {. <span class="hljs-string">"name"</span>: 'name} = <span class="hljs-string">""</span>;
 
 <span class="hljs-keyword">let</span> make = (<span class="hljs-constructor">Props</span>) =&gt; {
-  <span class="hljs-keyword">let</span> name = <span class="hljs-constructor">Props</span>##make;
+  <span class="hljs-keyword">let</span> name = <span class="hljs-constructor">Props</span>##name;
   <span class="hljs-keyword">let</span> (count, setCount) = <span class="hljs-module-identifier">React</span>.useState(() =&gt; <span class="hljs-number">0</span>);
 
   &lt;div&gt;
