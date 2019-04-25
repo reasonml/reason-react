@@ -46,8 +46,6 @@ Which compiles to
 React.createElement('div', {})
 ```
 
-## TODO - should you use the above outside the ppx? Probs not.
-
 ## Capitalized
 
 ```reason
