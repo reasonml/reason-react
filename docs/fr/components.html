@@ -81,7 +81,7 @@
 };
 </code></pre>
 <p>Le composant ci-dessus pourrait être appelé comme ceci :</p>
-<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">ComponentTakesChildren</span>&gt;
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">ComponentTakesChildren</span> name=<span class="hljs-string">"Imani"</span>&gt;
   &lt;div&gt; {<span class="hljs-module-identifier">React</span>.string(<span class="hljs-string">"Effectively the child."</span>)} &lt;/div&gt;
 &lt;/<span class="hljs-module-identifier">ComponentTakesChildren</span>&gt;
 </code></pre>
@@ -96,7 +96,7 @@
 
 <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Regina"</span> /&gt;</span>
 </span></code></pre>
-<p>It also works seemlessly with <a href="https://github.com/cristianoc/genType"><code>[@genType]</code></a> annotations and can be integrated with safety into TypeScript and Flow applications.</p>
+<p>It also works seamlessly with <a href="https://github.com/cristianoc/genType"><code>[@genType]</code></a> annotations and can be integrated with safety into TypeScript and Flow applications.</p>
 <p>Using a component written in JS requires a single external to annotate the types it takes.</p>
 <pre><code class="hljs css language-reason"><span class="hljs-attribute">[@bs.module "./path/to/Component.js"]</span><span class="hljs-attribute">[@react.component]</span>
 <span class="hljs-keyword">external</span> make: (~name: string) =&gt; <span class="hljs-module-identifier">React</span>.element = <span class="hljs-string">"default"</span>;
