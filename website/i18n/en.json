@@ -98,6 +98,9 @@
       "record-field-send-handle-not-found": {
         "title": "Record Field send/handle Not Found"
       },
+      "refs": {
+        "title": "Refs in React"
+      },
       "render": {
         "title": "Render"
       },
@@ -144,7 +147,7 @@
       "Getting Started": "Getting Started",
       "Core": "Core",
       "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
-      "Record API [deprecated]": "Record API [deprecated]",
+      "Record API [frozen api]": "Record API [frozen api]",
       "FAQ": "FAQ",
       "Code Snippets": "Code Snippets",
       "Community": "Community",

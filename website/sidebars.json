@@ -11,7 +11,8 @@
       "event",
       "style",
       "router",
-      "dom"
+      "dom",
+      "refs"
     ],
     "ReactJS Idioms Equivalents": [
       "invalid-prop-name",
