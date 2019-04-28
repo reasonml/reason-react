@@ -85,7 +85,7 @@ const MyComponent = require('./path/to/Component.bs.js').make;
 <MyComponent name="Regina" />
 ```
 
-It also works seemlessly with [`[@genType]`](https://github.com/cristianoc/genType) annotations and can be integrated with safety into TypeScript and Flow applications.
+It also works seamlessly with [`[@genType]`](https://github.com/cristianoc/genType) annotations and can be integrated with safety into TypeScript and Flow applications.
 
 Using a component written in JS requires a single external to annotate the types it takes.
 
