@@ -60,7 +60,7 @@ module ComponentTakesChildren = {
 The component above could be called like this:
 
 ```reason
-<ComponentTakesChildren>
+<ComponentTakesChildren name="Imani">
   <div> {React.string("Effectively the child.")} </div>
 </ComponentTakesChildren>
 ```
