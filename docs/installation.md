@@ -38,7 +38,7 @@ Add scripts to package.json:
 }
 ```
 
-Create a bsconfig.json file in the root of your project with the following. You camn change the name.
+Create a bsconfig.json file in the root of your project with the following. You can change the name.
 
 ```json
 {
