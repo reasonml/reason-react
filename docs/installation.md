@@ -19,3 +19,50 @@ npm run webpack
 BuckleScript's [bsb](https://bucklescript.github.io/docs/en/build-overview.html) build system has an `init` command that generates a project template. The `react` theme offers a lightweight solution optimized for low learning overhead and ease of integration into an existing project.
 
 It compiles to straightforward JS files, so you can open `index.html` directly from the file system. No server needed.
+
+## Adding Reason + Bucklescript to an existing project
+
+Install the following dependencies:
+
+```sh
+yarn add bs-platform --dev --exact
+yarn add reason-react --exact
+```
+
+Add scripts to package.json:
+
+```json
+"scripts": {
+  "re:build": "bsb -make-world -clean-world",
+  "re:watch": "bsb -make-world -clean-world -w"
+}
+```
+
+Create a bsconfig.json file in the root of your project with the following. You camn change the name.
+
+```json
+{
+  "name": "reason-react",
+  "reason": { "react-jsx": 3 },
+  "bsc-flags": ["-bs-super-errors"],
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "namespace": true,
+  "bs-dependencies": [
+    "reason-react"
+  ],
+  "ppx-flags": [],
+  "refmt": 3
+}
+```
