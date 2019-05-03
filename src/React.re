@@ -2,6 +2,8 @@ type element;
 
 [@bs.val] external null: element = "null";
 
+external float: float => element = "%identity";
+external int: int => element = "%identity";
 external string: string => element = "%identity";
 
 external array: array(element) => element = "%identity";
