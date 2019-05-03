@@ -42,7 +42,7 @@ Create a bsconfig.json file in the root of your project with the following. You 
 
 ```json
 {
-  "name": "reason-react",
+  "name": "your-project-name",
   "reason": { "react-jsx": 3 },
   "bsc-flags": ["-bs-super-errors"],
   "sources": [
