@@ -140,7 +140,7 @@ For example, let's say we have a `List` v2 component:
 /* List.re */
 let component = ReasonReact.statelessComponent("List");
 
-let make = (~visible, children: array(ReasonReact.reactElement)) => {
+let make = (~visible, children) => {
   ...component,
   render: _self => visible ? <div> ...children </div> : ReasonReact.null,
 };
