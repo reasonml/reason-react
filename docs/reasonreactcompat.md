@@ -2,14 +2,14 @@
 title: ReasonReactCompat: migrating to 0.7.0 and JSX v3
 ---
 
-In version 0.7.0, two large changes, both of them related, were introduced:
+In version 0.7.0, two large changes were introduced:
 
 - Support for React hooks
 - A new JSX version (v3)
 
 You can read more in the release [blog post](https://reasonml.github.io/reason-react/blog/2019/04/10/react-hooks).
 
-To enable the progressive migrations of existing ReasonReact applications to the new API and JSX, there is a module called `ReasonReactCompat`.
+To enable the progressive migrations of existing ReasonReact applications to the new API and JSX version, a new module called `ReasonReactCompat` was added to ReasonReact.
 
 ## React and ReasonReact modules
 
@@ -173,7 +173,7 @@ module Jsx3 = {
 };
 ```
 
-Because v3 components using `List.Jsx3` can decide whether to pass `children` or not, we have to account for those cases by setting `children` as optional labelled argument in `makeProps`. After that, we have to also convert `children` to an array inside `make` before passing control over to the v2 implementation.
+Because v3 components using `List.Jsx3` can decide whether to pass `children` or not, we have to account for those cases by setting `children` as optional labelled argument in `makeProps`. After that, we also have convert `children` to an array inside `make` before passing control over to the v2 implementation.
 
 ## Migrating an application to v0.7.0 and JSX v3
 
