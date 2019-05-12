@@ -123,6 +123,11 @@ module Suspense = {
 external useState:
   ([@bs.uncurry] (unit => 'state)) => ('state, ('state => 'state) => unit) =
   "";
+[@bs.module "react"]
+external useStateValue: 'state => ('state, 'state => unit) = "useState";
+[@bs.module "react"]
+external useStatePrevious: 'state => ('state, ('state => 'state) => unit) =
+  "useState";
 
 [@bs.module "react"]
 external useReducer:
