@@ -21,8 +21,8 @@ To enable the progressive migrations of existing ReasonReact applications to the
 JSX versions 2 and 3 are coupled with the corresponding modules `ReasonReact` and `React`. In other words: a component created using `ReasonReact` module will require JSX v2, and a component built using `React` module will require JSX v3.
 
 For clarity and brevity, in the rest of the section we will refer to each group as follows:
-- `ReasonReact` components (< 0.0.7) that use JSX v2, as **v2 components**
-- `React` components (>= 0.0.7) that use JSX v3, as **v3 components**.
+- `ReasonReact` components (< 0.7.0) that use JSX v2, as **v2 components**
+- `React` components (>= 0.7.0) that use JSX v3, as **v3 components**.
 
 ## `wrapReactForReasonReact`: Wrapping a v3 component to be used from a v2 component
 
@@ -121,12 +121,12 @@ We can follow the same approach as above and add a `Jsx3` module to the same fil
 ```reason
 /* Still in Text.re */
 module Jsx3 = {
+  [@bs.obj] external makeProps: (~text: string, unit) => _ = "";
   let make =
     ReasonReactCompat.wrapReasonReactForReact(
       ~component, (reactProps: {. "text": string}) =>
       make(~text=reactProps##text, [||])
     );
-  [@bs.obj] external makeProps: (~text: string, unit) => _ = "";
 };
 ```
 
@@ -151,6 +151,8 @@ The `Jsx3` compat module will look like:
 ```reason
 /* Still in List.re */
 module Jsx3 = {
+  [@bs.obj]
+  external makeProps: (~visible: bool, ~children: 'children=?, unit) => _ = "";
   let make =
     ReasonReactCompat.wrapReasonReactForReact(
       ~component,
@@ -168,8 +170,6 @@ module Jsx3 = {
         ->Belt.Option.mapWithDefault([||], c => [|c|]),
       )
     );
-  [@bs.obj]
-  external makeProps: (~visible: bool, ~children: 'children=?, unit) => _ = "";
 };
 ```
 
