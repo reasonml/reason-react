@@ -157,22 +157,30 @@ external useEffect2:
   ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
   "useEffect";
 [@bs.module "react"]
-external useEffect3: (unit => option(unit => unit), ('a, 'b, 'c)) => unit =
+external useEffect3:
+  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
   "useEffect";
 [@bs.module "react"]
-external useEffect4: (unit => option(unit => unit), ('a, 'b, 'c, 'd)) => unit =
+external useEffect4:
+  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
   "useEffect";
 [@bs.module "react"]
 external useEffect5:
-  (unit => option(unit => unit), ('a, 'b, 'c, 'd, 'e)) => unit =
+  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
+  unit =
   "useEffect";
 [@bs.module "react"]
 external useEffect6:
-  (unit => option(unit => unit), ('a, 'b, 'c, 'd, 'e, 'f)) => unit =
+  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+  unit =
   "useEffect";
 [@bs.module "react"]
 external useEffect7:
-  (unit => option(unit => unit), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => unit =
+  (
+    [@bs.uncurry] (unit => option(unit => unit)),
+    ('a, 'b, 'c, 'd, 'e, 'f, 'g)
+  ) =>
+  unit =
   "useEffect";
 
 [@bs.module "react"]
