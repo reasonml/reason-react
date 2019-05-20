@@ -46,7 +46,7 @@ let make = () => {
 };
 ```
 
-Please read the [new documentation](https://reasonml.github.io/reason-react/docs/en/components) for an in-depth explaination of how to write these components and how they compile to existing ReactJS code.
+Please read the [new documentation](https://reasonml.github.io/reason-react/docs/en/components) for an in-depth explanation of how to write these components and how they compile to existing ReactJS code.
 
 These components make use of a [new jsx](https://reasonml.github.io/reason-react/docs/en/jsx) implementation that desugars exactly to `React.createElement` calls. In order to use these new components with JSX you will need to use `[@bs.config {jsx: 3}]` at the top of your file and use `^5.0.4` or `^6.0.1` BuckleScript which supports this new version. If you are in a greenfield project or you have fully converted, you can also [change the JSX version](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) in your `bsconfig.json` file to `3` and drop the in-file annotations.
 
