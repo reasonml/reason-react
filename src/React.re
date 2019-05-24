@@ -390,3 +390,10 @@ external useImperativeHandle7:
 
 [@bs.set]
 external setDisplayName: (component('props), string) => unit = "displayName";
+
+[@bs.get]
+external getName: component('props) => Js.undefined(string) = "name";
+
+[@bs.get]
+external getDisplayName: component('props) => Js.undefined(string) =
+  "displayName";
