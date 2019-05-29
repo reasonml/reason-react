@@ -2562,12 +2562,10 @@ module Style = {
     style =
     "";
   /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
-  let combine: (style, style) => style =
-    (a, b) => {
-      let a: Js.t({..}) = Obj.magic(a);
-      let b: Js.t({..}) = Obj.magic(b);
-      Js.Obj.assign(Js.Obj.assign(Js.Obj.empty(), a), b) |> Obj.magic;
-    };
+  [@bs.val]
+  external combine: ([@bs.as {json|{}|json}] _, style, style) => style =
+    "Object.assign";
+
   let unsafeAddProp: (style, string, string) => style =
     (style, property, value) => {
       let propStyle: style = {
@@ -2577,4 +2575,9 @@ module Style = {
       };
       combine(style, propStyle);
     };
+
+  [@bs.val]
+  external unsafeAddStyle:
+    ([@bs.as {json|{}|json}] _, style, Js.t({..})) => style =
+    "Object.assign";
 };
