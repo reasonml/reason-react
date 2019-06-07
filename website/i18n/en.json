@@ -131,6 +131,9 @@
       "ternary-shortcut": {
         "title": "Ternary Shortcut"
       },
+      "use-state-use-effect": {
+        "title": "Use State and Use Effect"
+      },
       "what-and-why": {
         "title": "What & Why"
       }
