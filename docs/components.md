@@ -77,6 +77,8 @@ You don't need to use the `[@react.component]` declaration to write components. 
 
 ## Interop
 
+### Export to JS
+
 The make function above is a normal React component, you can use it today with code like:
 
 ```js
@@ -84,6 +86,8 @@ const MyComponent = require('./path/to/Component.bs.js').make;
 
 <MyComponent name="Regina" />
 ```
+
+### Import from JS
 
 It also works seamlessly with [`[@genType]`](https://github.com/cristianoc/genType) annotations and can be integrated with safety into TypeScript and Flow applications.
 
@@ -103,6 +107,8 @@ external makeProps: (~name: 'name, ~key: string=?, unit) => {. "name": 'name} = 
 [@bs.module "./path/to/Component.js"]
 external make: ({. "name": string}) => React.element = "default";
 ```
+
+**Note on `default`:** to understand what `default` means, see [the BuckleScript docs](https://bucklescript.github.io/docs/en/import-export#import-an-es6-default-value).
 
 ## Component Naming
 
