@@ -10,7 +10,7 @@ If you're accessing fields on your event object, like `event.target.value`, you'
 ReactEvent.Form.target(event)##value;
 ```
 
-Or, equivalently, using fast pipe:
+Or, equivalently, using the pipe first operator:
 
 ```reason
 event->ReactEvent.Form.target##value;
