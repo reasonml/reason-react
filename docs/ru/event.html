@@ -41,7 +41,7 @@
 <p>If you're accessing fields on your event object, like <code>event.target.value</code>, you'd use a combination of a <code>ReactDOMRe</code> helper and <a href="https://bucklescript.github.io/docs/en/object.html#accessors">BuckleScript's <code>##</code> object access FFI</a>:</p>
 <pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactEvent</span>.<span class="hljs-module-identifier">Form</span>.target(event)##value;
 </code></pre>
-<p>Or, equivalently, using fast pipe:</p>
+<p>Or, equivalently, using the pipe first operator:</p>
 <pre><code class="hljs css language-reason">event<span class="hljs-operator">-&gt;</span><span class="hljs-module-identifier">ReactEvent</span>.<span class="hljs-module-identifier">Form</span>.target##value;
 </code></pre>
 <p>More info on the <code>ReactDOMRe</code> module below in the <a href="/reason-react/docs/ru/dom">Working with DOM</a> section.</p>

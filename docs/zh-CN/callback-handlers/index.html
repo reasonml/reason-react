@@ -72,7 +72,7 @@ The Record API is in feature-freeze. For the newest features and better support 
 <span class="hljs-keyword">let</span> make = (~name, ~onClick, _children) =&gt; {
   <span class="hljs-keyword">let</span> click = (event, self) =&gt; {
     onClick(event);
-    <span class="hljs-module-identifier">Js</span>.log(self.state);
+    <span class="hljs-module-identifier">Js</span>.log(self.<span class="hljs-module-identifier">ReasonReact</span>.state);
   };
   {
     <span class="hljs-operator">...</span>component,
