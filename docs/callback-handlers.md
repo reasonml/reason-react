@@ -53,7 +53,7 @@ let component = /* ... */;
 let make = (~name, ~onClick, _children) => {
   let click = (event, self) => {
     onClick(event);
-    Js.log(self.state);
+    Js.log(self.ReasonReact.state);
   };
   {
     ...component,
