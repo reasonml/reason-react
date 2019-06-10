@@ -343,7 +343,13 @@ type domProps = {
   [@bs.optional]
   manifest: string, /* uri */
   [@bs.optional]
-  max: string, /* should be int or Js.Date.t */
+  max: string,
+  [@bs.optional] [@bs.as "max"]
+  maxDate: Js.Date.t,
+  [@bs.optional] [@bs.as "max"]
+  maxFloat: float,
+  [@bs.optional] [@bs.as "max"]
+  maxInt: int,
   [@bs.optional]
   maxLength: int,
   [@bs.optional]
@@ -353,7 +359,13 @@ type domProps = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: int,
+  min: string,
+  [@bs.optional] [@bs.as "min"]
+  minDate: Js.Date.t,
+  [@bs.optional] [@bs.as "min"]
+  minFloat: float,
+  [@bs.optional] [@bs.as "min"]
+  minInt: int,
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -422,7 +434,13 @@ type domProps = {
   [@bs.optional]
   start: int,
   [@bs.optional]
-  step: float,
+  step: string,
+  [@bs.optional] [@bs.as "step"]
+  stepInt: int,
+  [@bs.optional] [@bs.as "step"]
+  stepFloat: float,
+  [@bs.optional] [@bs.as "step"]
+  stepDate: float,
   [@bs.optional]
   summary: string, /* deprecated */
   [@bs.optional]
@@ -433,6 +451,12 @@ type domProps = {
   useMap: string,
   [@bs.optional]
   value: string,
+  [@bs.optional] [@bs.as "value"]
+  valueInt: int,
+  [@bs.optional] [@bs.as "value"]
+  valueFloat: float,
+  [@bs.optional] [@bs.as "value"]
+  valueDate: Js.Date.t,
   [@bs.optional]
   width: string, /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
   [@bs.optional]
@@ -1346,7 +1370,13 @@ type props = {
   [@bs.optional]
   manifest: string, /* uri */
   [@bs.optional]
-  max: string, /* should be int or Js.Date.t */
+  max: string,
+  [@bs.optional] [@bs.as "max"]
+  maxDate: Js.Date.t,
+  [@bs.optional] [@bs.as "max"]
+  maxFloat: float,
+  [@bs.optional] [@bs.as "max"]
+  maxInt: int,
   [@bs.optional]
   maxLength: int,
   [@bs.optional]
@@ -1356,7 +1386,13 @@ type props = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: int,
+  min: string,
+  [@bs.optional] [@bs.as "min"]
+  minDate: Js.Date.t,
+  [@bs.optional] [@bs.as "min"]
+  minFloat: float,
+  [@bs.optional] [@bs.as "min"]
+  minInt: int,
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -1425,7 +1461,13 @@ type props = {
   [@bs.optional]
   start: int,
   [@bs.optional]
-  step: float,
+  step: string,
+  [@bs.optional] [@bs.as "step"]
+  stepInt: int,
+  [@bs.optional] [@bs.as "step"]
+  stepFloat: float,
+  [@bs.optional] [@bs.as "step"]
+  stepDate: float,
   [@bs.optional]
   summary: string, /* deprecated */
   [@bs.optional]
@@ -1436,6 +1478,12 @@ type props = {
   useMap: string,
   [@bs.optional]
   value: string,
+  [@bs.optional] [@bs.as "value"]
+  valueInt: int,
+  [@bs.optional] [@bs.as "value"]
+  valueFloat: float,
+  [@bs.optional] [@bs.as "value"]
+  valueDate: Js.Date.t,
   [@bs.optional]
   width: string, /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
   [@bs.optional]
