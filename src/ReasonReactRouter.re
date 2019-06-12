@@ -7,7 +7,7 @@ external addEventListener: (Dom.window, string, unit => unit) => unit =
 
 [@bs.send]
 external removeEventListener: (Dom.window, string, unit => unit) => unit =
-  "";
+  "removeEventListener";
 
 [@bs.send]
 external dispatchEvent: (Dom.window, Dom.event) => unit = "dispatchEvent";
@@ -22,13 +22,13 @@ external dispatchEvent: (Dom.window, Dom.event) => unit = "dispatchEvent";
 external pushState:
   (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
   unit =
-  "";
+  "pushState";
 
 [@bs.send]
 external replaceState:
   (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
   unit =
-  "";
+  "replaceState";
 
 [@bs.val] external event: 'a = "Event";
 

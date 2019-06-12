@@ -11,10 +11,10 @@ type componentLike('props, 'return) = 'props => 'return;
 type component('props) = componentLike('props, element);
 
 [@bs.module "react"]
-external createElement: (component('props), 'props) => element = "";
+external createElement: (component('props), 'props) => element = "createElement";
 
 [@bs.module "react"]
-external cloneElement: (component('props), 'props) => element = "";
+external cloneElement: (component('props), 'props) => element = "cloneElement";
 
 [@bs.splice] [@bs.module "react"]
 external createElementVariadic:
@@ -28,7 +28,7 @@ module Ref = {
   [@bs.set] external setCurrent: (t('value), 'value) => unit = "current";
 };
 
-[@bs.module "react"] external createRef: unit => Ref.t(Js.nullable('a)) = "";
+[@bs.module "react"] external createRef: unit => Ref.t(Js.nullable('a)) = "createRef";
 
 module Children = {
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
@@ -57,16 +57,16 @@ module Context = {
     "Provider";
 };
 
-[@bs.module "react"] external createContext: 'a => Context.t('a) = "";
+[@bs.module "react"] external createContext: 'a => Context.t('a) = "createContext";
 
 [@bs.module "react"]
 external forwardRef:
   ([@bs.uncurry] (('props, Js.Nullable.t(Ref.t('a))) => element)) =>
   component('props) =
-  "";
+  "forwardRef";
 
 [@bs.module "react"]
-external memo: component('props) => component('props) = "";
+external memo: component('props) => component('props) = "memo";
 
 [@bs.module "react"]
 external memoCustomCompareProps:
@@ -122,13 +122,13 @@ module Suspense = {
 [@bs.module "react"]
 external useState:
   ([@bs.uncurry] (unit => 'state)) => ('state, ('state => 'state) => unit) =
-  "";
+  "useState";
 
 [@bs.module "react"]
 external useReducer:
   ([@bs.uncurry] (('state, 'action) => 'state), 'state) =>
   ('state, 'action => unit) =
-  "";
+  "useReducer";
 
 [@bs.module "react"]
 external useReducerWithMapState:
@@ -304,9 +304,9 @@ external useCallback7:
   callback('input, 'output) =
   "useCallback";
 
-[@bs.module "react"] external useContext: Context.t('any) => 'any = "";
+[@bs.module "react"] external useContext: Context.t('any) => 'any = "useContext";
 
-[@bs.module "react"] external useRef: 'value => Ref.t('value) = "";
+[@bs.module "react"] external useRef: 'value => Ref.t('value) = "useRef";
 
 [@bs.module "react"]
 external useImperativeHandle0:

@@ -2118,7 +2118,7 @@ include (
             external apply:
               ('theFunction, 'theContext, 'arguments) =>
               'returnTypeOfTheFunction =
-              "";
+              "apply";
 
             let createElementVariadic = (domClassName, ~props=?, children) => {
               let variadicArguments =
