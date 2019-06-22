@@ -51,7 +51,7 @@ let safeMakeEvent = eventName =>
   };
 
 /* This is copied from array.ml. We want to cut dependencies for ReasonReact so
-    that it's friendlier to use in size-constrained codebases */
+   that it's friendlier to use in size-constrained codebases */
 let arrayToList = a => {
   let rec tolist = (i, res) =>
     if (i < 0) {
@@ -62,55 +62,66 @@ let arrayToList = a => {
   tolist(Array.length(a) - 1, []);
 };
 /* if we ever roll our own parser in the future, make sure you test all url combinations
-    e.g. foo.com/?#bar
-    */
+   e.g. foo.com/?#bar
+   */
 /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
 /* actually you know what, not gonna provide search for now. It's a mess.
-    We'll let users roll their own solution/data structure for now */
-let path = () =>
+   We'll let users roll their own solution/data structure for now */
+let pathFromString = (pathname: string) =>
+  switch (pathname) {
+  | ""
+  | "/" => []
+  | raw =>
+    /* remove the preceeding /, which every pathname seems to have */
+    let raw = Js.String.sliceToEnd(~from=1, raw);
+    /* remove the trailing /, which some pathnames might have. Ugh */
+    let raw =
+      switch (Js.String.get(raw, Js.String.length(raw) - 1)) {
+      | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
+      | _ => raw
+      };
+    raw |> Js.String.split("/") |> arrayToList;
+  };
+
+let pathFromWindow = () =>
   switch ([%external window]) {
   | None => []
   | Some((window: Dom.window)) =>
-    switch (window |> location |> pathname) {
-    | ""
-    | "/" => []
-    | raw =>
-      /* remove the preceeding /, which every pathname seems to have */
-      let raw = Js.String.sliceToEnd(~from=1, raw);
-      /* remove the trailing /, which some pathnames might have. Ugh */
-      let raw =
-        switch (Js.String.get(raw, Js.String.length(raw) - 1)) {
-        | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
-        | _ => raw
-        };
-      raw |> Js.String.split("/") |> arrayToList;
-    }
+    pathFromString(window |> location |> pathname)
   };
-let hash = () =>
+
+let hashFromString = (hash: string) =>
+  switch (hash) {
+  | ""
+  | "#" => ""
+  | raw =>
+    /* remove the preceeding #, which every hash seems to have.
+       Why is this even included in location.hash?? */
+    raw |> Js.String.sliceToEnd(~from=1)
+  };
+
+let hashFromWindow = () =>
+  switch ([%external window]) {
+  | None => ""
+  | Some((window: Dom.window)) => hashFromString(window |> location |> hash)
+  };
+
+let searchFromString = (search: string) =>
+  switch (search) {
+  | ""
+  | "?" => ""
+  | raw =>
+    /* remove the preceeding ?, which every search seems to have. */
+    raw |> Js.String.sliceToEnd(~from=1)
+  };
+
+let searchFromWindow = () =>
   switch ([%external window]) {
   | None => ""
   | Some((window: Dom.window)) =>
-    switch (window |> location |> hash) {
-    | ""
-    | "#" => ""
-    | raw =>
-      /* remove the preceeding #, which every hash seems to have.
-          Why is this even included in location.hash?? */
-      raw |> Js.String.sliceToEnd(~from=1)
-    }
+    searchFromString(window |> location |> search)
   };
-let search = () =>
-  switch ([%external window]) {
-  | None => ""
-  | Some((window: Dom.window)) =>
-    switch (window |> location |> search) {
-    | ""
-    | "?" => ""
-    | raw =>
-      /* remove the preceeding ?, which every search seems to have. */
-      raw |> Js.String.sliceToEnd(~from=1)
-    }
-  };
+
 let push = path =>
   switch ([%external history], [%external window]) {
   | (None, _)
@@ -133,14 +144,42 @@ type url = {
   search: string,
 };
 type watcherID = unit => unit;
-let url = () => {path: path(), hash: hash(), search: search()};
+let urlFromWindow = () => {
+  path: pathFromWindow(),
+  hash: hashFromWindow(),
+  search: searchFromWindow(),
+};
+let url = (~pathname=?, ~search=?, ~hash=?, ()) => {
+  path:
+    pathFromString(
+      switch (pathname) {
+      | Some(pathname) => pathname
+      | None => "/"
+      },
+    ),
+  search:
+    searchFromString(
+      switch (search) {
+      | Some(search) => search
+      | None => ""
+      },
+    ),
+  hash:
+    hashFromString(
+      switch (hash) {
+      | Some(hash) => hash
+      | None => ""
+      },
+    ),
+};
 /* alias exposed publicly */
-let dangerouslyGetInitialUrl = url;
+let dangerouslyGetInitialUrl = urlFromWindow;
+let getUrl = url;
 let watchUrl = callback =>
   switch ([%external window]) {
   | None => (() => ())
   | Some((window: Dom.window)) =>
-    let watcherID = () => callback(url());
+    let watcherID = () => callback(urlFromWindow());
     addEventListener(window, "popstate", watcherID);
     watcherID;
   };

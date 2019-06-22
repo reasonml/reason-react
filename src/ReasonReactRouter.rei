@@ -27,6 +27,9 @@ let unwatchUrl: watcherID => unit;
       for an example.
       */
 let dangerouslyGetInitialUrl: unit => url;
+/** expose url creation functions, usefull for SSR, create an url type from strings to give to serverUrl */
+let getUrl:
+  (~pathname: string=?, ~search: string=?, ~hash: string=?, unit) => url;
 /** hook for watching url changes.
  * serverUrl is used for ssr. it allows you to specify the url without relying on browser apis existing/working as expected
  */
