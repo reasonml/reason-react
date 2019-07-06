@@ -9,6 +9,8 @@ Here is a small overview of the ReasonReact API before we start. No worries if s
 ```reason
 /* file: Greeting.re */
 
+[@bs.config {jsx: 3}];
+
 [@react.component]
 let make = (~name) =>
   <button> {ReasonReact.string("Hello " ++ name ++ "!")} </button>;
@@ -20,6 +22,8 @@ let make = (~name) =>
 
 ```reason
 /* file: Index.re */
+
+[@bs.config {jsx: 3}];
 
 ReactDOMRe.renderToElementWithId(<Greeting name="John" />, "greeting");
 ```
