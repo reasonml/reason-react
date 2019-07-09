@@ -20,7 +20,7 @@ let make = (~name) => {
 
 ## [@react.component]
 
-This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells the ReasonReact that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JS object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
+This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells ReasonReact that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JS object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
 
 ```reason
 [@bs.obj]
