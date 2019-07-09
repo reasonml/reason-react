@@ -39,9 +39,9 @@ Also, you can consume the context by using the `React.useContext` hook
 /** ComponentToConsumeTheContext.re */
 [@react.component]
 let make = () => {
-  let valueFromContext = React.useContext(ContextProvider.themeContext);
+  let theme = React.useContext(ContextProvider.themeContext);
 
-  <h1>valueFromContext->React.string</h1>
+  <h1>theme->React.string</h1>
 }
 ```
 
