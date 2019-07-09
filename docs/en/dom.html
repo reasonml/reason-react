@@ -78,7 +78,7 @@
 <li><code>objToDOMProps</code> : <code>Js.t({..}) =&gt; ReactDOMRe.props</code> (see use-case in <a href="/reason-react/docs/en/invalid-prop-name">Invalid Prop Name</a>)</li>
 <li><code>createElement</code> : <code>(string, ~props: ReactDOMRe.props=?, array(ReasonReact.reactElement)) =&gt; ReasonReact.reactElement</code>: the call that lower-case JSX turns into.</li>
 <li><code>createElementVariadic</code>: same as above, but a less performant version, used when there's a children spread and not a static array at the call site: <code>&lt;div&gt;...myChildren&lt;/div&gt;</code>.</li>
-<li><code>domElementToObj</code> : <code>Dom.element =&gt; Js.t({..})</code>: turns a DOM element into a Js object whose fields you can dangerously access. Usually not needed</li>
+<li><code>domElementToObj</code> : <code>Dom.element =&gt; Js.t({..})</code>: turns a DOM element into a Js object whose fields you can dangerously access. Usually not needed.</li>
 </ul>
 <p>And 4 convenience utilities:</p>
 <ul>
