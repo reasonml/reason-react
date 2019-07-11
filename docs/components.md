@@ -80,7 +80,7 @@ would translate to these two reason calls:
 
 ```reason
 useEffect2(effect, (dep1, dep2))
-     /* ^^^ -- Note the number matching the depenedencies' length */
+     /* ^^^ -- Note the number matching the dependencies' length */
 useEffect0(effect)
      /* ^^^ --- Compiles to javascript as `useEffect(effect, [])` */
 ```   
