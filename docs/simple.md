@@ -2,23 +2,18 @@
 title: Simple
 ---
 
-See https://github.com/reasonml-community/reason-react-example for examples you can clone and run. This page copy pastes a few from there for ease of reading.
-
 ```reason
-let handleClick = (_event) => Js.log("clicked!");
+/* Greeting.re */
 
-let make = (~message) =>
-  <div onClick={handleClick}>{React.string(message)}</div>;
+[@react.component]
+let make = (~message) => <h1> {React.string(message)} </h1>;
 ```
 
 Usage in another file:
 
 ```reason
-ReactDOMRe.renderToElementWithId(<Page message="Hello!" />, "index");
-```
-
-In the same file, you'd do:
-
-```reason
-ReactDOMRe.renderToElementWithId(React.createElement(Page.make, Page.makeProps(~message="Hello!", ())), "index");
+ReactDOMRe.renderToElementWithId(
+  <Greeting message="Hello World!" />,
+  "index",
+);
 ```
