@@ -1,7 +1,7 @@
+# ReasonReact
+
 ## 👋🏻👋🏻 [Reason Conf US](https://www.reason-conf.us) is happening October 7-8th in Chicago 🎉 
 Buy tickets or sponsor the event by visiting [https://www.reason-conf.us](https://www.reason-conf.us)
-
-# ReasonReact
 
 Come join us in [Discord](https://discord.gg/reasonml)!
 
