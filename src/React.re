@@ -14,7 +14,7 @@ type component('props) = componentLike('props, element);
 external createElement: (component('props), 'props) => element = "createElement";
 
 [@bs.module "react"]
-external cloneElement: (component('props), 'props) => element = "cloneElement";
+external cloneElement: (element, 'props) => element = "cloneElement";
 
 [@bs.splice] [@bs.module "react"]
 external createElementVariadic:
