@@ -275,7 +275,7 @@ type domProps = {
   [@bs.optional]
   cite: string, /* uri */
   [@bs.optional]
-  crossorigin: bool,
+  crossOrigin: string,  /* anonymous, use-credentials */
   [@bs.optional]
   cols: int,
   [@bs.optional]
