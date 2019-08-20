@@ -1,5 +1,5 @@
 ---
-title: JSX
+title: JSX (Version 3)
 ---
 
 Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact has two different transforms that you can use for your components. This doc covers Version 3 of the transform which is very similar to how [the ReactJS JSX transform](https://reactjs.org/docs/introducing-jsx.html) works. To use it, put `{"reason": {"react-jsx": 3}` in your [`bsconfig.json`](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
