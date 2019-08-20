@@ -67,12 +67,12 @@
               }
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/fr" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Children</h1></header><article><div><span><aside class="warning">
-The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
+L'API Record est figé et n'aura plus de nouvelles fonctionnalités. Pour les nouvelles fonctionnalités et une meilleure prise en charge à l'avenir, vous devriez migrer vers les nouveaux <a href="https://reasonml.github.io/reason-react/docs/en/components">composants fonctions</a>.
 </aside>
 <p>Les éléments children de ReasonReact sont comme les éléments children de ReactJS, sauf que nous fournissons des facilités qui tirent parti du langage lui même.</p>
 <p>Supposons que des personnes utilisent votre composant de cette façon: <code>&lt;Animation&gt;&lt;div /&gt;&lt;/Animation&gt;</code>. Dans le composant <code>Animation</code>, vous aimeriez contraindre la propriété <code>children</code> qui vous est passée (ici le <code>div</code>) en tant qu'enfant unique. C'est à dire que vous aimeriez générer une erreur sur : <code>&lt;Animation&gt;&lt;div /&gt;&lt;div /&gt;&lt;/Animation&gt;</code>.</p>
 <p>ReactJS fournit une fonction pour ça:</p>
-<pre><code class="hljs css language-js"><span class="hljs-comment">// inside Animation.js</span>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// dans Animation.js</span>
 render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.children);
 }
@@ -97,10 +97,10 @@ render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</s
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.props.children(<span class="hljs-string">'hello'</span>));
 }
 </code></pre>
-<p>As an author of these JS components, you can only hope that the user provided the right children type to you, and throw an error for them if not. In ReasonReact, <code>children</code> prop is typed and prevents bad usage from the consumer. This seems pretty natural, once you realize that <code>children</code> props <strong>is basically like any other prop</strong>! Yes, you can pass tuple, variant, record and others to children! This also mean we don't have to provide the equivalent <code>React.Children.*</code> utils in ReasonReact at all!</p>
-<p>However, due to syntactical and interoperability reasons, we do have some small restrictions on <code>children</code>:</p>
+<p>En tant qu'auteur de ces composants JS, vous ne pouvez qu'espérer que l'utilisateur vous a fourni les bons type d'enfants, et lancer une erreur pour eux si ce n'est pas le cas. Dans ReasonReact, la prop <code>children</code> est typé et empêche une mauvaise utilisation du consommateur. Cela semble plutôt naturel, une fois que vous réalisez que la prop <code>children</code> <strong>est juste comme n'importe quelle autre prop</strong>! En effet, vous pouvez passer un tuple, un variant, ou un enregistrement et d'autres en tant qu'enfant! Cela signifie aussi que nous n'avons pas à fournir l'équivalent des utilitaires <code>React.Children.*</code> du tout dans ReasonReact!</p>
+<p>Cependant, pour des raisons syntaxique et d'interopérabilité, nous avons de petites restrictions sur <code>children</code>:</p>
 <ul>
-<li>DOM elements such as <code>div</code>, <code>span</code> and others mandate the <code>children</code> you pass to be <code>array(reactElement)</code>. For example, <code>&lt;div&gt; [1, 2, 3] &lt;/div&gt;</code> or <code>&lt;span&gt; Some(10) &lt;/span&gt;</code> don't work, since the <code>list</code> and the <code>option</code> are forwarded to the underlying ReactJS <code>div</code>/<code>span</code> and such data types don't make sense in JS.</li>
+<li>Les éléments DOM tels que <code>div</code>, <code>span</code> et d'autres imposent le <code>children</code> que vous devez passer à <code>array(reactElement)</code>. Par exemple, <code>&lt;div&gt; [1, 2, 3] &lt;/div&gt;</code> ou <code>&lt;span&gt; Some(10) &lt;/span&gt;</code> ne fonctionnent pas, puisque <code>list</code> et l'<code>option</code> sont transféré directement aux <code>div</code>/<code>span</code> de ReactJS, et ces types de données n'ont pas de sens dans en JavaScript.</li>
 <li>User-defined elements, by default, also accept an array (of anything). This is due to a rather silly constraint of the JSX syntax, described below.</li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="syntax-constraint"></a><a href="#syntax-constraint" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Syntax Constraint</h2>
