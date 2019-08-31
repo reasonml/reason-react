@@ -132,6 +132,22 @@ type url = {
   hash: string,
   search: string,
 };
+let urlNotEqual = (a, b) => {
+  let rec listNotEqual = (aList, bList) => {
+    switch (aList, bList) {
+    | ([], []) => false
+    | ([], [_, ..._])
+    | ([_, ..._], []) => true
+    | ([aHead, ...aRest], [bHead, ...bRest]) =>
+      if (aHead !== bHead) {
+        true
+      } else {
+        listNotEqual(aRest, bRest)
+      }
+    }
+  };
+  a.hash !== b.hash || a.search !== b.search || listNotEqual(a.path, b.path)
+}
 type watcherID = unit => unit;
 let url = () => {path: path(), hash: hash(), search: search()};
 /* alias exposed publicly */
@@ -168,7 +184,7 @@ let useUrl = (~serverUrl=?, ()) => {
       * the initial state and the subscribe above
       */
     let newUrl = dangerouslyGetInitialUrl();
-    if (newUrl != url) {
+    if (urlNotEqual(newUrl, url)) {
       setUrl(_ => newUrl);
     };
 
