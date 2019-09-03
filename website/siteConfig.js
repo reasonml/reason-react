@@ -54,9 +54,9 @@ const users = [
     pinned: true
   },
   {
-    caption: "SV.CO Digital Learning Platform",
-    image: "img/logos/svco.svg",
-    infoLink: "https://www.sv.co",
+    caption: "Online Teaching Platform & LMS | PupilFirst",
+    image: "img/logos/pupilfirst.svg",
+    infoLink: "https://pupilfirst.com",
     pinned: true
   },
   {
