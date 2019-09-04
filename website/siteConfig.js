@@ -83,6 +83,11 @@ const examples = [
     image: "img/examples/todomvc.png",
     link:
       "https://github.com/reasonml-community/reason-react-example/tree/master/src/todomvc"
+  },
+  {
+    name: "Pupilfirst LMS",
+    image: "img/examples/pupilfirst-lms.png",
+    link: "https://github.com/SVdotCO/pupilfirst"
   }
 ];
 
