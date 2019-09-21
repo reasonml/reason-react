@@ -31,17 +31,17 @@ const code = "`";
 const codeExampleSmallScreen =`${pre}reason
 [@react.component]
 let make = (~name) =>
-    <button>
-      {React.string("Hello!")}
-    </button>;
+  <button>
+    {React.string("Hello!")}
+  </button>;
 ${pre}`;
 
 const codeExampleLargeScreen =`${pre}reason
 [@react.component]
 let make = (~name) =>
-    <button>
-      {React.string("Hello!")}
-    </button>;
+  <button>
+    {React.string("Hello!")}
+  </button>;
 ${pre}`;
 
 const quickStart = `${pre}bash
