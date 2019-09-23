@@ -69,6 +69,11 @@ const users = [
     caption: "codeheroes",
     image: "img/logos/codeheroes.svg",
     infoLink: "https://codeheroes.io/"
+  },
+    {
+    caption: "Astrolabe Diagnostics",
+    image: "img/logos/astrolabe.svg",
+    infoLink: "https://astrolabediagnostics.com/"
   }
 ];
 
