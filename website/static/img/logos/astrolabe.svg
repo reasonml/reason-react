@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72px" height="72px" viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>Group-2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Astrolabe" transform="translate(4.000000, 1.000000)">
+            <g id="Group-2" transform="translate(0.000000, 3.000000)">
+                <path d="M63.5859913,0 L0,0 L0,63.0447761 C34.9374879,63.0447761 63.2940757,34.8685934 63.5859913,0 Z" id="Combined-Shape" stroke="#1A3C44" stroke-width="8" stroke-linejoin="round"></path>
+                <circle id="Oval-4" fill="#193C44" fill-rule="nonzero" cx="27.2238806" cy="27.2238806" r="7.1641791"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
