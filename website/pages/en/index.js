@@ -54,7 +54,7 @@ ${pre}
 Then open another tab and do:
 
 ${pre}bash
-npm run webpack
+npm run server
 ${pre}
 
 Your apps are the html files inside ${code}src/${code}`;
