@@ -11,10 +11,12 @@ type componentLike('props, 'return) = 'props => 'return;
 type component('props) = componentLike('props, element);
 
 [@bs.module "react"]
-external createElement: (component('props), 'props) => element = "createElement";
+external createElement: (component('props), 'props) => element =
+  "createElement";
 
 [@bs.module "react"]
-external cloneElement: (component('props), 'props) => element = "cloneElement";
+external cloneElement: (component('props), 'props) => element =
+  "cloneElement";
 
 [@bs.splice] [@bs.module "react"]
 external createElementVariadic:
@@ -28,7 +30,8 @@ module Ref = {
   [@bs.set] external setCurrent: (t('value), 'value) => unit = "current";
 };
 
-[@bs.module "react"] external createRef: unit => Ref.t(Js.nullable('a)) = "createRef";
+[@bs.module "react"]
+external createRef: unit => Ref.t(Js.nullable('a)) = "createRef";
 
 module Children = {
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
@@ -57,7 +60,8 @@ module Context = {
     "Provider";
 };
 
-[@bs.module "react"] external createContext: 'a => Context.t('a) = "createContext";
+[@bs.module "react"]
+external createContext: 'a => Context.t('a) = "createContext";
 
 [@bs.module "react"]
 external forwardRef:
@@ -109,6 +113,30 @@ module Suspense = {
       "maxDuration": option(int),
     }) =
     "Suspense";
+};
+
+/* Experimental Concurrent Mode */
+module SuspenseList = {
+  [@bs.obj]
+  external makeProps:
+    (~children: element=?, ~revealOrder: string=?, ~tail: string=?, unit) =>
+    {
+      .
+      "children": option(element),
+      "revealOrder": option(string),
+      "tail": option(string),
+    } =
+    "";
+
+  [@bs.module "react"]
+  external make:
+    component({
+      .
+      "children": option(element),
+      "revealOrder": option(string),
+      "tail": option(string),
+    }) =
+    "SuspenseList";
 };
 
 /* HOOKS */
@@ -304,7 +332,8 @@ external useCallback7:
   callback('input, 'output) =
   "useCallback";
 
-[@bs.module "react"] external useContext: Context.t('any) => 'any = "useContext";
+[@bs.module "react"]
+external useContext: Context.t('any) => 'any = "useContext";
 
 [@bs.module "react"] external useRef: 'value => Ref.t('value) = "useRef";
 
