@@ -4,9 +4,9 @@ This code is used to generate [https://reasonml.github.io/reason-react](https://
 
 `website/` contains the actual js, css, images and other files (and blog, which contains some markdown files too, these are separated from `docs/`, not too important).
 
-`npm start` to start the server & watcher. The other scripts in package.json should also be self-descriptive.
+`yarn start` to start the server & watcher. The other scripts in package.json should also be self-descriptive. **Don't use `npm install`**. It's broken for us for various reasons.
 
-Don't use `npm build` for now.
+Don't use `yarn build` for now.
 
 In the end, we spit out normal HTML, with all the JS dependencies (barring a few critical ones) removed, including ReactJS itself. It's a full, static website, super lightweight, portable, unfancy but good looking.
 
