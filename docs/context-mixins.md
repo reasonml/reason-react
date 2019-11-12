@@ -51,19 +51,17 @@ Binding to a Context defined in a JS file holds no surprises.
 
 ```js
 /** ComponentThatDefinesTheContext.re */
-export const JwtContext = React.createContext("light");
+export const ThemeContext = React.createContext("light");
 ```
 
 ```reason
 /** ComponentToConsumeTheContext.re */
-module JwtContext = {
-  [@bs.module "ComponentThatDefinesTheContext"]
-  external make: React.Context.t('context) = "JwtContext";
-};
+[@bs.module "ComponentThatDefinesTheContext"]
+external themeContext: React.Context.t('context) = "ThemeContext";
 
 [@react.component]
 let make = () => {
-  let theme = React.useContext(ThemeContext.make);
+  let theme = React.useContext(themeContext);
 
   <h1>theme->React.string</h1>
 }
