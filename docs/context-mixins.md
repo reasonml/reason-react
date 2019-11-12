@@ -45,5 +45,29 @@ let make = () => {
 }
 ```
 
+## Binding to an external Context
+
+Binding to a Context defined in a JS file holds no surprises. 
+
+```js
+/** ComponentThatDefinesTheContext.re */
+export const JwtContext = React.createContext("light");
+```
+
+```reason
+/** ComponentToConsumeTheContext.re */
+module JwtContext = {
+  [@bs.module "ComponentThatDefinesTheContext"]
+  external make: React.Context.t('context) = "JwtContext";
+};
+
+[@react.component]
+let make = () => {
+  let theme = React.useContext(ThemeContext.make);
+
+  <h1>theme->React.string</h1>
+}
+```
+
 ## Mixins 
 ReasonReact doesn't support ReactJS mixins. Composing normal functions is a good alternative.
