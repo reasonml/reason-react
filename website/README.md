@@ -4,7 +4,7 @@ This code is used to generate [https://reasonml.github.io/reason-react](https://
 
 `website/` contains the actual js, css, images and other files (and blog, which contains some markdown files too, these are separated from `docs/`, not too important).
 
-`yarn start` to start the server & watcher. The other scripts in package.json should also be self-descriptive. **Don't use `npm install`**. It's broken for us for various reasons.
+`yarn start` to start the server & watcher. The other scripts in package.json should also be self-descriptive.
 
 Don't use `yarn build` for now.
 
