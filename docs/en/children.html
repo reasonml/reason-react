@@ -73,13 +73,13 @@ The Record API is in feature-freeze. For the newest features and better support 
 <p>Let's say people are using your component like so: <code>&lt;Animation&gt;&lt;div /&gt;&lt;/Animation&gt;</code>. In the <code>Animation</code> component, you'd want to constrain the <code>children</code> being passed to you (the <code>div</code> here) as a single child. Aka, you'd like to error on this: <code>&lt;Animation&gt;&lt;div /&gt;&lt;div /&gt;&lt;/Animation&gt;</code>.</p>
 <p>ReactJS provides such helper:</p>
 <pre><code class="hljs css language-js"><span class="hljs-comment">// inside Animation.js</span>
-render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.children);
 }
 </code></pre>
 <p>Or, maybe you made a Layout component and accepts exactly two children (e.g. <code>&lt;Layout&gt;&lt;MyColumn /&gt;&lt;MyColumn /&gt;&lt;/Layout&gt;</code>):</p>
 <pre><code class="hljs css language-js"><span class="hljs-comment">// Layout.js</span>
-render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">if</span> (React.Children.count(<span class="hljs-keyword">this</span>.props.children) !== <span class="hljs-number">2</span>) {
     <span class="hljs-comment">// ... error</span>
   }
@@ -94,7 +94,7 @@ render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</s
 </code></pre>
 <p>Or maybe you mandate a children callback:</p>
 <pre><code class="hljs css language-js">
-render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.props.children(<span class="hljs-string">'hello'</span>));
 }
 </code></pre>

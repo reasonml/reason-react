@@ -73,13 +73,13 @@ L'API Record est figé et n'aura plus de nouvelles fonctionnalités. Pour les no
 <p>Supposons que des personnes utilisent votre composant de cette façon: <code>&lt;Animation&gt;&lt;div /&gt;&lt;/Animation&gt;</code>. Dans le composant <code>Animation</code>, vous aimeriez contraindre la propriété <code>children</code> qui vous est passée (ici le <code>div</code>) en tant qu'enfant unique. C'est à dire que vous aimeriez générer une erreur sur : <code>&lt;Animation&gt;&lt;div /&gt;&lt;div /&gt;&lt;/Animation&gt;</code>.</p>
 <p>ReactJS fournit une fonction pour ça:</p>
 <pre><code class="hljs css language-js"><span class="hljs-comment">// dans Animation.js</span>
-render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> React.Children.only(<span class="hljs-keyword">this</span>.children);
 }
 </code></pre>
 <p>Ou, peut être avez vous créé un composant de mise en page qui n'accepte strictement que deux enfants (ex: <code>&lt;Layout&gt;&lt;MyColumn /&gt;&lt;MyColumn /&gt;&lt;/Layout&gt;</code>):</p>
 <pre><code class="hljs css language-js"><span class="hljs-comment">// Layout.js</span>
-render: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">if</span> (React.Children.count(<span class="hljs-keyword">this</span>.props.children) !== <span class="hljs-number">2</span>) {
     <span class="hljs-comment">// ... error</span>
   }
