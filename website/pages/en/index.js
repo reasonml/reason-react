@@ -45,7 +45,7 @@ let make = (~name) =>
 ${pre}`;
 
 const quickStart = `${pre}bash
-npm install -g bs-platform
+npm install -g bs-platform@6.2.1
 bsb -init my-react-app -theme react-hooks
 cd my-react-app
 npm install && npm start
