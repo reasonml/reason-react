@@ -42,8 +42,8 @@ const users = [
     pinned: true
   },
   {
-    caption: "Aesthetic Integration",
-    image: "img/logos/aesthetic-integration.svg",
+    caption: "Imandra Inc.",
+    image: "img/logos/imandra.svg",
     infoLink: "https://www.imandra.ai",
     pinned: true
   },
