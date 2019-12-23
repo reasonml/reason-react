@@ -7,7 +7,7 @@ Come join us in [Discord](https://discord.gg/reasonml)!
 ```reason
 /* Greeting.re */
 [@react.component]
-let make = (~name) => <h1> {React.string("Hello " ++ name)} </h1>
+let make = (~name) => <h1> {React.string("Hello " ++ name)} </h1>;
 ```
 
 in another file:
