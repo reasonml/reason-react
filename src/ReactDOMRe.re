@@ -350,7 +350,7 @@ type domProps = {
   media: string, /* a valid media query */
   [@bs.optional]
   mediaGroup: string,
-  [@bs.optional]
+  [@bs.optional] [@bs.as "method"]
   method: string, /* "post" or "get" */
   [@bs.optional]
   min: int,
