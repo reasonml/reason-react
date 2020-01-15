@@ -9,7 +9,7 @@ title: Installation
 [BuckleScript](http://bucklescript.github.io/) compiles ReasonML code to JavaScript. You can get it with:
 
 ```sh
-npm install --global bs-platform
+npm install --global bs-platform@^7.0.1
 bsb -init my-react-app -theme react-hooks
 cd my-react-app && npm install && npm start
 # in another tab
@@ -25,7 +25,7 @@ The `.re` files compile to straightforward `.bs.js` files. You can open `index.h
 Install the following dependencies:
 
 ```sh
-yarn add bs-platform --dev --exact
+yarn add bs-platform@^7.0.1 --dev --exact
 yarn add reason-react --exact
 ```
 
