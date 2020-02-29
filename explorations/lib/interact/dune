@@ -2,7 +2,7 @@
  ; Namespace
  (name Interact)
  (public_name static-react.interact)
- (flags (-w -30 -w -40 -w +26))
- (ocamlopt_flags (-unsafe -inline 100))
+ (flags (-w -9 -w -30 -w -40 -w +26 -w -27 -w -37))
+ (ocamlopt_flags (-inline 100))
  (libraries static-react.graphics)
 )

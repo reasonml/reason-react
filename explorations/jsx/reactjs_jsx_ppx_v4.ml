@@ -39,6 +39,8 @@
 open Migrate_parsetree
 open Ast_404
 
+[@@@ocaml.warn "-9"]
+
 let nolabel = Ast_404.Asttypes.Nolabel
 let labelled str = Ast_404.Asttypes.Labelled str
 let argIsKeyRef = function
@@ -390,7 +392,7 @@ let jsxMapper () =
 
 (* #if defined BS_NO_COMPILER_PATCH then *)
 let () =
-  Driver.register ~name:"JSX"
+  Migrate_parsetree.Driver.register ~name:"JSX"
     Versions.ocaml_404 (fun _config _cookies -> jsxMapper ())
 (* #else *)
 (* let () = Ast_mapper.register "JSX" (fun _argv -> jsxMapper ()) *)

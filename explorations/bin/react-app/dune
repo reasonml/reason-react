@@ -1,6 +1,13 @@
 (executable
  (name Main)
- (ocamlopt_flags -unsafe -inline 100)
- (preprocess (pps reactjs_jsx_ppx_v4))
+ (flags (-w -9 -w -30 -w -40 -w +26 -w -27 -w -37))
+
+
+ ; (ocamlc_flags (-ppx "jsx/ppx_react_compat.exe" ))
+ ; (ocamlopt_flags (-ppx "jsx/ppx_react_compat.exe" -unsafe -inline 100))
+ (preprocess (pps static-react.reactjs_jsx_ppx_v4 ))
+ ; (preprocess (action (run ppxfind -legacy ppx1,ppx2,... --as-pp ${<})))
+
+ 
  (public_name ReactApp.exe)
- (libraries static-react.reactlib static-react.interact))
+ (libraries unix static-react.reactlib static-react.interact))

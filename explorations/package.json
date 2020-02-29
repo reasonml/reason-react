@@ -9,23 +9,25 @@
     "@opam/ocamlfind": "",
     "@esy-ocaml/reason": "^3.0.0",
     "refmterr": "*",
-    "dune": "*"
+    "dune": "*",
+    "ocaml": "~4.7.0"
   },
   "esy": {
     "build": [
-      [ "refmterr", "jbuilder", "build", "./bin/react-app/Main.exe"],
-      [ "refmterr", "jbuilder", "build", "@install"]
-    ],
-    "install": [
-      "esy-installer"
-    ],
-    "buildsInSource": "_build"
-  },
-  "peerDependencies": {
-    "ocaml": "~4.6.0"
+      [ "refmterr", "dune", "build", "@install", "-p", "#{self.name}"]
+    ]
   },
   "devDependencies": {
+    "refmterr": "*",
     "@opam/merlin": "*",
-    "ocaml": "~4.6.0"
+    "ocaml": "~4.7.0"
+  },
+  "resolutions": {
+    "refmterr": "link:../../reason-native/refmterr.json",
+    "@esy-ocaml/reason": "facebook/reason:reason.json#84cf72348c21c3758e02871a059032ddf60eca06",
+    "@opam/merlin": "link:../../merlin/merlin.opam"
+  },
+  "scripts": {
+    "test": "echo 'hi'"
   }
 }

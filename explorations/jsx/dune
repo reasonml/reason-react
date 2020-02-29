@@ -1,6 +1,7 @@
 (library
  (name reactjs_jsx_ppx_v4)
  (public_name static-react.reactjs_jsx_ppx_v4)
+ (flags (-w -9 -w -30 -w -40 -w +26 -w -27 -w -37))
  (kind ppx_rewriter)
  (modules reactjs_jsx_ppx_v4)
  (libraries reason ocaml-migrate-parsetree))
@@ -8,7 +9,7 @@
 ;; compatibility for those that use -ppx manually
 (executable
  (name ppx_react_compat)
- (public_name ppx_react.exe)
+ (flags (-w -49))
+ (public_name static-react.ppx_react.exe)
  (modules ppx_react_compat)
- (package static-react)
  (libraries reason ocaml-migrate-parsetree reactjs_jsx_ppx_v4))
