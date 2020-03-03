@@ -390,3 +390,15 @@ external useImperativeHandle7:
 
 [@bs.set]
 external setDisplayName: (component('props), string) => unit = "displayName";
+
+[@bs.deriving abstract]
+type transitionConfig = {timeoutMs: int};
+
+[@bs.module "React"]
+external useTransition: unit => ((unit => unit) => unit, bool) =
+  "useTransition";
+
+[@bs.module "React"]
+external useTransitionWithConfig:
+  transitionConfig => ((unit => unit) => unit, bool) =
+  "useTransition";
