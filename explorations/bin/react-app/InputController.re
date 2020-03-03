@@ -1,3 +1,4 @@
+[@refmt.staticExperiment];
 open ReactLib;
 
 open ReactLib.React.Types;

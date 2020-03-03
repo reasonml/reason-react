@@ -1,3 +1,4 @@
+[@refmt.staticExperiment];
 open ReactLib;
 
 let render = (~txt="deafult", ~size, children, ~state=(size, 0), self) => {

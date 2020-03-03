@@ -8,6 +8,7 @@
    bsconfig.json. Specifically, there's a field called `react-jsx` inside the
    field `reason`, which enables this ppx through some internal call in bsb
  */
+
 /*
    The actual transform:
 
@@ -19,6 +20,7 @@
    `Foo.createElement key::a ref::b foo::bar children::[] () [@JSX]` into
    `ReasonReact.element key::a ref::b (Foo.make foo::bar [||] [@JSX])`
  */
+
 /*
    This file's shared between the Reason repo and the BuckleScript repo. In
    Reason, it's in src. In BuckleScript, it's in vendor/reason We periodically
@@ -32,26 +34,22 @@
    BuckleScript; ping @chenglou and a few others and we'll keep them synced up by
    patching the right parts, through the power of types(tm)
  */
+
 /* #if defined BS_NO_COMPILER_PATCH then */
 open Migrate_parsetree;
-
 open Ast_404;
 
-module To_current = Convert(OCaml_404, OCaml_current);
+[@ocaml.warn "-9"];
 
 let nolabel = Ast_404.Asttypes.Nolabel;
-
 let labelled = str => Ast_404.Asttypes.Labelled(str);
-
 let argIsKeyRef =
   fun
   | (Asttypes.Labelled("key" | "ref"), _)
   | (Asttypes.Optional("key" | "ref"), _) => true
   | _ => false;
-
 let constantString = (~loc, str) =>
   Ast_helper.Exp.constant(~loc, Parsetree.Pconst_string(str, None));
-
 /* #else */
 /* let nolabel = "" */
 /* let labelled str = str */
@@ -60,53 +58,79 @@ let constantString = (~loc, str) =>
 /* | _ -> false */
 /* let constantString ~loc str = Ast_helper.Exp.constant ~loc (Asttypes.Const_string (str, None)) */
 /* #end */
+
 open Ast_helper;
-
 open Ast_mapper;
-
 open Asttypes;
-
 open Parsetree;
-
 open Longident;
+
+let jsxVersion = ref(None);
 
 let makeStaticJsx = (~loc, lst) =>
   switch (lst) {
-  | [] => Exp.construct(~loc, {loc, txt: Lident("Empty")}, None)
-  | [hd] => Exp.construct(~loc, {loc, txt: Lident("One")}, Some(hd))
+  | [] =>
+    Exp.construct(~loc, {loc, txt: Ldot(Lident("React"), "Empty")}, None)
+  | [hd] => hd
   | [hd, hdHd] =>
     Exp.construct(
       ~loc,
-      {loc, txt: Lident("Two")},
+      {loc, txt: Ldot(Lident("React"), "TwoElements")},
       Some(Exp.tuple([hd, hdHd])),
     )
   | [hd, hdHd, hdHdHd] =>
     Exp.construct(
       ~loc,
-      {loc, txt: Lident("Three")},
+      {loc, txt: Ldot(Lident("React"), "ThreeElements")},
       Some(Exp.tuple([hd, hdHd, hdHdHd])),
     )
   | [hd, hdHd, hdHdHd, hdHdHdHd] =>
     Exp.construct(
       ~loc,
-      {loc, txt: Lident("Four")},
+      {loc, txt: Ldot(Lident("React"), "FourElements")},
       Some(Exp.tuple([hd, hdHd, hdHdHd, hdHdHdHd])),
     )
   | [hd, hdHd, hdHdHd, hdHdHdHd, ...tl] =>
     Exp.construct(
       ~loc,
-      {loc, txt: Lident("Sequence")},
+      {loc, txt: Ldot(Lident("React"), "ElementMap")},
       Some(Exp.tuple([hd, hdHd, hdHdHd, hdHdHdHd])),
     )
   };
 
-let transformChildren = (~loc, ~mapper, theList) => {
+let transformChildrenV4 = (~loc, ~mapper, theList) => {
+  let rec transformChildren' = (childrenLoc, theList, accum) =>
+    /* not in the sense of converting a list to an array; convert the AST
+       reprensentation of a list to the AST reprensentation of an array */
+    switch (theList) {
+    | {pexp_desc: Pexp_construct({txt: Lident("[]")}, None)} =>
+      makeStaticJsx(~loc=childrenLoc, List.rev(accum))
+    | {
+        pexp_desc:
+          Pexp_construct(
+            {txt: Lident("::")},
+            Some({pexp_desc: Pexp_tuple([v, acc])}),
+          ),
+      } =>
+      transformChildren'(
+        childrenLoc,
+        acc,
+        [mapper.expr(mapper, v), ...accum],
+      )
+    | notAList => mapper.expr(mapper, notAList)
+    };
+
+  let childrenLoc = theList.pexp_loc;
+  transformChildren'(childrenLoc, theList, []);
+};
+
+let transformChildrenV3 = (~loc, ~mapper, theList) => {
   let rec transformChildren' = (theList, accum) =>
     /* not in the sense of converting a list to an array; convert the AST
        reprensentation of a list to the AST reprensentation of an array */
     switch (theList) {
     | {pexp_desc: Pexp_construct({txt: Lident("[]")}, None)} =>
-      makeStaticJsx(~loc, List.rev(accum))
+      List.rev(accum) |> Exp.array(~loc)
     | {
         pexp_desc:
           Pexp_construct(
@@ -117,8 +141,19 @@ let transformChildren = (~loc, ~mapper, theList) => {
       transformChildren'(acc, [mapper.expr(mapper, v), ...accum])
     | notAList => mapper.expr(mapper, notAList)
     };
+
   transformChildren'(theList, []);
 };
+
+let transformChildren = (~loc, ~mapper, theList) =>
+  switch (jsxVersion^) {
+  | Some(2) => transformChildrenV3(~loc, ~mapper, theList)
+  | Some(3) => transformChildrenV3(~loc, ~mapper, theList)
+  | Some(4) => transformChildrenV4(~loc, ~mapper, theList)
+  | Some(_) =>
+    raise(Invalid_argument("JSX: the JSX version must be either 2, 3, or 4"))
+  | None => transformChildrenV4(~loc, ~mapper, theList)
+  };
 
 let extractChildrenForDOMElements =
     (~removeLastPositionUnit=false, ~loc, propsAndChildren) => {
@@ -139,6 +174,7 @@ let extractChildrenForDOMElements =
     /* #end */
     | [arg, ...rest] => allButLast_(rest, [arg, ...acc])
     };
+
   let allButLast = lst => allButLast_(lst, []) |> List.rev;
   switch (
     List.partition(
@@ -173,7 +209,7 @@ let extractChildrenForDOMElements =
 
 /* TODO: some line number might still be wrong */
 let jsxMapper = () => {
-  let jsxTransformV3 =
+  let jsxTransformV4 =
       (modulePath, mapper, loc, attrs, callExpression, callArguments) => {
     let (children, argsWithLabels) =
       extractChildrenForDOMElements(
@@ -184,6 +220,76 @@ let jsxMapper = () => {
     let (argsKeyRef, argsForMake) =
       List.partition(argIsKeyRef, argsWithLabels);
     let childrenExpr = transformChildren(~loc, ~mapper, children);
+    let recursivelyTransformedArgsForMake =
+      argsForMake
+      |> List.map(((label, expression)) =>
+           (label, mapper.expr(mapper, expression))
+         );
+    let args = recursivelyTransformedArgsForMake @ [(nolabel, childrenExpr)];
+    let wrapWithReasonReactElement = e => {
+      /* ReasonReact.element ::key ::ref (...) */
+      let one =
+        Exp.construct(
+          ~loc,
+          {loc, txt: Ldot(Lident("React"), "Element")},
+          Some(e),
+        );
+      Exp.apply(
+        ~loc,
+        Exp.ident(
+          ~loc,
+          {loc, txt: Ldot(Lident("ReasonReact"), "element")},
+        ),
+        argsKeyRef @ [(nolabel, one)],
+      );
+    };
+
+    Exp.apply(
+      ~loc,
+      ~attrs,
+      /* Foo.make */
+      Exp.ident(~loc, {loc, txt: Ldot(modulePath, "render")}),
+      args,
+    )
+    |> wrapWithReasonReactElement;
+  };
+
+  let jsxTransformV3 =
+      (modulePath, mapper, loc, attrs, callExpression, callArguments) => {
+    let (children, argsWithLabels) =
+      extractChildrenForDOMElements(
+        ~loc,
+        ~removeLastPositionUnit=true,
+        callArguments,
+      );
+    let (argsKeyRef, argsForMake) =
+      List.partition(argIsKeyRef, argsWithLabels);
+    let childrenExpr =
+      switch (children) {
+      /* if it's a single, non-jsx item, keep it so (remove the list wrapper, don't add the array wrapper) */
+      | {
+          pexp_desc:
+            Pexp_construct(
+              {txt: Lident("::"), loc},
+              Some({
+                pexp_desc:
+                  Pexp_tuple([
+                    {pexp_attributes} as singleItem,
+                    {pexp_desc: Pexp_construct({txt: Lident("[]")}, None)},
+                  ]),
+              }),
+            ),
+        }
+          when
+            List.for_all(
+              ((attribute, _)) => attribute.txt != "JSX",
+              pexp_attributes,
+            ) =>
+        mapper.expr(mapper, singleItem)
+      /* if it's a single jsx item, or multiple items, turn list into an array */
+      | nonEmptyChildren => transformChildren(~loc, ~mapper, nonEmptyChildren)
+      };
+
     let recursivelyTransformedArgsForMake =
       argsForMake
       |> List.map(((label, expression)) =>
@@ -204,11 +310,12 @@ let jsxMapper = () => {
       ~loc,
       ~attrs,
       /* Foo.make */
-      Exp.ident(~loc, {loc, txt: Ldot(modulePath, "render")}),
+      Exp.ident(~loc, {loc, txt: Ldot(modulePath, "make")}),
       args,
     )
     |> wrapWithReasonReactElement;
   };
+
   let jsxTransformV2 =
       (modulePath, mapper, loc, attrs, callExpression, callArguments) => {
     let (children, argsWithLabels) =
@@ -245,6 +352,7 @@ let jsxMapper = () => {
     )
     |> wrapWithReasonReactElement;
   };
+
   let lowercaseCaller = (mapper, loc, attrs, callArguments, id) => {
     let (children, propsWithLabels) =
       extractChildrenForDOMElements(~loc, callArguments);
@@ -271,6 +379,7 @@ let jsxMapper = () => {
                  (label, mapper.expr(mapper, expression))
                ),
           );
+
         [
           /* "div" */
           (nolabel, componentNameExpr),
@@ -292,7 +401,7 @@ let jsxMapper = () => {
       args,
     );
   };
-  let jsxVersion = ref(None);
+
   let structure = (mapper, structure) =>
     switch (structure) {
     /*
@@ -314,7 +423,7 @@ let jsxMapper = () => {
         {
           pstr_loc,
           pstr_desc:
-            Pstr_attribute((
+            Pstr_attribute(
               {txt: "bs.config"} as bsConfigLabel,
               PStr([
                 {
@@ -325,7 +434,7 @@ let jsxMapper = () => {
                     ),
                 } as configRecord,
               ]),
-            )),
+            ),
         },
         ...restOfStructure,
       ] =>
@@ -371,7 +480,7 @@ let jsxMapper = () => {
               {
                 pstr_loc,
                 pstr_desc:
-                  Pstr_attribute((
+                  Pstr_attribute(
                     bsConfigLabel,
                     PStr([
                       {
@@ -386,7 +495,7 @@ let jsxMapper = () => {
                           ),
                       },
                     ]),
-                  )),
+                  ),
               },
               ...restOfStructure,
             ],
@@ -401,6 +510,7 @@ let jsxMapper = () => {
       };
     | _ => default_mapper.structure(mapper, structure)
     };
+
   let transformJsxCall = (mapper, callExpression, callArguments, attrs) =>
     switch (callExpression.pexp_desc) {
     | Pexp_ident(caller) =>
@@ -417,11 +527,14 @@ let jsxMapper = () => {
           switch (jsxVersion^) {
           | Some(2) => jsxTransformV2(modulePath)
           | Some(3) => jsxTransformV3(modulePath)
+          | Some(4) => jsxTransformV4(modulePath)
           | Some(_) =>
             raise(
-              Invalid_argument("JSX: the JSX version must be either 2 or 3"),
+              Invalid_argument(
+                "JSX: the JSX version must be either 2, 3, or 4",
+              ),
             )
-          | None => jsxTransformV3(modulePath)
+          | None => jsxTransformV4(modulePath)
           };
         f(mapper, loc, attrs, callExpression, callArguments);
       /* div prop1::foo prop2:bar children::[bla] () */
@@ -451,8 +564,11 @@ let jsxMapper = () => {
         ),
       )
     };
+
   let hasJSX = attrs => attrs |> List.exists(((at, _)) => at.txt == "JSX");
-  let expr = (mapper, expression) =>
+  let expr =
+      /* TODO: Need to version the first two switches to only apply to v4. */
+      (mapper, expression) =>
     switch (expression) {
     | {
         pexp_loc,
@@ -473,35 +589,37 @@ let jsxMapper = () => {
         None,
       )
     /* Does the function application have the @JSX attribute? */
-    | {pexp_desc: Pexp_apply(callExpression, callArguments), pexp_attributes} =>
-      let (jsxAttribute, nonJSXAttributes) =
+
+    | {pexp_desc: Pexp_apply(callExpression, callArguments), pexp_attributes}
+        when hasJSX(pexp_attributes) =>
+      let (_, nonJSXAttributes) =
         List.partition(
           ((attribute, _)) => attribute.txt == "JSX",
           pexp_attributes,
         );
-      switch (jsxAttribute, nonJSXAttributes) {
-      /* no JSX attribute */
-      | ([], _) => default_mapper.expr(mapper, expression)
-      | (_, nonJSXAttributes) =>
-        transformJsxCall(
-          mapper,
-          callExpression,
-          callArguments,
-          nonJSXAttributes,
-        )
-      };
+      transformJsxCall(
+        mapper,
+        callExpression,
+        callArguments,
+        nonJSXAttributes,
+      );
     /* Delegate to the default mapper, a deep identity traversal */
     | e => default_mapper.expr(mapper, e)
     };
-  /* #if defined BS_NO_COMPILER_PATCH then */
-  To_current.copy_mapper({...default_mapper, structure, expr});
-};
 
+  /* #if defined BS_NO_COMPILER_PATCH then */
+  {...default_mapper, structure, expr};
+};
 /* #else */
 /* { default_mapper with structure; expr } */
 /* #end */
+
 /* #if defined BS_NO_COMPILER_PATCH then */
-let () = Compiler_libs.Ast_mapper.register("JSX", _argv => jsxMapper());
+let () =
+  Migrate_parsetree.Driver.register(
+    ~name="JSX", Versions.ocaml_404, (_config, _cookies) =>
+    jsxMapper()
+  );
 /* #else */
 /* let () = Ast_mapper.register "JSX" (fun _argv -> jsxMapper ()) */
 /* #end */

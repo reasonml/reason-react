@@ -1,3 +1,10 @@
+/**
+ * This is a comment here.
+ * and another one.
+ */
+
+let foo = "alskdfj";
+[@refmt.staticExperiment];
 open ReactLib;
 
 open React;

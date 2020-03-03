@@ -5,7 +5,7 @@
 
  ; (ocamlc_flags (-ppx "jsx/ppx_react_compat.exe" ))
  ; (ocamlopt_flags (-ppx "jsx/ppx_react_compat.exe" -unsafe -inline 100))
- (preprocess (pps static-react.reactjs_jsx_ppx_v4 ))
+ (preprocess (pps static-react.reactjs_jsx_ppx ))
  ; (preprocess (action (run ppxfind -legacy ppx1,ppx2,... --as-pp ${<})))
 
  

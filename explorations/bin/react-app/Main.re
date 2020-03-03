@@ -1,3 +1,4 @@
+[@refmt.staticExperiment];
 open ReactLib;
 
 module TapIneraction = TapInteraction;

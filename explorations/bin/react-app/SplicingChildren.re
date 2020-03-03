@@ -1,3 +1,4 @@
+[@refmt.staticExperiment];
 open ReactLib;
 
 let noReducer = (_, _) => (0, 0);

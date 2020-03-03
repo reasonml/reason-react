@@ -1,3 +1,4 @@
+[@refmt.staticExperiment];
 /**
  * Demonstrates subscribing to external sources and how the
  * self.handler will allow updating in your tree, in an imperative,

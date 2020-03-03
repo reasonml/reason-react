@@ -34,6 +34,10 @@
   `ReactDOMRe.createElement(ReasonReact.fragment, [|foo|])`
 *)
 
+#ifdef OMP_PPX
+open Migrate_parsetree
+open Ast_406
+#endif
 open Ast_helper
 open Ast_mapper
 open Asttypes
@@ -43,8 +47,6 @@ open Longident
 let rec find_opt p = function
   | [] -> None
   | x :: l -> if p x then Some x else find_opt p l
-
-
 
 let nolabel = Nolabel
 let labelled str = Labelled str
@@ -77,6 +79,89 @@ type 'a children = | ListLiteral of 'a | Exact of 'a
 type componentConfig = {
   propsName: string;
 }
+
+let jsxVersion = ref None
+
+
+(** Experimental static transform. Opt in via [@refmt.staticExperiment];  *)
+module Static = struct
+  let hasExperiment lst =
+    let isStaticExperiment = function
+      | {pstr_desc = Pstr_attribute ({txt = "refmt.staticExperiment"}, _)} -> true
+      | _ -> false
+    in
+    List.exists isStaticExperiment lst
+
+
+  let extractChildrenForDOMElements ?(removeLastPositionUnit= false)  ~loc
+    propsAndChildren =
+    let rec allButLast_ lst acc =
+      match lst with
+      | [] -> []
+      | (Nolabel, {pexp_desc = (Pexp_construct ({txt = Lident "()"}, None))})::[] -> acc
+      | (Nolabel, _)::rest -> raise (Invalid_argument "JSX: found non-labelled argument before the last position")
+      | arg::rest -> allButLast_ rest (arg :: acc) in
+    let allButLast lst = (allButLast_ lst []) |> List.rev in
+    match List.partition (fun (label, expr) -> label = (labelled "children")) propsAndChildren with
+    | ((label, childrenExpr)::[], props) -> (childrenExpr, (if removeLastPositionUnit then allButLast props else props))
+    | ([], props) -> (
+        (Exp.construct ~loc { loc; txt = ((Lident ("[]")))} None),
+        (if removeLastPositionUnit then allButLast props else props)
+      )
+    | (moreThanOneChild, props) -> raise (Invalid_argument "JSX: somehow there's more than one `children` label")
+
+
+  let makeJsx ~loc  lst =
+    match lst with
+    | [] -> Exp.construct ~loc {loc; txt = Ldot ((Lident "React"), "Empty")} None
+    | hd::[] -> hd
+    | hd::hdHd::[] ->
+        Exp.construct ~loc {loc; txt = Ldot (Lident "React", "TwoElements")} (Some (Exp.tuple [hd; hdHd]))
+    | hd::hdHd::hdHdHd::[] ->
+        Exp.construct ~loc {loc; txt = Ldot (Lident "React", "ThreeElements")} (Some (Exp.tuple [hd; hdHd; hdHdHd]))
+    | hd::hdHd::hdHdHd::hdHdHdHd::[] ->
+        Exp.construct ~loc {loc; txt = Ldot (Lident "React", "FourElements")} (Some (Exp.tuple [hd; hdHd; hdHdHd; hdHdHdHd]))
+    | hd::hdHd::hdHdHd::hdHdHdHd::tl -> Exp.construct ~loc {loc; txt = Ldot (Lident "React", "ElementMap")} (Some (Exp.tuple [hd; hdHd; hdHdHd; hdHdHdHd]))
+
+
+  let transformChildren ~loc  ~mapper  theList =
+    let rec transformChildren' childrenLoc theList accum =
+      match theList with
+      | { pexp_desc = Pexp_construct ({txt = Lident "[]" }, None) } ->
+          makeJsx ~loc:childrenLoc (List.rev accum)
+      | { pexp_desc = Pexp_construct (
+          {txt = Lident "::"},
+          Some { pexp_desc = Pexp_tuple (v::acc::[]) }
+        )} -> transformChildren' childrenLoc acc ((mapper.expr mapper v) :: accum)
+      | notAList -> mapper.expr mapper notAList in
+    let childrenLoc = theList.pexp_loc in
+    transformChildren' childrenLoc theList []
+
+
+  let staticJsxTransform modulePath mapper loc attrs callExpression callArguments = (
+    let (children, argsWithLabels) =
+      extractChildrenForDOMElements
+        ~loc
+        ~removeLastPositionUnit:true
+        callArguments
+      in
+    let (argsKeyRef, argsForMake) = List.partition argIsKeyRef argsWithLabels in
+    let childrenExpr = transformChildren ~loc ~mapper children in
+    let recursivelyTransformedArgsForMake =
+      argsForMake |> List.map(fun (label, expression) -> (label, mapper.expr mapper expression))
+    in
+    let args = recursivelyTransformedArgsForMake @ [(nolabel, childrenExpr)] in
+    let reasonReactDotElement = {loc; txt = Ldot(Lident("ReasonReact"), "element")} in
+    let dotRender = Exp.ident ~loc {loc; txt = Ldot(modulePath, "render")} in
+    let wrapWithReasonReactElement e = (
+      let one = Exp.construct ~loc {loc; txt = Ldot(Lident("React"), "Element")} (Some e) in
+      Exp.apply ~loc (Exp.ident ~loc reasonReactDotElement) (argsKeyRef @ [(nolabel, one)])
+    ) in
+    (Exp.apply ~loc ~attrs dotRender args)
+    |> wrapWithReasonReactElement
+  )
+end
+
 
 (* if children is a list, convert it to an array while mapping each element. If not, just map over it, as usual *)
 let transformChildrenIfListUpper ~loc ~mapper theList =
@@ -113,6 +198,7 @@ let transformChildrenIfList ~loc ~mapper theList =
     | notAList -> mapper.expr mapper notAList
   in
   transformChildren_ theList []
+
 
 let extractChildren ?(removeLastPositionUnit=false) ~loc propsAndChildren =
   let rec allButLast_ lst acc = match lst with
@@ -336,11 +422,9 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
     (List.map pluckLabelDefaultLocType namedArgListWithKeyAndRef)
     (makePropsType ~loc namedTypeList)
 
+
 (* TODO: some line number might still be wrong *)
 let jsxMapper () =
-
-  let jsxVersion = ref None in
-
   let transformUppercaseCall3 modulePath mapper loc attrs _ callArguments =
     let (children, argsWithLabels) = extractChildren ~loc ~removeLastPositionUnit:true callArguments in
     let argsForMake = argsWithLabels in
@@ -920,12 +1004,14 @@ let jsxMapper () =
           (match !jsxVersion with
 #ifdef REACT_JS_JSX_V2
           | None
-          | Some 2 -> transformUppercaseCall modulePath mapper loc attrs callExpression callArguments
+          | Some "2" -> transformUppercaseCall modulePath mapper loc attrs callExpression callArguments
 #else
-          | Some 2 -> transformUppercaseCall modulePath mapper loc attrs callExpression callArguments
+          | Some "2" -> transformUppercaseCall modulePath mapper loc attrs callExpression callArguments
           | None
 #endif
-          | Some 3 -> transformUppercaseCall3 modulePath mapper loc attrs callExpression callArguments
+          | Some "3" -> transformUppercaseCall3 modulePath mapper loc attrs callExpression callArguments
+          | Some "static" ->
+              Static.staticJsxTransform modulePath mapper loc attrs callExpression callArguments
           | Some _ -> raise (Invalid_argument "JSX: the JSX version must be 2 or 3"))
 
         (* div(~prop1=foo, ~prop2=bar, ~children=[bla], ()) *)
@@ -935,12 +1021,12 @@ let jsxMapper () =
           (match !jsxVersion with
 #ifdef REACT_JS_JSX_V2
           | None
-          | Some 2 -> transformLowercaseCall mapper loc attrs callArguments id
+          | Some "2" -> transformLowercaseCall mapper loc attrs callArguments id
 #else
-          | Some 2 -> transformLowercaseCall mapper loc attrs callArguments id
+          | Some "2" -> transformLowercaseCall mapper loc attrs callArguments id
           | None
 #endif
-          | Some 3 -> transformLowercaseCall3 mapper loc attrs callArguments id
+          | Some "3" -> transformLowercaseCall3 mapper loc attrs callArguments id
           | Some _ -> raise (Invalid_argument "JSX: the JSX version must be 2 or 3"))
 
         | {txt = Ldot (_, anythingNotCreateElementOrMake)} ->
@@ -968,7 +1054,11 @@ let jsxMapper () =
     (fun mapper signature -> default_mapper.signature mapper @@ reactComponentSignatureTransform mapper signature) in
 
   let structure =
-    (fun mapper structure -> match structure with
+    (fun mapper structure ->
+      if Static.hasExperiment structure then (
+        jsxVersion := Some "static";
+        default_mapper.structure mapper structure
+      ) else match structure with
       (*
         match against [@bs.config {foo, jsx: ...}] at the file-level. This
         indicates which version of JSX we're using. This code stays here because
@@ -983,12 +1073,7 @@ let jsxMapper () =
         a project to depend on a third-party which is still using an old version
         of JSX
       *)
-      | ({
-          pstr_desc = Pstr_attribute (
-            {txt = "ocaml.ppx.context"} ,
-            _
-          )
-        }::
+      | ({pstr_desc = Pstr_attribute ({txt = "ocaml.ppx.context"} , _)}::
         {
           pstr_loc;
           pstr_desc = Pstr_attribute (
@@ -996,7 +1081,8 @@ let jsxMapper () =
             PStr [{pstr_desc = Pstr_eval ({pexp_desc = Pexp_record (recordFields, b)} as innerConfigRecord, a)} as configRecord]
           )
         }
-        ::restOfStructure ) | ({
+        ::restOfStructure )
+      | ({
           pstr_loc;
           pstr_desc = Pstr_attribute (
             ({txt = "bs.config"} as bsConfigLabel),
@@ -1010,9 +1096,9 @@ let jsxMapper () =
           (* {jsx: 2} *)
           | ((_, {pexp_desc = Pexp_constant (Pconst_integer (version, None))})::rest, recordFieldsWithoutJsx) -> begin
               (match version with
-              | "2" -> jsxVersion := Some 2
-              | "3" -> jsxVersion := Some 3
-              | _ -> raise (Invalid_argument "JSX: the file-level bs.config's jsx version must be 2 or 3"));
+              | "2" -> jsxVersion := Some "2"
+              | "3" -> jsxVersion := Some "3"
+              | _ -> raise (Invalid_argument ("JSX: the file-level bs.config's jsx version must be 2 or 3")));
               match recordFieldsWithoutJsx with
               (* record empty now, remove the whole bs.config attribute *)
               | [] -> default_mapper.structure mapper @@ reactComponentTransform mapper restOfStructure
@@ -1031,49 +1117,55 @@ let jsxMapper () =
       end
     ) in
 
+  let hasJSX attrs = attrs |> List.exists( fun (at, _) -> at.txt = "JSX") in
+
   let expr =
-    (fun mapper expression -> match expression with
+    (fun mapper expression -> match !jsxVersion, expression with
        (* Does the function application have the @JSX attribute? *)
-       | {
+       | Some "static", {
+          pexp_loc;
+          pexp_attributes;
+          pexp_desc = Pexp_construct({txt = Lident "::" }, _);
+        } when hasJSX(pexp_attributes) ->
+        Static.transformChildren ~loc:pexp_loc ~mapper expression
+      | Some "static", {
+          pexp_loc;
+          pexp_attributes;
+          pexp_desc = Pexp_construct ({txt = Lident "[]" }, None);
+        } when hasJSX(pexp_attributes) ->
+          Exp.construct ~loc:pexp_loc {loc = pexp_loc; txt = Lident "Empty" } None
+       | _, {
            pexp_desc = Pexp_apply (callExpression, callArguments);
            pexp_attributes
-         } ->
-         let (jsxAttribute, nonJSXAttributes) = List.partition (fun (attribute, _) -> attribute.txt = "JSX") pexp_attributes in
-         (match (jsxAttribute, nonJSXAttributes) with
-         (* no JSX attribute *)
-         | ([], _) -> default_mapper.expr mapper expression
-         | (_, nonJSXAttributes) -> transformJsxCall mapper callExpression callArguments nonJSXAttributes)
+         } when hasJSX pexp_attributes ->
+         let (_, nonJSXAttributes) = List.partition (fun (attribute, _) -> attribute.txt = "JSX") pexp_attributes in
+         transformJsxCall mapper callExpression callArguments nonJSXAttributes
 
        (* is it a list with jsx attribute? Reason <>foo</> desugars to [@JSX][foo]*)
-       | {
+       | _, ({
            pexp_desc =
             Pexp_construct ({txt = Lident "::"; loc}, Some {pexp_desc = Pexp_tuple _})
             | Pexp_construct ({txt = Lident "[]"; loc}, None);
            pexp_attributes
-         } as listItems ->
-          let (jsxAttribute, nonJSXAttributes) = List.partition (fun (attribute, _) -> attribute.txt = "JSX") pexp_attributes in
-          (match (jsxAttribute, nonJSXAttributes) with
-          (* no JSX attribute *)
-          | ([], _) -> default_mapper.expr mapper expression
-          | (_, nonJSXAttributes) ->
-            let fragment = Exp.ident ~loc {loc; txt = Ldot (Lident "ReasonReact", "fragment")} in
-            let childrenExpr = transformChildrenIfList ~loc ~mapper listItems in
-            let args = [
-              (* "div" *)
-              (nolabel, fragment);
-              (* [|moreCreateElementCallsHere|] *)
-              (nolabel, childrenExpr)
-            ] in
-            Exp.apply
-              ~loc
-              (* throw away the [@JSX] attribute and keep the others, if any *)
-              ~attrs:nonJSXAttributes
-              (* ReactDOMRe.createElement *)
-              (Exp.ident ~loc {loc; txt = Ldot (Lident "ReactDOMRe", "createElement")})
-              args
-         )
+         } as listItems) when hasJSX pexp_attributes ->
+          let (_, nonJSXAttributes) = List.partition (fun (attribute, _) -> attribute.txt = "JSX") pexp_attributes in
+          let fragment = Exp.ident ~loc {loc; txt = Ldot (Lident "ReasonReact", "fragment")} in
+          let childrenExpr = transformChildrenIfList ~loc ~mapper listItems in
+          let args = [
+            (* "div" *)
+            (nolabel, fragment);
+            (* [|moreCreateElementCallsHere|] *)
+            (nolabel, childrenExpr)
+          ] in
+          Exp.apply
+            ~loc
+            (* throw away the [@JSX] attribute and keep the others, if any *)
+            ~attrs:nonJSXAttributes
+            (* ReactDOMRe.createElement *)
+            (Exp.ident ~loc {loc; txt = Ldot (Lident "ReactDOMRe", "createElement")})
+            args
        (* Delegate to the default mapper, a deep identity traversal *)
-       | e -> default_mapper.expr mapper e) in
+       | _, e -> default_mapper.expr mapper e) in
 
   let module_binding =
     (fun mapper module_binding ->
@@ -1094,4 +1186,9 @@ let rewrite_signature (code : Parsetree.signature) : Parsetree.signature =
 
 #ifdef BINARY
 let () = Ast_mapper.register "JSX" (fun _argv -> jsxMapper ())
+#endif
+
+#ifdef OMP_PPX
+let () =
+  Migrate_parsetree.Driver.register ~name:"JSX" Migrate_parsetree.Versions.ocaml_406 (fun _config _cookies -> jsxMapper())
 #endif

@@ -1,9 +1,14 @@
+(rule
+ (targets reactjs_jsx_ppx.ml)
+ (deps    (:first-dep reactjs_jsx_ppx.cppo.ml) )
+ (action  (run %{bin:cppo} -D "OMP_PPX" %{first-dep} -o %{targets})))
+
 (library
- (name reactjs_jsx_ppx_v4)
- (public_name static-react.reactjs_jsx_ppx_v4)
+ (name reactjs_jsx_ppx)
+ (public_name static-react.reactjs_jsx_ppx)
  (flags (-w -9 -w -30 -w -40 -w +26 -w -27 -w -37))
  (kind ppx_rewriter)
- (modules reactjs_jsx_ppx_v4)
+ (modules reactjs_jsx_ppx)
  (libraries reason ocaml-migrate-parsetree))
 
 ;; compatibility for those that use -ppx manually
@@ -12,4 +17,5 @@
  (flags (-w -49))
  (public_name static-react.ppx_react.exe)
  (modules ppx_react_compat)
- (libraries reason ocaml-migrate-parsetree reactjs_jsx_ppx_v4))
+ (libraries reason ocaml-migrate-parsetree reactjs_jsx_ppx))
+
