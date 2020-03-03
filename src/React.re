@@ -394,11 +394,10 @@ external setDisplayName: (component('props), string) => unit = "displayName";
 [@bs.deriving abstract]
 type transitionConfig = {timeoutMs: int};
 
-[@bs.module "React"]
-external useTransition: unit => ((unit => unit) => unit, bool) =
-  "useTransition";
+	
+[@bs.deriving abstract]
+type transitionConfig = {timeoutMs: int};
 
 [@bs.module "React"]
-external useTransitionWithConfig:
-  transitionConfig => ((unit => unit) => unit, bool) =
+external useTransition: (~config: transitionConfig=?, unit) => (callback(callback(unit, unit), unit), bool) =
   "useTransition";
