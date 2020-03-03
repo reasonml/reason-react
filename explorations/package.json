@@ -3,6 +3,7 @@
   "name": "static-react",
   "version": "0.0.1",
   "dependencies": {
+    "@opam/cppo": "*",
     "@opam/ocaml-migrate-parsetree": "*",
     "@esy-ocaml/esy-installer": "^0.0.0",
     "@esy-ocaml/substs": "^0.0.1",
@@ -23,9 +24,9 @@
     "ocaml": "~4.7.0"
   },
   "resolutions": {
-    "refmterr": "link:../../reason-native/refmterr.json",
+    "refmterr": "*",
     "@esy-ocaml/reason": "facebook/reason:reason.json#84cf72348c21c3758e02871a059032ddf60eca06",
-    "@opam/merlin": "link:../../merlin/merlin.opam"
+    "@opam/merlin": "*"
   },
   "scripts": {
     "test": "echo 'hi'"
