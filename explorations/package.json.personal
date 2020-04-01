@@ -24,7 +24,9 @@
     "ocaml": "~4.7.0"
   },
   "resolutions": {
-    "@esy-ocaml/reason": "facebook/reason:reason.json#84cf72348c21c3758e02871a059032ddf60eca06"
+    "refmterr": "link:../../reason-native/refmterr.json",
+    "@esy-ocaml/reason": "facebook/reason:reason.json#05e1e3a685c01c76477aee88a756c120f454c322",
+    "@opam/merlin": "link:../../merlin/merlin.opam"
   },
   "scripts": {
     "test": "echo 'hi'"
