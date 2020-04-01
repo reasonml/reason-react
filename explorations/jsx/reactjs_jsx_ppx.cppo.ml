@@ -111,18 +111,13 @@ module Static = struct
     | (moreThanOneChild, props) -> raise (Invalid_argument "JSX: somehow there's more than one `children` label")
 
 
-  let makeJsx ~loc  lst =
+  let makeJsx ~loc lst =
+    let len = List.length lst in
+    let lenStr = string_of_int len in
     match lst with
     | [] -> Exp.construct ~loc {loc; txt = Ldot ((Lident "React"), "Empty")} None
-    | hd::[] -> hd
-    | hd::hdHd::[] ->
-        Exp.construct ~loc {loc; txt = Ldot (Lident "React", "TwoElements")} (Some (Exp.tuple [hd; hdHd]))
-    | hd::hdHd::hdHdHd::[] ->
-        Exp.construct ~loc {loc; txt = Ldot (Lident "React", "ThreeElements")} (Some (Exp.tuple [hd; hdHd; hdHdHd]))
-    | hd::hdHd::hdHdHd::hdHdHdHd::[] ->
-        Exp.construct ~loc {loc; txt = Ldot (Lident "React", "FourElements")} (Some (Exp.tuple [hd; hdHd; hdHdHd; hdHdHdHd]))
-    | hd::hdHd::hdHdHd::hdHdHdHd::tl -> Exp.construct ~loc {loc; txt = Ldot (Lident "React", "ElementMap")} (Some (Exp.tuple [hd; hdHd; hdHdHd; hdHdHdHd]))
-
+    | [hd] -> hd
+    | _ -> Exp.construct ~loc {loc; txt = Ldot ((Lident "React"), "Element" ^ lenStr)} (Some (Exp.tuple lst))
 
   let transformChildren ~loc  ~mapper  theList =
     let rec transformChildren' childrenLoc theList accum =

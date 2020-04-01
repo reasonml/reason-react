@@ -1,15 +1,16 @@
 let suppress = {contents: false};
 
+
 let rec printInstanceCollection:
   type t. (~s: string=?, React.subtree(t)) => string =
   (~s="", subtree) => {
     let dNext = " " ++ s;
     React.(
       switch (subtree) {
-      | EmptyInstance => "EmptyIntance"
+      | EmptyInstance => "EmptyInstance"
       | Instance(n) => "Instance(" ++ printInstance(~s=dNext, n) ++ ")"
-      | TwoInstances(n1, n2) =>
-        "TwoInstances("
+      | Instance2(n1, n2) =>
+        "Instance2("
         ++ "\n"
         ++ dNext
         ++ printInstanceCollection(~s=dNext, n1)
@@ -17,6 +18,21 @@ let rec printInstanceCollection:
         ++ "\n"
         ++ dNext
         ++ printInstanceCollection(~s=dNext, n2)
+        ++ "\n"
+        ++ s
+        ++ ")"
+      | Instance3(n1, n2, n3) =>
+        "Instance3("
+        ++ "\n"
+        ++ dNext
+        ++ printInstanceCollection(~s=dNext, n1)
+        ++ ","
+        ++ "\n"
+        ++ dNext
+        ++ printInstanceCollection(~s=dNext, n2)
+        ++ "\n"
+        ++ dNext
+        ++ printInstanceCollection(~s=dNext, n3)
         ++ "\n"
         ++ s
         ++ ")"
@@ -30,6 +46,7 @@ let rec printInstanceCollection:
       }
     );
   }
+
 and printInstance:
   type s a sub. (~s: string=?, React.inst((s, a) => sub)) => string =
   (~s="", n) => {

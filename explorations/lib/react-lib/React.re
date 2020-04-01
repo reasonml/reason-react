@@ -1,7 +1,7 @@
 type noAction =
   | NoAction;
 
-let nonReducer = (_) =>
+let nonReducer = _ =>
   fun
   | NoAction => "";
 
@@ -16,7 +16,8 @@ module Types = {
   type elem('t) =
     | Empty: elem(empty)
     | Element(renderable(('s, 'a) => 'sub)): elem(('s, 'a) => 'sub)
-    | TwoElements(elem('t1), elem('t2)): elem(('t1, 't2))
+    | Element2(elem('t1), elem('t2)): elem(('t1, 't2))
+    | Element3(elem('t1), elem('t2), elem('t3)): elem(('t1, 't2, 't3))
     /*
      * Not an ordered map yet, but should be.
      */
@@ -27,9 +28,11 @@ module Types = {
   and subtree('t) =
     | EmptyInstance: subtree(empty)
     | Instance(inst(('s, 'a) => 'sub)): subtree(('s, 'a) => 'sub)
-    /* Having TwoInstances mirror the fact that TwoElements requires sub
+    /* Having Instance2 mirror the fact that Element2 requires sub
      * elements, was probably overkill. */
-    | TwoInstances(subtree('t1), subtree('t2)): subtree(('t1, 't2))
+    | Instance2(subtree('t1), subtree('t2)): subtree(('t1, 't2))
+    | Instance3(subtree('t1), subtree('t2), subtree('t3))
+      : subtree(('t1, 't2, 't3))
     | InstanceMap(list(subtree('t))): subtree(list('t))
   and reducer('t) = (inst('t), 'a) => 's constraint 't = ('s, 'a) => 'sub
   /*
@@ -42,7 +45,7 @@ module Types = {
     | Reducer('s, elem('sub), reducer('t))
   constraint 't = ('s, 'a) => 'sub
   and self('t) = {
-    reduceEvent: 'e .('e => 'a, 'e) => unit,
+    reduceEvent: 'e. ('e => 'a, 'e) => unit,
     /**
      * Implements the ability to cause your node to be swapped out from within
      * its tree. Not purely functional by design. This is for things like
@@ -104,6 +107,7 @@ let withState = (inst, nextState) => {
   {...inst, spec: Reducer(nextState, subElems, reducer)};
 };
 
+
 let rec newSelf:
   type s a sub.
     (replacer((s, a) => sub), subreplacer(sub)) => self((s, a) => sub) =
@@ -127,6 +131,7 @@ let rec newSelf:
     };
     self;
   }
+
 and init:
   type s a sub.
     (replacer((s, a) => sub), renderable((s, a) => sub)) =>
@@ -149,6 +154,10 @@ and init:
       subtree: initSubtree(subreplacer, subelems),
     };
   }
+
+/*
+ * TODO: Do not need to reallocate `InstanceN` when `next` is `===`.
+ */
 and initSubtree: type sub. (subreplacer(sub), elem(sub)) => subtree(sub) =
   (thisReplacer, jsx) =>
     switch (jsx) {
@@ -160,20 +169,41 @@ and initSubtree: type sub. (subreplacer(sub), elem(sub)) => subtree(sub) =
           inst !== next ? Instance(next) : subtree;
         });
       Instance(init(nextReplacer, renderable));
-    | TwoElements(stateRendererA, stateRendererB) =>
+    | Element2(stateRendererA, stateRendererB) =>
       let nextReplacerA = aSwapper =>
-        thisReplacer((TwoInstances(a, b) as subtree) => {
+        thisReplacer((Instance2(a, b) as subtree) => {
           let next = aSwapper(a);
-          next === a ? subtree : TwoInstances(next, b);
+          next === a ? subtree : Instance2(next, b);
         });
       let nextReplacerB = bSwapper =>
-        thisReplacer((TwoInstances(a, b) as subtree) => {
+        thisReplacer((Instance2(a, b) as subtree) => {
           let next = bSwapper(b);
-          next === b ? subtree : TwoInstances(a, next);
+          next === b ? subtree : Instance2(a, next);
         });
-      TwoInstances(
+      Instance2(
         initSubtree(nextReplacerA, stateRendererA),
         initSubtree(nextReplacerB, stateRendererB),
+      );
+    | Element3(stateRendererA, stateRendererB, stateRendererC) =>
+      let nextReplacerA = aSwapper =>
+        thisReplacer((Instance3(a, b, c) as subtree) => {
+          let next = aSwapper(a);
+          next === a ? subtree : Instance3(next, b, c);
+        });
+      let nextReplacerB = bSwapper =>
+        thisReplacer((Instance3(a, b, c) as subtree) => {
+          let next = bSwapper(b);
+          next === b ? subtree : Instance3(a, next, c);
+        });
+      let nextReplacerC = cSwapper =>
+        thisReplacer((Instance3(a, b, c) as subtree) => {
+          let next = cSwapper(c);
+          next === c ? subtree : Instance3(a, b, next);
+        });
+      Instance3(
+        initSubtree(nextReplacerA, stateRendererA),
+        initSubtree(nextReplacerB, stateRendererB),
+        initSubtree(nextReplacerC, stateRendererC),
       );
     | ElementMap(elems) =>
       let initElem = (i, e) => {
@@ -181,14 +211,15 @@ and initSubtree: type sub. (subreplacer(sub), elem(sub)) => subtree(sub) =
           thisReplacer((InstanceMap(iLst) as subtree) => {
             let (pre, inst, post) = Utils.splitList(i, iLst);
             let next = swapper(inst);
-            next === inst ?
-              subtree : InstanceMap(List.concat([pre, [next], post]));
+            next === inst
+              ? subtree : InstanceMap(List.concat([pre, [next], post]));
           });
         initSubtree(subreplacer, e);
       };
       let sub = List.mapi(initElem, elems);
       InstanceMap(sub);
     }
+
 and reconcile:
   type s a sub.
     (inst((s, a) => sub), renderable((s, a) => sub)) => inst((s, a) => sub) =
@@ -203,6 +234,7 @@ and reconcile:
       subtree: reconcileSubtree(inst.subtree, curSubelems, nextSubelems),
     };
   }
+
 and reconcileSubtree:
   type sub. (subtree(sub), elem(sub), elem(sub)) => subtree(sub) =
   (subtree, prevJsx, jsx) =>
@@ -213,13 +245,23 @@ and reconcileSubtree:
        * because it never will be if rPrev !== r. */
       false && r === rPrev ? instance : Instance(reconcile(i, r))
     | (
-        TwoInstances(ia, ib) as _iTwo,
-        TwoElements(raPrev, rbPrev),
-        TwoElements(ra, rb),
+        Instance2(ia, ib) as _iTwo,
+        Element2(raPrev, rbPrev),
+        Element2(ra, rb),
       ) =>
-      TwoInstances(
+      Instance2(
         reconcileSubtree(ia, raPrev, ra),
         reconcileSubtree(ib, rbPrev, rb),
+      )
+    | (
+        Instance3(ia, ib, ic) as _iThree,
+        Element3(raPrev, rbPrev, rcPrev),
+        Element3(ra, rb, rc),
+      ) =>
+      Instance3(
+        reconcileSubtree(ia, raPrev, ra),
+        reconcileSubtree(ib, rbPrev, rb),
+        reconcileSubtree(ic, rcPrev, rc),
       )
     | (InstanceMap(iLst), ElementMap(eLstPrev), ElementMap(eLst)) =>
       /* TODO: implement growing/shrinking. */
