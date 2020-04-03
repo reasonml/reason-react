@@ -2,51 +2,15 @@ let suppress = {contents: false};
 
 let emptyString = "";
 
-let indents = [|
-  "",
-  " ",
-  "  ",
-  "   ",
-  "    ",
-  "     ",
-  "      ",
-  "       ",
-  "        ",
-  "         ",
-  "          ",
-|];
+let indents = [|"", " ", "  ", "   ", "    ", "     "|];
 
-let indentNewlines = [|
-  "\n",
-  " \n",
-  "  \n",
-  "   \n",
-  "    \n",
-  "     \n",
-  "      \n",
-  "       \n",
-  "        \n",
-  "         \n",
-  "          \n",
-|];
+let indentNewlines = [|"\n", " \n", "  \n", "   \n", "    \n", "     \n"|];
 
-let newlineIndents = [|
-  "\n",
-  "\n ",
-  "\n  ",
-  "\n   ",
-  "\n    ",
-  "\n     ",
-  "\n      ",
-  "\n       ",
-  "\n        ",
-  "\n         ",
-  "\n          ",
-|];
+let newlineIndents = [|"\n", "\n ", "\n  ", "\n   ", "\n    ", "\n     "|];
 
-let dent = i => indents[i > 10 ? 10 : i];
-let dentNewline = i => indentNewlines[i > 10 ? 10 : i];
-let newlineDent = i => newlineIndents[i > 10 ? 10 : i];
+let dent = i => indents[i > 5 ? 5 : i];
+let dentLine = i => indentNewlines[i > 5 ? 5 : i];
+let lineDent = i => newlineIndents[i > 5 ? 5 : i];
 
 
 let rec instances: type t. (~nodes: bool, ~d: int, React.subtree(t)) => string =
@@ -62,14 +26,14 @@ let rec instances: type t. (~nodes: bool, ~d: int, React.subtree(t)) => string =
         ++ instances(~nodes, ~d=dNext, n1)
         ++ "\n"
         ++ instances(~nodes, ~d=dNext, n2)
-        ++ newlineDent(d)
+        ++ lineDent(d)
         ++ "</>";
       } else {
         instances(~nodes, ~d, n1) ++ "\n" ++ instances(~nodes, ~d, n2);
       }
     | Instance3(n1, n2, n3) =>
       if (!nodes) {
-        dentNewline(d)
+        dentLine(d)
         ++ instances(~nodes, ~d, n1)
         ++ "\n"
         ++ instances(~nodes, ~d, n2)
@@ -84,7 +48,7 @@ let rec instances: type t. (~nodes: bool, ~d: int, React.subtree(t)) => string =
         ++ instances(~nodes, ~d=dNext, n2)
         ++ "\n"
         ++ instances(~nodes, ~d=dNext, n3)
-        ++ newlineDent(d)
+        ++ lineDent(d)
         ++ "</>";
       }
     | InstanceMap(lst) =>
@@ -109,7 +73,7 @@ and instance:
     | (false, Reducer(state, subelems, _)) =>
       let stateO: Obj.t = Obj.magic(state);
       let stateS = printState(stateO);
-      let tail = newlineDent(d) ++ "</instance>";
+      let tail = lineDent(d) ++ "</instance>";
       let bodyAndTail =
         React.isEmptyInstance(n.subtree)
           ? tail : instances(~nodes, ~d=dNext, n.subtree) ++ tail;
@@ -125,7 +89,7 @@ and instance:
           ++ header
           ++ "\n"
           ++ instances(~nodes, ~d=d + 1, n.subtree)
-          ++ newlineDent(d)
+          ++ lineDent(d)
           ++ footer;
     };
   };
