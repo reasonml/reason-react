@@ -6,4 +6,5 @@ open ReactLib;
  * <React.stateless /> would simply call, so that it avoids wrapping its
  * render output.
  */
-let render = (~txt="default", children) => Div.render(~className=txt, Empty);
+let render = (~txt="default", children) =>
+  ReactDOM.div(~className=txt, Empty);

@@ -1,13 +1,14 @@
 [@refmt.staticExperiment];
 open ReactLib;
+open ReactDOM;
 
 type state = string;
 
-type t('c) = (state, React.noAction) => Div.t('c);
+type t('c) = (state, React.noAction) => ReactDOM.t('c);
 
-let oneJsx = <Div />;
+let oneJsx = <div />;
 
-let oneJsxWithDiv = <Div> <Div /> </Div>;
+let oneJsxWithDiv = <div> <div /> </div>;
 
 /*
  * Approach that assumes identifiers are not wrapped in Count.
@@ -150,6 +151,6 @@ let render:
   ) =>
     React.Reducer(
       state,
-      <> <Div className="childContainer"> children </Div> </>,
+      <> <div className="childContainer"> children </div> </>,
       React.nonReducer,
     );

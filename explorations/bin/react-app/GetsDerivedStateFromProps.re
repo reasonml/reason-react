@@ -1,5 +1,6 @@
 [@refmt.staticExperiment];
 open ReactLib;
+open ReactDOM;
 
 let render = (~txt="deafult", ~size, children, ~state=(size, 0), self) => {
   let (curSize, curChangeCount) = state;
@@ -10,8 +11,8 @@ let render = (~txt="deafult", ~size, children, ~state=(size, 0), self) => {
       <Button txt="ButtonInContainerThatCountsSizeChanges" size=0>
         children
       </Button>
-      <Div
-        className=("size changed times:" ++ string_of_int(nextChangeCount))
+      <div
+        className={"size changed times:" ++ string_of_int(nextChangeCount)}
       />
     </>,
     (_, _) => state,

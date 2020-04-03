@@ -133,7 +133,7 @@ module Static = struct
     transformChildren' childrenLoc theList []
 
 
-  let staticJsxTransform modulePath mapper loc attrs callExpression callArguments = (
+  let staticJsxTransform ident mapper loc attrs callExpression callArguments = (
     let (children, argsWithLabels) =
       extractChildrenForDOMElements
         ~loc
@@ -146,13 +146,10 @@ module Static = struct
       argsForMake |> List.map(fun (label, expression) -> (label, mapper.expr mapper expression))
     in
     let args = recursivelyTransformedArgsForMake @ [(nolabel, childrenExpr)] in
-    let reasonReactDotElement = {loc; txt = Ldot(Lident("ReasonReact"), "element")} in
-    let dotRender = Exp.ident ~loc {loc; txt = Ldot(modulePath, "render")} in
-    let wrapWithReasonReactElement e = (
-      let one = Exp.construct ~loc {loc; txt = Ldot(Lident("React"), "Element")} (Some e) in
-      Exp.apply ~loc (Exp.ident ~loc reasonReactDotElement) (argsKeyRef @ [(nolabel, one)])
-    ) in
-    (Exp.apply ~loc ~attrs dotRender args)
+    let wrapWithReasonReactElement e =
+      Exp.construct ~loc {loc; txt = Ldot(Lident("React"), "Element")} (Some e)
+    in
+    (Exp.apply ~loc ~attrs ident args)
     |> wrapWithReasonReactElement
   )
 end
@@ -1006,7 +1003,8 @@ let jsxMapper () =
 #endif
           | Some "3" -> transformUppercaseCall3 modulePath mapper loc attrs callExpression callArguments
           | Some "static" ->
-              Static.staticJsxTransform modulePath mapper loc attrs callExpression callArguments
+              let ident = Exp.ident ~loc {loc; txt = Ldot(modulePath, "render")} in
+              Static.staticJsxTransform ident mapper loc attrs callExpression callArguments
           | Some _ -> raise (Invalid_argument "JSX: the JSX version must be 2 or 3"))
 
         (* div(~prop1=foo, ~prop2=bar, ~children=[bla], ()) *)
@@ -1022,6 +1020,9 @@ let jsxMapper () =
           | None
 #endif
           | Some "3" -> transformLowercaseCall3 mapper loc attrs callArguments id
+          | Some "static" ->
+              let ident = Exp.ident ~loc {loc; txt = Lident id} in
+              Static.staticJsxTransform ident mapper loc attrs callExpression callArguments
           | Some _ -> raise (Invalid_argument "JSX: the JSX version must be 2 or 3"))
 
         | {txt = Ldot (_, anythingNotCreateElementOrMake)} ->

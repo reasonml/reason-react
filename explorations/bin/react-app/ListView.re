@@ -1,5 +1,6 @@
 [@refmt.staticExperiment];
 open ReactLib;
+open ReactDOM;
 
 type state = int;
 

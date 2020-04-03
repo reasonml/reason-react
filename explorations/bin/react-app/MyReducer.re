@@ -1,5 +1,6 @@
 [@refmt.staticExperiment];
 open ReactLib;
+open ReactDOM;
 
 type state = int;
 
@@ -20,7 +21,7 @@ let render = (children, ~state=0, self) =>
   React.Reducer(
     state,
     makeTreeOpaque(
-      <Div
+      <div
         onClick=(e => print_string("divClicked!"))
         className=("MyReducer:" ++ string_of_int(state))
       />,

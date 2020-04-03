@@ -7,8 +7,8 @@
  * in this example, and we'll provide a better hook for that.
  */
 open ReactLib;
-
 open React;
+open ReactDOM;
 
 type action =
   | Tick;
@@ -37,16 +37,16 @@ let render = (~txt="default", children, ~state=?, self) => {
   Reducer(
     state,
     <>
-      <Div className="rafFirstDiv" />
-      <Div className="rafSecond">
-        <Div className=("rafDeepDiv" ++ string_of_int(Random.int(10))) />
-      </Div>
+      <div className="rafFirstDiv" />
+      <div className="rafSecond">
+        <span className={"rafDeepDiv" ++ string_of_int(Random.int(10))} />
+      </div>
     </>,
     (inst, action) => {
       /* Reason knows this is a div instance because you used div JSX!!! */
       /* The shape of instances reflects the shape of the JSX */
       let Instance2(_, Instance({subtree: Instance(d)})) = inst.subtree;
-      let divStateStr = Div.domStateToString(React.stateOf(d));
+      let divStateStr = ReactDOM.domStateToString(React.stateOf(d));
       ignore(RequestAnimationFrame.request(self.reduceEvent(onRaf)));
       state ++ "->animFiredWithDeepDivState(" ++ divStateStr ++ ")";
     },
