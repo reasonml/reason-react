@@ -1,4 +1,4 @@
-type state = string;
+type state = unit;
 
 type event;
 

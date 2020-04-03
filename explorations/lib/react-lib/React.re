@@ -10,6 +10,9 @@ module Types = {
   type empty =
     | Empty_;
   /*
+   * Not an ordered map yet, but should be.
+   */
+  /*
    * Also create another form for splicing in nodes into otherwise fixed length
    * sets.
    */
@@ -35,6 +38,7 @@ module Types = {
       : subtree(('t1, 't2, 't3))
     | InstanceMap(list(subtree('t))): subtree(list('t))
   and reducer('t) = (inst('t), 'a) => 's constraint 't = ('s, 'a) => 'sub
+  and headerStringifier = unit => string
   /*
    * These are just convenient shortcuts to specifiying the entire spec.  It just
    * makes it so you don't have to do a spread onto a record, since in
@@ -42,8 +46,10 @@ module Types = {
    */
   and componentSpec('t) =
     /* Add more forms here for convenience */
-    | Reducer('s, elem('sub), reducer('t))
-  constraint 't = ('s, 'a) => 'sub
+    | Reducer('s, elem('sub), reducer(('s, 'a) => 'sub))
+      : componentSpec(('s, 'a) => 'sub)
+    | Node('s, elem('sub), headerStringifier, /*footer*/ string)
+      : componentSpec(('s, noAction) => 'sub)
   and self('t) = {
     reduceEvent: 'e. ('e => 'a, 'e) => unit,
     /**
@@ -102,10 +108,19 @@ module Types = {
 
 include Types;
 
-let withState = (inst, nextState) => {
-  let Reducer(_, subElems, reducer) = inst.spec;
-  {...inst, spec: Reducer(nextState, subElems, reducer)};
-};
+let withState: type s a sub. (inst((s, a) => sub), s) => inst((s, a) => sub) =
+  (inst, nextState) => {
+    switch (inst.spec) {
+    | Reducer(_, subElems, reducer) => {
+        ...inst,
+        spec: Reducer(nextState, subElems, reducer),
+      }
+    | Node(_, subElems, headerStringifier, footer) => {
+        ...inst,
+        spec: Node(nextState, subElems, headerStringifier, footer),
+      }
+    };
+  };
 
 
 let rec newSelf:
@@ -117,16 +132,22 @@ let rec newSelf:
       reduceEvent: (actionExtractor, ev) => {
         let action = actionExtractor(ev);
         replacer(inst => {
-          let Reducer(_, _, reducer) = inst.spec;
-          let nextState = reducer(inst, action);
-          reconcile(withState(inst, nextState), inst.renderable);
+          switch (inst.spec) {
+          | Reducer(_, _, reducer) =>
+            let nextState = reducer(inst, action);
+            reconcile(withState(inst, nextState), inst.renderable);
+          | Node(_) => inst
+          }
         });
       },
       send: action =>
         replacer(inst => {
-          let Reducer(_, _, reducer) = inst.spec;
-          let nextState = reducer(inst, action);
-          reconcile(withState(inst, nextState), inst.renderable);
+          switch (inst.spec) {
+          | Reducer(_, _, reducer) =>
+            let nextState = reducer(inst, action);
+            reconcile(withState(inst, nextState), inst.renderable);
+          | Node(_) => inst
+          }
         }),
     };
     self;
@@ -144,7 +165,11 @@ and init:
         inst.subtree !== nextSubtree ? {...inst, subtree: nextSubtree} : inst;
       });
     let self = newSelf(replacer, subreplacer);
-    let Reducer(_, subelems, _) as nextSpec = renderable(~state=?None, self);
+    let (subelems, nextSpec) =
+      switch (renderable(~state=?None, self)) {
+      | Reducer(_, subelems, _) as nextSpec => (subelems, nextSpec)
+      | Node(_, subelems, _, _) as nextSpec => (subelems, nextSpec)
+      };
     {
       self,
       replacer,
@@ -224,9 +249,22 @@ and reconcile:
   type s a sub.
     (inst((s, a) => sub), renderable((s, a) => sub)) => inst((s, a) => sub) =
   (inst, renderable) => {
-    let Reducer(curState, curSubelems, _) = inst.spec;
-    let nextSpec = renderable(~state=curState, inst.self);
-    let Reducer(_, nextSubelems, _) = nextSpec;
+    let (curState, curSubelems) =
+      switch (inst.spec) {
+      | Reducer(curState, curSubelems, _) => (curState, curSubelems)
+      | Node(curState, curSubelems, _, _) => (curState, curSubelems)
+      };
+    let (nextSubelems, nextSpec) =
+      switch (renderable(~state=curState, inst.self)) {
+      | Reducer(curState, nextSubelems, _) as nextSpec => (
+          nextSubelems,
+          nextSpec,
+        )
+      | Node(curState, nextSubelems, _, _) as nextSpec => (
+          nextSubelems,
+          nextSpec,
+        )
+      };
     {
       ...inst,
       renderable,
@@ -234,6 +272,13 @@ and reconcile:
       subtree: reconcileSubtree(inst.subtree, curSubelems, nextSubelems),
     };
   }
+
+and isEmptyInstance: type sub. subtree(sub) => bool =
+  subtree =>
+    switch (subtree) {
+    | EmptyInstance => true
+    | _ => false
+    }
 
 and reconcileSubtree:
   type sub. (subtree(sub), elem(sub), elem(sub)) => subtree(sub) =
@@ -283,6 +328,8 @@ let control: (elem(('s, 'a) => 'sub), ~state: 's) => elem(('s, 'a) => 'sub) =
     Element((~state=?, self) => renderable(~state=controlledState, self));
 
 let stateOf = inst => {
-  let Reducer(state, _, _) = inst.spec;
-  state;
+  switch (inst.spec) {
+  | Reducer(curState, nextSubelems, _) => curState
+  | Node(curState, nextSubelems, _, _) => curState
+  };
 };

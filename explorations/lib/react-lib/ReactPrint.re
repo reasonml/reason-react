@@ -1,81 +1,134 @@
 let suppress = {contents: false};
 
+let emptyString = "";
 
-let rec printInstanceCollection:
-  type t. (~s: string=?, React.subtree(t)) => string =
-  (~s="", subtree) => {
-    let dNext = " " ++ s;
-    React.(
-      switch (subtree) {
-      | EmptyInstance => "EmptyInstance"
-      | Instance(n) => "Instance(" ++ printInstance(~s=dNext, n) ++ ")"
-      | Instance2(n1, n2) =>
-        "Instance2("
+let indents = [|
+  "",
+  " ",
+  "  ",
+  "   ",
+  "    ",
+  "     ",
+  "      ",
+  "       ",
+  "        ",
+  "         ",
+  "          ",
+|];
+
+let indentNewlines = [|
+  "\n",
+  " \n",
+  "  \n",
+  "   \n",
+  "    \n",
+  "     \n",
+  "      \n",
+  "       \n",
+  "        \n",
+  "         \n",
+  "          \n",
+|];
+
+let newlineIndents = [|
+  "\n",
+  "\n ",
+  "\n  ",
+  "\n   ",
+  "\n    ",
+  "\n     ",
+  "\n      ",
+  "\n       ",
+  "\n        ",
+  "\n         ",
+  "\n          ",
+|];
+
+let dent = i => indents[i > 10 ? 10 : i];
+let dentNewline = i => indentNewlines[i > 10 ? 10 : i];
+let newlineDent = i => newlineIndents[i > 10 ? 10 : i];
+
+
+let rec instances: type t. (~nodes: bool, ~d: int, React.subtree(t)) => string =
+  (~nodes, ~d, subtree) => {
+    let dNext = d + 1;
+    switch (subtree) {
+    | EmptyInstance => nodes ? emptyString : dent(d) ++ "</>"
+    | Instance(n) => instance(~nodes, ~d, n)
+    | Instance2(n1, n2) =>
+      if (!nodes) {
+        dent(d)
+        ++ "<>\n"
+        ++ instances(~nodes, ~d=dNext, n1)
         ++ "\n"
-        ++ dNext
-        ++ printInstanceCollection(~s=dNext, n1)
-        ++ ","
-        ++ "\n"
-        ++ dNext
-        ++ printInstanceCollection(~s=dNext, n2)
-        ++ "\n"
-        ++ s
-        ++ ")"
-      | Instance3(n1, n2, n3) =>
-        "Instance3("
-        ++ "\n"
-        ++ dNext
-        ++ printInstanceCollection(~s=dNext, n1)
-        ++ ","
-        ++ "\n"
-        ++ dNext
-        ++ printInstanceCollection(~s=dNext, n2)
-        ++ "\n"
-        ++ dNext
-        ++ printInstanceCollection(~s=dNext, n3)
-        ++ "\n"
-        ++ s
-        ++ ")"
-      | InstanceMap(lst) =>
-        "InstanceMap("
-        ++ String.concat(
-             ",",
-             List.map(printInstanceCollection(~s=dNext), lst),
-           )
-        ++ ")"
+        ++ instances(~nodes, ~d=dNext, n2)
+        ++ newlineDent(d)
+        ++ "</>";
+      } else {
+        instances(~nodes, ~d, n1) ++ "\n" ++ instances(~nodes, ~d, n2);
       }
-    );
+    | Instance3(n1, n2, n3) =>
+      if (!nodes) {
+        dentNewline(d)
+        ++ instances(~nodes, ~d, n1)
+        ++ "\n"
+        ++ instances(~nodes, ~d, n2)
+        ++ "\n"
+        ++ instances(~nodes, ~d, n3);
+      } else {
+        dent(d)
+        ++ "<>"
+        ++ "\n"
+        ++ instances(~nodes, ~d=dNext, n1)
+        ++ "\n"
+        ++ instances(~nodes, ~d=dNext, n2)
+        ++ "\n"
+        ++ instances(~nodes, ~d=dNext, n3)
+        ++ newlineDent(d)
+        ++ "</>";
+      }
+    | InstanceMap(lst) =>
+      dent(d)
+      ++ "InstanceMap("
+      ++ String.concat(",", List.map(instances(~nodes, ~d=dNext), lst))
+      ++ ")"
+    };
   }
 
-and printInstance:
-  type s a sub. (~s: string=?, React.inst((s, a) => sub)) => string =
-  (~s="", n) => {
-    let React.Reducer(state, subelems, reducer) = n.spec;
-    let state: Obj.t = Obj.magic(state);
-    React.(
-      "{\n"
-      ++ s
-      ++ "  state: "
-      ++ (
-        if (Obj.is_int(state)) {
-          string_of_int(Obj.magic(state): int);
-        } else if (Obj.tag(state) === Obj.string_tag) {
-          "\"" ++ String.escaped(Obj.magic(state): string) ++ "\"";
-        } else {
-          "-";
-        }
-      )
-      ++ ",\n"
-      ++ s
-      ++ "  subtree: "
-      ++ printInstanceCollection(~s=" " ++ s, n.subtree)
-      ++ "\n"
-      ++ s
-      ++ "}"
-    );
+and printState: Obj.t => string =
+  state =>
+    Obj.is_int(state)
+      ? string_of_int(Obj.magic(state): int)
+      : Obj.tag(state) === Obj.string_tag
+          ? "\"" ++ String.escaped(Obj.magic(state): string) ++ "\"" : "?"
+and instance:
+  type s a sub. (~nodes: bool, ~d: int, React.inst((s, a) => sub)) => string =
+  (~nodes, ~d, n) => {
+    let dNext = d + 1;
+    switch (nodes, n.spec) {
+    | (false, Reducer(state, subelems, _)) =>
+      let stateO: Obj.t = Obj.magic(state);
+      let stateS = printState(stateO);
+      let tail = newlineDent(d) ++ "</instance>";
+      let bodyAndTail =
+        React.isEmptyInstance(n.subtree)
+          ? tail : instances(~nodes, ~d=dNext, n.subtree) ++ tail;
+      let line1 = "<instance\n" ++ dent(dNext) ++ "state=" ++ stateS ++ ">\n";
+      dent(d) ++ line1 ++ bodyAndTail;
+    | (true, Reducer(state, subelems, _)) =>
+      instances(~nodes, ~d, n.subtree)
+    | (_, Node(state, subelems, headerStringifier, footer)) =>
+      let header = headerStringifier();
+      React.isEmptyInstance(n.subtree)
+        ? dent(d) ++ header ++ footer
+        : dent(d)
+          ++ header
+          ++ "\n"
+          ++ instances(~nodes, ~d=d + 1, n.subtree)
+          ++ newlineDent(d)
+          ++ footer;
+    };
   };
-
-let printInstance = printInstanceCollection;
 
 let printSection = s =>
   if (suppress.contents) {
@@ -84,14 +137,16 @@ let printSection = s =>
     print_endline("\n\n" ++ s);
   };
 
-let printRoot: type s a sub. (string, Root.t((s, a) => sub)) => unit =
-  (title, root) =>
+let printRoot: type s a sub. (~title: string, Root.t((s, a) => sub)) => unit =
+  (~title, root) =>
     switch (suppress.contents, root.elemsAndInstance) {
     | (false, None) =>
       print_endline(title);
       print_endline("\n\n" ++ "<NotRendered>" ++ "\n");
     | (false, Some((elems, subtree))) =>
-      print_endline("\n\n" ++ title ++ "\n");
-      print_endline(printInstanceCollection(subtree));
+      print_endline("\n\n" ++ title ++ " Verbose\n");
+      print_endline(instances(~nodes=false, ~d=0, subtree));
+      print_endline("\n\n" ++ title ++ " Nodes Only\n");
+      print_endline(instances(~nodes=true, ~d=0, subtree));
     | (true, _) => ()
     };

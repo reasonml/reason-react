@@ -1,25 +1,30 @@
 type event = unit;
 
-type state = string;
+type state = unit;
 
 type t('renderedTree) = (state, React.noAction) => 'renderedTree;
 
 let domEventHandler = e => ();
 
-let domStateToString = state => state;
+let domStateToString = state => "no dom state";
 
 let render =
     (
       ~onFocusLost: option(event => unit)=?,
       ~onClick: option(event => unit)=?,
-      ~className: string="",
+      ~className: option(string)=?,
       children,
       ~state=?,
       self,
     ) =>
-  React.Reducer(
-    className,
+  React.Node(
+    (),
     children,
-    /*  */
-    (inst, React.NoAction) => "",
+    () => {
+      switch (className) {
+      | None => "<div>"
+      | Some(cn) => "<div class='" ++ cn ++ "'>"
+      }
+    },
+    "</div>",
   );

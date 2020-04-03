@@ -1,6 +1,6 @@
 (executable
  (name Main)
- (flags (-w -9 -w -30 -w -40 -w +26 -w -27 -w -37))
+ (flags (-short-paths -w -9 -w -30 -w -40 -w +26 -w -27 -w -37))
 
 
  ; (ocamlc_flags (-ppx "jsx/ppx_react_compat.exe" ))
