@@ -134,11 +134,11 @@ let oneJsxWithDiv = <div> <div /> </div>;
  * let y = One(Div.render(myChildren));
  *
  */
-let theSame = <Div> oneJsx </Div>;
+let theSame = <div> oneJsx </div>;
 
-let theSame = <Div> oneJsx oneJsx </Div>;
+let theSame = <div> oneJsx oneJsx </div>;
 
-let theSame = <Div> oneJsx <Div /> </Div>;
+let theSame = <div> oneJsx <div /> </div>;
 
 let render:
   (~txt: string=?, React.elem('childrenTree)) =>
