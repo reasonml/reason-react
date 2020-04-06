@@ -1,14 +1,14 @@
-[@refmt.staticExperiment];
-open ReactLib;
-open ReactDOM;
+/* [@refmt.staticExperiment]; */
+/* open ReactLib; */
+/* open ReactDOM; */
 
-type state = int;
+/* type state = int; */
 
-type stateTree('childTree) = state => list('childTree);
+/* type stateTree('childTree) = state => list('childTree); */
 
-let render = (~count=0, child, ~state=0, self) =>
-  React.Reducer(
-    state,
-    React.nonReducer,
-    React.Sequence(Array.to_list(Array.make(count, child))),
-  );
+/* let render = (~count=0, child, ~state=0, self) => */
+/*   React.Reducer( */
+/*     state, */
+/*     React.nonReducer, */
+/*     React.Sequence(Array.to_list(Array.make(count, child))), */
+/*   ); */

@@ -23,7 +23,7 @@ let render = (children, ~state=0, self) =>
     makeTreeOpaque(
       <div
         onClick=(e => print_string("divClicked!"))
-        className=("MyReducer:" ++ string_of_int(state))
+        className=("&MyReducer&" )
       />,
     ),
     (_, MyAction(next)) => int_of_string(next),
