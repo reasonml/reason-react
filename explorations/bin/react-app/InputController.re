@@ -1,27 +1,27 @@
 [@refmt.staticExperiment];
 open ReactLib;
-open ReactDOM;
+open StaticReactDOM;
 
-open ReactLib.React.Types;
+open ReactLib.StaticReact.Types;
 
 type state = string;
 
-type renderedTree = (ReactDOM.t(Input.t), MyReducer.t);
+type renderedTree = (StaticReactDOM.t(Input.t), MyReducer.t);
 
-type t = (state, React.noAction) => renderedTree;
+type t = (state, StaticReact.noAction) => renderedTree;
 
 let render = (~shouldControlInput, children, ~state="AppInstance", self) => {
   let input = <Input init="initTxt" />;
   let input =
     !shouldControlInput
       ? input
-      : React.control(input, ~state="haha I am controlling your input");
-  React.Reducer(
+      : StaticReact.control(input, ~state="haha I am controlling your input");
+  StaticReact.Reducer(
     state,
     <>
       <div className="divRenderedByAppContainsInput"> input </div>
       <MyReducer />
     </>,
-    React.nonReducer,
+    StaticReact.nonReducer,
   );
 };

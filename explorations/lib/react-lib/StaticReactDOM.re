@@ -2,7 +2,7 @@ type event = unit;
 
 type state = unit;
 
-type t('renderedTree) = (state, React.noAction) => 'renderedTree;
+type t('renderedTree) = (state, StaticReact.noAction) => 'renderedTree;
 
 let domEventHandler = e => ();
 
@@ -17,22 +17,22 @@ let div =
       ~state=?,
       self,
     ) =>
-  React.Node(
+  StaticReact.Node(
     (),
     children,
     () => {
       switch (className, style) {
       | (None, None) => "<div>"
       | (Some(cn), None) =>
-        "<div class='" ++ ReactDOMUtils.escapeHtml(cn) ++ "'>"
+        "<div class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
       | (Some(cn), Some(s)) =>
         "<div class='"
-        ++ ReactDOMUtils.escapeHtml(cn)
+        ++ StaticReactDOMUtils.escapeHtml(cn)
         ++ "' style='"
-        ++ ReactDOMUtils.escapeHtml(s)
+        ++ StaticReactDOMUtils.escapeHtml(s)
         ++ "'>"
       | (None, Some(s)) =>
-        "<div style='" ++ ReactDOMUtils.escapeHtml(s) ++ "'>"
+        "<div style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
       }
     },
     "</div>",
@@ -46,22 +46,22 @@ let i =
       ~state=?,
       self,
     ) =>
-  React.Node(
+  StaticReact.Node(
     (),
     children,
     () => {
       switch (className, style) {
       | (None, None) => "<i>"
       | (Some(cn), None) =>
-        "<i class='" ++ ReactDOMUtils.escapeHtml(cn) ++ "'>"
+        "<i class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
       | (Some(cn), Some(s)) =>
         "<i class='"
-        ++ ReactDOMUtils.escapeHtml(cn)
+        ++ StaticReactDOMUtils.escapeHtml(cn)
         ++ "' style='"
-        ++ ReactDOMUtils.escapeHtml(s)
+        ++ StaticReactDOMUtils.escapeHtml(s)
         ++ "'>"
       | (None, Some(s)) =>
-        "<i style='" ++ ReactDOMUtils.escapeHtml(s) ++ "'>"
+        "<i style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
       }
     },
     "</i>",
@@ -75,32 +75,32 @@ let b =
       ~state=?,
       self,
     ) =>
-  React.Node(
+  StaticReact.Node(
     (),
     children,
     () => {
       switch (className, style) {
       | (None, None) => "<b>"
       | (Some(cn), None) =>
-        "<b class='" ++ ReactDOMUtils.escapeHtml(cn) ++ "'>"
+        "<b class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
       | (Some(cn), Some(s)) =>
         "<b class='"
-        ++ ReactDOMUtils.escapeHtml(cn)
+        ++ StaticReactDOMUtils.escapeHtml(cn)
         ++ "' style='"
-        ++ ReactDOMUtils.escapeHtml(s)
+        ++ StaticReactDOMUtils.escapeHtml(s)
         ++ "'>"
       | (None, Some(s)) =>
-        "<b style='" ++ ReactDOMUtils.escapeHtml(s) ++ "'>"
+        "<b style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
       }
     },
     "</b>",
   );
 
 let p = (children, ~state=?, self) =>
-  React.Node(
+  StaticReact.Node(
     (),
     Empty,
-    () => "<p>" ++ ReactDOMUtils.escapeHtml(children),
+    () => "<p>" ++ StaticReactDOMUtils.escapeHtml(children),
     "</p>",
   );
 
@@ -112,22 +112,22 @@ let i =
       ~state=?,
       self,
     ) =>
-  React.Node(
+  StaticReact.Node(
     (),
     children,
     () => {
       switch (className, style) {
       | (None, None) => "<i>"
       | (Some(cn), None) =>
-        "<i class='" ++ ReactDOMUtils.escapeHtml(cn) ++ "'>"
+        "<i class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
       | (Some(cn), Some(s)) =>
         "<i class='"
-        ++ ReactDOMUtils.escapeHtml(cn)
+        ++ StaticReactDOMUtils.escapeHtml(cn)
         ++ "' style='"
-        ++ ReactDOMUtils.escapeHtml(s)
+        ++ StaticReactDOMUtils.escapeHtml(s)
         ++ "'>"
       | (None, Some(s)) =>
-        "<i style='" ++ ReactDOMUtils.escapeHtml(s) ++ "'>"
+        "<i style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
       }
     },
     "</i>",
@@ -142,22 +142,22 @@ let span =
       ~state=?,
       self,
     ) =>
-  React.Node(
+  StaticReact.Node(
     (),
     children,
     () => {
       switch (className, style) {
       | (None, None) => "<span>"
       | (Some(cn), None) =>
-        "<span class='" ++ ReactDOMUtils.escapeHtml(cn) ++ "'>"
+        "<span class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
       | (Some(cn), Some(s)) =>
         "<span class='"
-        ++ ReactDOMUtils.escapeHtml(cn)
+        ++ StaticReactDOMUtils.escapeHtml(cn)
         ++ "' style='"
-        ++ ReactDOMUtils.escapeHtml(s)
+        ++ StaticReactDOMUtils.escapeHtml(s)
         ++ "'>"
       | (None, Some(s)) =>
-        "<span style='" ++ ReactDOMUtils.escapeHtml(s) ++ "'>"
+        "<span style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
       }
     },
     "</span>",
@@ -173,43 +173,43 @@ let img =
       ~state=?,
       self,
     ) =>
-  React.Node(
+  StaticReact.Node(
     (),
     children,
     () => {
       switch (className, style, src) {
       | (None, None, None) => "<img>"
       | (Some(cn), None, None) =>
-        "<img class='" ++ ReactDOMUtils.escapeHtml(cn) ++ "'>"
+        "<img class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
       | (Some(cn), Some(s), None) =>
         "<img class='"
-        ++ ReactDOMUtils.escapeHtml(cn)
+        ++ StaticReactDOMUtils.escapeHtml(cn)
         ++ "' style='"
-        ++ ReactDOMUtils.escapeHtml(s)
+        ++ StaticReactDOMUtils.escapeHtml(s)
         ++ "'>"
       | (None, Some(s), None) =>
-        "<img style='" ++ ReactDOMUtils.escapeHtml(s) ++ "'>"
+        "<img style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
       | (None, None, Some(sr)) =>
-        "<img src='" ++ ReactDOMUtils.escapeHtml(sr) ++ "'>"
+        "<img src='" ++ StaticReactDOMUtils.escapeHtml(sr) ++ "'>"
       | (Some(cn), None, Some(sr)) =>
         "<img class='"
-        ++ ReactDOMUtils.escapeHtml(cn)
+        ++ StaticReactDOMUtils.escapeHtml(cn)
         ++ "' src='"
-        ++ ReactDOMUtils.escapeHtml(sr)
+        ++ StaticReactDOMUtils.escapeHtml(sr)
         ++ "'>"
       | (Some(cn), Some(s), Some(sr)) =>
         "<img class='"
-        ++ ReactDOMUtils.escapeHtml(cn)
+        ++ StaticReactDOMUtils.escapeHtml(cn)
         ++ "' style='"
-        ++ ReactDOMUtils.escapeHtml(s)
+        ++ StaticReactDOMUtils.escapeHtml(s)
         ++ "' src='"
-        ++ ReactDOMUtils.escapeHtml(sr)
+        ++ StaticReactDOMUtils.escapeHtml(sr)
         ++ "'>"
       | (None, Some(s), Some(sr)) =>
         "<img style='"
-        ++ ReactDOMUtils.escapeHtml(s)
+        ++ StaticReactDOMUtils.escapeHtml(s)
         ++ "' src='"
-        ++ ReactDOMUtils.escapeHtml(sr)
+        ++ StaticReactDOMUtils.escapeHtml(sr)
         ++ "'>"
       }
     },
