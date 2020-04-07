@@ -1,11 +1,10 @@
-type noAction =
-  | NoAction;
-
-let nonReducer = _ =>
-  fun
-  | NoAction => "";
-
 module Types = {
+  /**
+ * Module to break dependency cycles. Inner modules can depend only on the types.
+ */;
+  type noAction =
+    | NoAction;
+
   /* This is actually needed to ensure GADTs are inferred  */
   type empty =
     | Empty_;
@@ -26,8 +25,8 @@ module Types = {
      */
     | ElementMap(list(elem('t))): elem(list('t))
   /**
-   * Instance subtree. Mirrors the shape of JSX, instead of just being a List.
-   */
+ * Instance subtree. Mirrors the shape of JSX, instead of just being a List.
+ */
   and subtree('t) =
     | EmptyInstance: subtree(empty)
     | Instance(inst(('s, 'a) => 'sub)): subtree(('s, 'a) => 'sub)
@@ -53,28 +52,28 @@ module Types = {
   and self('t) = {
     reduceEvent: 'e. ('e => 'a, 'e) => unit,
     /**
-     * Implements the ability to cause your node to be swapped out from within
-     * its tree. Not purely functional by design. This is for things like
-     * external subscriptions that don't arive via propagations through the tree.
-     * However, this is better than simple naive mutation. That's because this
-     * "out of nowhere" operation notifies the root of the tree that it should
-     * perform a mutation. That allows the root to create an entirely new
-     * reference, leaving the previous tree completely in tact! There isn't a
-     * single mutable reference cell in the entire tree - only the root node is
-     * mutable, and even then it doesn't have to be.
-     *
-     * This Api takes highly imperative operations like request animation frame,
-     * and allows them to work well with what would otherwise be a purely
-     * functional data structure (aside from the side effects caused by
-     * subscribing upon mount etc).
-     */
+   * Implements the ability to cause your node to be swapped out from within
+   * its tree. Not purely functional by design. This is for things like
+   * external subscriptions that don't arive via propagations through the tree.
+   * However, this is better than simple naive mutation. That's because this
+   * "out of nowhere" operation notifies the root of the tree that it should
+   * perform a mutation. That allows the root to create an entirely new
+   * reference, leaving the previous tree completely in tact! There isn't a
+   * single mutable reference cell in the entire tree - only the root node is
+   * mutable, and even then it doesn't have to be.
+   *
+   * This Api takes highly imperative operations like request animation frame,
+   * and allows them to work well with what would otherwise be a purely
+   * functional data structure (aside from the side effects caused by
+   * subscribing upon mount etc).
+   */
     send: 'a => unit,
   }
   constraint 't = ('s, 'a) => 'sub
   /**
-   * The result of applying props. Now the result is a function that just waits
-   * for React to supply the state, and in turn returns the componentSpec.
-   */
+ * The result of applying props. Now the result is a function that just waits
+ * for React to supply the state, and in turn returns the componentSpec.
+ */
   and renderable('t) = (~state: 's=?, self('t)) => componentSpec('t)
   constraint 't = ('s, 'a) => 'sub
   /*
@@ -107,6 +106,10 @@ module Types = {
 };
 
 include Types;
+
+let nonReducer = _ =>
+  fun
+  | NoAction => "";
 
 let withState: type s a sub. (inst((s, a) => sub), s) => inst((s, a) => sub) =
   (inst, nextState) => {

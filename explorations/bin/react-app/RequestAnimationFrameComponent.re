@@ -6,9 +6,8 @@
  * initializer to perform side effects like the subscription to animation frame
  * in this example, and we'll provide a better hook for that.
  */
-open ReactLib;
 open StaticReact;
-open StaticReactDOM;
+open ReactDOM;
 
 type action =
   | Tick;
@@ -28,7 +27,7 @@ let (|?) = (x, getDefault) =>
 let onRaf = e => Tick;
 
 let initialStateGetter = (self, ()) => {
-  let _ = StaticReactRequestAnimationFrame.request(self.reduceEvent(onRaf));
+  let _ = ReactRequestAnimationFrame.request(self.reduceEvent(onRaf));
   "initialAnimationFrameSetup";
 };
 
@@ -46,11 +45,8 @@ let render = (~txt="default", children, ~state=?, self) => {
       /* Reason knows this is a div instance because you used div JSX!!! */
       /* The shape of instances reflects the shape of the JSX */
       let Instance2(_, Instance({subtree: Instance(d)})) = inst.subtree;
-      let divStateStr =
-        StaticReactDOM.domStateToString(StaticReact.stateOf(d));
-      ignore(
-        StaticReactRequestAnimationFrame.request(self.reduceEvent(onRaf)),
-      );
+      let divStateStr = ReactDOM.domStateToString(React.stateOf(d));
+      ignore(ReactRequestAnimationFrame.request(self.reduceEvent(onRaf)));
       state ++ "->animFiredWithDeepDivState(" ++ divStateStr ++ ")";
     },
   );

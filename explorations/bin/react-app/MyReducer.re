@@ -1,6 +1,6 @@
 [@refmt.staticExperiment];
-open ReactLib;
-open StaticReactDOM;
+open StaticReact;
+open ReactDOM;
 
 type state = int;
 
@@ -9,8 +9,8 @@ type action =
 
 type renderedTree;
 
-external makeTreeOpaque :
-  StaticReact.elem('renderedTree) => StaticReact.elem(renderedTree) =
+external makeTreeOpaque:
+  React.elem('renderedTree) => React.elem(renderedTree) =
   "%identity";
 
 let makeTreeOpaque = (() => makeTreeOpaque)();
@@ -18,12 +18,12 @@ let makeTreeOpaque = (() => makeTreeOpaque)();
 type t = (int, action) => renderedTree;
 
 let render = (children, ~state=0, self) =>
-  StaticReact.Reducer(
+  React.Reducer(
     state,
     makeTreeOpaque(
       <div
-        onClick=(e => print_string("divClicked!"))
-        className=("&MyReducer&" )
+        onClick={e => print_string("divClicked!")}
+        className="&MyReducer&"
       />,
     ),
     (_, MyAction(next)) => int_of_string(next),

@@ -1,7 +1,7 @@
 /*
  * Renders the One() JSX child into multiple slots.
  */
-/* open ReactLib; */
+/* open StaticReact; */
 
 /* type state; */
 

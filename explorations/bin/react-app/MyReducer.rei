@@ -1,4 +1,4 @@
-open ReactLib;
+open StaticReact;
 
 type state;
 
@@ -8,4 +8,4 @@ type renderedTree;
 
 type t = (state, action) => renderedTree;
 
-let render: 'children => StaticReact.renderable(t);
+let render: 'children => React.renderable(t);

@@ -1,8 +1,10 @@
 type event = unit;
 
-type state = unit;
+type domState =
+  | Stateless;
 
-type t('renderedTree) = (state, StaticReact.noAction) => 'renderedTree;
+type dom('renderedTree) =
+  (domState, StaticReactReact.noAction) => 'renderedTree;
 
 let domEventHandler = e => ();
 
@@ -14,40 +16,40 @@ let div =
       ~className: option(string)=?,
       ~style: option(string)=?,
       children,
-      ~state=?,
-      self,
-    ) =>
-  StaticReact.Node(
-    (),
-    children,
-    () => {
-      switch (className, style) {
-      | (None, None) => "<div>"
-      | (Some(cn), None) =>
-        "<div class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
-      | (Some(cn), Some(s)) =>
-        "<div class='"
-        ++ StaticReactDOMUtils.escapeHtml(cn)
-        ++ "' style='"
-        ++ StaticReactDOMUtils.escapeHtml(s)
-        ++ "'>"
-      | (None, Some(s)) =>
-        "<div style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
-      }
-    },
-    "</div>",
-  );
+    )
+    : StaticReactReact.renderable(dom(_)) =>
+  (~state: domState=Stateless, self) =>
+    StaticReactReact.Node(
+      state,
+      children,
+      () => {
+        switch (className, style) {
+        | (None, None) => "<div>"
+        | (Some(cn), None) =>
+          "<div class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
+        | (Some(cn), Some(s)) =>
+          "<div class='"
+          ++ StaticReactDOMUtils.escapeHtml(cn)
+          ++ "' style='"
+          ++ StaticReactDOMUtils.escapeHtml(s)
+          ++ "'>"
+        | (None, Some(s)) =>
+          "<div style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
+        }
+      },
+      "</div>",
+    );
 
 let i =
     (
       ~className: option(string)=?,
       ~style: option(string)=?,
       children,
-      ~state=?,
+      ~state: domState=Stateless,
       self,
     ) =>
-  StaticReact.Node(
-    (),
+  StaticReactReact.Node(
+    state,
     children,
     () => {
       switch (className, style) {
@@ -72,11 +74,11 @@ let b =
       ~className: option(string)=?,
       ~style: option(string)=?,
       children,
-      ~state=?,
+      ~state: domState=Stateless,
       self,
     ) =>
-  StaticReact.Node(
-    (),
+  StaticReactReact.Node(
+    state,
     children,
     () => {
       switch (className, style) {
@@ -96,9 +98,9 @@ let b =
     "</b>",
   );
 
-let p = (children, ~state=?, self) =>
-  StaticReact.Node(
-    (),
+let p = (children, ~state: domState=Stateless, self) =>
+  StaticReactReact.Node(
+    state,
     Empty,
     () => "<p>" ++ StaticReactDOMUtils.escapeHtml(children),
     "</p>",
@@ -109,11 +111,11 @@ let i =
       ~className: option(string)=?,
       ~style: option(string)=?,
       children,
-      ~state=?,
+      ~state=Stateless,
       self,
     ) =>
-  StaticReact.Node(
-    (),
+  StaticReactReact.Node(
+    state,
     children,
     () => {
       switch (className, style) {
@@ -139,11 +141,11 @@ let span =
       ~className: option(string)=?,
       ~style: option(string)=?,
       children,
-      ~state=?,
+      ~state=Stateless,
       self,
     ) =>
-  StaticReact.Node(
-    (),
+  StaticReactReact.Node(
+    state,
     children,
     () => {
       switch (className, style) {
@@ -170,11 +172,11 @@ let img =
       ~style: option(string)=?,
       ~src: option(string)=?,
       children,
-      ~state=?,
+      ~state=Stateless,
       self,
     ) =>
-  StaticReact.Node(
-    (),
+  StaticReactReact.Node(
+    state,
     children,
     () => {
       switch (className, style, src) {

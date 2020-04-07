@@ -14,7 +14,7 @@ let lineDent = i => newlineIndents[i > 5 ? 5 : i];
 
 
 let rec instances:
-  type t. (~nodes: bool, ~d: int, StaticReact.subtree(t)) => string =
+  type t. (~nodes: bool, ~d: int, StaticReactReact.subtree(t)) => string =
   (~nodes, ~d, subtree) => {
     let dNext = d + 1;
     switch (subtree) {
@@ -68,7 +68,7 @@ and printState: Obj.t => string =
           ? "\"" ++ String.escaped(Obj.magic(state): string) ++ "\"" : "?"
 and instance:
   type s a sub.
-    (~nodes: bool, ~d: int, StaticReact.inst((s, a) => sub)) => string =
+    (~nodes: bool, ~d: int, StaticReactReact.inst((s, a) => sub)) => string =
   (~nodes, ~d, n) => {
     let dNext = d + 1;
     switch (nodes, n.spec) {
@@ -77,7 +77,7 @@ and instance:
       let stateS = printState(stateO);
       let tail = lineDent(d) ++ "</instance>";
       let bodyAndTail =
-        StaticReact.isEmptyInstance(n.subtree)
+        StaticReactReact.isEmptyInstance(n.subtree)
           ? tail : instances(~nodes, ~d=dNext, n.subtree) ++ tail;
       let line1 = "<instance\n" ++ dent(dNext) ++ "state=" ++ stateS ++ ">\n";
       dent(d) ++ line1 ++ bodyAndTail;
@@ -85,7 +85,7 @@ and instance:
       instances(~nodes, ~d, n.subtree)
     | (_, Node(state, subelems, headerStringifier, footer)) =>
       let header = headerStringifier();
-      StaticReact.isEmptyInstance(n.subtree)
+      StaticReactReact.isEmptyInstance(n.subtree)
         ? dent(d) ++ header ++ footer
         : dent(d)
           ++ header
