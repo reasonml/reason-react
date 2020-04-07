@@ -11,7 +11,7 @@ title: Installation
 ```sh
 npm install --global bs-platform@6.2.1
 bsb -init my-react-app -theme react-hooks
-cd my-react-app && npm install && npm start
+cd my-react-app && npm install && npm run start
 # in another tab
 npm run server
 ```
