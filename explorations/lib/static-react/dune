@@ -4,5 +4,5 @@
  (public_name static-react)
  (flags (-w -9 -w -30 -w -40 -w +26 -w -27 -w -37))
  (ocamlopt_flags (-inline 100))
- (c_names react_dom_native)
+ (c_names static_react_platform_string)
 )
