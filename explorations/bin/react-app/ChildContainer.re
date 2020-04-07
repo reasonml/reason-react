@@ -1,10 +1,10 @@
 [@refmt.staticExperiment];
 open ReactLib;
-open ReactDOM;
+open StaticReactDOM;
 
 type state = string;
 
-type t('c) = (state, React.noAction) => ReactDOM.t('c);
+type t('c) = (state, StaticReact.noAction) => StaticReactDOM.t('c);
 
 let oneJsx = <div />;
 
@@ -141,16 +141,16 @@ let theSame = <div> oneJsx oneJsx </div>;
 let theSame = <div> oneJsx <div /> </div>;
 
 let render:
-  (~txt: string=?, React.elem('childrenTree)) =>
-  React.renderable(t('childrenTree)) =
+  (~txt: string=?, StaticReact.elem('childrenTree)) =>
+  StaticReact.renderable(t('childrenTree)) =
   (
     ~txt="deafult",
-    children: React.elem('childrenTree),
+    children: StaticReact.elem('childrenTree),
     ~state=txt,
-    self: React.self(t('childrenTree)),
+    self: StaticReact.self(t('childrenTree)),
   ) =>
-    React.Reducer(
+    StaticReact.Reducer(
       state,
       <> <div className="childContainer"> children </div> </>,
-      React.nonReducer,
+      StaticReact.nonReducer,
     );

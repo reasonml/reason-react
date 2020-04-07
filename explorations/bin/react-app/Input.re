@@ -1,18 +1,18 @@
 [@refmt.staticExperiment];
 open ReactLib;
-open ReactDOM;
+open StaticReactDOM;
 
 type state = string;
 
 type action =
   | TextChanged(string);
 
-type renderedTree = ReactDOM.t(React.empty);
+type renderedTree = StaticReactDOM.t(StaticReact.empty);
 
 type t = (state, action) => renderedTree;
 
 let render = (~init="deafult", children, ~state=init, self) =>
-  React.Reducer(
+  StaticReact.Reducer(
     state,
     <> <div className="divRenderedByInput" /> </>,
     (_, TextChanged(s)) => state,

@@ -25,6 +25,6 @@ type renderedTree;
 /**
  * The type of the
  */
-type t = (state, React.noAction) => renderedTree;
+type t = (state, StaticReact.noAction) => renderedTree;
 
-let render: (~txt: string=?, ~size: int, 'x) => React.renderable(t);
+let render: (~txt: string=?, ~size: int, 'x) => StaticReact.renderable(t);

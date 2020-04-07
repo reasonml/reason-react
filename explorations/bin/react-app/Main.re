@@ -9,7 +9,7 @@ print_newline();
 
 let startSeconds = Sys.time();
 
-ReactPrint.suppress.contents = false;
+StaticReactPrint.suppress.contents = false;
 
 let run = () => {
   for (i in 0 to 0) {
@@ -31,92 +31,107 @@ let run = () => {
     /*       Button.render(~txt="hello", ~size=0, Empty), */
     /*       Dom.div(~className="helloClass", children), */
     /*     ); */
-    ReactPrint.printSection(
+    StaticReactPrint.printSection(
       "\n\n-------------------\nChild Container \n-------------------",
     );
-    let containerRoot = Root.create();
+    let containerRoot = StaticReactRoot.create();
     for (j in 0 to 10) {
-      Root.render(
+      StaticReactRoot.render(
         containerRoot,
         <ChildContainer txt="Foo">
           <Stateless txt="stateless" />
         </ChildContainer>,
       );
     };
-    ReactPrint.printSection(
+    StaticReactPrint.printSection(
       "\n\n-------------------\nGets Derived State From Props\n-------------------",
     );
-    let counterRoot = Root.create();
-    Root.render(
+    let counterRoot = StaticReactRoot.create();
+    StaticReactRoot.render(
       counterRoot,
       <GetsDerivedStateFromProps txt="Foo" size=0>
         stateless
       </GetsDerivedStateFromProps>,
     );
-    ReactPrint.printRoot(~title="Init:", counterRoot);
-    Root.render(
+    StaticReactPrint.printRoot(~title="Init:", counterRoot);
+    StaticReactRoot.render(
       counterRoot,
       <GetsDerivedStateFromProps txt="Foo" size=0>
         stateless
       </GetsDerivedStateFromProps>,
     );
-    ReactPrint.printRoot(
+    StaticReactPrint.printRoot(
       ~title="Update Without Changing Props:",
       counterRoot,
     );
-    Root.render(
+    StaticReactRoot.render(
       counterRoot,
       <GetsDerivedStateFromProps txt="Foo" size=8>
         stateless
       </GetsDerivedStateFromProps>,
     );
-    ReactPrint.printRoot(~title="Update With Changing Props:", counterRoot);
-    ReactPrint.printSection(
+    StaticReactPrint.printRoot(
+      ~title="Update With Changing Props:",
+      counterRoot,
+    );
+    StaticReactPrint.printSection(
       "\n\n------------------------------\nApp With Request Animation Frame \n------------------------------",
     );
-    let animRoot = Root.create();
-    Root.render(animRoot, <RequestAnimationFrameComponent txt="" />);
-    ReactPrint.printRoot(~title="Init:", animRoot);
-    RequestAnimationFrame.tick();
-    ReactPrint.printRoot(~title="Update After raf tick:", animRoot);
-    RequestAnimationFrame.tick();
-    ReactPrint.printRoot(~title="Update After raf tick:", animRoot);
+    let animRoot = StaticReactRoot.create();
+    StaticReactRoot.render(
+      animRoot,
+      <RequestAnimationFrameComponent txt="" />,
+    );
+    StaticReactPrint.printRoot(~title="Init:", animRoot);
+    StaticReactRequestAnimationFrame.tick();
+    StaticReactPrint.printRoot(~title="Update After raf tick:", animRoot);
+    StaticReactRequestAnimationFrame.tick();
+    StaticReactPrint.printRoot(~title="Update After raf tick:", animRoot);
     /* Clear this otherwise they'll show up in next loop iteration */
-    RequestAnimationFrame.clearAll();
-    ReactPrint.printSection(
+    StaticReactRequestAnimationFrame.clearAll();
+    StaticReactPrint.printSection(
       "\n\n------------------------------\nApp With Polymoprhic State \n------------------------------",
     );
-    let polyRoot = Root.create();
-    Root.render(polyRoot, <PolymorphicState anyProp="hello" size="zero" />);
-    ReactPrint.printRoot(~title="Init:", polyRoot);
-    let anotherPolyRoot = Root.create();
-    Root.render(anotherPolyRoot, <PolymorphicState anyProp=0 size="zero" />);
-    ReactPrint.printRoot(~title="Another Type Init:", anotherPolyRoot);
+    let polyRoot = StaticReactRoot.create();
+    StaticReactRoot.render(
+      polyRoot,
+      <PolymorphicState anyProp="hello" size="zero" />,
+    );
+    StaticReactPrint.printRoot(~title="Init:", polyRoot);
+    let anotherPolyRoot = StaticReactRoot.create();
+    StaticReactRoot.render(
+      anotherPolyRoot,
+      <PolymorphicState anyProp=0 size="zero" />,
+    );
+    StaticReactPrint.printRoot(~title="Another Type Init:", anotherPolyRoot);
 
-    ReactPrint.printSection(
+    StaticReactPrint.printSection(
       "\n\n------------------------------\nApp With Controlled Input\n------------------------------",
     );
-    let appRoot = Root.create();
-    Root.render(
+    let appRoot = StaticReactRoot.create();
+    StaticReactRoot.render(
       appRoot,
       <InputController shouldControlInput=false> stateless </InputController>,
     );
-    ReactPrint.printRoot(~title="Init:", appRoot);
-    Root.render(appRoot, <InputController shouldControlInput=true />);
-    ReactPrint.printRoot(~title="Update:", appRoot);
-    
-    ReactPrint.printSection(
+    StaticReactPrint.printRoot(~title="Init:", appRoot);
+    StaticReactRoot.render(
+      appRoot,
+      <InputController shouldControlInput=true />,
+    );
+    StaticReactPrint.printRoot(~title="Update:", appRoot);
+
+    StaticReactPrint.printSection(
       "\n\n------------------------------\nDisplay Text\n------------------------------",
     );
-    let appRoot = Root.create();
-    open ReactDOM;
-    Root.render(
+    let appRoot = StaticReactRoot.create();
+    open StaticReactDOM;
+    StaticReactRoot.render(
       appRoot,
-      <div className="myClassName"> 
+      <div className="myClassName">
         <p> "And you can write freeform text here" </p>
       </div>,
     );
-    ReactPrint.printRoot(~title="Freeform Text:", appRoot);
+    StaticReactPrint.printRoot(~title="Freeform Text:", appRoot);
   };
 };
 run();
