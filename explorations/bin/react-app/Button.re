@@ -4,7 +4,7 @@
  */
 
 let foo = "alskdfj";
-[@refmt.staticExperiment];
+[@react.experiment.static];
 open StaticReact;
 open ReactDOM;
 type state = string;

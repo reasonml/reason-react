@@ -1,4 +1,4 @@
-[@refmt.staticExperiment];
+[@react.experiment.static];
 open StaticReact;
 open StaticReact.React.Types;
 open ReactDOM;

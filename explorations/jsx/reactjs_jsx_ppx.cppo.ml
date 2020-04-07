@@ -83,11 +83,11 @@ type componentConfig = {
 let jsxVersion = ref None
 
 
-(** Experimental static transform. Opt in via [@refmt.staticExperiment];  *)
+(** Experimental static transform. Opt in via [@react.experiment.static];  *)
 module Static = struct
   let hasExperiment lst =
     let isStaticExperiment = function
-      | {pstr_desc = Pstr_attribute ({txt = "refmt.staticExperiment"}, _)} -> true
+      | {pstr_desc = Pstr_attribute ({txt = "react.experiment.static"}, _)} -> true
       | _ -> false
     in
     List.exists isStaticExperiment lst

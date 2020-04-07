@@ -1,4 +1,4 @@
-[@refmt.staticExperiment];
+[@react.experiment.static];
 open StaticReact;
 
 module TapIneraction = TapInteraction;

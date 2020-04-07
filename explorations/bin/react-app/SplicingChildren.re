@@ -1,4 +1,4 @@
-[@refmt.staticExperiment];
+[@react.experiment.static];
 open StaticReact;
 
 let noReducer = (_, _) => (0, 0);
