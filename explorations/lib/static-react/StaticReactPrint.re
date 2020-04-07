@@ -12,6 +12,10 @@ let dent = i => indents[i > 5 ? 5 : i];
 let dentLine = i => indentNewlines[i > 5 ? 5 : i];
 let lineDent = i => newlineIndents[i > 5 ? 5 : i];
 
+/**
+ * This is needed for pre-4.07 type checker.
+ */
+open StaticReactReact;
 
 let rec instances:
   type t. (~nodes: bool, ~d: int, StaticReactReact.subtree(t)) => string =
