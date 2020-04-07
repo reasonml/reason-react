@@ -7,4 +7,4 @@ open ReactLib;
  * render output.
  */
 let render = (~txt="default", children) =>
-  StaticReactDOM.div(~className=txt, Empty);
+  ReactDOM.div(~className=txt, Empty);

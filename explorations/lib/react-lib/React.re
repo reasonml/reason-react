@@ -234,7 +234,7 @@ and initSubtree: type sub. (subreplacer(sub), elem(sub)) => subtree(sub) =
       let initElem = (i, e) => {
         let subreplacer = swapper =>
           thisReplacer((InstanceMap(iLst) as subtree) => {
-            let (pre, inst, post) = StaticReactUtils.splitList(i, iLst);
+            let (pre, inst, post) = Utils.splitList(i, iLst);
             let next = swapper(inst);
             next === inst
               ? subtree : InstanceMap(List.concat([pre, [next], post]));
@@ -311,7 +311,7 @@ and reconcileSubtree:
     | (InstanceMap(iLst), ElementMap(eLstPrev), ElementMap(eLst)) =>
       /* TODO: implement growing/shrinking. */
       let nextSeq =
-        StaticReactUtils.mapi3(
+        Utils.mapi3(
           (i, itm, r, rPrev) => reconcileSubtree(itm, rPrev, r),
           iLst,
           eLst,

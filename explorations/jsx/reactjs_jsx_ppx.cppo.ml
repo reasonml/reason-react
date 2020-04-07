@@ -115,9 +115,9 @@ module Static = struct
     let len = List.length lst in
     let lenStr = string_of_int len in
     match lst with
-    | [] -> Exp.construct ~loc {loc; txt = Ldot ((Lident "StaticReact"), "Empty")} None
+    | [] -> Exp.construct ~loc {loc; txt = Ldot ((Lident "React"), "Empty")} None
     | [hd] -> hd
-    | _ -> Exp.construct ~loc {loc; txt = Ldot ((Lident "StaticReact"), "Element" ^ lenStr)} (Some (Exp.tuple lst))
+    | _ -> Exp.construct ~loc {loc; txt = Ldot ((Lident "React"), "Element" ^ lenStr)} (Some (Exp.tuple lst))
 
   let transformChildren ~loc  ~mapper  theList =
     let rec transformChildren' childrenLoc theList accum =
@@ -147,7 +147,7 @@ module Static = struct
     in
     let args = recursivelyTransformedArgsForMake @ [(nolabel, childrenExpr)] in
     let wrapWithReasonReactElement e =
-      Exp.construct ~loc {loc; txt = Ldot(Lident("StaticReact"), "Element")} (Some e)
+      Exp.construct ~loc {loc; txt = Ldot(Lident("React"), "Element")} (Some e)
     in
     (Exp.apply ~loc ~attrs ident args)
     |> wrapWithReasonReactElement

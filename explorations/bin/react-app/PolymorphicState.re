@@ -1,6 +1,6 @@
 [@refmt.staticExperiment];
 open ReactLib;
-open StaticReactDOM;
+open ReactDOM;
 
 /*
  * State is polymorphic, and determined based on the type of prop passed.
@@ -17,10 +17,10 @@ open StaticReactDOM;
  */
 type state('x) = ('x, 'x);
 
-type sub = StaticReactDOM.t(StaticReact.empty);
+type sub = ReactDOM.t(React.empty);
 
 type t('x) = state('x) => sub;
 
 let render =
     (~anyProp, ~size: string, children, ~state=(anyProp, anyProp), self) =>
-  StaticReact.Reducer(state, <div className=size />, (_, action) => state);
+  React.Reducer(state, <div className=size />, (_, action) => state);

@@ -6,19 +6,19 @@
 let foo = "alskdfj";
 [@refmt.staticExperiment];
 open ReactLib;
-open StaticReactDOM;
+open ReactDOM;
 type state = string;
 
 type action =
   | Click;
 
-type renderedTree = StaticReactDOM.t(StaticReact.empty);
+type renderedTree = ReactDOM.t(React.empty);
 
-type t = (state, StaticReact.noAction) => renderedTree;
+type t = (state, React.noAction) => renderedTree;
 
 let render = (~txt="default", ~size: int, children, ~state=txt, self) =>
-  StaticReact.Reducer(
+  React.Reducer(
     state,
     <> <div className="buttonClass" /> </>,
-    StaticReact.nonReducer,
+    React.nonReducer,
   );

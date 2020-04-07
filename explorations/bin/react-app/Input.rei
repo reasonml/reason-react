@@ -19,5 +19,4 @@ type renderedTree;
 type t = (state, action) => renderedTree;
 
 let render:
-  (~init: string=?, StaticReact.elem(StaticReact.empty)) =>
-  StaticReact.renderable(t);
+  (~init: string=?, React.elem(React.empty)) => React.renderable(t);
