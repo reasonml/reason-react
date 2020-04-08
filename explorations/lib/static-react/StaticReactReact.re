@@ -318,15 +318,19 @@ and reconcileSubtree:
       /* No point memoizing based on return val of reconcile being === to i,
        * because it never will be if rPrev !== r. */
       false && r === rPrev ? instance : Instance.One(reconcile(i, r))
-    | (Instance.Two(ia, ib) as _iTwo, Two(raPrev, rbPrev), Two(ra, rb)) =>
+    | (
+        Instance.Two(ia, ib) as _iTwo,
+        Element.Two(raPrev, rbPrev),
+        Element.Two(ra, rb),
+      ) =>
       Instance.Two(
         reconcileSubtree(ia, raPrev, ra),
         reconcileSubtree(ib, rbPrev, rb),
       )
     | (
         Instance.Three(ia, ib, ic) as _iThree,
-        Three(raPrev, rbPrev, rcPrev),
-        Three(ra, rb, rc),
+        Element.Three(raPrev, rbPrev, rcPrev),
+        Element.Three(ra, rb, rc),
       ) =>
       Instance.Three(
         reconcileSubtree(ia, raPrev, ra),
