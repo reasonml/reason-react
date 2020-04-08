@@ -44,7 +44,11 @@ let render = (~txt="default", children, ~state=?, self) => {
     (inst, action) => {
       /* Reason knows this is a div instance because you used div JSX!!! */
       /* The shape of instances reflects the shape of the JSX */
-      let Instance2(_, Instance({subtree: Instance(d)})) = inst.subtree;
+      let React.Instance.Two(
+            _,
+            React.Instance.One({subtree: React.Instance.One(d)}),
+          ) =
+        inst.subtree;
       let divStateStr = ReactDOM.domStateToString(React.stateOf(d));
       ignore(ReactRequestAnimationFrame.request(self.reduceEvent(onRaf)));
       state ++ "->animFiredWithDeepDivState(" ++ divStateStr ++ ")";

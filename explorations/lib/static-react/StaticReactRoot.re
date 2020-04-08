@@ -10,8 +10,8 @@ type t('t) = {
       /* Since a root is not an instance, but we need the prev elems. */
       (
         (
-          StaticReactReact.elem('s => 'sub),
-          StaticReactReact.subtree('s => 'sub),
+          StaticReactReact.Element.tree('s => 'sub),
+          StaticReactReact.Instance.tree('s => 'sub),
         ),
       ),
 }
@@ -37,7 +37,7 @@ let clear = root => root.elemsAndInstance = None;
 /**
  * The most likely to be used publicly. Rendering with a single One() JSX.
  */
-let render = (root, elems: StaticReactReact.elem('s => 'sub)) =>
+let render = (root, elems: StaticReactReact.Element.tree('s => 'sub)) =>
   switch (root.elemsAndInstance) {
   | None =>
     let nextEi = (elems, StaticReactReact.initSubtree(root.replacer, elems));

@@ -11,6 +11,15 @@ let oneJsx = <div />;
 let oneJsxWithDiv = <div> <div /> </div>;
 
 /*
+ * Goal: Be able to pass a single item unwrapped, and receive it unwrapped:
+ * <Something> [1, 2, 3] </Something>
+ *
+ * Goal: Be able to forward your children without extra wrapping.
+ * <Something> myChildrenProp </Something>
+ *
+ * Goal: Be able to embed your children without extra/explicit wrapping.
+ * <Something> <div /> myChildrenProp </Something>
+ *
  * Approach that assumes identifiers are not wrapped in Count.
  * let x = <Div />
  * let x = Div.render();

@@ -17,14 +17,15 @@ let lineDent = i => newlineIndents[i > 5 ? 5 : i];
  */
 open StaticReactReact;
 
+
 let rec instances:
-  type t. (~nodes: bool, ~d: int, StaticReactReact.subtree(t)) => string =
+  type t. (~nodes: bool, ~d: int, StaticReactReact.Instance.tree(t)) => string =
   (~nodes, ~d, subtree) => {
     let dNext = d + 1;
     switch (subtree) {
-    | EmptyInstance => nodes ? emptyString : dent(d) ++ "</>"
-    | Instance(n) => instance(~nodes, ~d, n)
-    | Instance2(n1, n2) =>
+    | Instance.Empty => nodes ? emptyString : dent(d) ++ "</>"
+    | Instance.One(n) => instance(~nodes, ~d, n)
+    | Instance.Two(n1, n2) =>
       if (!nodes) {
         dent(d)
         ++ "<>\n"
@@ -36,7 +37,7 @@ let rec instances:
       } else {
         instances(~nodes, ~d, n1) ++ "\n" ++ instances(~nodes, ~d, n2);
       }
-    | Instance3(n1, n2, n3) =>
+    | Instance.Three(n1, n2, n3) =>
       if (!nodes) {
         dentLine(d)
         ++ instances(~nodes, ~d, n1)
@@ -56,9 +57,9 @@ let rec instances:
         ++ lineDent(d)
         ++ "</>";
       }
-    | InstanceMap(lst) =>
+    | Instance.Map(lst) =>
       dent(d)
-      ++ "InstanceMap("
+      ++ "Instance.Map("
       ++ String.concat(",", List.map(instances(~nodes, ~d=dNext), lst))
       ++ ")"
     };
@@ -81,7 +82,7 @@ and instance:
       let stateS = printState(stateO);
       let tail = lineDent(d) ++ "</instance>";
       let bodyAndTail =
-        StaticReactReact.isEmptyInstance(n.subtree)
+        StaticReactReact.Instance.isEmpty(n.subtree)
           ? tail : instances(~nodes, ~d=dNext, n.subtree) ++ tail;
       let line1 = "<instance\n" ++ dent(dNext) ++ "state=" ++ stateS ++ ">\n";
       dent(d) ++ line1 ++ bodyAndTail;
@@ -89,7 +90,7 @@ and instance:
       instances(~nodes, ~d, n.subtree)
     | (_, Node(state, subelems, headerStringifier, footer)) =>
       let header = headerStringifier();
-      StaticReactReact.isEmptyInstance(n.subtree)
+      StaticReactReact.Instance.isEmpty(n.subtree)
         ? dent(d) ++ header ++ footer
         : dent(d)
           ++ header

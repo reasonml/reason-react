@@ -11,6 +11,7 @@ let startSeconds = Sys.time();
 
 ReactPrint.suppress.contents = false;
 
+
 let run = () => {
   for (i in 0 to 0) {
     let stateless = <Stateless txt="stateless" />;
