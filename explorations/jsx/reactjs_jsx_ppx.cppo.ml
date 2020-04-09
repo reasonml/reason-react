@@ -85,6 +85,19 @@ let jsxVersion = ref None
 
 (** Experimental static transform. Opt in via [@react.experiment.static];  *)
 module Static = struct
+  let treeConstructorName i = match i with
+    | 1 -> "One"
+    | 2 -> "Two"
+    | 3 -> "Three"
+    | 4 -> "Four"
+    | 5 -> "Five"
+    | 6 -> "Six"
+    | 7 -> "Seven"
+    | 8 -> "Eight"
+    | 8 -> "Nine"
+    | 10 -> "Ten"
+    | ii -> "N" ^ string_of_int ii
+    
   let hasExperiment lst =
     let isStaticExperiment = function
       | {pstr_desc = Pstr_attribute ({txt = "react.experiment.static"}, _)} -> true
@@ -113,11 +126,11 @@ module Static = struct
 
   let makeJsx ~loc lst =
     let len = List.length lst in
-    let lenStr = string_of_int len in
+    let constructorName = treeConstructorName len in
     match lst with
-    | [] -> Exp.construct ~loc {loc; txt = Longident.parse "StaticReact.React.Empty"} None
+    | [] -> Exp.construct ~loc {loc; txt = Longident.parse "StaticReact.React.Element.Empty"} None
     | [hd] -> hd
-    | _ -> Exp.construct ~loc {loc; txt = Longident.parse ("StaticReact.React.Element" ^ lenStr)} (Some (Exp.tuple lst))
+    | _ -> Exp.construct ~loc {loc; txt = Longident.parse ("StaticReact.React.Element." ^ constructorName)} (Some (Exp.tuple lst))
 
   let transformChildren ~loc  ~mapper  theList =
     let rec transformChildren' childrenLoc theList accum =
@@ -147,7 +160,7 @@ module Static = struct
     in
     let args = recursivelyTransformedArgsForMake @ [(nolabel, childrenExpr)] in
     let wrapWithReasonReactElement e =
-      Exp.construct ~loc {loc; txt = Longident.parse "StaticReact.React.Element"} (Some e)
+      Exp.construct ~loc {loc; txt = Longident.parse "StaticReact.React.Element.One"} (Some e)
     in
     (Exp.apply ~loc ~attrs ident args)
     |> wrapWithReasonReactElement
