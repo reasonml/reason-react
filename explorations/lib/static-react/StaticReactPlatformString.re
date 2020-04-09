@@ -20,4 +20,4 @@ external sub: (platformString, int, int) => platformString =
 external concat: (platformString, platformString) => platformString =
   "raw-macro:<@js><@1/>+<@2/></@js><@php><@1/>.<@2/></@php>";
 external charCodeAt: (platformString, int) => int =
-  "raw-macro:<@js><@1/>.charCodeAt(<@2/>)</@js><@php>PHP\\ord(<@1>[<@2/>])<@/php>";
+  "raw-macro:<@js><@1/>.charCodeAt(<@2/>)</@js><@php>PHP\\ord(<@1/>[<@2/>])<@/php>";
