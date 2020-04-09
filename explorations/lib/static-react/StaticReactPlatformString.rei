@@ -18,6 +18,6 @@ external len: platformString => int =
 external sub: (platformString, int, int) => platformString =
   "raw-macro:<@js><@1/>.substring(<@2/>, <@3/>)</@js><@php>PHP\\substr(<@1/>, <@2/>, <@2/> > <@3/> ? 0 : <@3/>-<@2/>)</@php>";
 external concat: (platformString, platformString) => platformString =
-  "raw-macro:<@js><@1/>+<@2/></@js><@php><@1/>.<@2/>";
+  "raw-macro:<@js><@1/>+<@2/></@js><@php><@1/>.<@2/></@php>";
 external charCodeAt: (platformString, int) => int =
   "raw-macro:<@js><@1/>.charCodeAt(<@2/>)</@js><@php>PHP\\ord(<@1>[<@2/>])<@/php>";
