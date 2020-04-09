@@ -15,7 +15,7 @@
 
 #define LEN raw$2dmacro$3a$3c$40js$3e$3c$401$2f$3e$2elength$3c$2f$40js$3e$3c$40php$3eStr$5clength$28$3c$401$2f$3e$29$3c$40$2fphp$3e
 
-#define CONCAT raw$2dmacro$3a$3c$40js$3e$3c$401$2f$3e$2b$3c$402$2f$3e$3c$2f$40js$3e$3c$40php$3e$3c$401$2f$3e$2e$3c$402$2f$3e
+#define CONCAT raw$2dmacro$3a$3c$40js$3e$3c$401$2f$3e$2b$3c$402$2f$3e$3c$2f$40js$3e$3c$40php$3e$3c$401$2f$3e$2e$3c$402$2f$3e$3c$2f$40php$3e
 
 #define CHARCODEAT raw$2dmacro$3a$3c$40js$3e$3c$401$2f$3e$2echarCodeAt$28$3c$402$2f$3e$29$3c$2f$40js$3e$3c$40php$3ePHP$5cord$28$3c$401$3e$5b$3c$402$2f$3e$5d$29$3c$40$2fphp$3e
 
