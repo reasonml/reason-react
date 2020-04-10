@@ -25,7 +25,7 @@ The `.re` files compile to straightforward `.bs.js` files. You can open `index.h
 Install the following dependencies:
 
 ```sh
-yarn add bs-platform@6.2.1 --dev --exact
+yarn add bs-platform --dev --exact
 yarn add reason-react --exact
 ```
 
