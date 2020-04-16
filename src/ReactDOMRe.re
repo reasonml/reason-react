@@ -18,12 +18,10 @@ external _getElementById: string => option(Dom.element) =
 let renderToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
   | [||] =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.renderToElementWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.renderToElementWithClassName: no element of class "
+      ++ className
+      ++ " found in the HTML.",
     )
   | elements => render(reactElement, Array.unsafe_get(elements, 0))
   };
@@ -31,12 +29,10 @@ let renderToElementWithClassName = (reactElement, className) =>
 let renderToElementWithId = (reactElement, id) =>
   switch (_getElementById(id)) {
   | None =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.renderToElementWithId : no element of id "
-        ++ id
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.renderToElementWithId : no element of id "
+      ++ id
+      ++ " found in the HTML.",
     )
   | Some(element) => render(reactElement, element)
   };
@@ -47,12 +43,10 @@ external hydrate: (React.element, Dom.element) => unit = "hydrate";
 let hydrateToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
   | [||] =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.hydrateToElementWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.hydrateToElementWithClassName: no element of class "
+      ++ className
+      ++ " found in the HTML.",
     )
   | elements => hydrate(reactElement, Array.unsafe_get(elements, 0))
   };
