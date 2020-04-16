@@ -21,14 +21,20 @@ external createElementVariadic:
   (component('props), 'props, array(element)) => element =
   "createElement";
 
-module Ref = {
-  type t('value);
+type ref('value) = {mutable current: 'value};
 
-  [@bs.get] external current: t('value) => 'value = "current";
-  [@bs.set] external setCurrent: (t('value), 'value) => unit = "current";
+module Ref = {
+  [@deprecated "Please use the type React.ref instead"]
+  type t('value) = ref('value);
+
+  [@deprecated "Please directly read from ref.current instead"]
+  [@bs.get] external current: ref('value) => 'value = "current";
+
+  [@deprecated "Please directly assign to ref.current instead"]
+  [@bs.set] external setCurrent: (ref('value), 'value) => unit = "current";
 };
 
-[@bs.module "react"] external createRef: unit => Ref.t(Js.nullable('a)) = "createRef";
+[@bs.module "react"] external createRef: unit => ref(Js.nullable('a)) = "createRef";
 
 module Children = {
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
@@ -61,7 +67,7 @@ module Context = {
 
 [@bs.module "react"]
 external forwardRef:
-  ([@bs.uncurry] (('props, Js.Nullable.t(Ref.t('a))) => element)) =>
+  ([@bs.uncurry] (('props, Js.Nullable.t(ref('a))) => element)) =>
   component('props) =
   "forwardRef";
 
@@ -306,12 +312,12 @@ external useCallback7:
 
 [@bs.module "react"] external useContext: Context.t('any) => 'any = "useContext";
 
-[@bs.module "react"] external useRef: 'value => Ref.t('value) = "useRef";
+[@bs.module "react"] external useRef: 'value => ref('value) = "useRef";
 
 [@bs.module "react"]
 external useImperativeHandle0:
   (
-    Js.Nullable.t(Ref.t('value)),
+    Js.Nullable.t(ref('value)),
     [@bs.uncurry] (unit => 'value),
     [@bs.as {json|[]|json}] _
   ) =>
@@ -321,7 +327,7 @@ external useImperativeHandle0:
 [@bs.module "react"]
 external useImperativeHandle1:
   (
-    Js.Nullable.t(Ref.t('value)),
+    Js.Nullable.t(ref('value)),
     [@bs.uncurry] (unit => 'value),
     array('a)
   ) =>
@@ -331,7 +337,7 @@ external useImperativeHandle1:
 [@bs.module "react"]
 external useImperativeHandle2:
   (
-    Js.Nullable.t(Ref.t('value)),
+    Js.Nullable.t(ref('value)),
     [@bs.uncurry] (unit => 'value),
     ('a, 'b)
   ) =>
@@ -341,7 +347,7 @@ external useImperativeHandle2:
 [@bs.module "react"]
 external useImperativeHandle3:
   (
-    Js.Nullable.t(Ref.t('value)),
+    Js.Nullable.t(ref('value)),
     [@bs.uncurry] (unit => 'value),
     ('a, 'b, 'c)
   ) =>
@@ -351,7 +357,7 @@ external useImperativeHandle3:
 [@bs.module "react"]
 external useImperativeHandle4:
   (
-    Js.Nullable.t(Ref.t('value)),
+    Js.Nullable.t(ref('value)),
     [@bs.uncurry] (unit => 'value),
     ('a, 'b, 'c, 'd)
   ) =>
@@ -361,7 +367,7 @@ external useImperativeHandle4:
 [@bs.module "react"]
 external useImperativeHandle5:
   (
-    Js.Nullable.t(Ref.t('value)),
+    Js.Nullable.t(ref('value)),
     [@bs.uncurry] (unit => 'value),
     ('a, 'b, 'c, 'd, 'e)
   ) =>
@@ -371,7 +377,7 @@ external useImperativeHandle5:
 [@bs.module "react"]
 external useImperativeHandle6:
   (
-    Js.Nullable.t(Ref.t('value)),
+    Js.Nullable.t(ref('value)),
     [@bs.uncurry] (unit => 'value),
     ('a, 'b, 'c, 'd, 'e, 'f)
   ) =>
@@ -381,7 +387,7 @@ external useImperativeHandle6:
 [@bs.module "react"]
 external useImperativeHandle7:
   (
-    Js.Nullable.t(Ref.t('value)),
+    Js.Nullable.t(ref('value)),
     [@bs.uncurry] (unit => 'value),
     ('a, 'b, 'c, 'd, 'e, 'f, 'g)
   ) =>
