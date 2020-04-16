@@ -34,12 +34,12 @@ module Children = {
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external map: (element, element => element) => element = "map";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
-  external mapWithIndex: (element, (element, int) => element) => element =
+  external mapWithIndex: (element, [@bs.uncurry] ((element, int) => element)) => element =
     "map";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external forEach: (element, element => unit) => unit = "forEach";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
-  external forEachWithIndex: (element, (element, int) => unit) => unit =
+  external forEachWithIndex: (element, [@bs.uncurry] ((element, int) => unit)) => unit =
     "forEach";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external count: element => int = "count";
