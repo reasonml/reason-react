@@ -22,13 +22,14 @@ external createElementVariadic:
   "createElement";
 
 module Ref = {
-  type t('value);
+  type t('value) = {mutable current: Js.nullable('value)};
 
-  [@bs.get] external current: t('value) => 'value = "current";
+  [@bs.get] [@bs.return nullable] external current: t('value) => option('value) = "current";
   [@bs.set] external setCurrent: (t('value), 'value) => unit = "current";
+  [@bs.set] external setNull: (t('value), [@bs.as {json|null|json}] _) => unit = "current";
 };
 
-[@bs.module "react"] external createRef: unit => Ref.t(Js.nullable('a)) = "createRef";
+[@bs.module "react"] external createRef: unit => Ref.t('a) = "createRef";
 
 module Children = {
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
