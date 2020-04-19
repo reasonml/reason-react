@@ -21,6 +21,8 @@ external createElementVariadic:
   (component('props), 'props, array(element)) => element =
   "createElement";
 
+type ref('value) = {mutable current: 'value};
+
 module Ref = {
   type t('value) = {mutable current: Js.nullable('value)};
 
@@ -307,7 +309,7 @@ external useCallback7:
 
 [@bs.module "react"] external useContext: Context.t('any) => 'any = "useContext";
 
-[@bs.module "react"] external useRef: 'value => Ref.t('value) = "useRef";
+[@bs.module "react"] external useRef: 'value => ref('value) = "useRef";
 
 [@bs.module "react"]
 external useImperativeHandle0:
