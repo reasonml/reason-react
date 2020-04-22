@@ -131,20 +131,9 @@ external useState:
   "useState";
 
 [@bs.module "react"]
-external useStateU:
-  ([@bs.uncurry] (unit => 'state)) => ('state, (. 'state => 'state) => unit) =
-  "useState";
-
-[@bs.module "react"]
 external useReducer:
   ([@bs.uncurry] (('state, 'action) => 'state), 'state) =>
   ('state, 'action => unit) =
-  "useReducer";
-
-[@bs.module "react"]
-external useReducerU:
-  ([@bs.uncurry] (('state, 'action) => 'state), 'state) =>
-  ('state, (. 'action) => unit) =
   "useReducer";
 
 [@bs.module "react"]
@@ -155,16 +144,6 @@ external useReducerWithMapState:
     'initialState => 'state
   ) =>
   ('state, 'action => unit) =
-  "useReducer";
-
-[@bs.module "react"]
-external useReducerWithMapStateU:
-  (
-    [@bs.uncurry] (('state, 'action) => 'state),
-    'initialState,
-    'initialState => 'state
-  ) =>
-  ('state, (. 'action) => unit) =
   "useReducer";
 
 [@bs.module "react"]
@@ -287,15 +266,10 @@ external useMemo7:
 
 /* This is used as return values  */
 type callback('input, 'output) = 'input => 'output;
-type callbackU('input, 'output) = (. 'input) => 'output;
 
 [@bs.module "react"]
 external useCallback:
   ([@bs.uncurry] ('input => 'output)) => callback('input, 'output) =
-  "useCallback";
-[@bs.module "react"]
-external useCallbackU:
-  ([@bs.uncurry] ('input => 'output)) => callbackU('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback0:
@@ -303,25 +277,12 @@ external useCallback0:
   callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
-external useCallback0U:
-  ([@bs.uncurry] ('input => 'output), [@bs.as {json|[]|json}] _) =>
-  callbackU('input, 'output) =
-  "useCallback";
-[@bs.module "react"]
 external useCallback1:
   ([@bs.uncurry] ('input => 'output), array('a)) => callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
-external useCallback1U:
-  ([@bs.uncurry] ('input => 'output), array('a)) => callbackU('input, 'output) =
-  "useCallback";
-[@bs.module "react"]
 external useCallback2:
   ([@bs.uncurry] ('input => 'output), ('a, 'b)) => callback('input, 'output) =
-  "useCallback";
-[@bs.module "react"]
-external useCallback2U:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b)) => callbackU('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback3:
@@ -329,19 +290,9 @@ external useCallback3:
   callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
-external useCallback3U:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
-  callbackU('input, 'output) =
-  "useCallback";
-[@bs.module "react"]
 external useCallback4:
   ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
   callback('input, 'output) =
-  "useCallback";
-[@bs.module "react"]
-external useCallback4U:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
-  callbackU('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback5:
@@ -349,32 +300,89 @@ external useCallback5:
   callback('input, 'output) =
   "useCallback";
 [@bs.module "react"]
-external useCallback5U:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
-  callbackU('input, 'output) =
-  "useCallback";
-[@bs.module "react"]
 external useCallback6:
   ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
   callback('input, 'output) =
-  "useCallback";
-[@bs.module "react"]
-external useCallback6U:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
-  callbackU('input, 'output) =
   "useCallback";
 [@bs.module "react"]
 external useCallback7:
   ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
   callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
-external useCallback7U:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
-  callbackU('input, 'output) =
-  "useCallback";
 
-[@bs.module "react"] external useContext: Context.t('any) => 'any = "useContext";
+module Uncurried = {
+  [@bs.module "react"]
+  external useState:
+    ([@bs.uncurry] (unit => 'state)) =>
+    ('state, (. ('state => 'state)) => unit) =
+    "useState";
+
+  [@bs.module "react"]
+  external useReducer:
+    ([@bs.uncurry] (('state, 'action) => 'state), 'state) =>
+    ('state, (. 'action) => unit) =
+    "useReducer";
+
+  [@bs.module "react"]
+  external useReducerWithMapState:
+    (
+      [@bs.uncurry] (('state, 'action) => 'state),
+      'initialState,
+      'initialState => 'state
+    ) =>
+    ('state, (. 'action) => unit) =
+    "useReducer";
+
+  type callback('input, 'output) = (. 'input) => 'output;
+
+  [@bs.module "react"]
+  external useCallback:
+    ([@bs.uncurry] ('input => 'output)) => callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback0:
+    ([@bs.uncurry] ('input => 'output), [@bs.as {json|[]|json}] _) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback1:
+    ([@bs.uncurry] ('input => 'output), array('a)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback2:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback3:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback4:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback5:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback6:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback7:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
+    callback('input, 'output) =
+    "useCallback";
+};
+
+[@bs.module "react"]
+external useContext: Context.t('any) => 'any = "useContext";
 
 [@bs.module "react"] external useRef: 'value => Ref.t('value) = "useRef";
 
