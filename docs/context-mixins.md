@@ -57,7 +57,7 @@ export const ThemeContext = React.createContext("light");
 ```reason
 /** ComponentToConsumeTheContext.re */
 [@bs.module "ComponentThatDefinesTheContext"]
-external themeContext: React.Context.t('context) = "ThemeContext";
+external themeContext: React.Context.t(string) = "ThemeContext";
 
 [@react.component]
 let make = () => {
