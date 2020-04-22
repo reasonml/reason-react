@@ -67,8 +67,8 @@
               }
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/zh-CN" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Invalid Prop Name</h1></header><article><div><span><p>类似于 <code>type</code>（例如<code>&lt;input type=&quot;text&quot; /&gt;</code>）之类的 prop 命名在语法上是无效的，<code>type</code> 在ReasonReact或者OCaml中是保留关键词， Use <code>&lt;input type_=&quot;text&quot; /&gt;</code> instead. This follows BuckleScript's <a href="https://bucklescript.github.io/docs/en/object.html#invalid-field-names">name mangling rules</a>.</p>
-<p>For <code>aria-*</code>: use the camelCased <code>ariaFoo</code>. E.g. <code>ariaLabel</code>. For DOM components, we'll translate it to <code>aria-label</code> under the hood.</p>
-<p>For <code>data-*</code>, this is a bit trickier; words with <code>-</code> in them aren't valid in Reason/OCaml. When you do want to write them, e.g. <code>&lt;div data-name=&quot;click me&quot; /&gt;</code>, use the following:</p>
+<p>For <code>aria-*</code> use camelCasing, e.g., <code>ariaLabel</code>. For DOM components, we'll translate it to <code>aria-label</code> under the hood.</p>
+<p>For <code>data-*</code> this is a bit trickier; words with <code>-</code> in them aren't valid in Reason/OCaml. When you do want to write them, e.g., <code>&lt;div data-name=&quot;click me&quot; /&gt;</code>, use the following:</p>
 <pre><code class="hljs css language-reason"><span class="hljs-module-identifier">ReactDOMRe</span>.createElementVariadic(
   <span class="hljs-string">"div"</span>,
   ~props=(<span class="hljs-module-identifier">ReactDOMRe</span>.objToDOMProps({<span class="hljs-string">"data-name"</span>: <span class="hljs-string">"click me"</span>})),

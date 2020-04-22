@@ -79,7 +79,7 @@ The Record API is in feature-freeze. For the newest features and better support 
 <p>In reality, this is nothing but a thinly veiled way to mutate a component's &quot;state&quot;, without triggering a re-render. ReasonReact asks you to correctly put these instance variables into your component's <code>state</code>, into Reason <a href="https://reasonml.github.io/docs/en/mutation.html"><code>ref</code>s</a>.</p>
 <pre><code class="hljs css language-reason"><span class="hljs-keyword">type</span> state = {
   someRandomState: option(string),
-  intervalId: ref(option(int))
+  intervalId: ref(option(<span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.intervalId))
 };
 
 <span class="hljs-keyword">let</span> component = <span class="hljs-comment">/* ... */</span>; <span class="hljs-comment">/* remember, `component` needs to be close to `make`, and after `state` type declaration! */</span>
@@ -93,8 +93,6 @@ The Record API is in feature-freeze. For the newest features and better support 
   didMount: ({state}) =&gt; {
     <span class="hljs-comment">/* mutate the value here */</span>
     state.intervalId <span class="hljs-operator">:=</span> <span class="hljs-constructor">Some</span>(<span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.setInterval(<span class="hljs-comment">/* ... */</span>));
-    <span class="hljs-comment">/* no extra state update needed */</span>
-    <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-constructor">NoUpdate</span>
   },
   render: <span class="hljs-comment">/* ... */</span>
 };
