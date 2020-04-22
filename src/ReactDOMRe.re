@@ -470,6 +470,8 @@ type domProps = {
   onInput: ReactEvent.Form.t => unit,
   [@bs.optional]
   onSubmit: ReactEvent.Form.t => unit,
+  [@bs.optional]
+  onInvalid: ReactEvent.Form.t => unit,
   /* Mouse events */
   [@bs.optional]
   onClick: ReactEvent.Mouse.t => unit,
@@ -1473,6 +1475,8 @@ type props = {
   onInput: ReactEvent.Form.t => unit,
   [@bs.optional]
   onSubmit: ReactEvent.Form.t => unit,
+  [@bs.optional]
+  onInvalid: ReactEvent.Form.t => unit,
   /* Mouse events */
   [@bs.optional]
   onClick: ReactEvent.Mouse.t => unit,
