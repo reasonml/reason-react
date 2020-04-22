@@ -7,7 +7,7 @@
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "exit 0"
+    "test": "yarn clean && yarn build"
   },
   "keywords": [
     "reasonml",
