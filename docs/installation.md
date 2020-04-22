@@ -13,12 +13,12 @@ npm install --global bs-platform
 bsb -init my-react-app -theme react-hooks
 cd my-react-app && npm install && npm start
 # in another tab
-npm run webpack
+npm run server
 ```
 
-BuckleScript's [bsb](https://bucklescript.github.io/docs/en/build-overview.html) build system has an `init` command that generates a project template. The `react` theme offers a lightweight solution optimized for low learning overhead and ease of integration into an existing project.
+BuckleScript's [bsb](https://bucklescript.github.io/docs/en/build-overview.html) build system has an `init` command that generates a project template. The `react-hooks` theme happens to be our official, lightweight template optimized for low learning overhead and ease of integration into an existing project.
 
-It compiles to straightforward JS files, so you can open `index.html` directly from the file system. No server needed.
+The `.re` files compile to straightforward `.bs.js` files. You can open `index.html` directly from the file system. No server needed! Change any `.re` file to see that page automatically refreshed.
 
 ## Adding Reason + Bucklescript to an existing project
 

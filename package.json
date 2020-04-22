@@ -1,13 +1,13 @@
 {
   "name": "reason-react",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "React bindings for Reason",
   "main": "lib/js/src/ReasonReact.js",
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "exit 0"
+    "test": "yarn clean && yarn build"
   },
   "keywords": [
     "reasonml",

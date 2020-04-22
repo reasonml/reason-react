@@ -2,6 +2,8 @@ type element;
 
 [@bs.val] external null: element = "null";
 
+external float: float => element = "%identity";
+external int: int => element = "%identity";
 external string: string => element = "%identity";
 
 external array: array(element) => element = "%identity";
@@ -14,7 +16,7 @@ type component('props) = componentLike('props, element);
 external createElement: (component('props), 'props) => element = "createElement";
 
 [@bs.module "react"]
-external cloneElement: (component('props), 'props) => element = "cloneElement";
+external cloneElement: (element, 'props) => element = "cloneElement";
 
 [@bs.splice] [@bs.module "react"]
 external createElementVariadic:
@@ -34,7 +36,13 @@ module Children = {
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external map: (element, element => element) => element = "map";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  external mapWithIndex: (element, [@bs.uncurry] ((element, int) => element)) => element =
+    "map";
+  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external forEach: (element, element => unit) => unit = "forEach";
+  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  external forEachWithIndex: (element, [@bs.uncurry] ((element, int) => unit)) => unit =
+    "forEach";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external count: element => int = "count";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]

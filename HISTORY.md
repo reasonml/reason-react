@@ -1,3 +1,15 @@
+# 0.7.1
+
+Small release with a couple additional bindings to existing React APIs.
+
+New APIs:
+* `React.cloneElement`
+* `React.Children`
+* `useEffect`, `useLayoutEffect`, `useMemo`, `useCallback`, `useImperativeHandle` now are all consistently implemented up to `useX7` to improve usability.
+* `ReasonReactRouter.urlNotEqual`
+
+Also removes `.cm*` generated files from the release to clean up the build process.
+
 # 0.7.0
 
 Support for [React Hooks API](https://reactjs.org/docs/hooks-intro.html). Allows for writing function components with state and complex interactions.

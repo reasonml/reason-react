@@ -1,8 +1,5 @@
 # [ReasonReact](https://reasonml.github.io/reason-react/)
 
-## 👋🏻👋🏻 [Reason Conf US](https://www.reason-conf.us) is happening October 7-8th in Chicago 🎉 
-Buy tickets or sponsor the event by visiting [https://www.reason-conf.us](https://www.reason-conf.us)
-
 [![Chat](https://img.shields.io/discord/235176658175262720.svg?logo=discord&colorb=blue)](https://discord.gg/reasonml)
 
 ## Example
