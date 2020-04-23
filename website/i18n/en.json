@@ -110,6 +110,9 @@
       "refs": {
         "title": "Refs in React"
       },
+      "render-props": {
+        "title": "Render Props"
+      },
       "render": {
         "title": "Render"
       },
