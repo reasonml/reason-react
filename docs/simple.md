@@ -67,7 +67,8 @@ let make = () => {
 
 ### A Component that Renders a List of Items
 
-```
+```reason
+/* We define the type of the item */
 type item = {
   id: string,
   text: string,
@@ -77,9 +78,11 @@ type item = {
 let make = (~items) => {
   <ul>
     {items
+     /* Belt is Reason's "standard library" */
      ->Belt.Array.map(item => {
          <li key={item.id}> {React.string(item.text)} </li>
        })
+     /* Since everything is typed, the arrays need to be, too! */
      ->React.array}
   </ul>;
 };
