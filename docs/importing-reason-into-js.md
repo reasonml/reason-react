@@ -21,7 +21,7 @@ export default function App() {
 }
 ```
 
-### Importing a default component
+### Importing a Component as Default
 
 ```reason
 /* Greeting.re */
