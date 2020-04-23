@@ -26,18 +26,19 @@ ReactDOMRe.renderToElementWithId(
 
 ```reason
 [@react.component]
-let make = (~title, ~description=?) => {
+let make = (~title, ~description=?) =>
+  <>
     /* React.Fragment works the same way as in React.js! */
-    <>
-        <h1>{title}</h1>
-        /* Handling optional variables where you don't want to render anything */
-        {switch(description) {
-            | Some(description) => <span>{React.string(description)</span>}
-            /* Since everything is typed, React.null is required */
-            | None => React.null
-        }}
-    </>
-};
+    <h1> title </h1>
+    /* Handling optional variables where you don't want to render anything */
+    {
+      switch (description) {
+      | Some(description) => <span> {React.string(description)} </span>
+      /* Since everything is typed, React.null is required */
+      | None => React.null
+      }
+    }
+  </>;
 ```
 
 ### A Form Component with React.js Differences
@@ -45,47 +46,47 @@ let make = (~title, ~description=?) => {
 ```reason
 [@react.component]
 let make = () => {
-    /* unused variables are prefixed with an underscore */
-    let onSubmit = _event => {
-        Js.log("Hello this is a log!");
-    };
+  /* unused variables are prefixed with an underscore */
+  let onSubmit = _event => Js.log("Hello this is a log!");
 
-    /* onSubmit=onSubmit turns to just onSubmit */
-    <form onSubmit>
-        /* class names work the same way */
-        <input className="w-full"
-            /* type_ is underscored b/c its a reserved word in Reason */
-            type_="text"
-            /* No brackets needed! */
-            autoFocus=true
-            placeholder="Game Code"
-        />
-        <button type_="submit">
-            {React.string("Button label")}
-        </button>
-    </form>
+  /* onSubmit=onSubmit turns to just onSubmit */
+  <form onSubmit>
+
+      <input
+        className="w-full"
+        /* type_ is underscored b/c its a reserved word in Reason */
+        type_="text"
+        /* No brackets needed! */
+        autoFocus=true
+        placeholder="Game Code"
+      />
+      <button type_="submit"> {React.string("Button label")} </button>
+    </form>;
+    /* class names work the same way */
 };
 ```
 
 ### A Component that Renders a List of Items
 
+This component uses [Belt](https://reasonml.org/apis/javascript/latest/belt), Reason's preferred Standard Library.
+
 ```reason
-/* We define the type of the item */ 
+/* We define the type of the item */
 type item = {
   id: string,
   text: string,
 };
 
 [@react.component]
-let make = (~items) => {
+let make = (~items) =>
   <ul>
-    {items
-     /* Belt is Reason's "standard library" */
-     ->Belt.Array.map(item => {
-         <li key={item.id}> {React.string(item.text)} </li>
-       })
-     /* Since everything is typed, the arrays need to be, too! */
-     ->React.array}
+    {
+      items
+      ->Belt.Array.map(item =>
+          <li key={item.id}> {React.string(item.text)} </li>
+        )
+      /* Since everything is typed, the arrays need to be, too! */
+      ->React.array
+    }
   </ul>;
-};
 ```
