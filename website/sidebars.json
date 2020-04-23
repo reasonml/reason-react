@@ -55,6 +55,7 @@
       "use-state-use-effect",
       "reason-using-js",
       "js-using-reason",
+      "gentype",
       "example-projects"
     ]
   },
