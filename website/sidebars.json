@@ -53,6 +53,8 @@
       "usereducer-hook",
       "useeffect-hook",
       "use-state-use-effect",
+      "importing-js-into-reason",
+      "importing-reason-into-js",
       "reason-using-js",
       "js-using-reason",
       "gentype",
