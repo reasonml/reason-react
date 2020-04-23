@@ -26,9 +26,6 @@
       "context-mixins": {
         "title": "Context & Mixins"
       },
-      "counter": {
-        "title": "Counter"
-      },
       "creation-props-self": {
         "title": "Creation, Props & Self"
       },
@@ -58,6 +55,12 @@
       },
       "im-having-a-type-error": {
         "title": "I'm Having a Type Error"
+      },
+      "importing-js-into-reason": {
+        "title": "Importing JS into Reason"
+      },
+      "importing-reason-into-js": {
+        "title": "Importing Reason into JS"
       },
       "installation": {
         "title": "Installation"
