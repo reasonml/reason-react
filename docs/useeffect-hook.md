@@ -6,7 +6,7 @@ title: useEffect Hook
 
 Here's a simple example of how to use React's `useState` with `useEffects`.
 
-### Cleaning up an effect
+### Cleaning up an Effect
 
 ```reason
 [@react.component]
@@ -19,7 +19,7 @@ let make = () => {
 }
 ```
 
-### Conditionally firing an effect
+### Conditionally Firing an Effect
 
 With this, the subscription will only be recreated when `~source` changes
 

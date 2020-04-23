@@ -6,7 +6,7 @@ title: useState Hook
 
 >The setState function is used to update the state. It accepts a new state value and enqueues a re-render of the component.
 
-Counter example
+### A Simple Counter Example
 
 ```reason
 type action =

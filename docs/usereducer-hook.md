@@ -2,11 +2,9 @@
 title: useReducer Hook
 ---
 
-[React.js docs for useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer);
+[React.js docs for useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer)
 
 >useReducer is usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks.
-
-Here's the counter example from `useState`, rewritten to use a reducer:
 
 ```reason
 /* we create a type for the action */
@@ -33,6 +31,7 @@ let make = () => {
     Some(() => Js.Global.clearInterval(timerId));
   });
 
+  /* ints need to be converted to strings, that are then consumed by React.string */
   <div> {React.string(string_of_int(state.count))} </div>;
 };
 ```

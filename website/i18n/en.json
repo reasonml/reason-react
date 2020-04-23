@@ -50,6 +50,9 @@
       "functional-component": {
         "title": "Functional Component"
       },
+      "gentype": {
+        "title": "Gentype & Typescript"
+      },
       "i-really-need-feature-x-from-reactjs": {
         "title": "I Really Need Feature X From ReactJS"
       },
@@ -95,6 +98,9 @@
       "reason-using-js": {
         "title": "ReasonReact using ReactJS"
       },
+      "reasonreactcompat": {
+        "title": "ReasonReactCompat: migrating to 0.7.0 and JSX v3"
+      },
       "record-field-send-handle-not-found": {
         "title": "Record Field send/handle Not Found"
       },
@@ -117,7 +123,7 @@
         "title": "send/handle callbacks having Incompatible Types"
       },
       "simple": {
-        "title": "Simple"
+        "title": "Simple Examples"
       },
       "state-actions-reducer": {
         "title": "State, Actions & Reducer"
@@ -132,7 +138,16 @@
         "title": "Ternary Shortcut"
       },
       "use-state-use-effect": {
-        "title": "Use State and Use Effect"
+        "title": "useState, useEffect in a Form"
+      },
+      "useeffect-hook": {
+        "title": "useEffect Hook"
+      },
+      "usereducer-hook": {
+        "title": "useReducer Hook"
+      },
+      "usestate-hook": {
+        "title": "useState Hook"
       },
       "what-and-why": {
         "title": "What & Why"
