@@ -14,26 +14,25 @@ type action =
   | Tick;
 
 /* and do the same for state */
-type state = {
-  count: int,
-};
+type state = {count: int};
 
 [@react.component]
 let make = () => {
-  let (state, dispatch) = React.useReducer(
-    (state, action) =>
-      switch (action) {
-      | Tick => {count: state.count + 1}
-      },
-    {count: 0}
-  );
+  let (state, dispatch) =
+    React.useReducer(
+      (state, action) =>
+        switch (action) {
+        | Tick => {count: state.count + 1}
+        },
+      {count: 0},
+    );
 
   /* useEffect hook takes 0 arguments hence, useEffect0 */
   React.useEffect0(() => {
     let timerId = Js.Global.setInterval(() => dispatch(Tick), 1000);
-    Some(() => Js.Global.clearInterval(timerId))
+    Some(() => Js.Global.clearInterval(timerId));
   });
-  
-  <div>{React.string(string_of_int(state.count))}</div>;
+
+  <div> {React.string(string_of_int(state.count))} </div>;
 };
 ```
