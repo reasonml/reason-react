@@ -2,6 +2,8 @@
 title: Simple
 ---
 
+### Basic Greeting Component
+
 ```reason
 /* Greeting.re */
 
