@@ -4,6 +4,8 @@ title: Simple Examples
 
 ### A Simple Component
 
+Reason's returns are implicit so you don't need to write `return`, it'll be the last item in the block:
+
 ```reason
 /* Greeting.re */
 
@@ -68,7 +70,7 @@ let make = () => {
 ### A Component that Renders a List of Items
 
 ```reason
-/* We define the type of the item */
+/* We define the type of the item */ 
 type item = {
   id: string,
   text: string,

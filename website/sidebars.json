@@ -49,8 +49,10 @@
   "examples": {
     "Code Snippets": [
       "simple",
+      "usestate-hook",
+      "usereducer-hook",
+      "useeffect-hook",
       "counter",
-      "use-state-use-effect",
       "reason-using-js",
       "js-using-reason",
       "example-projects"
