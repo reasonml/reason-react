@@ -1,8 +1,8 @@
 ---
-title: Simple
+title: Simple Examples
 ---
 
-### Basic Greeting Component
+### A Simple Component
 
 ```reason
 /* Greeting.re */
@@ -20,7 +20,7 @@ ReactDOMRe.renderToElementWithId(
 );
 ```
 
-### Optional Arguments & React.Fragment
+### A Component with Optional Arguments and React.Fragment
 
 ```reason
 [@react.component]
@@ -38,7 +38,7 @@ let make = (~title, ~description=?) => {
 };
 ```
 
-### Form handler
+### A Form Component with React.js Differences
 
 ```reason
 [@react.component]
@@ -62,5 +62,25 @@ let make = () => {
             {React.string("Button label")}
         </button>
     </form>
+};
+```
+
+### A Component that Renders a List of Items
+
+```
+type item = {
+  id: string,
+  text: string,
+};
+
+[@react.component]
+let make = (~items) => {
+  <ul>
+    {items
+     ->Belt.Array.map(item => {
+         <li key={item.id}> {React.string(item.text)} </li>
+       })
+     ->React.array}
+  </ul>;
 };
 ```
