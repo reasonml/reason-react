@@ -53,6 +53,7 @@ let make = () => {
   <form onSubmit>
 
       <input
+        /* class names work the same way */
         className="w-full"
         /* type_ is underscored b/c its a reserved word in Reason */
         type_="text"
@@ -62,7 +63,6 @@ let make = () => {
       />
       <button type_="submit"> {React.string("Button label")} </button>
     </form>;
-    /* class names work the same way */
 };
 ```
 
@@ -71,7 +71,7 @@ let make = () => {
 This component uses [Belt](https://reasonml.org/apis/javascript/latest/belt), Reason's preferred Standard Library.
 
 ```reason
-/* We define the type of the item */
+/* We define the type of the item (this is a record) */
 type item = {
   id: string,
   text: string,

@@ -53,6 +53,7 @@
       "usereducer-hook",
       "useeffect-hook",
       "use-state-use-effect",
+      "usedebounce-custom-hook",
       "importing-js-into-reason",
       "importing-reason-into-js",
       "reason-using-js",

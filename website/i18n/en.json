@@ -143,6 +143,9 @@
       "use-state-use-effect": {
         "title": "useState, useEffect in a Form"
       },
+      "usedebounce-custom-hook": {
+        "title": "A Custom useDebounce Hook"
+      },
       "useeffect-hook": {
         "title": "useEffect Hook"
       },
