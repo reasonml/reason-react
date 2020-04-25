@@ -119,6 +119,28 @@ module Suspense = {
     "Suspense";
 };
 
+/* Experimental React.SuspenseList */
+module SuspenseList = {
+  [@bs.obj]
+  external makeProps:
+    (~children: element=?, ~revealOrder: string=?, ~tail: string=?, unit) =>
+    {
+      .
+      "children": option(element),
+      "revealOrder": option(string),
+      "tail": option(string),
+    } = "";
+
+  [@bs.module "react"]
+  external make:
+    component({
+      .
+      "children": option(element),
+      "revealOrder": option(string),
+      "tail": option(string),
+    }) =
+    "SuspenseList";
+};
 /* HOOKS */
 
 /*
