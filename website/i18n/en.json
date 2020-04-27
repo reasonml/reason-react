@@ -24,10 +24,7 @@
         "title": "Components"
       },
       "context-mixins": {
-        "title": "Context & Mixins?"
-      },
-      "counter": {
-        "title": "Counter"
+        "title": "Context & Mixins"
       },
       "creation-props-self": {
         "title": "Creation, Props & Self"
@@ -50,11 +47,20 @@
       "functional-component": {
         "title": "Functional Component"
       },
+      "gentype": {
+        "title": "Gentype & Typescript"
+      },
       "i-really-need-feature-x-from-reactjs": {
         "title": "I Really Need Feature X From ReactJS"
       },
       "im-having-a-type-error": {
         "title": "I'm Having a Type Error"
+      },
+      "importing-js-into-reason": {
+        "title": "Importing JS into Reason"
+      },
+      "importing-reason-into-js": {
+        "title": "Importing Reason into JS"
       },
       "installation": {
         "title": "Installation"
@@ -75,10 +81,10 @@
         "title": "ReactJS using ReasonReact"
       },
       "jsx-2": {
-        "title": "JSX Record API"
+        "title": "JSX (Old, Version 2)"
       },
       "jsx": {
-        "title": "JSX"
+        "title": "JSX (Version 3)"
       },
       "lifecycles": {
         "title": "Lifecycles"
@@ -95,11 +101,17 @@
       "reason-using-js": {
         "title": "ReasonReact using ReactJS"
       },
+      "reasonreactcompat": {
+        "title": "ReasonReactCompat: migrating to 0.7.0 and JSX v3"
+      },
       "record-field-send-handle-not-found": {
         "title": "Record Field send/handle Not Found"
       },
       "refs": {
         "title": "Refs in React"
+      },
+      "render-props": {
+        "title": "Render Props"
       },
       "render": {
         "title": "Render"
@@ -117,7 +129,7 @@
         "title": "send/handle callbacks having Incompatible Types"
       },
       "simple": {
-        "title": "Simple"
+        "title": "Simple Examples"
       },
       "state-actions-reducer": {
         "title": "State, Actions & Reducer"
@@ -130,6 +142,21 @@
       },
       "ternary-shortcut": {
         "title": "Ternary Shortcut"
+      },
+      "use-state-use-effect": {
+        "title": "useState, useEffect in a Form"
+      },
+      "usedebounce-custom-hook": {
+        "title": "A Custom useDebounce Hook"
+      },
+      "useeffect-hook": {
+        "title": "useEffect Hook"
+      },
+      "usereducer-hook": {
+        "title": "useReducer Hook"
+      },
+      "usestate-hook": {
+        "title": "useState Hook"
       },
       "what-and-why": {
         "title": "What & Why"
@@ -147,7 +174,7 @@
       "Getting Started": "Getting Started",
       "Core": "Core",
       "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
-      "Record API [frozen api]": "Record API [frozen api]",
+      "Record API (deprecated)": "Record API (deprecated)",
       "FAQ": "FAQ",
       "Code Snippets": "Code Snippets",
       "Community": "Community",
@@ -165,12 +192,12 @@
     "Need help?|no description given": "Need help?",
     "This project is maintained by a dedicated group of people.|statement made to reader": "This project is maintained by a dedicated group of people.",
     "Get Started|no description given": "Get Started",
+    "It's Just React|no description given": "It's Just React",
+    "Just a bunch of zero-runtime type definitions and lightweight utilities, for the same React you've come to know.|no description given": "Just a bunch of zero-runtime type definitions and lightweight utilities, for the same React you've come to know.",
     "Safe and Sound|no description given": "Safe and Sound",
-    "It's Just Reason. We leverage the existing type system to create a library that types just right.|no description given": "It's Just Reason. We leverage the existing type system to create a library that types just right.",
-    "Playground for Future React|no description given": "Playground for Future React",
-    "Lightweight, first-class support for the ReactJS community idioms you've been using.|no description given": "Lightweight, first-class support for the ReactJS community idioms you've been using.",
+    "Simple, solid and inferred using Reason types. Write the same React code, get your type system guarantees automatically.|no description given": "Simple, solid and inferred using Reason types. Write the same React code, get your type system guarantees automatically.",
     "Drop In|no description given": "Drop In",
-    "Easily integrate ReasonReact into your existing app. Convert a file, quickly see benefits.|no description given": "Easily integrate ReasonReact into your existing app. Convert a file, quickly see benefits.",
+    "Powered by ReactJS under the hood. Freely integrate your existing React libraries and knowledge.|no description given": "Powered by ReactJS under the hood. Freely integrate your existing React libraries and knowledge.",
     "QuickStart|no description given": "QuickStart",
     "Examples|no description given": "Examples",
     "Projects Using ReasonReact|no description given": "Projects Using ReasonReact",

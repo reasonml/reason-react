@@ -1,13 +1,13 @@
 {
   "name": "reason-react",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "React bindings for Reason",
   "main": "lib/js/src/ReasonReact.js",
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "exit 0"
+    "test": "yarn clean && yarn build"
   },
   "keywords": [
     "reasonml",
@@ -22,10 +22,10 @@
   },
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
-    "bs-platform": "5.0.3"
+    "bs-platform": "^7.0.1"
   },
-  "dependencies": {
-    "react": ">=16.8.1",
-    "react-dom": ">=16.8.1"
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
   }
 }
