@@ -46,3 +46,5 @@ export default function App() {
     )
 }
 ```
+
+Make sure you check out [Examples](simple) for more!
