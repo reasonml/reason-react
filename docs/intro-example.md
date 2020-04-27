@@ -31,7 +31,7 @@ ReactDOM.render(<Greeting name="John"> document.getElementById("root"));
 
 ### Using Greeting in an existing Javascript/Typescript App
 
-It's easy to import a Reason component into your existing app. All Reason extensions will have `bs` and export your component as `make`. You can rename it as so so it imports nicely:
+It's easy to import a Reason component into your existing app. All Reason extensions will have `bs` and export your component as `make`. You can rename it and call it as you usually do. [Gentype](https://github.com/cristianoc/genType) makes this easier (see the example).
 
 ```js
 /* file: App.js */
