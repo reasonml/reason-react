@@ -2,7 +2,7 @@
 title: Intro Example
 ---
 
-Here's a small overview of the ReasonReact API. No worries if something doesn't make sense, the docs will cover everything.
+Here is a small overview of the ReasonReact API before we start. No worries if some of these are unfamiliar; the docs cover all of them.
 
 ## The component "Greeting"
 
