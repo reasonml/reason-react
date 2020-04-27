@@ -213,6 +213,8 @@ module Mouse: {
   [@bs.send]
   external getModifierState: (t, string) => bool = "getModifierState";
   [@bs.get] external metaKey: t => bool = "metaKey";
+  [@bs.get] external movementX: t => int = "movementX";
+  [@bs.get] external movementY: t => int = "movementY";
   [@bs.get] external pageX: t => int = "pageX";
   [@bs.get] external pageY: t => int = "pageY";
   [@bs.get] [@bs.return nullable]
