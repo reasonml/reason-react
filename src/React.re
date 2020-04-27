@@ -127,14 +127,23 @@ module Suspense = {
 
 /* Experimental React.SuspenseList */
 module SuspenseList = {
+  type revealOrder;
+  type tail;
   [@bs.obj]
   external makeProps:
-    (~children: element=?, ~revealOrder: string=?, ~tail: string=?, unit) =>
+    (~children: element=?, ~revealOrder: ([@bs.string] [
+      | `forwards
+      | `backwards
+      | `together
+    ])=?, ~tail: ([@bs.string] [
+      | `collapsed
+      | `hidden
+    ])=?, unit) =>
     {
       .
       "children": option(element),
-      "revealOrder": option(string),
-      "tail": option(string),
+      "revealOrder": option(revealOrder),
+      "tail": option(tail),
     } = "";
 
   [@bs.module "react"]
@@ -142,8 +151,8 @@ module SuspenseList = {
     component({
       .
       "children": option(element),
-      "revealOrder": option(string),
-      "tail": option(string),
+      "revealOrder": option(revealOrder),
+      "tail": option(tail),
     }) =
     "SuspenseList";
 };
