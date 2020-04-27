@@ -1,8 +1,8 @@
 ---
-title: Simple Examples
+title: A List of Simple Examples
 ---
 
-### A Simple Component
+### A Basic Greeting Component
 
 Reason's returns are implicit so you don't need to write `return`, it'll be the last item in the block:
 
@@ -13,13 +13,16 @@ Reason's returns are implicit so you don't need to write `return`, it'll be the 
 let make = (~message) => <h1> {React.string(message)} </h1>;
 ```
 
-Usage in another file:
+Usage in another file. Looks very similar to JSX in Javascript!
 
 ```reason
-ReactDOMRe.renderToElementWithId(
-  <Greeting message="Hello World!" />,
-  "index",
-);
+/* ... */
+
+<div>
+  <Greeting message="Hello World!">
+</div>
+
+/* ... */
 ```
 
 ### A Component with Optional Arguments and React.Fragment

@@ -1,5 +1,5 @@
 ---
-title: Adding data-* props
+title: Adding data-* attributes
 ---
 
 Reason doesn't currently supporting using props with dashes, ie: `data-id` or `data-whatever`. There's a great way you can overcome this by creating a `Spread` component:
