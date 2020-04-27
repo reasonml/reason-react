@@ -60,7 +60,8 @@
       "reason-using-js",
       "js-using-reason",
       "gentype",
-      "example-projects"
+      "example-projects",
+      "graphql-apollo"
     ]
   },
   "community-menu": {
