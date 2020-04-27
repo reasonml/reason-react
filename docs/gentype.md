@@ -24,7 +24,9 @@ Read more [here](https://github.com/cristianoc/genType#installation)
 ### Basic Greeting Component
 
 ```reason
-[@gentype "Greeting"]
+/* Greeting.re */
+
+[@genType]
 [@react.component]
 let make = (~message) => {
     <div>{React.string(message)}</div>
