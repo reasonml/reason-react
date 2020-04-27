@@ -7,7 +7,7 @@ title: Render Props
 ```reason
 [@react.component]
 let make = () => {
-  <Loader render={<div />} />
+  <Loader render={() => <div />} />
 };
 ```
 
