@@ -37,6 +37,37 @@ let renderToElementWithId = (reactElement, id) =>
   | Some(element) => render(reactElement, element)
   };
 
+module Experimental = {
+  type root;
+
+  [@bs.module "react-dom"]
+  external createRoot: Dom.element => root = "createRoot";
+
+  [@bs.send] external render: (root, React.element) => unit = "";
+
+  let createRootWithClassName = className =>
+    switch (_getElementsByClassName(className)) {
+    | [||] =>
+      Error(
+        "ReactDOMRe.Unstable.createRootWithClassName: no element of class "
+        ++ className
+        ++ " found in the HTML.",
+      )
+    | elements => Ok(createRoot(Array.unsafe_get(elements, 0)))
+    };
+
+  let createRootWithId = id =>
+    switch (_getElementById(id)) {
+    | None =>
+      Error(
+        "ReactDOMRe.Unstable.createRootWithId: no element of id "
+        ++ id
+        ++ " found in the HTML.",
+      )
+    | Some(element) => Ok(createRoot(element))
+    };
+};
+
 [@bs.val] [@bs.module "react-dom"]
 external hydrate: (React.element, Dom.element) => unit = "hydrate";
 
