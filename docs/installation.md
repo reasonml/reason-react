@@ -15,6 +15,7 @@ BuckleScript's [bsb](https://bucklescript.github.io/docs/en/build-overview.html)
 The `.re` files compile to straightforward `.bs.js` files. You can open `index.html` directly from the file system. No server needed! Change any `.re` file to see that page automatically refreshed.
 
 ```sh
+# you can use yarn too (yarn global add bs-platform)
 npm install --global bs-platform
 
 # creates project folder

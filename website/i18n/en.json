@@ -95,6 +95,9 @@
       "reason-using-js": {
         "title": "ReasonReact using ReactJS"
       },
+      "reasonreactcompat": {
+        "title": "ReasonReactCompat: migrating to 0.7.0 and JSX v3"
+      },
       "record-field-send-handle-not-found": {
         "title": "Record Field send/handle Not Found"
       },

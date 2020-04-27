@@ -2,7 +2,7 @@
 title: Intro Example
 ---
 
-Here is a small overview of the ReasonReact API before we start. No worries if some of these are unfamiliar; the docs cover all of them.
+Here's a small overview of the ReasonReact API. No worries if something doesn't make sense, the docs will cover everything.
 
 ## The component "Greeting"
 
@@ -14,12 +14,35 @@ let make = (~name) =>
   <button> {ReasonReact.string("Hello " ++ name ++ "!")} </button>;
 ```
 
-## A usage of the component
+## Using Greeting in your App
 
-(assuming there's a `div` on the page with id `greeting`)
+If you're writing your entire React app in Reason, you'll probably have a `ReactDOM.render` in an index.js. This is what that looks like in Reason:
 
 ```reason
 /* file: Index.re */
+ReactDOMRe.renderToElementWithId(<Greeting name="John" />, "root");
+```
 
-ReactDOMRe.renderToElementWithId(<Greeting name="John" />, "greeting");
+This is how you used to write this in plain Javascript (index.js):
+```js
+/* file: index.js */
+ReactDOM.render(<Greeting name="John"> document.getElementById("root"));
+```
+
+### Using Greeting in an existing Javascript/Typescript App
+
+It's easy to import a Reason component into your existing app. All Reason extensions will have `bs` and export your component as `make`. You can rename it as so so it imports nicely:
+
+```js
+/* file: App.js */
+
+import { make as Greeting } from './Greeting.bs'
+
+export default function App() {
+    return (
+        <div>
+            <Greeting name="Peter" />
+        </div>
+    )
+}
 ```
