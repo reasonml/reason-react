@@ -50,8 +50,8 @@
       "gentype": {
         "title": "Gentype & Typescript"
       },
-      "graphql": {
-        "title": "GraphQL"
+      "graphql-apollo": {
+        "title": "GraphQL & Apollo"
       },
       "i-really-need-feature-x-from-reactjs": {
         "title": "I Really Need Feature X From ReactJS"
