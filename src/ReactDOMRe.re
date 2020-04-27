@@ -94,7 +94,15 @@ module Ref = {
   type callbackDomRef = Js.nullable(Dom.element) => unit;
 
   external domRef: currentDomRef => domRef = "%identity";
-  external callbackDomRef: callbackDomRef => domRef = "%identity";
+
+  [@bs.module "react"]
+  external callbackDomRef:
+    (
+      [@bs.uncurry] (Js.nullable(Dom.element) => unit),
+      [@bs.as {json|[]|json}] _
+    ) =>
+    domRef =
+    "useCallback";
 };
 
 /* This list isn't exhaustive. We'll add more as we go. */
