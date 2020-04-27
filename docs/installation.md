@@ -6,21 +6,30 @@ title: Installation
 
 ## BuckleScript
 
-[BuckleScript](http://bucklescript.github.io/) compiles ReasonML code to JavaScript. You can get it with:
+[BuckleScript](http://bucklescript.github.io/) is the tool that compiles ReasonML code to JavaScript. Every project that uses BuckleScript will have a `bsconfig.json` file (the same way you'd have `tsconfig.json` in a Typescript project) with project specific settings.
 
-```sh
-npm install --global bs-platform
-bsb -init my-react-app -theme react-hooks
-cd my-react-app && npm install && npm start
-# in another tab
-npm run server
-```
+### Using Bucklescript init
 
 BuckleScript's [bsb](https://bucklescript.github.io/docs/en/build-overview.html) build system has an `init` command that generates a project template. The `react-hooks` theme happens to be our official, lightweight template optimized for low learning overhead and ease of integration into an existing project.
 
 The `.re` files compile to straightforward `.bs.js` files. You can open `index.html` directly from the file system. No server needed! Change any `.re` file to see that page automatically refreshed.
 
-## Adding Reason + Bucklescript to an existing project
+```sh
+npm install --global bs-platform
+
+# creates project folder
+bsb -init my-react-app -theme react-hooks
+
+# cd into that folder, npm install, start
+cd my-react-app && npm install && npm start
+
+# in another tab
+npm run server
+```
+
+### Adding Reason to an existing React.js Project (Create React App, Next.js, etc.)
+
+Set up is very straight forward! Install two dependencies, add some scripts and create a bsconfig.json file.
 
 Install the following dependencies:
 
@@ -29,7 +38,7 @@ yarn add bs-platform --dev --exact
 yarn add reason-react --exact
 ```
 
-Add scripts to package.json:
+Add scripts to `package.json`:
 
 ```json
 "scripts": {
@@ -38,7 +47,7 @@ Add scripts to package.json:
 }
 ```
 
-Create a bsconfig.json file in the root of your project with the following. You can change the name.
+Create a `bsconfig.json` file in the root of your project with the following. All the settings are already defaults, most of this is boilerplate. The important fields are `name`, `bs-dependencies` and `ppx-flags`. As you can see, we've added `reason-react`. This tells Reason where to look for bindings (similar to depdencies in your package.json).
 
 ```json
 {
@@ -66,3 +75,7 @@ Create a bsconfig.json file in the root of your project with the following. You 
   "refmt": 3
 }
 ```
+
+That's it!
+
+**Note**: You'll have to run the reason compiler in a separate terminal. First start your project `yarn start` and in a separate terminal run: `yarn re:watch`
