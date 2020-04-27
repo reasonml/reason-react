@@ -47,13 +47,15 @@
     ]
   },
   "examples": {
-    "Code Snippets": [
+    "Recipes & Snippets": [
       "simple",
       "usestate-hook",
       "usereducer-hook",
       "useeffect-hook",
       "use-state-use-effect",
       "usedebounce-custom-hook",
+      "adding-data-props",
+      "working-with-optional-data",
       "render-props",
       "importing-js-into-reason",
       "importing-reason-into-js",

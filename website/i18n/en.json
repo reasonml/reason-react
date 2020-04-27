@@ -5,6 +5,9 @@
     "previous": "Previous",
     "tagline": "All your ReactJS knowledge, codified.",
     "docs": {
+      "adding-data-props": {
+        "title": "Adding data-* attributes"
+      },
       "callback-handlers": {
         "title": "Callback Handlers"
       },
@@ -129,7 +132,7 @@
         "title": "send/handle callbacks having Incompatible Types"
       },
       "simple": {
-        "title": "Simple Examples"
+        "title": "A List of Simple Examples"
       },
       "state-actions-reducer": {
         "title": "State, Actions & Reducer"
@@ -160,6 +163,9 @@
       },
       "what-and-why": {
         "title": "What & Why"
+      },
+      "working-with-optional-data": {
+        "title": "Working with Optional Data"
       }
     },
     "links": {
@@ -176,7 +182,7 @@
       "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
       "Record API (deprecated)": "Record API (deprecated)",
       "FAQ": "FAQ",
-      "Code Snippets": "Code Snippets",
+      "Recipes & Snippets": "Recipes & Snippets",
       "Community": "Community",
       "Try": "Try"
     }
@@ -192,6 +198,7 @@
     "Need help?|no description given": "Need help?",
     "This project is maintained by a dedicated group of people.|statement made to reader": "This project is maintained by a dedicated group of people.",
     "Get Started|no description given": "Get Started",
+    "Examples|no description given": "Examples",
     "It's Just React|no description given": "It's Just React",
     "Just a bunch of zero-runtime type definitions and lightweight utilities, for the same React you've come to know.|no description given": "Just a bunch of zero-runtime type definitions and lightweight utilities, for the same React you've come to know.",
     "Safe and Sound|no description given": "Safe and Sound",
@@ -199,7 +206,6 @@
     "Drop In|no description given": "Drop In",
     "Powered by ReactJS under the hood. Freely integrate your existing React libraries and knowledge.|no description given": "Powered by ReactJS under the hood. Freely integrate your existing React libraries and knowledge.",
     "QuickStart|no description given": "QuickStart",
-    "Examples|no description given": "Examples",
     "Projects Using ReasonReact|no description given": "Projects Using ReasonReact",
     "See Full List|no description given": "See Full List",
     "Help Translate|recruit community translators for your project": "Help Translate",

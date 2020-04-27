@@ -76,6 +76,14 @@ class HomeSplash extends React.Component {
             >
               <translate>Get Started</translate>
             </Button>
+            <Button
+              className="getStarted"
+              href={
+                siteConfig.baseUrl + "docs/" + this.props.language + "/simple"
+              }
+            >
+              <translate>Examples</translate>
+            </Button>
           </div>
         </div>
       </div>;

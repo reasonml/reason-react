@@ -4,6 +4,8 @@ title: Gentype & Typescript
 
 [Gentype](https://github.com/cristianoc/genType) is a library that automatically generates idiomatic bindings between Reason and JavaScript: either vanilla or typed with TypeScript/FlowType.
 
+If all your components are written in Typescript for example, this is a great way of supporting full type safety in both directions.
+
 Installing it includes running `yarn add --dev gentype` and creating a basic `gentypeconfig` in your `bsconfig.json` file:
 
 ```
@@ -22,7 +24,9 @@ Read more [here](https://github.com/cristianoc/genType#installation)
 ### Basic Greeting Component
 
 ```reason
-[@gentype "Greeting"]
+/* Greeting.re */
+
+[@genType]
 [@react.component]
 let make = (~message) => {
     <div>{React.string(message)}</div>
