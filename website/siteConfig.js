@@ -42,8 +42,8 @@ const users = [
     pinned: true
   },
   {
-    caption: "Aesthetic Integration",
-    image: "img/logos/aesthetic-integration.svg",
+    caption: "Imandra Inc.",
+    image: "img/logos/imandra.svg",
     infoLink: "https://www.imandra.ai",
     pinned: true
   },
@@ -54,9 +54,9 @@ const users = [
     pinned: true
   },
   {
-    caption: "SV.CO Digital Learning Platform",
-    image: "img/logos/svco.svg",
-    infoLink: "https://www.sv.co",
+    caption: "Online Teaching Platform & LMS | PupilFirst",
+    image: "img/logos/pupilfirst.svg",
+    infoLink: "https://pupilfirst.com",
     pinned: true
   },
   {
@@ -69,6 +69,17 @@ const users = [
     caption: "codeheroes",
     image: "img/logos/codeheroes.svg",
     infoLink: "https://codeheroes.io/"
+  },
+  {
+    caption: "Astrolabe Diagnostics",
+    image: "img/logos/astrolabe.svg",
+    infoLink: "https://astrolabediagnostics.com/"
+  },
+  {
+    caption: "Auditless",
+    image: "img/logos/auditless.svg",
+    infoLink: "https://auditless.com/",
+    pinned: true
   }
 ];
 

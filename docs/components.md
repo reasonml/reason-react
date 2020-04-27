@@ -20,7 +20,7 @@ let make = (~name) => {
 
 ## [@react.component]
 
-This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells the ReasonReact that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JS object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
+This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells ReasonReact that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JS object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
 
 ```reason
 [@bs.obj]
@@ -69,7 +69,33 @@ The component above could be called like this:
 
 The next thing you might notice looking at this example is the use of hooks (`useState`). ReasonReact binds to [all of the hooks that React provides](https://reactjs.org/docs/hooks-intro.html) with only minor API differences. Please refer to their excellent documentation for more information on how hooks work and for best practices.
 
-The differences that you'll notice are mostly around listing dependencies. In React they are managed by using a tuple of varying length as the final argument to the hook. Reason instead asks you to also list the number of elements you care about. So `useEffect(effect, [dep1, dep2])` becomes `useEffect2(effect, (dep1, dep2))`. Reason also always opts for the safest form of a given hook as well. So `React.useState` in JS can take an initial value or a function that returns an initial value. The former cannot be used safely in all situations, so ReasonReact only supports the second form which takes a function and uses the return.
+The differences that you'll notice are mostly around listing dependencies. In React they are passed as an array, however, as Reason does not allow elements of different types in an array, a tuple of varying length is needed as final argument to the hook. For a tuple of length `N` you would need to call `useEffectN`, as otherwise the argument would not type match given the function's type signature which would in turn require a tuple of length `N`.
+
+Accordingly, for example, the two javascript calls:
+
+```js
+useEffect(effect, [dep1, dep2]) 
+useEffect(effect, []) 
+```
+
+would be expressed as the following two reason calls:
+
+```reason
+useEffect2(effect, (dep1, dep2))
+     /* ^^^ -- Note the number matching the dependencies' length */
+useEffect0(effect)
+     /* ^^^ --- Compiles to javascript as `useEffect(effect, [])` */
+```
+
+A notable exception is that when there is only one dependency, the relevant `useEffect1` call takes an array as the final argument to the hook. While tuples are compiled into JS arrays, the singleton would not be. Therefore, it is necessary to explicitly pass the dependency wrapped in an array.
+
+```reason
+useEffect1(effect, [|dep|])
+```
+
+However, as the length of the array is not specified, you could pass an array of arbitrary length, including the empty array, `[||]`.
+
+Reason also always opts for the safest form of a given hook as well. So `React.useState` in JS can take an initial value or a function that returns an initial value. The former cannot be used safely in all situations, so ReasonReact only supports the second form which takes a function and uses the return.
 
 ## Hand-writing components
 
