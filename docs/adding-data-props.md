@@ -2,7 +2,7 @@
 title: Adding data-* attributes
 ---
 
-Reason doesn't currently supporting using props with dashes, ie: `data-id` or `data-whatever`. There's a great way you can overcome this by creating a `Spread` component:
+Reason doesn't support using props with dashes right now, ie: `data-id` or `data-whatever`. You can overcome this by creating a `Spread` component:
 
 ```reason
 /* Spread.re */
