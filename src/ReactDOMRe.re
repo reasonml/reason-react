@@ -37,38 +37,34 @@ let renderToElementWithId = (reactElement, id) =>
   | Some(element) => render(reactElement, element)
   };
 
-module Unstable = {
+module Experimental = {
   type root;
 
   [@bs.module "react-dom"]
-  external createRoot: Dom.element => root = "unstable_createRoot";
+  external createRoot: Dom.element => root = "createRoot";
 
   [@bs.send] external render: (root, React.element) => unit = "";
 
   let createRootWithClassName = className =>
     switch (_getElementsByClassName(className)) {
     | [||] =>
-      raise(
-        Invalid_argument(
-          "ReactDOMRe.Unstable.createRootWithClassName: no element of class "
-          ++ className
-          ++ " found in the HTML.",
-        ),
+      Error(
+        "ReactDOMRe.Unstable.createRootWithClassName: no element of class "
+        ++ className
+        ++ " found in the HTML.",
       )
-    | elements => createRoot(Array.unsafe_get(elements, 0))
+    | elements => Ok(createRoot(Array.unsafe_get(elements, 0)))
     };
 
   let createRootWithId = id =>
     switch (_getElementById(id)) {
     | None =>
-      raise(
-        Invalid_argument(
-          "ReactDOMRe.Unstable.createRootWithId: no element of id "
-          ++ id
-          ++ " found in the HTML.",
-        ),
+      Error(
+        "ReactDOMRe.Unstable.createRootWithId: no element of id "
+        ++ id
+        ++ " found in the HTML.",
       )
-    | Some(element) => createRoot(element)
+    | Some(element) => Ok(createRoot(element))
     };
 };
 
