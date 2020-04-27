@@ -18,12 +18,10 @@ external _getElementById: string => option(Dom.element) =
 let renderToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
   | [||] =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.renderToElementWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.renderToElementWithClassName: no element of class "
+      ++ className
+      ++ " found in the HTML.",
     )
   | elements => render(reactElement, Array.unsafe_get(elements, 0))
   };
@@ -31,12 +29,10 @@ let renderToElementWithClassName = (reactElement, className) =>
 let renderToElementWithId = (reactElement, id) =>
   switch (_getElementById(id)) {
   | None =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.renderToElementWithId : no element of id "
-        ++ id
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.renderToElementWithId : no element of id "
+      ++ id
+      ++ " found in the HTML.",
     )
   | Some(element) => render(reactElement, element)
   };
@@ -47,12 +43,10 @@ external hydrate: (React.element, Dom.element) => unit = "hydrate";
 let hydrateToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
   | [||] =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.hydrateToElementWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.hydrateToElementWithClassName: no element of class "
+      ++ className
+      ++ " found in the HTML.",
     )
   | elements => hydrate(reactElement, Array.unsafe_get(elements, 0))
   };
@@ -90,7 +84,7 @@ type domRef;
 
 module Ref = {
   type t = domRef;
-  type currentDomRef = React.Ref.t(Js.nullable(Dom.element));
+  type currentDomRef = ref(Js.nullable(Dom.element));
   type callbackDomRef = Js.nullable(Dom.element) => unit;
 
   external domRef: currentDomRef => domRef = "%identity";
@@ -263,6 +257,8 @@ type domProps = {
   [@bs.optional]
   autoComplete: string, /* has a fixed, but large-ish, set of possible values */
   [@bs.optional]
+  autoCapitalize: string, /* Mobile Safari specific */
+  [@bs.optional]
   autoFocus: bool,
   [@bs.optional]
   autoPlay: bool,
@@ -353,7 +349,7 @@ type domProps = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: int,
+  min: string,
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -1268,6 +1264,8 @@ type props = {
   [@bs.optional]
   autoComplete: string, /* has a fixed, but large-ish, set of possible values */
   [@bs.optional]
+  autoCapitalize: string, /* Mobile Safari specific */
+  [@bs.optional]
   autoFocus: bool,
   [@bs.optional]
   autoPlay: bool,
@@ -1358,7 +1356,7 @@ type props = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: int,
+  min: string,
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -2566,12 +2564,10 @@ module Style = {
     style =
     "";
   /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
-  let combine: (style, style) => style =
-    (a, b) => {
-      let a: Js.t({..}) = Obj.magic(a);
-      let b: Js.t({..}) = Obj.magic(b);
-      Js.Obj.assign(Js.Obj.assign(Js.Obj.empty(), a), b) |> Obj.magic;
-    };
+  [@bs.val]
+  external combine: ([@bs.as {json|{}|json}] _, style, style) => style =
+    "Object.assign";
+
   let unsafeAddProp: (style, string, string) => style =
     (style, property, value) => {
       let propStyle: style = {
@@ -2581,4 +2577,9 @@ module Style = {
       };
       combine(style, propStyle);
     };
+
+  [@bs.val]
+  external unsafeAddStyle:
+    ([@bs.as {json|{}|json}] _, style, Js.t({..})) => style =
+    "Object.assign";
 };

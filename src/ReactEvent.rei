@@ -162,7 +162,8 @@ module Focus: {
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external relatedTarget: t => Js.nullable(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
+  [@bs.get] [@bs.return nullable]
+  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
 };
 
 module Form: {
@@ -212,9 +213,12 @@ module Mouse: {
   [@bs.send]
   external getModifierState: (t, string) => bool = "getModifierState";
   [@bs.get] external metaKey: t => bool = "metaKey";
+  [@bs.get] external movementX: t => int = "movementX";
+  [@bs.get] external movementY: t => int = "movementY";
   [@bs.get] external pageX: t => int = "pageX";
   [@bs.get] external pageY: t => int = "pageY";
-  [@bs.get] external relatedTarget: t => Js.nullable(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
+  [@bs.get] [@bs.return nullable]
+  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
   [@bs.get] external screenX: t => int = "screenX";
   [@bs.get] external screenY: t => int = "screenY";
   [@bs.get] external shiftKey: t => bool = "shiftKey";
