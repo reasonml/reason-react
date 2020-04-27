@@ -31,6 +31,7 @@ Thanks to all of our contributors for making this happen!
 
 ### Documentation:
 
+* Adds Apollo / GraphQL Recipe [@dylanirlbeck in #537](https://github.com/reasonml/reason-react/pull/537)
 * Updates docs to be more user friendly [@peterpme in #534](https://github.com/reasonml/reason-react/pull/534)
 * Fix typo in render props [@vdanchenkov in #535](https://github.com/reasonml/reason-react/pull/535)
 * Update Examples based off React.js Docs & organize a bit [@peterpme in #532](https://github.com/reasonml/reason-react/pull/532)
