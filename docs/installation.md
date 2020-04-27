@@ -6,7 +6,7 @@ title: Installation
 
 ## BuckleScript
 
-[BuckleScript](http://bucklescript.github.io/) is the tool that compiles ReasonML code to JavaScript. Every project that uses BuckleScript will have a `bsconfig.json` file (the same way you'd have `tsconfig.json` in a Typescript project) with project specific settings.
+[BuckleScript](http://bucklescript.github.io/) is the tool that compiles ReasonML code to JavaScript. Every project that uses BuckleScript will have a `bsconfig.json` file (the same way you'd have `tsconfig.json` in a Typescript project) with project specific settings. You can install it globally or keep it project specific by adding it as a `devDependency`.
 
 ### Using Bucklescript init
 
