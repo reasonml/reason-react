@@ -96,8 +96,8 @@ module Focus = {
   include MakeEventWithType({
     type nonrec t = t;
   });
-  [@bs.get]
-  external relatedTarget: t => Js.nullable(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
+  [@bs.get] [@bs.return nullable]
+  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
 };
 
 module Form = {
@@ -127,8 +127,8 @@ module Mouse = {
   [@bs.get] external movementY: t => int = "movementY";
   [@bs.get] external pageX: t => int = "pageX";
   [@bs.get] external pageY: t => int = "pageY";
-  [@bs.get]
-  external relatedTarget: t => Js.nullable(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
+  [@bs.get] [@bs.return nullable]
+  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
   [@bs.get] external screenX: t => int = "screenX";
   [@bs.get] external screenY: t => int = "screenY";
   [@bs.get] external shiftKey: t => bool = "shiftKey";
