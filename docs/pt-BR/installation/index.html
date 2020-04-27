@@ -68,27 +68,35 @@
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/pt-BR" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">Installation</h1></header><article><div><span><p><strong>Nota</strong>: para a configuração geral do editor do Reason + BuckleScript, consulte <a href="https://reasonml.github.io/docs/en/editor-plugins">aqui</a>.</p>
 <h2><a class="anchor" aria-hidden="true" id="bucklescript"></a><a href="#bucklescript" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>BuckleScript</h2>
-<p><a href="http://bucklescript.github.io/">BuckleScript</a> compiles ReasonML code to JavaScript. You can get it with:</p>
-<pre><code class="hljs css language-sh">npm install --global bs-platform
+<p><a href="http://bucklescript.github.io/">BuckleScript</a> is the tool that compiles ReasonML code to JavaScript. Every project that uses BuckleScript will have a <code>bsconfig.json</code> file (the same way you'd have <code>tsconfig.json</code> in a Typescript project) with project specific settings. You can install it globally or keep it project specific by adding it as a <code>devDependency</code>.</p>
+<h3><a class="anchor" aria-hidden="true" id="using-bucklescript-init"></a><a href="#using-bucklescript-init" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Bucklescript init</h3>
+<p>BuckleScript's <a href="https://bucklescript.github.io/docs/en/build-overview.html">bsb</a> build system has an <code>init</code> command that generates a project template. The <code>react-hooks</code> theme happens to be our official, lightweight template optimized for low learning overhead and ease of integration into an existing project.</p>
+<p>The <code>.re</code> files compile to straightforward <code>.bs.js</code> files. You can open <code>index.html</code> directly from the file system. No server needed! Change any <code>.re</code> file to see that page automatically refreshed.</p>
+<pre><code class="hljs css language-sh"><span class="hljs-comment"># you can use yarn too (yarn global add bs-platform)</span>
+npm install --global bs-platform
+
+<span class="hljs-comment"># creates project folder</span>
 bsb -init my-react-app -theme react-hooks
+
+<span class="hljs-comment"># cd into that folder, npm install, start</span>
 <span class="hljs-built_in">cd</span> my-react-app &amp;&amp; npm install &amp;&amp; npm start
+
 <span class="hljs-comment"># in another tab</span>
 npm run server
 </code></pre>
-<p>BuckleScript's <a href="https://bucklescript.github.io/docs/en/build-overview.html">bsb</a> build system has an <code>init</code> command that generates a project template. The <code>react-hooks</code> theme happens to be our official, lightweight template optimized for low learning overhead and ease of integration into an existing project.</p>
-<p>The <code>.re</code> files compile to straightforward <code>.bs.js</code> files. You can open <code>index.html</code> directly from the file system. No server needed! Change any <code>.re</code> file to see that page automatically refreshed.</p>
-<h2><a class="anchor" aria-hidden="true" id="adding-reason-bucklescript-to-an-existing-project"></a><a href="#adding-reason-bucklescript-to-an-existing-project" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding Reason + Bucklescript to an existing project</h2>
+<h3><a class="anchor" aria-hidden="true" id="adding-reason-to-an-existing-reactjs-project-create-react-app-nextjs-etc"></a><a href="#adding-reason-to-an-existing-reactjs-project-create-react-app-nextjs-etc" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding Reason to an existing React.js Project (Create React App, Next.js, etc.)</h3>
+<p>Set up is very straight forward! Install two dependencies, add some scripts and create a bsconfig.json file.</p>
 <p>Install the following dependencies:</p>
 <pre><code class="hljs css language-sh">yarn add bs-platform --dev --exact
 yarn add reason-react --exact
 </code></pre>
-<p>Add scripts to package.json:</p>
+<p>Add scripts to <code>package.json</code>:</p>
 <pre><code class="hljs css language-json">"scripts": {
   "re:build": "bsb -make-world -clean-world",
   "re:watch": "bsb -make-world -clean-world -w"
 }
 </code></pre>
-<p>Create a bsconfig.json file in the root of your project with the following. You can change the name.</p>
+<p>Create a <code>bsconfig.json</code> file in the root of your project with the following. All the settings are already defaults, most of this is boilerplate. The important fields are <code>name</code>, <code>bs-dependencies</code> and <code>ppx-flags</code>. As you can see, we've added <code>reason-react</code>. This tells Reason where to look for bindings (similar to depdencies in your package.json).</p>
 <pre><code class="hljs css language-json">{
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"your-project-name"</span>,
   <span class="hljs-attr">"reason"</span>: { <span class="hljs-attr">"react-jsx"</span>: <span class="hljs-number">3</span> },
@@ -114,7 +122,9 @@ yarn add reason-react --exact
   <span class="hljs-attr">"refmt"</span>: <span class="hljs-number">3</span>
 }
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/pt-BR/what-and-why"><span class="arrow-prev">← </span><span>What &amp; Why</span></a><a class="docs-next button" href="/reason-react/docs/pt-BR/intro-example"><span>Intro Example</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#bucklescript">BuckleScript</a></li><li><a href="#adding-reason-bucklescript-to-an-existing-project">Adding Reason + Bucklescript to an existing project</a></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+<p>That's it!</p>
+<p><strong>Note</strong>: You'll have to run the reason compiler in a separate terminal. First start your project <code>yarn start</code> and in a separate terminal run: <code>yarn re:watch</code></p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/pt-BR/what-and-why"><span class="arrow-prev">← </span><span>What &amp; Why</span></a><a class="docs-next button" href="/reason-react/docs/pt-BR/intro-example"><span>Intro Example</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#bucklescript">BuckleScript</a><ul class="toc-headings"><li><a href="#using-bucklescript-init">Using Bucklescript init</a></li><li><a href="#adding-reason-to-an-existing-reactjs-project-create-react-app-nextjs-etc">Adding Reason to an existing React.js Project (Create React App, Next.js, etc.)</a></li></ul></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
             '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
