@@ -17,5 +17,6 @@ Using Spread:
 let make = () =>
   <Spread props={"data-cy": name}>
     /* This div will now have the `data-cy` attribute in the DOM! */
-     <div /> </Spread>;
+    <div />
+  </Spread>;
 ```
