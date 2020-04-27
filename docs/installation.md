@@ -9,7 +9,7 @@ title: Installation
 [BuckleScript](http://bucklescript.github.io/) compiles ReasonML code to JavaScript. You can get it with:
 
 ```sh
-npm install --global bs-platform@6.2.1
+npm install --global bs-platform
 bsb -init my-react-app -theme react-hooks
 cd my-react-app && npm install && npm start
 # in another tab

@@ -1,6 +1,6 @@
 # [ReasonReact](https://reasonml.github.io/reason-react/)
 
-Come join us in [Discord](https://discord.gg/reasonml)!
+[![Chat](https://img.shields.io/discord/235176658175262720.svg?logo=discord&colorb=blue)](https://discord.gg/reasonml)
 
 ## Example
 
