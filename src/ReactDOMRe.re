@@ -257,6 +257,8 @@ type domProps = {
   [@bs.optional]
   autoComplete: string, /* has a fixed, but large-ish, set of possible values */
   [@bs.optional]
+  autoCapitalize: string, /* Mobile Safari specific */
+  [@bs.optional]
   autoFocus: bool,
   [@bs.optional]
   autoPlay: bool,
@@ -1261,6 +1263,8 @@ type props = {
   async: bool,
   [@bs.optional]
   autoComplete: string, /* has a fixed, but large-ish, set of possible values */
+  [@bs.optional]
+  autoCapitalize: string, /* Mobile Safari specific */
   [@bs.optional]
   autoFocus: bool,
   [@bs.optional]
