@@ -349,7 +349,7 @@ type domProps = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: int,
+  min: string,
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -1356,7 +1356,7 @@ type props = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: int,
+  min: string,
   [@bs.optional]
   minLength: int,
   [@bs.optional]
