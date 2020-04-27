@@ -5,6 +5,9 @@
     "previous": "Previous",
     "tagline": "All your ReactJS knowledge, codified.",
     "docs": {
+      "adding-data-props": {
+        "title": "Adding data-* props"
+      },
       "callback-handlers": {
         "title": "Callback Handlers"
       },

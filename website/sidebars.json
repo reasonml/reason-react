@@ -54,6 +54,7 @@
       "useeffect-hook",
       "use-state-use-effect",
       "usedebounce-custom-hook",
+      "adding-data-props",
       "render-props",
       "importing-js-into-reason",
       "importing-reason-into-js",
