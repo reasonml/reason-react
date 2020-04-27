@@ -2,13 +2,17 @@
 title: Callback Handlers
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
+</aside>
+
 This section describes how ReactJS' `<div onClick={this.handleClick} />` pattern translates into ReasonReact.
 
 ## Callback Without State Update
 
 Two scenarios.
 
-### Not Reading Into `self`
+### Without Reading From `self`
 
 _Reminder: `self` is ReasonReact's `this`. It's a record that contains things like `state`, `send` and others._
 
@@ -23,7 +27,7 @@ let make = (~name, ~onClick, _children) => {
 };
 ```
 
-No surprise here. Since Reason's JSX has [punning syntax](https://reasonml.github.io/docs/en/jsx.html), that `button` will format into `<button onClick />`.
+No surprise here. Since Reason's JSX has [punning syntax](https://reasonml.github.io/docs/en/jsx.html#punning), that `button` will format into `<button onClick />`.
 
 Similarly, to pre-process a value before sending it back to the component's owner:
 
@@ -39,7 +43,7 @@ let make = (~name, ~onClick, _children) => {
 };
 ```
 
-### Reading Into `self`
+### Reading From `self`
 
 To access `state`, `send` and the other items in `self` from a callback, you **need** to wrap the callback in an extra layer called `self.handle`:
 
@@ -49,7 +53,7 @@ let component = /* ... */;
 let make = (~name, ~onClick, _children) => {
   let click = (event, self) => {
     onClick(event);
-    Js.log(self.state);
+    Js.log(self.ReasonReact.state);
   };
   {
     ...component,

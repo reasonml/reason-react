@@ -1,3 +1,50 @@
+# 0.7.1
+
+Small release with a couple additional bindings to existing React APIs.
+
+New APIs:
+* `React.cloneElement`
+* `React.Children`
+* `useEffect`, `useLayoutEffect`, `useMemo`, `useCallback`, `useImperativeHandle` now are all consistently implemented up to `useX7` to improve usability.
+* `ReasonReactRouter.urlNotEqual`
+
+Also removes `.cm*` generated files from the release to clean up the build process.
+
+# 0.7.0
+
+Support for [React Hooks API](https://reactjs.org/docs/hooks-intro.html). Allows for writing function components with state and complex interactions.
+
+You can now write components like
+
+```reason
+[@react.component]
+let make = (~className, ~text) => <div className> {text} </div>;
+```
+
+which will compile to a 0-cost React component that looks like
+
+```js
+let make = ({className, text}) => <div className> {text} </div>;
+```
+
+These components use a new PPX shipped with BuckleScript 5.0.0+. Please read the documentation for more.
+
+There is no breaking change here, but if you're interested in migrating some components the upgrade script is [provided](https://github.com/rickyvetter/upgrade-reason-react#installation). It will wrap existing ReasonReact components as if they are Hooks components.
+
+
+# 0.6.0
+
+Mini release before a surprise release next time (shhhhh) =).
+
+## Breaking
+
+- The DOM prop `crossorigin` is now correctly named `crossOrigin`. This is a tiny breaking change, thus the version bump (#290).
+
+## Improvements
+
+- Fix issue with react-hot-loader (#298).
+- `ReasonReact.Router.replace` to replace state.
+
 # 0.5.0
 
 **This release requires `bs-platform 4.0.3`**.
@@ -272,7 +319,7 @@ Replaced with the new `make` (previously `createElement`) call which takes in la
 How to access `props` in the `update`/`handle` callbacks now? You'd move these callback definitions into the `make` function body.
 
 ### `componentBag.state`
-Now passed to you as an argument in callbacks and lifecyle events.
+Now passed to you as an argument in callbacks and lifecycle events.
 
 ### `componentBag.instanceVars`
 No longer needed. In ReactJS, attaching instance variables onto a component has always been a sly way of introducing 1. mutative state that 2. doesn't trigger re-render. This whole concept is now replaced by putting your value into `state` and using [`ReasonReact.SilentUpdate`](https://reasonml.github.io/reason-react/docs/en/callback-handlers.html) (doesn't trigger re-render, but does update state) in callbacks & lifecycles.

@@ -6,22 +6,14 @@
       "intro-example"
     ],
     "Core": [
-      "creation-props-self",
+      "components",
       "jsx",
-      "render",
-      "callback-handlers",
-      "state-actions-reducer",
-      "lifecycles",
-      "instance-variables",
-      "react-ref",
-      "interop",
       "event",
       "style",
-      "clone-element",
-      "children",
+      "router",
       "dom",
-      "subscriptions-helper",
-      "router"
+      "refs",
+      "reasonreactcompat"
     ],
     "ReactJS Idioms Equivalents": [
       "invalid-prop-name",
@@ -30,6 +22,21 @@
       "ternary-shortcut",
       "context-mixins",
       "custom-class-component-property"
+    ],
+    "Record API (deprecated)": [
+      "jsx-2",
+      "creation-props-self",
+      "render",
+      "callback-handlers",
+      "state-actions-reducer",
+      "lifecycles",
+      "instance-variables",
+      "react-ref",
+      "interop",
+      "clone-element",
+      "children",
+      "subscriptions-helper",
+      "router-2"
     ],
     "FAQ": [
       "im-having-a-type-error",
@@ -42,9 +49,17 @@
   "examples": {
     "Code Snippets": [
       "simple",
-      "counter",
+      "usestate-hook",
+      "usereducer-hook",
+      "useeffect-hook",
+      "use-state-use-effect",
+      "usedebounce-custom-hook",
+      "render-props",
+      "importing-js-into-reason",
+      "importing-reason-into-js",
       "reason-using-js",
       "js-using-reason",
+      "gentype",
       "example-projects"
     ]
   },

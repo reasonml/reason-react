@@ -9,13 +9,9 @@ Here is a small overview of the ReasonReact API before we start. No worries if s
 ```reason
 /* file: Greeting.re */
 
-let component = ReasonReact.statelessComponent("Greeting");
-
-/* underscores before names indicate unused variables. We name them for clarity */
-let make = (~name, _children) => {
-  ...component,
-  render: (_self) => <button> {ReasonReact.string("Hello " ++ name ++ "!")} </button>
-};
+[@react.component]
+let make = (~name) =>
+  <button> {ReasonReact.string("Hello " ++ name ++ "!")} </button>;
 ```
 
 ## A usage of the component

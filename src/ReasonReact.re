@@ -2,30 +2,30 @@ type reactClass;
 
 type jsProps;
 
-type reactElement;
+type reactElement = React.element;
 
 type reactRef;
 
-[@bs.val] external null : reactElement = "null";
+[@bs.val] external null: reactElement = "null";
 
-external string : string => reactElement = "%identity";
+external string: string => reactElement = "%identity";
 
-external array : array(reactElement) => reactElement = "%identity";
+external array: array(reactElement) => reactElement = "%identity";
 
-external refToJsObj : reactRef => Js.t({..}) = "%identity";
+external refToJsObj: reactRef => Js.t({..}) = "%identity";
 
 [@bs.splice] [@bs.val] [@bs.module "react"]
-external createElement :
+external createElement:
   (reactClass, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "createElement";
 
 [@bs.splice] [@bs.module "react"]
-external cloneElement :
+external cloneElement:
   (reactElement, ~props: Js.t({..})=?, array(reactElement)) => reactElement =
   "cloneElement";
 
 [@bs.val] [@bs.module "react"]
-external createElementVerbatim : 'a = "createElement";
+external createElementVerbatim: 'a = "createElement";
 
 let createDomElement = (s, ~props, children) => {
   let vararg =
@@ -34,7 +34,7 @@ let createDomElement = (s, ~props, children) => {
   Obj.magic(createElementVerbatim)##apply(Js.Nullable.null, vararg);
 };
 
-[@bs.val] external magicNull : 'a = "null";
+[@bs.val] external magicNull: 'a = "null";
 
 type reactClassInternal = reactClass;
 
@@ -108,7 +108,7 @@ and component('state, 'retainedProps, 'action) =
   componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action)
 and self('state, 'retainedProps, 'action) = {
   handle:
-    'payload .
+    'payload.
     (('payload, self('state, 'retainedProps, 'action)) => unit, 'payload) =>
     unit,
 
@@ -136,7 +136,9 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
       unit
     ),
   "jsPropsToReason":
-    option(uncurriedJsPropsToReason('props, 'state, 'retainedProps, 'action)),
+    option(
+      uncurriedJsPropsToReason('props, 'state, 'retainedProps, 'action),
+    ),
 }
 /***
  * `totalState` tracks all of the internal reason API bookkeeping.
@@ -151,9 +153,9 @@ type jsComponentThis('state, 'props, 'retainedProps, 'action) = {
  */
 and totalState('state, 'retainedProps, 'action) = {. "reasonState": 'state};
 
-let anyToUnit = (_) => ();
+let anyToUnit = _ => ();
 
-let anyToTrue = (_) => true;
+let anyToTrue = _ => true;
 
 let willReceivePropsDefault = ({state}) => state;
 
@@ -182,8 +184,7 @@ let convertPropsIfTheyreFromJs = (props, jsPropsToReason, debugName) => {
 };
 
 let createClass =
-    (type reasonState, type retainedProps, type action, debugName)
-    : reactClass =>
+    (type reasonState, type retainedProps, type action, debugName): reactClass =>
   ReasonReactOptimizedCreateClass.createClass(.
     [@bs]
     {
@@ -204,7 +205,7 @@ let createClass =
         retainedProps,
         onUnmount: Obj.magic(this##onUnmountMethod),
       };
-      pub getInitialState = () : totalState('state, 'retainedProps, 'action) => {
+      pub getInitialState = (): totalState('state, 'retainedProps, 'action) => {
         let thisJs:
           jsComponentThis(reasonState, element, retainedProps, action) = [%bs.raw
           "this"
@@ -479,7 +480,7 @@ let createClass =
       };
       pub onUnmountMethod = subscription =>
         switch (Js.Null.toOption(this##subscriptions)) {
-        | None => this##subscriptions#=(Js.Null.return([|subscription|]))
+        | None => this##subscriptions #= Js.Null.return([|subscription|])
         | Some(subs) => ignore(Js.Array.push(subscription, subs))
         };
       pub handleMethod = callback => {
@@ -614,8 +615,7 @@ let basicComponent = debugName => {
 };
 
 let statelessComponent =
-    debugName
-    : component(stateless, noRetainedProps, actionless) =>
+    debugName: component(stateless, noRetainedProps, actionless) =>
   basicComponent(debugName);
 
 let statelessComponentWithRetainedProps =
@@ -689,13 +689,11 @@ let wrapReasonForJs =
   let jsPropsToReason:
     jsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     Obj.magic(jsPropsToReason) /* cast 'jsProps to jsProps */;
-  let uncurriedJsPropsToReason: uncurriedJsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
+  let uncurriedJsPropsToReason:
+    uncurriedJsPropsToReason(jsProps, 'state, 'retainedProps, 'action) =
     (. jsProps) => jsPropsToReason(jsProps);
-  Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason#=(
-                                                                    Some(
-                                                                    uncurriedJsPropsToReason,
-                                                                    )
-                                                                    );
+  Obj.magic(component.reactClassInternal)##prototype##jsPropsToReason
+  #= Some(uncurriedJsPropsToReason);
   component.reactClassInternal;
 };
 
@@ -732,143 +730,6 @@ module WrapProps = {
 
 let wrapJsForReason = WrapProps.wrapJsForReason;
 
-[@bs.module "react"] external fragment : 'a = "Fragment";
+[@bs.module "react"] external fragment: 'a = "Fragment";
 
-module Router = {
-  [@bs.get] external location : Dom.window => Dom.location = "";
-
-  [@bs.send]
-  /* actually the cb is Dom.event => unit, but let's restrict the access for now */
-  external addEventListener : (Dom.window, string, unit => unit) => unit = "";
-
-  [@bs.send]
-  external removeEventListener : (Dom.window, string, unit => unit) => unit =
-    "";
-
-  [@bs.send] external dispatchEvent : (Dom.window, Dom.event) => unit = "";
-
-  [@bs.get] external pathname : Dom.location => string = "";
-
-  [@bs.get] external hash : Dom.location => string = "";
-
-  [@bs.get] external search : Dom.location => string = "";
-
-  [@bs.send]
-  external pushState :
-    (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
-    unit =
-    "";
-
-  [@bs.val] external event : 'a = "Event";
-
-  [@bs.new] external makeEventIE11Compatible : string => Dom.event = "Event";
-
-  [@bs.val] [@bs.scope "document"]
-  external createEventNonIEBrowsers : string => Dom.event = "createEvent";
-
-  [@bs.send]
-  external initEventNonIEBrowsers : (Dom.event, string, bool, bool) => unit =
-    "initEvent";
-
-  let safeMakeEvent = eventName =>
-    if (Js.typeof(event) == "function") {
-      makeEventIE11Compatible(eventName);
-    } else {
-      let event = createEventNonIEBrowsers("Event");
-      initEventNonIEBrowsers(event, eventName, true, true);
-      event;
-    };
-
-  /* This is copied from array.ml. We want to cut dependencies for ReasonReact so
-     that it's friendlier to use in size-constrained codebases */
-  let arrayToList = a => {
-    let rec tolist = (i, res) =>
-      if (i < 0) {
-        res;
-      } else {
-        tolist(i - 1, [Array.unsafe_get(a, i), ...res]);
-      };
-    tolist(Array.length(a) - 1, []);
-  };
-  /* if we ever roll our own parser in the future, make sure you test all url combinations
-     e.g. foo.com/?#bar
-     */
-  /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
-  /* actually you know what, not gonna provide search for now. It's a mess.
-     We'll let users roll their own solution/data structure for now */
-  let path = () =>
-    switch ([%external window]) {
-    | None => []
-    | Some((window: Dom.window)) =>
-      switch (window |> location |> pathname) {
-      | ""
-      | "/" => []
-      | raw =>
-        /* remove the preceeding /, which every pathname seems to have */
-        let raw = Js.String.sliceToEnd(~from=1, raw);
-        /* remove the trailing /, which some pathnames might have. Ugh */
-        let raw =
-          switch (Js.String.get(raw, Js.String.length(raw) - 1)) {
-          | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
-          | _ => raw
-          };
-        raw |> Js.String.split("/") |> arrayToList;
-      }
-    };
-  let hash = () =>
-    switch ([%external window]) {
-    | None => ""
-    | Some((window: Dom.window)) =>
-      switch (window |> location |> hash) {
-      | ""
-      | "#" => ""
-      | raw =>
-        /* remove the preceeding #, which every hash seems to have.
-           Why is this even included in location.hash?? */
-        raw |> Js.String.sliceToEnd(~from=1)
-      }
-    };
-  let search = () =>
-    switch ([%external window]) {
-    | None => ""
-    | Some((window: Dom.window)) =>
-      switch (window |> location |> search) {
-      | ""
-      | "?" => ""
-      | raw =>
-        /* remove the preceeding ?, which every search seems to have. */
-        raw |> Js.String.sliceToEnd(~from=1)
-      }
-    };
-  let push = path =>
-    switch ([%external history], [%external window]) {
-    | (None, _)
-    | (_, None) => ()
-    | (Some((history: Dom.history)), Some((window: Dom.window))) =>
-      pushState(history, ~href=path);
-      dispatchEvent(window, safeMakeEvent("popstate"));
-    };
-  type url = {
-    path: list(string),
-    hash: string,
-    search: string,
-  };
-  type watcherID = unit => unit;
-  let url = () => {path: path(), hash: hash(), search: search()};
-  /* alias exposed publicly */
-  let dangerouslyGetInitialUrl = url;
-  let watchUrl = callback =>
-    switch ([%external window]) {
-    | None => (() => ())
-    | Some((window: Dom.window)) =>
-      let watcherID = () => callback(url());
-      addEventListener(window, "popstate", watcherID);
-      watcherID;
-    };
-  let unwatchUrl = watcherID =>
-    switch ([%external window]) {
-    | None => ()
-    | Some((window: Dom.window)) =>
-      removeEventListener(window, "popstate", watcherID)
-    };
-};
+module Router = ReasonReactRouter;

@@ -2,6 +2,10 @@
 title: Children
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
+</aside>
+
 ReasonReact children are like ReactJS children, except we provide more bells and whistles that leverages the language itself.
 
 Let's say people are using your component like so: `<Animation><div /></Animation>`. In the `Animation` component, you'd want to constrain the `children` being passed to you (the `div` here) as a single child. Aka, you'd like to error on this: `<Animation><div /><div /></Animation>`.

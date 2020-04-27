@@ -2,6 +2,10 @@
 title: Lifecycles
 ---
 
+<aside class="warning">
+The Record API is in feature-freeze. For the newest features and better support going forward, please consider migrating to the new <a href="https://reasonml.github.io/reason-react/docs/en/components">function components</a>.
+</aside>
+
 ReasonReact supports the familiar ReactJS lifecycle events.
 
 ```reason
@@ -21,18 +25,18 @@ willUnmount: self => unit
 Note:
 
 - We've dropped the `component` prefix from all these.
-- `willReceiveProps` asks, for the return type, to be `state`, not `update state` (i.e. not `NoUpdate/Update/SideEffects/UpdateWithSideEffects`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
+- `willReceiveProps` asks for the return type to be `state`, not `update state` (i.e. not `NoUpdate/Update/SideEffects/UpdateWithSideEffects`). We presume you'd always want to update the state in this lifecycle. If not, simply return the previous `state` exposed in the lifecycle argument.
 - `didUpdate`, `willUnmount` and `willUpdate` don't allow you to return a new state to be updated, to prevent infinite loops.
 - `willMount` is unsupported. Use `didMount` instead.
 - `didUpdate`, `willUpdate` and `shouldUpdate` take in a **`oldAndNewSelf` record**, of type `{oldSelf: self, newSelf: self}`. These two fields are the equivalent of ReactJS' `componentDidUpdate`'s `prevProps/prevState/` in conjunction with `props/state`. Likewise for `willUpdate` and `shouldUpdate`.
 
 If you need to update state in a lifecycle event, simply `send` an action to `reducer` and handle it correspondingly: `self.send(DidMountUpdate)`.
 
-**Some new lifecyle methods act differently**. Described below.
+**Some new lifecycle methods act differently**. Described below.
 
 ## Access next or previous props: `retainedProps`
 
-One pattern that's sometimes used in ReactJS is accessing a lifecyle event's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous props for you. We provide the `retainedProps` API for this purpose:
+One pattern that's sometimes used in ReactJS is accessing a lifecycle event's `prevProps` (`componentDidUpdate`), `nextProps` (`componentWillUpdate`), and so on. ReasonReact doesn't automatically keep copies of previous props for you. We provide the `retainedProps` API for this purpose:
 
 ```reason
 type retainedProps = {message: string};
@@ -84,7 +88,7 @@ ReactJS' `componentWillUpdate`'s `nextProps` is just the labeled arguments in `m
 ```reason
 {
   ...component,
-  willUpdate: {oldSelf, newSelf} => /* ... */
+  willUpdate: ({oldSelf, newSelf}) => /* ... */
 }
 ```
 

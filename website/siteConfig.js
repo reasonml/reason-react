@@ -12,21 +12,9 @@ const users = [
     pinned: true
   },
   {
-    caption: "WOW air",
-    image: "img/logos/wowair.svg",
-    infoLink: "https://wowair.com",
-    pinned: true
-  },
-  {
     caption: "BeOp",
     image: "img/logos/beop.svg",
     infoLink: "https://beop.io",
-    pinned: true
-  },
-  {
-    caption: "Mesopo",
-    image: "img/logos/mesopo.svg",
-    infoLink: "https://mesopo.ai",
     pinned: true
   },
   {
@@ -54,9 +42,43 @@ const users = [
     pinned: true
   },
   {
-    caption: "Aesthetic Integration",
-    image: "img/logos/aesthetic-integration.svg",
+    caption: "Imandra Inc.",
+    image: "img/logos/imandra.svg",
     infoLink: "https://www.imandra.ai",
+    pinned: true
+  },
+  {
+    caption: "Literal",
+    image: "img/logos/literal.svg",
+    infoLink: "https://literal.io",
+    pinned: true
+  },
+  {
+    caption: "Online Teaching Platform & LMS | PupilFirst",
+    image: "img/logos/pupilfirst.svg",
+    infoLink: "https://pupilfirst.com",
+    pinned: true
+  },
+  {
+    caption: "Atvero DMS",
+    image: "img/logos/atvero.svg",
+    infoLink: "https://www.atvero.com",
+    pinned: true
+  },
+  {
+    caption: "codeheroes",
+    image: "img/logos/codeheroes.svg",
+    infoLink: "https://codeheroes.io/"
+  },
+  {
+    caption: "Astrolabe Diagnostics",
+    image: "img/logos/astrolabe.svg",
+    infoLink: "https://astrolabediagnostics.com/"
+  },
+  {
+    caption: "Auditless",
+    image: "img/logos/auditless.svg",
+    infoLink: "https://auditless.com/",
     pinned: true
   }
 ];
@@ -65,16 +87,17 @@ const examples = [
   {
     name: "Hacker News",
     image: "img/examples/hn.png",
-    link: "https://github.com/reasonml-community/reason-react-hacker-news",
+    link: "https://github.com/reasonml-community/reason-react-hacker-news"
   },
   {
     name: "TodoMVC",
     image: "img/examples/todomvc.png",
-    link: "https://github.com/reasonml-community/reason-react-example/tree/master/src/todomvc",
+    link:
+      "https://github.com/reasonml-community/reason-react-example/tree/master/src/todomvc"
   }
-]
+];
 
-let reasonHighlightJs = require('reason-highlightjs');
+let reasonHighlightJs = require("reason-highlightjs");
 
 const siteConfig = {
   title: "ReasonReact" /* title for your website */,
@@ -92,12 +115,12 @@ const siteConfig = {
     { blog: true, label: "Blog" },
     { languages: true },
     { search: true },
-    { href: "https://github.com/reasonml/reason-react", label: "GitHub" },
+    { href: "https://github.com/reasonml/reason-react", label: "GitHub" }
   ],
   users,
   examples,
-  onPageNav: 'separate',
-  scripts: ['/reason-react/js/pjax-api.min.js'],
+  onPageNav: "separate",
+  scripts: ["/reason-react/js/pjax-api.min.js"],
   /* path to images for header/footer */
   headerIcon: "img/reason-react-white.svg",
   footerIcon: "img/reason-react-white.svg",
@@ -106,14 +129,14 @@ const siteConfig = {
   colors: {
     primaryColor: "#48a9dc",
     // darkened 10%
-    secondaryColor: "#2F90C3",
+    secondaryColor: "#2F90C3"
   },
   // no .html suffix needed
   cleanUrl: true,
   highlight: {
-    theme: 'atom-one-light',
-    hljs: function(hljs) {
-      hljs.registerLanguage('reason', reasonHighlightJs)
+    theme: "atom-one-light",
+    hljs: function (hljs) {
+      hljs.registerLanguage("reason", reasonHighlightJs);
     }
   },
   algolia: {
@@ -122,7 +145,7 @@ const siteConfig = {
     algoliaOptions: {
       facetFilters: ["lang:LANGUAGE"]
     }
-  },
+  }
 };
 
 module.exports = siteConfig;

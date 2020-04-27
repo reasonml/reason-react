@@ -29,33 +29,24 @@ const code = "`";
 
 // fake, static, responsive refmt, lol. See reason.css homeCodeSnippet logic
 const codeExampleSmallScreen =`${pre}reason
-let component =
-  ReasonReact.statelessComponent("Greeting");
-
-let make = (~name, _children) => {
-  ...component,
-  render: _self =>
-    <button>
-      {ReasonReact.string("Hello!")}
-    </button>
-};
+[@react.component]
+let make = (~name) =>
+  <button>
+    {React.string("Hello!")}
+  </button>;
 ${pre}`;
 
 const codeExampleLargeScreen =`${pre}reason
-let component = ReasonReact.statelessComponent("Greeting");
-
-let make = (~name, _children) => {
-  ...component,
-  render: _self =>
-    <button>
-      {ReasonReact.string("Hello!")}
-    </button>
-};
+[@react.component]
+let make = (~name) =>
+  <button>
+    {React.string("Hello!")}
+  </button>;
 ${pre}`;
 
 const quickStart = `${pre}bash
 npm install -g bs-platform
-bsb -init my-react-app -theme react
+bsb -init my-react-app -theme react-hooks
 cd my-react-app
 npm install && npm start
 ${pre}
@@ -63,7 +54,7 @@ ${pre}
 Then open another tab and do:
 
 ${pre}bash
-npm run webpack
+npm run server
 ${pre}
 
 Your apps are the html files inside ${code}src/${code}`;
@@ -147,16 +138,16 @@ class Index extends React.Component {
               align="center"
               contents={[
                 {
-                  title: <translate>Safe and Sound</translate>,
-                  content: <translate>It's Just Reason. We leverage the existing type system to create a library that types just right.</translate>,
+                  title: <translate>It's Just React</translate>,
+                  content: <translate>Just a bunch of zero-runtime type definitions and lightweight utilities, for the same React you've come to know.</translate>,
                 },
                 {
-                  title: <translate>Playground for Future React</translate>,
-                  content: <translate>Lightweight, first-class support for the ReactJS community idioms you've been using.</translate>,
+                  title: <translate>Safe and Sound</translate>,
+                  content: <translate>Simple, solid and inferred using Reason types. Write the same React code, get your type system guarantees automatically.</translate>,
                 },
                 {
                   title: <translate>Drop In</translate>,
-                  content: <translate>Easily integrate ReasonReact into your existing app. Convert a file, quickly see benefits.</translate>,
+                  content: <translate>Powered by ReactJS under the hood. Freely integrate your existing React libraries and knowledge.</translate>,
                 },
               ]}
               layout="threeColumn"

@@ -1,29 +1,92 @@
 ---
-title: Simple
+title: Simple Examples
 ---
 
-See https://github.com/reasonml-community/reason-react-example for examples you can clone and run. This page copy pastes a few from there for ease of reading.
+### A Simple Component
+
+Reason's returns are implicit so you don't need to write `return`, it'll be the last item in the block:
 
 ```reason
-let component = ReasonReact.statelessComponent("Page");
+/* Greeting.re */
 
-let handleClick = (_event, _self) => Js.log("clicked!");
-
-let make = (~message, _children) => {
-  ...component,
-  render: self =>
-    <div onClick={self.handle(handleClick)}>{ReasonReact.string(message)}</div>
-};
+[@react.component]
+let make = (~message) => <h1> {React.string(message)} </h1>;
 ```
 
 Usage in another file:
 
 ```reason
-ReactDOMRe.renderToElementWithId(<Page message="Hello!" />, "index");
+ReactDOMRe.renderToElementWithId(
+  <Greeting message="Hello World!" />,
+  "index",
+);
 ```
 
-In the same file, you'd do:
+### A Component with Optional Arguments and React.Fragment
 
 ```reason
-ReactDOMRe.renderToElementWithId(ReasonReact.element(make(~message="Hello!", [||])), "index");
+[@react.component]
+let make = (~title, ~description=?) =>
+  <>
+    /* React.Fragment works the same way as in React.js! */
+    <h1> title </h1>
+    /* Handling optional variables where you don't want to render anything */
+    {
+      switch (description) {
+      | Some(description) => <span> {React.string(description)} </span>
+      /* Since everything is typed, React.null is required */
+      | None => React.null
+      }
+    }
+  </>;
+```
+
+### A Form Component with React.js Differences
+
+```reason
+[@react.component]
+let make = () => {
+  /* unused variables are prefixed with an underscore */
+  let onSubmit = _event => Js.log("Hello this is a log!");
+
+  /* onSubmit=onSubmit turns to just onSubmit */
+  <form onSubmit>
+
+      <input
+        /* class names work the same way */
+        className="w-full"
+        /* type_ is underscored b/c its a reserved word in Reason */
+        type_="text"
+        /* No brackets needed! */
+        autoFocus=true
+        placeholder="Game Code"
+      />
+      <button type_="submit"> {React.string("Button label")} </button>
+    </form>;
+};
+```
+
+### A Component that Renders a List of Items
+
+This component uses [Belt](https://reasonml.org/apis/javascript/latest/belt), Reason's preferred Standard Library.
+
+```reason
+/* We define the type of the item (this is a record) */
+type item = {
+  id: string,
+  text: string,
+};
+
+[@react.component]
+let make = (~items) =>
+  <ul>
+    {
+      items
+      ->Belt.Array.map(item =>
+          <li key={item.id}> {React.string(item.text)} </li>
+        )
+      /* Since everything is typed, the arrays need to be, too! */
+      ->React.array
+    }
+  </ul>;
 ```

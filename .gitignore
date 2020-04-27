@@ -2,11 +2,15 @@
 /node_modules*
 finalOutput/*.js
 .merlin
+.install
 /lib/bs/
 /lib/ocaml/
 *.log
 .bsb.lock
 /src/*.js
+_esy
+_build
+*.install
 
 # Editor
 /.idea/
