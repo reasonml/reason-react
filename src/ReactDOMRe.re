@@ -71,8 +71,7 @@ let hydrateToElementWithId = (reactElement, id) =>
   };
 
 [@bs.val] [@bs.module "react-dom"]
-external createPortal:
-  (React.element, Dom.element) => React.element =
+external createPortal: (React.element, Dom.element) => React.element =
   "createPortal";
 
 [@bs.val] [@bs.module "react-dom"]
@@ -97,13 +96,26 @@ module Ref = {
   external callbackDomRef: callbackDomRef => domRef = "%identity";
 };
 
+/** Type-safe form input values. */
+module Input = {
+  type t('a);
+
+  external string: string => t(string) = "%identity";
+  external date: Js.Date.t => t(Js.Date.t) = "%identity";
+  external float: float => t(float) = "%identity";
+  external int: int => t(int) = "%identity";
+};
+
 /* This list isn't exhaustive. We'll add more as we go. */
 /*
  * Watch out! There are two props types and the only difference is the type of ref.
  * Please keep in sync.
  */
+
+/** [domProps('input)] is the type of the React element attributes object.
+    ['input] is the type of values accepted by [input] elements. */
 [@bs.deriving abstract]
-type domProps = {
+type domProps('input) = {
   [@bs.optional]
   key: string,
   [@bs.optional]
@@ -343,13 +355,7 @@ type domProps = {
   [@bs.optional]
   manifest: string, /* uri */
   [@bs.optional]
-  max: string,
-  [@bs.optional] [@bs.as "max"]
-  maxDate: Js.Date.t,
-  [@bs.optional] [@bs.as "max"]
-  maxFloat: float,
-  [@bs.optional] [@bs.as "max"]
-  maxInt: int,
+  max: Input.t('input),
   [@bs.optional]
   maxLength: int,
   [@bs.optional]
@@ -359,13 +365,7 @@ type domProps = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: string,
-  [@bs.optional] [@bs.as "min"]
-  minDate: Js.Date.t,
-  [@bs.optional] [@bs.as "min"]
-  minFloat: float,
-  [@bs.optional] [@bs.as "min"]
-  minInt: int,
+  min: Input.t('input),
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -434,13 +434,7 @@ type domProps = {
   [@bs.optional]
   start: int,
   [@bs.optional]
-  step: string,
-  [@bs.optional] [@bs.as "step"]
-  stepInt: int,
-  [@bs.optional] [@bs.as "step"]
-  stepFloat: float,
-  [@bs.optional] [@bs.as "step"]
-  stepDate: float,
+  step: Input.t('input),
   [@bs.optional]
   summary: string, /* deprecated */
   [@bs.optional]
@@ -450,13 +444,7 @@ type domProps = {
   [@bs.optional]
   useMap: string,
   [@bs.optional]
-  value: string,
-  [@bs.optional] [@bs.as "value"]
-  valueInt: int,
-  [@bs.optional] [@bs.as "value"]
-  valueFloat: float,
-  [@bs.optional] [@bs.as "value"]
-  valueDate: Js.Date.t,
+  value: Input.t('input),
   [@bs.optional]
   width: string, /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
   [@bs.optional]
@@ -1120,8 +1108,7 @@ type domProps = {
 
 [@bs.splice] [@bs.module "react"]
 external createDOMElementVariadic:
-  (string, ~props: domProps=?, array(React.element)) =>
-  React.element =
+  (string, ~props: domProps(_)=?, array(React.element)) => React.element =
   "createElement";
 
 /* This list isn't exhaustive. We'll add more as we go. */
@@ -1129,8 +1116,11 @@ external createDOMElementVariadic:
  * Watch out! There are two props types and the only difference is the type of ref.
  * Please keep in sync.
  */
+
+/** [props('input)] is the type of the React element attributes object.
+    ['input] is the type of values accepted by [input] elements. */
 [@bs.deriving abstract]
-type props = {
+type props('input) = {
   [@bs.optional]
   key: string,
   [@bs.optional]
@@ -1370,13 +1360,7 @@ type props = {
   [@bs.optional]
   manifest: string, /* uri */
   [@bs.optional]
-  max: string,
-  [@bs.optional] [@bs.as "max"]
-  maxDate: Js.Date.t,
-  [@bs.optional] [@bs.as "max"]
-  maxFloat: float,
-  [@bs.optional] [@bs.as "max"]
-  maxInt: int,
+  max: Input.t('input),
   [@bs.optional]
   maxLength: int,
   [@bs.optional]
@@ -1386,13 +1370,7 @@ type props = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: string,
-  [@bs.optional] [@bs.as "min"]
-  minDate: Js.Date.t,
-  [@bs.optional] [@bs.as "min"]
-  minFloat: float,
-  [@bs.optional] [@bs.as "min"]
-  minInt: int,
+  min: Input.t('input),
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -1461,13 +1439,7 @@ type props = {
   [@bs.optional]
   start: int,
   [@bs.optional]
-  step: string,
-  [@bs.optional] [@bs.as "step"]
-  stepInt: int,
-  [@bs.optional] [@bs.as "step"]
-  stepFloat: float,
-  [@bs.optional] [@bs.as "step"]
-  stepDate: float,
+  step: Input.t('input),
   [@bs.optional]
   summary: string, /* deprecated */
   [@bs.optional]
@@ -1477,13 +1449,7 @@ type props = {
   [@bs.optional]
   useMap: string,
   [@bs.optional]
-  value: string,
-  [@bs.optional] [@bs.as "value"]
-  valueInt: int,
-  [@bs.optional] [@bs.as "value"]
-  valueFloat: float,
-  [@bs.optional] [@bs.as "value"]
-  valueDate: Js.Date.t,
+  value: Input.t('input),
   [@bs.optional]
   width: string, /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
   [@bs.optional]
@@ -2145,15 +2111,14 @@ type props = {
   suppressContentEditableWarning: bool,
 };
 
-external objToDOMProps: Js.t({..}) => props = "%identity";
+external objToDOMProps: Js.t({..}) => props(_) = "%identity";
 
 [@deprecated "Please use ReactDOMRe.props instead"]
-type reactDOMProps = props;
+type reactDOMProps('a) = props('a);
 
 [@bs.splice] [@bs.val] [@bs.module "react"]
 external createElement:
-  (string, ~props: props=?, array(React.element)) =>
-  React.element =
+  (string, ~props: props(_)=?, array(React.element)) => React.element =
   "createElement";
 
 /* Only wanna expose createElementVariadic here. Don't wanna write an interface file */
@@ -2181,7 +2146,7 @@ include (
             };
           }: {
             let createElementVariadic:
-              (string, ~props: props=?, array(React.element)) =>
+              (string, ~props: props(_)=?, array(React.element)) =>
               React.element;
           }
         );
