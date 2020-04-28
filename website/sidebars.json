@@ -21,7 +21,8 @@
       "component-as-prop",
       "ternary-shortcut",
       "context-mixins",
-      "custom-class-component-property"
+      "custom-class-component-property",
+      "usestate-event-value"
     ],
     "Record API (deprecated)": [
       "jsx-2",
