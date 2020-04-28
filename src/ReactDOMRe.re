@@ -47,24 +47,14 @@ module Experimental = {
 
   let createRootWithClassName = className =>
     switch (_getElementsByClassName(className)) {
-    | [||] =>
-      Error(
-        "ReactDOMRe.Unstable.createRootWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      )
-    | elements => Ok(createRoot(Array.unsafe_get(elements, 0)))
+    | [||] => None
+    | elements => Some(createRoot(Array.unsafe_get(elements, 0)))
     };
 
   let createRootWithId = id =>
     switch (_getElementById(id)) {
-    | None =>
-      Error(
-        "ReactDOMRe.Unstable.createRootWithId: no element of id "
-        ++ id
-        ++ " found in the HTML.",
-      )
-    | Some(element) => Ok(createRoot(element))
+    | None => None
+    | Some(element) => Some(createRoot(element))
     };
 };
 
