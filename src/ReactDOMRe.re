@@ -85,12 +85,10 @@ let hydrateToElementWithClassName = (reactElement, className) =>
 let hydrateToElementWithId = (reactElement, id) =>
   switch (_getElementById(id)) {
   | None =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.hydrateToElementWithId : no element of id "
-        ++ id
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.hydrateToElementWithId : no element of id "
+      ++ id
+      ++ " found in the HTML.",
     )
   | Some(element) => hydrate(reactElement, element)
   };
