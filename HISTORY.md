@@ -1,3 +1,48 @@
+# 0.8.0 (04/2020)
+
+v0.8.0 is a *huge* release that includes several breaking changes, maintenance fixes and documentation updates :tada:
+
+Thanks to all of our contributors for making this happen!
+
+### Maintenance:
+
+* Moves `bs-platform` to `peerDependencies`
+* Moves `react`, `react-dom` to `peerDependencies` [@sync in #361](https://github.com/reasonml/reason-react/pull/361/files)
+* Removes compilation warnings [@bloodyowl in #539](https://github.com/reasonml/reason-react/pull/539)
+
+### Breaking Changes:
+
+* `bs-platform` has a minimum version of 7.0.1 (^7.0.1) [@imbsky in #503](https://github.com/reasonml/reason-react/pull/503)
+* Adds `onInvalid` prop [@bsansouci in #364](https://github.com/reasonml/reason-react/pull/364)
+* Adds `React.float` and `React.int` [@utkarshkukreti in #420](https://github.com/reasonml/reason-react/pull/420)
+* Fix `crossOrigin` case and type [@schmavery in #469](https://github.com/reasonml/reason-react/pull/469)
+* Adds `mapWithIndex` and `forEachWithIndex` to `children` [@cem2ran in #515](https://github.com/reasonml/reason-react/pull/515)
+* Fixes `cloneElement` type definition [@bloodyowl in #464](https://github.com/reasonml/reason-react/pull/464)
+* Removes `maxDuration` prop from suspense [@anmonteiro in #399](https://github.com/reasonml/reason-react/pull/399)
+* Adds `React.SuspenseList` [@ri7nz in #533](https://github.com/reasonml/reason-react/pull/533)
+* Simplifies ref type [@cknitt in #521](https://github.com/reasonml/reason-react/pull/521)
+* Uses `console.error` instead of throwing [@bloodywl in #520](https://github.com/reasonml/reason-react/pull/520)
+* Adds `unsafeAddStyle` and `combine` [@sgny in #437](https://github.com/reasonml/reason-react/pull/437)
+* Uses an external for `ReactDOMRE.Style.combine` and removes `Obj.magic` [@bloodyowl in #519](https://github.com/reasonml/reason-react/pull/519)
+* Adds `autoCapitalize` [@wegry in #304](https://github.com/reasonml/reason-react/pull/304/files)
+* Adds bindings for `useTransition` hook [@kiangtengl in #512](https://github.com/reasonml/reason-react/pull/512)
+* Sets `min` attribute to `string` [@stuartkeith in #281](https://github.com/reasonml/reason-react/pull/281)
+* Adds `displayName` [@czystyl in #433](https://github.com/reasonml/reason-react/pull/433)
+* Adds Experimental module [@anmonteiro in #400](https://github.com/reasonml/reason-react/pull/400)
+
+### Documentation:
+
+* Adds Apollo / GraphQL Recipe [@dylanirlbeck in #537](https://github.com/reasonml/reason-react/pull/537)
+* Updates docs to be more user friendly [@peterpme in #534](https://github.com/reasonml/reason-react/pull/534)
+* Fix typo in render props [@vdanchenkov in #535](https://github.com/reasonml/reason-react/pull/535)
+* Update Examples based off React.js Docs & organize a bit [@peterpme in #532](https://github.com/reasonml/reason-react/pull/532)
+* Binding to external context [@alavkx in #495](https://github.com/reasonml/reason-react/pull/495)
+* Updates component-as-prop docs [@vonwao in #463](https://github.com/reasonml/reason-react/pull/463)
+* Improves `useEffect` docs [@sgny in #461](https://github.com/reasonml/reason-react/pull/461)
+* Clarifies `useEffect` docs [@pckilgore in #336](https://github.com/reasonml/reason-react/pull/446)
+* Adds notes about using `children` with Hooks API [@anmonteiro in #396](https://github.com/reasonml/reason-react/pull/396)
+* Adds repl.it link [@amasad in #244](https://github.com/reasonml/reason-react/pull/244)
+
 # 0.7.1
 
 Small release with a couple additional bindings to existing React APIs.
