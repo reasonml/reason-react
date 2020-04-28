@@ -7,7 +7,8 @@
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "yarn clean && yarn build"
+    "test": "yarn clean && yarn build",
+    "format": "find ./src -iname '*.re' | xargs bsrefmt --in-place && find ./src -iname '*.rei' | xargs bsrefmt -i true --in-place"
   },
   "keywords": [
     "reasonml",

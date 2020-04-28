@@ -51,7 +51,7 @@ let safeMakeEvent = eventName =>
   };
 
 /* This is copied from array.ml. We want to cut dependencies for ReasonReact so
-    that it's friendlier to use in size-constrained codebases */
+   that it's friendlier to use in size-constrained codebases */
 let arrayToList = a => {
   let rec tolist = (i, res) =>
     if (i < 0) {
@@ -62,11 +62,11 @@ let arrayToList = a => {
   tolist(Array.length(a) - 1, []);
 };
 /* if we ever roll our own parser in the future, make sure you test all url combinations
-    e.g. foo.com/?#bar
-    */
+   e.g. foo.com/?#bar
+   */
 /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
 /* actually you know what, not gonna provide search for now. It's a mess.
-    We'll let users roll their own solution/data structure for now */
+   We'll let users roll their own solution/data structure for now */
 let path = () =>
   switch ([%external window]) {
   | None => []
@@ -95,7 +95,7 @@ let hash = () =>
     | "#" => ""
     | raw =>
       /* remove the preceeding #, which every hash seems to have.
-          Why is this even included in location.hash?? */
+         Why is this even included in location.hash?? */
       raw |> Js.String.sliceToEnd(~from=1)
     }
   };
@@ -140,14 +140,14 @@ let urlNotEqual = (a, b) => {
     | ([_, ..._], []) => true
     | ([aHead, ...aRest], [bHead, ...bRest]) =>
       if (aHead !== bHead) {
-        true
+        true;
       } else {
-        listNotEqual(aRest, bRest)
+        listNotEqual(aRest, bRest);
       }
-    }
+    };
   };
-  a.hash !== b.hash || a.search !== b.search || listNotEqual(a.path, b.path)
-}
+  a.hash !== b.hash || a.search !== b.search || listNotEqual(a.path, b.path);
+};
 type watcherID = unit => unit;
 let url = () => {path: path(), hash: hash(), search: search()};
 /* alias exposed publicly */

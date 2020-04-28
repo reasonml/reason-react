@@ -13,7 +13,8 @@ type componentLike('props, 'return) = 'props => 'return;
 type component('props) = componentLike('props, element);
 
 [@bs.module "react"]
-external createElement: (component('props), 'props) => element = "createElement";
+external createElement: (component('props), 'props) => element =
+  "createElement";
 
 [@bs.module "react"]
 external cloneElement: (element, 'props) => element = "cloneElement";
@@ -29,25 +30,28 @@ module Ref = {
   [@deprecated "Please use the type React.ref instead"]
   type t('value) = ref('value);
 
-  [@deprecated "Please directly read from ref.current instead"]
-  [@bs.get] external current: ref('value) => 'value = "current";
+  [@deprecated "Please directly read from ref.current instead"] [@bs.get]
+  external current: ref('value) => 'value = "current";
 
-  [@deprecated "Please directly assign to ref.current instead"]
-  [@bs.set] external setCurrent: (ref('value), 'value) => unit = "current";
+  [@deprecated "Please directly assign to ref.current instead"] [@bs.set]
+  external setCurrent: (ref('value), 'value) => unit = "current";
 };
 
-[@bs.module "react"] external createRef: unit => ref(Js.nullable('a)) = "createRef";
+[@bs.module "react"]
+external createRef: unit => ref(Js.nullable('a)) = "createRef";
 
 module Children = {
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external map: (element, element => element) => element = "map";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
-  external mapWithIndex: (element, [@bs.uncurry] ((element, int) => element)) => element =
+  external mapWithIndex:
+    (element, [@bs.uncurry] ((element, int) => element)) => element =
     "map";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external forEach: (element, element => unit) => unit = "forEach";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
-  external forEachWithIndex: (element, [@bs.uncurry] ((element, int) => unit)) => unit =
+  external forEachWithIndex:
+    (element, [@bs.uncurry] ((element, int) => unit)) => unit =
     "forEach";
   [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
   external count: element => int = "count";
@@ -71,7 +75,8 @@ module Context = {
     "Provider";
 };
 
-[@bs.module "react"] external createContext: 'a => Context.t('a) = "createContext";
+[@bs.module "react"]
+external createContext: 'a => Context.t('a) = "createContext";
 
 [@bs.module "react"]
 external forwardRef:
@@ -91,8 +96,7 @@ external memoCustomCompareProps:
 module Fragment = {
   [@bs.obj]
   external makeProps:
-    (~children: element, ~key: 'key=?, unit) => {. "children": element} =
-    "";
+    (~children: element, ~key: 'key=?, unit) => {. "children": element};
   [@bs.module "react"]
   external make: component({. "children": element}) = "Fragment";
 };
@@ -105,8 +109,7 @@ module Suspense = {
       .
       "children": option(element),
       "fallback": option(element),
-    } =
-    "";
+    };
   [@bs.module "react"]
   external make:
     component({
@@ -123,20 +126,18 @@ module SuspenseList = {
   type tail;
   [@bs.obj]
   external makeProps:
-    (~children: element=?, ~revealOrder: ([@bs.string] [
-      | `forwards
-      | `backwards
-      | `together
-    ])=?, ~tail: ([@bs.string] [
-      | `collapsed
-      | `hidden
-    ])=?, unit) =>
+    (
+      ~children: element=?,
+      ~revealOrder: [@bs.string] [ | `forwards | `backwards | `together]=?,
+      ~tail: [@bs.string] [ | `collapsed | `hidden]=?,
+      unit
+    ) =>
     {
       .
       "children": option(element),
       "revealOrder": option(revealOrder),
       "tail": option(tail),
-    } = "";
+    };
 
   [@bs.module "react"]
   external make:
@@ -341,7 +342,8 @@ external useCallback7:
   callback('input, 'output) =
   "useCallback";
 
-[@bs.module "react"] external useContext: Context.t('any) => 'any = "useContext";
+[@bs.module "react"]
+external useContext: Context.t('any) => 'any = "useContext";
 
 [@bs.module "react"] external useRef: 'value => ref('value) = "useRef";
 
@@ -357,21 +359,13 @@ external useImperativeHandle0:
 
 [@bs.module "react"]
 external useImperativeHandle1:
-  (
-    Js.Nullable.t(ref('value)),
-    [@bs.uncurry] (unit => 'value),
-    array('a)
-  ) =>
+  (Js.Nullable.t(ref('value)), [@bs.uncurry] (unit => 'value), array('a)) =>
   unit =
   "useImperativeHandle";
 
 [@bs.module "react"]
 external useImperativeHandle2:
-  (
-    Js.Nullable.t(ref('value)),
-    [@bs.uncurry] (unit => 'value),
-    ('a, 'b)
-  ) =>
+  (Js.Nullable.t(ref('value)), [@bs.uncurry] (unit => 'value), ('a, 'b)) =>
   unit =
   "useImperativeHandle";
 
@@ -428,12 +422,13 @@ external useImperativeHandle7:
 type transitionConfig = {timeoutMs: int};
 
 [@bs.module "react"]
-external useTransition: (~config: transitionConfig=?, unit) => (callback(callback(unit, unit), unit), bool) =
+external useTransition:
+  (~config: transitionConfig=?, unit) =>
+  (callback(callback(unit, unit), unit), bool) =
   "useTransition";
 
 [@bs.set]
 external setDisplayName: (component('props), string) => unit = "displayName";
 
-[@bs.get] [@bs.return nullable] 
-external displayName: component('props) => option(string) =
-  "displayName";
+[@bs.get] [@bs.return nullable]
+external displayName: component('props) => option(string) = "displayName";
