@@ -12,7 +12,8 @@
       "style",
       "router",
       "dom",
-      "refs"
+      "refs",
+      "reasonreactcompat"
     ],
     "ReactJS Idioms Equivalents": [
       "invalid-prop-name",
@@ -46,13 +47,23 @@
     ]
   },
   "examples": {
-    "Code Snippets": [
+    "Recipes & Snippets": [
       "simple",
-      "counter",
+      "usestate-hook",
+      "usereducer-hook",
+      "useeffect-hook",
       "use-state-use-effect",
+      "usedebounce-custom-hook",
+      "adding-data-props",
+      "working-with-optional-data",
+      "render-props",
+      "importing-js-into-reason",
+      "importing-reason-into-js",
       "reason-using-js",
       "js-using-reason",
-      "example-projects"
+      "gentype",
+      "example-projects",
+      "graphql-apollo"
     ]
   },
   "community-menu": {

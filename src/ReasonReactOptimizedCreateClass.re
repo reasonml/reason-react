@@ -2,8 +2,8 @@ let _assign = Js.Obj.assign;
 
 let emptyObject = Js.Obj.empty();
 
-[%%bs.raw
-  {|
+%bs.raw
+{|
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -43,8 +43,7 @@ var ReactPropTypeLocationNames;
 // } else {
   ReactPropTypeLocationNames = {};
 // }
-|}
-];
+|};
 
 let factory = [%bs.raw
   {|
@@ -881,13 +880,14 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 |}
 ];
 
-[@bs.module "react"] external reactComponent : 'a = "Component";
+[@bs.module "react"] external reactComponent: 'a = "Component";
 
-[@bs.module "react"] external reactIsValidElement : bool = "isValidElement";
+[@bs.module "react"] external reactIsValidElement: bool = "isValidElement";
 
-[@bs.module "react"] [@bs.new] external newReactComponent : unit => {. "updater": 'a} =
-  "Component";
+[@bs.module "react"] [@bs.new]
+external newReactComponent: unit => {. "updater": 'a} = "Component";
 
 let reactNoopUpdateQueue = newReactComponent()##updater;
 
-let createClass = [@bs] factory(reactComponent, reactIsValidElement, reactNoopUpdateQueue);
+let createClass =
+  factory(. reactComponent, reactIsValidElement, reactNoopUpdateQueue);

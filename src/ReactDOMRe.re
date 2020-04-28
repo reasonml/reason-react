@@ -18,12 +18,10 @@ external _getElementById: string => option(Dom.element) =
 let renderToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
   | [||] =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.renderToElementWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.renderToElementWithClassName: no element of class "
+      ++ className
+      ++ " found in the HTML.",
     )
   | elements => render(reactElement, Array.unsafe_get(elements, 0))
   };
@@ -31,15 +29,44 @@ let renderToElementWithClassName = (reactElement, className) =>
 let renderToElementWithId = (reactElement, id) =>
   switch (_getElementById(id)) {
   | None =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.renderToElementWithId : no element of id "
-        ++ id
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.renderToElementWithId : no element of id "
+      ++ id
+      ++ " found in the HTML.",
     )
   | Some(element) => render(reactElement, element)
   };
+
+module Experimental = {
+  type root;
+
+  [@bs.module "react-dom"]
+  external createRoot: Dom.element => root = "createRoot";
+
+  [@bs.send] external render: (root, React.element) => unit = "render";
+
+  let createRootWithClassName = className =>
+    switch (_getElementsByClassName(className)) {
+    | [||] =>
+      Error(
+        "ReactDOMRe.Unstable.createRootWithClassName: no element of class "
+        ++ className
+        ++ " found in the HTML.",
+      )
+    | elements => Ok(createRoot(Array.unsafe_get(elements, 0)))
+    };
+
+  let createRootWithId = id =>
+    switch (_getElementById(id)) {
+    | None =>
+      Error(
+        "ReactDOMRe.Unstable.createRootWithId: no element of id "
+        ++ id
+        ++ " found in the HTML.",
+      )
+    | Some(element) => Ok(createRoot(element))
+    };
+};
 
 [@bs.val] [@bs.module "react-dom"]
 external hydrate: (React.element, Dom.element) => unit = "hydrate";
@@ -47,12 +74,10 @@ external hydrate: (React.element, Dom.element) => unit = "hydrate";
 let hydrateToElementWithClassName = (reactElement, className) =>
   switch (_getElementsByClassName(className)) {
   | [||] =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.hydrateToElementWithClassName: no element of class "
-        ++ className
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.hydrateToElementWithClassName: no element of class "
+      ++ className
+      ++ " found in the HTML.",
     )
   | elements => hydrate(reactElement, Array.unsafe_get(elements, 0))
   };
@@ -71,8 +96,7 @@ let hydrateToElementWithId = (reactElement, id) =>
   };
 
 [@bs.val] [@bs.module "react-dom"]
-external createPortal:
-  (React.element, Dom.element) => React.element =
+external createPortal: (React.element, Dom.element) => React.element =
   "createPortal";
 
 [@bs.val] [@bs.module "react-dom"]
@@ -90,7 +114,7 @@ type domRef;
 
 module Ref = {
   type t = domRef;
-  type currentDomRef = React.Ref.t(Js.nullable(Dom.element));
+  type currentDomRef = React.ref(Js.nullable(Dom.element));
   type callbackDomRef = Js.nullable(Dom.element) => unit;
 
   external domRef: currentDomRef => domRef = "%identity";
@@ -263,6 +287,8 @@ type domProps = {
   [@bs.optional]
   autoComplete: string, /* has a fixed, but large-ish, set of possible values */
   [@bs.optional]
+  autoCapitalize: string, /* Mobile Safari specific */
+  [@bs.optional]
   autoFocus: bool,
   [@bs.optional]
   autoPlay: bool,
@@ -275,7 +301,7 @@ type domProps = {
   [@bs.optional]
   cite: string, /* uri */
   [@bs.optional]
-  crossOrigin: string,  /* anonymous, use-credentials */
+  crossOrigin: string, /* anonymous, use-credentials */
   [@bs.optional]
   cols: int,
   [@bs.optional]
@@ -353,7 +379,7 @@ type domProps = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: int,
+  min: string,
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -470,6 +496,8 @@ type domProps = {
   onInput: ReactEvent.Form.t => unit,
   [@bs.optional]
   onSubmit: ReactEvent.Form.t => unit,
+  [@bs.optional]
+  onInvalid: ReactEvent.Form.t => unit,
   /* Mouse events */
   [@bs.optional]
   onClick: ReactEvent.Mouse.t => unit,
@@ -1096,8 +1124,7 @@ type domProps = {
 
 [@bs.splice] [@bs.module "react"]
 external createDOMElementVariadic:
-  (string, ~props: domProps=?, array(React.element)) =>
-  React.element =
+  (string, ~props: domProps=?, array(React.element)) => React.element =
   "createElement";
 
 /* This list isn't exhaustive. We'll add more as we go. */
@@ -1266,6 +1293,8 @@ type props = {
   [@bs.optional]
   autoComplete: string, /* has a fixed, but large-ish, set of possible values */
   [@bs.optional]
+  autoCapitalize: string, /* Mobile Safari specific */
+  [@bs.optional]
   autoFocus: bool,
   [@bs.optional]
   autoPlay: bool,
@@ -1356,7 +1385,7 @@ type props = {
   [@bs.optional]
   method: string, /* "post" or "get" */
   [@bs.optional]
-  min: int,
+  min: string,
   [@bs.optional]
   minLength: int,
   [@bs.optional]
@@ -1473,6 +1502,8 @@ type props = {
   onInput: ReactEvent.Form.t => unit,
   [@bs.optional]
   onSubmit: ReactEvent.Form.t => unit,
+  [@bs.optional]
+  onInvalid: ReactEvent.Form.t => unit,
   /* Mouse events */
   [@bs.optional]
   onClick: ReactEvent.Mouse.t => unit,
@@ -2104,8 +2135,7 @@ type reactDOMProps = props;
 
 [@bs.splice] [@bs.val] [@bs.module "react"]
 external createElement:
-  (string, ~props: props=?, array(React.element)) =>
-  React.element =
+  (string, ~props: props=?, array(React.element)) => React.element =
   "createElement";
 
 /* Only wanna expose createElementVariadic here. Don't wanna write an interface file */
@@ -2133,8 +2163,7 @@ include (
             };
           }: {
             let createElementVariadic:
-              (string, ~props: props=?, array(React.element)) =>
-              React.element;
+              (string, ~props: props=?, array(React.element)) => React.element;
           }
         );
 
@@ -2559,22 +2588,22 @@ module Style = {
        */
       unit
     ) =>
-    style =
-    "";
+    style;
   /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
-  let combine: (style, style) => style =
-    (a, b) => {
-      let a: Js.t({..}) = Obj.magic(a);
-      let b: Js.t({..}) = Obj.magic(b);
-      Js.Obj.assign(Js.Obj.assign(Js.Obj.empty(), a), b) |> Obj.magic;
-    };
-  let unsafeAddProp: (style, string, string) => style =
-    (style, property, value) => {
-      let propStyle: style = {
-        let dict = Js.Dict.empty();
-        Js.Dict.set(dict, property, value);
-        Obj.magic(dict);
-      };
-      combine(style, propStyle);
-    };
+  [@bs.val]
+  external combine: ([@bs.as {json|{}|json}] _, style, style) => t =
+    "Object.assign";
+
+  external _dictToStyle: Js.Dict.t(string) => style = "%identity";
+
+  let unsafeAddProp = (style, key, value) => {
+    let dict = Js.Dict.empty();
+    Js.Dict.set(dict, key, value);
+    combine(style, _dictToStyle(dict));
+  };
+
+  [@bs.val]
+  external unsafeAddStyle:
+    ([@bs.as {json|{}|json}] _, style, Js.t({..})) => style =
+    "Object.assign";
 };

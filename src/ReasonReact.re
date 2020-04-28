@@ -1,3 +1,7 @@
+// Prevent warning about the `retainedProps` field being defined in both
+// `self` and `componentSpec` record types.
+[@warning "-30"];
+
 type reactClass;
 
 type jsProps;
@@ -258,13 +262,13 @@ let createClass =
         let Element(newComponent) = newConvertedReasonProps;
         if (newComponent.didUpdate !== anyToUnit) {
           let oldConvertedReasonProps =
-            prevProps === newJsProps ?
-              newConvertedReasonProps :
-              convertPropsIfTheyreFromJs(
-                prevProps,
-                thisJs##jsPropsToReason,
-                debugName,
-              );
+            prevProps === newJsProps
+              ? newConvertedReasonProps
+              : convertPropsIfTheyreFromJs(
+                  prevProps,
+                  thisJs##jsPropsToReason,
+                  debugName,
+                );
           let Element(oldComponent) = oldConvertedReasonProps;
           let prevReasonState = prevState##reasonState;
           let prevReasonState = Obj.magic(prevReasonState);
@@ -332,13 +336,13 @@ let createClass =
           let oldJsProps = thisJs##props;
           /* Avoid converting again the props that are just the same as curProps. */
           let oldConvertedReasonProps =
-            nextProps === oldJsProps ?
-              newConvertedReasonProps :
-              convertPropsIfTheyreFromJs(
-                oldJsProps,
-                thisJs##jsPropsToReason,
-                debugName,
-              );
+            nextProps === oldJsProps
+              ? newConvertedReasonProps
+              : convertPropsIfTheyreFromJs(
+                  oldJsProps,
+                  thisJs##jsPropsToReason,
+                  debugName,
+                );
           let Element(oldComponent) = oldConvertedReasonProps;
           let curState = thisJs##state;
           let curReasonState = curState##reasonState;
@@ -381,13 +385,13 @@ let createClass =
           let oldJsProps = thisJs##props;
           /* Avoid converting again the props that are just the same as curProps. */
           let oldConvertedReasonProps =
-            nextProps === oldJsProps ?
-              newConvertedReasonProps :
-              convertPropsIfTheyreFromJs(
-                oldJsProps,
-                thisJs##jsPropsToReason,
-                debugName,
-              );
+            nextProps === oldJsProps
+              ? newConvertedReasonProps
+              : convertPropsIfTheyreFromJs(
+                  oldJsProps,
+                  thisJs##jsPropsToReason,
+                  debugName,
+                );
           let Element(oldComponent) = oldConvertedReasonProps;
           thisJs##setState(
             (curTotalState, _) => {
@@ -449,13 +453,13 @@ let createClass =
           );
         /* Avoid converting again the props that are just the same as curProps. */
         let newConvertedReasonProps =
-          nextJsProps === curJsProps ?
-            oldConvertedReasonProps :
-            convertPropsIfTheyreFromJs(
-              nextJsProps,
-              thisJs##jsPropsToReason,
-              debugName,
-            );
+          nextJsProps === curJsProps
+            ? oldConvertedReasonProps
+            : convertPropsIfTheyreFromJs(
+                nextJsProps,
+                thisJs##jsPropsToReason,
+                debugName,
+              );
         let Element(oldComponent) = oldConvertedReasonProps;
         let Element(newComponent) = newConvertedReasonProps;
         let nextReasonState = nextState##reasonState;
@@ -615,11 +619,11 @@ let basicComponent = debugName => {
 };
 
 let statelessComponent =
-    debugName: component(stateless, noRetainedProps, actionless) =>
+    (debugName): component(stateless, noRetainedProps, actionless) =>
   basicComponent(debugName);
 
 let statelessComponentWithRetainedProps =
-    debugName
+    (debugName)
     : componentSpec(
         stateless,
         stateless,
@@ -630,7 +634,7 @@ let statelessComponentWithRetainedProps =
   basicComponent(debugName);
 
 let reducerComponent =
-    debugName
+    (debugName)
     : componentSpec(
         'state,
         stateless,
@@ -641,7 +645,7 @@ let reducerComponent =
   basicComponent(debugName);
 
 let reducerComponentWithRetainedProps =
-    debugName
+    (debugName)
     : componentSpec(
         'state,
         stateless,
