@@ -43,7 +43,7 @@ module Experimental = {
   [@bs.module "react-dom"]
   external createRoot: Dom.element => root = "createRoot";
 
-  [@bs.send] external render: (root, React.element) => unit = "";
+  [@bs.send] external render: (root, React.element) => unit = "render";
 
   let createRootWithClassName = className =>
     switch (_getElementsByClassName(className)) {
