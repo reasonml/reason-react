@@ -2588,7 +2588,7 @@ module Style = {
        */
       unit
     ) =>
-    style = "";
+    style;
   /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
   [@bs.val]
   external combine: ([@bs.as {json|{}|json}] _, style, style) => t =
