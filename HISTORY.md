@@ -8,6 +8,7 @@ Thanks to all of our contributors for making this happen!
 
 * Moves `bs-platform` to `peerDependencies`
 * Moves `react`, `react-dom` to `peerDependencies` [@sync in #361](https://github.com/reasonml/reason-react/pull/361/files)
+* Removes compilation warnings [@bloodyowl in #539](https://github.com/reasonml/reason-react/pull/539)
 
 ### Breaking Changes:
 
