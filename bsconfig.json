@@ -3,8 +3,8 @@
   comma. If this screws with your editor highlighting, please tell us by filing
   an issue! */
 {
-  "name" : "reason-react",
-  "sources": "src",
+  "name": "reason-react",
+  "sources": { "dir": "src", "subdirs": true },
   "refmt": 3,
   "bsc-flags": ["-bs-no-version-header"]
 }
