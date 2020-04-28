@@ -43,7 +43,7 @@ module Experimental = {
   [@bs.module "react-dom"]
   external createRoot: Dom.element => root = "createRoot";
 
-  [@bs.send] external render: (root, React.element) => unit = "";
+  [@bs.send] external render: (root, React.element) => unit = "render";
 
   let createRootWithClassName = className =>
     switch (_getElementsByClassName(className)) {
@@ -301,7 +301,7 @@ type domProps = {
   [@bs.optional]
   cite: string, /* uri */
   [@bs.optional]
-  crossOrigin: string,  /* anonymous, use-credentials */
+  crossOrigin: string, /* anonymous, use-credentials */
   [@bs.optional]
   cols: int,
   [@bs.optional]
@@ -2588,8 +2588,7 @@ module Style = {
        */
       unit
     ) =>
-    style =
-    "";
+    style;
   /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
   [@bs.val]
   external combine: ([@bs.as {json|{}|json}] _, style, style) => t =
