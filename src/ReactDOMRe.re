@@ -122,33 +122,36 @@ module Ref = {
 };
 
 /** Type-safe form input values. */
-module Input = {
+module Input: {
   type t('a);
+  type step('a);
 
   external string: string => t(string) = "%identity";
   external date: Js.Date.t => t(Js.Date.t) = "%identity";
   external float: float => t(float) = "%identity";
   external int: int => t(int) = "%identity";
 
-  module Step: {
-    type t('a);
+  [@bs.inline "any"]
+  let anyStep: step(_);
 
-    [@bs.inline "any"]
-    let any: t(_);
+  external dateStep: int => step(Js.Date.t) = "%identity";
+  external floatStep: float => step(float) = "%identity";
+  external intStep: int => step(int) = "%identity";
+} = {
+  type t('a);
+  type step('a) = string;
 
-    external date: int => t(Js.Date.t) = "%identity";
-    external float: float => t(float) = "%identity";
-    external int: int => t(int) = "%identity";
-  } = {
-    type t('a) = string;
+  external string: string => t(string) = "%identity";
+  external date: Js.Date.t => t(Js.Date.t) = "%identity";
+  external float: float => t(float) = "%identity";
+  external int: int => t(int) = "%identity";
 
-    [@bs.inline]
-    let any = "any";
+  [@bs.inline]
+  let anyStep = "any";
 
-    external date: int => t(Js.Date.t) = "%identity";
-    external float: float => t(float) = "%identity";
-    external int: int => t(int) = "%identity";
-  };
+  external dateStep: int => step(Js.Date.t) = "%identity";
+  external floatStep: float => step(float) = "%identity";
+  external intStep: int => step(int) = "%identity";
 };
 
 /* This list isn't exhaustive. We'll add more as we go. */
@@ -481,7 +484,7 @@ type domProps('input) = {
   [@bs.optional]
   start: int,
   [@bs.optional]
-  step: Input.Step.t('input),
+  step: Input.step('input),
   [@bs.optional]
   summary: string, /* deprecated */
   [@bs.optional]
@@ -1490,7 +1493,7 @@ type props('input) = {
   [@bs.optional]
   start: int,
   [@bs.optional]
-  step: Input.Step.t('input),
+  step: Input.step('input),
   [@bs.optional]
   summary: string, /* deprecated */
   [@bs.optional]
