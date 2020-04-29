@@ -1,5 +1,5 @@
 ---
-title: Using event values with useState
+title: Using Event Values With useState
 ---
 
 In ReactJS, it's common to update a component's state based on an event's
