@@ -4,7 +4,11 @@ title: A List of Simple Examples
 
 ### A Basic Greeting Component
 
-Reason's returns are implicit so you don't need to write `return`, it'll be the last item in the block:
+**Some things to note**:
+
+- Reason's `return` statements are implicit so you don't need to write `return`. It'll always be the last item in the block
+- Reason has labelled parameters (arguments) that are prefixed by a tilde, eg: `~message`
+- Since everything in ReasonReact is typed, we need to wrap our message in `React.string(message)`
 
 ```reason
 /* Greeting.re */
