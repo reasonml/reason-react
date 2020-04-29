@@ -92,7 +92,12 @@
       &lt;input
         onBlur=onCancel
         onFocus
-        onChange={event =&gt; onChange(<span class="hljs-module-identifier">ReactEvent</span>.<span class="hljs-module-identifier">Form</span>.target(event)##value)}
+        onChange={
+          event =&gt; {
+            <span class="hljs-keyword">let</span> value = <span class="hljs-module-identifier">ReactEvent</span>.<span class="hljs-module-identifier">Form</span>.target(event)##value;
+            onChange(_ =&gt; value)
+          }
+        }
         value
       /&gt;
     &lt;/form&gt;;
