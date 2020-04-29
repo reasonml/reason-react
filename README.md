@@ -1,4 +1,4 @@
-# [ReasonReact](https://reasonml.github.io/reason-react/) - ReasonML bindings for React.js
+# [ReasonReact](https://reasonml.github.io/reason-react/) - ReasonML / BuckleScript bindings for React.js
 
 [![npm version](https://badge.fury.io/js/reason-react.svg)](https://www.npmjs.com/package/reason-react)
 ![npm](https://img.shields.io/npm/dt/reason-react)
@@ -7,7 +7,7 @@
 [![discord](https://img.shields.io/discord/235176658175262720.svg?logo=discord&colorb=blue)](https://discord.gg/reasonml)
 [![twitter](https://img.shields.io/twitter/follow/reasonml?style=social)](https://twitter.com/reasonml)
 
-ReasonML Bindings for [React.js](https://reactjs.org). ReasonReact is a safer, simpler way to build React components. You get a great type system with an even better developer experience. Learn more about ReasonReact & ReasonML [here](https://reasonml.github.io/reason-react/docs/en/what-and-why)
+ReasonReact is a safer, simpler way to build React components. You get a great type system with an even better developer experience. Why choose ReasonReact? Read more [here](https://reasonml.github.io/reason-react/docs/en/what-and-why)
 
 ReasonReact is just React.js under the hood. This makes it super easy to integrate with your current Next.js, Create React App, JavaScript, Flowtype or Typescript project. Learn more about getting started [here](https://reasonml.github.io/reason-react/docs/en/installation#adding-reason-to-an-existing-reactjs-project-create-react-app-nextjs-etc)
 
@@ -65,6 +65,10 @@ Add the appropriate script tags to package.json:
 
 Copy the `bsconfig.json` file from our docs located [here](https://reasonml.github.io/reason-react/docs/en/installation#adding-reason-to-an-existing-reactjs-project-create-react-app-nextjs-etc)
 
+## Using Your Favorite Javascript Libraries
+
+The same way that Tyepscript has `type annotations`, we have `bindings`. Bindings are libraries that allow you to import a popular project (like lodash) or to import your own local file. ReasonReact is in fact an example of a binding!
+
 ## Documentation
 
 See https://reasonml.github.io/reason-react/
@@ -83,3 +87,11 @@ npm start
 Then add some files somewhere (don't forget to change `bsconfig.json`, if needed).
 
 See the README inside `src` for more info!
+
+## Friends of ReasonReact
+
+- [genType](https://github.com/cristianoc/genType) - genType automatically generates bindings for your TypeScript / vanilla JS code.
+- [reason-react-native](https://github.com/reason-react-native/reason-react-native) - ReasonML / Bucklescript bindings for React Native. Allows you to use Reason to build an iOS, Android or Web app!
+- [reasonml.org](https://reasonml.org/) - An effort by the Reason Association to improve documentation for ReasonML & BuckleScript
+- [redex.github.io](https://redex.github.io/) - Find bindings for your favorite libraries here
+- [ReasonTown Podcast](https://anchor.fm/reason-town) - ReasonML Podcast
