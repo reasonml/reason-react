@@ -1,6 +1,13 @@
 # [ReasonReact](https://reasonml.github.io/reason-react/)
 
-[![Chat](https://img.shields.io/discord/235176658175262720.svg?logo=discord&colorb=blue)](https://discord.gg/reasonml)
+ReasonML Bindings for [React.js](https://reactjs.org). Write the same React code you're used to, get your type system guarantees automatically!
+
+ReasonReact uses ReactJS under the hood so you can easily integrate it into your Typescript or React.js project
+
+[![Discorsd](https://img.shields.io/discord/235176658175262720.svg?logo=discord&colorb=blue)](https://discord.gg/reasonml)
+[![npm version](https://badge.fury.io/js/reason-react.svg)](https://badge.fury.io/js/reason-react)
+[![contributors](https://img.shields.io/github/contributors/reasonml/reason-react)]
+[![twitter](https://img.shields.io/twitter/follow/reasonml?style=social)
 
 ## Example
 
