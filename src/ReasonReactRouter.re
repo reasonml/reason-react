@@ -7,7 +7,7 @@ external addEventListener: (Dom.window, string, unit => unit) => unit =
 
 [@bs.send]
 external removeEventListener: (Dom.window, string, unit => unit) => unit =
-  "";
+  "removeEventListener";
 
 [@bs.send]
 external dispatchEvent: (Dom.window, Dom.event) => unit = "dispatchEvent";
@@ -22,13 +22,13 @@ external dispatchEvent: (Dom.window, Dom.event) => unit = "dispatchEvent";
 external pushState:
   (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
   unit =
-  "";
+  "pushState";
 
 [@bs.send]
 external replaceState:
   (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
   unit =
-  "";
+  "replaceState";
 
 [@bs.val] external event: 'a = "Event";
 
@@ -51,7 +51,7 @@ let safeMakeEvent = eventName =>
   };
 
 /* This is copied from array.ml. We want to cut dependencies for ReasonReact so
-    that it's friendlier to use in size-constrained codebases */
+   that it's friendlier to use in size-constrained codebases */
 let arrayToList = a => {
   let rec tolist = (i, res) =>
     if (i < 0) {
@@ -62,11 +62,11 @@ let arrayToList = a => {
   tolist(Array.length(a) - 1, []);
 };
 /* if we ever roll our own parser in the future, make sure you test all url combinations
-    e.g. foo.com/?#bar
-    */
+   e.g. foo.com/?#bar
+   */
 /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
 /* actually you know what, not gonna provide search for now. It's a mess.
-    We'll let users roll their own solution/data structure for now */
+   We'll let users roll their own solution/data structure for now */
 let path = () =>
   switch ([%external window]) {
   | None => []
@@ -95,7 +95,7 @@ let hash = () =>
     | "#" => ""
     | raw =>
       /* remove the preceeding #, which every hash seems to have.
-          Why is this even included in location.hash?? */
+         Why is this even included in location.hash?? */
       raw |> Js.String.sliceToEnd(~from=1)
     }
   };
@@ -131,6 +131,22 @@ type url = {
   path: list(string),
   hash: string,
   search: string,
+};
+let urlNotEqual = (a, b) => {
+  let rec listNotEqual = (aList, bList) => {
+    switch (aList, bList) {
+    | ([], []) => false
+    | ([], [_, ..._])
+    | ([_, ..._], []) => true
+    | ([aHead, ...aRest], [bHead, ...bRest]) =>
+      if (aHead !== bHead) {
+        true;
+      } else {
+        listNotEqual(aRest, bRest);
+      }
+    };
+  };
+  a.hash !== b.hash || a.search !== b.search || listNotEqual(a.path, b.path);
 };
 type watcherID = unit => unit;
 let url = () => {path: path(), hash: hash(), search: search()};
@@ -168,7 +184,7 @@ let useUrl = (~serverUrl=?, ()) => {
       * the initial state and the subscribe above
       */
     let newUrl = dangerouslyGetInitialUrl();
-    if (newUrl != url) {
+    if (urlNotEqual(newUrl, url)) {
       setUrl(_ => newUrl);
     };
 

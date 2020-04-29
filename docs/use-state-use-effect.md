@@ -1,5 +1,5 @@
 ---
-title: Use State and Use Effect
+title: useState, useEffect in a Form
 ---
 
 Here's a simple example of how to use React's `useState` with `useEffects`.

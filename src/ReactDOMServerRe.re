@@ -1,7 +1,6 @@
 [@bs.val] [@bs.module "react-dom/server"]
-external renderToString : ReasonReact.reactElement => string =
-  "renderToString";
+external renderToString: React.element => string = "renderToString";
 
 [@bs.val] [@bs.module "react-dom/server"]
-external renderToStaticMarkup : ReasonReact.reactElement => string =
+external renderToStaticMarkup: React.element => string =
   "renderToStaticMarkup";

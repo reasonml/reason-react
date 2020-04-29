@@ -1,5 +1,5 @@
 ---
-title: JSX Record API
+title: JSX (Old, Version 2)
 ---
 
 <aside class="warning">

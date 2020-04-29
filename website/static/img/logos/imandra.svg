@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="142.16" height="55.97" viewBox="0 0 142.16 55.97">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-4);
+      }
+
+      .cls-5 {
+        fill: url(#linear-gradient-5);
+      }
+
+      .cls-6 {
+        fill: url(#linear-gradient-6);
+      }
+
+      .cls-7 {
+        fill: url(#linear-gradient-7);
+      }
+
+      .cls-8 {
+        fill: url(#linear-gradient-8);
+      }
+
+      .cls-9 {
+        fill: url(#linear-gradient-9);
+      }
+
+      .cls-10 {
+        fill: url(#linear-gradient-10);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="16.83" y1="-7.19" x2="16.83" y2="67.09" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#009cff"/>
+      <stop offset="1" stop-color="#3469e5"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="71.08" y1="-7.19" x2="71.08" y2="67.09" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="125.33" y1="-7.19" x2="125.33" y2="67.09" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="2.8" y1="57.97" x2="2.8" y2="42.32" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-5" x1="22.74" y1="57.97" x2="22.74" y2="42.32" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-6" x1="46.02" y1="57.97" x2="46.02" y2="42.32" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-7" x1="68.45" y1="57.97" x2="68.45" y2="42.32" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-8" x1="91.22" y1="57.97" x2="91.22" y2="42.32" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-9" x1="113.5" y1="57.97" x2="113.5" y2="42.32" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-10" x1="135.57" y1="57.97" x2="135.57" y2="42.32" xlink:href="#linear-gradient"/>
+  </defs>
+  <title>imandra1</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <path id="Fill-6" class="cls-1" d="M16.67,0A16.83,16.83,0,1,0,17,0Z"/>
+      <path id="Fill-12" class="cls-2" d="M63.16,8V25.82a11.61,11.61,0,0,0,0,1.18A7.94,7.94,0,1,0,79,25.82V8A7.92,7.92,0,1,0,63.16,8"/>
+      <path id="Fill-9" class="cls-3" d="M125.17,0a16.88,16.88,0,0,0,.23,33.76h0A16.88,16.88,0,0,0,125.5,0Z"/>
+      <g>
+        <polygon id="Fill-15" class="cls-4" points="2.19 55.97 3.41 55.97 3.41 45.84 2.19 45.84 2.19 55.97"/>
+        <polygon id="Fill-17" class="cls-5" points="26.31 45.84 22.74 51 19.18 45.84 17.67 45.84 17.67 55.97 18.89 55.97 18.89 47.62 22.55 52.78 22.84 52.78 26.59 47.71 26.59 55.97 27.81 55.97 27.81 45.84 26.31 45.84"/>
+        <path id="Fill-20" class="cls-6" d="M45.27,45.84,40.76,56h1.41l.94-2.25h5.81L50,56h1.32L46.77,45.84Zm.75,1.3,2.35,5.44H43.58Z"/>
+        <polygon id="Fill-23" class="cls-7" points="71.36 45.84 71.36 53.53 65.17 45.84 64.33 45.84 64.33 55.97 65.55 55.97 65.55 48.28 71.74 55.97 72.58 55.97 72.58 45.84 71.36 45.84"/>
+        <path id="Fill-26" class="cls-8" d="M86.85,45.84V56h3.66c3.57,0,5.07-2.53,5.07-5.16a4.74,4.74,0,0,0-5.07-5Zm1.22,1.22h2.44a3.61,3.61,0,0,1,3.85,3.75,3.7,3.7,0,0,1-3.85,3.94H88.07Z"/>
+        <path id="Fill-29" class="cls-9" d="M109.28,45.84V47h4.59A2.12,2.12,0,0,1,116,49.12a2,2,0,0,1-2.25,2.07h-3.29V48.82l-1.13-.94V56h1.22V52.31H113l3.2,3.56h1.57l-3.37-3.75A2.88,2.88,0,0,0,117.26,49a3.15,3.15,0,0,0-3.38-3.19Z"/>
+        <path id="Fill-32" class="cls-10" d="M134.82,45.84,130.32,56h1.4l.94-2.25h5.81l1,2.25h1.32l-4.6-10.13Zm.75,1.3,2.35,5.44h-4.79Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
