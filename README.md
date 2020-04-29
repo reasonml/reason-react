@@ -1,10 +1,10 @@
-# [ReasonReact](https://reasonml.github.io/reason-react/)
+# [ReasonReact](https://reasonml.github.io/reason-react/) - ReasonML bindings for React.js
 
 [![npm version](https://badge.fury.io/js/reason-react.svg)](https://www.npmjs.com/package/reason-react)
 ![npm](https://img.shields.io/npm/dt/reason-react)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+![contributors](https://img.shields.io/github/contributors/reasonml/reason-react)
 [![discord](https://img.shields.io/discord/235176658175262720.svg?logo=discord&colorb=blue)](https://discord.gg/reasonml)
-[![contributors](https://img.shields.io/github/contributors/reasonml/reason-react)
 [![twitter](https://img.shields.io/twitter/follow/reasonml?style=social)](https://twitter.com/reasonml)
 
 ReasonML Bindings for [React.js](https://reactjs.org). ReasonReact is a safer, simpler way to build React components. You get a great type system with an even better developer experience. Learn more about ReasonReact & ReasonML [here](https://reasonml.github.io/reason-react/docs/en/what-and-why)
