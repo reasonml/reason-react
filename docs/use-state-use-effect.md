@@ -30,7 +30,12 @@ let make = (~label, ~onSubmit) => {
       <input
         onBlur=onCancel
         onFocus
-        onChange={event => onChange(ReactEvent.Form.target(event)##value)}
+        onChange={
+          event => {
+            let value = ReactEvent.Form.target(event)##value;
+            onChange(_ => value)
+          }
+        }
         value
       />
     </form>;
