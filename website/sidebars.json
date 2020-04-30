@@ -1,6 +1,10 @@
 {
   "docs": {
-    "Getting Started": ["what-and-why", "installation", "intro-example"],
+    "Getting Started": [
+      "what-and-why",
+      "installation",
+      "intro-example"
+    ],
     "Core": [
       "components",
       "jsx",
@@ -65,9 +69,14 @@
     ]
   },
   "community-menu": {
-    "Community": ["community", "roadmap"]
+    "Community": [
+      "community",
+      "roadmap"
+    ]
   },
   "try-menu": {
-    "Try": ["playground"]
+    "Try": [
+      "playground"
+    ]
   }
 }
