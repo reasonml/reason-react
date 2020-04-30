@@ -53,8 +53,8 @@ had a typo in a class name. For example,
 </div>
 ```
 
-Wouldn't it be nice to get some validation _while_ you're writing React code?
-Better yet, how about preventing your code from even compiling if your Tailwind
+Wouldn't it be nice to get some validation _while_ you're writing the Tailwind
+classes? Better yet, how about preventing your code from even compiling if the
 classes aren't correct? Well, enter
 [`tailwind-ppx`](https://github.com/dylanirlbeck/tailwind-ppx): a compile-time
 validator for Tailwind CSS. Using this PPX, you can get immediate compiler
