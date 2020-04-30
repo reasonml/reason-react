@@ -4,6 +4,7 @@ finalOutput/*.js
 .merlin
 .install
 /lib/bs/
+/lib/js/
 /lib/ocaml/
 *.log
 .bsb.lock
@@ -11,6 +12,7 @@ finalOutput/*.js
 _esy
 _build
 *.install
+*.bs.js
 
 # Editor
 /.idea/
