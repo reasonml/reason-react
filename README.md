@@ -67,7 +67,7 @@ Copy the `bsconfig.json` file from our docs located [here](https://reasonml.gith
 
 ## Using Your Favorite Javascript Libraries
 
-The same way that Tyepscript has `type annotations`, we have `bindings`. Bindings are libraries that allow you to import a popular project (like lodash) or to import your own local file. ReasonReact is in fact an example of a binding!
+The same way that TypeScript has `type annotations`, we have `bindings`. Bindings are libraries that allow you to import a popular project (like lodash) or to import your own local file. ReasonReact is in fact an example of a binding!
 
 ## Documentation
 
@@ -95,3 +95,7 @@ See the README inside `src` for more info!
 - [reasonml.org](https://reasonml.org/) - An effort by the Reason Association to improve documentation for ReasonML & BuckleScript
 - [redex.github.io](https://redex.github.io/) - Find bindings for your favorite libraries here
 - [ReasonTown Podcast](https://anchor.fm/reason-town) - ReasonML Podcast
+
+## Editor Support
+
+Looking for syntax highlighting for your favorite editor? Check out [ReasonML Editor Plugins](https://reasonml.github.io/docs/en/editor-plugins)
