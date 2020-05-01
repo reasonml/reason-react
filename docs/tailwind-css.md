@@ -1,5 +1,5 @@
 ---
-title: Tailwind CSS
+title: Styling: Tailwind CSS
 ---
 
 [Tailwind CSS](https://tailwindcss.com) is a new CSS framework that is rapidly
