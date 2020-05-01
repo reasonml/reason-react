@@ -9,7 +9,11 @@
 
 ReasonReact is a safer, simpler way to build React components. You get a great type system with an even better developer experience. Why choose ReasonReact? Read more [here](https://reasonml.github.io/reason-react/docs/en/what-and-why)
 
-ReasonReact is just React.js under the hood. This makes it super easy to integrate with your current Next.js, Create React App, JavaScript, Flowtype or Typescript project. Learn more about getting started [here](https://reasonml.github.io/reason-react/docs/en/installation#adding-reason-to-an-existing-reactjs-project-create-react-app-nextjs-etc)
+ReasonReact is just React.js under the hood. This makes it super easy to integrate with your current Next.js, Create React App, JavaScript, Flowtype or TypeScript project. Learn more about getting started [here](https://reasonml.github.io/reason-react/docs/en/installation#adding-reason-to-an-existing-reactjs-project-create-react-app-nextjs-etc)
+
+> Watch Ricky Vetter's Reason Conf talk, ["Why React is Just Better in Reason"](https://www.youtube.com/watch?v=i9Kr9wuz24g) to learn more about how Facebook & Messenger are using ReasonReact
+
+> Watch Jordan Walke's Reason Conf talk,  ["React to the Future"](https://www.youtube.com/watch?v=5fG_lyNuEAw) to learn more about the future of ReasonML and React
 
 ## Example
 
@@ -65,13 +69,15 @@ Add the appropriate script tags to package.json:
 
 Copy the `bsconfig.json` file from our docs located [here](https://reasonml.github.io/reason-react/docs/en/installation#adding-reason-to-an-existing-reactjs-project-create-react-app-nextjs-etc)
 
+Then add some files somewhere (don't forget to change `bsconfig.json`, if needed).
+
 ## Using Your Favorite Javascript Libraries
 
 The same way that TypeScript has `type annotations`, we have `bindings`. Bindings are libraries that allow you to import a popular project (like lodash) or to import your own local file. ReasonReact is in fact an example of a binding!
 
 ## Documentation
 
-See https://reasonml.github.io/reason-react/
+See [https://reasonml.github.io/reason-react](https://reasonml.github.io/reason-react)
 
 ## Contribute
 
@@ -84,9 +90,11 @@ npm install
 npm start
 ```
 
-Then add some files somewhere (don't forget to change `bsconfig.json`, if needed).
-
 See the README inside `src` for more info!
+
+## Editor Support
+
+Looking for syntax highlighting for your favorite editor? Check out [ReasonML Editor Plugins](https://reasonml.github.io/docs/en/editor-plugins)
 
 ## Friends of ReasonReact
 
@@ -95,7 +103,4 @@ See the README inside `src` for more info!
 - [reasonml.org](https://reasonml.org/) - An effort by the Reason Association to improve documentation for ReasonML & BuckleScript
 - [redex.github.io](https://redex.github.io/) - Find bindings for your favorite libraries here
 - [ReasonTown Podcast](https://anchor.fm/reason-town) - ReasonML Podcast
-
-## Editor Support
-
-Looking for syntax highlighting for your favorite editor? Check out [ReasonML Editor Plugins](https://reasonml.github.io/docs/en/editor-plugins)
+- [ReasonConf Youtube](https://www.youtube.com/channel/UCtFP_Hn5nIbZY4Xi47qfHhw/videos) Reason Conf on Youtube
