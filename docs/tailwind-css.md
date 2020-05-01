@@ -30,7 +30,7 @@ let make = () =>
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2"> {React.string("Tailwind")} </div>
         <p className="text-gray-700 text-base">
-          {"A reason react starter with tailwind" |> str}
+          {React.string("A reason react starter with tailwind")}
         </p>
       </div>
    </div>
