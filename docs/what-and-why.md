@@ -2,7 +2,7 @@
 title: What & Why
 ---
 
-ReasonReact helps you use Reason to build React components that have type safety at their core.
+ReasonReact helps you use [Reason](http://reasonml.github.io/) to build [React](https://reactjs.org/) components with deeply integrated, strong, static type safety.
 
 It is designed and built by people using Reason and React in large, mission critical production React codebases.
 
