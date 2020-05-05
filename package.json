@@ -1,8 +1,15 @@
 {
   "name": "reason-react",
-  "version": "0.8.0-dev.4",
+  "version": "0.8.0",
   "description": "React bindings for Reason",
-  "main": "lib/js/src/ReasonReact.js",
+  "main": "src/React.bs.js",
+  "files": [
+    "README.md",
+    "HISTORY.md",
+    "LICENSE",
+    "bsconfig.json",
+    "src"
+  ],
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",

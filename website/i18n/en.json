@@ -146,6 +146,9 @@
       "subscriptions-helper": {
         "title": "Subscriptions Helper"
       },
+      "tailwind-css": {
+        "title": "Tailwind CSS"
+      },
       "ternary-shortcut": {
         "title": "Ternary Shortcut"
       },
@@ -162,7 +165,7 @@
         "title": "useReducer Hook"
       },
       "usestate-event-value": {
-        "title": "Using event values with useState"
+        "title": "Using Event Values With useState"
       },
       "usestate-hook": {
         "title": "useState Hook"
