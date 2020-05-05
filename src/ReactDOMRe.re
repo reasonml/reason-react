@@ -2138,17 +2138,8 @@ external createElement:
   (string, ~props: props=?, array(React.element)) => React.element =
   "createElement";
 
-[@bs.module "React"] [@deprecated "Please use JSX syntax directly."]
-external jsxKeyed: (string, domProps, string) => React.element = "jsx";
-
-[@bs.module "React"] [@deprecated "Please use JSX syntax directly."]
-external jsx: (string, domProps) => React.element = "jsx";
-
-[@bs.module "React"] [@deprecated "Please use JSX syntax directly."]
-external jsxs: (string, domProps) => React.element = "jsxs";
-
-[@bs.module "React"] [@deprecated "Please use JSX syntax directly."]
-external jsxsKeyed: (string, domProps, string) => React.element = "jsxs";
+[@deprecated "Please use JSX syntax directly."];
+external makeDOMComponent: string => React.component(domProps) = "%identity";
 
 /* Only wanna expose createElementVariadic here. Don't wanna write an interface file */
 include (
