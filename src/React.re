@@ -173,7 +173,7 @@ external useReducerWithMapState:
   (
     [@bs.uncurry] (('state, 'action) => 'state),
     'initialState,
-    'initialState => 'state
+    [@bs.uncurry] ('initialState => 'state)
   ) =>
   ('state, 'action => unit) =
   "useReducer";
