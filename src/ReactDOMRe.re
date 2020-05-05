@@ -1122,7 +1122,9 @@ type domProps = {
   suppressContentEditableWarning: bool,
 };
 
-[@bs.splice] [@bs.module "react"] [@deprecated "Please use React.array or JSX syntax."]
+[@bs.splice]
+[@bs.module "react"]
+[@deprecated "Please use React.array or JSX syntax."]
 external createDOMElementVariadic:
   (string, ~props: domProps=?, array(React.element)) => React.element =
   "createElement";
@@ -2133,7 +2135,10 @@ external objToDOMProps: Js.t({..}) => props = "%identity";
 [@deprecated "Please use ReactDOMRe.props instead"]
 type reactDOMProps = props;
 
-[@bs.splice] [@bs.val] [@bs.module "react"] [@deprecated "Please use React.array or JSX syntax."]
+[@bs.splice]
+[@bs.val]
+[@bs.module "react"]
+[@deprecated "Please use React.array or JSX syntax."]
 external createElement:
   (string, ~props: props=?, array(React.element)) => React.element =
   "createElement";
