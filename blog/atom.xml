@@ -2,17 +2,17 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://reasonml.github.io/reason-react/reason-react/blog</id>
     <title>ReasonReact Blog</title>
-    <updated>1970-01-01T00:00:00Z</updated>
+    <updated>2020-05-05T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
     <link rel="alternate" href="https://reasonml.github.io/reason-react/reason-react/blog"/>
     <subtitle>The best place to stay up-to-date with the latest ReasonReact news and events.</subtitle>
     <logo>https://reasonml.github.io/reason-react/reason-react/img/reason-react-white.svg</logo>
     <entry>
         <title type="html"><![CDATA[ReasonReact 0.8.0 🎉 BuckleScript Upgrade & More!]]></title>
-        <id>https://reasonml.github.io/reason-react/reason-react/blog/2020/04/49/080-release.html</id>
-        <link href="https://reasonml.github.io/reason-react/reason-react/blog/2020/04/49/080-release.html">
+        <id>https://reasonml.github.io/reason-react/reason-react/blog/2020/05/05/080-release.html</id>
+        <link href="https://reasonml.github.io/reason-react/reason-react/blog/2020/05/05/080-release.html">
         </link>
-        <updated>1970-01-01T00:00:00Z</updated>
+        <updated>2020-05-05T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>We're excited to share Version 0.8.0 of ReasonReact with the world today! ReasonReact adds a huge number of quality of life improvements and new api changes. This is our first big release since introducing hooks in 0.7.0.</p> <p>It's a breaking change prima...</p>]]></summary>
         <author>
         </author>

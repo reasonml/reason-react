@@ -4,7 +4,7 @@
         <title>ReasonReact Blog</title>
         <link>https://reasonml.github.io/reason-react/reason-react/blog</link>
         <description>The best place to stay up-to-date with the latest ReasonReact news and events.</description>
-        <lastBuildDate>Thu, 01 Jan 1970 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 05 May 2020 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -14,9 +14,9 @@
         </image>
         <item>
             <title><![CDATA[ReasonReact 0.8.0 🎉 BuckleScript Upgrade & More!]]></title>
-            <link>https://reasonml.github.io/reason-react/reason-react/blog/2020/04/49/080-release.html</link>
-            <guid>https://reasonml.github.io/reason-react/reason-react/blog/2020/04/49/080-release.html</guid>
-            <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
+            <link>https://reasonml.github.io/reason-react/reason-react/blog/2020/05/05/080-release.html</link>
+            <guid>https://reasonml.github.io/reason-react/reason-react/blog/2020/05/05/080-release.html</guid>
+            <pubDate>Tue, 05 May 2020 06:00:00 GMT</pubDate>
             <description><![CDATA[<p>We're excited to share Version 0.8.0 of ReasonReact with the world today! ReasonReact adds a huge number of quality of life improvements and new api changes. This is our first big release since introducing hooks in 0.7.0.</p> <p>It's a breaking change prima...</p>]]></description>
         </item>
         <item>
