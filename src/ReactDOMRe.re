@@ -2143,9 +2143,6 @@ external createElement:
   (string, ~props: props=?, array(React.element)) => React.element =
   "createElement";
 
-[@deprecated "Please use JSX syntax directly."];
-external makeDOMComponent: string => React.component(domProps) = "%identity";
-
 /* Only wanna expose createElementVariadic here. Don't wanna write an interface file */
 include (
           /* Use varargs to avoid the ReactJS warning for duplicate keys in children */
