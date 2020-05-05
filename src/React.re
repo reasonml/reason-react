@@ -428,7 +428,8 @@ module Uncurried = {
 
   [@bs.module "react"]
   external useReducer:
-    ((. 'state, 'action) => 'state, 'state) => ('state, (. 'action) => unit) =
+    ([@bs.uncurry] (('state, 'action) => 'state), 'state) =>
+    ('state, (. 'action) => unit) =
     "useReducer";
 
   [@bs.module "react"]
@@ -436,7 +437,7 @@ module Uncurried = {
     (
       [@bs.uncurry] (('state, 'action) => 'state),
       'initialState,
-      'initialState => 'state
+      [@bs.uncurry] ('initialState => 'state)
     ) =>
     ('state, (. 'action) => unit) =
     "useReducer";
