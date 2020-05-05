@@ -62,16 +62,14 @@ module Children = {
 };
 
 module Context = {
-  type t('props);
+  type t('contextValue);
+  type props('contextValue) = {
+    value: 'contextValue,
+    children: element,
+  };
 
   [@bs.get]
-  external provider:
-    t('props) =>
-    component({
-      .
-      "value": 'props,
-      "children": element,
-    }) =
+  external provider: t('contextValue) => component(props('contextValue)) =
     "Provider";
 };
 
