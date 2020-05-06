@@ -101,6 +101,14 @@ module Fragment = {
   external make: component({. "children": element}) = "Fragment";
 };
 
+module StrictMode = {
+  [@bs.obj]
+  external makeProps:
+    (~children: element, ~key: 'key=?, unit) => {. "children": element};
+  [@bs.module "react"]
+  external make: component({. "children": element}) = "StrictMode";
+};
+
 module Suspense = {
   [@bs.obj]
   external makeProps:
