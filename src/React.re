@@ -12,6 +12,9 @@ type componentLike('props, 'return) = 'props => 'return;
 
 type component('props) = componentLike('props, element);
 
+/* this function exists to prepare for making `component` abstract */
+external component: componentLike('props, element) => component('props) = "%identity";
+
 [@bs.module "react"]
 external createElement: (component('props), 'props) => element =
   "createElement";
