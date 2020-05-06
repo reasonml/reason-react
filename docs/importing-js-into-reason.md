@@ -25,8 +25,8 @@ let make = () => <div> <Greeting name="Peter" /> </div>;
 
 ### Default props and JavaScript components
 
-Sometimes when you need your JavaScript component to have a default prop. How
-you handle this will depend on a few details for each situation.
+Sometimes you need your JavaScript component to have a default prop. How you
+handle this will depend on the details of the situation.
 
 #### Scenario 1: The JavaScript component prop is already coded to have a default
 
