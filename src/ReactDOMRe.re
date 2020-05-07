@@ -123,96 +123,64 @@ module Ref = {
 
 /** Type-safe form input values. */
 module Input: {
-  type type_('a);
-  type t('a);
-  type step('a);
+  type type_('value);
+  type t('value);
+  type step('value);
 
-  external string: string => t(string) = "%identity";
   external date: Js.Date.t => t(Js.Date.t) = "%identity";
   external float: float => t(float) = "%identity";
   external int: int => t(int) = "%identity";
-  external bool: bool => t(bool) = "%identity";
-  
-  [@bs.inline "number"]
-  let intType: type_(int);
-  
-  [@bs.inline "number"]
-  let floatType: type_(float);
-
-  [@bs.inline "any"]
-  let anyStep: step(_);
-  
-  [@bs.inline "date"]
-  let dateType: type_(Js.Date.t);
 
   [@bs.inline "checkbox"]
   let checkbox: type_(bool);
+
+  [@bs.inline "date"]
+  let dateType: type_(Js.Date.t);
+
+  [@bs.inline "number"]
+  let intType: type_(int);
+
+  [@bs.inline "number"]
+  let floatType: type_(float);
+
+  external otherType: string => type_(_) = "%identity";
+
+  [@bs.inline "any"]
+  let anyStep: step(_);
 
   external dateStep: int => step(Js.Date.t) = "%identity";
   external floatStep: float => step(float) = "%identity";
   external intStep: int => step(int) = "%identity";
 } = {
-  type type_('a) = string;  
-  type t('a);
-  type step('a) = string;
+  type type_('value) = string;
+  type t('value);
+  type step('value) = string;
 
-  external string: string => t(string) = "%identity";
   external date: Js.Date.t => t(Js.Date.t) = "%identity";
   external float: float => t(float) = "%identity";
   external int: int => t(int) = "%identity";
-  external bool: bool => t(bool) = "%identity";
 
   [@bs.inline]
-  let anyStep = "any";
-  
-  [@bs.inline]
-  let intType = "number";
-  
-  [@bs.inline]
-  let floatType = "number";
-  
+  let checkbox = "checkbox";
+
   [@bs.inline]
   let dateType = "date";
 
   [@bs.inline]
-  let checkbox = "checkbox";
-  
+  let intType = "number";
+
+  [@bs.inline]
+  let floatType = "number";
+
+  external otherType: string => type_(_) = "%identity";
+
+  [@bs.inline]
+  let anyStep = "any";
 
   external dateStep: int => step(Js.Date.t) = "%identity";
   external floatStep: float => step(float) = "%identity";
   external intStep: int => step(int) = "%identity";
 };
-// module Input: {
-//   type t('a);
-//   type step('a);
-
-//   external string: string => t(string) = "%identity";
-//   external date: Js.Date.t => t(Js.Date.t) = "%identity";
-//   external float: float => t(float) = "%identity";
-//   external int: int => t(int) = "%identity";
-
-//   [@bs.inline "any"]
-//   let anyStep: step(_);
-
-//   external dateStep: int => step(Js.Date.t) = "%identity";
-//   external floatStep: float => step(float) = "%identity";
-//   external intStep: int => step(int) = "%identity";
-// } = {
-//   type t('a);
-//   type step('a) = string;
-
-//   external string: string => t(string) = "%identity";
-//   external date: Js.Date.t => t(Js.Date.t) = "%identity";
-//   external float: float => t(float) = "%identity";
-//   external int: int => t(int) = "%identity";
-
-//   [@bs.inline]
-//   let anyStep = "any";
-
-//   external dateStep: int => step(Js.Date.t) = "%identity";
-//   external floatStep: float => step(float) = "%identity";
-//   external intStep: int => step(int) = "%identity";
-// };
 
 /* This list isn't exhaustive. We'll add more as we go. */
 /*
