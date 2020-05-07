@@ -25,11 +25,10 @@ let make = () => {
       {count: 0},
     );
 
-  /* useEffect hook takes 0 arguments hence, useEffect0 */
-  React.useEffect0(() => {
+  React.useEffectN(() => {
     let timerId = Js.Global.setInterval(() => dispatch(Tick), 1000);
     Some(() => Js.Global.clearInterval(timerId));
-  });
+  }, [||]);
 
   /* ints need to be converted to strings, that are then consumed by React.string */
   <div> {React.string(string_of_int(state.count))} </div>;

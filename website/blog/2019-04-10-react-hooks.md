@@ -37,10 +37,10 @@ let make = () => {
     {count: 0}
   );
 
-  React.useEffect0(() => {
+  React.useEffectN(() => {
     let timerId = Js.Global.setInterval(() => dispatch(Tick), 1000);
     Some(() => Js.Global.clearInterval(timerId))
-  });
+  }, [||]);
   
   <div>{ReasonReact.string(string_of_int(state.count))}</div>;
 };

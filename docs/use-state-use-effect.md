@@ -12,12 +12,12 @@ let make = (~label, ~onSubmit) => {
   let onCancel = _evt => setEditing(_ => false);
   let onFocus = event => ReactEvent.Focus.target(event)##select();
 
-  React.useEffect1(
+  React.useEffectN(
     () => {
       onChange(_ => label);
       None
     },
-    [|label|],
+    [|label->React.Dep|],
     );
 
   if (editing) {

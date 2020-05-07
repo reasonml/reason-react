@@ -7,14 +7,14 @@ title: A Custom useDebounce Hook
 let useDebounce = (value, delay) => {
   let (debouncedValue, setDebouncedValue) = React.useState(_ => value);
 
-  React.useEffect1(
+  React.useEffectN(
     () => {
       let handler =
         Js.Global.setTimeout(() => setDebouncedValue(_ => value), delay);
 
       Some(() => Js.Global.clearTimeout(handler));
     },
-    [|value|],
+    [|value->React.Dep|],
   );
 
   debouncedValue;

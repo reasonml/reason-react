@@ -11,11 +11,11 @@ Here's a simple example of how to use React's `useState` with `useEffects`.
 ```reason
 [@react.component]
 let make = () => {
-    React.useEffect0(() => {
+    React.useEffectN(() => {
         let id = subscription.subscribe();
         /* clean up the subscription */
         Some(() => subscription.unsubscribe(id));
-    });
+    }, [||]);
 }
 ```
 
@@ -26,10 +26,10 @@ With this, the subscription will only be recreated when `~source` changes
 ```reason
 [@react.component]
 let make = (~source) => {
-    React.useEffect1(() => {
+    React.useEffectN(() => {
         let id = subscription.subscribe();
         /* clean up the subscription */
         Some(() => subscription.unsubscribe(id));
-    }, [|source|]);
+    }, [|source->React.Dep|]);
 }
 ```
