@@ -26,7 +26,7 @@ ReactDOMRe.renderToElementWithId(<Greeting name="John" />, "root");
 This is how you used to write this in plain Javascript (index.js):
 ```js
 /* file: index.js */
-ReactDOM.render(<Greeting name="John"> document.getElementById("root"));
+ReactDOM.render(<Greeting name="John">, document.getElementById("root"));
 ```
 
 ### Using Greeting in an existing Javascript/Typescript App
