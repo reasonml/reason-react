@@ -35,7 +35,7 @@ as its signature is concerned. To bind to it, we just make the prop optional.
 
 ```reason
 module Greeting = {
-  [@bs.module "./MyJavascriptFile.js"] [@react.component]
+  [@bs.module "./Greeting.js"] [@react.component]
   external make: (~name: string=?) => React.element = "default";
 };
 ```
