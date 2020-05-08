@@ -8,7 +8,7 @@ module DummyStatefulComponent = {
     let (value, setValue) = React.useState(() => initialValue);
 
     <button onClick={_ => setValue(value => value + 1)}>
-      {value->React.int}
+      value->React.int
     </button>;
   };
 };
@@ -30,7 +30,7 @@ module DummyReducerComponent = {
       );
 
     <>
-      <div className="value"> {state->React.int} </div>
+      <div className="value"> state->React.int </div>
       <button onClick={_ => send(Increment)}>
         "Increment"->React.string
       </button>
@@ -38,6 +38,15 @@ module DummyReducerComponent = {
         "Decrement"->React.string
       </button>
     </>;
+  };
+};
+
+module DummyComponentWithEffect = {
+  [@react.component]
+  let make = (~value=0, ~callback, ()) => {
+    React.useEffect1(() => {callback(value)}, [|value|]);
+
+    <div />;
   };
 };
 
@@ -163,5 +172,34 @@ describe("React", ({test, beforeEach, afterEach}) => {
       ->Option.isSome,
     ).
       toBeFalse();
+  });
+
+  test("can render react components with effects", ({expect}) => {
+    let container = getContainer(container);
+    let callback = Mock.fn();
+
+    act(() => {
+      ReactDOMRe.render(
+        <DummyComponentWithEffect value=0 callback />,
+        container,
+      )
+    });
+    act(() => {
+      ReactDOMRe.render(
+        <DummyComponentWithEffect value=1 callback />,
+        container,
+      )
+    });
+    act(() => {
+      ReactDOMRe.render(
+        <DummyComponentWithEffect value=1 callback />,
+        container,
+      )
+    });
+
+    expect.value(callback->Mock.getMock->Mock.calls).toEqual([|
+      [|0|],
+      [|1|],
+    |]);
   });
 });
