@@ -52,7 +52,7 @@ wrap it with our own component to add the logic.
 
 ```reason
 module GreetingJs = {
-  [@bs.module "./MyJavascriptFile.js"] [@react.component]
+  [@bs.module "./Greeting.js"] [@react.component]
   external make: (~name: string) => React.element = "default";
 };
 
