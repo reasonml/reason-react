@@ -30,11 +30,29 @@
   },
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
-    "bs-platform": "7.1.1"
+    "bs-platform": "^7.3.0",
+    "jest": "^26.0.1",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "reason-test-framework": "^0.3.1"
   },
   "peerDependencies": {
-    "bs-platform": "^7.1.1",
+    "bs-platform": "^7.3.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "roots": [
+      "test"
+    ],
+    "testMatch": [
+      "**/*__test.bs.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(bs-platform|reason-react|reason-react-compat|reason-react-update|bs-webapi|bs-css|bs-css-emotion|reason-test-framework)/)"
+    ]
   }
 }
