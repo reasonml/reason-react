@@ -69,7 +69,7 @@ The component above could be called like this:
 
 The next thing you might notice looking at this example is the use of hooks (`useState`). ReasonReact binds to [all of the hooks that React provides](https://reactjs.org/docs/hooks-intro.html) with only minor API differences. Please refer to their excellent documentation for more information on how hooks work and for best practices.
 
-The differences that you'll notice are mostly around listing dependencies. In React they are passed as a heterogeneous array, however, as Reason does not allow elements of different types in an array, a special wrapper `React.Dep` is used to wrap each dependency in the array in a type-safe way.
+The differences that you'll notice are mostly around listing dependencies. In React they are passed as a heterogeneous array, however, as Reason does not allow elements of different types in an array, a special wrapper function `React.dep` is used to type-cast each dependency in the array in a type-safe way. (It's type-safe because it's cast into an abstract type `dep` which does not allow any further operations.)
 
 Accordingly, for example, the two javascript calls:
 
@@ -81,7 +81,7 @@ useEffect(effect, [])
 would be expressed as the following two Reason calls:
 
 ```reason
-useEffectN(effect, [|dep1->Dep, dep2->Dep|]) // Note the type-safe wrapping
+useEffectN(effect, [|dep1->dep, dep2->dep|]) // Note the type-safe wrapping
 // ^ compiles to JavaScript `useEffect(effect, [dep1, dep2])
 useEffectN(effect, [||])
 // ^ compiles to JavaScript `useEffect(effect, [])

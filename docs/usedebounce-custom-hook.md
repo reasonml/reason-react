@@ -14,7 +14,7 @@ let useDebounce = (value, delay) => {
 
       Some(() => Js.Global.clearTimeout(handler));
     },
-    [|value->React.Dep|],
+    [|value->React.dep|],
   );
 
   debouncedValue;

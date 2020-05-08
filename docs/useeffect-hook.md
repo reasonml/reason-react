@@ -30,6 +30,6 @@ let make = (~source) => {
         let id = subscription.subscribe();
         /* clean up the subscription */
         Some(() => subscription.unsubscribe(id));
-    }, [|source->React.Dep|]);
+    }, [|source->React.dep|]);
 }
 ```

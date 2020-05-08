@@ -187,9 +187,10 @@ external useReducerWithMapState:
   "useReducer";
 
 /** A hook dependency. */
-[@unboxed]
-type dep =
-  | Dep(_): dep;
+type dep;
+
+/** [dep(value)] safely type-casts any [value] into a React hook dependency. */
+external dep: _ => dep = "%identity";
 
 [@bs.module "react"]
 external useEffect: ([@bs.uncurry] (unit => option(unit => unit))) => unit =

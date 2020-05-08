@@ -17,7 +17,7 @@ let make = (~label, ~onSubmit) => {
       onChange(_ => label);
       None
     },
-    [|label->React.Dep|],
+    [|label->React.dep|],
     );
 
   if (editing) {
