@@ -2763,10 +2763,10 @@ read-pkg@^5.2.0:
     parse-json "^5.0.0"
     type-fest "^0.6.0"
 
-reason-test-framework@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/reason-test-framework/-/reason-test-framework-0.3.1.tgz#375078743a63d9534a9c24e287204daf9b3874c8"
-  integrity sha512-InvbILqKGI6jTKpw1j89fMYPEd4KahBh3Z9Gl5RQo1tPm2YHOoHtb99lRBdQ9ESykymLVkhbUy0sB33aqeKlig==
+reason-test-framework@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/reason-test-framework/-/reason-test-framework-0.3.2.tgz#28e690850354bb484a560206cd453a64f5f0bc7c"
+  integrity sha512-yc+8fWz5V5tnb/vFnVO7IgcsYjL9RLVWKvDAK42cjvWNMRpiS9zUiOOMIxs2XVix1YW4wqPH8KGdLzs23gsdVQ==
 
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"

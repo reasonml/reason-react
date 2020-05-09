@@ -34,10 +34,10 @@
     "jest": "^26.0.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "reason-test-framework": "^0.3.1"
+    "reason-test-framework": "^0.3.2"
   },
   "peerDependencies": {
-    "bs-platform": "^7.3.0",
+    "bs-platform": "^7.1.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
   },
