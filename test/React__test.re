@@ -41,10 +41,54 @@ module DummyReducerComponent = {
   };
 };
 
+module DummyReducerWithMapStateComponent = {
+  type action =
+    | Increment
+    | Decrement;
+  [@react.component]
+  let make = (~initialValue=0, ()) => {
+    let (state, send) =
+      React.useReducerWithMapState(
+        (state, action) =>
+          switch (action) {
+          | Increment => state + 1
+          | Decrement => state - 1
+          },
+        initialValue,
+        initialValue => initialValue + 1,
+      );
+
+    <>
+      <div className="value"> state->React.int </div>
+      <button onClick={_ => send(Increment)}>
+        "Increment"->React.string
+      </button>
+      <button onClick={_ => send(Decrement)}>
+        "Decrement"->React.string
+      </button>
+    </>;
+  };
+};
+
 module DummyComponentWithEffect = {
   [@react.component]
   let make = (~value=0, ~callback, ()) => {
     React.useEffect1(
+      () => {
+        callback(value);
+        None;
+      },
+      [|value|],
+    );
+
+    <div />;
+  };
+};
+
+module DummyComponentWithLayoutEffect = {
+  [@react.component]
+  let make = (~value=0, ~callback, ()) => {
+    React.useLayoutEffect1(
       () => {
         callback(value);
         None;
@@ -342,6 +386,75 @@ describe("React", ({test, beforeEach, afterEach}) => {
       toBeFalse();
   });
 
+  test("can render react components with reducers (map state)", ({expect}) => {
+    let container = getContainer(container);
+
+    act(() => {
+      ReactDOMRe.render(<DummyReducerWithMapStateComponent />, container)
+    });
+
+    expect.bool(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "1")
+      ->Option.isSome,
+    ).
+      toBeTrue();
+
+    let button =
+      container->DOM.findBySelectorAndPartialTextContent(
+        "button",
+        "Increment",
+      );
+
+    act(() => {
+      switch (button) {
+      | Some(button) => Simulate.click(button)
+      | None => ()
+      }
+    });
+
+    expect.bool(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "1")
+      ->Option.isSome,
+    ).
+      toBeFalse();
+
+    expect.bool(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "2")
+      ->Option.isSome,
+    ).
+      toBeTrue();
+
+    let button =
+      container->DOM.findBySelectorAndPartialTextContent(
+        "button",
+        "Decrement",
+      );
+
+    act(() => {
+      switch (button) {
+      | Some(button) => Simulate.click(button)
+      | None => ()
+      }
+    });
+
+    expect.bool(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "1")
+      ->Option.isSome,
+    ).
+      toBeTrue();
+
+    expect.bool(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "2")
+      ->Option.isSome,
+    ).
+      toBeFalse();
+  });
+
   test("can render react components with effects", ({expect}) => {
     let container = getContainer(container);
     let callback = Mock.fn();
@@ -361,6 +474,35 @@ describe("React", ({test, beforeEach, afterEach}) => {
     act(() => {
       ReactDOMRe.render(
         <DummyComponentWithEffect value=1 callback />,
+        container,
+      )
+    });
+
+    expect.value(callback->Mock.getMock->Mock.calls).toEqual([|
+      [|0|],
+      [|1|],
+    |]);
+  });
+
+  test("can render react components with layout effects", ({expect}) => {
+    let container = getContainer(container);
+    let callback = Mock.fn();
+
+    act(() => {
+      ReactDOMRe.render(
+        <DummyComponentWithLayoutEffect value=0 callback />,
+        container,
+      )
+    });
+    act(() => {
+      ReactDOMRe.render(
+        <DummyComponentWithLayoutEffect value=1 callback />,
+        container,
+      )
+    });
+    act(() => {
+      ReactDOMRe.render(
+        <DummyComponentWithLayoutEffect value=1 callback />,
         container,
       )
     });
