@@ -21,7 +21,8 @@
       "component-as-prop",
       "ternary-shortcut",
       "context-mixins",
-      "custom-class-component-property"
+      "custom-class-component-property",
+      "usestate-event-value"
     ],
     "Record API (deprecated)": [
       "jsx-2",
@@ -63,7 +64,8 @@
       "js-using-reason",
       "gentype",
       "example-projects",
-      "graphql-apollo"
+      "graphql-apollo",
+      "tailwind-css"
     ]
   },
   "community-menu": {

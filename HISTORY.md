@@ -12,7 +12,7 @@ Thanks to all of our contributors for making this happen!
 
 ### Breaking Changes:
 
-* `bs-platform` has a minimum version of 7.0.1 (^7.0.1) [@imbsky in #503](https://github.com/reasonml/reason-react/pull/503)
+* `bs-platform` has a minimum version of 7.1.1 (^7.1.1) [@imbsky in #503](https://github.com/reasonml/reason-react/pull/503)
 * Adds `onInvalid` prop [@bsansouci in #364](https://github.com/reasonml/reason-react/pull/364)
 * Adds `React.float` and `React.int` [@utkarshkukreti in #420](https://github.com/reasonml/reason-react/pull/420)
 * Fix `crossOrigin` case and type [@schmavery in #469](https://github.com/reasonml/reason-react/pull/469)
