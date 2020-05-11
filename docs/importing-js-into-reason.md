@@ -30,6 +30,16 @@ handle this will depend on the details of the situation.
 
 #### Scenario 1: The JavaScript component prop is already coded to have a default
 
+```js
+function Greeting({ name }) {
+ return <span>Hey {name}</span>
+};
+
+Greeting.defaultProps = {
+  name: "John"
+};
+```
+
 Props (or any function argument) with a default is just an optional prop as far
 as its signature is concerned. To bind to it, we just make the prop optional.
 
