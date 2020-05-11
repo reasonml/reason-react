@@ -113,6 +113,14 @@ module Fragment = {
   external make: component({. "children": element}) = "Fragment";
 };
 
+module StrictMode = {
+  [@bs.obj]
+  external makeProps:
+    (~children: element, ~key: 'key=?, unit) => {. "children": element};
+  [@bs.module "react"]
+  external make: component({. "children": element}) = "StrictMode";
+};
+
 module Suspense = {
   [@bs.obj]
   external makeProps:
@@ -185,7 +193,7 @@ external useReducerWithMapState:
   (
     [@bs.uncurry] (('state, 'action) => 'state),
     'initialState,
-    'initialState => 'state
+    [@bs.uncurry] ('initialState => 'state)
   ) =>
   ('state, 'action => unit) =
   "useReducer";

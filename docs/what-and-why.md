@@ -2,13 +2,14 @@
 title: What & Why
 ---
 
-ReasonReact is a safer, simpler way to build [React](https://reactjs.org/) components, in [Reason](http://reasonml.github.io/).
+ReasonReact helps you use [Reason](http://reasonml.github.io/) to build [React](https://reactjs.org/) components with deeply integrated, strong, static type safety.
 
-By leveraging the latter's great type system, expressive language features and smooth interoperability with JS, ReasonReact packs ReactJS' features into an API that is:
+It is designed and built by people using Reason and React in large, mission critical production React codebases.
 
-- Safe and statically typed
-- Simple and lean
-- Familiar and easy to insert into an existing ReactJS codebase
-- Well thought-out (made by the creator of ReactJS himself!)
+ReasonReact uses Reason's expressive language features, along with smooth JavaScript interop to provide a React API that is:
 
-It is often said that writing ReactJS code feels like "just using JavaScript". The same applies to ReasonReact, but we push it further; writing routing, data management, component composition and components themselves feel like "just using Reason".
+- Safe and statically typed (with full type inference).
+- Simple and lean.
+- Familiar and easy to insert into an existing ReactJS codebase.
+
+One of ReactJS's strengths is that it uses the programming language's features to implement framework features. It is often said that ReactJS feels like an extension of the programming language.  ReasonReact pushes that philosophy further because the Reason syntax and language features are a better match for React programming patterns.  ReasonReact also uses built-in language features to seamlessly integrate into other UI framework patterns left unaddressed by ReactJS. Routing, data management, component composition and components themselves all feel like "just using Reason".
