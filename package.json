@@ -15,6 +15,9 @@
   },
   "esy": {
     "build": [
+      [ "dune", "build", "@install", "-p", "#{self.name}"]
+    ],
+    "buildDev": [
       [ "refmterr", "dune", "build", "@install", "-p", "#{self.name}"]
     ]
   },
