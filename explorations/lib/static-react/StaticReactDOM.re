@@ -165,6 +165,66 @@ let span =
     "</span>",
   );
 
+let ul =
+    (
+      ~onClick: option(event => unit)=?,
+      ~className: option(string)=?,
+      ~style: option(string)=?,
+      children,
+      ~state=Stateless,
+      self,
+    ) =>
+  StaticReactReact.Node(
+    state,
+    children,
+    () => {
+      switch (className, style) {
+      | (None, None) => "<ul>"
+      | (Some(cn), None) =>
+        "<ul class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
+      | (Some(cn), Some(s)) =>
+        "<ul class='"
+        ++ StaticReactDOMUtils.escapeHtml(cn)
+        ++ "' style='"
+        ++ StaticReactDOMUtils.escapeHtml(s)
+        ++ "'>"
+      | (None, Some(s)) =>
+        "<ul style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
+      }
+    },
+    "</ul>",
+  );
+
+let li =
+    (
+      ~onClick: option(event => unit)=?,
+      ~className: option(string)=?,
+      ~style: option(string)=?,
+      children,
+      ~state=Stateless,
+      self,
+    ) =>
+  StaticReactReact.Node(
+    state,
+    children,
+    () => {
+      switch (className, style) {
+      | (None, None) => "<li>"
+      | (Some(cn), None) =>
+        "<li class='" ++ StaticReactDOMUtils.escapeHtml(cn) ++ "'>"
+      | (Some(cn), Some(s)) =>
+        "<li class='"
+        ++ StaticReactDOMUtils.escapeHtml(cn)
+        ++ "' style='"
+        ++ StaticReactDOMUtils.escapeHtml(s)
+        ++ "'>"
+      | (None, Some(s)) =>
+        "<li style='" ++ StaticReactDOMUtils.escapeHtml(s) ++ "'>"
+      }
+    },
+    "</li>",
+  );
+
 let img =
     (
       ~onClick: option(event => unit)=?,
