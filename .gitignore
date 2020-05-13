@@ -8,3 +8,4 @@ finalOutput/*.js
 .bsb.lock
 /src/*.js
 _esy
+*.install
