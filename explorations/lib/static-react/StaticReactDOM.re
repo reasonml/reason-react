@@ -106,6 +106,14 @@ let p = (children, ~state: domState=Stateless, self) =>
     "</p>",
   );
 
+let text = (children, ~state: domState=Stateless, self) =>
+  StaticReactReact.Node(
+    state,
+    Empty,
+    () => StaticReactDOMUtils.escapeHtml(children),
+    "",
+  );
+
 let i =
     (
       ~className: option(string)=?,
