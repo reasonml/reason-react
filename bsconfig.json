@@ -1,8 +1,10 @@
 {
   "name": "reason-react",
-  "sources": "src",
-  "package-specs": [{ "module": "es6", "in-source": true }],
+  "reason": { "react-jsx": 3 },
+  "sources": ["src", { "dir": "test", "dev": true }],
+  "package-specs": [{ "module": "commonjs", "in-source": true }],
   "suffix": ".bs.js",
   "refmt": 3,
+  "bs-dependencies": ["reason-test-framework"],
   "bsc-flags": ["-bs-no-version-header"]
 }

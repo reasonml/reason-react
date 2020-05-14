@@ -26,7 +26,7 @@ jobs:
   # https://circleci.com/docs/1.0/environment-variables/
   deploy-website:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:12
 
     steps:
       - checkout
