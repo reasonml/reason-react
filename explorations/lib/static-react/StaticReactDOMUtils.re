@@ -12,7 +12,6 @@ let emptyHTML = toPlatformString("");
 let rec escapePlatformStringLoop =
         (html, lastIndex, index, s: platformString, len) =>
   if (index === len) {
-    flush_all();
     lastIndex === 0
       ? s : lastIndex !== index ? concat(html, sub(s, lastIndex, len)) : html;
   } else {
