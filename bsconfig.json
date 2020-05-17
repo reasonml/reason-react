@@ -5,6 +5,6 @@
   "package-specs": [{ "module": "commonjs", "in-source": true }],
   "suffix": ".bs.js",
   "refmt": 3,
-  "bs-dependencies": ["reason-test-framework"],
+  "bs-dev-dependencies": ["reason-test-framework"],
   "bsc-flags": ["-bs-no-version-header"]
 }
