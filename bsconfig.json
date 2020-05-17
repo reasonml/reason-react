@@ -1,7 +1,7 @@
 {
   "name": "reason-react",
   "reason": { "react-jsx": 3 },
-  "sources": ["src", { "dir": "test", "dev": true }],
+  "sources": ["src", { "dir": "test", "type": "dev" }],
   "package-specs": [{ "module": "commonjs", "in-source": true }],
   "suffix": ".bs.js",
   "refmt": 3,
