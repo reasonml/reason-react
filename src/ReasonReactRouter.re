@@ -67,7 +67,7 @@ let arrayToList = a => {
 /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
 /* actually you know what, not gonna provide search for now. It's a mess.
    We'll let users roll their own solution/data structure for now */
-let hsMatcher = [%re "/(#.+)(\\?.+)$/"];
+let hsMatcher = [%re "/(#[^?&]+)?([?&].*)?$/"];
 let pathMatcher = [%re "/(#|\\?).+$/"];
 let pathParse = str =>
   switch (str) {
