@@ -67,49 +67,67 @@ let arrayToList = a => {
 /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
 /* actually you know what, not gonna provide search for now. It's a mess.
    We'll let users roll their own solution/data structure for now */
-let path = () =>
-  switch ([%external window]) {
-  | None => []
-  | Some((window: Dom.window)) =>
-    switch (window |> location |> pathname) {
-    | ""
-    | "/" => []
-    | raw =>
-      /* remove the preceeding /, which every pathname seems to have */
-      let raw = Js.String.sliceToEnd(~from=1, raw);
-      /* remove the trailing /, which some pathnames might have. Ugh */
-      let raw =
-        switch (Js.String.get(raw, Js.String.length(raw) - 1)) {
-        | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
-        | _ => raw
-        };
-      raw |> Js.String.split("/") |> arrayToList;
+let hsMatcher = [%re "/(#.+)(\\?.+)$/"];
+let pathMatcher = [%re "/(#|\\?).+$/"];
+let pathParse = str =>
+  switch (str) {
+  | ""
+  | "/" => []
+  | raw =>
+    /* remove the preceeding /, which every pathname seems to have */
+    let raw = Js.String.sliceToEnd(~from=1, raw);
+    /* remove the trailing /, which some pathnames might have. Ugh */
+    let raw =
+      switch (Js.String.get(raw, Js.String.length(raw) - 1)) {
+      | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
+      | _ => raw
+      };
+    raw
+    |> Js.String.replaceByRe(pathMatcher, "")
+    |> Js.String.split("/")
+    |> Js.Array.filter(item => String.length(item) != 0)
+    |> arrayToList;
+  };
+
+let path = (~serverUrlString=None, ()) =>
+  switch (serverUrlString, [%external window]) {
+  | (None, None) => []
+  | (_, Some((window: Dom.window))) =>
+    pathParse(window |> location |> pathname)
+  | (Some(serverUrlString), _) => pathParse(serverUrlString)
+  };
+let hashParse = str =>
+  switch (str) {
+  | ""
+  | "#" => ""
+  | raw =>
+    switch (raw |> Js.String.splitByReAtMost(hsMatcher, ~limit=3)) {
+    | [|_, Some(hash), _|] => hash |> Js.String.sliceToEnd(~from=1)
+    | _ => ""
     }
   };
-let hash = () =>
-  switch ([%external window]) {
-  | None => ""
-  | Some((window: Dom.window)) =>
-    switch (window |> location |> hash) {
-    | ""
-    | "#" => ""
-    | raw =>
-      /* remove the preceeding #, which every hash seems to have.
-         Why is this even included in location.hash?? */
-      raw |> Js.String.sliceToEnd(~from=1)
+let hash = (~serverUrlString=None, ()) =>
+  switch (serverUrlString, [%external window]) {
+  | (None, None) => ""
+  | (_, Some((window: Dom.window))) => hashParse(window |> location |> hash)
+  | (Some(serverUrlString), _) => hashParse(serverUrlString)
+  };
+let searchParse = str =>
+  switch (str) {
+  | ""
+  | "?" => ""
+  | raw =>
+    switch (raw |> Js.String.splitByReAtMost(hsMatcher, ~limit=3)) {
+    | [|_, _, Some(search)|] => search |> Js.String.sliceToEnd(~from=1)
+    | _ => ""
     }
   };
-let search = () =>
-  switch ([%external window]) {
-  | None => ""
-  | Some((window: Dom.window)) =>
-    switch (window |> location |> search) {
-    | ""
-    | "?" => ""
-    | raw =>
-      /* remove the preceeding ?, which every search seems to have. */
-      raw |> Js.String.sliceToEnd(~from=1)
-    }
+let search = (~serverUrlString=None, ()) =>
+  switch (serverUrlString, [%external window]) {
+  | (None, None) => ""
+  | (_, Some((window: Dom.window))) =>
+    searchParse(window |> location |> search)
+  | (Some(serverUrlString), _) => searchParse(serverUrlString)
   };
 let push = path =>
   switch ([%external history], [%external window]) {
@@ -133,7 +151,7 @@ type url = {
   search: string,
 };
 let urlNotEqual = (a, b) => {
-  let rec listNotEqual = (aList, bList) => {
+  let rec listNotEqual = (aList, bList) =>
     switch (aList, bList) {
     | ([], []) => false
     | ([], [_, ..._])
@@ -145,13 +163,16 @@ let urlNotEqual = (a, b) => {
         listNotEqual(aRest, bRest);
       }
     };
-  };
   a.hash !== b.hash || a.search !== b.search || listNotEqual(a.path, b.path);
 };
 type watcherID = unit => unit;
-let url = () => {path: path(), hash: hash(), search: search()};
+let url = (~serverUrlString=?, ()) => {
+  path: path(~serverUrlString, ()),
+  hash: hash(~serverUrlString, ()),
+  search: search(~serverUrlString, ()),
+};
 /* alias exposed publicly */
-let dangerouslyGetInitialUrl = url;
+let dangerouslyGetInitialUrl = () => url();
 let watchUrl = callback =>
   switch ([%external window]) {
   | None => (() => ())
@@ -166,7 +187,7 @@ let unwatchUrl = watcherID =>
   | Some((window: Dom.window)) =>
     removeEventListener(window, "popstate", watcherID)
   };
-
+let fromServer = serverUrlString => url(~serverUrlString, ());
 let useUrl = (~serverUrl=?, ()) => {
   let (url, setUrl) =
     React.useState(() =>
