@@ -31,3 +31,5 @@ let dangerouslyGetInitialUrl: unit => url;
  * serverUrl is used for ssr. it allows you to specify the url without relying on browser apis existing/working as expected
  */
 let useUrl: (~serverUrl: url=?, unit) => url;
+/* build a url object based off of a string, such as req.url in express.js */
+let fromServer: string => url;
