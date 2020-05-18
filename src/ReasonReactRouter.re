@@ -92,9 +92,9 @@ let pathParse = str =>
 let path = (~serverUrlString=None, ()) =>
   switch (serverUrlString, [%external window]) {
   | (None, None) => []
+  | (Some(serverUrlString), _) => pathParse(serverUrlString)
   | (_, Some((window: Dom.window))) =>
     pathParse(window |> location |> pathname)
-  | (Some(serverUrlString), _) => pathParse(serverUrlString)
   };
 let hashParse = str =>
   switch (str) {
@@ -109,8 +109,8 @@ let hashParse = str =>
 let hash = (~serverUrlString=None, ()) =>
   switch (serverUrlString, [%external window]) {
   | (None, None) => ""
-  | (_, Some((window: Dom.window))) => hashParse(window |> location |> hash)
   | (Some(serverUrlString), _) => hashParse(serverUrlString)
+  | (_, Some((window: Dom.window))) => hashParse(window |> location |> hash)
   };
 let searchParse = str =>
   switch (str) {
@@ -125,9 +125,9 @@ let searchParse = str =>
 let search = (~serverUrlString=None, ()) =>
   switch (serverUrlString, [%external window]) {
   | (None, None) => ""
+  | (Some(serverUrlString), _) => searchParse(serverUrlString)
   | (_, Some((window: Dom.window))) =>
     searchParse(window |> location |> search)
-  | (Some(serverUrlString), _) => searchParse(serverUrlString)
   };
 let push = path =>
   switch ([%external history], [%external window]) {
