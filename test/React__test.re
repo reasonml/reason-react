@@ -633,7 +633,7 @@ describe("React", ({test, beforeEach, afterEach}) => {
 
     act(() => {
       ReactDOMRe.render(
-        <ReactErrorBoundary
+        <ReasonReactErrorBoundary
           fallback={({error, info}) => {
             expect.value(error).toEqual(ComponentThatThrows.TestError);
             expect.bool(
@@ -643,7 +643,7 @@ describe("React", ({test, beforeEach, afterEach}) => {
             <strong> "An error occured"->React.string </strong>;
           }}>
           <ComponentThatThrows value=1 />
-        </ReactErrorBoundary>,
+        </ReasonReactErrorBoundary>,
         container,
       )
     });
