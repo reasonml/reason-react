@@ -2,6 +2,13 @@ open TestFramework;
 open ReasonReactRouter;
 
 describe("it allows to create url from string", ({test}) => {
+  test("it supports basic paths", ({expect}) => {
+    let expected = {path: ["foo", "bar"], hash: "", search: ""};
+    let generated = fromServer("/foo/bar");
+
+    expect.bool(generated == expected).toBeTrue();
+  });
+
   test("it creates with hash", ({expect}) => {
     let expected = {path: ["foo", "bar"], hash: "someHash", search: ""};
     let generated = fromServer("/foo/bar#someHash");
