@@ -26,10 +26,8 @@ let unwatchUrl: watcherID => unit;
       watchUrl. Please see https://github.com/reasonml-community/reason-react-example/blob/master/src/todomvc/TodoItem.re
       for an example.
       */
-let dangerouslyGetInitialUrl: unit => url;
+let dangerouslyGetInitialUrl: (~serverUrlString: string=?, unit) => url;
 /** hook for watching url changes.
  * serverUrl is used for ssr. it allows you to specify the url without relying on browser apis existing/working as expected
  */
 let useUrl: (~serverUrl: url=?, unit) => url;
-/* build a url object based off of a string, such as req.url in express.js */
-let fromServer: string => url;
