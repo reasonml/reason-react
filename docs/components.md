@@ -26,8 +26,8 @@ This snippet is doing quite a bit! The first thing you might notice is the decor
 [@bs.obj]
 external makeProps: (~name: 'name, ~key: string=?, unit) => {. "name": 'name} = "";
 
-let make = (Props) => {
-  let name = Props##name;
+let make = (props) => {
+  let name = props##name;
   let (count, setCount) = React.useState(() => 0);
 
   <div>
