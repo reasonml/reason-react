@@ -67,8 +67,6 @@ let arrayToList = a => {
 /* sigh URLSearchParams doesn't work on IE11, edge16, etc. */
 /* actually you know what, not gonna provide search for now. It's a mess.
    We'll let users roll their own solution/data structure for now */
-let hsMatcher = [%re "/(#[^?&]+)?([?&].*)?$/"];
-let pathMatcher = [%re "/(#|\\?).+$/"];
 let pathParse = str =>
   switch (str) {
   | ""
@@ -82,47 +80,46 @@ let pathParse = str =>
       | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
       | _ => raw
       };
+    /* remove search portion if present in string */
+    let raw =
+      switch (raw |> Js.String.splitAtMost("?", ~limit=2)) {
+      | [|path, _|] => path
+      | _ => raw
+      };
+
     raw
-    |> Js.String.replaceByRe(pathMatcher, "")
     |> Js.String.split("/")
     |> Js.Array.filter(item => String.length(item) != 0)
     |> arrayToList;
   };
-
-let path = (~serverUrlString=None, ()) =>
+let path = (~serverUrlString=?, ()) =>
   switch (serverUrlString, [%external window]) {
   | (None, None) => []
   | (Some(serverUrlString), _) => pathParse(serverUrlString)
   | (_, Some((window: Dom.window))) =>
     pathParse(window |> location |> pathname)
   };
-let hashParse = str =>
-  switch (str) {
-  | ""
-  | "#" => ""
-  | raw =>
-    switch (raw |> Js.String.splitByReAtMost(hsMatcher, ~limit=3)) {
-    | [|_, Some(hash), _|] => hash |> Js.String.sliceToEnd(~from=1)
-    | _ => ""
+let hash = () =>
+  switch ([%external window]) {
+  | None => ""
+  | Some((window: Dom.window)) =>
+    switch (window |> location |> hash) {
+    | ""
+    | "#" => ""
+    | raw => raw |> Js.String.sliceToEnd(~from=1)
     }
-  };
-let hash = (~serverUrlString=None, ()) =>
-  switch (serverUrlString, [%external window]) {
-  | (None, None) => ""
-  | (Some(serverUrlString), _) => hashParse(serverUrlString)
-  | (_, Some((window: Dom.window))) => hashParse(window |> location |> hash)
   };
 let searchParse = str =>
   switch (str) {
   | ""
   | "?" => ""
   | raw =>
-    switch (raw |> Js.String.splitByReAtMost(hsMatcher, ~limit=3)) {
-    | [|_, _, Some(search)|] => search |> Js.String.sliceToEnd(~from=1)
+    switch (raw |> Js.String.splitAtMost("?", ~limit=2)) {
+    | [|_, search|] => search
     | _ => ""
     }
   };
-let search = (~serverUrlString=None, ()) =>
+let search = (~serverUrlString=?, ()) =>
   switch (serverUrlString, [%external window]) {
   | (None, None) => ""
   | (Some(serverUrlString), _) => searchParse(serverUrlString)
@@ -166,13 +163,17 @@ let urlNotEqual = (a, b) => {
   a.hash !== b.hash || a.search !== b.search || listNotEqual(a.path, b.path);
 };
 type watcherID = unit => unit;
-let url = (~serverUrlString=?, ()) => {
-  path: path(~serverUrlString, ()),
-  hash: hash(~serverUrlString, ()),
-  search: search(~serverUrlString, ()),
-};
+let url = (~serverUrlString=?, ()) =>
+  switch (serverUrlString) {
+  | Some(serverUrlString) => {
+      path: path(~serverUrlString, ()),
+      hash: hash(),
+      search: search(~serverUrlString, ()),
+    }
+  | _ => {path: path(), hash: hash(), search: search()}
+  };
 /* alias exposed publicly */
-let dangerouslyGetInitialUrl = () => url();
+let dangerouslyGetInitialUrl = url;
 let watchUrl = callback =>
   switch ([%external window]) {
   | None => (() => ())
@@ -187,7 +188,6 @@ let unwatchUrl = watcherID =>
   | Some((window: Dom.window)) =>
     removeEventListener(window, "popstate", watcherID)
   };
-let fromServer = serverUrlString => url(~serverUrlString, ());
 let useUrl = (~serverUrl=?, ()) => {
   let (url, setUrl) =
     React.useState(() =>
