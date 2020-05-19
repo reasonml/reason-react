@@ -106,7 +106,10 @@ let hash = () =>
     switch (window |> location |> hash) {
     | ""
     | "#" => ""
-    | raw => raw |> Js.String.sliceToEnd(~from=1)
+    | raw =>
+      /* remove the preceeding #, which every hash seems to have.
+         Why is this even included in location.hash?? */
+      raw |> Js.String.sliceToEnd(~from=1)
     }
   };
 let searchParse = str =>
