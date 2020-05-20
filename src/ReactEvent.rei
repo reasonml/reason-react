@@ -88,7 +88,7 @@ module Clipboard: {
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external clipboardData: t => Dom.dataTransfer = "clipboardData";
+  [@bs.get] external clipboardData: t => Js.t({..}) = "clipboardData"; /* Should return Dom.dataTransfer */
 };
 
 module Composition: {
@@ -167,7 +167,7 @@ module Focus: {
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
   [@bs.get] [@bs.return nullable]
-  external relatedTarget: t => option(Dom.eventTarget) = "relatedTarget";
+  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
 };
 
 module Form: {
@@ -224,7 +224,7 @@ module Mouse: {
   [@bs.get] external pageX: t => int = "pageX";
   [@bs.get] external pageY: t => int = "pageY";
   [@bs.get] [@bs.return nullable]
-  external relatedTarget: t => option(Dom.eventTarget) = "relatedTarget";
+  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
   [@bs.get] external screenX: t => int = "screenX";
   [@bs.get] external screenY: t => int = "screenY";
   [@bs.get] external shiftKey: t => bool = "shiftKey";
@@ -236,8 +236,9 @@ module Pointer: {
 
   // Event
   [@bs.get] external type_: t => string = "type";
-  [@bs.get] external target: t => Dom.eventTarget = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target"; /* Should return Dom.eventTarget */
   [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+ /* Should return Dom.eventTarget */
 
   [@bs.get] external eventPhase: t => int = "eventPhase";
 
