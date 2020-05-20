@@ -44,7 +44,7 @@ module Synthetic: {
   [@bs.get] external bubbles: synthetic('a) => bool = "bubbles";
   [@bs.get] external cancelable: synthetic('a) => bool = "cancelable";
   [@bs.get]
-  external currentTarget: synthetic('a) => Js.t({..}) = "currentTarget";
+  external currentTarget: synthetic('a) => Dom.eventTarget = "currentTarget";
   [@bs.get]
   external defaultPrevented: synthetic('a) => bool = "defaultPrevented";
   [@bs.get] external eventPhase: synthetic('a) => int = "eventPhase";
@@ -60,7 +60,7 @@ module Synthetic: {
   [@bs.send]
   external isPropagationStopped: synthetic('a) => bool =
     "isPropagationStopped";
-  [@bs.get] external target: synthetic('a) => Js.t({..}) = "target";
+  [@bs.get] external target: synthetic('a) => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: synthetic('a) => float = "timeStamp";
   [@bs.get] external type_: synthetic('a) => string = "type";
   [@bs.send] external persist: synthetic('a) => unit = "persist";
@@ -74,7 +74,8 @@ module Clipboard: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -83,7 +84,7 @@ module Clipboard: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -95,7 +96,8 @@ module Composition: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -104,7 +106,7 @@ module Composition: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -116,7 +118,8 @@ module Keyboard: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -125,7 +128,7 @@ module Keyboard: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -149,7 +152,8 @@ module Focus: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -158,7 +162,7 @@ module Focus: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -171,7 +175,8 @@ module Form: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -180,7 +185,7 @@ module Form: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -191,7 +196,8 @@ module Mouse: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -200,7 +206,7 @@ module Mouse: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -230,8 +236,9 @@ module Pointer: {
 
   // Event
   [@bs.get] external type_: t => string = "type";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external target: t => Dom.eventTarget = "target"; /* Should return Dom.eventTarget */
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+ /* Should return Dom.eventTarget */
 
   [@bs.get] external eventPhase: t => int = "eventPhase";
 
@@ -275,10 +282,10 @@ module Pointer: {
   [@bs.get] external buttons: t => int = "buttons";
 
   [@bs.get] [@bs.return nullable]
-  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
+  external relatedTarget: t => option(Dom.eventTarget) = "relatedTarget";
 
   // PointerEvent
-  [@bs.get] external pointerId: t => float = "pointerId";
+  [@bs.get] external pointerId: t => Dom.eventPointerId = "pointerId";
   [@bs.get] external width: t => float = "width";
   [@bs.get] external height: t => float = "height";
   [@bs.get] external pressure: t => float = "pressure";
@@ -295,7 +302,8 @@ module Selection: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -304,7 +312,7 @@ module Selection: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -315,7 +323,8 @@ module Touch: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -324,7 +333,7 @@ module Touch: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -344,7 +353,8 @@ module UI: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -353,7 +363,7 @@ module UI: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -366,7 +376,8 @@ module Wheel: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -375,7 +386,7 @@ module Wheel: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -390,7 +401,8 @@ module Media: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -399,7 +411,7 @@ module Media: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -410,7 +422,8 @@ module Image: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -419,7 +432,7 @@ module Image: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -430,7 +443,8 @@ module Animation: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -439,7 +453,7 @@ module Animation: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
@@ -453,7 +467,8 @@ module Transition: {
   type t = synthetic(tag);
   [@bs.get] external bubbles: t => bool = "bubbles";
   [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@bs.get] external currentTarget: t => Dom.eventTarget = "currentTarget";
+
   [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: t => int = "eventPhase";
   [@bs.get] external isTrusted: t => bool = "isTrusted";
@@ -462,7 +477,7 @@ module Transition: {
   [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
   [@bs.send] external stopPropagation: t => unit = "stopPropagation";
   [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
+  [@bs.get] external target: t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: t => float = "timeStamp";
   [@bs.get] external type_: t => string = "type";
   [@bs.send] external persist: t => unit = "persist";
