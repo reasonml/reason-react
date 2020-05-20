@@ -134,6 +134,53 @@ module Mouse = {
   [@bs.get] external shiftKey: t => bool = "shiftKey";
 };
 
+module Pointer = {
+  type tag;
+  type t = synthetic(tag);
+  include MakeEventWithType({
+    type nonrec t = t;
+  });
+
+  // UIEvent
+  [@bs.get] external detail: t => int = "detail";
+  [@bs.get] external view: t => Dom.window = "view"; /* Should return DOMAbstractView/WindowProxy */
+
+  // MouseEvent
+  [@bs.get] external screenX: t => int = "screenX";
+  [@bs.get] external screenY: t => int = "screenY";
+  [@bs.get] external clientX: t => int = "clientX";
+  [@bs.get] external clientY: t => int = "clientY";
+  [@bs.get] external pageX: t => int = "pageX";
+  [@bs.get] external pageY: t => int = "pageY";
+  [@bs.get] external movementX: t => int = "movementX";
+  [@bs.get] external movementY: t => int = "movementY";
+
+  [@bs.get] external ctrlKey: t => bool = "ctrlKey";
+  [@bs.get] external shiftKey: t => bool = "shiftKey";
+  [@bs.get] external altKey: t => bool = "altKey";
+  [@bs.get] external metaKey: t => bool = "metaKey";
+  [@bs.send]
+  external getModifierState: (t, string) => bool = "getModifierState";
+
+  [@bs.get] external button: t => int = "button";
+  [@bs.get] external buttons: t => int = "buttons";
+
+  [@bs.get] [@bs.return nullable]
+  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
+
+  // PointerEvent
+  [@bs.get] external pointerId: t => float = "pointerId";
+  [@bs.get] external width: t => float = "width";
+  [@bs.get] external height: t => float = "height";
+  [@bs.get] external pressure: t => float = "pressure";
+  [@bs.get] external tangentialPressure: t => float = "tangentialPressure";
+  [@bs.get] external tiltX: t => int = "tiltX";
+  [@bs.get] external tiltY: t => int = "tiltY";
+  [@bs.get] external twist: t => int = "twist";
+  [@bs.get] external pointerType: t => string = "pointerType";
+  [@bs.get] external isPrimary: t => bool = "isPrimary";
+};
+
 module Selection = {
   type tag;
   type t = synthetic(tag);
