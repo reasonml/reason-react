@@ -278,7 +278,7 @@ module Pointer: {
   external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
 
   // PointerEvent
-  [@bs.get] external pointerId: t => float = "pointerId";
+  [@bs.get] external pointerId: t => Dom.eventPointerId = "pointerId";
   [@bs.get] external width: t => float = "width";
   [@bs.get] external height: t => float = "height";
   [@bs.get] external pressure: t => float = "pressure";
