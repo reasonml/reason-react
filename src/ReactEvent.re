@@ -3,7 +3,7 @@ type synthetic('a);
 module MakeEventWithType = (Type: {type t;}) => {
   [@bs.get] external bubbles: Type.t => bool = "bubbles";
   [@bs.get] external cancelable: Type.t => bool = "cancelable";
-  [@bs.get] external currentTarget: Type.t => Js.t({..}) = "currentTarget"; /* Should return Dom.eventTarget */
+  [@bs.get] external currentTarget: Type.t => Dom.eventTarget = "currentTarget";
   [@bs.get] external defaultPrevented: Type.t => bool = "defaultPrevented";
   [@bs.get] external eventPhase: Type.t => int = "eventPhase";
   [@bs.get] external isTrusted: Type.t => bool = "isTrusted";
@@ -14,7 +14,7 @@ module MakeEventWithType = (Type: {type t;}) => {
   [@bs.send] external stopPropagation: Type.t => unit = "stopPropagation";
   [@bs.send]
   external isPropagationStopped: Type.t => bool = "isPropagationStopped";
-  [@bs.get] external target: Type.t => Js.t({..}) = "target"; /* Should return Dom.eventTarget */
+  [@bs.get] external target: Type.t => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: Type.t => float = "timeStamp";
   [@bs.get] external type_: Type.t => string = "type";
   [@bs.send] external persist: Type.t => unit = "persist";
@@ -26,7 +26,7 @@ module Synthetic = {
   [@bs.get] external bubbles: synthetic('a) => bool = "bubbles";
   [@bs.get] external cancelable: synthetic('a) => bool = "cancelable";
   [@bs.get]
-  external currentTarget: synthetic('a) => Js.t({..}) = "currentTarget"; /* Should return Dom.eventTarget */
+  external currentTarget: synthetic('a) => Dom.eventTarget = "currentTarget";
   [@bs.get]
   external defaultPrevented: synthetic('a) => bool = "defaultPrevented";
   [@bs.get] external eventPhase: synthetic('a) => int = "eventPhase";
@@ -42,7 +42,7 @@ module Synthetic = {
   [@bs.send]
   external isPropagationStopped: synthetic('a) => bool =
     "isPropagationStopped";
-  [@bs.get] external target: synthetic('a) => Js.t({..}) = "target"; /* Should return Dom.eventTarget */
+  [@bs.get] external target: synthetic('a) => Dom.eventTarget = "target";
   [@bs.get] external timeStamp: synthetic('a) => float = "timeStamp";
   [@bs.get] external type_: synthetic('a) => string = "type";
   [@bs.send] external persist: synthetic('a) => unit = "persist";
@@ -166,10 +166,10 @@ module Pointer = {
   [@bs.get] external buttons: t => int = "buttons";
 
   [@bs.get] [@bs.return nullable]
-  external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
+  external relatedTarget: t => option(Dom.eventTarget) = "relatedTarget";
 
   // PointerEvent
-  [@bs.get] external pointerId: t => float = "pointerId";
+  [@bs.get] external pointerId: t => Dom.eventPointerId = "pointerId";
   [@bs.get] external width: t => float = "width";
   [@bs.get] external height: t => float = "height";
   [@bs.get] external pressure: t => float = "pressure";
