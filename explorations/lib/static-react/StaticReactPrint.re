@@ -39,13 +39,6 @@ let rec instances:
       }
     | Instance.Three(n1, n2, n3) =>
       if (!nodes) {
-        dentLine(d)
-        ++ instances(~nodes, ~d, n1)
-        ++ "\n"
-        ++ instances(~nodes, ~d, n2)
-        ++ "\n"
-        ++ instances(~nodes, ~d, n3);
-      } else {
         dent(d)
         ++ "<>"
         ++ "\n"
@@ -56,8 +49,14 @@ let rec instances:
         ++ instances(~nodes, ~d=dNext, n3)
         ++ lineDent(d)
         ++ "</>";
-      }
-    | Instance.Map(lst) =>
+      } else {
+        dentLine(d)
+        ++ instances(~nodes, ~d, n1)
+        ++ "\n"
+        ++ instances(~nodes, ~d, n2)
+        ++ "\n"
+        ++ instances(~nodes, ~d, n3);
+      }    | Instance.Map(lst) =>
       dent(d)
       ++ "Instance.Map("
       ++ String.concat(",", List.map(instances(~nodes, ~d=dNext), lst))
