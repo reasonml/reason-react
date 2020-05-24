@@ -5,6 +5,7 @@ title: Example Projects
 Feel free to submit yours!
 
 - [ReasonReact Hacker News](https://github.com/reasonml-community/reason-react-hacker-news)
+- [Personas Avatar Generator](https://github.com/draftbit/avatar-generator)
 
 **Legacy API:**
 - [ReasonReact Example](https://github.com/reasonml-community/reason-react-example)
