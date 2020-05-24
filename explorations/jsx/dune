@@ -1,7 +1,7 @@
 (rule
  (targets reactjs_jsx_ppx.ml)
  (deps    (:first-dep reactjs_jsx_ppx.cppo.ml) )
- (action  (run %{bin:cppo} -D "OMP_PPX" %{first-dep} -o %{targets})))
+ (action  (run %{bin:cppo} -D "STATIC_REACT" -D "OMP_PPX" %{first-dep} -o %{targets})))
 
 (library
  (name reactjs_jsx_ppx)
