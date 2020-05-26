@@ -9,7 +9,7 @@
 * Adds `ReactErrorBoundary` [@bloodyowl in 577](https://github.com/reasonml/reason-react/pull/577/files)
 * Adds React StrictMode [@relekang in #572](https://github.com/reasonml/reason-react/pull/572)
 * Adds tests [@bloodyowl in #575](https://github.com/reasonml/reason-react/pull/575)
-* Adds `bs.uncurry] to `useReducerWithMapState) [@johnridesabike in #570](https://github.com/reasonml/reason-react/pull/570)
+* Adds `[@bs.uncurry]` to `useReducerWithMapState` [@johnridesabike in #570](https://github.com/reasonml/reason-react/pull/570)
 * Moves reason-test-framework to `devDependency` [@bloodyowl in #578](https://github.com/reasonml/reason-react/pull/578)
 * Adds React.component as a new binding for making components [@rickyvetter in #571](https://github.com/reasonml/reason-react/pull/571)
 * Uses console.error for hydrate function [@bloodyowl in #545](https://github.com/reasonml/reason-react/pull/545)
