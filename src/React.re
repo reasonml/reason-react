@@ -430,6 +430,77 @@ external useImperativeHandle7:
   unit =
   "useImperativeHandle";
 
+module Uncurried = {
+  [@bs.module "react"]
+  external useState:
+    ([@bs.uncurry] (unit => 'state)) =>
+    ('state, (. ('state => 'state)) => unit) =
+    "useState";
+
+  [@bs.module "react"]
+  external useReducer:
+    ([@bs.uncurry] (('state, 'action) => 'state), 'state) =>
+    ('state, (. 'action) => unit) =
+    "useReducer";
+
+  [@bs.module "react"]
+  external useReducerWithMapState:
+    (
+      [@bs.uncurry] (('state, 'action) => 'state),
+      'initialState,
+      [@bs.uncurry] ('initialState => 'state)
+    ) =>
+    ('state, (. 'action) => unit) =
+    "useReducer";
+
+  type callback('input, 'output) = (. 'input) => 'output;
+
+  [@bs.module "react"]
+  external useCallback:
+    ([@bs.uncurry] ('input => 'output)) => callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback0:
+    ([@bs.uncurry] ('input => 'output), [@bs.as {json|[]|json}] _) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback1:
+    ([@bs.uncurry] ('input => 'output), array('a)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback2:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback3:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback4:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback5:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback6:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+    callback('input, 'output) =
+    "useCallback";
+  [@bs.module "react"]
+  external useCallback7:
+    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
+    callback('input, 'output) =
+    "useCallback";
+};
+
 type transitionConfig = {timeoutMs: int};
 
 [@bs.module "react"]
