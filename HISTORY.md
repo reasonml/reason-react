@@ -1,8 +1,9 @@
 # 0.9.0 (05/2020)
 
-### Maintenance
+### Breaking Changes
 
-* Adds `docs` to `.npmignore` [@peterpme in #583](https://github.com/reasonml/reason-react/pull/583)
+* Stops versioning `lib/js` [@bloodyowl in #552](https://github.com/reasonml/reason-react/pull/552)
+* Use simpler constructs for createRoot [@bloodyowl in #546](https://github.com/reasonml/reason-react/pull/546)
 
 ### Additions
 
@@ -17,10 +18,9 @@
 * ReactDOM simplification [@bloodyowl in #547](https://github.com/reasonml/reason-react/pull/547)
 * Adds uncurried hooks [@johnridesabike in #551](https://github.com/reasonml/reason-react/pull/551)
 
-### Breaking Changes
+### Maintenance
 
-* Stops versioning `lib/js` [@bloodyowl in #552](https://github.com/reasonml/reason-react/pull/552)
-* Use simpler constructs for createRoot [@bloodyowl in #546](https://github.com/reasonml/reason-react/pull/546)
+* Adds `docs` to `.npmignore` [@peterpme in #583](https://github.com/reasonml/reason-react/pull/583)
 
 ### Documentation
 
@@ -28,7 +28,6 @@
 * Importing components with default props [@johnridesabike in #573](https://github.com/reasonml/reason-react/pull/573)
 * Adds binding to external context docs [@alavkx in #495](https://github.com/reasonml/reason-react/pull/575)
 * Adds Personas by Draftbit example [@dylanirlbeck in #586](https://github.com/reasonml/reason-react/pull/586)
-
 
 # 0.8.0 (04/2020)
 
