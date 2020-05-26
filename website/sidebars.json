@@ -13,7 +13,8 @@
       "router",
       "dom",
       "refs",
-      "reasonreactcompat"
+      "reasonreactcompat",
+      "testing"
     ],
     "ReactJS Idioms Equivalents": [
       "invalid-prop-name",
