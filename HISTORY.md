@@ -15,17 +15,15 @@
 * Uses console.error for hydrate function [@bloodyowl in #545](https://github.com/reasonml/reason-react/pull/545)
 * Adds pointer events [@nickretallack in #584)(https://github.com/reasonml/reason-react/pull/584)
 * ReactDOM simplification [@bloodyowl in #547](https://github.com/reasonml/reason-react/pull/547)
-* Use simpler constructs for createRoot [@bloodyowl in #546](https://github.com/reasonml/reason-react/pull/546)
 * Adds uncurried hooks [@johnridesabike in #551](https://github.com/reasonml/reason-react/pull/551)
 
 ### Breaking Changes
 
 * Stops versioning `lib/js` [@bloodyowl in #552](https://github.com/reasonml/reason-react/pull/552)
-
+* Use simpler constructs for createRoot [@bloodyowl in #546](https://github.com/reasonml/reason-react/pull/546)
 
 ### Documentation
 
-* Adds docs for ErrorBoundaries
 * Fixed typo in blog post [@maxdeviant in #569](https://github.com/reasonml/reason-react/pull/569)
 * Importing components with default props [@johnridesabike in #573](https://github.com/reasonml/reason-react/pull/573)
 * Adds binding to external context docs [@alavkx in #495](https://github.com/reasonml/reason-react/pull/575)
