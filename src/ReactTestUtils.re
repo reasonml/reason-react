@@ -32,7 +32,7 @@ external isElement: 'element => bool = "isElement";
 
 [@bs.module "react-dom/test-utils"]
 external isElementOfType: ('element, React.component('props)) => bool =
-  "isElement";
+  "isElementOfType";
 
 [@bs.module "react-dom/test-utils"]
 external isDOMComponent: 'element => bool = "isDOMComponent";
