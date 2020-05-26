@@ -22,7 +22,8 @@
       "ternary-shortcut",
       "context-mixins",
       "custom-class-component-property",
-      "usestate-event-value"
+      "usestate-event-value",
+      "error-boundaries"
     ],
     "Record API (deprecated)": [
       "jsx-2",

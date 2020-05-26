@@ -85,12 +85,10 @@ let hydrateToElementWithClassName = (reactElement, className) =>
 let hydrateToElementWithId = (reactElement, id) =>
   switch (_getElementById(id)) {
   | None =>
-    raise(
-      Invalid_argument(
-        "ReactDOMRe.hydrateToElementWithId : no element of id "
-        ++ id
-        ++ " found in the HTML.",
-      ),
+    Js.Console.error(
+      "ReactDOMRe.hydrateToElementWithId : no element of id "
+      ++ id
+      ++ " found in the HTML.",
     )
   | Some(element) => hydrate(reactElement, element)
   };
@@ -547,6 +545,27 @@ type domProps = {
   onTouchMove: ReactEvent.Touch.t => unit,
   [@bs.optional]
   onTouchStart: ReactEvent.Touch.t => unit,
+  /* Pointer events */
+  [@bs.optional]
+  onPointerOver: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerEnter: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerDown: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerMove: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerUp: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerCancel: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerOut: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerLeave: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onGotPointerCapture: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onLostPointerCapture: ReactEvent.Pointer.t => unit,
   /* UI events */
   [@bs.optional]
   onScroll: ReactEvent.UI.t => unit,
@@ -1553,6 +1572,27 @@ type props = {
   onTouchMove: ReactEvent.Touch.t => unit,
   [@bs.optional]
   onTouchStart: ReactEvent.Touch.t => unit,
+  /* Pointer events */
+  [@bs.optional]
+  onPointerOver: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerEnter: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerDown: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerMove: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerUp: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerCancel: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerOut: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onPointerLeave: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onGotPointerCapture: ReactEvent.Pointer.t => unit,
+  [@bs.optional]
+  onLostPointerCapture: ReactEvent.Pointer.t => unit,
   /* UI events */
   [@bs.optional]
   onScroll: ReactEvent.UI.t => unit,

@@ -150,6 +150,17 @@ module DummyContext = {
   };
 };
 
+module ComponentThatThrows = {
+  exception TestError;
+  [@react.component]
+  let make = (~shouldThrow=true, ~value) => {
+    if (shouldThrow) {
+      raise(TestError);
+    };
+    <div> value->React.int </div>;
+  };
+};
+
 describe("React", ({test, beforeEach, afterEach}) => {
   let container = ref(None);
 
@@ -615,5 +626,33 @@ describe("React", ({test, beforeEach, afterEach}) => {
     };
 
     expect.string(value.contents).toEqual("My value");
+  });
+
+  test("ErrorBoundary", ({expect}) => {
+    let container = getContainer(container);
+
+    act(() => {
+      ReactDOMRe.render(
+        <ReasonReactErrorBoundary
+          fallback={({error, info}) => {
+            expect.value(error).toEqual(ComponentThatThrows.TestError);
+            expect.bool(
+              info.componentStack->Js.String2.includes("ComponentThatThrows"),
+            ).
+              toBeTrue();
+            <strong> "An error occured"->React.string </strong>;
+          }}>
+          <ComponentThatThrows value=1 />
+        </ReasonReactErrorBoundary>,
+        container,
+      )
+    });
+
+    expect.bool(
+      container
+      ->DOM.findBySelectorAndTextContent("strong", "An error occured")
+      ->Option.isSome,
+    ).
+      toBeTrue();
   });
 });
