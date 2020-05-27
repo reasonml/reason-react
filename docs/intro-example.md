@@ -11,7 +11,7 @@ Here is a small overview of the ReasonReact API before we start. No worries if s
 
 [@react.component]
 let make = (~name) =>
-  <button> {ReasonReact.string("Hello " ++ name ++ "!")} </button>;
+  <button> {React.string("Hello " ++ name ++ "!")} </button>;
 ```
 
 ## Using Greeting in your App
