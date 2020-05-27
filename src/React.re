@@ -52,6 +52,7 @@ module Ref = {
   external setCurrent: (ref('value), 'value) => unit = "current";
 };
 
+[@deprecated "Please use React.useRef within your component instead"]
 [@bs.module "react"]
 external createRef: unit => ref(Js.nullable('a)) = "createRef";
 

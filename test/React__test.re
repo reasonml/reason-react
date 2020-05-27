@@ -514,7 +514,7 @@ describe("React", ({test, beforeEach, afterEach}) => {
   });
 
   test("can work with React refs", ({expect}) => {
-    let reactRef = React.createRef();
+    let reactRef = [@warning "-3"] React.createRef();
     expect.value(reactRef.current).toEqual(Js.Nullable.null);
     reactRef.current = Js.Nullable.return(1);
     expect.value(reactRef.current).toEqual(Js.Nullable.return(1));
