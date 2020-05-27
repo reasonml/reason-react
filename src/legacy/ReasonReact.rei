@@ -12,12 +12,16 @@ type reactElement = React.element;
 
 type reactRef;
 
+[@deprecated "Please use React.null"]
 [@bs.val] external null: reactElement = "null";
 
+[@deprecated "Please use React.string"]
 external string: string => reactElement = "%identity";
 
+[@deprecated "Please use React.array"]
 external array: array(reactElement) => reactElement = "%identity";
 
+[@deprecated "refToJsObj will be removed in the next version"]
 external refToJsObj: reactRef => Js.t({..}) = "%identity";
 
 /* This should _not_ be used directly, unless you're passing a class like this:
@@ -150,6 +154,7 @@ and component('state, 'retainedProps, 'action) =
   componentSpec('state, 'state, 'retainedProps, 'retainedProps, 'action);
 
 /*** Create a stateless component: i.e. a component where state has type stateless. */
+[@deprecated "The old component API is going to be removed in the next version"]
 let statelessComponent:
   string =>
   componentSpec(
@@ -160,6 +165,7 @@ let statelessComponent:
     actionless,
   );
 
+[@deprecated "The old component API is going to be removed in the next version"]
 let statelessComponentWithRetainedProps:
   string =>
   componentSpec(
@@ -170,10 +176,12 @@ let statelessComponentWithRetainedProps:
     actionless,
   );
 
+[@deprecated "The old component API is going to be removed in the next version"]
 let reducerComponent:
   string =>
   componentSpec('state, stateless, noRetainedProps, noRetainedProps, 'action);
 
+[@deprecated "The old component API is going to be removed in the next version"]
 let reducerComponentWithRetainedProps:
   string =>
   componentSpec('state, stateless, 'retainedProps, noRetainedProps, 'action);
@@ -226,4 +234,5 @@ let wrapJsForReason:
 
 [@bs.module "react"] external fragment: 'a = "Fragment";
 
+[@deprecated "Please use ReasonReactRouter directly"]
 module Router = ReasonReactRouter;
