@@ -1,3 +1,4 @@
+[@deprecated "The compat layer is going to be removed in the next version"]
 let wrapReactForReasonReact:
   (React.component('props), 'props, 'children) =>
   ReasonReact.component(
@@ -6,6 +7,7 @@ let wrapReactForReasonReact:
     ReasonReact.actionless,
   );
 
+[@deprecated "The compat layer is going to be removed in the next version"]
 let wrapReasonReactForReact:
   (
     ~component: ReasonReact.componentSpec('a, 'b, 'c, 'd, 'e),
