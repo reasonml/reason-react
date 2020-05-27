@@ -91,9 +91,14 @@ external createPortal: (React.element, Dom.element) => React.element =
 external unmountComponentAtNode: Dom.element => unit =
   "unmountComponentAtNode";
 
-[@bs.val] [@bs.module "react-dom"]
+[@bs.val]
+[@bs.module "react-dom"]
+[@deprecated
+  "findDOMNode will be removed as ReasonReact will only support the functional API"
+]
 external findDOMNode: ReasonReact.reactRef => Dom.element = "findDOMNode";
 
+[@deprecated]
 external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 
 type style = ReactDOM.style;
