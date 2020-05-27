@@ -79,6 +79,15 @@ module Children = {
 module Context = {
   type t('props);
 
+  [@bs.obj]
+  external makeProps:
+    (~value: 'props, ~children: element, unit) =>
+    {
+      .
+      "value": 'props,
+      "children": element,
+    };
+
   [@bs.get]
   external provider:
     t('props) =>

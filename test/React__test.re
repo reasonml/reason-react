@@ -130,14 +130,7 @@ module DummyComponentThatMapsChildren = {
 module DummyContext = {
   let context = React.createContext(0);
   module Provider = {
-    [@bs.obj]
-    external makeProps:
-      (~value: int, ~children: React.element, unit) =>
-      {
-        .
-        "value": int,
-        "children": React.element,
-      };
+    include React.Context;
     let make = context->React.Context.provider;
   };
 
