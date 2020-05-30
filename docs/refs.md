@@ -13,7 +13,7 @@ There are many cases where you might want to use refs to track things that don't
 let make = () => {
   let clicks = React.useRef(0);
 
-  <div onClick={_ => React.Ref.(clicks->setCurrent(clicks->current + 1))} />;
+  <div onClick={_ => clicks.current = clicks.current + 1} />;
 };
 ```
 
