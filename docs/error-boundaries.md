@@ -34,7 +34,7 @@ class MyErrorBoundary extends React.Component {
 </MyErrorBoundary>
 ```
 
-Given ReasonReact does not bind to ReactJS class API, we're providing a lightweight component that does that just for you: `ReactErrorBoundary`.
+Given ReasonReact does not bind to ReactJS class API, we're providing a lightweight component that does that just for you: `ReasonReactErrorBoundary`.
 
 ```reason
 <ReasonReactErrorBoundary
