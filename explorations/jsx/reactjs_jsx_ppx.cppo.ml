@@ -152,23 +152,18 @@ module External_ffi_types = struct
   type t  =
   | Ffi_obj_create of External_arg_spec.obj_params
   let to_string  (Ffi_obj_create obj_params : t) =
+    let macro_arg k v =
+    (* Creates a standard ML string from the raw region for the key *)
+      "<@%caml_js_to_string_from_raw><@>" ^ k ^ "</@></@%caml_js_to_string_from_raw>" ^ v in
     let kvs = List.mapi (fun i obj_param ->
       let index = "<@" ^ string_of_int (i + 1) ^ "/>" in
       match obj_param with
-      | {External_arg_spec.obj_arg_label = Obj_empty} -> ("", index)
+      | {External_arg_spec.obj_arg_label = Obj_empty} ->  ("", index)
       | {obj_arg_label = Obj_label {name}} -> (name, index)
       | {obj_arg_label = Obj_optional {name}} -> (name, index)) obj_params in
-    "raw-macro:"
-    ^ "<@.php>"
-    ^ "darray["
-    ^ (String.concat ", " (List.map (fun (nm, v) -> "  \"" ^ escapeKey nm ^ "\" => " ^ v) kvs))
-    ^ "]"
-    ^ "</@.php>"
-    ^ "<@.js>"
-    ^ "{"
-    ^ (String.concat ", " (List.map (fun (nm, v) ->  "  " ^ escapeKey nm  ^ ": " ^ v) kvs))
-    ^ "}"
-    ^ "</@.js>"
+    (* TODO: Convert optionals *)
+    let paramss = List.map (fun (nm, v) -> macro_arg nm v) kvs in
+    "raw-macro:<@caml_js_object_args>" ^ String.concat " " paramss ^ "<@/caml_js_object_args>"
   let ffi_obj_as_prims obj_params = [to_string (Ffi_obj_create obj_params)]
 end
 
@@ -299,37 +294,6 @@ module Ast_utils = struct
 
   (* https://github.com/BuckleScript/bucklescript/blob/8c62040207ed5b7bcbe580655d20ed3a9b54fcf9/jscomp/syntax/bs_builtin_ppx.ml *)
   (* https://github.com/BuckleScript/bucklescript/blob/3be847359a5b77d103fc25ef86117a24b930a29d/jscomp/syntax/ast_util.ml *)
-  (*
-  (
-    Exp.apply
-      ~loc:obj_loc
-      (* THIS LOC IS WRONG *)
-      ((Exp.ident {loc = obj_loc; txt = Ldot (Lident "Extern", "obj")}))
-      [Nolabel, ((Exp.array (List.map fieldsToObjCallArgs fields)))]
-  )
-  *)
-
-   (*
-      [
-        structure_item ([1,0+0]..[1,0+13])
-          Pstr_eval
-          expression ([1,0+0]..[1,0+13])
-            Pexp_extension "bs.obj"
-            [
-              structure_item ([1,0+0]..[1,0+13])
-                Pstr_eval
-                expression ([1,0+0]..[1,0+13])
-                  Pexp_record
-                  [
-                    "foo" ([1,0+1]..[1,0+12])
-                      expression ([1,0+8]..[1,0+12])
-                        Pexp_construct "true" ([1,0+8]..[1,0+12])
-                        None
-                  ]
-                  None
-            ]
-        ]
-  *)
   let record_as_js_object
     loc
     (self : Ast_mapper.mapper)
