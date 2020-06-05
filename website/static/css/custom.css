@@ -54,4 +54,16 @@
   border-radius: 4px;
 }
 
+.homeBanner {
+  color: white;
+  background: black;
+  font-size: 20px;
+  text-align: center;
+  padding: 10px;
+}
+.homeBanner a {
+  color: white;
+  text-decoration: underline;
+}
+
 /* end override */
