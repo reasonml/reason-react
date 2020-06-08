@@ -73,7 +73,7 @@
 <span class="hljs-keyword">let</span> make = () =&gt; {
   <span class="hljs-keyword">let</span> clicks = <span class="hljs-module-identifier">React</span>.useRef(<span class="hljs-number">0</span>);
 
-  &lt;div onClick={_ =&gt; <span class="hljs-module-identifier">React</span>.<span class="hljs-module-identifier">Ref</span>.(clicks<span class="hljs-operator">-&gt;</span>setCurrent(clicks<span class="hljs-operator">-&gt;</span>current <span class="hljs-operator">+</span> <span class="hljs-number">1</span>))} /&gt;;
+  &lt;div onClick={_ =&gt; clicks.current = clicks.current <span class="hljs-operator">+</span> <span class="hljs-number">1</span>} /&gt;;
 };
 </code></pre>
 <p>DOM elements allow you to pass refs to track specific elements that have been rendered for side-effects outside of React's control. To do this you can use the <code>ReactDOMRe.Ref</code> module.</p>
