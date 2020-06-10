@@ -2098,4 +2098,8 @@ module Props = {
 
 include Props;
 
+// As we've removed `ReactDOMRe.createElement`, this enables patterns like
+// React.createElement(ReactDOM.stringToComponent(multiline ? "textarea" : "input"), ...)
+external stringToComponent: string => React.component(domProps) = "%identity";
+
 module Style = ReactDOMStyle;
