@@ -9,11 +9,10 @@ For `aria-*` use camelCasing, e.g., `ariaLabel`. For DOM components, we'll trans
 For `data-*` this is a bit trickier; words with `-` in them aren't valid in Reason/OCaml. When you do want to write them, e.g., `<div data-name="click me" />`, use the following:
 
 ```reason
-ReactDOMRe.createElementVariadic(
-  "div",
-  ~props=(ReactDOMRe.objToDOMProps({"data-name": "click me"})),
-  [||]
-)
+React.cloneElement(
+  <div />,
+  {"data-name": "click me"}
+);
 ```
 
 For non-DOM components, you need to pick valid prop names.

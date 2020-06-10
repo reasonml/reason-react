@@ -41,6 +41,9 @@
       "element-type-is-invalid": {
         "title": "Element Type is Invalid Runtime Error"
       },
+      "error-boundaries": {
+        "title": "Error boundaries"
+      },
       "event": {
         "title": "Event"
       },
@@ -147,7 +150,7 @@
         "title": "Subscriptions Helper"
       },
       "tailwind-css": {
-        "title": "Tailwind CSS"
+        "title": "Styling: Tailwind CSS"
       },
       "ternary-shortcut": {
         "title": "Ternary Shortcut"

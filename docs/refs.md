@@ -17,7 +17,7 @@ let make = () => {
 };
 ```
 
-DOM elements allow you to pass refs to track specific elements that have been rendered for side-effects outside of React's control. To do this you can use the `ReactDOMRe.Ref` module.
+DOM elements allow you to pass refs to track specific elements that have been rendered for side-effects outside of React's control. To do this you can use the `ReactDOM.Ref` module.
 
 ```reason
 [@react.component]
@@ -28,16 +28,16 @@ let make = () => {
     doSomething(divRef);
   });
 
-  <div ref={ReactDOMRe.Ref.domRef(divRef)} />;
+  <div ref={ReactDOM.Ref.domRef(divRef)} />;
 };
 ```
 
-For some cases it's easier to work with callback refs which get called when the DOM node changes. We support this use-case as well using `ReactDOMRe.Ref.callbackDomRef`.
+For some cases it's easier to work with callback refs which get called when the DOM node changes. We support this use-case as well using `ReactDOM.Ref.callbackDomRef`.
 
 ```reason
 [@react.component]
 let make = () => {
-  <div ref={ReactDOMRe.Ref.callbackDomRef(ref =>
+  <div ref={ReactDOM.Ref.callbackDomRef(ref =>
     doEffectWhenRefChanges(ref)
   )} />;
 };
