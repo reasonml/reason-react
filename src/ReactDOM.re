@@ -329,6 +329,8 @@ module Props = {
     [@bs.optional]
     placeholder: string,
     [@bs.optional]
+    playsInline: bool,
+    [@bs.optional]
     poster: string, /* uri */
     [@bs.optional]
     preload: string, /* "none", "metadata" or "auto" (and "" as a synonym for "auto") */
