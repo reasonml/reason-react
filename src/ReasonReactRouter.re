@@ -166,15 +166,11 @@ let urlNotEqual = (a, b) => {
   a.hash !== b.hash || a.search !== b.search || listNotEqual(a.path, b.path);
 };
 type watcherID = unit => unit;
-let url = (~serverUrlString=?, ()) =>
-  switch (serverUrlString) {
-  | Some(serverUrlString) => {
-      path: path(~serverUrlString, ()),
-      hash: hash(),
-      search: search(~serverUrlString, ()),
-    }
-  | _ => {path: path(), hash: hash(), search: search()}
-  };
+let url = (~serverUrlString=?, ()) => {
+  path: path(~serverUrlString?, ()),
+  hash: hash(),
+  search: search(~serverUrlString?, ()),
+};
 /* alias exposed publicly */
 let dangerouslyGetInitialUrl = url;
 let watchUrl = callback =>
