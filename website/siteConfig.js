@@ -80,6 +80,12 @@ const users = [
     image: "img/logos/auditless.svg",
     infoLink: "https://auditless.com/",
     pinned: true
+  },
+  {
+    caption: "Porter",
+    image: "img/logos/porter.svg",
+    infoLink: "https://porter.in/",
+    pinned: true
   }
 ];
 
