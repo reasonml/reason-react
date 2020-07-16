@@ -71,11 +71,7 @@
 <pre><code class="hljs css language-reason"><span class="hljs-comment">/** ContextProvider.re */</span>
 <span class="hljs-keyword">let</span> themeContext = <span class="hljs-module-identifier">React</span>.createContext(<span class="hljs-string">"light"</span>);
 
-<span class="hljs-keyword">let</span> makeProps = (~value, ~children, ()) =&gt; {
-  <span class="hljs-string">"value"</span>: value,
-  <span class="hljs-string">"children"</span>: children,
-};
-
+<span class="hljs-keyword">include</span> <span class="hljs-module-identifier">React</span>.<span class="hljs-module-identifier">Context</span>; <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">Adds</span> the makeProps <span class="hljs-keyword">external</span>
 <span class="hljs-keyword">let</span> make = <span class="hljs-module-identifier">React</span>.<span class="hljs-module-identifier">Context</span>.provider(themeContext);
 </code></pre>
 <p>That will give you a <code>ContextProvider</code> component you can use in your application later on. You'll do this like you'd normally would in any React application.</p>
