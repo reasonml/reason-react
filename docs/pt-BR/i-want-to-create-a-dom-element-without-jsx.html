@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>I want to create a DOM element without JSX · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="In certain cases, you might want to choose the DOM element given props, and JSX prevents that."/><meta name="docsearch:language" content="pt-BR"/><meta property="og:title" content="I want to create a DOM element without JSX · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/"/><meta property="og:description" content="In certain cases, you might want to choose the DOM element given props, and JSX prevents that."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><script src="/reason-react/js/scrollSpy.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/><script src="/reason-react/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/pt-BR"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/reason-react/docs/pt-BR/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/pt-BR/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/pt-BR/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/pt-BR/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>Português (Brasil)</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/i-want-to-create-a-dom-element-without-jsx">日本語</a></li><li><a href="/reason-react/docs/en/i-want-to-create-a-dom-element-without-jsx">English</a></li><li><a href="/reason-react/docs/es-ES/i-want-to-create-a-dom-element-without-jsx">Español</a></li><li><a href="/reason-react/docs/fr/i-want-to-create-a-dom-element-without-jsx">Français</a></li><li><a href="/reason-react/docs/ko/i-want-to-create-a-dom-element-without-jsx">한국어</a></li><li><a href="/reason-react/docs/ru/i-want-to-create-a-dom-element-without-jsx">Русский</a></li><li><a href="/reason-react/docs/zh-CN/i-want-to-create-a-dom-element-without-jsx">中文</a></li><li><a href="/reason-react/docs/zh-Hant/i-want-to-create-a-dom-element-without-jsx">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>FAQ</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/what-and-why">What &amp; Why</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/installation">Installation</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/intro-example">Intro Example</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Core</h3><ul class=""><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/components">Components</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/jsx">JSX (Version 3)</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/event">Event</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/style">Style</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/router">Router</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/dom">Working with DOM</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/refs">Refs in React</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/reasonreactcompat">ReasonReactCompat: migrating to 0.7.0 and JSX v3</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/testing">Testing ReasonReact components</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">ReactJS Idioms Equivalents</h3><ul class=""><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/invalid-prop-name">Invalid Prop Name</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/props-spread">Props Spread</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/component-as-prop">Component as Prop</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/ternary-shortcut">Ternary Shortcut</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/context-mixins">Context &amp; Mixins</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/custom-class-component-property">Custom Class/Component Property</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/usestate-event-value">Using Event Values With useState</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/error-boundaries">Error boundaries</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Record API (deprecated)</h3><ul class=""><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/jsx-2">JSX (Old, Version 2)</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/creation-props-self">Creation, Props &amp; Self</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/render">Render</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/callback-handlers">Callback Handlers</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/state-actions-reducer">State, Actions &amp; Reducer</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/lifecycles">Lifecycles</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/instance-variables">Instance Variables</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/react-ref">React Ref</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/interop">Talk to Existing ReactJS Code</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/clone-element">cloneElement</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/children">Children</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/subscriptions-helper">Subscriptions Helper</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/router-2">Router</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul class=""><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/im-having-a-type-error">I&#x27;m Having a Type Error</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/record-field-send-handle-not-found">Record Field send/handle Not Found</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/send-handle-callbacks-having-incompatible-types">send/handle callbacks having Incompatible Types</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/i-really-need-feature-x-from-reactjs">I Really Need Feature X From ReactJS</a></li><li class="navListItem"><a class="navItem" href="/reason-react/docs/pt-BR/element-type-is-invalid">Element Type is Invalid Runtime Error</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/docs/pt-BR/i-want-to-create-a-dom-element-without-jsx">I want to create a DOM element without JSX</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://crowdin.com/project/reason-react/pt-BR" target="_blank" rel="noreferrer noopener">Translate</a><h1 class="postHeaderTitle">I want to create a DOM element without JSX</h1></header><article><div><span><p>In certain cases, you might want to choose the DOM element given props, and JSX prevents that.</p>
+<p>In JS, you'd do:</p>
+<pre><code class="hljs css language-js">React.createElement(multiline ? <span class="hljs-string">"textarea"</span> : <span class="hljs-string">"input"</span> <span class="hljs-comment">/* ... */</span>);
+</code></pre>
+<p>ReactJS has a special behavior that considers strings as special components. In a typed language, that's a bit trickier. To that end we provide <code>ReactDOM.stringToComponent</code> that makes the compiler understand that a given string is to be considered a component.</p>
+<p>In Reason:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-module-identifier">React</span>.createElement(<span class="hljs-module-identifier">ReactDOM</span>.stringToComponent(multiline ? <span class="hljs-string">"textarea"</span> : <span class="hljs-string">"input"</span>), <span class="hljs-comment">/* ... */</span>)
+</code></pre>
+<p>You can also pass a variable:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> tag = <span class="hljs-module-identifier">ReactDOM</span>.stringToComponent(multiline ? <span class="hljs-string">"textarea"</span> : <span class="hljs-string">"input"</span>);
+<span class="hljs-module-identifier">React</span>.createElement(tag, <span class="hljs-comment">/* ... */</span>)
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/pt-BR/element-type-is-invalid"><span class="arrow-prev">← </span><span>Element Type is Invalid Runtime Error</span></a></div></div></div><nav class="onPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:pt-BR"]}
+              });
+            </script></body></html>
