@@ -46,7 +46,8 @@
       "record-field-send-handle-not-found",
       "send-handle-callbacks-having-incompatible-types",
       "i-really-need-feature-x-from-reactjs",
-      "element-type-is-invalid"
+      "element-type-is-invalid",
+      "i-want-to-create-a-dom-element-without-jsx"
     ]
   },
   "examples": {
