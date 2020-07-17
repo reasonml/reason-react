@@ -7,7 +7,7 @@ Reason doesn't support using props with dashes right now, ie: `data-id` or `data
 ```reason
 /* Spread.re */
 [@react.component]
-let make = (~props, ~children) => ReasonReact.cloneElement(children, ~props, [||]);
+let make = (~props, ~children) => React.cloneElement(children, props);
 ```
 
 Using Spread:

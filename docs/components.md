@@ -10,7 +10,7 @@ let make = (~name) => {
   let (count, setCount) = React.useState(() => 0);
 
   <div>
-    <p> {React.string(name ++ " clicked " ++ string_of_int(count) ++ " times")} </p>
+    <p> {React.string(name ++ " clicked " ++ Belt.Int.toString(count) ++ " times")} </p>
     <button onClick={_ => setCount(_ => count + 1)}>
       {React.string("Click me")}
     </button>
@@ -31,7 +31,7 @@ let make = (Props) => {
   let (count, setCount) = React.useState(() => 0);
 
   <div>
-    <p> {React.string(name ++ " clicked " ++ string_of_int(count) ++ " times")} </p>
+    <p> {React.string(name ++ " clicked " ++  Belt.Int.toString(count) ++ " times")} </p>
     <button onClick={_evt => setCount(count => count + 1)}>
       {React.string("Click me")}
     </button>
@@ -63,6 +63,20 @@ The component above could be called like this:
 <ComponentTakesChildren name="Imani">
   <div> {React.string("Effectively the child.")} </div>
 </ComponentTakesChildren>
+```
+
+## Rendering text, int, floats, arrays and null
+
+In order for the compiler to understand that rendering a string of text or a number is intentional, you need to explicitely write it:
+
+```reason
+<div>
+  {React.string("Hello")}
+  {React.int(3)}
+  {React.float(1.23)}
+  {React.array([|<div key="0"/>, <span key="1" />|])}
+  {React.null}
+</div>
 ```
 
 ## Hooks
