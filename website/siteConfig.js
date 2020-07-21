@@ -87,7 +87,7 @@ const users = [
     infoLink: "https://porter.in/",
     pinned: true
   },
-   {
+  {
     caption: "Lukin Co.",
     image: "img/logos/lukin.svg",
     infoLink: "https://lukin.co",
