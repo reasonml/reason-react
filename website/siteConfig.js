@@ -86,6 +86,12 @@ const users = [
     image: "img/logos/porter.svg",
     infoLink: "https://porter.in/",
     pinned: true
+  },
+   {
+    caption: "Lukin Co.",
+    image: "img/logos/lukin.svg",
+    infoLink: "https://lukin.co",
+    pinned: true
   }
 ];
 
