@@ -19,6 +19,9 @@ module Experimental = {
   [@bs.module "react-dom"]
   external createRoot: Dom.element => root = "createRoot";
 
+  [@bs.module "react-dom"]
+  external createBlockingRoot: Dom.element => root = "createBlockingRoot";
+
   [@bs.send] external render: (root, React.element) => unit = "render";
 };
 
