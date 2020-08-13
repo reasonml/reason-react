@@ -4,12 +4,12 @@ title: Working with DOM
 
 ## ReactDOM
 
-ReasonReact's ReactDOM module is called `ReactDOM`. The module exposes helpers that work with familiar ReactJS idioms.
+ReasonReact's ReactDOM module is called `ReactDOMRe`. The module exposes helpers that work with familiar ReactJS idioms.
 
 - `render` : `(React.element, Dom.element) => unit`
 - `unmountComponentAtNode` : `Dom.element => unit`
 - `hydrate` : `(React.element, Dom.element) => unit`
-- `createPortal` : `(React.component('props), 'props) => React.element`
+- `createPortal` : `(React.element, Dom.element) => React.element`
 
 ## ReactDOMServer
 
