@@ -9,7 +9,7 @@ ReasonReact's ReactDOM module is called `ReactDOMRe`. The module exposes helpers
 - `render` : `(React.element, Dom.element) => unit`
 - `unmountComponentAtNode` : `Dom.element => unit`
 - `hydrate` : `(React.element, Dom.element) => unit`
-- `createPortal` : `(React.component('props), Dom.element) => React.element`
+- `createPortal` : `(React.element, Dom.element) => React.element`
 
 ## ReactDOMServer
 
