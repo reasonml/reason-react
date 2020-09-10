@@ -19,7 +19,7 @@ let make = (~initialCount) => {
   let (count, setCount) = React.useState(_ => initialCount);
 
   <>
-    {React.string("Count: " ++ count)}
+    {React.string("Count: " ++ string_of_int(count))}
     <button onClick={_ => setCount(_ => initialCount)}>
       {React.string("Reset")}
     </button>
