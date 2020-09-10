@@ -81,7 +81,7 @@
   <span class="hljs-keyword">let</span> (count, setCount) = <span class="hljs-module-identifier">React</span>.useState(_ =&gt; initialCount);
 
   &lt;&gt;
-    {<span class="hljs-module-identifier">React</span>.string(<span class="hljs-string">"Count: "</span> <span class="hljs-operator">++</span> count)}
+    {<span class="hljs-module-identifier">React</span>.string(<span class="hljs-string">"Count: "</span> <span class="hljs-operator">++</span> string_of_int(count))}
     &lt;button onClick={_ =&gt; setCount(_ =&gt; initialCount)}&gt;
       {<span class="hljs-module-identifier">React</span>.string(<span class="hljs-string">"Reset"</span>)}
     &lt;/button&gt;
