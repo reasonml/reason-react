@@ -9,9 +9,6 @@ title: useState Hook
 ### A Simple Counter Example
 
 ```reason
-type action =
-  | Tick;
-
 type state = {count: int};
 
 [@react.component]
