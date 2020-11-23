@@ -92,6 +92,12 @@ const users = [
     image: "img/logos/lukin.svg",
     infoLink: "https://lukin.co",
     pinned: true
+  },
+  {
+    caption: "Greenlabs",
+    image: "img/logos/greenlabs.svg",
+    infoLink: "https://greenlabs.co.kr",
+    pinned: true
   }
 ];
 
