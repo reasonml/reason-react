@@ -46,6 +46,7 @@ module Simulate: {
 module DOM: {
   [@bs.return nullable] [@bs.get]
   external value: Dom.element => option(string) = "value";
+  [@bs.get] external textContent: Dom.element => string = "textContent";
 
   let findBySelector: (Dom.element, string) => option(Dom.element);
   let findByAllSelector: (Dom.element, string) => array(Dom.element);

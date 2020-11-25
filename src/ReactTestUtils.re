@@ -93,7 +93,6 @@ external querySelectorAll:
   (Dom.element, string) => Js.Array.array_like(Dom.element) =
   "querySelectorAll";
 
-[@bs.get] external textContent: Dom.element => string = "textContent";
 [@bs.get] external body: Dom.document => option(Dom.element) = "body";
 [@bs.send]
 external createElement: (Dom.document, string) => Dom.element =
@@ -112,6 +111,7 @@ module DOM = {
 
   [@bs.return nullable] [@bs.get]
   external value: Dom.element => option(string) = "value";
+  [@bs.get] external textContent: Dom.element => string = "textContent";
 
   let findBySelector = (element, selector) =>
     querySelector(element, selector);
