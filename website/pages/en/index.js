@@ -32,7 +32,7 @@ const codeExampleSmallScreen =`${pre}reason
 [@react.component]
 let make = (~name) =>
   <button>
-    {React.string("Hello!")}
+    {React.string("Hello" ++ name)}
   </button>;
 ${pre}`;
 
@@ -40,7 +40,7 @@ const codeExampleLargeScreen =`${pre}reason
 [@react.component]
 let make = (~name) =>
   <button>
-    {React.string("Hello!")}
+    {React.string("Hello" ++ name)}
   </button>;
 ${pre}`;
 
