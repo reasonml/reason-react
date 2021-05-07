@@ -13,7 +13,11 @@ class Button extends React.Component {
   render() {
     return (
       <div className="pluginWrapper">
-        <a className={`button ${this.props.className || ""}`} href={this.props.href} target={this.props.target}>
+        <a
+          className={`button ${this.props.className || ""}`}
+          href={this.props.href}
+          target={this.props.target}
+        >
           {this.props.children}
         </a>
       </div>
@@ -22,13 +26,13 @@ class Button extends React.Component {
 }
 
 Button.defaultProps = {
-  target: "_self"
+  target: "_self",
 };
 const pre = "```";
 const code = "`";
 
 // fake, static, responsive refmt, lol. See reason.css homeCodeSnippet logic
-const codeExampleSmallScreen =`${pre}reason
+const codeExampleSmallScreen = `${pre}reason
 [@react.component]
 let make = (~name) =>
   <button>
@@ -36,7 +40,7 @@ let make = (~name) =>
   </button>;
 ${pre}`;
 
-const codeExampleLargeScreen =`${pre}reason
+const codeExampleLargeScreen = `${pre}reason
 [@react.component]
 let make = (~name) =>
   <button>
@@ -61,7 +65,7 @@ Your apps are the html files inside ${code}src/${code}`;
 
 class HomeSplash extends React.Component {
   render() {
-    let promoSection =
+    let promoSection = (
       <div className="section promoSection">
         <div className="promoRow">
           <div className="pluginRowBlock">
@@ -86,26 +90,78 @@ class HomeSplash extends React.Component {
             </Button>
           </div>
         </div>
-      </div>;
+      </div>
+    );
 
     return (
       <div className="homeContainer">
         <div className="homeContainer homeContainerWrapper homeBanner">
-          Black Lives Matter.{' '}
-          <a target="_blank" href="https://support.eji.org/give/153413/#!/donation/checkout">
-            Support the Equal Justice Initiative
-           </a>.
-         </div>
+          <div style={{ maxWidth: "38rem", display: "flex" }}>
+            <img
+              src={siteConfig.baseUrl + "img/logos/rescript-brandmark@2x.png"}
+              style={{ width: "5rem", height: "5rem", marginTop: "0.5rem" }}
+            />
+            <div>
+              <div>
+                ReasonReact is now{" "}
+                <a
+                  target="_blank"
+                  href="https://rescript-lang.org/docs/react/latest/introduction"
+                  style={{ color: "#e6484f", fontWeight: "bolder" }}
+                >
+                  ReScript/React
+                </a>
+              </div>
+              <div style={{ marginTop: "1.2rem", fontSize: "1.2rem" }}>
+                {
+                  "For the latest updates, please migrate to our actively maintained ReScript bindings."
+                }
+                <div
+                  style={{
+                    marginTop: "2.5rem",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <a
+                    className="heroButton"
+                    href="https://rescript-lang.org/docs/react/latest/introduction"
+                    target="_blank"
+                  >
+                      Visit the latest docs
+                  </a>
+                  <div>
+                    <a
+                      className="heroLink"
+                      href={
+                        siteConfig.baseUrl +
+                        "blog/2021/05/07/rescript-migration"
+                      }
+                      style={{marginLeft: "1rem"}}
+                    >
+                      Learn more
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="redirectBanner">
           <div>
-            Hello! This particular page hash has moved to <a id="redirectLink" />.
-            Please update the URLs to reflect it. Thanks!
+            Hello! This particular page hash has moved to{" "}
+            <a id="redirectLink" />. Please update the URLs to reflect it.
+            Thanks!
           </div>
         </div>
 
         <div className="homeWrapperWrapper">
-
-          <img src={siteConfig.baseUrl + siteConfig.headerIcon} className="spinner" />
+          <img
+            src={siteConfig.baseUrl + siteConfig.headerIcon}
+            className="spinner"
+          />
 
           <div className="wrapper homeWrapper">
             <div className="projectTitle">{siteConfig.title}</div>
@@ -120,7 +176,6 @@ class HomeSplash extends React.Component {
 
             {promoSection}
           </div>
-
         </div>
       </div>
     );
@@ -131,13 +186,16 @@ class Index extends React.Component {
   render() {
     let language = this.props.language || "en";
     const showcase = siteConfig.users
-      .filter(user => {
+      .filter((user) => {
         return user.pinned;
       })
-      .map(user => {
+      .map((user) => {
         return (
           <a href={user.infoLink} key={user.caption}>
-            <img src={`${siteConfig.baseUrl}${user.image}`} title={user.caption} />
+            <img
+              src={`${siteConfig.baseUrl}${user.image}`}
+              title={user.caption}
+            />
           </a>
         );
       });
@@ -152,62 +210,39 @@ class Index extends React.Component {
               contents={[
                 {
                   title: <translate>It's Just React</translate>,
-                  content: <translate>Just a bunch of zero-runtime type definitions and lightweight utilities, for the same React you've come to know.</translate>,
+                  content: (
+                    <translate>
+                      Just a bunch of zero-runtime type definitions and
+                      lightweight utilities, for the same React you've come to
+                      know.
+                    </translate>
+                  ),
                 },
                 {
                   title: <translate>Safe and Sound</translate>,
-                  content: <translate>Simple, solid and inferred using Reason types. Write the same React code, get your type system guarantees automatically.</translate>,
+                  content: (
+                    <translate>
+                      Simple, solid and inferred using Reason types. Write the
+                      same React code, get your type system guarantees
+                      automatically.
+                    </translate>
+                  ),
                 },
                 {
                   title: <translate>Drop In</translate>,
-                  content: <translate>Powered by ReactJS under the hood. Freely integrate your existing React libraries and knowledge.</translate>,
+                  content: (
+                    <translate>
+                      Powered by ReactJS under the hood. Freely integrate your
+                      existing React libraries and knowledge.
+                    </translate>
+                  ),
                 },
               ]}
               layout="threeColumn"
             />
           </Container>
-
-          <Container background="light" className="quickStartAndExamples homeCodeSnippet">
-            <div>
-              <h2><translate>QuickStart</translate></h2>
-              <MarkdownBlock>
-                {quickStart}
-              </MarkdownBlock>
-            </div>
-            <div>
-              <h2><translate>Examples</translate></h2>
-              <GridBlock
-                className="examples"
-                align="center"
-                contents={siteConfig.examples.map(example => ({
-                  title: example.name,
-                  image: `${siteConfig.baseUrl}${example.image}`,
-                  imageLink: example.link,
-                  imageAlign: "top",
-                  content: "",
-                }))}
-              />
-            </div>
-          </Container>
-
-          <div className="productShowcaseSection paddingBottom">
-            <h2>
-              <translate>Projects Using ReasonReact</translate>
-            </h2>
-            <div className="logos">
-              {showcase}
-            </div>
-            <div className="more-users">
-              <a
-                className="button"
-                href={`${siteConfig.baseUrl}${this.props.language}/built-with-reason-react`}
-              >
-                <translate>See Full List</translate>
-              </a>
-            </div>
-          </div>
         </div>
-        <script src={siteConfig.baseUrl + 'js/redirectIndex.js'}></script>
+        <script src={siteConfig.baseUrl + "js/redirectIndex.js"}></script>
       </div>
     );
   }

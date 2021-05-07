@@ -62,6 +62,9 @@
       "i-really-need-feature-x-from-reactjs": {
         "title": "I Really Need Feature X From ReactJS"
       },
+      "i-want-to-create-a-dom-element-without-jsx": {
+        "title": "I want to create a DOM element without JSX"
+      },
       "im-having-a-type-error": {
         "title": "I'm Having a Type Error"
       },
@@ -154,6 +157,9 @@
       },
       "ternary-shortcut": {
         "title": "Ternary Shortcut"
+      },
+      "testing": {
+        "title": "Testing ReasonReact components"
       },
       "use-state-use-effect": {
         "title": "useState, useEffect in a Form"
