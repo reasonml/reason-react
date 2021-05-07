@@ -4,7 +4,7 @@
         <title>ReasonReact Blog</title>
         <link>https://reasonml.github.io/reason-react/reason-react/blog</link>
         <description>The best place to stay up-to-date with the latest ReasonReact news and events.</description>
-        <lastBuildDate>Mon, 08 Jun 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 07 May 2021 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -12,6 +12,13 @@
             <url>https://reasonml.github.io/reason-react/reason-react/img/reason-react-white.svg</url>
             <link>https://reasonml.github.io/reason-react/reason-react/blog</link>
         </image>
+        <item>
+            <title><![CDATA[We are rebranding to ReScript / React]]></title>
+            <link>https://reasonml.github.io/reason-react/reason-react/blog/2021/05/07/rescript-migration.html</link>
+            <guid>https://reasonml.github.io/reason-react/reason-react/blog/2021/05/07/rescript-migration.html</guid>
+            <pubDate>Fri, 07 May 2021 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>BuckleScript &amp; Reason are now called <a href="https://rescript-lang.org/blog/bucklescript-is-rebranding">ReScript</a>, which means that the <strong>ReasonReact</strong> bindings will now be known as <strong>ReScript / React</strong> and need to move to a different npm package.</p> <p>This means...</p> <ul> <li>Our <code>reason-react</code> npm package will now be published as <code>@resc...</code></li></ul>]]></description>
+        </item>
         <item>
             <title><![CDATA[ReasonReact 0.9.0 - Uncurried and Code Cleanup]]></title>
             <link>https://reasonml.github.io/reason-react/reason-react/blog/2020/06/08/090-release.html</link>
