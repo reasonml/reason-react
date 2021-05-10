@@ -17,7 +17,7 @@
             <link>https://reasonml.github.io/reason-react/reason-react/blog/2021/05/07/rescript-migration.html</link>
             <guid>https://reasonml.github.io/reason-react/reason-react/blog/2021/05/07/rescript-migration.html</guid>
             <pubDate>Fri, 07 May 2021 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>BuckleScript &amp; Reason are now called <a href="https://rescript-lang.org/blog/bucklescript-is-rebranding">ReScript</a>, which means that the <strong>ReasonReact</strong> bindings will now be known as <strong>ReScript / React</strong> and need to move to a different npm package.</p> <p>This means...</p> <ul> <li>Our <code>reason-react</code> npm package will now be published as <code>@resc...</code></li></ul>]]></description>
+            <description><![CDATA[<p>BuckleScript &amp; Reason are now called <a href="https://rescript-lang.org/blog/bucklescript-is-rebranding">ReScript</a>, therefore the <strong>ReasonReact</strong> bindings will now be known as <strong>ReScript / React</strong> and need to be moved to a different npm package.</p> <p>This means...</p> <ul> <li>Our <code>reason-react</code> npm package will now be published as <a href="https://www.npmjs.com/package/@rescript/react"><code>@rescrip...</code></a></li></ul>]]></description>
         </item>
         <item>
             <title><![CDATA[ReasonReact 0.9.0 - Uncurried and Code Cleanup]]></title>
