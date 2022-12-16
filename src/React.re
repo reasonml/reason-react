@@ -160,8 +160,8 @@ module SuspenseList = {
   external makeProps:
     (
       ~children: element=?,
-      ~revealOrder: [ | `forwards | `backwards | `together]=?,
-      ~tail: [ | `collapsed | `hidden]=?,
+      ~revealOrder: [@bs.string] [ | `forwards | `backwards | `together]=?,
+      ~tail: [@bs.string] [ | `collapsed | `hidden]=?,
       unit
     ) =>
     {
