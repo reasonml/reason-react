@@ -14,7 +14,8 @@
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
     "test": "jest",
-    "format": "find ./src -iname '*.re' | xargs bsrefmt --in-place && find ./src -iname '*.rei' | xargs bsrefmt -i true --in-place"
+    "format": "find ./src -iname '*.re' | xargs bsrefmt --in-place && find ./src -iname '*.rei' | xargs bsrefmt -i true --in-place",
+    "init": "opam switch create . 4.06.1 --deps-only -y"
   },
   "keywords": [
     "reasonml",
