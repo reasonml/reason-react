@@ -66,7 +66,7 @@ module Props = {
     /* accessibility */
     /* https://www.w3.org/TR/wai-aria-1.1/ */
     [@bs.optional] [@bs.as "aria-activedescendant"]
-    ariaActivedescendant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescenda/t */
+    ariaActivedescendant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescendat */
     [@bs.optional] [@bs.as "aria-atomic"]
     ariaAtomic: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic */
     [@bs.optional] [@bs.as "aria-autocomplete"]
@@ -102,7 +102,7 @@ module Props = {
     [@bs.optional] [@bs.as "aria-haspopup"]
     ariaHaspopup: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
     [@bs.optional] [@bs.as "aria-hidden"]
-    ariaHidden: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
+    ariaHidden: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
     [@bs.optional] [@bs.as "aria-invalid"]
     ariaInvalid: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-invalid */
     [@bs.optional] [@bs.as "aria-keyshortcuts"]
@@ -148,7 +148,7 @@ module Props = {
     [@bs.optional] [@bs.as "aria-rowspan"]
     ariaRowspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowspan */
     [@bs.optional] [@bs.as "aria-selected"]
-    ariaSelected: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
+    ariaSelected: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
     [@bs.optional] [@bs.as "aria-setsize"]
     ariaSetsize: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-setsize */
     [@bs.optional] [@bs.as "aria-sort"]
@@ -1079,7 +1079,6 @@ module Props = {
     [@bs.optional]
     suppressContentEditableWarning: bool,
   };
-
   /* This list isn't exhaustive. We'll add more as we go. */
   /*
    * Watch out! There are two props types and the only difference is the type of ref.
@@ -1094,7 +1093,7 @@ module Props = {
     /* accessibility */
     /* https://www.w3.org/TR/wai-aria-1.1/ */
     [@bs.optional] [@bs.as "aria-activedescendant"]
-    ariaActivedescendant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescenda/t */
+    ariaActivedescendant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescendat */
     [@bs.optional] [@bs.as "aria-atomic"]
     ariaAtomic: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic */
     [@bs.optional] [@bs.as "aria-autocomplete"]
@@ -1176,7 +1175,7 @@ module Props = {
     [@bs.optional] [@bs.as "aria-rowspan"]
     ariaRowspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowspan */
     [@bs.optional] [@bs.as "aria-selected"]
-    ariaSelected: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
+    ariaSelected: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
     [@bs.optional] [@bs.as "aria-setsize"]
     ariaSetsize: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-setsize */
     [@bs.optional] [@bs.as "aria-sort"]
