@@ -161,7 +161,7 @@ module Drag = {
   [@bs.get] external screenY: t => int = "screenY";
   [@bs.get] external shiftKey: t => bool = "shiftKey";
 
-  [@bs.get] external dataTransfer: t => Dom.dataTransfer = "dataTransfer";
+  [@bs.get] external dataTransfer: t => Js.t({..}) = "dataTransfer"; /* Should return Dom.dataTransfer */
 };
 
 module Pointer = {
