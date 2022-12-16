@@ -1203,6 +1203,8 @@ module Props = {
     [@bs.optional]
     itemType: string, /* uri */
     /* tag-specific html attributes */
+    [@bs.optional] [@bs.as "as"]
+    as_: string,
     [@bs.optional]
     accept: string,
     [@bs.optional]
