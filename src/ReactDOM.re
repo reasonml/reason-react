@@ -94,7 +94,7 @@ module Props = {
     [@bs.optional] [@bs.as "aria-errormessage"]
     ariaErrormessage: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage */
     [@bs.optional] [@bs.as "aria-expanded"]
-    ariaExpanded: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
+    ariaExpanded: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
     [@bs.optional] [@bs.as "aria-flowto"]
     ariaFlowto: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
     [@bs.optional] [@bs.as "aria-grabbed"] /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
@@ -1122,7 +1122,7 @@ module Props = {
     [@bs.optional] [@bs.as "aria-errormessage"]
     ariaErrormessage: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage */
     [@bs.optional] [@bs.as "aria-expanded"]
-    ariaExpanded: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
+    ariaExpanded: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
     [@bs.optional] [@bs.as "aria-flowto"]
     ariaFlowto: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
     [@bs.optional] [@bs.as "aria-grabbed"] /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
@@ -1130,7 +1130,7 @@ module Props = {
     [@bs.optional] [@bs.as "aria-haspopup"]
     ariaHaspopup: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
     [@bs.optional] [@bs.as "aria-hidden"]
-    ariaHidden: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
+    ariaHidden: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
     [@bs.optional] [@bs.as "aria-invalid"]
     ariaInvalid: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-invalid */
     [@bs.optional] [@bs.as "aria-keyshortcuts"]
