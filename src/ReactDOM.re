@@ -97,6 +97,8 @@ module Props = {
     ariaExpanded: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
     [@bs.optional] [@bs.as "aria-flowto"]
     ariaFlowto: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
+    [@bs.optional] [@bs.as "aria-grabbed"] /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
+    ariaGrabbed: bool,
     [@bs.optional] [@bs.as "aria-haspopup"]
     ariaHaspopup: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
     [@bs.optional] [@bs.as "aria-hidden"]
@@ -1124,6 +1126,8 @@ module Props = {
     ariaExpanded: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
     [@bs.optional] [@bs.as "aria-flowto"]
     ariaFlowto: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
+    [@bs.optional] [@bs.as "aria-grabbed"] /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
+    ariaGrabbed: bool,
     [@bs.optional] [@bs.as "aria-haspopup"]
     ariaHaspopup: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
     [@bs.optional] [@bs.as "aria-hidden"]
