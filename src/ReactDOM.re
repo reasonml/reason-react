@@ -65,98 +65,102 @@ module Props = {
     ref: domRef,
     /* accessibility */
     /* https://www.w3.org/TR/wai-aria-1.1/ */
-    /* https://accessibilityresources.org/<aria-tag> is a great resource for these */
-    /* [@bs.optional] [@bs.as "aria-current"] ariaCurrent: page|step|location|date|time|true|false, */
-    [@bs.optional] [@bs.as "aria-details"]
-    ariaDetails: string,
-    [@bs.optional] [@bs.as "aria-disabled"]
-    ariaDisabled: bool,
-    [@bs.optional] [@bs.as "aria-hidden"]
-    ariaHidden: bool,
-    /* [@bs.optional] [@bs.as "aria-invalid"] ariaInvalid: grammar|false|spelling|true, */
-    [@bs.optional] [@bs.as "aria-keyshortcuts"]
-    ariaKeyshortcuts: string,
-    [@bs.optional] [@bs.as "aria-label"]
-    ariaLabel: string,
-    [@bs.optional] [@bs.as "aria-roledescription"]
-    ariaRoledescription: string,
-    /* Widget Attributes */
-    /* [@bs.optional] [@bs.as "aria-autocomplete"] ariaAutocomplete: inline|list|both|none, */
-    /* [@bs.optional] [@bs.as "aria-checked"] ariaChecked: true|false|mixed, /* https://www.w3.org/TR/wai-aria-1.1/#valuetype_tristate */ */
-    [@bs.optional] [@bs.as "aria-expanded"]
-    ariaExpanded: bool,
-    /* [@bs.optional] [@bs.as "aria-haspopup"] ariaHaspopup: false|true|menu|listbox|tree|grid|dialog, */
-    [@bs.optional] [@bs.as "aria-level"]
-    ariaLevel: int,
-    [@bs.optional] [@bs.as "aria-modal"]
-    ariaModal: bool,
-    [@bs.optional] [@bs.as "aria-multiline"]
-    ariaMultiline: bool,
-    [@bs.optional] [@bs.as "aria-multiselectable"]
-    ariaMultiselectable: bool,
-    /* [@bs.optional] [@bs.as "aria-orientation"] ariaOrientation: horizontal|vertical|undefined, */
-    [@bs.optional] [@bs.as "aria-placeholder"]
-    ariaPlaceholder: string,
-    /* [@bs.optional] [@bs.as "aria-pressed"] ariaPressed: true|false|mixed, /* https://www.w3.org/TR/wai-aria-1.1/#valuetype_tristate */ */
-    [@bs.optional] [@bs.as "aria-readonly"]
-    ariaReadonly: bool,
-    [@bs.optional] [@bs.as "aria-required"]
-    ariaRequired: bool,
-    [@bs.optional] [@bs.as "aria-selected"]
-    ariaSelected: bool,
-    [@bs.optional] [@bs.as "aria-sort"]
-    ariaSort: string,
-    [@bs.optional] [@bs.as "aria-valuemax"]
-    ariaValuemax: float,
-    [@bs.optional] [@bs.as "aria-valuemin"]
-    ariaValuemin: float,
-    [@bs.optional] [@bs.as "aria-valuenow"]
-    ariaValuenow: float,
-    [@bs.optional] [@bs.as "aria-valuetext"]
-    ariaValuetext: string,
-    /* Live Region Attributes */
-    [@bs.optional] [@bs.as "aria-atomic"]
-    ariaAtomic: bool,
-    [@bs.optional] [@bs.as "aria-busy"]
-    ariaBusy: bool,
-    /* [@bs.optional] [@bs.as "aria-live"] ariaLive: off|polite|assertive|rude, */
-    [@bs.optional] [@bs.as "aria-relevant"]
-    ariaRelevant: string,
-    /* Drag-and-Drop Attributes */
-    /* [@bs.optional] [@bs.as "aria-dropeffect"] ariaDropeffect: copy|move|link|execute|popup|none, */
-    [@bs.optional] [@bs.as "aria-grabbed"]
-    ariaGrabbed: bool,
-    /* Relationship Attributes */
     [@bs.optional] [@bs.as "aria-activedescendant"]
-    ariaActivedescendant: string,
+    ariaActivedescendant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescendat */
+    [@bs.optional] [@bs.as "aria-atomic"]
+    ariaAtomic: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic */
+    [@bs.optional] [@bs.as "aria-autocomplete"]
+    ariaAutocomplete: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-autocomplete */
+    [@bs.optional] [@bs.as "aria-busy"]
+    ariaBusy: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy */
+    [@bs.optional] [@bs.as "aria-checked"]
+    ariaChecked: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-checked */
     [@bs.optional] [@bs.as "aria-colcount"]
-    ariaColcount: int,
+    ariaColcount: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colcount */
     [@bs.optional] [@bs.as "aria-colindex"]
-    ariaColindex: int,
+    ariaColindex: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colindex */
     [@bs.optional] [@bs.as "aria-colspan"]
-    ariaColspan: int,
+    ariaColspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colspan */
     [@bs.optional] [@bs.as "aria-controls"]
-    ariaControls: string,
+    ariaControls: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls */
+    [@bs.optional] [@bs.as "aria-current"]
+    ariaCurrent: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current */
     [@bs.optional] [@bs.as "aria-describedby"]
-    ariaDescribedby: string,
+    ariaDescribedby: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby */
+    [@bs.optional] [@bs.as "aria-details"]
+    ariaDetails: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-details */
+    [@bs.optional] [@bs.as "aria-disabled"]
+    ariaDisabled: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled */
     [@bs.optional] [@bs.as "aria-errormessage"]
-    ariaErrormessage: string,
+    ariaErrormessage: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage */
+    [@bs.optional] [@bs.as "aria-expanded"]
+    ariaExpanded: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
     [@bs.optional] [@bs.as "aria-flowto"]
-    ariaFlowto: string,
+    ariaFlowto: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
+    [@bs.optional] [@bs.as "aria-grabbed"] /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
+    ariaGrabbed: bool,
+    [@bs.optional] [@bs.as "aria-haspopup"]
+    ariaHaspopup: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
+    [@bs.optional] [@bs.as "aria-hidden"]
+    ariaHidden: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
+    [@bs.optional] [@bs.as "aria-invalid"]
+    ariaInvalid: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-invalid */
+    [@bs.optional] [@bs.as "aria-keyshortcuts"]
+    ariaKeyshortcuts: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-keyshortcuts */
+    [@bs.optional] [@bs.as "aria-label"]
+    ariaLabel: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label */
     [@bs.optional] [@bs.as "aria-labelledby"]
-    ariaLabelledby: string,
+    ariaLabelledby: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby */
+    [@bs.optional] [@bs.as "aria-level"]
+    ariaLevel: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-level */
+    [@bs.optional] [@bs.as "aria-live"]
+    ariaLive: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live */
+    [@bs.optional] [@bs.as "aria-modal"]
+    ariaModal: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-modal */
+    [@bs.optional] [@bs.as "aria-multiline"]
+    ariaMultiline: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiline */
+    [@bs.optional] [@bs.as "aria-multiselectable"]
+    ariaMultiselectable: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiselectable */
+    [@bs.optional] [@bs.as "aria-orientation"]
+    ariaOrientation: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-orientation */
     [@bs.optional] [@bs.as "aria-owns"]
-    ariaOwns: string,
+    ariaOwns: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-owns */
+    [@bs.optional] [@bs.as "aria-placeholder"]
+    ariaPlaceholder: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-placeholder */
     [@bs.optional] [@bs.as "aria-posinset"]
-    ariaPosinset: int,
+    ariaPosinset: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-posinset */
+    [@bs.optional] [@bs.as "aria-pressed"]
+    ariaPressed: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-pressed */
+    [@bs.optional] [@bs.as "aria-readonly"]
+    ariaReadonly: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-readonly */
+    [@bs.optional] [@bs.as "aria-relevant"]
+    ariaRelevant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
+    [@bs.optional] [@bs.as "aria-required"]
+    ariaRequired: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-required */
+    [@bs.optional] [@bs.as "aria-roledescription"]
+    ariaRoledescription: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-roledescription */
     [@bs.optional] [@bs.as "aria-rowcount"]
-    ariaRowcount: int,
+    ariaRowcount: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowcount */
     [@bs.optional] [@bs.as "aria-rowindex"]
-    ariaRowindex: int,
+    ariaRowindex: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindex */
+    [@bs.optional] [@bs.as "aria-rowindextext"]
+    ariaRowindextext: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindextext */
     [@bs.optional] [@bs.as "aria-rowspan"]
-    ariaRowspan: int,
+    ariaRowspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowspan */
+    [@bs.optional] [@bs.as "aria-selected"]
+    ariaSelected: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
     [@bs.optional] [@bs.as "aria-setsize"]
-    ariaSetsize: int,
+    ariaSetsize: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-setsize */
+    [@bs.optional] [@bs.as "aria-sort"]
+    ariaSort: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-sort */
+    [@bs.optional] [@bs.as "aria-valuemax"]
+    ariaValuemax: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax */
+    [@bs.optional] [@bs.as "aria-valuemin"]
+    ariaValuemin: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin */
+    [@bs.optional] [@bs.as "aria-valuenow"]
+    ariaValuenow: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuenow */
+    [@bs.optional] [@bs.as "aria-valuetext"]
+    ariaValuetext: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext */
     /* react textarea/input */
     [@bs.optional]
     defaultChecked: bool,
@@ -1077,7 +1081,6 @@ module Props = {
     [@bs.optional]
     suppressContentEditableWarning: bool,
   };
-
   /* This list isn't exhaustive. We'll add more as we go. */
   /*
    * Watch out! There are two props types and the only difference is the type of ref.
@@ -1091,98 +1094,102 @@ module Props = {
     ref: Js.nullable(Dom.element) => unit,
     /* accessibility */
     /* https://www.w3.org/TR/wai-aria-1.1/ */
-    /* https://accessibilityresources.org/<aria-tag> is a great resource for these */
-    /* [@bs.optional] [@bs.as "aria-current"] ariaCurrent: page|step|location|date|time|true|false, */
-    [@bs.optional] [@bs.as "aria-details"]
-    ariaDetails: string,
-    [@bs.optional] [@bs.as "aria-disabled"]
-    ariaDisabled: bool,
-    [@bs.optional] [@bs.as "aria-hidden"]
-    ariaHidden: bool,
-    /* [@bs.optional] [@bs.as "aria-invalid"] ariaInvalid: grammar|false|spelling|true, */
-    [@bs.optional] [@bs.as "aria-keyshortcuts"]
-    ariaKeyshortcuts: string,
-    [@bs.optional] [@bs.as "aria-label"]
-    ariaLabel: string,
-    [@bs.optional] [@bs.as "aria-roledescription"]
-    ariaRoledescription: string,
-    /* Widget Attributes */
-    /* [@bs.optional] [@bs.as "aria-autocomplete"] ariaAutocomplete: inline|list|both|none, */
-    /* [@bs.optional] [@bs.as "aria-checked"] ariaChecked: true|false|mixed, /* https://www.w3.org/TR/wai-aria-1.1/#valuetype_tristate */ */
-    [@bs.optional] [@bs.as "aria-expanded"]
-    ariaExpanded: bool,
-    /* [@bs.optional] [@bs.as "aria-haspopup"] ariaHaspopup: false|true|menu|listbox|tree|grid|dialog, */
-    [@bs.optional] [@bs.as "aria-level"]
-    ariaLevel: int,
-    [@bs.optional] [@bs.as "aria-modal"]
-    ariaModal: bool,
-    [@bs.optional] [@bs.as "aria-multiline"]
-    ariaMultiline: bool,
-    [@bs.optional] [@bs.as "aria-multiselectable"]
-    ariaMultiselectable: bool,
-    /* [@bs.optional] [@bs.as "aria-orientation"] ariaOrientation: horizontal|vertical|undefined, */
-    [@bs.optional] [@bs.as "aria-placeholder"]
-    ariaPlaceholder: string,
-    /* [@bs.optional] [@bs.as "aria-pressed"] ariaPressed: true|false|mixed, /* https://www.w3.org/TR/wai-aria-1.1/#valuetype_tristate */ */
-    [@bs.optional] [@bs.as "aria-readonly"]
-    ariaReadonly: bool,
-    [@bs.optional] [@bs.as "aria-required"]
-    ariaRequired: bool,
-    [@bs.optional] [@bs.as "aria-selected"]
-    ariaSelected: bool,
-    [@bs.optional] [@bs.as "aria-sort"]
-    ariaSort: string,
-    [@bs.optional] [@bs.as "aria-valuemax"]
-    ariaValuemax: float,
-    [@bs.optional] [@bs.as "aria-valuemin"]
-    ariaValuemin: float,
-    [@bs.optional] [@bs.as "aria-valuenow"]
-    ariaValuenow: float,
-    [@bs.optional] [@bs.as "aria-valuetext"]
-    ariaValuetext: string,
-    /* Live Region Attributes */
-    [@bs.optional] [@bs.as "aria-atomic"]
-    ariaAtomic: bool,
-    [@bs.optional] [@bs.as "aria-busy"]
-    ariaBusy: bool,
-    /* [@bs.optional] [@bs.as "aria-live"] ariaLive: off|polite|assertive|rude, */
-    [@bs.optional] [@bs.as "aria-relevant"]
-    ariaRelevant: string,
-    /* Drag-and-Drop Attributes */
-    /* [@bs.optional] [@bs.as "aria-dropeffect"] ariaDropeffect: copy|move|link|execute|popup|none, */
-    [@bs.optional] [@bs.as "aria-grabbed"]
-    ariaGrabbed: bool,
-    /* Relationship Attributes */
     [@bs.optional] [@bs.as "aria-activedescendant"]
-    ariaActivedescendant: string,
+    ariaActivedescendant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescendat */
+    [@bs.optional] [@bs.as "aria-atomic"]
+    ariaAtomic: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic */
+    [@bs.optional] [@bs.as "aria-autocomplete"]
+    ariaAutocomplete: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-autocomplete */
+    [@bs.optional] [@bs.as "aria-busy"]
+    ariaBusy: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy */
+    [@bs.optional] [@bs.as "aria-checked"]
+    ariaChecked: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-checked */
     [@bs.optional] [@bs.as "aria-colcount"]
-    ariaColcount: int,
+    ariaColcount: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colcount */
     [@bs.optional] [@bs.as "aria-colindex"]
-    ariaColindex: int,
+    ariaColindex: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colindex */
     [@bs.optional] [@bs.as "aria-colspan"]
-    ariaColspan: int,
+    ariaColspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colspan */
     [@bs.optional] [@bs.as "aria-controls"]
-    ariaControls: string,
+    ariaControls: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls */
+    [@bs.optional] [@bs.as "aria-current"]
+    ariaCurrent: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current */
     [@bs.optional] [@bs.as "aria-describedby"]
-    ariaDescribedby: string,
+    ariaDescribedby: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby */
+    [@bs.optional] [@bs.as "aria-details"]
+    ariaDetails: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-details */
+    [@bs.optional] [@bs.as "aria-disabled"]
+    ariaDisabled: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled */
     [@bs.optional] [@bs.as "aria-errormessage"]
-    ariaErrormessage: string,
+    ariaErrormessage: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage */
+    [@bs.optional] [@bs.as "aria-expanded"]
+    ariaExpanded: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
     [@bs.optional] [@bs.as "aria-flowto"]
-    ariaFlowto: string,
+    ariaFlowto: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
+    [@bs.optional] [@bs.as "aria-grabbed"] /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
+    ariaGrabbed: bool,
+    [@bs.optional] [@bs.as "aria-haspopup"]
+    ariaHaspopup: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
+    [@bs.optional] [@bs.as "aria-hidden"]
+    ariaHidden: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
+    [@bs.optional] [@bs.as "aria-invalid"]
+    ariaInvalid: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-invalid */
+    [@bs.optional] [@bs.as "aria-keyshortcuts"]
+    ariaKeyshortcuts: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-keyshortcuts */
+    [@bs.optional] [@bs.as "aria-label"]
+    ariaLabel: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label */
     [@bs.optional] [@bs.as "aria-labelledby"]
-    ariaLabelledby: string,
+    ariaLabelledby: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby */
+    [@bs.optional] [@bs.as "aria-level"]
+    ariaLevel: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-level */
+    [@bs.optional] [@bs.as "aria-live"]
+    ariaLive: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live */
+    [@bs.optional] [@bs.as "aria-modal"]
+    ariaModal: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-modal */
+    [@bs.optional] [@bs.as "aria-multiline"]
+    ariaMultiline: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiline */
+    [@bs.optional] [@bs.as "aria-multiselectable"]
+    ariaMultiselectable: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiselectable */
+    [@bs.optional] [@bs.as "aria-orientation"]
+    ariaOrientation: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-orientation */
     [@bs.optional] [@bs.as "aria-owns"]
-    ariaOwns: string,
+    ariaOwns: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-owns */
+    [@bs.optional] [@bs.as "aria-placeholder"]
+    ariaPlaceholder: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-placeholder */
     [@bs.optional] [@bs.as "aria-posinset"]
-    ariaPosinset: int,
+    ariaPosinset: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-posinset */
+    [@bs.optional] [@bs.as "aria-pressed"]
+    ariaPressed: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-pressed */
+    [@bs.optional] [@bs.as "aria-readonly"]
+    ariaReadonly: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-readonly */
+    [@bs.optional] [@bs.as "aria-relevant"]
+    ariaRelevant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
+    [@bs.optional] [@bs.as "aria-required"]
+    ariaRequired: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-required */
+    [@bs.optional] [@bs.as "aria-roledescription"]
+    ariaRoledescription: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-roledescription */
     [@bs.optional] [@bs.as "aria-rowcount"]
-    ariaRowcount: int,
+    ariaRowcount: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowcount */
     [@bs.optional] [@bs.as "aria-rowindex"]
-    ariaRowindex: int,
+    ariaRowindex: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindex */
+    [@bs.optional] [@bs.as "aria-rowindextext"]
+    ariaRowindextext: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindextext */
     [@bs.optional] [@bs.as "aria-rowspan"]
-    ariaRowspan: int,
+    ariaRowspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowspan */
+    [@bs.optional] [@bs.as "aria-selected"]
+    ariaSelected: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
     [@bs.optional] [@bs.as "aria-setsize"]
-    ariaSetsize: int,
+    ariaSetsize: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-setsize */
+    [@bs.optional] [@bs.as "aria-sort"]
+    ariaSort: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-sort */
+    [@bs.optional] [@bs.as "aria-valuemax"]
+    ariaValuemax: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax */
+    [@bs.optional] [@bs.as "aria-valuemin"]
+    ariaValuemin: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin */
+    [@bs.optional] [@bs.as "aria-valuenow"]
+    ariaValuenow: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuenow */
+    [@bs.optional] [@bs.as "aria-valuetext"]
+    ariaValuetext: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext */
     /* react textarea/input */
     [@bs.optional]
     defaultChecked: bool,
