@@ -207,6 +207,8 @@ module Props = {
     [@bs.optional]
     itemType: string, /* uri */
     /* tag-specific html attributes */
+    [@bs.optional] [@bs.as "as"]
+    as_: string,
     [@bs.optional]
     accept: string,
     [@bs.optional]
@@ -443,21 +445,21 @@ module Props = {
     [@bs.optional]
     onDoubleClick: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onDrag: ReactEvent.Mouse.t => unit,
+    onDrag: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragEnd: ReactEvent.Mouse.t => unit,
+    onDragEnd: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragEnter: ReactEvent.Mouse.t => unit,
+    onDragEnter: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragExit: ReactEvent.Mouse.t => unit,
+    onDragExit: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragLeave: ReactEvent.Mouse.t => unit,
+    onDragLeave: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragOver: ReactEvent.Mouse.t => unit,
+    onDragOver: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragStart: ReactEvent.Mouse.t => unit,
+    onDragStart: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDrop: ReactEvent.Mouse.t => unit,
+    onDrop: ReactEvent.Drag.t => unit,
     [@bs.optional]
     onMouseDown: ReactEvent.Mouse.t => unit,
     [@bs.optional]
@@ -1234,6 +1236,8 @@ module Props = {
     [@bs.optional]
     itemType: string, /* uri */
     /* tag-specific html attributes */
+    [@bs.optional] [@bs.as "as"]
+    as_: string,
     [@bs.optional]
     accept: string,
     [@bs.optional]
@@ -1468,21 +1472,21 @@ module Props = {
     [@bs.optional]
     onDoubleClick: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onDrag: ReactEvent.Mouse.t => unit,
+    onDrag: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragEnd: ReactEvent.Mouse.t => unit,
+    onDragEnd: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragEnter: ReactEvent.Mouse.t => unit,
+    onDragEnter: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragExit: ReactEvent.Mouse.t => unit,
+    onDragExit: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragLeave: ReactEvent.Mouse.t => unit,
+    onDragLeave: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragOver: ReactEvent.Mouse.t => unit,
+    onDragOver: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragStart: ReactEvent.Mouse.t => unit,
+    onDragStart: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDrop: ReactEvent.Mouse.t => unit,
+    onDrop: ReactEvent.Drag.t => unit,
     [@bs.optional]
     onMouseDown: ReactEvent.Mouse.t => unit,
     [@bs.optional]
