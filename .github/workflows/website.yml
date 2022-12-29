@@ -9,10 +9,6 @@ on:
   pull_request:
     branches: [ master ]
 
-defaults:
-  run:
-    working-directory: ./website
-
 jobs:
   build:
 
@@ -23,12 +19,15 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
+      working-directory: ./website
 
     - name: Build docusaurus
       run: npx docusaurus-write-translations
+      working-directory: ./website
 
     - name: Deploy docusaurus
       run: npx docusaurus-publish
+      working-directory: ./website
 
     # - name: crowdin action
       # uses: crowdin/github-action@1.5.2
