@@ -26,7 +26,7 @@ jobs:
       working-directory: ./website
 
     - name: Deploy docusaurus
-      run: npx docusaurus-publish
+      run: GIT_USER="davesnx" USE_SSH=false npx docusaurus-publish
       working-directory: ./website
 
     # - name: crowdin action
