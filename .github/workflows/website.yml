@@ -25,6 +25,13 @@ jobs:
       run: npx docusaurus-write-translations
       working-directory: ./website
 
+    - name: Setting whoaim
+      run: |
+        git config --global user.email "davesnx@users.noreply.github.com"
+        git config --global user.name "Website Deployment CI"
+        echo "machine github.com login davesnx password $GITHUB_TOKEN" > ~/.netrc
+      working-directory: ./website
+
     - name: Deploy docusaurus
       run: GIT_USER="davesnx" USE_SSH=false npx docusaurus-publish
       working-directory: ./website
