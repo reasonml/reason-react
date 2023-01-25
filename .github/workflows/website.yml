@@ -27,9 +27,7 @@ jobs:
       run: |
         git config --global user.email "davesnx@users.noreply.github.com"
         git config --global user.name "Website Deployment CI"
-        echo "machine github.com login davesnx password $GITHUB_TOKEN" > ~/.netrc
-      env:
-         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        echo "machine github.com login davesnx password ${{ secrets.GH_TOKEN }}" > ~/.netrc
 
      - name: crowdin action
        uses: crowdin/github-action@1.5.2
