@@ -121,7 +121,7 @@ const siteConfig = {
   tagline: "All your ReactJS knowledge, codified.",
   organizationName: "reasonml",
   url: "https://reasonml.github.io/reason-react" /* your github url */,
-  editUrl: "https://github.com/reasonml/reason-react/tree/master/docs/",
+  editUrl: "https://github.com/reasonml/reason-react/tree/main/docs/",
   translationRecruitingLink: "https://crowdin.com/project/reason-react",
   baseUrl: "/reason-react/" /* base url for your project */,
   projectName: "reason-react",

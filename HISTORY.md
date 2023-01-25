@@ -252,7 +252,7 @@ Breaking Changes:
 
 # 0.2.4
 
-**Major update**, but again with **no** breaking changes, and _again_ with a convenience [migration script](https://github.com/reasonml/reason-react/blob/master/migrate/from02xTo024.js)! =)
+**Major update**, but again with **no** breaking changes, and _again_ with a convenience [migration script](https://github.com/reasonml/reason-react/blob/main/migrate/from02xTo024.js)! =)
 
 The big change in this release is the deprecation of `statefulComponent` and `statefulComponentWithRetainedProps`. `statelessComponent` stays the same.
 
