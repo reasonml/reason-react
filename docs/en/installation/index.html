@@ -96,7 +96,7 @@ yarn add reason-react --exact
   "re:watch": "bsb -make-world -clean-world -w"
 }
 </code></pre>
-<p>Create a <code>bsconfig.json</code> file in the root of your project with the following. All the settings are already defaults, most of this is boilerplate. The important fields are <code>name</code>, <code>bs-dependencies</code> and <code>ppx-flags</code>. As you can see, we've added <code>reason-react</code>. This tells Reason where to look for bindings (similar to depdencies in your package.json).</p>
+<p>Create a <code>bsconfig.json</code> file in the root of your project with the following. All the settings are already defaults, most of this is boilerplate. The important fields are <code>name</code>, <code>bs-dependencies</code> and <code>ppx-flags</code>. As you can see, we've added <code>reason-react</code>. This tells Reason where to look for bindings (similar to dependencies in your package.json).</p>
 <pre><code class="hljs css language-json">{
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"your-project-name"</span>,
   <span class="hljs-attr">"reason"</span>: { <span class="hljs-attr">"react-jsx"</span>: <span class="hljs-number">3</span> },
