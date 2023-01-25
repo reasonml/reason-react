@@ -66,7 +66,7 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/master/docs/testing.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Testing ReasonReact components</h1></header><article><div><span><p>Even though types make your code safer, it doesn't remove the need for testing!
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/main/docs/testing.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Testing ReasonReact components</h1></header><article><div><span><p>Even though types make your code safer, it doesn't remove the need for testing!
 If you want to test your ReasonReact components using your JavaScript testing stack, that's perfectly alright, but if you prefer to write them in Reason, here are some testing frameworks and bindings to make your life easier:</p>
 <h3><a class="anchor" aria-hidden="true" id="test-framework"></a><a href="#test-framework" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Test framework</h3>
 <p>Pick the test framework you like the best (both use Jest under the hood):</p>
@@ -75,7 +75,7 @@ If you want to test your ReasonReact components using your JavaScript testing st
 <li><a href="https://github.com/glennsl/bs-jest">bs-jest</a></li>
 </ul>
 <h3><a class="anchor" aria-hidden="true" id="test-utilities"></a><a href="#test-utilities" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Test utilities</h3>
-<p>We provide test utilities in the <a href="https://github.com/reasonml/reason-react/blob/master/src/ReactTestUtils.rei"><code>ReactTestUtils</code></a> module.</p>
+<p>We provide test utilities in the <a href="https://github.com/reasonml/reason-react/blob/main/src/ReactTestUtils.rei"><code>ReactTestUtils</code></a> module.</p>
 <p>Here's what a test might look like:</p>
 <pre><code class="hljs css language-reason"><span class="hljs-keyword">open</span> <span class="hljs-module-identifier">TestFramework</span>;
 <span class="hljs-keyword">open</span> <span class="hljs-module-identifier">ReactTestUtils</span>;
@@ -94,7 +94,7 @@ describe(<span class="hljs-string">"My basic test"</span>, ({test, beforeEach, a
     <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">The</span> following <span class="hljs-keyword">function</span> gives us the div
     <span class="hljs-keyword">let</span> container = getContainer(container);
 
-    <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">Most</span> <span class="hljs-keyword">of</span> the <span class="hljs-constructor">ReactTestUtils</span> <span class="hljs-constructor">API</span> is there 
+    <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">Most</span> <span class="hljs-keyword">of</span> the <span class="hljs-constructor">ReactTestUtils</span> <span class="hljs-constructor">API</span> is there
     act(() =&gt; {
       <span class="hljs-module-identifier">ReactDOMRe</span>.render(&lt;div&gt; <span class="hljs-string">"Hello world!"</span><span class="hljs-operator">-&gt;</span><span class="hljs-module-identifier">React</span>.string &lt;/div&gt;, container)
     });
@@ -142,7 +142,7 @@ describe(<span class="hljs-string">"My basic test"</span>, ({test, beforeEach, a
 <li><code>Simulate.timeUpdate</code></li>
 <li><code>Simulate.ended</code></li>
 </ul>
-<p>If you feel like some are missing, you can easily adapt the bindings: <a href="https://github.com/reasonml/reason-react/blob/master/src/ReactTestUtils.rei"><code>ReactTestUtils</code></a> and make a PR!</p>
+<p>If you feel like some are missing, you can easily adapt the bindings: <a href="https://github.com/reasonml/reason-react/blob/main/src/ReactTestUtils.rei"><code>ReactTestUtils</code></a> and make a PR!</p>
 <h4><a class="anchor" aria-hidden="true" id="reacttestutilsdom-convenience-functions"></a><a href="#reacttestutilsdom-convenience-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>ReactTestUtils.DOM</code> convenience functions</h4>
 <ul>
 <li><code>value</code></li>
