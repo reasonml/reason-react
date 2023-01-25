@@ -29,15 +29,15 @@ jobs:
         git config --global user.name "Website Deployment CI"
         echo "machine github.com login davesnx password ${{ secrets.GH_TOKEN }}" > ~/.netrc
 
-     - name: crowdin action
-       uses: crowdin/github-action@1.5.2
-       with:
-         upload_translations: false
-         download_translations: true
-       env:
-         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-         CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-         CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+    - name: crowdin action
+      uses: crowdin/github-action@1.5.2
+      with:
+        upload_translations: false
+        download_translations: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+        CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
     - name: Deploy docusaurus
       run: GIT_USER="davesnx" USE_SSH=false npx docusaurus-publish
