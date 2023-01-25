@@ -9,6 +9,11 @@ on:
   pull_request:
     branches: [ master ]
 
+defaults:
+  run:
+    shell: bash
+  working-directory: ./website
+
 jobs:
   build:
 
@@ -19,7 +24,7 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-      working-directory: ./website
+
 
     - name: Build docusaurus
       run: npx docusaurus-write-translations
@@ -30,22 +35,18 @@ jobs:
         git config --global user.email "davesnx@users.noreply.github.com"
         git config --global user.name "Website Deployment CI"
         echo "machine github.com login davesnx password $GITHUB_TOKEN" > ~/.netrc
-      working-directory: ./website
+      env:
+         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+     - name: crowdin action
+       uses: crowdin/github-action@1.5.2
+       with:
+         upload_translations: false
+         download_translations: true
+       env:
+         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+         CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+         CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
     - name: Deploy docusaurus
       run: GIT_USER="davesnx" USE_SSH=false npx docusaurus-publish
-      working-directory: ./website
-
-    # - name: crowdin action
-      # uses: crowdin/github-action@1.5.2
-      # with:
-        # upload_translations: false
-        # download_translations: true
-      # env:
-        # GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        # CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-        # CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-
-    # - name: Deploy website to GitHub Pages
-      # working-directory: ./website
-      # uses: JamesIves/github-pages-deploy-action@v4
