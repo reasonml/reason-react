@@ -6,13 +6,13 @@ on:
   pull_request:
     branches: [ master ]
 
-defaults:
-  working-directory: ./website
-
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./website
 
     steps:
     - uses: actions/checkout@v3
