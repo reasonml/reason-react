@@ -8,7 +8,7 @@ ReasonReact comes with a router! We've leveraged the language and library featur
 - Easily pluggable anywhere into your existing code.
 - Performant and tiny.
 
-[Here's the documented public interface](https://github.com/reasonml/reason-react/blob/master/src/ReasonReactRouter.rei), repeated here:
+[Here's the documented public interface](https://github.com/reasonml/reason-react/blob/main/src/ReasonReactRouter.rei), repeated here:
 
 - `ReasonReactRouter.push(string)`: takes a new path and update the URL.
 - `ReasonReactRouter.replace(string)`: like `push`, but replaces the current URL.
