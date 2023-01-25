@@ -1,0 +1,36 @@
+name: Deploy website
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./website
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build docusaurus
+      run: npx docusaurus-write-translations
+
+    - name: Setting whoaim
+      run: |
+        git config --global user.email "davesnx@users.noreply.github.com"
+        git config --global user.name "Website Deployment CI"
+        echo "machine github.com login davesnx password ${{ secrets.GH_TOKEN }}" > ~/.netrc
+
+    - name: Deploy docusaurus
+      run: GIT_USER="davesnx" USE_SSH=false npx docusaurus-publish

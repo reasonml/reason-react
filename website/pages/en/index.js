@@ -38,14 +38,14 @@ let make = (~name) =>
   <button>
     {React.string("Hello " ++ name)}
   </button>;
-${pre}`;
+${pre}`
 
 const codeExampleLargeScreen = `${pre}reason
 [@react.component]
 let make = (~name) =>
   <button>
     {React.string("Hello " ++ name)}
-  </button>;
+  </button>
 ${pre}`;
 
 const quickStart = `${pre}bash
@@ -103,7 +103,7 @@ class HomeSplash extends React.Component {
             />
             <div>
               <div>
-                ReasonReact is now{" "}
+                {siteConfig.title} is now{" "}
                 <a
                   target="_blank"
                   href="https://rescript-lang.org/docs/react/latest/introduction"
