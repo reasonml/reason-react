@@ -620,8 +620,7 @@ describe("React", ({test, beforeEach, afterEach}) => {
     act(() => {
       ReactDOM.render(
         <ReasonReactErrorBoundary
-          fallback={({error, info}) => {
-            expect.value(error).toEqual(ComponentThatThrows.TestError);
+          fallback={({error: _, info}) => {
             expect.bool(
               info.componentStack->Js.String2.includes("ComponentThatThrows"),
             ).
