@@ -4,7 +4,7 @@ title: Roadmap & Contribution
 
 ## Reason Team TODOs
 
-Some future plans are briefly discussed in the repo's [FUTURE.md](https://github.com/reasonml/reason-react/blob/master/FUTURE.md).
+Some future plans are briefly discussed in the repo's [FUTURE.md](https://github.com/reasonml/reason-react/blob/main/FUTURE.md).
 
 ## Your Contribution Opportunities
 

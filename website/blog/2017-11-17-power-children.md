@@ -2,7 +2,7 @@
 title: RR 0.3.0 - Power Children
 ---
 
-0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/master/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here's the big improvement of this release: **you're now allowed to pass any data type to JSX children**, not just `array(reactElement)`. And yes, they all type check, naturally!
+0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see [HISTORY.md](https://github.com/reasonml/reason-react/blob/main/HISTORY.md#030). We've been _really_ careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here's the big improvement of this release: **you're now allowed to pass any data type to JSX children**, not just `array(reactElement)`. And yes, they all type check, naturally!
 
 Head over to the improved [JSX](https://reasonml.github.io/reason-react/docs/en/jsx.html#children) docs and then [Children](https://reasonml.github.io/reason-react/docs/en/children.html) docs to know the details. Here's a summary.
 
