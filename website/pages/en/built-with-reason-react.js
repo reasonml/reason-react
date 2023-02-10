@@ -31,7 +31,7 @@ class Users extends React.Component {
               {showcase}
             </div>
             <a
-              href="https://github.com/reasonml/reason-react/edit/master/website/siteConfig.js"
+              href="https://github.com/reasonml/reason-react/edit/main/website/siteConfig.js"
               className="button"
             >
               Add yours

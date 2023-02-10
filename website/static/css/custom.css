@@ -55,15 +55,36 @@
 }
 
 .homeBanner {
-  color: white;
-  background: black;
-  font-size: 20px;
+  display: flex;
+  justify-content: center;
   text-align: center;
-  padding: 10px;
+  color: #979aad;
+  background-color: rgba(10,13,47, 1);
+  font-size: 2.2rem;
+  text-align: center;
+  padding: 1.5rem;
 }
-.homeBanner a {
+
+.heroButton {
+  padding: 1rem;
+  border: 1px;
+  text-decoration: none;
+  background-color: #e6484f;
+  border-radius: 0.25rem;
+  color: white;
+}
+
+.heroButton:hover {
+  color: white;
+  background-color: #C3373d;
+  text-align: center;
+}
+
+.heroLink {
   color: white;
   text-decoration: underline;
+  display: inline-block;
+  text-align: center
 }
 
 /* end override */

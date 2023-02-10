@@ -13,7 +13,8 @@ type componentLike('props, 'return) = 'props => 'return;
 type component('props) = componentLike('props, element);
 
 /* this function exists to prepare for making `component` abstract */
-external component: componentLike('props, element) => component('props) = "%identity";
+external component: componentLike('props, element) => component('props) =
+  "%identity";
 
 [@bs.module "react"]
 external createElement: (component('props), 'props) => element =
@@ -160,8 +161,8 @@ module SuspenseList = {
   external makeProps:
     (
       ~children: element=?,
-      ~revealOrder: [@bs.string] [ | `forwards | `backwards | `together]=?,
-      ~tail: [@bs.string] [ | `collapsed | `hidden]=?,
+      ~revealOrder: [ | `forwards | `backwards | `together]=?,
+      ~tail: [ | `collapsed | `hidden]=?,
       unit
     ) =>
     {

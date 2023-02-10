@@ -14,7 +14,7 @@ Pick the test framework you like the best (both use Jest under the hood):
 
 ### Test utilities
 
-We provide test utilities in the [`ReactTestUtils`](https://github.com/reasonml/reason-react/blob/master/src/ReactTestUtils.rei) module.
+We provide test utilities in the [`ReactTestUtils`](https://github.com/reasonml/reason-react/blob/main/src/ReactTestUtils.rei) module.
 
 Here's what a test might look like:
 
@@ -36,7 +36,7 @@ describe("My basic test", ({test, beforeEach, afterEach}) => {
     // The following function gives us the div
     let container = getContainer(container);
 
-    // Most of the ReactTestUtils API is there 
+    // Most of the ReactTestUtils API is there
     act(() => {
       ReactDOMRe.render(<div> "Hello world!"->React.string </div>, container)
     });
@@ -87,7 +87,7 @@ And utilities for setup and teardown:
 - `Simulate.timeUpdate`
 - `Simulate.ended`
 
-If you feel like some are missing, you can easily adapt the bindings: [`ReactTestUtils`](https://github.com/reasonml/reason-react/blob/master/src/ReactTestUtils.rei) and make a PR!
+If you feel like some are missing, you can easily adapt the bindings: [`ReactTestUtils`](https://github.com/reasonml/reason-react/blob/main/src/ReactTestUtils.rei) and make a PR!
 
 #### `ReactTestUtils.DOM` convenience functions
 
