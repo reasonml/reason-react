@@ -3,11 +3,10 @@ synopsis: "reason-react"
 homepage: "https://reasonml.github.io/reason-react/"
 bug-reports: "https://github.com/reasonml/reason-react/issues"
 depends: [
-  "dune" {>= "2.7" & < "3"}
-  "ocaml" {= "4.06.1"}
-  "ocaml-lsp-server" {= "1.4.1"}
-  "reason" {= "3.8.2"}
-  "merlin" {= "3.4.0"}
+  "dune" {>= "3.6.0" & < "4"}
+  "ocaml" {> "4.06.1" & < "5"}
+  "ocaml-lsp-server" {> "1.4.1" & <= "1.15.1-4.14"}
+  "reason" {> "3.8.2" & < "4"}
 ]
 build: [
   ["dune" "subst"] {dev}
