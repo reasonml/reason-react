@@ -1,13 +1,19 @@
 opam-version: "2.0"
-synopsis: "reason-react"
 homepage: "https://reasonml.github.io/reason-react/"
 bug-reports: "https://github.com/reasonml/reason-react/issues"
+description: """
+ReasonReact helps you use Reason to build React components with deeply integrated, strong, static type safety.
+
+It is designed and built by people using Reason and React in large, mission critical production React codebases.
+"""
+synopsis: "Reason bindings for React.js"
+maintainer: "David Sancho <dsnxmoreno@gmail.com>"
+author: [ "Cheng Lou <chenglou92@gmail.com>" "Ricky Vetter <rickywvetter@gmail.com>"]
 depends: [
-  "dune" {>= "2.7" & < "3"}
-  "ocaml" {= "4.06.1"}
-  "ocaml-lsp-server" {= "1.4.1"}
-  "reason" {= "3.8.2"}
-  "merlin" {= "3.4.0"}
+  "dune" {>= "3.6.0" & < "4"}
+  "ocaml" {> "4.06.1" & < "5"}
+  "ocaml-lsp-server" {> "1.4.1" & <= "1.15.1-4.14"}
+  "reason" {<= "3.8.2" & < "4"}
 ]
 build: [
   ["dune" "subst"] {dev}

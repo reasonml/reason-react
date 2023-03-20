@@ -1,0 +1,76 @@
+name: opam CI
+
+on:
+  pull_request:
+  push:
+   branches:
+     - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          # Windows is deactivated since it doesn't find dune 3.6.0 and we need it for dune lang 3.5
+          # - windows-latest
+
+        ocaml-compiler:
+          - 4.14.x
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+
+      - name: Load opam cache when not Windows
+        if: runner.os != 'Windows'
+        id: opam-cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ~/.opam
+          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
+
+      - name: Load opam cache when Windows
+        if: runner.os == 'Windows'
+        id: opam-cache-windows
+        uses: actions/cache/restore@v3
+        with:
+          path: _opam
+          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
+
+      - name: Install dependencies
+        run: opam install . --deps-only
+
+      - name: Build
+        run: opam exec -- dune build
+
+      - name: Test
+        run: echo "todo"
+
+      - name: Save cache when not Windows
+        uses: actions/cache/save@v3
+        if: steps.opam-cache.outputs.cache-hit != 'true' && runner.os != 'Windows'
+        with:
+          path: ~/.opam
+          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
+
+      - name: Save cache when Windows
+        uses: actions/cache/save@v3
+        if: steps.opam-cache-windows.outputs.cache-hit != 'true' && runner.os == 'Windows'
+        with:
+          path: _opam
+          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
