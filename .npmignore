@@ -2,3 +2,4 @@
 lib/bs/
 .merlin
 docs
+_build
