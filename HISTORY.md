@@ -1,3 +1,13 @@
+# 0.10.0
+
+* Add dune file [@davesnx in #709](https://github.com/reasonml/reason-react/pull/709)
+
+# 0.9.2
+
+* Upgrade bs-platform to 9.0.2 [@davesnx in #700](https://github.com/reasonml/reason-react/pull/700)
+* Update Drag.dataTransfer to Js.t [@davesnx in #701](https://github.com/reasonml/reason-react/pull/701)
+* Added as property to DOM props [@cornedor in #603](https://github.com/reasonml/reason-react/pull/603)
+
 # 0.9.0 (05/2020)
 
 ### Breaking Changes
