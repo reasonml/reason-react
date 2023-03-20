@@ -19,7 +19,8 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          - windows-latest
+          # Windows is deactivated since it doesn't find dune 3.6.0 and we need it for dune lang 3.5
+          # - windows-latest
 
         ocaml-compiler:
           - 4.14.x

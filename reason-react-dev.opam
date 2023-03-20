@@ -10,7 +10,7 @@ synopsis: "Reason bindings for React.js"
 maintainer: "David Sancho <dsnxmoreno@gmail.com>"
 author: [ "Cheng Lou <chenglou92@gmail.com>" "Ricky Vetter <rickywvetter@gmail.com>"]
 depends: [
-  "dune" {>= "3" & < "4"}
+  "dune" {>= "3.6.0" & < "4"}
   "ocaml" {> "4.06.1" & < "5"}
   "ocaml-lsp-server" {> "1.4.1" & <= "1.15.1-4.14"}
   "reason" {<= "3.8.2" & < "4"}
