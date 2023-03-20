@@ -1,5 +1,5 @@
-> **Note**
-> For ReScript users, we recommend using [@rescript/react](https://github.com/rescript-lang/rescript-react) instead. Before, ReasonReact was meant to be used with BuckleScript and it got packaged into @rescript/react. More context on the move [here](https://rescript-lang.org/blog/bucklescript-is-rebranding).
+> **Warning**
+> For **ReScript** users, we recommend using [@rescript/react](https://github.com/rescript-lang/rescript-react) instead. Before, ReasonReact was designed to be used with BuckleScript and it got packaged into @rescript/react. More context on the move [here](https://rescript-lang.org/blog/bucklescript-is-rebranding).
 
 # [ReasonReact](https://reasonml.github.io/reason-react/)
 
