@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if ! ( make format-check ); then
+    echo "some files are not properly formatted, refusing to push"
+    exit 1
+fi
