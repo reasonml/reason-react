@@ -1,7 +1,7 @@
 (lang dune 3.7)
 (using melange 0.1)
 (generate_opam_files true)
-(implicit_transitive_deps false)
+(implicit_transitive_deps true)
 
 (package
  (name reason-react)

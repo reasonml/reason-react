@@ -1,25 +1,25 @@
 let lower = ReactDOMRe.createDOMElementVariadic "div" [||]
 let lower_empty_attr =
   ReactDOMRe.createDOMElementVariadic "div"
-    ~props:(ReactDOM.domProps ~className:(("")[@reason.raw_literal ""]) ())
+    ~props:(ReactDOMRe.domProps ~className:(("")[@reason.raw_literal ""]) ())
     [||]
 let lower_inline_styles =
   ReactDOMRe.createDOMElementVariadic "div"
-    ~props:(ReactDOM.domProps
+    ~props:(ReactDOMRe.domProps
               ~style:((ReactDOM.Style.make ~backgroundColor:(("gainsboro")
                          [@reason.raw_literal "gainsboro"]) ())
               [@reason.preserve_braces ]) ()) [||]
 let lower_inner_html =
   ReactDOMRe.createDOMElementVariadic "div"
-    ~props:(ReactDOM.domProps
+    ~props:(ReactDOMRe.domProps
               ~dangerouslySetInnerHTML:([%bs.obj { __html = text }]) ()) 
     [||]
 let lower_opt_attr =
   ReactDOMRe.createDOMElementVariadic "div"
-    ~props:(ReactDOM.domProps ?tabIndex ()) [||]
+    ~props:(ReactDOMRe.domProps ?tabIndex ()) [||]
 let lowerWithChildAndProps foo =
   ReactDOMRe.createDOMElementVariadic "a"
-    ~props:(ReactDOM.domProps ~tabIndex:1 ~href:(("https://example.com")
+    ~props:(ReactDOMRe.domProps ~tabIndex:1 ~href:(("https://example.com")
               [@reason.raw_literal "https://example.com"]) ()) [|foo|]
 let lower_child_static =
   ReactDOMRe.createDOMElementVariadic "div"
@@ -35,18 +35,18 @@ let lower_child_with_upper_as_children =
     [|(React.createElement App.make (App.makeProps ()))|]
 let lower_children_nested =
   ReactDOMRe.createDOMElementVariadic "div"
-    ~props:(ReactDOM.domProps ~className:(("flex-container")
+    ~props:(ReactDOMRe.domProps ~className:(("flex-container")
               [@reason.raw_literal "flex-container"]) ())
     [|(ReactDOMRe.createDOMElementVariadic "div"
-         ~props:(ReactDOM.domProps ~className:(("sidebar")
+         ~props:(ReactDOMRe.domProps ~className:(("sidebar")
                    [@reason.raw_literal "sidebar"]) ())
          [|(ReactDOMRe.createDOMElementVariadic "h2"
-              ~props:(ReactDOM.domProps ~className:(("title")
+              ~props:(ReactDOMRe.domProps ~className:(("title")
                         [@reason.raw_literal "title"]) ())
               [|(((("jsoo-react")[@reason.raw_literal "jsoo-react"]) |> s)
                 [@reason.preserve_braces ])|]);(ReactDOMRe.createDOMElementVariadic
                                                   "nav"
-                                                  ~props:(ReactDOM.domProps
+                                                  ~props:(ReactDOMRe.domProps
                                                             ~className:(("menu")
                                                             [@reason.raw_literal
                                                               "menu"]) ())
@@ -58,7 +58,7 @@ let lower_children_nested =
                                                                     ReactDOMRe.createDOMElementVariadic
                                                                     "li"
                                                                     ~props:(
-                                                                    ReactDOM.domProps
+                                                                    ReactDOMRe.domProps
                                                                     ~key:((
                                                                     e.path)
                                                                     [@reason.preserve_braces
@@ -67,7 +67,7 @@ let lower_children_nested =
                                                                     ReactDOMRe.createDOMElementVariadic
                                                                     "a"
                                                                     ~props:(
-                                                                    ReactDOM.domProps
+                                                                    ReactDOMRe.domProps
                                                                     ~href:((
                                                                     e.path)
                                                                     [@reason.preserve_braces
@@ -138,29 +138,29 @@ let upper_ref_with_children =
        ~children:(ReactDOMRe.createDOMElementVariadic "div" [||]) ())
 let lower_ref_with_children =
   ReactDOMRe.createDOMElementVariadic "button"
-    ~props:(ReactDOM.domProps ~ref ~className:(("FancyButton")
+    ~props:(ReactDOMRe.domProps ~ref ~className:(("FancyButton")
               [@reason.raw_literal "FancyButton"]) ()) [|children|]
 let lower_with_many_props =
   ReactDOMRe.createDOMElementVariadic "div"
-    ~props:(ReactDOM.domProps ~translate:(("yes")[@reason.raw_literal "yes"])
-              ())
+    ~props:(ReactDOMRe.domProps ~translate:(("yes")
+              [@reason.raw_literal "yes"]) ())
     [|(ReactDOMRe.createDOMElementVariadic "picture"
-         ~props:(ReactDOM.domProps ~id:(("idpicture")
+         ~props:(ReactDOMRe.domProps ~id:(("idpicture")
                    [@reason.raw_literal "idpicture"]) ())
          [|(ReactDOMRe.createDOMElementVariadic "img"
-              ~props:(ReactDOM.domProps ~src:(("picture/img.png")
+              ~props:(ReactDOMRe.domProps ~src:(("picture/img.png")
                         [@reason.raw_literal "picture/img.png"])
                         ~alt:(("test picture/img.png")
                         [@reason.raw_literal "test picture/img.png"])
                         ~id:(("idimg")[@reason.raw_literal "idimg"]) ()) 
               [||]);(ReactDOMRe.createDOMElementVariadic "source"
-                       ~props:(ReactDOM.domProps ~type_:(("image/webp")
+                       ~props:(ReactDOMRe.domProps ~type_:(("image/webp")
                                  [@reason.raw_literal "image/webp"])
                                  ~src:(("picture/img1.webp")
                                  [@reason.raw_literal "picture/img1.webp"])
                                  ()) [||]);(ReactDOMRe.createDOMElementVariadic
                                               "source"
-                                              ~props:(ReactDOM.domProps
+                                              ~props:(ReactDOMRe.domProps
                                                         ~type_:(("image/jpeg")
                                                         [@reason.raw_literal
                                                           "image/jpeg"])
@@ -170,7 +170,7 @@ let lower_with_many_props =
                                                         ()) [||])|])|]
 let some_random_html_element =
   ReactDOMRe.createDOMElementVariadic "text"
-    ~props:(ReactDOM.domProps ~dx:(("1 2")[@reason.raw_literal "1 2"])
+    ~props:(ReactDOMRe.domProps ~dx:(("1 2")[@reason.raw_literal "1 2"])
               ~dy:(("3 4")[@reason.raw_literal "3 4"]) ()) [||]
 module React_component_with_props =
   struct
@@ -234,7 +234,7 @@ module Forward_Ref =
       ((fun ~children ->
           ((fun ~buttonRef ->
               ((ReactDOMRe.createDOMElementVariadic "button"
-                  ~props:(ReactDOM.domProps ~ref:buttonRef
+                  ~props:(ReactDOMRe.domProps ~ref:buttonRef
                             ~className:(("FancyButton")
                             [@reason.raw_literal "FancyButton"]) ())
                   [|children|])
@@ -262,7 +262,7 @@ module Onclick_handler_button =
           ((fun ?isDisabled ->
               ((let onClick event = Js.log event in
                 ReactDOMRe.createDOMElementVariadic "button"
-                  ~props:(ReactDOM.domProps ~name ~onClick
+                  ~props:(ReactDOMRe.domProps ~name ~onClick
                             ~disabled:isDisabled ()) [||])
               [@reason.preserve_braces ]))
           [@warning "-16"]))
@@ -316,7 +316,7 @@ module Uppercase_with_SSR_components =
                                                                  [|(ReactDOMRe.createDOMElementVariadic
                                                                     "div"
                                                                     ~props:(
-                                                                    ReactDOM.domProps
+                                                                    ReactDOMRe.domProps
                                                                     ~id:(("root")
                                                                     [@reason.raw_literal
                                                                     "root"])
@@ -325,7 +325,7 @@ module Uppercase_with_SSR_components =
                                                                    ReactDOMRe.createDOMElementVariadic
                                                                     "script"
                                                                     ~props:(
-                                                                    ReactDOM.domProps
+                                                                    ReactDOMRe.domProps
                                                                     ~src:(("/static/client.js")
                                                                     [@reason.raw_literal
                                                                     "/static/client.js"])
@@ -348,7 +348,7 @@ module Upper_with_aria =
     let make =
       ((fun ~children ->
           ReactDOMRe.createDOMElementVariadic "div"
-            ~props:(ReactDOM.domProps ~ariaHidden:(("true")
+            ~props:(ReactDOMRe.domProps ~ariaHidden:(("true")
                       [@reason.raw_literal "true"]) ()) [|children|])
       [@warning "-16"])
     let make =
@@ -359,13 +359,13 @@ module Upper_with_aria =
 let data_attributes_should_transform_to_kebabcase =
   ReactDOMRe.createElement ReasonReact.fragment
     [|(ReactDOMRe.createDOMElementVariadic "div"
-         ~props:(ReactDOM.domProps ~dataAttribute:(("")
+         ~props:(ReactDOMRe.domProps ~dataAttribute:(("")
                    [@reason.raw_literal ""]) ~dataattribute:(("")
                    [@reason.raw_literal ""]) ~className:(("md:w-1/3")
                    [@reason.raw_literal "md:w-1/3"]) ()) [||]);(ReactDOMRe.createDOMElementVariadic
                                                                   "div"
                                                                   ~props:(
-                                                                  ReactDOM.domProps
+                                                                  ReactDOMRe.domProps
                                                                     ~className:(("md:w-2/3")
                                                                     [@reason.raw_literal
                                                                     "md:w-2/3"])
@@ -373,7 +373,7 @@ let data_attributes_should_transform_to_kebabcase =
                                                                   [||])|]
 let render_onclickPropsAsString =
   ReactDOMRe.createDOMElementVariadic "div"
-    ~props:(ReactDOM.domProps ~_onclick:(("alert('hello')")
+    ~props:(ReactDOMRe.domProps ~_onclick:(("alert('hello')")
               [@reason.raw_literal "alert('hello')"]) ()) [||]
 module External =
   struct
