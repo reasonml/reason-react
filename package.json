@@ -32,14 +32,12 @@
   },
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
-    "bs-platform": "^9.0.2",
     "jest": "^26.0.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "reason-test-framework": "^0.3.2"
   },
   "peerDependencies": {
-    "bs-platform": "^9.0.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
   },
