@@ -58,7 +58,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: opam install . --deps-only --with-test
+        run: make install
 
       - name: Pin melange and dune
         run: make pin
