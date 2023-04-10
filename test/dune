@@ -5,4 +5,4 @@
   (commonjs bs.js))
  (libraries reason_react jest)
  (preprocess
-  (pps reason-react-jsx-ppx)))
+  (pps reactjs-jsx-ppx)))
