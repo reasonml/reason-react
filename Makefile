@@ -56,5 +56,8 @@ pin: ## Pin dependencies
 	@opam pin add melange "https://github.com/melange-re/melange.git#3df98795a3aa3c2488bee48e3e5d3da198c03860" -y
 
 .PHONY: init
-init: ## Create a local opam switch and setups githooks
-	@opam switch create . 4.14.1 --deps-only --with-test
+create-switch: ## Create a local opam switch and setups githooks
+	@opam switch create . 4.14.1 --deps-only --with-test --no-install
+
+.PHONY: init
+init: create-switch install ## Create a local opam switch and setups githooks
