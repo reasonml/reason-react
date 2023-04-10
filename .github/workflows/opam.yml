@@ -58,18 +58,16 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: opam install . --deps-only
+        run: opam install . --deps-only --with-test
 
       - name: Pin melange and dune
         run: make pin
 
       - name: Build
-        run: opam exec -- dune build
+        run: make build
 
       - name: Test
-        run: |
-          opam exec -- dune build @runtest
-          npx jest
+        run: make test
 
       - name: Save cache when not Windows
         uses: actions/cache/save@v3
