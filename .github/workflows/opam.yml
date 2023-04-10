@@ -60,6 +60,9 @@ jobs:
       - name: Install dependencies
         run: opam install . --deps-only
 
+      - name: Pin melange and dune
+        run: make pin
+
       - name: Build
         run: opam exec -- dune build
 
