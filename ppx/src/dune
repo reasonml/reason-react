@@ -1,0 +1,7 @@
+(library
+ (name react_jsx_ppx)
+ (public_name reason-react.ppx)
+ (kind ppx_rewriter)
+ (libraries ppxlib compiler-libs.common)
+ (preprocess
+  (pps ppxlib.metaquot)))

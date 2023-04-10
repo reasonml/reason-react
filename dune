@@ -1,1 +1,1 @@
-(dirs src test)
+(dirs src test ppx)
