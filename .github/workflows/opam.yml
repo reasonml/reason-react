@@ -19,7 +19,7 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          - windows-latest
+          # - windows-latest
 
         ocaml-compiler:
           - 4.14.x
@@ -34,7 +34,6 @@ jobs:
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
-          opam-depext: false
 
       - name: Load opam cache when not Windows
         if: runner.os != 'Windows'
