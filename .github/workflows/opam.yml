@@ -52,6 +52,11 @@ jobs:
           path: _opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
       - name: Install dependencies
         run: opam install . --deps-only
 
@@ -59,7 +64,9 @@ jobs:
         run: opam exec -- dune build
 
       - name: Test
-        run: echo "todo"
+        run: |
+          opam exec -- dune build @runtest
+          npx jest
 
       - name: Save cache when not Windows
         uses: actions/cache/save@v3
