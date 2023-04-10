@@ -1,3 +1,5 @@
+(include_subdirs unqualified)
+
 (library
  (name reason_react)
  (public_name reason-react)

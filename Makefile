@@ -26,6 +26,7 @@ clean: ## Clean artifacts
 .PHONY: test
 test: ## Run the unit tests
 	@$(DUNE) build @runtest
+	@npx jest
 
 .PHONY: test-watch
 test-watch: ## Run the unit tests in watch mode
@@ -47,6 +48,7 @@ format-check: ## Checks if format is correct
 install: ## Update the package dependencies when new deps are added to dune-project
 	@$(DUNE) build @install
 	@opam install . --deps-only --with-test # Install the new dependencies
+	@npm install
 
 # Those pins are necessary until melange is released on opam and dune 3.8 is released
 .PHONY: pin
