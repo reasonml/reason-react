@@ -32,6 +32,6 @@ It is designed and built by people using Reason and React in large, mission crit
 (depends
   (ocaml (>= 4.06.1))
   (reason (>= 3.6.0))
-  (ppxlib (>= 0.28.0))
+  (ppxlib (>= 0.29.1))
   (ocaml-lsp-server :with-test)
 ))

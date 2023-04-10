@@ -52,10 +52,9 @@ install: ## Update the package dependencies when new deps are added to dune-proj
 # Those pins are necessary until melange is released on opam and dune 3.8 is released
 .PHONY: pin
 pin: ## Pin dependencies
-	@opam pin add dune "https://github.com/ocaml/dune.git#17308d3a4639349ea3e4d5aaa4bfd3be1c8502a6" -y
-	@opam pin add melange "https://github.com/melange-re/melange.git#907fb9535555d460b26e660bc2a298f31bdf36ad" -y
+	@opam pin add dune "https://github.com/ocaml/dune.git#a5fd306a4e24c7bd67330b411b3e5662b7e03039" -y
+	@opam pin add melange "https://github.com/melange-re/melange.git#3df98795a3aa3c2488bee48e3e5d3da198c03860" -y
 
 .PHONY: init
 init: ## Create a local opam switch and setups githooks
-	@git config core.hooksPath .githooks
 	@opam switch create . 4.14.1 --deps-only --with-test
