@@ -19,3 +19,19 @@ It is designed and built by people using Reason and React in large, mission crit
   (reason (>= 3.6.0))
   (ocaml-lsp-server :with-test)
 ))
+
+(package
+ (name reason-react-jsx-ppx)
+ (synopsis "React.js JSX PPX")
+  (documentation "https://reasonml.github.io/reason-react")
+ (description "ReasonReact JSX PPX")
+(maintainers "David Sancho <dsnxmoreno@gmail.com>")
+(authors "Cheng Lou <chenglou92@gmail.com>" "Ricky Vetter <rickywvetter@gmail.com>")
+(source
+ (github reasonml/reason-react))
+(depends
+  (ocaml (>= 4.06.1))
+  (reason (>= 3.6.0))
+  (ppxlib (>= 0.23.0))
+  (ocaml-lsp-server :with-test)
+))
