@@ -1,1 +1,1 @@
-(dirs src test ppx)
+(dirs lib ppx)
