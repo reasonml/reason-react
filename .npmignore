@@ -4,3 +4,6 @@ lib/bs/
 docs
 _build
 test
+test/dune
+test/jest/dune
+ppx/test/*

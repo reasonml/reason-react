@@ -3,13 +3,13 @@
   "version": "0.10.1",
   "description": "React bindings for Reason",
   "files": [
-    "dune",
-    "dune-project",
+    "./dune",
+    "./dune-project",
     "README.md",
     "HISTORY.md",
     "LICENSE",
     "src",
-    "ppx",
+    "ppx/src",
     "reactjs-jsx-ppx.opam",
     "reason-react.opam"
   ],
