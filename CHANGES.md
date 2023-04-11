@@ -1,3 +1,7 @@
+# 0.11.0 (unreleased)
+
+* Setup repo with Melange [@davesnx in #711](https://github.com/reasonml/reason-react/pull/711)
+
 # 0.10.1
 
 * Add dune file [@davesnx in #709](https://github.com/reasonml/reason-react/pull/709)
