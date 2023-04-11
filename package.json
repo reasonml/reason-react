@@ -40,8 +40,8 @@
   },
   "peerDependencies": {
     "bs-platform": "^9.0.2",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react": "^16.8.1 || ^17.0.0",
+    "react-dom": "^16.8.1 || ^17.0.0"
   },
   "jest": {
     "moduleDirectories": [
