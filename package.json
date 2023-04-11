@@ -8,7 +8,10 @@
     "README.md",
     "HISTORY.md",
     "LICENSE",
-    "src"
+    "src",
+    "ppx",
+    "reactjs-jsx-ppx.opam",
+    "reason-react.opam"
   ],
   "keywords": [
     "reasonml",
