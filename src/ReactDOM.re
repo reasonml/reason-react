@@ -40,7 +40,7 @@ external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 
 type style = ReactDOMStyle.t;
 
-type domRef;
+type domRef = JsxDOM.domRef;
 
 module Ref = {
   type t = domRef;
@@ -2117,3 +2117,25 @@ include Props;
 external stringToComponent: string => React.component(domProps) = "%identity";
 
 module Style = ReactDOMStyle;
+
+[@bs.variadic] [@bs.module "react"]
+external createElement:
+  (string, ~props: props=?, array(React.element)) => React.element =
+  "createElement";
+
+[@bs.variadic] [@bs.module "react"]
+external createDOMElementVariadic:
+  (string, ~props: domProps=?, array(React.element)) => React.element =
+  "createElement";
+
+[@bs.module "react/jsx-runtime"]
+external jsxKeyed: (string, JsxDOM.domProps, string) => Jsx.element = "jsx";
+
+[@bs.module "react/jsx-runtime"]
+external jsx: (string, JsxDOM.domProps) => Jsx.element = "jsx";
+
+[@bs.module "react/jsx-runtime"]
+external jsxs: (string, JsxDOM.domProps) => Jsx.element = "jsxs";
+
+[@bs.module "react/jsx-runtime"]
+external jsxsKeyed: (string, JsxDOM.domProps, string) => Jsx.element = "jsxs";

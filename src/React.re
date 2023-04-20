@@ -1,4 +1,4 @@
-type element;
+type element = Jsx.element;
 
 [@bs.val] external null: element = "null";
 
@@ -28,17 +28,29 @@ external createElementVariadic:
   (component('props), 'props, array(element)) => element =
   "createElement";
 
-[@bs.module "react"] [@deprecated "Please use JSX syntax directly."]
+[@bs.module "react/jsx-runtime"]
 external jsxKeyed: (component('props), 'props, string) => element = "jsx";
 
-[@bs.module "react"] [@deprecated "Please use JSX syntax directly."]
+[@bs.module "react/jsx-runtime"]
 external jsx: (component('props), 'props) => element = "jsx";
 
-[@bs.module "react"] [@deprecated "Please use JSX syntax directly."]
+[@bs.module "react/jsx-runtime"]
 external jsxs: (component('props), 'props) => element = "jsxs";
 
-[@bs.module "react"] [@deprecated "Please use JSX syntax directly."]
+[@bs.module "react/jsx-runtime"]
 external jsxsKeyed: (component('props), 'props, string) => element = "jsxs";
+
+type fragmentProps('children) = {children: 'children};
+
+/* [@bs.module "react/jsx-runtime"] */
+/* external jsxFragment: component('props) = "Fragment"; */
+[@bs.module "react/jsx-runtime"] external jsxFragment: 'a = "Fragment";
+/* external jsxFragment: component({. "children": element}) = "Fragment"; */
+/* [@bs.obj] */
+/* external makeProps: */
+/* (~children: element, ~key: 'key=?, unit) => {. "children": element}; */
+[@bs.module "react"]
+external make: component({. "children": element}) = "Fragment";
 
 type ref('value) = {mutable current: 'value};
 
