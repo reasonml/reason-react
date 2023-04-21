@@ -3,8 +3,8 @@
   "version": "0.10.2-0",
   "description": "React bindings for Reason",
   "files": [
-    "./dune",
-    "./dune-project",
+    "dune",
+    "dune-project",
     "README.md",
     "HISTORY.md",
     "LICENSE",
