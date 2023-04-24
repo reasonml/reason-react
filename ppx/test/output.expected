@@ -91,15 +91,14 @@ let lower_children_nested =
                                                              |> React.list)
                                                          [@reason.preserve_braces
                                                            ])|])|])|])|]
-let fragment foo = ((ReactDOMRe.createElement ReasonReact.fragment [|foo|])
-  [@bla ])
+let fragment foo = ((React.createElement React.fragment [|foo|])[@bla ])
 let poly_children_fragment foo bar =
-  ReactDOMRe.createElement ReasonReact.fragment [|foo;bar|]
+  React.createElement React.fragment [|foo;bar|]
 let nested_fragment foo bar baz =
-  ReactDOMRe.createElement ReasonReact.fragment
-    [|foo;(ReactDOMRe.createElement ReasonReact.fragment [|bar;baz|])|]
+  React.createElement React.fragment
+    [|foo;(React.createElement React.fragment [|bar;baz|])|]
 let nested_fragment_with_lower foo =
-  ReactDOMRe.createElement ReasonReact.fragment
+  React.createElement React.fragment
     [|(ReactDOMRe.createDOMElementVariadic "div" [|foo|])|]
 let upper = React.createElement Upper.make (Upper.makeProps ())
 let upper_prop = React.createElement Upper.make (Upper.makeProps ~count ())
@@ -199,7 +198,7 @@ module Upper_case_with_fragment_as_root =
         ""[@@bs.obj ]
     let make =
       ((fun ?(name= (("")[@reason.raw_literal ""])) ->
-          ReactDOMRe.createElement ReasonReact.fragment
+          React.createElement React.fragment
             [|(ReactDOMRe.createDOMElementVariadic "div"
                  [|((React.string
                        ((("First ")[@reason.raw_literal "First "]) ^ name))
@@ -357,7 +356,7 @@ module Upper_with_aria =
       Generated$Upper_with_aria
   end
 let data_attributes_should_transform_to_kebabcase =
-  ReactDOMRe.createElement ReasonReact.fragment
+  React.createElement React.fragment
     [|(ReactDOMRe.createDOMElementVariadic "div"
          ~props:(ReactDOMRe.domProps ~dataAttribute:(("")
                    [@reason.raw_literal ""]) ~dataattribute:(("")

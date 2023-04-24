@@ -126,6 +126,8 @@ module Fragment = {
   external make: component({. "children": element}) = "Fragment";
 };
 
+[@bs.module "react"] external fragment: 'a = "Fragment";
+
 module StrictMode = {
   [@bs.obj]
   external makeProps:

@@ -500,7 +500,7 @@ let jsxMapper =
     Exp.apply
       ~loc (* throw away the [@JSX] attribute and keep the others, if any *)
       ~attrs
-      (* ReactDOMRe.createElement *)
+      (* ReactDOMRe.createDOMElementVariadic *)
       (Exp.ident ~loc
          { loc; txt = Ldot (Lident "ReactDOMRe", createElementCall) })
       args
@@ -1278,7 +1278,7 @@ let jsxMapper =
           | _, nonJSXAttributes ->
               let fragment =
                 Exp.ident ~loc
-                  { loc; txt = Ldot (Lident "ReasonReact", "fragment") }
+                  { loc; txt = Ldot (Lident "React", "fragment") }
               in
               let childrenExpr =
                 transformChildrenIfList ~loc ~ctxt ~mapper:self listItems
@@ -1297,7 +1297,7 @@ let jsxMapper =
                 ~attrs:nonJSXAttributes
                 (* ReactDOMRe.createElement *)
                 (Exp.ident ~loc
-                   { loc; txt = Ldot (Lident "ReactDOMRe", "createElement") })
+                   { loc; txt = Ldot (Lident "React", "createElement") })
                 args)
       (* Delegate to the default mapper, a deep identity traversal *)
       | e -> super#expression ctxt e
