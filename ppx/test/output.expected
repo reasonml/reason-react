@@ -1,0 +1,414 @@
+let lower = ReactDOMRe.createDOMElementVariadic "div" [||]
+let lower_empty_attr =
+  ReactDOMRe.createDOMElementVariadic "div"
+    ~props:(ReactDOMRe.domProps ~className:(("")[@reason.raw_literal ""]) ())
+    [||]
+let lower_inline_styles =
+  ReactDOMRe.createDOMElementVariadic "div"
+    ~props:(ReactDOMRe.domProps
+              ~style:((ReactDOM.Style.make ~backgroundColor:(("gainsboro")
+                         [@reason.raw_literal "gainsboro"]) ())
+              [@reason.preserve_braces ]) ()) [||]
+let lower_inner_html =
+  ReactDOMRe.createDOMElementVariadic "div"
+    ~props:(ReactDOMRe.domProps
+              ~dangerouslySetInnerHTML:([%bs.obj { __html = text }]) ()) 
+    [||]
+let lower_opt_attr =
+  ReactDOMRe.createDOMElementVariadic "div"
+    ~props:(ReactDOMRe.domProps ?tabIndex ()) [||]
+let lowerWithChildAndProps foo =
+  ReactDOMRe.createDOMElementVariadic "a"
+    ~props:(ReactDOMRe.domProps ~tabIndex:1 ~href:(("https://example.com")
+              [@reason.raw_literal "https://example.com"]) ()) [|foo|]
+let lower_child_static =
+  ReactDOMRe.createDOMElementVariadic "div"
+    [|(ReactDOMRe.createDOMElementVariadic "span" [||])|]
+let lower_child_ident = ReactDOMRe.createDOMElementVariadic "div" [|lolaspa|]
+let lower_child_single =
+  ReactDOMRe.createDOMElementVariadic "div"
+    [|(ReactDOMRe.createDOMElementVariadic "div" [||])|]
+let lower_children_multiple foo bar =
+  ReactDOMRe.createDOMElementVariadic "lower" [|foo;bar|]
+let lower_child_with_upper_as_children =
+  ReactDOMRe.createDOMElementVariadic "div"
+    [|(React.createElement App.make (App.makeProps ()))|]
+let lower_children_nested =
+  ReactDOMRe.createDOMElementVariadic "div"
+    ~props:(ReactDOMRe.domProps ~className:(("flex-container")
+              [@reason.raw_literal "flex-container"]) ())
+    [|(ReactDOMRe.createDOMElementVariadic "div"
+         ~props:(ReactDOMRe.domProps ~className:(("sidebar")
+                   [@reason.raw_literal "sidebar"]) ())
+         [|(ReactDOMRe.createDOMElementVariadic "h2"
+              ~props:(ReactDOMRe.domProps ~className:(("title")
+                        [@reason.raw_literal "title"]) ())
+              [|(((("jsoo-react")[@reason.raw_literal "jsoo-react"]) |> s)
+                [@reason.preserve_braces ])|]);(ReactDOMRe.createDOMElementVariadic
+                                                  "nav"
+                                                  ~props:(ReactDOMRe.domProps
+                                                            ~className:(("menu")
+                                                            [@reason.raw_literal
+                                                              "menu"]) ())
+                                                  [|(ReactDOMRe.createDOMElementVariadic
+                                                       "ul"
+                                                       [|(((examples |>
+                                                              (List.map
+                                                                 (fun e ->
+                                                                    ReactDOMRe.createDOMElementVariadic
+                                                                    "li"
+                                                                    ~props:(
+                                                                    ReactDOMRe.domProps
+                                                                    ~key:((
+                                                                    e.path)
+                                                                    [@reason.preserve_braces
+                                                                    ]) ())
+                                                                    [|(
+                                                                    ReactDOMRe.createDOMElementVariadic
+                                                                    "a"
+                                                                    ~props:(
+                                                                    ReactDOMRe.domProps
+                                                                    ~href:((
+                                                                    e.path)
+                                                                    [@reason.preserve_braces
+                                                                    ])
+                                                                    ~onClick:((
+                                                                    fun event
+                                                                    ->
+                                                                    ((ReactEvent.Mouse.preventDefault
+                                                                    event;
+                                                                    ReactRouter.push
+                                                                    e.path)
+                                                                    [@reason.preserve_braces
+                                                                    ]))
+                                                                    [@reason.preserve_braces
+                                                                    ]) ())
+                                                                    [|((
+                                                                    e.title
+                                                                    |> s)
+                                                                    [@reason.preserve_braces
+                                                                    ])|])|])))
+                                                             |> React.list)
+                                                         [@reason.preserve_braces
+                                                           ])|])|])|])|]
+let fragment foo = ((ReactDOMRe.createElement ReasonReact.fragment [|foo|])
+  [@bla ])
+let poly_children_fragment foo bar =
+  ReactDOMRe.createElement ReasonReact.fragment [|foo;bar|]
+let nested_fragment foo bar baz =
+  ReactDOMRe.createElement ReasonReact.fragment
+    [|foo;(ReactDOMRe.createElement ReasonReact.fragment [|bar;baz|])|]
+let nested_fragment_with_lower foo =
+  ReactDOMRe.createElement ReasonReact.fragment
+    [|(ReactDOMRe.createDOMElementVariadic "div" [|foo|])|]
+let upper = React.createElement Upper.make (Upper.makeProps ())
+let upper_prop = React.createElement Upper.make (Upper.makeProps ~count ())
+let upper_children_single foo =
+  React.createElement Upper.make (Upper.makeProps ~children:foo ())
+let upper_children_multiple foo bar =
+  React.createElementVariadic Upper.make
+    (Upper.makeProps ~children:React.null ()) [|foo;bar|]
+let upper_children =
+  React.createElement Page.make
+    (Page.makeProps ~moreProps:(("hgalo")[@reason.raw_literal "hgalo"])
+       ~children:(ReactDOMRe.createDOMElementVariadic "h1"
+                    [|((React.string (("Yep")[@reason.raw_literal "Yep"]))
+                      [@reason.preserve_braces ])|]) ())
+let upper_nested_module =
+  React.createElement Foo.Bar.make
+    (Foo.Bar.makeProps ~a:1 ~b:(("1")[@reason.raw_literal "1"]) ())
+let upper_child_expr =
+  React.createElement Div.make
+    (Div.makeProps ~children:((React.int 1)[@reason.preserve_braces ]) ())
+let upper_child_ident =
+  React.createElement Div.make (Div.makeProps ~children:lola ())
+let upper_all_kinds_of_props =
+  React.createElement MyComponent.make
+    (MyComponent.makeProps ~booleanAttribute:true
+       ~stringAttribute:(("string")[@reason.raw_literal "string"])
+       ~intAttribute:1
+       ?forcedOptional:((Some (("hello")[@reason.raw_literal "hello"]))
+       [@reason.preserve_braces ][@explicit_arity ])
+       ~onClick:((send handleClick)[@reason.preserve_braces ])
+       ~children:(ReactDOMRe.createDOMElementVariadic "div"
+                    [|(("hello")[@reason.raw_literal "hello"])|]) ())
+let upper_ref_with_children =
+  React.createElement FancyButton.make
+    (FancyButton.makeProps ~ref:buttonRef
+       ~children:(ReactDOMRe.createDOMElementVariadic "div" [||]) ())
+let lower_ref_with_children =
+  ReactDOMRe.createDOMElementVariadic "button"
+    ~props:(ReactDOMRe.domProps ~ref ~className:(("FancyButton")
+              [@reason.raw_literal "FancyButton"]) ()) [|children|]
+let lower_with_many_props =
+  ReactDOMRe.createDOMElementVariadic "div"
+    ~props:(ReactDOMRe.domProps ~translate:(("yes")
+              [@reason.raw_literal "yes"]) ())
+    [|(ReactDOMRe.createDOMElementVariadic "picture"
+         ~props:(ReactDOMRe.domProps ~id:(("idpicture")
+                   [@reason.raw_literal "idpicture"]) ())
+         [|(ReactDOMRe.createDOMElementVariadic "img"
+              ~props:(ReactDOMRe.domProps ~src:(("picture/img.png")
+                        [@reason.raw_literal "picture/img.png"])
+                        ~alt:(("test picture/img.png")
+                        [@reason.raw_literal "test picture/img.png"])
+                        ~id:(("idimg")[@reason.raw_literal "idimg"]) ()) 
+              [||]);(ReactDOMRe.createDOMElementVariadic "source"
+                       ~props:(ReactDOMRe.domProps ~type_:(("image/webp")
+                                 [@reason.raw_literal "image/webp"])
+                                 ~src:(("picture/img1.webp")
+                                 [@reason.raw_literal "picture/img1.webp"])
+                                 ()) [||]);(ReactDOMRe.createDOMElementVariadic
+                                              "source"
+                                              ~props:(ReactDOMRe.domProps
+                                                        ~type_:(("image/jpeg")
+                                                        [@reason.raw_literal
+                                                          "image/jpeg"])
+                                                        ~src:(("picture/img2.jpg")
+                                                        [@reason.raw_literal
+                                                          "picture/img2.jpg"])
+                                                        ()) [||])|])|]
+let some_random_html_element =
+  ReactDOMRe.createDOMElementVariadic "text"
+    ~props:(ReactDOMRe.domProps ~dx:(("1 2")[@reason.raw_literal "1 2"])
+              ~dy:(("3 4")[@reason.raw_literal "3 4"]) ()) [||]
+module React_component_with_props =
+  struct
+    external makeProps :
+      lola:'lola -> ?key:string -> unit -> < lola: 'lola   >  Js.t = ""
+    [@@bs.obj ]
+    let make =
+      ((fun ~lola ->
+          ((ReactDOMRe.createDOMElementVariadic "div"
+              [|((React.string lola)[@reason.preserve_braces ])|])
+          [@reason.preserve_braces ]))
+      [@warning "-16"])
+    let make =
+      let Generated$React_component_with_props
+        (Props : < lola: 'lola   >  Js.t) = make ~lola:(Props ## lola) in
+      Generated$React_component_with_props
+  end
+let react_component_with_props =
+  React.createElement React_component_with_props.make
+    (React_component_with_props.makeProps ~lola:(("flores")
+       [@reason.raw_literal "flores"]) ())
+module Upper_case_with_fragment_as_root =
+  struct
+    external makeProps :
+      ?name:'name -> ?key:string -> unit -> < name: 'name option   >  Js.t =
+        ""[@@bs.obj ]
+    let make =
+      ((fun ?(name= (("")[@reason.raw_literal ""])) ->
+          ReactDOMRe.createElement ReasonReact.fragment
+            [|(ReactDOMRe.createDOMElementVariadic "div"
+                 [|((React.string
+                       ((("First ")[@reason.raw_literal "First "]) ^ name))
+                   [@reason.preserve_braces ])|]);(React.createElement
+                                                     Hello.make
+                                                     (Hello.makeProps
+                                                        ~one:(("1")
+                                                        [@reason.raw_literal
+                                                          "1"])
+                                                        ~children:((React.string
+                                                                    ((("2nd ")
+                                                                    [@reason.raw_literal
+                                                                    "2nd "])
+                                                                    ^ name))
+                                                        [@reason.preserve_braces
+                                                          ]) ()))|])
+      [@warning "-16"])
+    let make =
+      let Generated$Upper_case_with_fragment_as_root
+        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name) in
+      Generated$Upper_case_with_fragment_as_root
+  end
+module Forward_Ref =
+  struct
+    external makeProps :
+      children:'children ->
+        buttonRef:'buttonRef ->
+          ?key:string ->
+            unit -> < children: 'children  ;buttonRef: 'buttonRef   >  Js.t =
+        ""[@@bs.obj ]
+    let make =
+      ((fun ~children ->
+          ((fun ~buttonRef ->
+              ((ReactDOMRe.createDOMElementVariadic "button"
+                  ~props:(ReactDOMRe.domProps ~ref:buttonRef
+                            ~className:(("FancyButton")
+                            [@reason.raw_literal "FancyButton"]) ())
+                  [|children|])
+              [@reason.preserve_braces ]))
+          [@warning "-16"]))
+      [@warning "-16"])
+    let make =
+      React.forwardRef
+        (let Generated$Forward_Ref
+           (Props : < children: 'children  ;buttonRef: 'buttonRef   >  Js.t)
+           =
+           make ~buttonRef:(Props ## buttonRef) ~children:(Props ## children) in
+         Generated$Forward_Ref)
+  end
+module Onclick_handler_button =
+  struct
+    external makeProps :
+      name:'name ->
+        ?isDisabled:'isDisabled ->
+          ?key:string ->
+            unit -> < name: 'name  ;isDisabled: 'isDisabled option   >  Js.t
+        = ""[@@bs.obj ]
+    let make =
+      ((fun ~name ->
+          ((fun ?isDisabled ->
+              ((let onClick event = Js.log event in
+                ReactDOMRe.createDOMElementVariadic "button"
+                  ~props:(ReactDOMRe.domProps ~name ~onClick
+                            ~disabled:isDisabled ()) [||])
+              [@reason.preserve_braces ]))
+          [@warning "-16"]))
+      [@warning "-16"])
+    let make =
+      let Generated$Onclick_handler_button
+        (Props : < name: 'name  ;isDisabled: 'isDisabled option   >  Js.t) =
+        make ?isDisabled:(Props ## isDisabled) ~name:(Props ## name) in
+      Generated$Onclick_handler_button
+  end
+module Children_as_string =
+  struct
+    external makeProps :
+      ?name:'name -> ?key:string -> unit -> < name: 'name option   >  Js.t =
+        ""[@@bs.obj ]
+    let make =
+      ((fun ?(name= (("joe")[@reason.raw_literal "joe"])) ->
+          ReactDOMRe.createDOMElementVariadic "div"
+            [|(((Printf.sprintf (("`name` is %s")
+                   [@reason.raw_literal "`name` is %s"]) name)
+                  |> React.string)
+              [@reason.preserve_braces ])|])
+      [@warning "-16"])
+    let make =
+      let Generated$Children_as_string
+        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name) in
+      Generated$Children_as_string
+  end
+let () = Dream.run ()
+let l = 33
+module Uppercase_with_SSR_components =
+  struct
+    external makeProps :
+      children:'children ->
+        moreProps:'moreProps ->
+          ?key:string ->
+            unit -> < children: 'children  ;moreProps: 'moreProps   >  Js.t =
+        ""[@@bs.obj ]
+    let make =
+      ((fun ~children ->
+          ((fun ~moreProps ->
+              ReactDOMRe.createDOMElementVariadic "html"
+                [|(ReactDOMRe.createDOMElementVariadic "head"
+                     [|(ReactDOMRe.createDOMElementVariadic "title"
+                          [|((React.string
+                                ((("SSR React ")
+                                   [@reason.raw_literal "SSR React "]) ^
+                                   moreProps))
+                            [@reason.preserve_braces ])|])|]);(ReactDOMRe.createDOMElementVariadic
+                                                                 "body"
+                                                                 [|(ReactDOMRe.createDOMElementVariadic
+                                                                    "div"
+                                                                    ~props:(
+                                                                    ReactDOMRe.domProps
+                                                                    ~id:(("root")
+                                                                    [@reason.raw_literal
+                                                                    "root"])
+                                                                    ())
+                                                                    [|children|]);(
+                                                                   ReactDOMRe.createDOMElementVariadic
+                                                                    "script"
+                                                                    ~props:(
+                                                                    ReactDOMRe.domProps
+                                                                    ~src:(("/static/client.js")
+                                                                    [@reason.raw_literal
+                                                                    "/static/client.js"])
+                                                                    ()) 
+                                                                    [||])|])|])
+          [@warning "-16"]))
+      [@warning "-16"])
+    let make =
+      let Generated$Uppercase_with_SSR_components
+        (Props : < children: 'children  ;moreProps: 'moreProps   >  Js.t) =
+        make ~moreProps:(Props ## moreProps) ~children:(Props ## children) in
+      Generated$Uppercase_with_SSR_components
+  end
+module Upper_with_aria =
+  struct
+    external makeProps :
+      children:'children ->
+        ?key:string -> unit -> < children: 'children   >  Js.t = ""[@@bs.obj
+                                                                    ]
+    let make =
+      ((fun ~children ->
+          ReactDOMRe.createDOMElementVariadic "div"
+            ~props:(ReactDOMRe.domProps ~ariaHidden:(("true")
+                      [@reason.raw_literal "true"]) ()) [|children|])
+      [@warning "-16"])
+    let make =
+      let Generated$Upper_with_aria (Props : < children: 'children   >  Js.t)
+        = make ~children:(Props ## children) in
+      Generated$Upper_with_aria
+  end
+let data_attributes_should_transform_to_kebabcase =
+  ReactDOMRe.createElement ReasonReact.fragment
+    [|(ReactDOMRe.createDOMElementVariadic "div"
+         ~props:(ReactDOMRe.domProps ~dataAttribute:(("")
+                   [@reason.raw_literal ""]) ~dataattribute:(("")
+                   [@reason.raw_literal ""]) ~className:(("md:w-1/3")
+                   [@reason.raw_literal "md:w-1/3"]) ()) [||]);(ReactDOMRe.createDOMElementVariadic
+                                                                  "div"
+                                                                  ~props:(
+                                                                  ReactDOMRe.domProps
+                                                                    ~className:(("md:w-2/3")
+                                                                    [@reason.raw_literal
+                                                                    "md:w-2/3"])
+                                                                    ()) 
+                                                                  [||])|]
+let render_onclickPropsAsString =
+  ReactDOMRe.createDOMElementVariadic "div"
+    ~props:(ReactDOMRe.domProps ~_onclick:(("alert('hello')")
+              [@reason.raw_literal "alert('hello')"]) ()) [||]
+module External =
+  struct
+    external componentProps :
+      a:int ->
+        b:string -> ?key:string -> unit -> < a: int  ;b: string   >  Js.t =
+        ""[@@bs.obj ]
+    external component :
+      (< a: int  ;b: string   >  Js.t, React.element) React.componentLike =
+        "require(\"my-react-library\").MyReactComponent"[@@otherAttribute
+                                                          (("bla")
+                                                            [@reason.raw_literal
+                                                              "bla"])]
+  end
+module type X_int  = sig val x : int end
+module Func(M:X_int) =
+  struct
+    let x = M.x + 1
+    external makeProps :
+      a:'a -> b:'b -> ?key:string -> unit -> < a: 'a  ;b: 'b   >  Js.t = ""
+    [@@bs.obj ]
+    let make =
+      ((fun ~a ->
+          ((fun ~b ->
+              fun _ ->
+                ((print_endline
+                    (("This function should be named `Test$Func`")
+                    [@reason.raw_literal
+                      "This function should be named `Test$Func`"]) M.x;
+                  ReactDOMRe.createDOMElementVariadic "div" [||])
+                [@reason.preserve_braces ]))
+          [@warning "-16"]))
+      [@warning "-16"])
+    let make =
+      let Generated$Func (Props : < a: 'a  ;b: 'b   >  Js.t) =
+        make ~b:(Props ## b) ~a:(Props ## a) () in
+      Generated$Func
+  end

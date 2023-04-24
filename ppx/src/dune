@@ -1,0 +1,6 @@
+(library
+ (name react_jsx_ppx)
+ (public_name reactjs-jsx-ppx)
+ (kind ppx_rewriter)
+ (flags :standard -w -9)
+ (libraries ppxlib))

@@ -1,6 +1,6 @@
 {
   "name": "reason-react",
-  "version": "0.10.1",
+  "version": "0.10.3-0",
   "description": "React bindings for Reason",
   "files": [
     "dune",
@@ -8,20 +8,13 @@
     "README.md",
     "HISTORY.md",
     "LICENSE",
-    "bsconfig.json",
-    "src"
+    "src",
+    "ppx/src",
+    "reactjs-jsx-ppx.opam",
+    "reason-react.opam"
   ],
-  "scripts": {
-    "build": "bsb -make-world",
-    "start": "bsb -make-world -w",
-    "clean": "bsb -clean-world",
-    "test": "jest",
-    "format": "find ./src -iname '*.re' | xargs bsrefmt --in-place && find ./src -iname '*.rei' | xargs bsrefmt -i true --in-place",
-    "init": "opam switch create . 4.06.1 --deps-only -y"
-  },
   "keywords": [
     "reasonml",
-    "bucklescript",
     "react"
   ],
   "author": "",
@@ -32,14 +25,11 @@
   },
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
-    "bs-platform": "^9.0.2",
     "jest": "^26.0.1",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1",
-    "reason-test-framework": "^0.3.2"
+    "react-dom": "^16.8.1"
   },
   "peerDependencies": {
-    "bs-platform": "^9.0.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
   },
@@ -48,13 +38,10 @@
       "node_modules"
     ],
     "roots": [
-      "test"
+      "_build/default/test/test/test"
     ],
     "testMatch": [
       "**/*__test.bs.js"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!(bs-platform|reason-react|reason-react-compat|reason-react-update|bs-webapi|bs-css|bs-css-emotion|reason-test-framework)/)"
     ]
   }
 }

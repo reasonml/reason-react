@@ -43,14 +43,7 @@ See [https://reasonml.github.io/reason-react](https://reasonml.github.io/reason-
 
 We welcome all contributors! Anything from docs to issues to pull requests. Please help us :smile:
 
-```sh
-git clone https://github.com/reasonml/reason-react.git
-cd reason-react
-npm install
-npm start
-```
-
-See the README inside `src` for more info!
+[./CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Editor Support
 

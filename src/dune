@@ -1,5 +1,7 @@
+(include_subdirs unqualified)
+
 (library
  (name reason_react)
+ (public_name reason-react)
  (wrapped false)
- (flags :standard -bs-jsx 3)
  (modes melange))

@@ -1,6 +1,8 @@
 // Prevent warning about the `retainedProps` field being defined in both
 // `self` and `componentSpec` record types.
 [@warning "-30"];
+[@warning "-9"];
+[@warning "-27"];
 
 type reactClass;
 

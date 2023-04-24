@@ -1,0 +1,22 @@
+(executable
+ (name standalone)
+ (libraries reactjs-jsx-ppx ppxlib))
+
+(rule
+ (targets result.ml)
+ (deps generated.ml)
+ (action
+  (run ./standalone.exe --impl %{deps} -o %{targets})))
+
+(rule
+ (targets generated.ml)
+ (deps input.re)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run refmt --parse=re --print=ml %{deps}))))
+
+(rule
+ (alias runtest)
+ (action
+  (diff output.expected result.ml)))
