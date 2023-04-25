@@ -13,7 +13,6 @@
       "router",
       "dom",
       "refs",
-      "reasonreactcompat",
       "testing"
     ],
     "ReactJS Idioms Equivalents": [
@@ -25,21 +24,6 @@
       "custom-class-component-property",
       "usestate-event-value",
       "error-boundaries"
-    ],
-    "Record API (deprecated)": [
-      "jsx-2",
-      "creation-props-self",
-      "render",
-      "callback-handlers",
-      "state-actions-reducer",
-      "lifecycles",
-      "instance-variables",
-      "react-ref",
-      "interop",
-      "clone-element",
-      "children",
-      "subscriptions-helper",
-      "router-2"
     ],
     "FAQ": [
       "im-having-a-type-error",
