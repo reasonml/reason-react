@@ -500,7 +500,7 @@ let jsxMapper =
     Exp.apply
       ~loc (* throw away the [@JSX] attribute and keep the others, if any *)
       ~attrs
-      (* ReactDOMRe.createElement *)
+      (* ReactDOMRe.createDOMElementVariadic *)
       (Exp.ident ~loc
          { loc; txt = Ldot (Lident "ReactDOMRe", createElementCall) })
       args
