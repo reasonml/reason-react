@@ -31,7 +31,7 @@ type domRef;
 /*
    This list isn't exhaustive. We'll add more as we go.
  */
-[@bs.deriving abstract]
+[@deriving abstract]
 type domProps = {
   [@bs.optional]
   key: string,
