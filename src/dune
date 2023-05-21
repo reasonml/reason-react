@@ -6,6 +6,4 @@
  (preprocess
   (pps melange.ppx reactjs-jsx-ppx))
  (wrapped false)
- (modes melange)
- (preprocess
-  (pps melange.ppx reactjs-jsx-ppx)))
+ (modes melange))
