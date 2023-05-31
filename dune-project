@@ -44,5 +44,4 @@
   (reason
    (>= 3.6.0))
   (ppxlib
-   (>= 0.29.1))
-  (ocaml-lsp-server :with-test)))
+   (>= 0.28.0))))
