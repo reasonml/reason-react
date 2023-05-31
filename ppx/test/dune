@@ -20,3 +20,5 @@
  (alias runtest)
  (action
   (diff output.expected result.ml)))
+
+(cram)

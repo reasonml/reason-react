@@ -4,6 +4,8 @@
 
 (generate_opam_files true)
 
+(cram enable)
+
 (name reason-react)
 
 (maintainers "David Sancho <dsnxmoreno@gmail.com>")
@@ -16,6 +18,7 @@
  (github reasonml/reason-react))
 
 (homepage "https://reasonml.github.io/reason-react")
+
 (documentation "https://reasonml.github.io/reason-react")
 
 (bug_reports "https://github.com/reasonml/reason-react/issues")
