@@ -1080,6 +1080,8 @@ module Props = {
     dangerouslySetInnerHTML: {. "__html": string},
     [@bs.optional]
     suppressContentEditableWarning: bool,
+    [@bs.optional]
+    suppressHydrationWarning: bool,
   };
   /* This list isn't exhaustive. We'll add more as we go. */
   /*
@@ -2107,6 +2109,8 @@ module Props = {
     dangerouslySetInnerHTML: {. "__html": string},
     [@bs.optional]
     suppressContentEditableWarning: bool,
+    [@bs.optional]
+    suppressHydrationWarning: bool,
   };
 };
 
