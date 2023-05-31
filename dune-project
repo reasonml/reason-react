@@ -35,6 +35,8 @@
  (depends
   (ocaml
    (>= 4.06.1))
+  (melange (= dev))
+  (reactjs-jsx-ppx (= dev))
   (reason
    (>= 3.6.0))
   (ocaml-lsp-server :with-test)))
