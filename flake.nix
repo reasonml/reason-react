@@ -38,6 +38,10 @@
                 "ppx"
               ];
             };
+            # Due to a Reason version mismatch, the generated OCaml PPX diff
+            # looks different
+            doCheck = false;
+            nativeCheckInputs = [ reason ];
             propagatedBuildInputs = [ ppxlib ];
           };
 
@@ -53,6 +57,7 @@
                 "test"
               ];
             };
+            doCheck = true;
             nativeBuildInputs = [ pkgs.ocamlPackages.melange reason ];
             propagatedBuildInputs = [
               pkgs.ocamlPackages.melange

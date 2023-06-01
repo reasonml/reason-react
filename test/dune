@@ -6,4 +6,4 @@
   (commonjs bs.js))
  (libraries reason-react jest)
  (preprocess
-  (pps reactjs-jsx-ppx)))
+  (pps melange.ppx reactjs-jsx-ppx)))

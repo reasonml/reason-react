@@ -21,4 +21,5 @@
  (action
   (diff output.expected result.ml)))
 
-(cram)
+(cram
+ (package reason-react))
