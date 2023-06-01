@@ -35,8 +35,7 @@
  (depends
   (ocaml
    (>= 4.06.1))
-  (melange
-   (= dev))
+  melange
   reactjs-jsx-ppx
   (reason
    (>= 3.6.0))
