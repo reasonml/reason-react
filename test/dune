@@ -1,6 +1,7 @@
 (melange.emit
  (alias runtest)
  (target test)
+ (package reason-react)
  (module_systems
   (commonjs bs.js))
  (libraries reason_react jest)
