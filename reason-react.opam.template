@@ -1,0 +1,3 @@
+pin-depends: [
+  [ "melange.dev" "https://github.com/melange-re/melange/releases/download/1.0.0/melange-1.0.0.tbz" ]
+]
