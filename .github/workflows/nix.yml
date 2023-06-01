@@ -1,0 +1,22 @@
+name: "Nix Build"
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ocamlVersion: [4_14, 5_0]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cachix/install-nix-action@v21
+      with:
+        extra_nix_config: |
+          extra-substituters = https://anmonteiro.nix-cache.workers.dev
+          extra-trusted-public-keys = ocaml.nix-cache.com-1:/xI2h2+56rwFfKyyFVbkJSeGqSIYMC/Je+7XXqGKDIY=
+    - name: "Run Nix tests"
+      run: nix build .#reactjs-jsx-ppx .#reason-react
+
