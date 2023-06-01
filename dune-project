@@ -6,7 +6,9 @@
 
 (name reason-react)
 
-(maintainers "David Sancho <dsnxmoreno@gmail.com>")
+(maintainers
+ "David Sancho <dsnxmoreno@gmail.com>"
+ "Antonio Monteiro <anmonteiro@gmail.com>")
 
 (authors
  "Cheng Lou <chenglou92@gmail.com>"
