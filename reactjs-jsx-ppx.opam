@@ -2,7 +2,10 @@
 opam-version: "2.0"
 synopsis: "React.js JSX PPX"
 description: "ReasonReact JSX PPX"
-maintainer: ["David Sancho <dsnxmoreno@gmail.com>"]
+maintainer: [
+  "David Sancho <dsnxmoreno@gmail.com>"
+  "Antonio Monteiro <anmonteiro@gmail.com>"
+]
 authors: [
   "Cheng Lou <chenglou92@gmail.com>" "Ricky Vetter <rickywvetter@gmail.com>"
 ]
