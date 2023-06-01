@@ -5,7 +5,10 @@ description: """
 ReasonReact helps you use Reason to build React components with deeply integrated, strong, static type safety.
 
 It is designed and built by people using Reason and React in large, mission critical production React codebases."""
-maintainer: ["David Sancho <dsnxmoreno@gmail.com>"]
+maintainer: [
+  "David Sancho <dsnxmoreno@gmail.com>"
+  "Antonio Monteiro <anmonteiro@gmail.com>"
+]
 authors: [
   "Cheng Lou <chenglou92@gmail.com>" "Ricky Vetter <rickywvetter@gmail.com>"
 ]
