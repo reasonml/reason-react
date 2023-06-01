@@ -19,6 +19,8 @@ bug-reports: "https://github.com/reasonml/reason-react/issues"
 depends: [
   "dune" {>= "3.8"}
   "ocaml" {>= "4.06.1"}
+  "melange"
+  "reactjs-jsx-ppx"
   "reason" {>= "3.6.0"}
   "ocaml-lsp-server" {with-test}
   "odoc" {with-doc}
@@ -38,3 +40,6 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/reasonml/reason-react.git"
+pin-depends: [
+  [ "melange.dev" "https://github.com/melange-re/melange/releases/download/1.0.0/melange-1.0.0.tbz" ]
+]
