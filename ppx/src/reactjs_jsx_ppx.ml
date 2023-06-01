@@ -500,7 +500,7 @@ let jsxMapper =
     Exp.apply
       ~loc (* throw away the [@JSX] attribute and keep the others, if any *)
       ~attrs
-      (* ReactDOMRe.createDOMElementVariadic *)
+      (* ReactDOMRe.createElement *)
       (Exp.ident ~loc
          { loc; txt = Ldot (Lident "ReactDOMRe", createElementCall) })
       args
@@ -1230,15 +1230,12 @@ let jsxMapper =
     inherit
       [Expansion_context.Base.t] Ppxlib.Ast_traverse.map_with_context as super
 
-    (* method! expr ctxt ex = expr self ex *)
     method! signature ctxt sig_ =
       super#signature ctxt (reactComponentSignatureTransform self sig_)
     [@@raises Invalid_argument]
 
     method! structure ctxt stru =
-      match stru with
-      | structures ->
-          super#structure ctxt (reactComponentTransform ~ctxt self structures)
+      super#structure ctxt (reactComponentTransform ~ctxt self stru)
     [@@raises Invalid_argument]
 
     method! expression ctxt expr =
