@@ -62,9 +62,6 @@ jobs:
       - name: Install dependencies
         run: make install
 
-      - name: Pin melange and dune
-        run: make pin
-
       - name: Build
         run: make build
 
