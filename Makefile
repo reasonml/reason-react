@@ -49,12 +49,6 @@ install: ## Update the package dependencies when new deps are added to dune-proj
 	@opam install . --deps-only --with-test
 	@npm install
 
-# Those pins are necessary until melange is released on opam
-.PHONY: pin
-pin: ## Pin melange and reactjs-jsx-ppx
-	@opam pin add melange.dev "https://github.com/melange-re/melange.git#d850696851939a46d803b306d1e231fca48697da" -y
-	@opam pin add reactjs-jsx-ppx.dev . -y
-
 .PHONY: init
 create-switch: ## Create a local opam switch
 	@opam switch create . 4.14.1 --no-install
