@@ -54,4 +54,4 @@ create-switch: ## Create a local opam switch
 	@opam switch create . 4.14.1 --no-install
 
 .PHONY: init
-init: create-switch install pin ## Create a local opam switch, install deps and pin dependencies
+init: create-switch install ## Create a local opam switch, install deps
