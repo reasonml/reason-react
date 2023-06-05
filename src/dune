@@ -4,4 +4,6 @@
  (name reason_react)
  (public_name reason-react)
  (wrapped false)
- (modes melange))
+ (modes melange)
+ (preprocess
+  (pps melange.ppx reactjs-jsx-ppx)))

@@ -29,9 +29,8 @@ Running `make help` you can see the common commands to interact with the project
   format-check    Checks if format is correct
   format          Format the codebase with ocamlformat
   help            Print this help message
-  init            Create a local opam switch, install deps and pin dependencies
+  init            Create a local opam switch, install deps
   install         Update the package dependencies when new deps are added to dune-project
-  pin             Pin melange and dune
   test-promote    Updates snapshots and promotes it to correct
   test-watch      Run the unit tests in watch mode
   test            Run the unit tests

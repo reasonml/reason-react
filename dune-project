@@ -1,12 +1,16 @@
-(lang dune 3.7)
+(lang dune 3.8)
 
 (using melange 0.1)
 
 (generate_opam_files true)
 
+(cram enable)
+
 (name reason-react)
 
-(maintainers "David Sancho <dsnxmoreno@gmail.com>")
+(maintainers
+ "David Sancho <dsnxmoreno@gmail.com>"
+ "Antonio Monteiro <anmonteiro@gmail.com>")
 
 (authors
  "Cheng Lou <chenglou92@gmail.com>"
@@ -16,6 +20,7 @@
  (github reasonml/reason-react))
 
 (homepage "https://reasonml.github.io/reason-react")
+
 (documentation "https://reasonml.github.io/reason-react")
 
 (bug_reports "https://github.com/reasonml/reason-react/issues")
@@ -30,6 +35,9 @@
  (depends
   (ocaml
    (>= 4.06.1))
+  (melange
+   (>= 1.0.0))
+  reactjs-jsx-ppx
   (reason
    (>= 3.6.0))
   (ocaml-lsp-server :with-test)))
@@ -44,5 +52,4 @@
   (reason
    (>= 3.6.0))
   (ppxlib
-   (>= 0.29.1))
-  (ocaml-lsp-server :with-test)))
+   (>= 0.28.0))))
