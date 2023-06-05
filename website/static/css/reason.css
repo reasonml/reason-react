@@ -97,9 +97,10 @@ table .hljs {
 }
 
 .homeWrapperWrapper {
-  background-color: #f6f4f4;
+  background-color: #ebebeb;
   overflow: hidden;
   position: relative;
+  padding: 3rem;
 }
 
 .homeWrapperInner {
@@ -139,7 +140,8 @@ table .hljs {
 .projectTitle {
   font-size: 50px;
   font-weight: bold;
-  font-family: proxima-nova,sans-serif;
+  font-family: proxima-nova, sans-serif;
+  color: #24292e;
 }
 
 .read-more {

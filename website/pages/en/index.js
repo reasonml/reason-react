@@ -95,60 +95,6 @@ class HomeSplash extends React.Component {
 
     return (
       <div className="homeContainer">
-        <div className="homeContainer homeContainerWrapper homeBanner">
-          <div style={{ maxWidth: "38rem", display: "flex" }}>
-            <img
-              src={siteConfig.baseUrl + "img/logos/rescript-brandmark@2x.png"}
-              style={{ width: "5rem", height: "5rem", marginTop: "0.5rem" }}
-            />
-            <div>
-              <div>
-                {siteConfig.title} is now{" "}
-                <a
-                  target="_blank"
-                  href="https://rescript-lang.org/docs/react/latest/introduction"
-                  style={{ color: "#e6484f", fontWeight: "bolder" }}
-                >
-                  ReScript/React
-                </a>
-              </div>
-              <div style={{ marginTop: "1.2rem", fontSize: "1.2rem" }}>
-                {
-                  "For the latest updates, please migrate to our actively maintained ReScript bindings."
-                }
-                <div
-                  style={{
-                    marginTop: "2.5rem",
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <a
-                    className="heroButton"
-                    href="https://rescript-lang.org/docs/react/latest/introduction"
-                    target="_blank"
-                  >
-                      Visit the latest docs
-                  </a>
-                  <div>
-                    <a
-                      className="heroLink"
-                      href={
-                        siteConfig.baseUrl +
-                        "blog/2021/05/07/rescript-migration"
-                      }
-                      style={{marginLeft: "1rem"}}
-                    >
-                      Learn more
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div id="redirectBanner">
           <div>
             Hello! This particular page hash has moved to{" "}
@@ -164,10 +110,9 @@ class HomeSplash extends React.Component {
           />
 
           <div className="wrapper homeWrapper">
-            <div className="projectTitle">{siteConfig.title}</div>
+            <div className="projectTitle">{siteConfig.tagline}</div>
 
             <div className="homeWrapperInner">
-              <div className="homeTagLine">{siteConfig.tagline}</div>
               <div className="homeCodeSnippet">
                 <MarkdownBlock>{codeExampleSmallScreen}</MarkdownBlock>
                 <MarkdownBlock>{codeExampleLargeScreen}</MarkdownBlock>
