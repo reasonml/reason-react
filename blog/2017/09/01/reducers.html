@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Reducers Are Here! · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="_v0.2.4 was done in collaboration with the ReactJS team_."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Reducers Are Here! · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/blog/2017/09/01/reducers"/><meta property="og:description" content="_v0.2.4 was done in collaboration with the ReactJS team_."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><script src="/reason-react/js/scrollSpy.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/><script src="/reason-react/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/en"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/en/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/en/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/en/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/en/community" target="_self">Community</a></li><li class="siteNavGroupActive"><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Recent Posts</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul class=""><li class="navListItem"><a class="navItem" href="/reason-react/blog/2021/05/07/rescript-migration">We are rebranding to ReScript / React</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2020/06/08/090-release">ReasonReact 0.9.0 - Uncurried and Code Cleanup</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2020/05/05/080-release">ReasonReact 0.8.0 🎉 BuckleScript Upgrade &amp; More!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2019/10/18/new-bsb-template">New ReasonReact bsb template!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2019/04/10/react-hooks">ReasonReact 0.7.0: Support for React Hooks</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2017/09/01/reducers">Reducers Are Here!</a></h1><p class="post-meta">September 1, 2017</p><div class="authorBlock"></div></header><div><span><p><em>v0.2.4 was done in collaboration with the ReactJS team</em>.</p>
+<p>This is a release we've been planning for quite a while now, and is one that embodies what the Reason team is trying to achieve through ReasonReact.</p>
+<p>First, a bit of context: if you use ReactJS, then you've likely heard of the the massively popular <a href="https://github.com/reactjs/redux/">Redux</a> state management library. Redux's original inspiration comes from <a href="http://elm-lang.org">Elm</a>, whose root we share.</p>
+<!--truncate-->
+<p>It's only appropriate then, that in ReasonReact, we leverage the Reason language's existing facilities (notably, <a href="https://reasonml.github.io/docs/en/variant.html">variant</a> and <a href="https://reasonml.github.io/docs/en/pattern-matching.html">pattern-matching</a>) to model a lightweight, low-surface data management API that we now provide out-of-the-box. Here it is:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">type</span> actions =
+  | <span class="hljs-constructor">BumpCount</span>
+  | <span class="hljs-constructor">ToggleDialog</span> bool;
+
+<span class="hljs-keyword">type</span> state = {count: int, showDialog: bool};
+
+<span class="hljs-keyword">let</span> component = <span class="hljs-module-identifier">ReasonReact</span>.reducerComponent <span class="hljs-string">"MyComponent"</span>;
+
+<span class="hljs-keyword">let</span> make ::className _children =&gt; {
+  <span class="hljs-operator">...</span>component,
+  initialState: <span class="hljs-keyword">fun</span> () =&gt; {count: <span class="hljs-number">0</span>, showDialog: <span class="hljs-literal">false</span>},
+  reducer: <span class="hljs-keyword">fun</span> action state =&gt;
+    <span class="hljs-keyword">switch</span> action {
+    | <span class="hljs-constructor">BumpCount</span> =&gt; <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-constructor">Update</span> {<span class="hljs-operator">...</span>state, count: state.count <span class="hljs-operator">+</span> <span class="hljs-number">1</span>}
+    | <span class="hljs-constructor">ToggleDialog</span> show =&gt; <span class="hljs-module-identifier">ReasonReact</span>.<span class="hljs-constructor">Update</span> {<span class="hljs-operator">...</span>state, showDialog: show}
+    },
+  render: <span class="hljs-keyword">fun</span> {state, reduce} =&gt; {
+    <span class="hljs-keyword">let</span> message = <span class="hljs-string">"You've clicked "</span> <span class="hljs-operator">^</span> string_of_int state.count <span class="hljs-operator">^</span> <span class="hljs-string">" time(s)"</span>;
+    &lt;div className&gt;
+      &lt;button onClick=(reduce (<span class="hljs-keyword">fun</span> _ =&gt; <span class="hljs-constructor">BumpCount</span>))&gt;
+        (<span class="hljs-module-identifier">ReasonReact</span>.stringToElement message)
+      &lt;/button&gt;
+      &lt;<span class="hljs-module-identifier">MyButton</span> onToggle=(reduce (<span class="hljs-keyword">fun</span> toggleState =&gt; <span class="hljs-constructor">ToggleDialog</span> toggleState)) /&gt;
+      (state.showDialog ? &lt;<span class="hljs-module-identifier">Dialog</span> /&gt; : <span class="hljs-module-identifier">ReasonReact</span>.nullElement)
+    &lt;/div&gt;
+  }
+};
+</code></pre>
+<p><em>More examples at <a href="https://github.com/reasonml-community/reason-react-example">reason-react-example</a></em>.</p>
+<p>That's it! A <code>reducer</code> function on your component, that pattern-matches on the possible state transforms, and specifies what the next state should be. This is akin to a <strong>state machine</strong>, where you feed in the token (action) and transition (reducer) onto the next state.</p>
+<p>Hopefully you can see that the new <code>reducer</code> feature is <strong>nothing but a thin layer on top of <code>setState</code></strong>. The whole API is component-local, and doesn't disturb your existing state management solution. If you're really into crazier and potentially global state management solutions, the new API should still work under it. Stateless components haven't changed.</p>
+<p>Head to the <a href="https://github.com/reasonml/reason-react/blob/main/HISTORY.md#024">migration guide</a> to see how you can upgrade your ReasonReact app. Surprise! It's a <strong>non-breaking change</strong>! What are you waiting for? =)</p>
+<p>Below is a set of decisions we've made that justifies this API change.</p>
+<h2><a class="anchor" aria-hidden="true" id="design-decisions"></a><a href="#design-decisions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Design Decisions</h2>
+<p>Why the reducer API? Upon careful examination, you'll realize it's an extra layer of indirection compared to the conventional state-setting: instead of invoking the callback directly through <code>self.update</code>, you now send an action through <code>self.reduce</code>, which is then matched inside <code>reducer</code>. We need to justify an indirection with its benefits.</p>
+<p>For one, <code>reducer</code> is a first step toward easier ReactJS Fiber support. Fiber's concurrency requires us handling state updates &amp; side-effects in a more principled way (more details another time). We've also decided to iterate on ReasonReact instead of core React, partially because we're Reason users and partially because ReasonReact's nature of being new &amp; less used allow us to iterate exciting new APIs without legacy concerns and without churning existing ReactJS users (though <a href="https://github.com/facebook/react/issues/10580">discussions</a> have already <a href="https://github.com/facebook/react/issues/10581">started</a> on first-class ReasonReact integration inside ReactJS).</p>
+<p>More technically speaking, the reducer centralizes all your state transitions in a single spot and provides, along with the <code>action</code> variant type you've defined, an overview of the whole behavior of a component (including principled side-effects in the reducer! See <code>ReasonReact.SideEffects</code> &amp; <code>ReasonReact.UpdateWithSideEffects</code>). This also solves some obscure corners of past ReasonReact, while enabling potentially much better testing paradigms in the near future. Best of all: because it's just a thin declarative layer on top of ReactJS' imperative <code>setState</code>, reducer doesn't have many technical unknowns. If you're used to setState, you know reduce. When the language provides great variant facilities already, not much else is needed in order to compose features together into a great API.</p>
+<p>The new ReasonReact is already live on messenger.com. Again, don't forget to see the <a href="https://github.com/reasonml/reason-react/blob/main/HISTORY.md#024">migration guide</a> and the corresponding migration script.</p>
+<p>Enjoy!</p>
+</span></div></div><div class="blogSocialSection"></div></div><div class="blog-recent"><a class="button" href="/reason-react/blog">Recent Posts</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#design-decisions">Design Decisions</a></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:en"]}
+              });
+            </script></body></html>

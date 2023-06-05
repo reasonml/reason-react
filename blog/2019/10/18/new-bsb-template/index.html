@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>New ReasonReact bsb template! · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="BuckleScript 6.2.1 just got released, and with it came a freshly updated bsb ReasonReact template. To try it, just use the [official installation](https://reasonml.github.io/reason-react/docs/en/installation#bucklescript): `bsb -init my-react-app -theme react-hooks`."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="New ReasonReact bsb template! · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/blog/2019/10/18/new-bsb-template"/><meta property="og:description" content="BuckleScript 6.2.1 just got released, and with it came a freshly updated bsb ReasonReact template. To try it, just use the [official installation](https://reasonml.github.io/reason-react/docs/en/installation#bucklescript): `bsb -init my-react-app -theme react-hooks`."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><script src="/reason-react/js/scrollSpy.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/><script src="/reason-react/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/en"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/en/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/en/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/en/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/en/community" target="_self">Community</a></li><li class="siteNavGroupActive"><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Recent Posts</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul class=""><li class="navListItem"><a class="navItem" href="/reason-react/blog/2021/05/07/rescript-migration">We are rebranding to ReScript / React</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2020/06/08/090-release">ReasonReact 0.9.0 - Uncurried and Code Cleanup</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2020/05/05/080-release">ReasonReact 0.8.0 🎉 BuckleScript Upgrade &amp; More!</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/blog/2019/10/18/new-bsb-template">New ReasonReact bsb template!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2019/04/10/react-hooks">ReasonReact 0.7.0: Support for React Hooks</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2019/10/18/new-bsb-template">New ReasonReact bsb template!</a></h1><p class="post-meta">October 18, 2019</p><div class="authorBlock"></div></header><div><span><p><img src="/reason-react/img/new-bsb-template.png" alt="New examples"></p>
+<p>BuckleScript 6.2.1 just got released, and with it came a freshly updated bsb ReasonReact template. To try it, just use the <a href="https://reasonml.github.io/reason-react/docs/en/installation#bucklescript">official installation</a>: <code>bsb -init my-react-app -theme react-hooks</code>.</p>
+<p>If you like what ReasonReact's Router did to your routing experience, you'll love what this template does to your project scaffolding. Highlights:</p>
+<ul>
+<li><strong>No more development-time bundler needed!</strong>
+<ul>
+<li>Files are dynamically <code>require</code>d every page reload. <strong>No caching, no stale bundle, no race condition</strong>. Bsb provided us some much needed sanity in the build system. We're now applying the same philosophy to the subsequent bundling step at development time.</li>
+<li>Thanks to that, the entire edit-reload cycle is now in milliseconds, with <strong>cold</strong> reloading. No state bugs.</li>
+<li>An optional, example bundler (Webpack) for production is provided, just for completeness.</li>
+</ul></li>
+<li><strong>This starter boilerplate now serves the extra purpose of being a ReasonReact examples repo.</strong>
+<ul>
+<li>Evergreen collection of use-cases right in your template. Supersedes the now-deprecated <a href="https://github.com/reasonml-old/reason-react-example">reason-react-examples</a> repo.</li>
+<li>Informative comments on possible, lean architecture choices. No decision paralysis.</li>
+<li><strong>Table of ReasonReact features used</strong> in the README, so that you can eye the ReasonReact API you need and directly jump into the corresponding file.</li>
+</ul></li>
+<li><strong>Finally, a front-end boilerplate you can 100% fit in your head!</strong>
+<ul>
+<li><strong>Only two production dependencies</strong>: React and ReasonReact.</li>
+<li><strong>Only two development-time dependencies</strong>: BuckleScript and moduleserve (the latter resolves the <code>require</code>s during development).</li>
+<li>Simple, transparent and great for learners. Nothing in the repo is opaque; everything can be tweaked. You get to make structural changes as you see fit.</li>
+</ul></li>
+</ul>
+<p>Ever seen newcomers subconsciously blame themselves for not understanding a boilerplate when it's too rigid or fragile? It hurts to watch that. Front-end boilerplate generators have become complex beasts that have exceed the threshold acceptable for learning. For us, a boilerplate needs to enable folks to:</p>
+<ul>
+<li>get to their first working screen quickly, and</li>
+<li>understand the entirely of what's going on. Hard to change what you don't understand!</li>
+</ul>
+<p>Most boilerplates overfit the first, at the <strong>huge expense</strong> of the second. There are simply too many layers of shaky abstractions piled on top of each other for a person to truly grasp it; all the bells and whistles one might think newcomers appreciate pale in comparison to the disempowerment they'd feel facing such large scope and fragile setups. It shouldn't feel this elaborate to put pixels on the screen!</p>
+<p>Such boilerplate is no way to design learnability. That's why ours keeps things at a minimum, and should ironically feel much easier to get started with and to fully grasp than the opposite, overbearing approach. We encourage you to go through every file in the project; they're well-commented, succinct, and immediately useful. It goes without saying that we did not compromise on the polish of the examples =).</p>
+<p>For a long time, folks thought their edit-reload experience would be achieved through adding more layers on top of their bundler; we believe, just like for our ReasonReact Router, that we've achieved this by removing the layers.</p>
+</span></div></div><div class="blogSocialSection"></div></div><div class="blog-recent"><a class="button" href="/reason-react/blog">Recent Posts</a></div></div></div><nav class="onPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:en"]}
+              });
+            </script></body></html>

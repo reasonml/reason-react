@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Blog · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="All your ReactJS knowledge, codified."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Blog · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/"/><meta property="og:description" content="All your ReactJS knowledge, codified."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><script src="/reason-react/js/scrollSpy.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/><script src="/reason-react/js/codetabs.js"></script></head><body class="blog"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/en"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/en/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/en/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/en/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/en/community" target="_self">Community</a></li><li class="siteNavGroupActive siteNavItemActive"><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Recent Posts</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul class=""><li class="navListItem"><a class="navItem" href="/reason-react/blog/2021/05/07/rescript-migration">We are rebranding to ReScript / React</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2020/06/08/090-release">ReasonReact 0.9.0 - Uncurried and Code Cleanup</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2020/05/05/080-release">ReasonReact 0.8.0 🎉 BuckleScript Upgrade &amp; More!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2019/10/18/new-bsb-template">New ReasonReact bsb template!</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2019/04/10/react-hooks">ReasonReact 0.7.0: Support for React Hooks</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="posts"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2021/05/07/rescript-migration">We are rebranding to ReScript / React</a></h1><p class="post-meta">May 7, 2021</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p>BuckleScript &amp; Reason are now called <a href="https://rescript-lang.org/blog/bucklescript-is-rebranding">ReScript</a>, therefore the <strong>ReasonReact</strong> bindings will now be known as <strong>ReScript / React</strong> and need to be moved to a different npm package.</p>
+<p>This means...</p>
+<ul>
+<li>Our <code>reason-react</code> npm package will now be published as <a href="https://www.npmjs.com/package/@rescript/react"><code>@rescript/react</code></a></li>
+<li><code>rescript-react@0.10.1</code> is basically a cleaned up version of <code>reason-react@0.9.1</code> (see the <a href="https://github.com/rescript-lang/rescript-react/blob/master/Changes.md#v0101">CHANGELOG</a> for minor breaking changes).</li>
+<li>The <code>reason-react</code> github repository will be archived. Please refer to our new repository at <a href="https://github.com/rescript-lang/rescript-react">github.com/rescript-lang/rescript-react</a>.</li>
+<li>The next upcoming <code>@rescript/react</code> release will come with a few cool new features! Check out our <a href="https://forum.rescript-lang.org/t/rfc-rescript-react/901">RFC discussion</a> for more infos.</li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="migration"></a><a href="#migration" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Migration</h2>
+<p>From an API perspective, upgrading from <code>reason-react</code> to <code>@rescript/react</code> should be very easy, since most changes are a just matter of doing a few global search &amp; replaces.
+Details for the changed APIs can be found in our revamped <a href="https://rescript-lang.org/docs/react/latest/migrate-from-reason-react">ReScript / React migration guide</a>.</p>
+<h3><a class="anchor" aria-hidden="true" id="important-all-libraries-need-to-be-upgraded-to-rescript-react"></a><a href="#important-all-libraries-need-to-be-upgraded-to-rescript-react" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Important: All Libraries need to be upgraded to <code>rescript/react</code></h3>
+<p>Unfortunately <code>@rescript/react</code> based projects are not compatible with libraries that depend on the old <code>reason-react</code> package due to dependency conflicts.</p>
+<p>In other words: If you try to compile a project that uses both, <code>@rescript/react</code> and <code>reason-react</code>, the compiler will not compile due to a <code>React</code> module name collision.</p>
+<p><strong>There are currently three strategies to deal this issue:</strong></p>
+<ul>
+<li>As a temporary workaround, use a patching tool like <a href="https://www.npmjs.com/package/patch-package"><code>npm patch-package</code></a> to adjust the package dependencies of indidvidual bindings to <code>@rescript/react</code> (adapt <code>package.json</code> &amp; <code>bsconfig.json</code>)</li>
+<li>Ask the maintainer of your outdated third-party library to create a new major version release with <code>@rescript/react</code> as a dependency (don't forget to mention which version supports <code>@rescript/react</code> in the README).</li>
+<li>Or as a third alternative, create an updated fork of the project, or copy the bindings directly in your ReScript project.
+<ul>
+<li>Also take the occasion to adapt <code>bs-</code> prefixed library names to our new <a href="https://rescript-lang.org/docs/guidelines/publishing-packages">ReScript package conventions</a>. Otherwise your new libraries will not show up on our <a href="https://rescript-lang.org/packages">package index</a>.</li>
+</ul></li>
+</ul>
+<p>For more details on the name collision issue, please refer to <a href="https://forum.rescript-lang.org/t/discussion-reason-react-rescript-react-migration-path/1086">this forum post</a>.</p>
+<p>We apologize for the inconvenience; we promise that the migration work will be worth it!</p>
+<p>If you have any questions or migration issues, please open a discussion on the <a href="https://forum.rescript-lang.org">ReScript Forum</a> to get support, or ping @ryyppy / @rickyvetter on Github.</p>
+<p>Thanks for being part of the ReasonReact community and see you on the ReScript side!</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2020/06/08/090-release">ReasonReact 0.9.0 - Uncurried and Code Cleanup</a></h1><p class="post-meta">June 8, 2020</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p>Release 0.9.0 is primarily to setup for larger changes in coming BuckleScript and ReasonReact release, but that's not all that's there. Exciting new features include <code>React.Uncurried</code> hooks which provide even cleaner JS output and better performance for hooks that get called in hot loops. Additionally we now have better support for <code>Strict</code> mode, <code>ErrorBoundaries</code>, and pointer events.</p>
+<p>There are two breaking changes which most people are unlikely to hit:</p>
+<ol>
+<li>We have stopped versioning lib/js and will not ship on NPM. If you are using this library from Reason you will be unaffected. If you're using directly from handwritten JS, you could run into issues. If you want to continue doing this, you can <code>include</code> the code you're using into a Reason file in your codebase where you have more control over how it is exposed.</li>
+<li>We have changed the APIs of some of the <code>ReactDOM.Experimental</code> namespace. As the namespace implies, this code is not intended for production app use and you likely will not notice any difference here.</li>
+</ol>
+<p>Take a look at <a href="https://github.com/reasonml/reason-react/blob/main/HISTORY.md#090-052020">https://github.com/reasonml/reason-react/blob/main/HISTORY.md#090-052020</a> for a full listing of all the changes and credit to the incredible folks who have contributed.</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2020/05/05/080-release">ReasonReact 0.8.0 🎉 BuckleScript Upgrade &amp; More!</a></h1><p class="post-meta">May 5, 2020</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p>We're excited to share Version 0.8.0 of ReasonReact with the world today! ReasonReact adds a huge number of quality of life improvements and new api changes. This is our first big release since introducing hooks in 0.7.0.</p>
+<p>It's a breaking change primarily because it enforces a minimum BuckleScript version of 7.1.1. This is to ensure that we get consistent record and object runtime representation and to unlock more changes in the future. Going forward you can expect that ReasonReact will track BuckleScript more closely. The PPX lives in and ships with BuckleScript, so in order to make sweeping changes we have to work in both codebases.</p>
+<p>There are a number of additional breaking changes:</p>
+<ul>
+<li>crossOrigin casing was incorrect</li>
+<li>maxDuration removed from suspense api</li>
+<li>Ref type has been changed to be modelled as a record instead of abstract type with get and set</li>
+<li>The min attribute on dom nodes in now a string to match max</li>
+</ul>
+<p>As well as new additions:</p>
+<ul>
+<li>Support for concurrent mode with createRoot, Suspense, SuspenseList, useTransition</li>
+<li>React.float and int</li>
+<li>Better Children mapping</li>
+</ul>
+<p>This is not an exhaustive list - I encourage you to check out the full set in <a href="https://github.com/reasonml/reason-react/blob/main/HISTORY.md">https://github.com/reasonml/reason-react/blob/main/HISTORY.md</a>.</p>
+<p>This release has been a long time coming and is the huge effort of the ReasonReact community. A heartfelt thanks to everyone in the HISTORY and to everyone who has created or interacted with issues! The first step to upgrading here is to make sure you're on BuckleScript ^7.1.1. From there you can visit <a href="https://github.com/rickyvetter/upgrade-reason-react">upgrade-reason-react</a> for a script that will handle the ref upgrade, crossOrigin capitalization, and the type of min when used in JSX. Happy hacking!</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2019/10/18/new-bsb-template">New ReasonReact bsb template!</a></h1><p class="post-meta">October 18, 2019</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p><img src="/reason-react/img/new-bsb-template.png" alt="New examples"></p>
+<p>BuckleScript 6.2.1 just got released, and with it came a freshly updated bsb ReasonReact template. To try it, just use the <a href="https://reasonml.github.io/reason-react/docs/en/installation#bucklescript">official installation</a>: <code>bsb -init my-react-app -theme react-hooks</code>.</p>
+<p>If you like what ReasonReact's Router did to your routing experience, you'll love what this template does to your project scaffolding. Highlights:</p>
+<ul>
+<li><strong>No more development-time bundler needed!</strong>
+<ul>
+<li>Files are dynamically <code>require</code>d every page reload. <strong>No caching, no stale bundle, no race condition</strong>. Bsb provided us some much needed sanity in the build system. We're now applying the same philosophy to the subsequent bundling step at development time.</li>
+<li>Thanks to that, the entire edit-reload cycle is now in milliseconds, with <strong>cold</strong> reloading. No state bugs.</li>
+<li>An optional, example bundler (Webpack) for production is provided, just for completeness.</li>
+</ul></li>
+<li><strong>This starter boilerplate now serves the extra purpose of being a ReasonReact examples repo.</strong>
+<ul>
+<li>Evergreen collection of use-cases right in your template. Supersedes the now-deprecated <a href="https://github.com/reasonml-old/reason-react-example">reason-react-examples</a> repo.</li>
+<li>Informative comments on possible, lean architecture choices. No decision paralysis.</li>
+<li><strong>Table of ReasonReact features used</strong> in the README, so that you can eye the ReasonReact API you need and directly jump into the corresponding file.</li>
+</ul></li>
+<li><strong>Finally, a front-end boilerplate you can 100% fit in your head!</strong>
+<ul>
+<li><strong>Only two production dependencies</strong>: React and ReasonReact.</li>
+<li><strong>Only two development-time dependencies</strong>: BuckleScript and moduleserve (the latter resolves the <code>require</code>s during development).</li>
+<li>Simple, transparent and great for learners. Nothing in the repo is opaque; everything can be tweaked. You get to make structural changes as you see fit.</li>
+</ul></li>
+</ul>
+<p>Ever seen newcomers subconsciously blame themselves for not understanding a boilerplate when it's too rigid or fragile? It hurts to watch that. Front-end boilerplate generators have become complex beasts that have exceed the threshold acceptable for learning. For us, a boilerplate needs to enable folks to:</p>
+<ul>
+<li>get to their first working screen quickly, and</li>
+<li>understand the entirely of what's going on. Hard to change what you don't understand!</li>
+</ul>
+<p>Most boilerplates overfit the first, at the <strong>huge expense</strong> of the second. There are simply too many layers of shaky abstractions piled on top of each other for a person to truly grasp it; all the bells and whistles one might think newcomers appreciate pale in comparison to the disempowerment they'd feel facing such large scope and fragile setups. It shouldn't feel this elaborate to put pixels on the screen!</p>
+<p>Such boilerplate is no way to design learnability. That's why ours keeps things at a minimum, and should ironically feel much easier to get started with and to fully grasp than the opposite, overbearing approach. We encourage you to go through every file in the project; they're well-commented, succinct, and immediately useful. It goes without saying that we did not compromise on the polish of the examples =).</p>
+<p>For a long time, folks thought their edit-reload experience would be achieved through adding more layers on top of their bundler; we believe, just like for our ReasonReact Router, that we've achieved this by removing the layers.</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2019/04/10/react-hooks">ReasonReact 0.7.0: Support for React Hooks</a></h1><p class="post-meta">April 10, 2019</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p>Version 0.7.0 of ReasonReact adds support for the <a href="https://reactjs.org/docs/hooks-intro.html">React Hooks API</a>. This allows for writing function components with state and complex interactions.</p>
+<p>You can now write components like</p>
+<pre><code class="hljs css language-reason"><span class="hljs-attribute">[@react.component]</span>
+<span class="hljs-keyword">let</span> make = (~className, ~text) =&gt; &lt;div className&gt; {text} &lt;/div&gt;;
+</code></pre>
+<p>which will compile to a 0-cost React component that looks like</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">let</span> make = <span class="hljs-function">(<span class="hljs-params">{className, text}</span>) =&gt;</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{className}</span>&gt;</span> {text} <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+</code></pre>
+<p>In these new components you can make use of the full Hooks api:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">type</span> action =
+  | <span class="hljs-constructor">Tick</span>;
+
+<span class="hljs-keyword">type</span> state = {
+  count: int,
+};
+
+<span class="hljs-attribute">[@react.component]</span>
+<span class="hljs-keyword">let</span> make = () =&gt; {
+  <span class="hljs-keyword">let</span> (state, dispatch) = <span class="hljs-module-identifier">React</span>.useReducer(
+    (state, action) =&gt;
+      <span class="hljs-keyword">switch</span> (action) {
+      | <span class="hljs-constructor">Tick</span> =&gt; {count: state.count <span class="hljs-operator">+</span> <span class="hljs-number">1</span>}
+      },
+    {count: <span class="hljs-number">0</span>}
+  );
+
+  <span class="hljs-module-identifier">React</span>.useEffect0(() =&gt; {
+    <span class="hljs-keyword">let</span> timerId = <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.setInterval(() =&gt; dispatch(<span class="hljs-constructor">Tick</span>), <span class="hljs-number">1000</span>);
+    <span class="hljs-constructor">Some</span>(() =&gt; <span class="hljs-module-identifier">Js</span>.<span class="hljs-module-identifier">Global</span>.clearInterval(timerId))
+  });
+  
+  &lt;div&gt;{<span class="hljs-module-identifier">ReasonReact</span>.string(string_of_int(state.count))}&lt;/div&gt;;
+};
+</code></pre>
+<p>Please read the <a href="https://reasonml.github.io/reason-react/docs/en/components">new documentation</a> for an in-depth explanation of how to write these components and how they compile to existing ReactJS code.</p>
+<p>These components make use of a <a href="https://reasonml.github.io/reason-react/docs/en/jsx">new jsx</a> implementation that desugars exactly to <code>React.createElement</code> calls. In order to use these new components with JSX you will need to use <code>[@bs.config {jsx: 3}]</code> at the top of your file and use <code>^5.0.4</code> or <code>^6.0.1</code> BuckleScript which supports this new version. If you are in a greenfield project or you have fully converted, you can also <a href="https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt">change the JSX version</a> in your <code>bsconfig.json</code> file to <code>3</code> and drop the in-file annotations.</p>
+<p>This release also makes use of a new <code>React</code> namespace for APIs for all of the code related to this new way of writing components. Some functions have been copied over (like <code>React.string</code>, <code>React.array</code>) and many are new (like hooks)!</p>
+<p>The only breaking change for this API is the introduction of new namespaces, which should be a fairly straightforward fix that most people won't need to do. However, since lots of the new code won't work without a more recent version of BuckleScript, we do recommend doing an upgrade on this version first and treating this as a breaking change even if you have no <code>React</code> namespace conflict. If you're interested in migrating some components the upgrade script is <a href="https://github.com/chenglou/upgrade-reason-react#installation">provided</a>. It will wrap existing ReasonReact components as if they are Hooks components. This script will <em>not</em> attempt to re-write your logic as hooks because this is often a complicated process and it is not guaranteed to be correct. Please always inspect and test the work of the migration script to make sure it does what you're expecting!</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2019/03/12/small-release">ReasonReact 0.6.0 (Small Release)</a></h1><p class="post-meta">March 12, 2019</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p>Hello! It's been a while. We've been heads down working on a few secret features these days; in the meantime, hopefully you enjoyed the stability of the API so far.</p>
+<p>We're making a tiny release today to improve some nits. Consider this blog post as a heart beat. Don't forget to come to <a href="https://www.reason-conf.com">Reason Conf</a>! We have some ReasonReact stuff to share with you there.</p>
+<p>As usual, release notes are <a href="https://github.com/reasonml/reason-react/blob/main/HISTORY.md#060">here</a>. No migration script this time; it's just a single letter change.</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2018/08/06/050">ReasonReact 0.5: Fragment, Event, Cleanups</a></h1><p class="post-meta">August 6, 2018</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p>It's been a while since the last blog post! Note that we've been updating ReasonReact, just that we didn't want to drown you with too many blog posts when unnecessary. As we've said in our <a href="https://twitter.com/reasonconf/status/1002152653718245376">ReasonConf video</a>, we wanted the ReasonReact community to catch up and settle down a bit before showering it with another batch of changes.</p>
+<p>As usual, the proper list of changes are in <a href="https://github.com/reasonml/reason-react/blob/main/HISTORY.md#050">HISTORY.md</a>, likewise for the <a href="https://github.com/chenglou/upgrade-reason-react#installation">migration script</a>. Major highlights:</p>
+<ul>
+<li>Fragment support.</li>
+<li><code>ReactEventRe</code> -&gt; <code>ReactEvent</code> revamp.</li>
+<li>General cleanups that removes a bunch of already deprecated features.</li>
+</ul>
+<p>There are also many other quality-of-life improvements that, combined together, should reduce the arbitrary newcomer frictions in some places.</p>
+<p>See you next time!</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2018/01/09/subscriptions-send-router">Router and Subscriptions!</a></h1><p class="post-meta">January 9, 2018</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p>Happy new year! We've got a new, non-breaking release for you =). As always, <strong><a href="https://github.com/chenglou/upgrade-reason-react">here</a>'s the migration script</strong> and <a href="https://github.com/reasonml/reason-react/blob/main/HISTORY.md#031">here</a>'s the list of changes.</p>
+<p>V0.3.1 brings two important features, both super lightweight and performant, yet strike, we hope, a sweet spot in terms of usability:</p>
+<ul>
+<li><a href="https://reasonml.github.io/reason-react/docs/en/router.html"><strong>Router</strong></a>! It's tiny and has almost no learning overhead.</li>
+<li><a href="https://reasonml.github.io/reason-react/docs/en/subscriptions-helper.html">Subscriptions helper</a>. Helps you cut down on some boilerplate.</li>
+</ul>
+<p>These two features follow our spirit of keeping the learning and performance overhead low, while providing facilities that codifies your existing knowledge of ReactJS. In particular, note how:</p>
+<ul>
+<li>The subscriptions helper prevents you from forgetting to free your event listeners and timers.</li>
+<li>The router just uses pattern-matching to kill a majority of otherwise needed API surface.</li>
+</ul>
+<p>There are no FAQs for these two features. Check out the linked docs; you can use your existing understanding of Reason to answer your questions: is this performant? Will this work in my existing setup? How does nesting work? Etc. Special thanks to Ryan Florence and Michael Jackson for some small conversations.</p>
+<p>Additionally, we've <strong>deprecated</strong> <code>self.reduce</code> in favor of <code>self.send</code> (the migration script takes care of that):</p>
+<ul>
+<li><p>Before: <code>onClick={self.reduce(_event =&gt; Click)}</code></p></li>
+<li><p>After: <code>onClick={_event =&gt; self.send(Click)}</code></p></li>
+<li><p>Before: <code>didMount: self =&gt; {self.reduce(() =&gt; Click, ()); NoUpdate}</code></p></li>
+<li><p>After: <code>didMount: self =&gt; {self.send(Click); NoUpdate}</code></p></li>
+</ul>
+<p>This change should drastically reduce the confusion of an immediately called <code>self.reduce</code> (the form with two arguments). It also rolls on the tongue better: you &quot;send&quot; an action to the reducer.</p>
+<p>Happy coding!</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2017/11/17/power-children">RR 0.3.0 - Power Children</a></h1><p class="post-meta">November 17, 2017</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p>0.3.0 is here! We've bumped the minor version because it's a breaking change (just a small one, see <a href="https://github.com/reasonml/reason-react/blob/main/HISTORY.md#030">HISTORY.md</a>. We've been <em>really</em> careful with breaking changes). Stay tuned for more exciting features coming in the next few weeks (non-breaking). In the meantime, here's the big improvement of this release: <strong>you're now allowed to pass any data type to JSX children</strong>, not just <code>array(reactElement)</code>. And yes, they all type check, naturally!</p>
+<p>Head over to the improved <a href="https://reasonml.github.io/reason-react/docs/en/jsx.html#children">JSX</a> docs and then <a href="https://reasonml.github.io/reason-react/docs/en/children.html">Children</a> docs to know the details. Here's a summary.</p>
+<p>Previously, <code>&lt;Comp&gt; child1 child2 &lt;/Comp&gt;</code> desugars to passing an array of <code>[|child1, child2|]</code> to <code>Comp</code> as <code>children</code>. This is likewise the case for <code>&lt;Comp&gt; child1 &lt;/Comp&gt;</code> where, due to syntax constraints, we're <em>still</em> passing an array of <code>[|child1|]</code> to <code>Comp</code>. Since Reason 3, we've introduced the <a href="https://reasonml.github.io/docs/en/jsx.html#children-spread">children spread syntax</a> which simply makes <code>&lt;Comp&gt; ...child1 &lt;/Comp&gt;</code> <em>not</em> pass the array wrapper, but directly <code>child1</code>, to <code>children</code>.</p>
+<p>What does this unlock? Crazy tricks like these:</p>
+<ul>
+<li><p>A form component that mandates a tuple of 2 react element and shows them side-by-side:</p>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">MyForm</span>&gt; <span class="hljs-operator">...</span>(&lt;div /&gt;, &lt;div /&gt;) &lt;/<span class="hljs-module-identifier">MyForm</span>&gt;
+</code></pre></li>
+<li><p>A component that mandates a callback, no need for ReactJS' <code>React.Children.only</code> runtime check:</p>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">Motion</span>&gt; <span class="hljs-operator">...</span>((name) =&gt; &lt;div className=name /&gt;) &lt;/<span class="hljs-module-identifier">Motion</span>&gt;
+</code></pre></li>
+<li><p>A layout helper that accepts a variant of <code>TwoRows | ThreeRows | FourColumns</code></p>
+<pre><code class="hljs css language-reason">&lt;<span class="hljs-module-identifier">Layout</span>&gt; <span class="hljs-operator">...</span>(<span class="hljs-constructor">ThreeRows</span>(&lt;div /&gt;, child2, child3)) &lt;/<span class="hljs-module-identifier">Layout</span>&gt;
+</code></pre></li>
+</ul>
+<p>The type system will ensure that the data you're passing matches its usage inside these component. No need to explicitly annotate them unless you want to.</p>
+<p>In reality, this change was around 2 or 3 lines of code (albeit with lots of thinking time). It's a nice indicator of us leveraging the language itself rather than reinventing such concept within the framework. Notice also that the new spread syntax addition is <em>still</em> ReasonReact-agnostic (under the hood, the <code>children</code> label simply isn't passed a wrapper list/array in the presence of <code>...</code>). This kind of simple, gradual and vertically-integrated-yet-agnostic improvement is a large part of what we're hoping to do more in the future.</p>
+</span></div></article></div><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2017/10/02/new-docs-site">New Docs Site</a></h1><p class="post-meta">October 2, 2017</p><div class="authorBlock"></div></header><article class="post-content"><div><span><p><em>The ReactJS doc site has also been updated last friday <strong>by pure coincidence</strong>. No conspiracy theory!</em></p>
+<p>Do you like the new look? There's been quite a bit of iterations on the new docs, with an eye toward settings up site templates for our future libraries API docs effort (more on that another time). Meawhile, true to our community's spirit:</p>
+<ul>
+<li>The new docs site is much more readable, and just as simple, lean, fast, and easy to read and contribute to.</li>
+<li>It's done by a prominent community member, <a href="https://twitter.com/@rickyvetter">@rickyvetter</a>, who took every nit seriously and cleaned up every corner of the documentation layout, formatting, responsiveness, reorganization, etc. Quality open source contribution right here =)</li>
+<li>The existing links are preserved and show you the correct page to redirect to. Take your time migrating your links to the new ones; we'll keep them around for a while.</li>
+<li>We care about our community across the globe! There is now dedicated translation support. Click on that symbol on the upper right corner! Translating the docs is a good way to learning. Just ask <a href="https://twitter.com/charles_mangwa">@charles_mangwa</a> who learned Reason by translating the Reason docs to <a href="https://reasonml-fr.surge.sh">French</a>.</li>
+<li>Works with JavaScript off (falls out naturally from the doc site architecture).</li>
+</ul>
+<p>This community is the best part of Reason. In the end, it's all about people. Tweet to <a href="https://twitter.com/@rickyvetter">@rickyvetter</a> to show some thanks for his excellent work! It makes contributing in his free time much more worthwhile.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-next" href="/reason-react/blog/page2/">Next →</a></div></div></div></div></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:en"]}
+              });
+            </script></body></html>
