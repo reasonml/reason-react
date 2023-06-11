@@ -2,7 +2,7 @@
 
 (using melange 0.1)
 
-(generate_opam_files true)
+(generate_opam_files false)
 
 (cram enable)
 
