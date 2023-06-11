@@ -18,7 +18,7 @@ doc: "https://reasonml.github.io/reason-react"
 bug-reports: "https://github.com/reasonml/reason-react/issues"
 depends: [
   "dune" {>= "3.8"}
-  "ocaml" {>= "4.06.1"}
+  "ocaml" {>= "4.13.0"}
   "melange" {>= "1.0.0"}
   "reactjs-jsx-ppx"
   "reason" {>= "3.6.0"}
@@ -35,7 +35,6 @@ build: [
     "-j"
     jobs
     "@install"
-    "@runtest" {with-test}
     "@doc" {with-doc}
   ]
 ]
