@@ -33,7 +33,8 @@ let keyType loc =
 type 'a children = ListLiteral of 'a | Exact of 'a
 type componentConfig = { propsName : string }
 
-(* if children is a list, convert it to an array while mapping each element. If not, just map over it, as usual *)
+(* if children is a list, convert it to an array while mapping each element. If
+   not, just map over it, as usual *)
 let transformChildrenIfListUpper ~ctxt ~loc ~mapper theList =
   let rec transformChildren_ theList accum =
     (* not in the sense of converting a list to an array; convert the AST
@@ -127,11 +128,13 @@ let hasAttr { attr_name = loc; _ } = loc.txt = "react.component"
 (* Helper method to filter out any attribute that isn't [@react.component] *)
 let otherAttrsPure { attr_name = loc; _ } = loc.txt <> "react.component"
 
-(* Iterate over the attributes and try to find the [@react.component] attribute *)
+(* Iterate over the attributes and try to find the [@react.component]
+   attribute *)
 let hasAttrOnBinding { pvb_attributes } =
   find_opt hasAttr pvb_attributes <> None
 
-(* Finds the name of the variable the binding is assigned to, otherwise raises Invalid_argument *)
+(* Finds the name of the variable the binding is assigned to, otherwise raises
+   Invalid_argument *)
 let getFnName binding =
   match binding with
   | { pvb_pat = { ppat_desc = Ppat_var { txt } } } -> txt
@@ -165,7 +168,8 @@ let getPropsNameValue _acc (loc, exp) =
           ^ Longident.last_exn txt))
   [@@raises Invalid_argument]
 
-(* Lookup the `props` record or string as part of [@react.component] and store the name for use when rewriting *)
+(* Lookup the `props` record or string as part of [@react.component] and store
+   the name for use when rewriting *)
 let getPropsAttr payload =
   let defaultProps = { propsName = "Props" } in
   match payload with
@@ -196,7 +200,8 @@ let getPropsAttr payload =
 let pluckLabelDefaultLocType (label, default, _, _, loc, type_) =
   (label, default, loc, type_)
 
-(* Lookup the filename from the location information on the AST node and turn it into a valid module identifier *)
+(* Lookup the filename from the location information on the AST node and turn
+   it into a valid module identifier *)
 let filenameFromLoc ~ctxt (pstr_loc : Location.t) =
   let fileName =
     match pstr_loc.loc_start.pos_fname with
@@ -210,7 +215,8 @@ let filenameFromLoc ~ctxt (pstr_loc : Location.t) =
   let fileName = String.capitalize_ascii fileName in
   fileName
 
-(* Build a string representation of a module name with segments separated by $ *)
+(* Build a string representation of a module name with segments
+   separated by $ *)
 let makeModuleName fileName nestedModules fnName =
   let fullModuleName =
     match (fileName, nestedModules, fnName) with
@@ -224,13 +230,12 @@ let makeModuleName fileName nestedModules fnName =
   let fullModuleName = String.concat "$" fullModuleName in
   fullModuleName
 
-(*
-  AST node builders
-  These functions help us build AST nodes that are needed when transforming a [@react.component] into a
-  constructor and a props external
-*)
+(* AST node builders
+   These functions help us build AST nodes that are needed when transforming a
+   [@react.component] into a constructor and a props external *)
 
-(* Build an AST node representing all named args for the `external` definition for a component's props *)
+(* Build an AST node representing all named args for the `external` definition
+   for a component's props *)
 let rec recursivelyMakeNamedArgsForExternal list args =
   match list with
   | (label, default, loc, interiorType) :: tl ->
@@ -262,7 +267,8 @@ let rec recursivelyMakeNamedArgsForExternal list args =
                        ({ txt = Ldot (Lident "*predef*", "option") }, [ type_ ]);
                  },
                _ )
-           (* ~foo: int=? - note this isnt valid. but we want to get a type error *)
+           (* ~foo: int=? - note this isnt valid. but we want to get a type
+              error *)
            | label, Some type_, _
              when isOptional label ->
                type_
@@ -315,7 +321,8 @@ let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
   }
   [@@raises Invalid_argument]
 
-(* Build an AST node representing an `external` with the definition of the [@bs.obj] *)
+(* Build an AST node representing an `external` with the definition of the
+   [@bs.obj] *)
 let makePropsExternal fnName loc namedArgListWithKeyAndRef propsType =
   {
     pstr_loc = loc;
@@ -334,7 +341,8 @@ let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
   }
   [@@raises Invalid_argument]
 
-(* Build an AST node for the props name when converted to an object inside the function signature  *)
+(* Build an AST node for the props name when converted to an object inside the
+   function signature *)
 let makePropsName ~loc name =
   {
     ppat_desc = Ppat_var { txt = name; loc };
@@ -350,7 +358,8 @@ let makeObjectField loc (str, attrs, type_) =
     pof_attributes = attrs;
   }
 
-(* Build an AST node representing a "closed" object representing a component's props *)
+(* Build an AST node representing a "closed" object representing a component's
+   props *)
 let makePropsType ~loc namedTypeList =
   Typ.mk ~loc
     (Ptyp_constr
@@ -397,7 +406,8 @@ let jsxMapper =
         | Exact children -> [ (labelled "children", children) ]
         | ListLiteral { pexp_desc = Pexp_array list } when list = [] -> []
         | ListLiteral expression ->
-            (* this is a hack to support react components that introspect into their children *)
+            (* this is a hack to support react components that introspect into
+               their children *)
             childrenArg := Some expression;
             [
               ( labelled "children",
@@ -740,7 +750,8 @@ let jsxMapper =
             in
             let modifiedBindingOld binding =
               let expression = binding.pvb_expr in
-              (* TODO: there is a long-tail of unsupported features inside of blocks - Pexp_letmodule , Pexp_letexception , Pexp_ifthenelse *)
+              (* TODO: there is a long-tail of unsupported features inside of
+                 blocks - Pexp_letmodule , Pexp_letexception , Pexp_ifthenelse *)
               let rec spelunkForFunExpression expression =
                 match expression with
                 (* let make = (~prop) => ... *)
@@ -789,7 +800,8 @@ let jsxMapper =
                     unerasableIgnore emptyLoc :: exp.pexp_attributes;
                 }
               in
-              (* TODO: there is a long-tail of unsupported features inside of blocks - Pexp_letmodule , Pexp_letexception , Pexp_ifthenelse *)
+              (* TODO: there is a long-tail of unsupported features inside of
+                 blocks - Pexp_letmodule , Pexp_letexception , Pexp_ifthenelse *)
               let rec spelunkForFunExpression expression =
                 match expression with
                 (* let make = (~prop) => ... with no final unit *)
@@ -1256,7 +1268,8 @@ let jsxMapper =
           | _, nonJSXAttributes ->
               transformJsxCall ~ctxt self callExpression callArguments
                 nonJSXAttributes)
-      (* is it a list with jsx attribute? Reason <>foo</> desugars to [@JSX][foo]*)
+      (* is it a list with jsx attribute? Reason <>foo</> desugars to
+         [@JSX][foo]*)
       | {
           pexp_desc =
             ( Pexp_construct
@@ -1290,7 +1303,8 @@ let jsxMapper =
               in
               Exp.apply
                 ~loc
-                  (* throw away the [@JSX] attribute and keep the others, if any *)
+                  (* throw away the [@JSX] attribute and keep the others, if
+                     any *)
                 ~attrs:nonJSXAttributes
                 (* ReactDOMRe.createElement *)
                 (Exp.ident ~loc
