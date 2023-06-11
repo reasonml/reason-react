@@ -40,7 +40,7 @@ external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 
 type style = ReactDOMStyle.t;
 
-type domRef = JsxDOM.domRef;
+type domRef;
 
 module Ref = {
   type t = domRef;
@@ -63,6 +63,8 @@ module Props = {
     key: option(string),
     [@bs.optional]
     ref: option(domRef),
+    [@bs.optional]
+    children: option(React.element),
     /* accessibility */
     /* https://www.w3.org/TR/wai-aria-1.1/ */
     [@bs.optional] [@bs.as "aria-activedescendant"]
@@ -1081,6 +1083,7 @@ module Props = {
     [@bs.optional]
     suppressContentEditableWarning: option(bool),
   };
+
   /* This list isn't exhaustive. We'll add more as we go. */
   /*
    * Watch out! There are two props types and the only difference is the type of ref.
@@ -2129,13 +2132,13 @@ external createDOMElementVariadic:
   "createElement";
 
 [@bs.module "react/jsx-runtime"]
-external jsxKeyed: (string, JsxDOM.domProps, string) => Jsx.element = "jsx";
+external jsxKeyed: (string, domProps, string) => React.element = "jsx";
 
 [@bs.module "react/jsx-runtime"]
-external jsx: (string, JsxDOM.domProps) => Jsx.element = "jsx";
+external jsx: (string, domProps) => React.element = "jsx";
 
 [@bs.module "react/jsx-runtime"]
-external jsxs: (string, JsxDOM.domProps) => Jsx.element = "jsxs";
+external jsxs: (string, domProps) => React.element = "jsxs";
 
 [@bs.module "react/jsx-runtime"]
-external jsxsKeyed: (string, JsxDOM.domProps, string) => Jsx.element = "jsxs";
+external jsxsKeyed: (string, domProps, string) => React.element = "jsxs";

@@ -520,7 +520,7 @@ let jsxMapper =
 
       let propsCall =
         Exp.apply ~loc
-          (Exp.ident ~loc { loc; txt = Ldot (Lident "JsxDOM", "domProps") })
+          (Exp.ident ~loc { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
           ((match childrenProp with
            | Some childrenProp ->
                (labelled "children", childrenProp) :: nonChildrenProps

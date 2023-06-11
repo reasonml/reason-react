@@ -1,4 +1,4 @@
-type element = Jsx.element;
+type element;
 
 [@bs.val] external null: element = "null";
 
@@ -40,17 +40,7 @@ external jsxs: (component('props), 'props) => element = "jsxs";
 [@bs.module "react/jsx-runtime"]
 external jsxsKeyed: (component('props), 'props, string) => element = "jsxs";
 
-type fragmentProps('children) = {children: 'children};
-
-/* [@bs.module "react/jsx-runtime"] */
-/* external jsxFragment: component('props) = "Fragment"; */
-[@bs.module "react/jsx-runtime"] external jsxFragment: 'a = "Fragment";
-/* external jsxFragment: component({. "children": element}) = "Fragment"; */
-/* [@bs.obj] */
-/* external makeProps: */
-/* (~children: element, ~key: 'key=?, unit) => {. "children": element}; */
-[@bs.module "react"]
-external make: component({. "children": element}) = "Fragment";
+[@bs.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
 
 type ref('value) = {mutable current: 'value};
 
