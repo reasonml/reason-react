@@ -207,8 +207,8 @@ let getPropsAttr payload =
 let pluckLabelDefaultLocType (label, default, _, _, loc, type_) =
   (label, default, loc, type_)
 
-(* Lookup the filename from the location information on the AST node and turn it
-   into a valid module identifier *)
+(* Lookup the filename from the location information on the AST node and turn
+   it into a valid module identifier *)
 let filenameFromLoc ~ctxt (pstr_loc : Location.t) =
   let fileName =
     match pstr_loc.loc_start.pos_fname with
@@ -222,8 +222,8 @@ let filenameFromLoc ~ctxt (pstr_loc : Location.t) =
   let fileName = String.capitalize_ascii fileName in
   fileName
 
-(* Build a string representation of a module name with segments separated by
-   $ *)
+(* Build a string representation of a module name with segments
+   separated by $ *)
 let makeModuleName fileName nestedModules fnName =
   let fullModuleName =
     match (fileName, nestedModules, fnName) with
@@ -237,9 +237,9 @@ let makeModuleName fileName nestedModules fnName =
   let fullModuleName = String.concat "$" fullModuleName in
   fullModuleName
 
-(* AST node builders These functions help us build AST nodes that are needed
-   when transforming a [@react.component] into a constructor and a props
-   external *)
+(* AST node builders
+   These functions help us build AST nodes that are needed when transforming a
+   [@react.component] into a constructor and a props external *)
 
 (* Build an AST node representing all named args for the `external` definition
    for a component's props *)
@@ -1313,7 +1313,8 @@ let jsxMapper =
               in
               Exp.apply
                 ~loc
-                  (* throw away the [@JSX] attribute and keep the others, if any *)
+                  (* throw away the [@JSX] attribute and keep the others, if
+                     any *)
                 ~attrs:nonJSXAttributes
                 (* ReactDOMRe.createElement *)
                 (Exp.ident ~loc
