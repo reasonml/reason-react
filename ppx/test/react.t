@@ -38,8 +38,6 @@ Demonstrate how to use the React JSX PPX
           melc output/node_modules/reason-react/ReactTestUtils.js
           melc output/node_modules/reason-react/ReasonReactErrorBoundary.js
           melc output/node_modules/reason-react/ReasonReactRouter.js
-          melc output/node_modules/reason-react/legacy/ReactDOMRe.js
-          melc output/node_modules/reason-react/legacy/ReasonReact.js
          refmt x.re.ml
       ocamlopt .ppx/df8d19d63a600c50cc2fede8aa971a95/dune__exe___ppx.{cmx,o}
       ocamlopt .ppx/df8d19d63a600c50cc2fede8aa971a95/ppx.exe
