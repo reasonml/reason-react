@@ -48,7 +48,7 @@
  (description "ReasonReact JSX PPX")
  (depends
   (ocaml
-   (>= 4.06.1))
+   (>= 4.13.0))
   (reason
    (>= 3.6.0))
   (ppxlib
