@@ -12,7 +12,7 @@ This likely means that:
 - The JS component uses ES6 default export (`export default MyComponent`) (or, you forgot to export the component altogether!).
 - You're using Babel/Webpack to compile those ES6 modules.
 
-This is a common mistake. Please see BuckleScript's [Import an ES6 Default Value](https://bucklescript.github.io/docs/en/import-export.html#import-an-es6-default-value). Aka, instead of:
+This is a common mistake. Please see Melange's [Import an ES6 Default Value](https://melange.re/v1.0.0/communicate-with-javascript/#default-es6-values). Aka, instead of:
 
 ```reason
 [@bs.module] external myJSReactClass: ReasonReact.reactClass = "./myJSReactClass";
