@@ -37,13 +37,13 @@
    (>= 4.06.1))
   (melange
    (>= 1.0.0))
-  reactjs-jsx-ppx
+  reason-react-ppx
   (reason
    (>= 3.6.0))
   (ocaml-lsp-server :with-test)))
 
 (package
- (name reactjs-jsx-ppx)
+ (name reason-react-ppx)
  (synopsis "React.js JSX PPX")
  (description "ReasonReact JSX PPX")
  (depends

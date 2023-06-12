@@ -11,7 +11,7 @@ Demonstrate how to use the React JSX PPX
   >  (compile_flags :standard -w -20)
   >  (emit_stdlib false)
   >  (libraries reason-react)
-  >  (preprocess (pps melange.ppx reactjs-jsx-ppx)))
+  >  (preprocess (pps melange.ppx reason-react-ppx)))
   > EOF
   $ cat > x.re <<EOF
   > module App = {

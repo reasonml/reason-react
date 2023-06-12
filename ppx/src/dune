@@ -1,6 +1,6 @@
 (library
- (name reactjs_jsx_ppx)
+ (name reason_react_ppx)
  (kind ppx_rewriter)
- (public_name reactjs-jsx-ppx)
+ (public_name reason-react-ppx)
  (flags :standard -w -9)
  (libraries ppxlib))
