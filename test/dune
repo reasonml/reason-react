@@ -1,9 +1,9 @@
-; (melange.emit
-; (alias runtest)
-; (target test)
-; (package reason-react)
-; (module_systems
-; (commonjs bs.js))
-; (libraries reason_react jest)
-; (preprocess
-; (pps melange.ppx reactjs-jsx-ppx)))
+(melange.emit
+ (alias runtest)
+ (target melange)
+ (package reason-react)
+ (module_systems
+  (commonjs bs.js))
+ (libraries reason_react jest)
+ (preprocess
+  (pps melange.ppx reactjs-jsx-ppx)))

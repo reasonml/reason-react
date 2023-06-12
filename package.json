@@ -1,6 +1,6 @@
 {
   "name": "reason-react",
-  "version": "0.10.3-0",
+  "version": "0.11.0",
   "description": "React bindings for Reason",
   "files": [
     "dune",
@@ -38,7 +38,7 @@
       "node_modules"
     ],
     "roots": [
-      "_build/default/test/test/test"
+      "_build/default/test/melange/test"
     ],
     "testMatch": [
       "**/*__test.bs.js"
