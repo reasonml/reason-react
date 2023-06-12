@@ -58,18 +58,17 @@ let make = () => {
 
   /* onSubmit=onSubmit turns to just onSubmit */
   <form onSubmit>
-
-      <input
-        /* class names work the same way */
-        className="w-full"
-        /* type_ is underscored b/c its a reserved word in Reason */
-        type_="text"
-        /* No brackets needed! */
-        autoFocus=true
-        placeholder="Game Code"
-      />
-      <button type_="submit"> {React.string("Button label")} </button>
-    </form>;
+    <input
+      /* class names work the same way */
+      className="w-full"
+      /* type_ is underscored b/c its a reserved word in Reason */
+      type_="text"
+      /* No brackets needed! */
+      autoFocus=true
+      placeholder="Game Code"
+    />
+    <button type_="submit"> {React.string("Button label")} </button>
+  </form>;
 };
 ```
 
