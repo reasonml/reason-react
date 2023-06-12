@@ -23,42 +23,28 @@
         "flake-utils": [
           "flake-utils"
         ],
-        "nix-filter": "nix-filter",
+        "nix-filter": [
+          "nix-filter"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1685563568,
-        "narHash": "sha256-nbdH3TKhgCfofhRxOyl5pv4nz9EiuOqZM4ExFkwTgAw=",
+        "lastModified": 1686521510,
+        "narHash": "sha256-4BGoDG3/l7aTKDCOF8zIwt/s7uC7CV3PiCOYBqiKkuU=",
         "owner": "melange-re",
         "repo": "melange",
-        "rev": "c989a91761a9b1bcc8af80fb9653eab897360325",
+        "rev": "dcf5a6c5c708449d07c89d41a3a63018e20f7afa",
         "type": "github"
       },
       "original": {
         "owner": "melange-re",
-        "ref": "1.0.0",
         "repo": "melange",
         "type": "github"
       }
     },
     "nix-filter": {
-      "locked": {
-        "lastModified": 1681154353,
-        "narHash": "sha256-MCJ5FHOlbfQRFwN0brqPbCunLEVw05D/3sRVoNVt2tI=",
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "rev": "f529f42792ade8e32c4be274af6b6d60857fbee7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "type": "github"
-      }
-    },
-    "nix-filter_2": {
       "locked": {
         "lastModified": 1681154353,
         "narHash": "sha256-MCJ5FHOlbfQRFwN0brqPbCunLEVw05D/3sRVoNVt2tI=",
@@ -114,7 +100,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "melange": "melange",
-        "nix-filter": "nix-filter_2",
+        "nix-filter": "nix-filter",
         "nixpkgs": "nixpkgs"
       }
     },
