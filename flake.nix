@@ -26,15 +26,15 @@
 
       rec {
         packages = with pkgs.ocamlPackages; rec {
-          reactjs-jsx-ppx = buildDunePackage {
-            pname = "reactjs-jsx-ppx";
+          reason-react-ppx = buildDunePackage {
+            pname = "reason-react-ppx";
             version = "n/a";
             src = with nix-filter.lib; filter {
               root = ./.;
               include = [
                 "dune-project"
                 "dune"
-                "reactjs-jsx-ppx.opam"
+                "reason-react-ppx.opam"
                 "ppx"
               ];
             };
@@ -61,7 +61,7 @@
             nativeBuildInputs = [ pkgs.ocamlPackages.melange reason ];
             propagatedBuildInputs = [
               pkgs.ocamlPackages.melange
-              reactjs-jsx-ppx
+              reason-react-ppx
             ];
           };
         } // { default = packages.reason-react; };
