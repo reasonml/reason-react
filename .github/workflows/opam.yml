@@ -51,7 +51,6 @@ jobs:
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           dune-cache: true
-          opam-depext: false
 
       - name: Use Node.js
         uses: actions/setup-node@v3
