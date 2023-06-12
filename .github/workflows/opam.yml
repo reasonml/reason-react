@@ -47,7 +47,7 @@ jobs:
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
       - name: Use OCaml ${{ matrix.ocaml-compiler }}
-        uses: ocaml/setup-ocaml@v2
+        uses: ocaml/setup-ocaml@v2.0.15
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           dune-cache: true
