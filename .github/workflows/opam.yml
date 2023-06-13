@@ -19,9 +19,9 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          # Windows is disabled since it can't find dune 3.7 (it's needed).
-          # When dune with melange support and melange gets published to opam we can enable it again.
           # - windows-latest
+          # It seems like dune 3.8 isn't available under opam-repository-mingw for Windows
+          # disabling this for now
 
         ocaml-compiler:
           - 4.14.x
@@ -31,12 +31,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Use OCaml ${{ matrix.ocaml-compiler }}
-        uses: ocaml/setup-ocaml@v2
-        with:
-          ocaml-compiler: ${{ matrix.ocaml-compiler }}
-          dune-cache: true
 
       - name: Load opam cache when not Windows
         if: runner.os != 'Windows'
@@ -54,6 +48,12 @@ jobs:
           path: _opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+          dune-cache: true
+
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -61,9 +61,6 @@ jobs:
 
       - name: Install dependencies
         run: make install
-
-      - name: Pin melange and dune
-        run: make pin
 
       - name: Build
         run: make build

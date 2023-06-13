@@ -1,10 +1,10 @@
 ---
-title: JSX (Version 3)
+title: JSX
 ---
 
-Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact has two different transforms that you can use for your components. This doc covers Version 3 of the transform which is very similar to how [the ReactJS JSX transform](https://reactjs.org/docs/introducing-jsx.html) works. To use it, put `{"reason": {"react-jsx": 3}` in your [`bsconfig.json`](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
+Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact works very similar to how [the ReactJS JSX transform](https://reactjs.org/docs/introducing-jsx.html) does. To use it, put `{"reason": {"react-jsx": 3}` in your [`bsconfig.json`](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
 
-[Version 2](jsx-2.md) is used to render Reducer style components which require special interop to handle the ways they differ from ReactJS components. If you are starting a new project you can stick to version 3 all the time.
+Previously there was a [Version 2](jsx-2.md) of this transformation, used to render Reducer style components which require special interop to handle the ways they differ from React.js components.
 
 For help to migrate from version 2 to version 3, check the `ReasonReactCompat` [section](https://reasonml.github.io/reason-react/docs/en/reasonreactcompat.html#migrating-an-application-to-v070-and-jsx-v3).
 
