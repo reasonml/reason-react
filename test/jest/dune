@@ -1,3 +1,5 @@
 (library
  (name jest)
- (modes melange))
+ (modes melange)
+ (preprocess
+  (pps melange.ppx)))

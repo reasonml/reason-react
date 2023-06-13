@@ -46,6 +46,7 @@ format-check: ## Checks if format is correct
 
 .PHONY: install
 install: ## Update the package dependencies when new deps are added to dune-project
+	@opam pin add -y melange --dev-repo
 	@opam install . --deps-only --with-test
 	@npm install
 

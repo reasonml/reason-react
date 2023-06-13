@@ -28,8 +28,8 @@ Demonstrate how to use the React JSX PPX
   > EOF
 
   $ dune build @mel --display=short
-        ocamlc .ppx/df8d19d63a600c50cc2fede8aa971a95/dune__exe___ppx.{cmi,cmo}
-      ocamlopt .ppx/df8d19d63a600c50cc2fede8aa971a95/build_info__Build_info_data.{cmx,o}
+        ocamlc .ppx/9aa86304e1964cfc127b38093f18cb83/dune__exe___ppx.{cmi,cmo}
+      ocamlopt .ppx/9aa86304e1964cfc127b38093f18cb83/build_info__Build_info_data.{cmx,o}
           melc output/node_modules/reason-react/React.js
           melc output/node_modules/reason-react/ReactDOM.js
           melc output/node_modules/reason-react/ReactDOMServer.js
@@ -41,8 +41,8 @@ Demonstrate how to use the React JSX PPX
           melc output/node_modules/reason-react/legacy/ReactDOMRe.js
           melc output/node_modules/reason-react/legacy/ReasonReact.js
          refmt x.re.ml
-      ocamlopt .ppx/df8d19d63a600c50cc2fede8aa971a95/dune__exe___ppx.{cmx,o}
-      ocamlopt .ppx/df8d19d63a600c50cc2fede8aa971a95/ppx.exe
+      ocamlopt .ppx/9aa86304e1964cfc127b38093f18cb83/dune__exe___ppx.{cmx,o}
+      ocamlopt .ppx/9aa86304e1964cfc127b38093f18cb83/ppx.exe
            ppx x.re.pp.ml
           melc .output.mobjs/melange/melange__X.{cmi,cmj,cmt}
           melc output/x.js

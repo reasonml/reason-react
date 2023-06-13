@@ -32,12 +32,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use OCaml ${{ matrix.ocaml-compiler }}
-        uses: ocaml/setup-ocaml@v2
-        with:
-          ocaml-compiler: ${{ matrix.ocaml-compiler }}
-          dune-cache: true
-
       - name: Load opam cache when not Windows
         if: runner.os != 'Windows'
         id: opam-cache
@@ -54,6 +48,12 @@ jobs:
           path: _opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+          dune-cache: true
+
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -65,8 +65,8 @@ jobs:
       - name: Build
         run: make build
 
-      # - name: Test
-        # run: make test
+      - name: Test
+        run: make test
 
       - name: Save cache when not Windows
         uses: actions/cache/save@v3
