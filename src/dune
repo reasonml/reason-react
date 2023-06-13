@@ -3,7 +3,7 @@
 (library
  (name reason_react)
  (public_name reason-react)
- (wrapped false)
- (modes melange)
  (preprocess
-  (pps melange.ppx reactjs-jsx-ppx)))
+  (pps melange.ppx reactjs-jsx-ppx))
+ (wrapped false)
+ (modes melange))

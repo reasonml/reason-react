@@ -28,17 +28,19 @@ external createElementVariadic:
   (component('props), 'props, array(element)) => element =
   "createElement";
 
-[@bs.module "react"] [@deprecated "Please use JSX syntax directly."]
+[@bs.module "react/jsx-runtime"]
 external jsxKeyed: (component('props), 'props, string) => element = "jsx";
 
-[@bs.module "react"] [@deprecated "Please use JSX syntax directly."]
+[@bs.module "react/jsx-runtime"]
 external jsx: (component('props), 'props) => element = "jsx";
 
-[@bs.module "react"] [@deprecated "Please use JSX syntax directly."]
+[@bs.module "react/jsx-runtime"]
 external jsxs: (component('props), 'props) => element = "jsxs";
 
-[@bs.module "react"] [@deprecated "Please use JSX syntax directly."]
+[@bs.module "react/jsx-runtime"]
 external jsxsKeyed: (component('props), 'props, string) => element = "jsxs";
+
+[@bs.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
 
 type ref('value) = {mutable current: 'value};
 
