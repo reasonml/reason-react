@@ -1,6 +1,6 @@
 (melange.emit
  (alias runtest)
- (target melange)
+ (target test)
  (package reason-react)
  (module_systems
   (commonjs bs.js))

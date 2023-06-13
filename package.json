@@ -38,7 +38,7 @@
       "node_modules"
     ],
     "roots": [
-      "_build/default/test/melange/test"
+      "_build/default/test/test/test"
     ],
     "testMatch": [
       "**/*__test.bs.js"
