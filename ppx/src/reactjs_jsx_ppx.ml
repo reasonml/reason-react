@@ -71,7 +71,7 @@ let transformChildrenIfList ~ctxt ~loc ~mapper theList =
   in
   transformChildren_ theList []
 
-let extractChildren ?(removeLastPositionUnit = false) ~loc propsAndChildren =
+let extractChildren ?(removeLastPositionUnit = false) propsAndChildren =
   let rec allButLast_ lst acc =
     match lst with
     | [] -> []
@@ -97,10 +97,17 @@ let extractChildren ?(removeLastPositionUnit = false) ~loc propsAndChildren =
   with
   | [], props ->
       (* no children provided? Place a placeholder list *)
-      ( Exp.construct ~loc { loc; txt = Lident "[]" } None,
-        if removeLastPositionUnit then allButLast props else props )
+      (None, if removeLastPositionUnit then allButLast props else props)
+  | ( [
+        ( _,
+          { pexp_desc = Pexp_construct ({ txt = Lident "[]"; loc = _ }, None) }
+        );
+      ],
+      props ) ->
+      (None, if removeLastPositionUnit then allButLast props else props)
   | [ (_, childrenExpr) ], props ->
-      (childrenExpr, if removeLastPositionUnit then allButLast props else props)
+      ( Some childrenExpr,
+        if removeLastPositionUnit then allButLast props else props )
   | _ ->
       raise
         (Invalid_argument "JSX: somehow there's more than one `children` label")
@@ -374,6 +381,66 @@ let makePropsType ~loc namedTypeList =
            };
          ] ))
 
+let jsxExprAndChildren =
+  let arr ~loc children =
+    Exp.apply
+      (Exp.ident { txt = Longident.Ldot (Lident "React", "array"); loc })
+      [ (nolabel, children) ]
+  in
+  fun ?(ident = "React") ~loc ~ctxt mapper ~keyProps children ->
+    let childrenExpr =
+      Option.map (transformChildrenIfListUpper ~loc ~mapper ~ctxt) children
+    in
+    match (childrenExpr, keyProps) with
+    | Some (Exact children), (_, key) :: _ ->
+        ( Exp.ident
+            { loc = Location.none; txt = Ldot (Lident ident, "jsxKeyed") },
+          Some key,
+          (* [|moreCreateElementCallsHere|] *)
+          Some children )
+    | Some (Exact children), [] ->
+        ( Exp.ident { loc = Location.none; txt = Ldot (Lident ident, "jsx") },
+          None,
+          (* [|moreCreateElementCallsHere|] *)
+          Some children )
+    | ( Some (ListLiteral ({ pexp_desc = Pexp_array list } as children)),
+        (_, key) :: _ )
+      when list = [] ->
+        ( Exp.ident
+            { loc = Location.none; txt = Ldot (Lident ident, "jsxKeyed") },
+          Some key,
+          (* [|moreCreateElementCallsHere|] *)
+          Some (arr ~loc children) )
+    | Some (ListLiteral { pexp_desc = Pexp_array list }), [] when list = [] ->
+        ( Exp.ident { loc = Location.none; txt = Ldot (Lident ident, "jsx") },
+          None,
+          (* [|moreCreateElementCallsHere|] *)
+          children )
+    | Some (ListLiteral children), (_, key) :: _ ->
+        (* this is a hack to support react components that introspect into their
+           children *)
+        ( Exp.ident
+            { loc = Location.none; txt = Ldot (Lident ident, "jsxsKeyed") },
+          Some key,
+          Some (arr ~loc children) )
+    | Some (ListLiteral children), [] ->
+        (* this is a hack to support react components that introspect into their
+           children *)
+        ( Exp.ident { loc = Location.none; txt = Ldot (Lident ident, "jsxs") },
+          None,
+          Some (arr ~loc children) )
+    | None, (_, key) :: _ ->
+        ( Exp.ident
+            { loc = Location.none; txt = Ldot (Lident ident, "jsxKeyed") },
+          Some key,
+          (* [|moreCreateElementCallsHere|] *)
+          None )
+    | None, [] ->
+        ( Exp.ident { loc = Location.none; txt = Ldot (Lident ident, "jsx") },
+          None,
+          (* [|moreCreateElementCallsHere|] *)
+          None )
+
 (* Builds an AST node for the entire `external` definition of props *)
 let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
   makePropsExternal fnName loc
@@ -383,37 +450,24 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper =
-  let jsxVersion = ref None in
-
   let transformUppercaseCall3 ~caller modulePath ~ctxt mapper loc attrs _
       callArguments =
-    let children, argsWithLabels =
-      extractChildren ~loc ~removeLastPositionUnit:true callArguments
-    in
+    let children, argsWithLabels = extractChildren callArguments in
     let argsForMake = argsWithLabels in
-    let childrenExpr =
-      transformChildrenIfListUpper ~loc ~mapper ~ctxt children
+    let keyProps, otherProps =
+      List.partition
+        (fun (arg_label, _) -> "key" = getLabel arg_label)
+        argsForMake
     in
-    let recursivelyTransformedArgsForMake =
-      argsForMake
+    let jsxExpr, key, childrenProp =
+      jsxExprAndChildren ~loc ~ctxt mapper ~keyProps children
+    in
+    let propsArg =
+      (match childrenProp with
+      | Some childrenProp -> (labelled "children", childrenProp) :: otherProps
+      | None -> otherProps)
       |> List.map (fun (label, expression) ->
              (label, mapper#expression ctxt expression))
-    in
-    let childrenArg = ref None in
-    let args =
-      recursivelyTransformedArgsForMake
-      @ (match childrenExpr with
-        | Exact children -> [ (labelled "children", children) ]
-        | ListLiteral { pexp_desc = Pexp_array list } when list = [] -> []
-        | ListLiteral expression ->
-            (* this is a hack to support react components that introspect into
-               their children *)
-            childrenArg := Some expression;
-            [
-              ( labelled "children",
-                Exp.ident ~loc { loc; txt = Ldot (Lident "React", "null") } );
-            ])
-      @ [ (nolabel, Exp.construct ~loc { loc; txt = Lident "()" } None) ]
     in
     let isCap str =
       let first = String.sub str 0 1 [@@raises Invalid_argument] in
@@ -438,83 +492,51 @@ let jsxMapper =
                "JSX name can't be the result of function applications")
     in
     let props =
-      Exp.apply ~attrs ~loc (Exp.ident ~loc { loc; txt = propsIdent }) args
+      Exp.apply ~attrs ~loc (Exp.ident ~loc { loc; txt = propsIdent }) propsArg
     in
-    (* handle key, ref, children *)
-    (* React.createElement(Component.make, props, ...children) *)
-    match !childrenArg with
-    | None ->
-        Exp.apply ~loc ~attrs
-          (Exp.ident ~loc { loc; txt = Ldot (Lident "React", "createElement") })
-          [ (nolabel, Exp.ident ~loc { txt = ident; loc }); (nolabel, props) ]
-    | Some children ->
-        Exp.apply ~loc ~attrs
-          (Exp.ident ~loc
-             { loc; txt = Ldot (Lident "React", "createElementVariadic") })
-          [
-            (nolabel, Exp.ident ~loc { txt = ident; loc });
-            (nolabel, props);
-            (nolabel, children);
-          ]
-    [@@raises Invalid_argument]
+    let key_args =
+      match key with
+      | Some key -> [ (nolabel, mapper#expression ctxt key) ]
+      | None -> []
+    in
+    Exp.apply ~loc ~attrs jsxExpr
+      ([ (nolabel, Exp.ident ~loc { txt = ident; loc }); (nolabel, props) ]
+      @ key_args)
   in
 
   let transformLowercaseCall3 ~ctxt mapper loc attrs callArguments id =
-    let children, nonChildrenProps = extractChildren ~loc callArguments in
+    let children, nonChildrenProps = extractChildren callArguments in
     let componentNameExpr = constantString ~loc id in
-    let childrenExpr = transformChildrenIfList ~loc ~ctxt ~mapper children in
-    let createElementCall =
-      match children with
-      (* [@JSX] div(~children=[a]), coming from <div> a </div> *)
-      | {
-       pexp_desc =
-         ( Pexp_construct
-             ({ txt = Lident "::" }, Some { pexp_desc = Pexp_tuple _ })
-         | Pexp_construct ({ txt = Lident "[]" }, None) );
-      } ->
-          "createDOMElementVariadic"
-      (* [@JSX] div(~children= value), coming from <div> ...(value) </div> *)
-      | _ ->
-          raise
-            (Invalid_argument
-               "A spread as a DOM element's children don't make sense written \
-                together. You can simply remove the spread.")
+    let keyProps, nonChildrenProps =
+      List.partition
+        (fun (arg_label, _) -> "key" = getLabel arg_label)
+        nonChildrenProps
     in
-    let args =
-      match nonChildrenProps with
-      | [ _justTheUnitArgumentAtEnd ] ->
-          [
-            (* "div" *)
-            (nolabel, componentNameExpr);
-            (* [|moreCreateElementCallsHere|] *)
-            (nolabel, childrenExpr);
-          ]
-      | nonEmptyProps ->
-          let propsCall =
-            Exp.apply ~loc
-              (Exp.ident ~loc
-                 { loc; txt = Ldot (Lident "ReactDOMRe", "domProps") })
-              (nonEmptyProps
-              |> List.map (fun (label, expression) ->
-                     (label, mapper#expression ctxt expression)))
-          in
-          [
-            (* "div" *)
-            (nolabel, componentNameExpr);
-            (* ReactDOMRe.props(~className=blabla, ~foo=bar, ()) *)
-            (labelled "props", propsCall);
-            (* [|moreCreateElementCallsHere|] *)
-            (nolabel, childrenExpr);
-          ]
+    let jsxExpr, args =
+      let jsxExpr, key, childrenProp =
+        jsxExprAndChildren ~ident:"ReactDOM" ~loc ~ctxt mapper ~keyProps
+          children
+      in
+
+      let propsCall =
+        Exp.apply ~loc
+          (Exp.ident ~loc { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+          ((match childrenProp with
+           | Some childrenProp ->
+               (labelled "children", childrenProp) :: nonChildrenProps
+           | None -> nonChildrenProps)
+          |> List.map (fun (label, expression) ->
+                 (label, mapper#expression ctxt expression)))
+      in
+      let key_args =
+        match key with
+        | Some key -> [ (nolabel, mapper#expression ctxt key) ]
+        | None -> []
+      in
+      ( jsxExpr,
+        [ (nolabel, componentNameExpr); (nolabel, propsCall) ] @ key_args )
     in
-    Exp.apply
-      ~loc (* throw away the [@JSX] attribute and keep the others, if any *)
-      ~attrs
-      (* ReactDOMRe.createElement *)
-      (Exp.ident ~loc
-         { loc; txt = Ldot (Lident "ReactDOMRe", createElementCall) })
-      args
-    [@@raises Invalid_argument]
+    Exp.apply ~loc ~attrs jsxExpr args
   in
 
   let rec recursivelyTransformNamedArgsForMake ~ctxt mapper expr list =
@@ -550,8 +572,8 @@ let jsxMapper =
                   Ocaml_common.Location.prerr_warning pattern.ppat_loc
                     (Preprocessor
                        (Printf.sprintf
-                          "ReasonReact: optional argument annotations must \
-                           have explicit `option`. Did you mean \
+                          "react-jsx-ppx: optional argument annotations must \
+                           have an explicit `option` type. Did you mean \
                            `option(%s)=?`?"
                           currentType)))
           | _ -> ()
@@ -588,8 +610,8 @@ let jsxMapper =
         (list, Some txt)
     | Pexp_fun (Nolabel, _, pattern, _expression) ->
         Location.raise_errorf ~loc:pattern.ppat_loc
-          "ReasonReact: react.component refs only support plain arguments and \
-           type annotations."
+          "react-jsx-ppx: react.component refs only support plain arguments \
+           and type annotations."
     | _ -> (list, None)
     [@@raises Invalid_argument]
   in
@@ -856,11 +878,11 @@ let jsxMapper =
                       ((fun a -> a), false, unerasableIgnoreExp expression)
                     else
                       Location.raise_errorf ~loc:pattern.ppat_loc
-                        "ReasonReact: props need to be labelled arguments.\n\
+                        "react-jsx-ppx: props need to be labelled arguments.\n\
                         \  If you are working with refs be sure to wrap with \
                          React.forwardRef.\n\
-                        \  If your component doesn't have any props use () or \
-                         _ instead of a name."
+                        \  If your component doesn't have any props, use () \
+                         (unit) or _ (wildcard) instead of a name."
                 (* let make = {let foo = bar in (~prop) => ...} *)
                 | { pexp_desc = Pexp_let (recursive, vbs, internalExpression) }
                   ->
@@ -1197,33 +1219,21 @@ let jsxMapper =
               (Invalid_argument
                  "JSX: `createElement` should be preceeded by a module name.")
         (* Foo.createElement(~prop1=foo, ~prop2=bar, ~children=[], ()) *)
-        | { loc; txt = Ldot (modulePath, ("createElement" | "make")) } -> (
-            match !jsxVersion with
-            | None | Some 3 ->
-                transformUppercaseCall3 ~ctxt ~caller:"make" modulePath mapper
-                  loc attrs callExpression callArguments
-            | Some _ ->
-                raise (Invalid_argument "JSX: the JSX version must be  3"))
+        | { loc; txt = Ldot (modulePath, ("createElement" | "make")) } ->
+            transformUppercaseCall3 ~ctxt ~caller:"make" modulePath mapper loc
+              attrs callExpression callArguments
         (* div(~prop1=foo, ~prop2=bar, ~children=[bla], ()) *)
         (* turn that into
-           ReactDOMRe.createElement(~props=ReactDOMRe.props(~props1=foo, ~props2=bar, ()), [|bla|]) *)
-        | { loc; txt = Lident id } -> (
-            match !jsxVersion with
-            | None | Some 3 ->
-                transformLowercaseCall3 ~ctxt mapper loc attrs callArguments id
-            | Some _ ->
-                raise (Invalid_argument "JSX: the JSX version must be 3"))
+           ReactDOMRe.createElement(~props=ReactDOMRe.props(~props1=foo,
+           ~props2=bar, ()), [|bla|]) *)
+        | { loc; txt = Lident id } ->
+            transformLowercaseCall3 ~ctxt mapper loc attrs callArguments id
         (* Foo.bar(~prop1=foo, ~prop2=bar, ~children=[], ()) *)
         (* Not only "createElement" or "make". See
            https://github.com/reasonml/reason/pull/2541 *)
-        | { loc; txt = Ldot (modulePath, anythingNotCreateElementOrMake) } -> (
-            match !jsxVersion with
-            | None | Some 3 ->
-                transformUppercaseCall3 ~ctxt
-                  ~caller:anythingNotCreateElementOrMake modulePath mapper loc
-                  attrs callExpression callArguments
-            | Some _ ->
-                raise (Invalid_argument "JSX: the JSX version must be  3"))
+        | { loc; txt = Ldot (modulePath, anythingNotCreateElementOrMake) } ->
+            transformUppercaseCall3 ~ctxt ~caller:anythingNotCreateElementOrMake
+              modulePath mapper loc attrs callExpression callArguments
         | { txt = Lapply _ } ->
             (* don't think there's ever a case where this is reached *)
             raise
@@ -1288,7 +1298,7 @@ let jsxMapper =
           | _, nonJSXAttributes ->
               let fragment =
                 Exp.ident ~loc
-                  { loc; txt = Ldot (Lident "ReasonReact", "fragment") }
+                  { loc; txt = Ldot (Lident "React", "jsxFragment") }
               in
               let childrenExpr =
                 transformChildrenIfList ~loc ~ctxt ~mapper:self listItems
@@ -1308,7 +1318,7 @@ let jsxMapper =
                 ~attrs:nonJSXAttributes
                 (* ReactDOMRe.createElement *)
                 (Exp.ident ~loc
-                   { loc; txt = Ldot (Lident "ReactDOMRe", "createElement") })
+                   { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
                 args)
       (* Delegate to the default mapper, a deep identity traversal *)
       | e -> super#expression ctxt e
