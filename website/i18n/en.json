@@ -96,7 +96,7 @@
         "title": "JSX (Old, Version 2)"
       },
       "jsx": {
-        "title": "JSX (Version 3)"
+        "title": "JSX"
       },
       "lifecycles": {
         "title": "Lifecycles"
@@ -198,7 +198,6 @@
       "Getting Started": "Getting Started",
       "Core": "Core",
       "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
-      "Record API (deprecated)": "Record API (deprecated)",
       "FAQ": "FAQ",
       "Recipes & Snippets": "Recipes & Snippets",
       "Community": "Community",
@@ -223,9 +222,6 @@
     "Simple, solid and inferred using Reason types. Write the same React code, get your type system guarantees automatically.|no description given": "Simple, solid and inferred using Reason types. Write the same React code, get your type system guarantees automatically.",
     "Drop In|no description given": "Drop In",
     "Powered by ReactJS under the hood. Freely integrate your existing React libraries and knowledge.|no description given": "Powered by ReactJS under the hood. Freely integrate your existing React libraries and knowledge.",
-    "QuickStart|no description given": "QuickStart",
-    "Projects Using ReasonReact|no description given": "Projects Using ReasonReact",
-    "See Full List|no description given": "See Full List",
     "Help Translate|recruit community translators for your project": "Help Translate",
     "Edit this Doc|recruitment message asking to edit the doc source": "Edit",
     "Translate this Doc|recruitment message asking to translate the docs": "Translate"
