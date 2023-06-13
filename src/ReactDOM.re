@@ -1082,6 +1082,8 @@ module Props = {
     dangerouslySetInnerHTML: option({. "__html": string}),
     [@bs.optional]
     suppressContentEditableWarning: option(bool),
+    [@bs.optional]
+    suppressHydrationWarning: option(bool),
   };
 
   /* This list isn't exhaustive. We'll add more as we go. */
@@ -2108,6 +2110,8 @@ module Props = {
     /* react-specific */
     [@bs.optional]
     dangerouslySetInnerHTML: option({. "__html": string}),
+    [@bs.optional]
+    suppressHydrationWarning: option(bool),
     [@bs.optional]
     suppressContentEditableWarning: option(bool),
   };
