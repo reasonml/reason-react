@@ -2,11 +2,11 @@
 title: JSX
 ---
 
-Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact works very similar to how [the ReactJS JSX transform](https://reactjs.org/docs/introducing-jsx.html) does. To use it, put `{"reason": {"react-jsx": 3}` in your [`bsconfig.json`](https://bucklescript.github.io/docs/en/build-configuration.html#reason-refmt) (schema [here](http://bucklescript.github.io/bucklescript/docson/#build-schema.json)).
+Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact works very similar to how [the ReactJS JSX transform](https://reactjs.org/docs/introducing-jsx.html) does.
 
-Previously there was a [Version 2](jsx-2.md) of this transformation, used to render Reducer style components which require special interop to handle the ways they differ from React.js components.
+To use it, you would need to install [`reactjs-jsx-ppx`](https://opam.ocaml.org/packages/reactjs-jsx-ppx/) and add `(preprocess (pps reactjs-jsx-ppx))` in [`melange.emit or library`](https://dune.readthedocs.io/en/stable/melange.html) stanzas in your `dune` file.
 
-For help to migrate from version 2 to version 3, check the `ReasonReactCompat` [section](https://reasonml.github.io/reason-react/docs/en/reasonreactcompat.html#migrating-an-application-to-v070-and-jsx-v3).
+Here's a list of transformations made by the [ppx](https://ocaml.org/docs/metaprogramming):
 
 ## Uncapitalized
 
@@ -17,14 +17,14 @@ For help to migrate from version 2 to version 3, check the `ReasonReactCompat` [
 transforms into
 
 ```reason
-ReactDOMRe.createDOMElementVariadic(
+ReactDOM.createDOMElementVariadic(
   "div",
-  ~props=ReactDOMRe.domProps(~foo=bar, ()),
+  ~props=ReactDOM.domProps(~foo=bar, ()),
   [|child1, child2|]
 );
 ```
 
-which compiles to the JS code:
+which compiles to the JavaScript code:
 
 ```js
 React.createElement('div', {foo: bar}, child1, child2)
@@ -33,9 +33,9 @@ React.createElement('div', {foo: bar}, child1, child2)
 Prop-less `<div />` transforms into
 
 ```reason
-ReactDOMRe.createDOMElementVariadic(
+ReactDOM.createDOMElementVariadic(
   "div",
-  ~props=ReactDOMRe.domProps(),
+  ~props=ReactDOM.domProps(),
   [||]
 );
 ```
