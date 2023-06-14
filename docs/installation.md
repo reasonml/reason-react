@@ -6,7 +6,7 @@ ReasonReact is built to work with [Melange](https://melange.re/) and [Reason](ht
 
 If you want to build a new app or a new website with ReasonReact and Melange, we recommend to use a package manager such as [opam](https://opam.ocaml.org/) to download and install the required dependencies.
 
-There are other alternatives available, such as [esy](https://esy.sh/) or [nix](https://nixos.org/) explained under [Melange documentation](https://melange.re/v1.0.0/getting-started/#alternative-package-managers-experimental) in better detail.
+There are other alternatives available, such as [esy](https://esy.sh/) or [nix](https://nixos.org/). See [Melange documentation](https://melange.re/v1.0.0/getting-started/#alternative-package-managers-experimental) for details.
 
 #### Requirements
 
