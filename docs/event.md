@@ -4,7 +4,7 @@ title: Event
 
 ReasonReact events map cleanly to ReactJS [synthetic events](https://reactjs.org/docs/events.html). ReasonReact exposes a module called `ReactEvent` to help you work with events.
 
-ReactEvent is the module that contains all the event types, and contains each event kind as submodule. (e.g. `ReactEvent.Form`, or `ReactEvent.Mouse`)
+ReactEvent module contains all event types as submodules, e.g. `ReactEvent.Form`, `ReactEvent.Mouse`, etc.
 
 You can access to their properties using the `ReactEvent.{{EventName}}.{{property}}` method. For example, to access the `target` property of a `ReactEvent.Form.t` event, you would use `ReactEvent.Form.target`.
 
