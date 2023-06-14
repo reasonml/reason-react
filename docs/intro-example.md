@@ -10,13 +10,12 @@ Here is a small overview of the ReasonReact API before we start. No worries if s
 /* file: Greeting.re */
 
 [@react.component]
-let make = (~name) =>
-  <button> {ReasonReact.string("Hello " ++ name ++ "!")} </button>;
+let make = (~name) => <button> {React.string("Hello " ++ name ++ "!")} </button>;
 ```
 
 ## Using Greeting in your App
 
-If you're writing your entire React app in Reason, you'll probably have a `ReactDOM.render` in an index.js. This is what that looks like in Reason:
+If you're writing your entire React app in Reason, you'll probably have a `ReactDOM.render` in an index file. This is what that looks like in Reason:
 
 ```reason
 /* file: Index.re */
@@ -26,30 +25,24 @@ switch (ReactDOM.querySelector("#root")) {
 }
 ```
 
-This is how you used to write this in plain Javascript (index.js):
+This is how you used to write this in plain JavaScript (index.js):
 
 ```js
 /* file: index.js */
 let root = document.getElementById("root");
-if(root != null) {
+if (root != null) {
   ReactDOM.render(<Greeting name="John" />, root);
 };
 ```
 
-or if you prefer to be surprised with runtime errors:
+### Using Greeting in an existing JavaScript/Typescript application
 
-```js
-ReactDOM.render(<Greeting name="John" />, document.getElementById("root"));
-```
-
-### Using Greeting in an existing Javascript/Typescript App
-
-It's easy to import a Reason component into your existing app. All Reason extensions will have `bs` and export your component as `make`. You can rename it and call it as you usually do. [Gentype](https://github.com/cristianoc/genType) makes this easier (see the example).
+It's easy to import a ReasonReact component into your existing app. After being transpiled to JS, all Reason components will have `.js` as extension by default and export a function component called `make`. You can change it with [module_systems](https://melange.re/v1.0.0/build-system/#commonjs-or-es6-modules) field inside a [`melange.emit` stanza](https://dune.readthedocs.io/en/stable/melange.html#melange-emit).
 
 ```js
 /* file: App.js */
 
-import { make as Greeting } from "./Greeting.bs";
+import { make as Greeting } from "./Greeting.js";
 
 export default function App() {
   return (

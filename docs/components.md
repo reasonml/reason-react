@@ -39,7 +39,7 @@ let make = (Props) => {
 };
 ```
 
-It has added a new function with `Props` as a suffix which uses [`[@bs.obj]`](https://bucklescript.github.io/docs/en/object-2#function) to create your props object. This function gets compiled away by BuckleScript and will be replaced by object literals when used.
+It has added a new function called  `makeProps` which uses [`[@bs.obj]`](https://melange.re/v1.0.0/communicate-with-javascript/#using-jst-objects) to create your props object. This function gets compiled away by Melange and will be replaced by object literals when used.
 
 ### A note on `children`
 
@@ -88,8 +88,8 @@ The differences that you'll notice are mostly around listing dependencies. In Re
 Accordingly, for example, the two javascript calls:
 
 ```js
-useEffect(effect, [dep1, dep2]) 
-useEffect(effect, []) 
+useEffect(effect, [dep1, dep2])
+useEffect(effect, [])
 ```
 
 would be expressed as the following two reason calls:
@@ -113,7 +113,7 @@ Reason also always opts for the safest form of a given hook as well. So `React.u
 
 ## Hand-writing components
 
-You don't need to use the `[@react.component]` declaration to write components. Instead you can write a pair of `foo` and `fooProps` functions such that `type fooProps: 'a => props and foo: props => React.element` and these will always work as React components! This works with your own version of [`[@bs.obj]`](https://bucklescript.github.io/docs/en/object-2#function), [`[bs.deriving abstract]`](https://bucklescript.github.io/docs/en/object#record-mode), or any other function that takes named args and returns a single props structure.
+You don't need to use the `[@react.component]` declaration to write components. Instead you can write a pair of `foo` and `fooProps` functions such that `type fooProps: 'a => props and foo: props => React.element` and these will always work as React components! This works with your own version of [`[@bs.obj]`](https://melange.re/v1.0.0/communicate-with-javascript/#using-jst-objects), [`[bs.deriving abstract]`](https://melange.re/v1.0.0/communicate-with-javascript/#convert-records-into-abstract-types), or any other function that takes named args and returns a single props structure.
 
 ## Interop
 
@@ -148,7 +148,7 @@ external makeProps: (~name: 'name, ~key: string=?, unit) => {. "name": 'name} = 
 external make: ({. "name": string}) => React.element = "default";
 ```
 
-**Note on `default`:** to understand what `default` means, see [the BuckleScript docs](https://bucklescript.github.io/docs/en/import-export#import-an-es6-default-value).
+**Note on `default`:** to understand what `default` means, see [the Melange docs on ES6](https://melange.re/v1.0.0/communicate-with-javascript/#default-es6-values).
 
 ## Component Naming
 
