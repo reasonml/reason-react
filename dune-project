@@ -2,7 +2,7 @@
 
 (using melange 0.1)
 
-(generate_opam_files false)
+(generate_opam_files true)
 
 (cram enable)
 
@@ -34,7 +34,7 @@
   "ReasonReact helps you use Reason to build React components with deeply integrated, strong, static type safety.\n\nIt is designed and built by people using Reason and React in large, mission critical production React codebases.")
  (depends
   (ocaml
-   (>= 4.06.1))
+   (>= 4.13.0))
   (melange
    (>= 1.0.0))
   reactjs-jsx-ppx

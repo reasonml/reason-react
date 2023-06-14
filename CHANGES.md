@@ -1,4 +1,4 @@
-# 0.11.0 (unreleased)
+# 0.11.0
 
 * Setup repo with Melange [@davesnx in #711](https://github.com/reasonml/reason-react/pull/711)
 
