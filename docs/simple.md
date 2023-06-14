@@ -63,7 +63,7 @@ let make = () => {
       className="w-full"
       /* type_ is underscored b/c its a reserved word in Reason */
       type_="text"
-      /* No brackets needed! */
+      /* No braces {} needed! */
       autoFocus=true
       placeholder="Game Code"
     />
