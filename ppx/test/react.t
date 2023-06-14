@@ -4,6 +4,7 @@ Demonstrate how to use the React JSX PPX
   > (lang dune 3.8)
   > (using melange 0.1)
   > EOF
+
   $ cat > dune <<EOF
   > (melange.emit
   >  (target output)
@@ -13,6 +14,7 @@ Demonstrate how to use the React JSX PPX
   >  (libraries reason-react)
   >  (preprocess (pps melange.ppx reason-react-ppx)))
   > EOF
+
   $ cat > x.re <<EOF
   > module App = {
   >   [@react.component]
