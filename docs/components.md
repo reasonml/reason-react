@@ -39,7 +39,7 @@ let make = (Props) => {
 };
 ```
 
-It has added a new function with `Props` as a suffix which uses [`[@bs.obj]`](https://melange.re/v1.0.0/communicate-with-javascript/#using-jst-objects) to create your props object. This function gets compiled away by Melange and will be replaced by object literals when used.
+It has added a new function called  `makeProps` which uses [`[@bs.obj]`](https://melange.re/v1.0.0/communicate-with-javascript/#using-jst-objects) to create your props object. This function gets compiled away by Melange and will be replaced by object literals when used.
 
 ### A note on `children`
 
