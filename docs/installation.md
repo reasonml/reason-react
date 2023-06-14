@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-ReasonReact is build to work with [Melange](https://melange.re/) and [Reason](https://reasonml.github.io/), this installation guide will help you get started.
+ReasonReact is built to work with [Melange](https://melange.re/) and [Reason](https://reasonml.github.io/). This installation guide will help you get started.
 
 If you want to build a new app or a new website with ReasonReact and Melange, we recommend to use a package manager such as [opam](https://opam.ocaml.org/) to download and install the required dependencies.
 
