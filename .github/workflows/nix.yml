@@ -23,5 +23,5 @@ jobs:
           extra-substituters = https://anmonteiro.nix-cache.workers.dev
           extra-trusted-public-keys = ocaml.nix-cache.com-1:/xI2h2+56rwFfKyyFVbkJSeGqSIYMC/Je+7XXqGKDIY=
     - name: "Run Nix tests"
-      run: nix build .#reactjs-jsx-ppx .#reason-react
+      run: nix build .#reason-react-ppx .#reason-react
 

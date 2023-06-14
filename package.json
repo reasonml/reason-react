@@ -10,7 +10,7 @@
     "LICENSE",
     "src",
     "ppx/src",
-    "reactjs-jsx-ppx.opam",
+    "reason-react-ppx.opam",
     "reason-react.opam"
   ],
   "keywords": [
