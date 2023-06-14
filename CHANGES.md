@@ -3,7 +3,7 @@
 * Setup repo with Melange [@davesnx in #711](https://github.com/reasonml/reason-react/pull/711)
 * Migrate the reason-react PPX and library to the [new React JSX
 transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)
-  @anmonteiro in [#714](https://github.com/reasonml/reason-react/pull/714))
+  (@anmonteiro in [#714](https://github.com/reasonml/reason-react/pull/714))
 * Add `suppressHydrationWarning` to supported props (@davesnx in
 [#721](https://github.com/reasonml/reason-react/pull/721))
 
