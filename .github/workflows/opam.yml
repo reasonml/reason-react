@@ -19,9 +19,7 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          # - windows-latest
-          # It seems like dune 3.8 isn't available under opam-repository-mingw for Windows
-          # disabling this for now
+          - windows-latest
 
         ocaml-compiler:
           - 4.14.x
@@ -53,6 +51,9 @@ jobs:
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           dune-cache: true
+          opam-repositories: |
+            opam-repository-mingw: https://github.com/ocaml-opam/opam-repository-mingw.git#sunset
+            default: https://github.com/ocaml/opam-repository.git
 
       - name: Use Node.js
         uses: actions/setup-node@v3
