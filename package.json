@@ -27,7 +27,8 @@
   "devDependencies": {
     "jest": "^26.0.1",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react-dom": "^16.8.1",
+    "react-test-renderer": "^16.13.1"
   },
   "peerDependencies": {
     "react": "^16.8.1",
