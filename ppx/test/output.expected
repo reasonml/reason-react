@@ -201,7 +201,8 @@ module React_component_with_props =
       [@warning "-16"])
     let make =
       let Generated$React_component_with_props
-        (Props : < lola: 'lola   >  Js.t) = make ~lola:(Props ## lola) in
+        (Props : < lola: 'lola   >  Js.t) = make ~lola:(Props ## lola)
+        [@@merlin.hide ] in
       Generated$React_component_with_props
   end
 let react_component_with_props =
@@ -230,7 +231,8 @@ module Upper_case_with_fragment_as_root =
       [@warning "-16"])
     let make =
       let Generated$Upper_case_with_fragment_as_root
-        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name) in
+        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name)
+        [@@merlin.hide ] in
       Generated$Upper_case_with_fragment_as_root
   end
 module Forward_Ref =
@@ -256,7 +258,8 @@ module Forward_Ref =
         (let Generated$Forward_Ref
            (Props : < children: 'children  ;buttonRef: 'buttonRef   >  Js.t)
            =
-           make ~buttonRef:(Props ## buttonRef) ~children:(Props ## children) in
+           make ~buttonRef:(Props ## buttonRef) ~children:(Props ## children)
+           [@@merlin.hide ] in
          Generated$Forward_Ref)
   end
 module Onclick_handler_button =
@@ -279,7 +282,8 @@ module Onclick_handler_button =
     let make =
       let Generated$Onclick_handler_button
         (Props : < name: 'name  ;isDisabled: 'isDisabled option   >  Js.t) =
-        make ?isDisabled:(Props ## isDisabled) ~name:(Props ## name) in
+        make ?isDisabled:(Props ## isDisabled) ~name:(Props ## name)[@@merlin.hide
+                                                                    ] in
       Generated$Onclick_handler_button
   end
 module Children_as_string =
@@ -297,7 +301,8 @@ module Children_as_string =
       [@warning "-16"])
     let make =
       let Generated$Children_as_string
-        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name) in
+        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name)
+        [@@merlin.hide ] in
       Generated$Children_as_string
   end
 let () = Dream.run ()
@@ -348,7 +353,8 @@ module Uppercase_with_SSR_components =
     let make =
       let Generated$Uppercase_with_SSR_components
         (Props : < children: 'children  ;moreProps: 'moreProps   >  Js.t) =
-        make ~moreProps:(Props ## moreProps) ~children:(Props ## children) in
+        make ~moreProps:(Props ## moreProps) ~children:(Props ## children)
+        [@@merlin.hide ] in
       Generated$Uppercase_with_SSR_components
   end
 module Upper_with_aria =
@@ -365,7 +371,7 @@ module Upper_with_aria =
       [@warning "-16"])
     let make =
       let Generated$Upper_with_aria (Props : < children: 'children   >  Js.t)
-        = make ~children:(Props ## children) in
+        = make ~children:(Props ## children)[@@merlin.hide ] in
       Generated$Upper_with_aria
   end
 let data_attributes_should_transform_to_kebabcase =
@@ -415,6 +421,6 @@ module Func(M:X_int) =
       [@warning "-16"])
     let make =
       let Generated$Func (Props : < a: 'a  ;b: 'b   >  Js.t) =
-        make ~b:(Props ## b) ~a:(Props ## a) () in
+        make ~b:(Props ## b) ~a:(Props ## a) ()[@@merlin.hide ] in
       Generated$Func
   end

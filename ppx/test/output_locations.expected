@@ -1238,7 +1238,24 @@
                  ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
                 (loc_ghost true)))
               (pexp_loc_stack ()) (pexp_attributes ())))
-            (pvb_attributes ())
+            (pvb_attributes
+             (((attr_name
+                ((txt merlin.hide)
+                 (loc
+                  ((loc_start
+                    ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                     (pos_cnum -1)))
+                   (loc_end
+                    ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                     (pos_cnum -1)))
+                   (loc_ghost true)))))
+               (attr_payload (PStr ()))
+               (attr_loc
+                ((loc_start
+                  ((pos_fname _none_) (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+                 (loc_end
+                  ((pos_fname _none_) (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+                 (loc_ghost true))))))
             (pvb_loc
              ((loc_start
                ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)

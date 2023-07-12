@@ -122,6 +122,15 @@ let unerasableIgnore loc =
     attr_loc = loc;
   }
 
+(* [merlinHide] tells merlin to not look at a node, or at any of its
+   descendants. *)
+let merlinHide =
+  {
+    attr_name = { txt = "merlin.hide"; loc = Location.none };
+    attr_payload = PStr [];
+    attr_loc = Location.none;
+  }
+
 let merlinFocus =
   {
     attr_name = { loc = Location.none; txt = "merlin.focus" };
@@ -1067,7 +1076,7 @@ let jsxMapper =
               | txt ->
                   Exp.let_ Nonrecursive
                     [
-                      Vb.mk ~loc:emptyLoc
+                      Vb.mk ~loc:emptyLoc ~attrs:[merlinHide]
                         (Pat.var ~loc:emptyLoc { loc = emptyLoc; txt })
                         fullExpression;
                     ]
