@@ -705,12 +705,12 @@
                 ((txt (Ldot (Lident ReactDOM) jsx))
                  (loc
                   ((loc_start
-                    ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
-                     (pos_cnum -1)))
+                    ((pos_fname generated_locations.ml) (pos_lnum 2)
+                     (pos_bol 18) (pos_cnum 20)))
                    (loc_end
-                    ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
-                     (pos_cnum -1)))
-                   (loc_ghost true))))))
+                    ((pos_fname generated_locations.ml) (pos_lnum 3)
+                     (pos_bol 90) (pos_cnum 126)))
+                   (loc_ghost false))))))
               (pexp_loc
                ((loc_start
                  ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
@@ -756,12 +756,32 @@
                    (pexp_loc
                     ((loc_start
                       ((pos_fname generated_locations.ml) (pos_lnum 2)
-                       (pos_bol 18) (pos_cnum 22)))
+                       (pos_bol 18) (pos_cnum 20)))
                      (loc_end
-                      ((pos_fname generated_locations.ml) (pos_lnum 2)
-                       (pos_bol 18) (pos_cnum 25)))
+                      ((pos_fname generated_locations.ml) (pos_lnum 3)
+                       (pos_bol 90) (pos_cnum 126)))
                      (loc_ghost false)))
-                   (pexp_loc_stack ()) (pexp_attributes ()))
+                   (pexp_loc_stack ())
+                   (pexp_attributes
+                    (((attr_name
+                       ((txt merlin.hide)
+                        (loc
+                         ((loc_start
+                           ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                            (pos_cnum -1)))
+                          (loc_end
+                           ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                            (pos_cnum -1)))
+                          (loc_ghost true)))))
+                      (attr_payload (PStr ()))
+                      (attr_loc
+                       ((loc_start
+                         ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                          (pos_cnum -1)))
+                        (loc_end
+                         ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                          (pos_cnum -1)))
+                        (loc_ghost true)))))))
                   (((Labelled children)
                     ((pexp_desc
                       (Pexp_apply
@@ -874,19 +894,19 @@
                 (pexp_loc
                  ((loc_start
                    ((pos_fname generated_locations.ml) (pos_lnum 2)
-                    (pos_bol 18) (pos_cnum 22)))
+                    (pos_bol 18) (pos_cnum 20)))
                   (loc_end
-                   ((pos_fname generated_locations.ml) (pos_lnum 2)
-                    (pos_bol 18) (pos_cnum 25)))
+                   ((pos_fname generated_locations.ml) (pos_lnum 3)
+                    (pos_bol 90) (pos_cnum 126)))
                   (loc_ghost false)))
                 (pexp_loc_stack ()) (pexp_attributes ()))))))
            (pexp_loc
             ((loc_start
               ((pos_fname generated_locations.ml) (pos_lnum 2) (pos_bol 18)
-               (pos_cnum 22)))
+               (pos_cnum 20)))
              (loc_end
-              ((pos_fname generated_locations.ml) (pos_lnum 2) (pos_bol 18)
-               (pos_cnum 25)))
+              ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+               (pos_cnum 126)))
              (loc_ghost false)))
            (pexp_loc_stack ())
            (pexp_attributes
@@ -1226,11 +1246,11 @@
                       (pexp_loc_stack ()) (pexp_attributes ()))))))
                  (pexp_loc
                   ((loc_start
-                    ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
-                     (pos_cnum -1)))
+                    ((pos_fname generated_locations.ml) (pos_lnum 1)
+                     (pos_bol 0) (pos_cnum 0)))
                    (loc_end
-                    ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
-                     (pos_cnum -1)))
+                    ((pos_fname generated_locations.ml) (pos_lnum 3)
+                     (pos_bol 90) (pos_cnum 146)))
                    (loc_ghost true)))
                  (pexp_loc_stack ()) (pexp_attributes ()))))
               (pexp_loc
@@ -1309,4 +1329,1406 @@
     (loc_end
      ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
       (pos_cnum 146)))
+    (loc_ghost true))))
+ ((pstr_desc
+   (Pstr_primitive
+    ((pval_name
+      ((txt makeProps)
+       (loc
+        ((loc_start
+          ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+           (pos_cnum 147)))
+         (loc_end
+          ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+           (pos_cnum 456)))
+         (loc_ghost true)))))
+     (pval_type
+      ((ptyp_desc
+        (Ptyp_arrow (Optional initialValue)
+         ((ptyp_desc (Ptyp_var initialValue))
+          (ptyp_loc
+           ((loc_start
+             ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+              (pos_cnum 158)))
+            (loc_end
+             ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+              (pos_cnum 170)))
+            (loc_ghost false)))
+          (ptyp_loc_stack ()) (ptyp_attributes ()))
+         ((ptyp_desc
+           (Ptyp_arrow (Optional key)
+            ((ptyp_desc
+              (Ptyp_constr
+               ((txt (Lident string))
+                (loc
+                 ((loc_start
+                   ((pos_fname generated_locations.ml) (pos_lnum 4)
+                    (pos_bol 147) (pos_cnum 147)))
+                  (loc_end
+                   ((pos_fname generated_locations.ml) (pos_lnum 9)
+                    (pos_bol 407) (pos_cnum 456)))
+                  (loc_ghost true))))
+               ()))
+             (ptyp_loc
+              ((loc_start
+                ((pos_fname generated_locations.ml) (pos_lnum 4)
+                 (pos_bol 147) (pos_cnum 147)))
+               (loc_end
+                ((pos_fname generated_locations.ml) (pos_lnum 9)
+                 (pos_bol 407) (pos_cnum 456)))
+               (loc_ghost true)))
+             (ptyp_loc_stack ()) (ptyp_attributes ()))
+            ((ptyp_desc
+              (Ptyp_arrow Nolabel
+               ((ptyp_desc
+                 (Ptyp_constr
+                  ((txt (Lident unit))
+                   (loc
+                    ((loc_start
+                      ((pos_fname generated_locations.ml) (pos_lnum 4)
+                       (pos_bol 147) (pos_cnum 147)))
+                     (loc_end
+                      ((pos_fname generated_locations.ml) (pos_lnum 9)
+                       (pos_bol 407) (pos_cnum 456)))
+                     (loc_ghost true))))
+                  ()))
+                (ptyp_loc
+                 ((loc_start
+                   ((pos_fname generated_locations.ml) (pos_lnum 4)
+                    (pos_bol 147) (pos_cnum 147)))
+                  (loc_end
+                   ((pos_fname generated_locations.ml) (pos_lnum 9)
+                    (pos_bol 407) (pos_cnum 456)))
+                  (loc_ghost true)))
+                (ptyp_loc_stack ()) (ptyp_attributes ()))
+               ((ptyp_desc
+                 (Ptyp_constr
+                  ((txt (Ldot (Lident Js) t))
+                   (loc
+                    ((loc_start
+                      ((pos_fname generated_locations.ml) (pos_lnum 4)
+                       (pos_bol 147) (pos_cnum 147)))
+                     (loc_end
+                      ((pos_fname generated_locations.ml) (pos_lnum 9)
+                       (pos_bol 407) (pos_cnum 456)))
+                     (loc_ghost true))))
+                  (((ptyp_desc
+                     (Ptyp_object
+                      (((pof_desc
+                         (Otag
+                          ((txt initialValue)
+                           (loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 4) (pos_bol 147) (pos_cnum 147)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 9) (pos_bol 407) (pos_cnum 456)))
+                             (loc_ghost true))))
+                          ((ptyp_desc
+                            (Ptyp_constr
+                             ((txt (Lident option))
+                              (loc
+                               ((loc_start
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                                (loc_end
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                                (loc_ghost false))))
+                             (((ptyp_desc (Ptyp_var initialValue))
+                               (ptyp_loc
+                                ((loc_start
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                                 (loc_end
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                                 (loc_ghost false)))
+                               (ptyp_loc_stack ()) (ptyp_attributes ())))))
+                           (ptyp_loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                             (loc_ghost false)))
+                           (ptyp_loc_stack ()) (ptyp_attributes ()))))
+                        (pof_loc
+                         ((loc_start
+                           ((pos_fname generated_locations.ml) (pos_lnum 4)
+                            (pos_bol 147) (pos_cnum 147)))
+                          (loc_end
+                           ((pos_fname generated_locations.ml) (pos_lnum 9)
+                            (pos_bol 407) (pos_cnum 456)))
+                          (loc_ghost true)))
+                        (pof_attributes ())))
+                      Closed))
+                    (ptyp_loc
+                     ((loc_start
+                       ((pos_fname generated_locations.ml) (pos_lnum 4)
+                        (pos_bol 147) (pos_cnum 147)))
+                      (loc_end
+                       ((pos_fname generated_locations.ml) (pos_lnum 9)
+                        (pos_bol 407) (pos_cnum 456)))
+                      (loc_ghost true)))
+                    (ptyp_loc_stack ()) (ptyp_attributes ())))))
+                (ptyp_loc
+                 ((loc_start
+                   ((pos_fname generated_locations.ml) (pos_lnum 4)
+                    (pos_bol 147) (pos_cnum 147)))
+                  (loc_end
+                   ((pos_fname generated_locations.ml) (pos_lnum 9)
+                    (pos_bol 407) (pos_cnum 456)))
+                  (loc_ghost true)))
+                (ptyp_loc_stack ()) (ptyp_attributes ()))))
+             (ptyp_loc
+              ((loc_start
+                ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
+               (loc_end
+                ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
+               (loc_ghost true)))
+             (ptyp_loc_stack ()) (ptyp_attributes ()))))
+          (ptyp_loc
+           ((loc_start
+             ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+              (pos_cnum 147)))
+            (loc_end
+             ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+              (pos_cnum 456)))
+            (loc_ghost true)))
+          (ptyp_loc_stack ()) (ptyp_attributes ()))))
+       (ptyp_loc
+        ((loc_start
+          ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+           (pos_cnum 158)))
+         (loc_end
+          ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+           (pos_cnum 170)))
+         (loc_ghost false)))
+       (ptyp_loc_stack ()) (ptyp_attributes ())))
+     (pval_prim (""))
+     (pval_attributes
+      (((attr_name
+         ((txt bs.obj)
+          (loc
+           ((loc_start
+             ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+              (pos_cnum 147)))
+            (loc_end
+             ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+              (pos_cnum 456)))
+            (loc_ghost true)))))
+        (attr_payload (PStr ()))
+        (attr_loc
+         ((loc_start
+           ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+            (pos_cnum 147)))
+          (loc_end
+           ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+            (pos_cnum 456)))
+          (loc_ghost true))))))
+     (pval_loc
+      ((loc_start
+        ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+         (pos_cnum 147)))
+       (loc_end
+        ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+         (pos_cnum 456)))
+       (loc_ghost true))))))
+  (pstr_loc
+   ((loc_start
+     ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+      (pos_cnum 147)))
+    (loc_end
+     ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+      (pos_cnum 456)))
+    (loc_ghost true))))
+ ((pstr_desc
+   (Pstr_value Nonrecursive
+    (((pvb_pat
+       ((ppat_desc
+         (Ppat_var
+          ((txt make)
+           (loc
+            ((loc_start
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 151)))
+             (loc_end
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 155)))
+             (loc_ghost false))))))
+        (ppat_loc
+         ((loc_start
+           ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+            (pos_cnum 151)))
+          (loc_end
+           ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+            (pos_cnum 155)))
+          (loc_ghost false)))
+        (ppat_loc_stack ()) (ppat_attributes ())))
+      (pvb_expr
+       ((pexp_desc
+         (Pexp_fun (Optional initialValue)
+          (((pexp_desc (Pexp_constant (Pconst_integer 0 ())))
+            (pexp_loc
+             ((loc_start
+               ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+                (pos_cnum 172)))
+              (loc_end
+               ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+                (pos_cnum 173)))
+              (loc_ghost false)))
+            (pexp_loc_stack ()) (pexp_attributes ())))
+          ((ppat_desc
+            (Ppat_var
+             ((txt initialValue)
+              (loc
+               ((loc_start
+                 ((pos_fname generated_locations.ml) (pos_lnum 4)
+                  (pos_bol 147) (pos_cnum 158)))
+                (loc_end
+                 ((pos_fname generated_locations.ml) (pos_lnum 4)
+                  (pos_bol 147) (pos_cnum 170)))
+                (loc_ghost false))))))
+           (ppat_loc
+            ((loc_start
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 158)))
+             (loc_end
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 170)))
+             (loc_ghost false)))
+           (ppat_loc_stack ()) (ppat_attributes ()))
+          ((pexp_desc
+            (Pexp_fun Nolabel ()
+             ((ppat_desc
+               (Ppat_construct
+                ((txt (Lident "()"))
+                 (loc
+                  ((loc_start
+                    ((pos_fname generated_locations.ml) (pos_lnum 4)
+                     (pos_bol 147) (pos_cnum 176)))
+                   (loc_end
+                    ((pos_fname generated_locations.ml) (pos_lnum 4)
+                     (pos_bol 147) (pos_cnum 178)))
+                   (loc_ghost false))))
+                ()))
+              (ppat_loc
+               ((loc_start
+                 ((pos_fname generated_locations.ml) (pos_lnum 4)
+                  (pos_bol 147) (pos_cnum 176)))
+                (loc_end
+                 ((pos_fname generated_locations.ml) (pos_lnum 4)
+                  (pos_bol 147) (pos_cnum 178)))
+                (loc_ghost false)))
+              (ppat_loc_stack ()) (ppat_attributes ()))
+             ((pexp_desc
+               (Pexp_let Nonrecursive
+                (((pvb_pat
+                   ((ppat_desc
+                     (Ppat_tuple
+                      (((ppat_desc
+                         (Ppat_var
+                          ((txt value)
+                           (loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 5) (pos_bol 181) (pos_cnum 190)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 5) (pos_bol 181) (pos_cnum 195)))
+                             (loc_ghost false))))))
+                        (ppat_loc
+                         ((loc_start
+                           ((pos_fname generated_locations.ml) (pos_lnum 5)
+                            (pos_bol 181) (pos_cnum 190)))
+                          (loc_end
+                           ((pos_fname generated_locations.ml) (pos_lnum 5)
+                            (pos_bol 181) (pos_cnum 195)))
+                          (loc_ghost false)))
+                        (ppat_loc_stack ()) (ppat_attributes ()))
+                       ((ppat_desc
+                         (Ppat_var
+                          ((txt setValue)
+                           (loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 5) (pos_bol 181) (pos_cnum 197)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 5) (pos_bol 181) (pos_cnum 205)))
+                             (loc_ghost false))))))
+                        (ppat_loc
+                         ((loc_start
+                           ((pos_fname generated_locations.ml) (pos_lnum 5)
+                            (pos_bol 181) (pos_cnum 197)))
+                          (loc_end
+                           ((pos_fname generated_locations.ml) (pos_lnum 5)
+                            (pos_bol 181) (pos_cnum 205)))
+                          (loc_ghost false)))
+                        (ppat_loc_stack ()) (ppat_attributes ())))))
+                    (ppat_loc
+                     ((loc_start
+                       ((pos_fname generated_locations.ml) (pos_lnum 5)
+                        (pos_bol 181) (pos_cnum 189)))
+                      (loc_end
+                       ((pos_fname generated_locations.ml) (pos_lnum 5)
+                        (pos_bol 181) (pos_cnum 206)))
+                      (loc_ghost false)))
+                    (ppat_loc_stack
+                     (((loc_start
+                        ((pos_fname generated_locations.ml) (pos_lnum 5)
+                         (pos_bol 181) (pos_cnum 190)))
+                       (loc_end
+                        ((pos_fname generated_locations.ml) (pos_lnum 5)
+                         (pos_bol 181) (pos_cnum 205)))
+                       (loc_ghost false))))
+                    (ppat_attributes ())))
+                  (pvb_expr
+                   ((pexp_desc
+                     (Pexp_apply
+                      ((pexp_desc
+                        (Pexp_ident
+                         ((txt (Ldot (Lident React) useState))
+                          (loc
+                           ((loc_start
+                             ((pos_fname generated_locations.ml) (pos_lnum 5)
+                              (pos_bol 181) (pos_cnum 209)))
+                            (loc_end
+                             ((pos_fname generated_locations.ml) (pos_lnum 5)
+                              (pos_bol 181) (pos_cnum 223)))
+                            (loc_ghost false))))))
+                       (pexp_loc
+                        ((loc_start
+                          ((pos_fname generated_locations.ml) (pos_lnum 5)
+                           (pos_bol 181) (pos_cnum 209)))
+                         (loc_end
+                          ((pos_fname generated_locations.ml) (pos_lnum 5)
+                           (pos_bol 181) (pos_cnum 223)))
+                         (loc_ghost false)))
+                       (pexp_loc_stack ()) (pexp_attributes ()))
+                      ((Nolabel
+                        ((pexp_desc
+                          (Pexp_fun Nolabel ()
+                           ((ppat_desc
+                             (Ppat_construct
+                              ((txt (Lident "()"))
+                               (loc
+                                ((loc_start
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 5) (pos_bol 181) (pos_cnum 229)))
+                                 (loc_end
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 5) (pos_bol 181) (pos_cnum 231)))
+                                 (loc_ghost false))))
+                              ()))
+                            (ppat_loc
+                             ((loc_start
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 5) (pos_bol 181) (pos_cnum 229)))
+                              (loc_end
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 5) (pos_bol 181) (pos_cnum 231)))
+                              (loc_ghost false)))
+                            (ppat_loc_stack ()) (ppat_attributes ()))
+                           ((pexp_desc
+                             (Pexp_ident
+                              ((txt (Lident initialValue))
+                               (loc
+                                ((loc_start
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 5) (pos_bol 181) (pos_cnum 235)))
+                                 (loc_end
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 5) (pos_bol 181) (pos_cnum 247)))
+                                 (loc_ghost false))))))
+                            (pexp_loc
+                             ((loc_start
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 5) (pos_bol 181) (pos_cnum 235)))
+                              (loc_end
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 5) (pos_bol 181) (pos_cnum 247)))
+                              (loc_ghost false)))
+                            (pexp_loc_stack ()) (pexp_attributes ()))))
+                         (pexp_loc
+                          ((loc_start
+                            ((pos_fname generated_locations.ml) (pos_lnum 5)
+                             (pos_bol 181) (pos_cnum 224)))
+                           (loc_end
+                            ((pos_fname generated_locations.ml) (pos_lnum 5)
+                             (pos_bol 181) (pos_cnum 248)))
+                           (loc_ghost false)))
+                         (pexp_loc_stack
+                          (((loc_start
+                             ((pos_fname generated_locations.ml) (pos_lnum 5)
+                              (pos_bol 181) (pos_cnum 225)))
+                            (loc_end
+                             ((pos_fname generated_locations.ml) (pos_lnum 5)
+                              (pos_bol 181) (pos_cnum 247)))
+                            (loc_ghost false))))
+                         (pexp_attributes ()))))))
+                    (pexp_loc
+                     ((loc_start
+                       ((pos_fname generated_locations.ml) (pos_lnum 5)
+                        (pos_bol 181) (pos_cnum 209)))
+                      (loc_end
+                       ((pos_fname generated_locations.ml) (pos_lnum 5)
+                        (pos_bol 181) (pos_cnum 248)))
+                      (loc_ghost false)))
+                    (pexp_loc_stack ()) (pexp_attributes ())))
+                  (pvb_attributes ())
+                  (pvb_loc
+                   ((loc_start
+                     ((pos_fname generated_locations.ml) (pos_lnum 5)
+                      (pos_bol 181) (pos_cnum 185)))
+                    (loc_end
+                     ((pos_fname generated_locations.ml) (pos_lnum 5)
+                      (pos_bol 181) (pos_cnum 248)))
+                    (loc_ghost false)))))
+                ((pexp_desc
+                  (Pexp_apply
+                   ((pexp_desc
+                     (Pexp_ident
+                      ((txt (Ldot (Lident ReactDOM) jsx))
+                       (loc
+                        ((loc_start
+                          ((pos_fname generated_locations.ml) (pos_lnum 6)
+                           (pos_bol 252) (pos_cnum 256)))
+                         (loc_end
+                          ((pos_fname generated_locations.ml) (pos_lnum 8)
+                           (pos_bol 391) (pos_cnum 405)))
+                         (loc_ghost false))))))
+                    (pexp_loc
+                     ((loc_start
+                       ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                        (pos_cnum -1)))
+                      (loc_end
+                       ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                        (pos_cnum -1)))
+                      (loc_ghost true)))
+                    (pexp_loc_stack ()) (pexp_attributes ()))
+                   ((Nolabel
+                     ((pexp_desc
+                       (Pexp_constant
+                        (Pconst_string button
+                         ((loc_start
+                           ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                            (pos_cnum -1)))
+                          (loc_end
+                           ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                            (pos_cnum -1)))
+                          (loc_ghost true))
+                         ())))
+                      (pexp_loc
+                       ((loc_start
+                         ((pos_fname generated_locations.ml) (pos_lnum 6)
+                          (pos_bol 252) (pos_cnum 258)))
+                        (loc_end
+                         ((pos_fname generated_locations.ml) (pos_lnum 6)
+                          (pos_bol 252) (pos_cnum 264)))
+                        (loc_ghost false)))
+                      (pexp_loc_stack ()) (pexp_attributes ())))
+                    (Nolabel
+                     ((pexp_desc
+                       (Pexp_apply
+                        ((pexp_desc
+                          (Pexp_ident
+                           ((txt (Ldot (Lident ReactDOM) domProps))
+                            (loc
+                             ((loc_start
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 6) (pos_bol 252) (pos_cnum 258)))
+                              (loc_end
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 6) (pos_bol 252) (pos_cnum 264)))
+                              (loc_ghost false))))))
+                         (pexp_loc
+                          ((loc_start
+                            ((pos_fname generated_locations.ml) (pos_lnum 6)
+                             (pos_bol 252) (pos_cnum 256)))
+                           (loc_end
+                            ((pos_fname generated_locations.ml) (pos_lnum 8)
+                             (pos_bol 391) (pos_cnum 405)))
+                           (loc_ghost false)))
+                         (pexp_loc_stack ())
+                         (pexp_attributes
+                          (((attr_name
+                             ((txt merlin.hide)
+                              (loc
+                               ((loc_start
+                                 ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                                  (pos_cnum -1)))
+                                (loc_end
+                                 ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                                  (pos_cnum -1)))
+                                (loc_ghost true)))))
+                            (attr_payload (PStr ()))
+                            (attr_loc
+                             ((loc_start
+                               ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                                (pos_cnum -1)))
+                              (loc_end
+                               ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                                (pos_cnum -1)))
+                              (loc_ghost true)))))))
+                        (((Labelled children)
+                          ((pexp_desc
+                            (Pexp_apply
+                             ((pexp_desc
+                               (Pexp_ident
+                                ((txt (Lident |.))
+                                 (loc
+                                  ((loc_start
+                                    ((pos_fname generated_locations.ml)
+                                     (pos_lnum 7) (pos_bol 320)
+                                     (pos_cnum 373)))
+                                   (loc_end
+                                    ((pos_fname generated_locations.ml)
+                                     (pos_lnum 7) (pos_bol 320)
+                                     (pos_cnum 375)))
+                                   (loc_ghost false))))))
+                              (pexp_loc
+                               ((loc_start
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 7) (pos_bol 320) (pos_cnum 373)))
+                                (loc_end
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 7) (pos_bol 320) (pos_cnum 375)))
+                                (loc_ghost false)))
+                              (pexp_loc_stack ()) (pexp_attributes ()))
+                             ((Nolabel
+                               ((pexp_desc
+                                 (Pexp_ident
+                                  ((txt (Lident value))
+                                   (loc
+                                    ((loc_start
+                                      ((pos_fname generated_locations.ml)
+                                       (pos_lnum 7) (pos_bol 320)
+                                       (pos_cnum 367)))
+                                     (loc_end
+                                      ((pos_fname generated_locations.ml)
+                                       (pos_lnum 7) (pos_bol 320)
+                                       (pos_cnum 372)))
+                                     (loc_ghost false))))))
+                                (pexp_loc
+                                 ((loc_start
+                                   ((pos_fname generated_locations.ml)
+                                    (pos_lnum 7) (pos_bol 320)
+                                    (pos_cnum 367)))
+                                  (loc_end
+                                   ((pos_fname generated_locations.ml)
+                                    (pos_lnum 7) (pos_bol 320)
+                                    (pos_cnum 372)))
+                                  (loc_ghost false)))
+                                (pexp_loc_stack ()) (pexp_attributes ())))
+                              (Nolabel
+                               ((pexp_desc
+                                 (Pexp_ident
+                                  ((txt (Ldot (Lident React) int))
+                                   (loc
+                                    ((loc_start
+                                      ((pos_fname generated_locations.ml)
+                                       (pos_lnum 7) (pos_bol 320)
+                                       (pos_cnum 376)))
+                                     (loc_end
+                                      ((pos_fname generated_locations.ml)
+                                       (pos_lnum 7) (pos_bol 320)
+                                       (pos_cnum 385)))
+                                     (loc_ghost false))))))
+                                (pexp_loc
+                                 ((loc_start
+                                   ((pos_fname generated_locations.ml)
+                                    (pos_lnum 7) (pos_bol 320)
+                                    (pos_cnum 376)))
+                                  (loc_end
+                                   ((pos_fname generated_locations.ml)
+                                    (pos_lnum 7) (pos_bol 320)
+                                    (pos_cnum 385)))
+                                  (loc_ghost false)))
+                                (pexp_loc_stack ()) (pexp_attributes ()))))))
+                           (pexp_loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 7) (pos_bol 320) (pos_cnum 367)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 7) (pos_bol 320) (pos_cnum 385)))
+                             (loc_ghost false)))
+                           (pexp_loc_stack ()) (pexp_attributes ())))
+                         ((Labelled onClick)
+                          ((pexp_desc
+                            (Pexp_fun Nolabel ()
+                             ((ppat_desc Ppat_any)
+                              (ppat_loc
+                               ((loc_start
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 6) (pos_bol 252) (pos_cnum 280)))
+                                (loc_end
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 6) (pos_bol 252) (pos_cnum 281)))
+                                (loc_ghost false)))
+                              (ppat_loc_stack ()) (ppat_attributes ()))
+                             ((pexp_desc
+                               (Pexp_apply
+                                ((pexp_desc
+                                  (Pexp_ident
+                                   ((txt (Lident setValue))
+                                    (loc
+                                     ((loc_start
+                                       ((pos_fname generated_locations.ml)
+                                        (pos_lnum 6) (pos_bol 252)
+                                        (pos_cnum 285)))
+                                      (loc_end
+                                       ((pos_fname generated_locations.ml)
+                                        (pos_lnum 6) (pos_bol 252)
+                                        (pos_cnum 293)))
+                                      (loc_ghost false))))))
+                                 (pexp_loc
+                                  ((loc_start
+                                    ((pos_fname generated_locations.ml)
+                                     (pos_lnum 6) (pos_bol 252)
+                                     (pos_cnum 285)))
+                                   (loc_end
+                                    ((pos_fname generated_locations.ml)
+                                     (pos_lnum 6) (pos_bol 252)
+                                     (pos_cnum 293)))
+                                   (loc_ghost false)))
+                                 (pexp_loc_stack ()) (pexp_attributes ()))
+                                ((Nolabel
+                                  ((pexp_desc
+                                    (Pexp_fun Nolabel ()
+                                     ((ppat_desc
+                                       (Ppat_var
+                                        ((txt value)
+                                         (loc
+                                          ((loc_start
+                                            ((pos_fname
+                                              generated_locations.ml)
+                                             (pos_lnum 6) (pos_bol 252)
+                                             (pos_cnum 299)))
+                                           (loc_end
+                                            ((pos_fname
+                                              generated_locations.ml)
+                                             (pos_lnum 6) (pos_bol 252)
+                                             (pos_cnum 304)))
+                                           (loc_ghost false))))))
+                                      (ppat_loc
+                                       ((loc_start
+                                         ((pos_fname generated_locations.ml)
+                                          (pos_lnum 6) (pos_bol 252)
+                                          (pos_cnum 299)))
+                                        (loc_end
+                                         ((pos_fname generated_locations.ml)
+                                          (pos_lnum 6) (pos_bol 252)
+                                          (pos_cnum 304)))
+                                        (loc_ghost false)))
+                                      (ppat_loc_stack ())
+                                      (ppat_attributes ()))
+                                     ((pexp_desc
+                                       (Pexp_apply
+                                        ((pexp_desc
+                                          (Pexp_ident
+                                           ((txt (Lident +))
+                                            (loc
+                                             ((loc_start
+                                               ((pos_fname
+                                                 generated_locations.ml)
+                                                (pos_lnum 6) (pos_bol 252)
+                                                (pos_cnum 314)))
+                                              (loc_end
+                                               ((pos_fname
+                                                 generated_locations.ml)
+                                                (pos_lnum 6) (pos_bol 252)
+                                                (pos_cnum 315)))
+                                              (loc_ghost false))))))
+                                         (pexp_loc
+                                          ((loc_start
+                                            ((pos_fname
+                                              generated_locations.ml)
+                                             (pos_lnum 6) (pos_bol 252)
+                                             (pos_cnum 314)))
+                                           (loc_end
+                                            ((pos_fname
+                                              generated_locations.ml)
+                                             (pos_lnum 6) (pos_bol 252)
+                                             (pos_cnum 315)))
+                                           (loc_ghost false)))
+                                         (pexp_loc_stack ())
+                                         (pexp_attributes ()))
+                                        ((Nolabel
+                                          ((pexp_desc
+                                            (Pexp_ident
+                                             ((txt (Lident value))
+                                              (loc
+                                               ((loc_start
+                                                 ((pos_fname
+                                                   generated_locations.ml)
+                                                  (pos_lnum 6) (pos_bol 252)
+                                                  (pos_cnum 308)))
+                                                (loc_end
+                                                 ((pos_fname
+                                                   generated_locations.ml)
+                                                  (pos_lnum 6) (pos_bol 252)
+                                                  (pos_cnum 313)))
+                                                (loc_ghost false))))))
+                                           (pexp_loc
+                                            ((loc_start
+                                              ((pos_fname
+                                                generated_locations.ml)
+                                               (pos_lnum 6) (pos_bol 252)
+                                               (pos_cnum 308)))
+                                             (loc_end
+                                              ((pos_fname
+                                                generated_locations.ml)
+                                               (pos_lnum 6) (pos_bol 252)
+                                               (pos_cnum 313)))
+                                             (loc_ghost false)))
+                                           (pexp_loc_stack ())
+                                           (pexp_attributes ())))
+                                         (Nolabel
+                                          ((pexp_desc
+                                            (Pexp_constant
+                                             (Pconst_integer 1 ())))
+                                           (pexp_loc
+                                            ((loc_start
+                                              ((pos_fname
+                                                generated_locations.ml)
+                                               (pos_lnum 6) (pos_bol 252)
+                                               (pos_cnum 316)))
+                                             (loc_end
+                                              ((pos_fname
+                                                generated_locations.ml)
+                                               (pos_lnum 6) (pos_bol 252)
+                                               (pos_cnum 317)))
+                                             (loc_ghost false)))
+                                           (pexp_loc_stack ())
+                                           (pexp_attributes ()))))))
+                                      (pexp_loc
+                                       ((loc_start
+                                         ((pos_fname generated_locations.ml)
+                                          (pos_lnum 6) (pos_bol 252)
+                                          (pos_cnum 308)))
+                                        (loc_end
+                                         ((pos_fname generated_locations.ml)
+                                          (pos_lnum 6) (pos_bol 252)
+                                          (pos_cnum 317)))
+                                        (loc_ghost false)))
+                                      (pexp_loc_stack ())
+                                      (pexp_attributes ()))))
+                                   (pexp_loc
+                                    ((loc_start
+                                      ((pos_fname generated_locations.ml)
+                                       (pos_lnum 6) (pos_bol 252)
+                                       (pos_cnum 294)))
+                                     (loc_end
+                                      ((pos_fname generated_locations.ml)
+                                       (pos_lnum 6) (pos_bol 252)
+                                       (pos_cnum 318)))
+                                     (loc_ghost false)))
+                                   (pexp_loc_stack
+                                    (((loc_start
+                                       ((pos_fname generated_locations.ml)
+                                        (pos_lnum 6) (pos_bol 252)
+                                        (pos_cnum 295)))
+                                      (loc_end
+                                       ((pos_fname generated_locations.ml)
+                                        (pos_lnum 6) (pos_bol 252)
+                                        (pos_cnum 317)))
+                                      (loc_ghost false))))
+                                   (pexp_attributes ()))))))
+                              (pexp_loc
+                               ((loc_start
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 6) (pos_bol 252) (pos_cnum 285)))
+                                (loc_end
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 6) (pos_bol 252) (pos_cnum 318)))
+                                (loc_ghost false)))
+                              (pexp_loc_stack ()) (pexp_attributes ()))))
+                           (pexp_loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 6) (pos_bol 252) (pos_cnum 274)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 7) (pos_bol 320) (pos_cnum 355)))
+                             (loc_ghost false)))
+                           (pexp_loc_stack
+                            (((loc_start
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 6) (pos_bol 252) (pos_cnum 275)))
+                              (loc_end
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 6) (pos_bol 252) (pos_cnum 319)))
+                              (loc_ghost false))
+                             ((loc_start
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 6) (pos_bol 252) (pos_cnum 276)))
+                              (loc_end
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 6) (pos_bol 252) (pos_cnum 318)))
+                              (loc_ghost false))))
+                           (pexp_attributes
+                            (((attr_name
+                               ((txt reason.preserve_braces)
+                                (loc
+                                 ((loc_start
+                                   ((pos_fname generated_locations.ml)
+                                    (pos_lnum 7) (pos_bol 320)
+                                    (pos_cnum 330)))
+                                  (loc_end
+                                   ((pos_fname generated_locations.ml)
+                                    (pos_lnum 7) (pos_bol 320)
+                                    (pos_cnum 352)))
+                                  (loc_ghost false)))))
+                              (attr_payload (PStr ()))
+                              (attr_loc
+                               ((loc_start
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 7) (pos_bol 320) (pos_cnum 328)))
+                                (loc_end
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 7) (pos_bol 320) (pos_cnum 354)))
+                                (loc_ghost false))))))))
+                         (Nolabel
+                          ((pexp_desc
+                            (Pexp_construct
+                             ((txt (Lident "()"))
+                              (loc
+                               ((loc_start
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 7) (pos_bol 320) (pos_cnum 387)))
+                                (loc_end
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 7) (pos_bol 320) (pos_cnum 389)))
+                                (loc_ghost false))))
+                             ()))
+                           (pexp_loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 7) (pos_bol 320) (pos_cnum 387)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 7) (pos_bol 320) (pos_cnum 389)))
+                             (loc_ghost false)))
+                           (pexp_loc_stack ()) (pexp_attributes ()))))))
+                      (pexp_loc
+                       ((loc_start
+                         ((pos_fname generated_locations.ml) (pos_lnum 6)
+                          (pos_bol 252) (pos_cnum 256)))
+                        (loc_end
+                         ((pos_fname generated_locations.ml) (pos_lnum 8)
+                          (pos_bol 391) (pos_cnum 405)))
+                        (loc_ghost false)))
+                      (pexp_loc_stack ()) (pexp_attributes ()))))))
+                 (pexp_loc
+                  ((loc_start
+                    ((pos_fname generated_locations.ml) (pos_lnum 6)
+                     (pos_bol 252) (pos_cnum 256)))
+                   (loc_end
+                    ((pos_fname generated_locations.ml) (pos_lnum 8)
+                     (pos_bol 391) (pos_cnum 405)))
+                   (loc_ghost false)))
+                 (pexp_loc_stack ()) (pexp_attributes ()))))
+              (pexp_loc
+               ((loc_start
+                 ((pos_fname generated_locations.ml) (pos_lnum 5)
+                  (pos_bol 181) (pos_cnum 183)))
+                (loc_end
+                 ((pos_fname generated_locations.ml) (pos_lnum 9)
+                  (pos_bol 407) (pos_cnum 436)))
+                (loc_ghost false)))
+              (pexp_loc_stack
+               (((loc_start
+                  ((pos_fname generated_locations.ml) (pos_lnum 5)
+                   (pos_bol 181) (pos_cnum 184)))
+                 (loc_end
+                  ((pos_fname generated_locations.ml) (pos_lnum 8)
+                   (pos_bol 391) (pos_cnum 406)))
+                 (loc_ghost false))
+                ((loc_start
+                  ((pos_fname generated_locations.ml) (pos_lnum 5)
+                   (pos_bol 181) (pos_cnum 185)))
+                 (loc_end
+                  ((pos_fname generated_locations.ml) (pos_lnum 8)
+                   (pos_bol 391) (pos_cnum 405)))
+                 (loc_ghost false))))
+              (pexp_attributes
+               (((attr_name
+                  ((txt reason.preserve_braces)
+                   (loc
+                    ((loc_start
+                      ((pos_fname generated_locations.ml) (pos_lnum 9)
+                       (pos_bol 407) (pos_cnum 411)))
+                     (loc_end
+                      ((pos_fname generated_locations.ml) (pos_lnum 9)
+                       (pos_bol 407) (pos_cnum 433)))
+                     (loc_ghost false)))))
+                 (attr_payload (PStr ()))
+                 (attr_loc
+                  ((loc_start
+                    ((pos_fname generated_locations.ml) (pos_lnum 9)
+                     (pos_bol 407) (pos_cnum 409)))
+                   (loc_end
+                    ((pos_fname generated_locations.ml) (pos_lnum 9)
+                     (pos_bol 407) (pos_cnum 435)))
+                   (loc_ghost false)))))))))
+           (pexp_loc
+            ((loc_start
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 176)))
+             (loc_end
+              ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+               (pos_cnum 436)))
+             (loc_ghost true)))
+           (pexp_loc_stack ()) (pexp_attributes ()))))
+        (pexp_loc
+         ((loc_start
+           ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+            (pos_cnum 156)))
+          (loc_end
+           ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+            (pos_cnum 436)))
+          (loc_ghost true)))
+        (pexp_loc_stack ())
+        (pexp_attributes
+         (((attr_name
+            ((txt warning)
+             (loc
+              ((loc_start
+                ((pos_fname generated_locations.ml) (pos_lnum 4)
+                 (pos_bol 147) (pos_cnum 147)))
+               (loc_end
+                ((pos_fname generated_locations.ml) (pos_lnum 9)
+                 (pos_bol 407) (pos_cnum 456)))
+               (loc_ghost true)))))
+           (attr_payload
+            (PStr
+             (((pstr_desc
+                (Pstr_eval
+                 ((pexp_desc
+                   (Pexp_constant
+                    (Pconst_string -16
+                     ((loc_start
+                       ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                        (pos_cnum -1)))
+                      (loc_end
+                       ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                        (pos_cnum -1)))
+                      (loc_ghost true))
+                     ())))
+                  (pexp_loc
+                   ((loc_start
+                     ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                      (pos_cnum -1)))
+                    (loc_end
+                     ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                      (pos_cnum -1)))
+                    (loc_ghost true)))
+                  (pexp_loc_stack ()) (pexp_attributes ()))
+                 ()))
+               (pstr_loc
+                ((loc_start
+                  ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
+                 (loc_end
+                  ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
+                 (loc_ghost true)))))))
+           (attr_loc
+            ((loc_start
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 147)))
+             (loc_end
+              ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+               (pos_cnum 456)))
+             (loc_ghost true))))))))
+      (pvb_attributes ())
+      (pvb_loc
+       ((loc_start
+         ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+          (pos_cnum 147)))
+        (loc_end
+         ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+          (pos_cnum 456)))
+        (loc_ghost false)))))))
+  (pstr_loc
+   ((loc_start
+     ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+      (pos_cnum 147)))
+    (loc_end
+     ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+      (pos_cnum 456)))
+    (loc_ghost false))))
+ ((pstr_desc
+   (Pstr_value Nonrecursive
+    (((pvb_pat
+       ((ppat_desc
+         (Ppat_var
+          ((txt make)
+           (loc
+            ((loc_start
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 151)))
+             (loc_end
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 155)))
+             (loc_ghost false))))))
+        (ppat_loc
+         ((loc_start
+           ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+            (pos_cnum 151)))
+          (loc_end
+           ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+            (pos_cnum 155)))
+          (loc_ghost false)))
+        (ppat_loc_stack ()) (ppat_attributes ())))
+      (pvb_expr
+       ((pexp_desc
+         (Pexp_let Nonrecursive
+          (((pvb_pat
+             ((ppat_desc
+               (Ppat_var
+                ((txt Generated_locations)
+                 (loc
+                  ((loc_start
+                    ((pos_fname generated_locations.ml) (pos_lnum 4)
+                     (pos_bol 147) (pos_cnum 147)))
+                   (loc_end
+                    ((pos_fname generated_locations.ml) (pos_lnum 9)
+                     (pos_bol 407) (pos_cnum 456)))
+                   (loc_ghost true))))))
+              (ppat_loc
+               ((loc_start
+                 ((pos_fname generated_locations.ml) (pos_lnum 4)
+                  (pos_bol 147) (pos_cnum 147)))
+                (loc_end
+                 ((pos_fname generated_locations.ml) (pos_lnum 9)
+                  (pos_bol 407) (pos_cnum 456)))
+                (loc_ghost true)))
+              (ppat_loc_stack ()) (ppat_attributes ())))
+            (pvb_expr
+             ((pexp_desc
+               (Pexp_fun Nolabel ()
+                ((ppat_desc
+                  (Ppat_constraint
+                   ((ppat_desc
+                     (Ppat_var
+                      ((txt Props)
+                       (loc
+                        ((loc_start
+                          ((pos_fname generated_locations.ml) (pos_lnum 4)
+                           (pos_bol 147) (pos_cnum 147)))
+                         (loc_end
+                          ((pos_fname generated_locations.ml) (pos_lnum 9)
+                           (pos_bol 407) (pos_cnum 456)))
+                         (loc_ghost true))))))
+                    (ppat_loc
+                     ((loc_start
+                       ((pos_fname generated_locations.ml) (pos_lnum 4)
+                        (pos_bol 147) (pos_cnum 147)))
+                      (loc_end
+                       ((pos_fname generated_locations.ml) (pos_lnum 9)
+                        (pos_bol 407) (pos_cnum 456)))
+                      (loc_ghost true)))
+                    (ppat_loc_stack ()) (ppat_attributes ()))
+                   ((ptyp_desc
+                     (Ptyp_constr
+                      ((txt (Ldot (Lident Js) t))
+                       (loc
+                        ((loc_start
+                          ((pos_fname generated_locations.ml) (pos_lnum 4)
+                           (pos_bol 147) (pos_cnum 147)))
+                         (loc_end
+                          ((pos_fname generated_locations.ml) (pos_lnum 9)
+                           (pos_bol 407) (pos_cnum 456)))
+                         (loc_ghost true))))
+                      (((ptyp_desc
+                         (Ptyp_object
+                          (((pof_desc
+                             (Otag
+                              ((txt initialValue)
+                               (loc
+                                ((loc_start
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 4) (pos_bol 147) (pos_cnum 147)))
+                                 (loc_end
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 9) (pos_bol 407) (pos_cnum 456)))
+                                 (loc_ghost true))))
+                              ((ptyp_desc
+                                (Ptyp_constr
+                                 ((txt (Lident option))
+                                  (loc
+                                   ((loc_start
+                                     ((pos_fname generated_locations.ml)
+                                      (pos_lnum 4) (pos_bol 147)
+                                      (pos_cnum 158)))
+                                    (loc_end
+                                     ((pos_fname generated_locations.ml)
+                                      (pos_lnum 4) (pos_bol 147)
+                                      (pos_cnum 170)))
+                                    (loc_ghost false))))
+                                 (((ptyp_desc (Ptyp_var initialValue))
+                                   (ptyp_loc
+                                    ((loc_start
+                                      ((pos_fname generated_locations.ml)
+                                       (pos_lnum 4) (pos_bol 147)
+                                       (pos_cnum 158)))
+                                     (loc_end
+                                      ((pos_fname generated_locations.ml)
+                                       (pos_lnum 4) (pos_bol 147)
+                                       (pos_cnum 170)))
+                                     (loc_ghost false)))
+                                   (ptyp_loc_stack ()) (ptyp_attributes ())))))
+                               (ptyp_loc
+                                ((loc_start
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                                 (loc_end
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                                 (loc_ghost false)))
+                               (ptyp_loc_stack ()) (ptyp_attributes ()))))
+                            (pof_loc
+                             ((loc_start
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 4) (pos_bol 147) (pos_cnum 147)))
+                              (loc_end
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 9) (pos_bol 407) (pos_cnum 456)))
+                              (loc_ghost true)))
+                            (pof_attributes ())))
+                          Closed))
+                        (ptyp_loc
+                         ((loc_start
+                           ((pos_fname generated_locations.ml) (pos_lnum 4)
+                            (pos_bol 147) (pos_cnum 147)))
+                          (loc_end
+                           ((pos_fname generated_locations.ml) (pos_lnum 9)
+                            (pos_bol 407) (pos_cnum 456)))
+                          (loc_ghost true)))
+                        (ptyp_loc_stack ()) (ptyp_attributes ())))))
+                    (ptyp_loc
+                     ((loc_start
+                       ((pos_fname generated_locations.ml) (pos_lnum 4)
+                        (pos_bol 147) (pos_cnum 147)))
+                      (loc_end
+                       ((pos_fname generated_locations.ml) (pos_lnum 9)
+                        (pos_bol 407) (pos_cnum 456)))
+                      (loc_ghost true)))
+                    (ptyp_loc_stack ()) (ptyp_attributes ()))))
+                 (ppat_loc
+                  ((loc_start
+                    ((pos_fname generated_locations.ml) (pos_lnum 4)
+                     (pos_bol 147) (pos_cnum 147)))
+                   (loc_end
+                    ((pos_fname generated_locations.ml) (pos_lnum 9)
+                     (pos_bol 407) (pos_cnum 456)))
+                   (loc_ghost true)))
+                 (ppat_loc_stack ()) (ppat_attributes ()))
+                ((pexp_desc
+                  (Pexp_apply
+                   ((pexp_desc
+                     (Pexp_ident
+                      ((txt (Lident make))
+                       (loc
+                        ((loc_start
+                          ((pos_fname generated_locations.ml) (pos_lnum 4)
+                           (pos_bol 147) (pos_cnum 147)))
+                         (loc_end
+                          ((pos_fname generated_locations.ml) (pos_lnum 9)
+                           (pos_bol 407) (pos_cnum 456)))
+                         (loc_ghost true))))))
+                    (pexp_loc
+                     ((loc_start
+                       ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                        (pos_cnum -1)))
+                      (loc_end
+                       ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                        (pos_cnum -1)))
+                      (loc_ghost true)))
+                    (pexp_loc_stack ()) (pexp_attributes ()))
+                   (((Optional initialValue)
+                     ((pexp_desc
+                       (Pexp_apply
+                        ((pexp_desc
+                          (Pexp_ident
+                           ((txt (Lident ##))
+                            (loc
+                             ((loc_start
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                              (loc_end
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                              (loc_ghost false))))))
+                         (pexp_loc
+                          ((loc_start
+                            ((pos_fname generated_locations.ml) (pos_lnum 4)
+                             (pos_bol 147) (pos_cnum 158)))
+                           (loc_end
+                            ((pos_fname generated_locations.ml) (pos_lnum 4)
+                             (pos_bol 147) (pos_cnum 170)))
+                           (loc_ghost false)))
+                         (pexp_loc_stack ()) (pexp_attributes ()))
+                        ((Nolabel
+                          ((pexp_desc
+                            (Pexp_ident
+                             ((txt (Lident Props))
+                              (loc
+                               ((loc_start
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                                (loc_end
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                                (loc_ghost false))))))
+                           (pexp_loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                             (loc_ghost false)))
+                           (pexp_loc_stack ()) (pexp_attributes ())))
+                         (Nolabel
+                          ((pexp_desc
+                            (Pexp_ident
+                             ((txt (Lident initialValue))
+                              (loc
+                               ((loc_start
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                                (loc_end
+                                 ((pos_fname generated_locations.ml)
+                                  (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                                (loc_ghost false))))))
+                           (pexp_loc
+                            ((loc_start
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 4) (pos_bol 147) (pos_cnum 158)))
+                             (loc_end
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 4) (pos_bol 147) (pos_cnum 170)))
+                             (loc_ghost false)))
+                           (pexp_loc_stack ()) (pexp_attributes ()))))))
+                      (pexp_loc
+                       ((loc_start
+                         ((pos_fname generated_locations.ml) (pos_lnum 4)
+                          (pos_bol 147) (pos_cnum 158)))
+                        (loc_end
+                         ((pos_fname generated_locations.ml) (pos_lnum 4)
+                          (pos_bol 147) (pos_cnum 170)))
+                        (loc_ghost false)))
+                      (pexp_loc_stack ()) (pexp_attributes ())))
+                    (Nolabel
+                     ((pexp_desc
+                       (Pexp_construct
+                        ((txt (Lident "()"))
+                         (loc
+                          ((loc_start
+                            ((pos_fname generated_locations.ml) (pos_lnum 4)
+                             (pos_bol 147) (pos_cnum 147)))
+                           (loc_end
+                            ((pos_fname generated_locations.ml) (pos_lnum 9)
+                             (pos_bol 407) (pos_cnum 456)))
+                           (loc_ghost true))))
+                        ()))
+                      (pexp_loc
+                       ((loc_start
+                         ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                          (pos_cnum -1)))
+                        (loc_end
+                         ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                          (pos_cnum -1)))
+                        (loc_ghost true)))
+                      (pexp_loc_stack ()) (pexp_attributes ()))))))
+                 (pexp_loc
+                  ((loc_start
+                    ((pos_fname generated_locations.ml) (pos_lnum 4)
+                     (pos_bol 147) (pos_cnum 147)))
+                   (loc_end
+                    ((pos_fname generated_locations.ml) (pos_lnum 9)
+                     (pos_bol 407) (pos_cnum 456)))
+                   (loc_ghost true)))
+                 (pexp_loc_stack ()) (pexp_attributes ()))))
+              (pexp_loc
+               ((loc_start
+                 ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
+                (loc_end
+                 ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
+                (loc_ghost true)))
+              (pexp_loc_stack ()) (pexp_attributes ())))
+            (pvb_attributes
+             (((attr_name
+                ((txt merlin.hide)
+                 (loc
+                  ((loc_start
+                    ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                     (pos_cnum -1)))
+                   (loc_end
+                    ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
+                     (pos_cnum -1)))
+                   (loc_ghost true)))))
+               (attr_payload (PStr ()))
+               (attr_loc
+                ((loc_start
+                  ((pos_fname _none_) (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+                 (loc_end
+                  ((pos_fname _none_) (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+                 (loc_ghost true))))))
+            (pvb_loc
+             ((loc_start
+               ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+                (pos_cnum 147)))
+              (loc_end
+               ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+                (pos_cnum 456)))
+              (loc_ghost true)))))
+          ((pexp_desc
+            (Pexp_ident
+             ((txt (Lident Generated_locations))
+              (loc
+               ((loc_start
+                 ((pos_fname generated_locations.ml) (pos_lnum 4)
+                  (pos_bol 147) (pos_cnum 147)))
+                (loc_end
+                 ((pos_fname generated_locations.ml) (pos_lnum 9)
+                  (pos_bol 407) (pos_cnum 456)))
+                (loc_ghost true))))))
+           (pexp_loc
+            ((loc_start
+              ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+               (pos_cnum 147)))
+             (loc_end
+              ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+               (pos_cnum 456)))
+             (loc_ghost true)))
+           (pexp_loc_stack ()) (pexp_attributes ()))))
+        (pexp_loc
+         ((loc_start
+           ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
+          (loc_end
+           ((pos_fname _none_) (pos_lnum 0) (pos_bol 0) (pos_cnum -1)))
+          (loc_ghost true)))
+        (pexp_loc_stack ()) (pexp_attributes ())))
+      (pvb_attributes ())
+      (pvb_loc
+       ((loc_start
+         ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+          (pos_cnum 147)))
+        (loc_end
+         ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+          (pos_cnum 456)))
+        (loc_ghost false)))))))
+  (pstr_loc
+   ((loc_start
+     ((pos_fname generated_locations.ml) (pos_lnum 4) (pos_bol 147)
+      (pos_cnum 147)))
+    (loc_end
+     ((pos_fname generated_locations.ml) (pos_lnum 9) (pos_bol 407)
+      (pos_cnum 456)))
     (loc_ghost true)))))

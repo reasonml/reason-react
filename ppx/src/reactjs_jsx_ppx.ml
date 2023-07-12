@@ -392,7 +392,7 @@ let makePropsType ~loc namedTypeList =
 
 let jsxExprAndChildren =
   let arr ~loc children =
-    Exp.apply
+    Exp.apply ~loc
       (Exp.ident { txt = Longident.Ldot (Lident "React", "array"); loc })
       [ (nolabel, children) ]
   in
@@ -402,50 +402,46 @@ let jsxExprAndChildren =
     in
     match (childrenExpr, keyProps) with
     | Some (Exact children), (_, key) :: _ ->
-        ( Exp.ident
-            { loc = Location.none; txt = Ldot (Lident ident, "jsxKeyed") },
+        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
           Some key,
           (* [|moreCreateElementCallsHere|] *)
           Some children )
     | Some (Exact children), [] ->
-        ( Exp.ident { loc = Location.none; txt = Ldot (Lident ident, "jsx") },
+        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
           None,
           (* [|moreCreateElementCallsHere|] *)
           Some children )
     | ( Some (ListLiteral ({ pexp_desc = Pexp_array list } as children)),
         (_, key) :: _ )
       when list = [] ->
-        ( Exp.ident
-            { loc = Location.none; txt = Ldot (Lident ident, "jsxKeyed") },
+        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
           Some key,
           (* [|moreCreateElementCallsHere|] *)
           Some (arr ~loc children) )
     | Some (ListLiteral { pexp_desc = Pexp_array list }), [] when list = [] ->
-        ( Exp.ident { loc = Location.none; txt = Ldot (Lident ident, "jsx") },
+        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
           None,
           (* [|moreCreateElementCallsHere|] *)
           children )
     | Some (ListLiteral children), (_, key) :: _ ->
         (* this is a hack to support react components that introspect into their
            children *)
-        ( Exp.ident
-            { loc = Location.none; txt = Ldot (Lident ident, "jsxsKeyed") },
+        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxsKeyed") },
           Some key,
           Some (arr ~loc children) )
     | Some (ListLiteral children), [] ->
         (* this is a hack to support react components that introspect into their
            children *)
-        ( Exp.ident { loc = Location.none; txt = Ldot (Lident ident, "jsxs") },
+        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxs") },
           None,
           Some (arr ~loc children) )
     | None, (_, key) :: _ ->
-        ( Exp.ident
-            { loc = Location.none; txt = Ldot (Lident ident, "jsxKeyed") },
+        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
           Some key,
           (* [|moreCreateElementCallsHere|] *)
           None )
     | None, [] ->
-        ( Exp.ident { loc = Location.none; txt = Ldot (Lident ident, "jsx") },
+        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
           None,
           (* [|moreCreateElementCallsHere|] *)
           None )
@@ -501,7 +497,9 @@ let jsxMapper =
                "JSX name can't be the result of function applications")
     in
     let props =
-      Exp.apply ~attrs ~loc (Exp.ident ~loc { loc; txt = propsIdent }) propsArg
+      Exp.apply ~attrs:[ merlinHide ] ~loc
+        (Exp.ident ~loc { loc; txt = propsIdent })
+        propsArg
     in
     let key_args =
       match key with
@@ -513,7 +511,8 @@ let jsxMapper =
       @ key_args)
   in
 
-  let transformLowercaseCall3 ~ctxt mapper loc attrs callArguments id =
+  let transformLowercaseCall3 ~ctxt parentExpLoc mapper loc attrs callArguments
+      id =
     let children, nonChildrenProps = extractChildren callArguments in
     let componentNameExpr = constantString ~loc id in
     let keyProps, nonChildrenProps =
@@ -523,13 +522,14 @@ let jsxMapper =
     in
     let jsxExpr, args =
       let jsxExpr, key, childrenProp =
-        jsxExprAndChildren ~ident:"ReactDOM" ~loc ~ctxt mapper ~keyProps
-          children
+        jsxExprAndChildren ~ident:"ReactDOM" ~loc:parentExpLoc ~ctxt mapper
+          ~keyProps children
       in
 
       let propsCall =
-        Exp.apply ~loc
-          (Exp.ident ~loc { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+        Exp.apply ~loc:parentExpLoc
+          (Exp.ident ~loc:parentExpLoc ~attrs:[ merlinHide ]
+             { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
           ((match childrenProp with
            | Some childrenProp ->
                (labelled "children", childrenProp) :: nonChildrenProps
@@ -545,7 +545,7 @@ let jsxMapper =
       ( jsxExpr,
         [ (nolabel, componentNameExpr); (nolabel, propsCall) ] @ key_args )
     in
-    Exp.apply ~loc ~attrs jsxExpr args
+    Exp.apply ~loc:parentExpLoc ~attrs jsxExpr args
   in
 
   let rec recursivelyTransformNamedArgsForMake ~ctxt mapper expr list =
@@ -902,12 +902,15 @@ let jsxMapper =
                  pexp_desc =
                    Pexp_apply
                      (wrapperExpression, [ (Nolabel, internalExpression) ]);
+                 pexp_loc;
                 } ->
                     let () = hasApplication := true in
                     let _, hasUnit, exp =
                       spelunkForFunExpression internalExpression
                     in
-                    ( (fun exp -> Exp.apply wrapperExpression [ (nolabel, exp) ]),
+                    ( (fun exp ->
+                        Exp.apply ~loc:pexp_loc wrapperExpression
+                          [ (nolabel, exp) ]),
                       hasUnit,
                       exp )
                 | {
@@ -1018,7 +1021,7 @@ let jsxMapper =
               else []
             in
             let innerExpression =
-              Exp.apply
+              Exp.apply ~loc
                 (Exp.ident
                    {
                      loc;
@@ -1210,7 +1213,8 @@ let jsxMapper =
     [@@raises Invalid_argument]
   in
 
-  let transformJsxCall ~ctxt mapper callExpression callArguments attrs =
+  let transformJsxCall ~ctxt parentExpLoc mapper callExpression callArguments
+      attrs =
     match callExpression.pexp_desc with
     | Pexp_ident caller -> (
         match caller with
@@ -1227,7 +1231,8 @@ let jsxMapper =
            ReactDOMRe.createElement(~props=ReactDOMRe.props(~props1=foo,
            ~props2=bar, ()), [|bla|]) *)
         | { loc; txt = Lident id } ->
-            transformLowercaseCall3 ~ctxt mapper loc attrs callArguments id
+            transformLowercaseCall3 ~ctxt parentExpLoc mapper loc attrs
+              callArguments id
         (* Foo.bar(~prop1=foo, ~prop2=bar, ~children=[], ()) *)
         (* Not only "createElement" or "make". See
            https://github.com/reasonml/reason/pull/2541 *)
@@ -1266,6 +1271,7 @@ let jsxMapper =
       | {
        pexp_desc = Pexp_apply (callExpression, callArguments);
        pexp_attributes;
+       pexp_loc = parentExpLoc;
       } -> (
           let jsxAttribute, nonJSXAttributes =
             List.partition
@@ -1276,8 +1282,8 @@ let jsxMapper =
           (* no JSX attribute *)
           | [], _ -> super#expression ctxt expr
           | _, nonJSXAttributes ->
-              transformJsxCall ~ctxt self callExpression callArguments
-                nonJSXAttributes)
+              transformJsxCall ~ctxt parentExpLoc self callExpression
+                callArguments nonJSXAttributes)
       (* is it a list with jsx attribute? Reason <>foo</> desugars to
          [@JSX][foo]*)
       | {
