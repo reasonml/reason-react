@@ -463,11 +463,11 @@
       ((txt makeProps)
        (loc
         ((loc_start
-          ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-           (pos_cnum -1)))
+          ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+           (pos_cnum 0)))
          (loc_end
-          ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-           (pos_cnum -1)))
+          ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+           (pos_cnum 146)))
          (loc_ghost true)))))
      (pval_type
       ((ptyp_desc
@@ -489,20 +489,20 @@
                ((txt (Lident string))
                 (loc
                  ((loc_start
-                   ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                    (pos_cnum -1)))
+                   ((pos_fname generated_locations.ml) (pos_lnum 1)
+                    (pos_bol 0) (pos_cnum 0)))
                   (loc_end
-                   ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                    (pos_cnum -1)))
+                   ((pos_fname generated_locations.ml) (pos_lnum 3)
+                    (pos_bol 90) (pos_cnum 146)))
                   (loc_ghost true))))
                ()))
              (ptyp_loc
               ((loc_start
-                ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                 (pos_cnum -1)))
+                ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+                 (pos_cnum 0)))
                (loc_end
-                ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                 (pos_cnum -1)))
+                ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+                 (pos_cnum 146)))
                (loc_ghost true)))
              (ptyp_loc_stack ()) (ptyp_attributes ()))
             ((ptyp_desc
@@ -512,20 +512,20 @@
                   ((txt (Lident unit))
                    (loc
                     ((loc_start
-                      ((pos_fname Generated_locations) (pos_lnum 1)
-                       (pos_bol 0) (pos_cnum -1)))
+                      ((pos_fname generated_locations.ml) (pos_lnum 1)
+                       (pos_bol 0) (pos_cnum 0)))
                      (loc_end
-                      ((pos_fname Generated_locations) (pos_lnum 1)
-                       (pos_bol 0) (pos_cnum -1)))
+                      ((pos_fname generated_locations.ml) (pos_lnum 3)
+                       (pos_bol 90) (pos_cnum 146)))
                      (loc_ghost true))))
                   ()))
                 (ptyp_loc
                  ((loc_start
-                   ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                    (pos_cnum -1)))
+                   ((pos_fname generated_locations.ml) (pos_lnum 1)
+                    (pos_bol 0) (pos_cnum 0)))
                   (loc_end
-                   ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                    (pos_cnum -1)))
+                   ((pos_fname generated_locations.ml) (pos_lnum 3)
+                    (pos_bol 90) (pos_cnum 146)))
                   (loc_ghost true)))
                 (ptyp_loc_stack ()) (ptyp_attributes ()))
                ((ptyp_desc
@@ -533,11 +533,11 @@
                   ((txt (Ldot (Lident Js) t))
                    (loc
                     ((loc_start
-                      ((pos_fname Generated_locations) (pos_lnum 1)
-                       (pos_bol 0) (pos_cnum -1)))
+                      ((pos_fname generated_locations.ml) (pos_lnum 1)
+                       (pos_bol 0) (pos_cnum 0)))
                      (loc_end
-                      ((pos_fname Generated_locations) (pos_lnum 1)
-                       (pos_bol 0) (pos_cnum -1)))
+                      ((pos_fname generated_locations.ml) (pos_lnum 3)
+                       (pos_bol 90) (pos_cnum 146)))
                      (loc_ghost true))))
                   (((ptyp_desc
                      (Ptyp_object
@@ -546,11 +546,11 @@
                           ((txt lola)
                            (loc
                             ((loc_start
-                              ((pos_fname Generated_locations) (pos_lnum 1)
-                               (pos_bol 0) (pos_cnum -1)))
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 1) (pos_bol 0) (pos_cnum 0)))
                              (loc_end
-                              ((pos_fname Generated_locations) (pos_lnum 1)
-                               (pos_bol 0) (pos_cnum -1)))
+                              ((pos_fname generated_locations.ml)
+                               (pos_lnum 3) (pos_bol 90) (pos_cnum 146)))
                              (loc_ghost true))))
                           ((ptyp_desc (Ptyp_var lola))
                            (ptyp_loc
@@ -564,30 +564,30 @@
                            (ptyp_loc_stack ()) (ptyp_attributes ()))))
                         (pof_loc
                          ((loc_start
-                           ((pos_fname Generated_locations) (pos_lnum 1)
-                            (pos_bol 0) (pos_cnum -1)))
+                           ((pos_fname generated_locations.ml) (pos_lnum 1)
+                            (pos_bol 0) (pos_cnum 0)))
                           (loc_end
-                           ((pos_fname Generated_locations) (pos_lnum 1)
-                            (pos_bol 0) (pos_cnum -1)))
+                           ((pos_fname generated_locations.ml) (pos_lnum 3)
+                            (pos_bol 90) (pos_cnum 146)))
                           (loc_ghost true)))
                         (pof_attributes ())))
                       Closed))
                     (ptyp_loc
                      ((loc_start
-                       ((pos_fname Generated_locations) (pos_lnum 1)
-                        (pos_bol 0) (pos_cnum -1)))
+                       ((pos_fname generated_locations.ml) (pos_lnum 1)
+                        (pos_bol 0) (pos_cnum 0)))
                       (loc_end
-                       ((pos_fname Generated_locations) (pos_lnum 1)
-                        (pos_bol 0) (pos_cnum -1)))
+                       ((pos_fname generated_locations.ml) (pos_lnum 3)
+                        (pos_bol 90) (pos_cnum 146)))
                       (loc_ghost true)))
                     (ptyp_loc_stack ()) (ptyp_attributes ())))))
                 (ptyp_loc
                  ((loc_start
-                   ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                    (pos_cnum -1)))
+                   ((pos_fname generated_locations.ml) (pos_lnum 1)
+                    (pos_bol 0) (pos_cnum 0)))
                   (loc_end
-                   ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                    (pos_cnum -1)))
+                   ((pos_fname generated_locations.ml) (pos_lnum 3)
+                    (pos_bol 90) (pos_cnum 146)))
                   (loc_ghost true)))
                 (ptyp_loc_stack ()) (ptyp_attributes ()))))
              (ptyp_loc
@@ -599,11 +599,11 @@
              (ptyp_loc_stack ()) (ptyp_attributes ()))))
           (ptyp_loc
            ((loc_start
-             ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-              (pos_cnum -1)))
+             ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+              (pos_cnum 0)))
             (loc_end
-             ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-              (pos_cnum -1)))
+             ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+              (pos_cnum 146)))
             (loc_ghost true)))
           (ptyp_loc_stack ()) (ptyp_attributes ()))))
        (ptyp_loc
@@ -621,34 +621,36 @@
          ((txt bs.obj)
           (loc
            ((loc_start
-             ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-              (pos_cnum -1)))
+             ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+              (pos_cnum 0)))
             (loc_end
-             ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-              (pos_cnum -1)))
+             ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+              (pos_cnum 146)))
             (loc_ghost true)))))
         (attr_payload (PStr ()))
         (attr_loc
          ((loc_start
-           ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-            (pos_cnum -1)))
+           ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+            (pos_cnum 0)))
           (loc_end
-           ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-            (pos_cnum -1)))
+           ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+            (pos_cnum 146)))
           (loc_ghost true))))))
      (pval_loc
       ((loc_start
-        ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-         (pos_cnum -1)))
+        ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+         (pos_cnum 0)))
        (loc_end
-        ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-         (pos_cnum -1)))
+        ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+         (pos_cnum 146)))
        (loc_ghost true))))))
   (pstr_loc
    ((loc_start
-     ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+     ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+      (pos_cnum 0)))
     (loc_end
-     ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+     ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+      (pos_cnum 146)))
     (loc_ghost true))))
  ((pstr_desc
    (Pstr_value Nonrecursive
@@ -666,12 +668,12 @@
              (loc_ghost false))))))
         (ppat_loc
          ((loc_start
-           ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-            (pos_cnum -1)))
+           ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+            (pos_cnum 4)))
           (loc_end
-           ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-            (pos_cnum -1)))
-          (loc_ghost true)))
+           ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+            (pos_cnum 8)))
+          (loc_ghost false)))
         (ppat_loc_stack ()) (ppat_attributes ())))
       (pvb_expr
        ((pexp_desc
@@ -921,11 +923,11 @@
             ((txt warning)
              (loc
               ((loc_start
-                ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                 (pos_cnum -1)))
+                ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+                 (pos_cnum 0)))
                (loc_end
-                ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                 (pos_cnum -1)))
+                ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+                 (pos_cnum 146)))
                (loc_ghost true)))))
            (attr_payload
             (PStr
@@ -960,21 +962,21 @@
                  (loc_ghost true)))))))
            (attr_loc
             ((loc_start
-              ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-               (pos_cnum -1)))
+              ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+               (pos_cnum 0)))
              (loc_end
-              ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-               (pos_cnum -1)))
+              ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+               (pos_cnum 146)))
              (loc_ghost true))))))))
       (pvb_attributes ())
       (pvb_loc
        ((loc_start
-         ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-          (pos_cnum -1)))
+         ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+          (pos_cnum 0)))
         (loc_end
-         ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-          (pos_cnum -1)))
-        (loc_ghost true)))))))
+         ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+          (pos_cnum 146)))
+        (loc_ghost false)))))))
   (pstr_loc
    ((loc_start
      ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
@@ -1015,19 +1017,19 @@
                 ((txt Generated_locations)
                  (loc
                   ((loc_start
-                    ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                     (pos_cnum -1)))
+                    ((pos_fname generated_locations.ml) (pos_lnum 1)
+                     (pos_bol 0) (pos_cnum 0)))
                    (loc_end
-                    ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                     (pos_cnum -1)))
+                    ((pos_fname generated_locations.ml) (pos_lnum 3)
+                     (pos_bol 90) (pos_cnum 146)))
                    (loc_ghost true))))))
               (ppat_loc
                ((loc_start
-                 ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                  (pos_cnum -1)))
+                 ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+                  (pos_cnum 0)))
                 (loc_end
-                 ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                  (pos_cnum -1)))
+                 ((pos_fname generated_locations.ml) (pos_lnum 3)
+                  (pos_bol 90) (pos_cnum 146)))
                 (loc_ghost true)))
               (ppat_loc_stack ()) (ppat_attributes ())))
             (pvb_expr
@@ -1040,19 +1042,19 @@
                       ((txt Props)
                        (loc
                         ((loc_start
-                          ((pos_fname Generated_locations) (pos_lnum 1)
-                           (pos_bol 0) (pos_cnum -1)))
+                          ((pos_fname generated_locations.ml) (pos_lnum 1)
+                           (pos_bol 0) (pos_cnum 0)))
                          (loc_end
-                          ((pos_fname Generated_locations) (pos_lnum 1)
-                           (pos_bol 0) (pos_cnum -1)))
+                          ((pos_fname generated_locations.ml) (pos_lnum 3)
+                           (pos_bol 90) (pos_cnum 146)))
                          (loc_ghost true))))))
                     (ppat_loc
                      ((loc_start
-                       ((pos_fname Generated_locations) (pos_lnum 1)
-                        (pos_bol 0) (pos_cnum -1)))
+                       ((pos_fname generated_locations.ml) (pos_lnum 1)
+                        (pos_bol 0) (pos_cnum 0)))
                       (loc_end
-                       ((pos_fname Generated_locations) (pos_lnum 1)
-                        (pos_bol 0) (pos_cnum -1)))
+                       ((pos_fname generated_locations.ml) (pos_lnum 3)
+                        (pos_bol 90) (pos_cnum 146)))
                       (loc_ghost true)))
                     (ppat_loc_stack ()) (ppat_attributes ()))
                    ((ptyp_desc
@@ -1060,11 +1062,11 @@
                       ((txt (Ldot (Lident Js) t))
                        (loc
                         ((loc_start
-                          ((pos_fname Generated_locations) (pos_lnum 1)
-                           (pos_bol 0) (pos_cnum -1)))
+                          ((pos_fname generated_locations.ml) (pos_lnum 1)
+                           (pos_bol 0) (pos_cnum 0)))
                          (loc_end
-                          ((pos_fname Generated_locations) (pos_lnum 1)
-                           (pos_bol 0) (pos_cnum -1)))
+                          ((pos_fname generated_locations.ml) (pos_lnum 3)
+                           (pos_bol 90) (pos_cnum 146)))
                          (loc_ghost true))))
                       (((ptyp_desc
                          (Ptyp_object
@@ -1073,11 +1075,11 @@
                               ((txt lola)
                                (loc
                                 ((loc_start
-                                  ((pos_fname Generated_locations)
-                                   (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 1) (pos_bol 0) (pos_cnum 0)))
                                  (loc_end
-                                  ((pos_fname Generated_locations)
-                                   (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+                                  ((pos_fname generated_locations.ml)
+                                   (pos_lnum 3) (pos_bol 90) (pos_cnum 146)))
                                  (loc_ghost true))))
                               ((ptyp_desc (Ptyp_var lola))
                                (ptyp_loc
@@ -1091,39 +1093,39 @@
                                (ptyp_loc_stack ()) (ptyp_attributes ()))))
                             (pof_loc
                              ((loc_start
-                               ((pos_fname Generated_locations) (pos_lnum 1)
-                                (pos_bol 0) (pos_cnum -1)))
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 1) (pos_bol 0) (pos_cnum 0)))
                               (loc_end
-                               ((pos_fname Generated_locations) (pos_lnum 1)
-                                (pos_bol 0) (pos_cnum -1)))
+                               ((pos_fname generated_locations.ml)
+                                (pos_lnum 3) (pos_bol 90) (pos_cnum 146)))
                               (loc_ghost true)))
                             (pof_attributes ())))
                           Closed))
                         (ptyp_loc
                          ((loc_start
-                           ((pos_fname Generated_locations) (pos_lnum 1)
-                            (pos_bol 0) (pos_cnum -1)))
+                           ((pos_fname generated_locations.ml) (pos_lnum 1)
+                            (pos_bol 0) (pos_cnum 0)))
                           (loc_end
-                           ((pos_fname Generated_locations) (pos_lnum 1)
-                            (pos_bol 0) (pos_cnum -1)))
+                           ((pos_fname generated_locations.ml) (pos_lnum 3)
+                            (pos_bol 90) (pos_cnum 146)))
                           (loc_ghost true)))
                         (ptyp_loc_stack ()) (ptyp_attributes ())))))
                     (ptyp_loc
                      ((loc_start
-                       ((pos_fname Generated_locations) (pos_lnum 1)
-                        (pos_bol 0) (pos_cnum -1)))
+                       ((pos_fname generated_locations.ml) (pos_lnum 1)
+                        (pos_bol 0) (pos_cnum 0)))
                       (loc_end
-                       ((pos_fname Generated_locations) (pos_lnum 1)
-                        (pos_bol 0) (pos_cnum -1)))
+                       ((pos_fname generated_locations.ml) (pos_lnum 3)
+                        (pos_bol 90) (pos_cnum 146)))
                       (loc_ghost true)))
                     (ptyp_loc_stack ()) (ptyp_attributes ()))))
                  (ppat_loc
                   ((loc_start
-                    ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                     (pos_cnum -1)))
+                    ((pos_fname generated_locations.ml) (pos_lnum 1)
+                     (pos_bol 0) (pos_cnum 0)))
                    (loc_end
-                    ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                     (pos_cnum -1)))
+                    ((pos_fname generated_locations.ml) (pos_lnum 3)
+                     (pos_bol 90) (pos_cnum 146)))
                    (loc_ghost true)))
                  (ppat_loc_stack ()) (ppat_attributes ()))
                 ((pexp_desc
@@ -1133,11 +1135,11 @@
                       ((txt (Lident make))
                        (loc
                         ((loc_start
-                          ((pos_fname Generated_locations) (pos_lnum 1)
-                           (pos_bol 0) (pos_cnum -1)))
+                          ((pos_fname generated_locations.ml) (pos_lnum 1)
+                           (pos_bol 0) (pos_cnum 0)))
                          (loc_end
-                          ((pos_fname Generated_locations) (pos_lnum 1)
-                           (pos_bol 0) (pos_cnum -1)))
+                          ((pos_fname generated_locations.ml) (pos_lnum 3)
+                           (pos_bol 90) (pos_cnum 146)))
                          (loc_ghost true))))))
                     (pexp_loc
                      ((loc_start
@@ -1258,30 +1260,30 @@
                  (loc_ghost true))))))
             (pvb_loc
              ((loc_start
-               ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                (pos_cnum -1)))
+               ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+                (pos_cnum 0)))
               (loc_end
-               ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                (pos_cnum -1)))
+               ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+                (pos_cnum 146)))
               (loc_ghost true)))))
           ((pexp_desc
             (Pexp_ident
              ((txt (Lident Generated_locations))
               (loc
                ((loc_start
-                 ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                  (pos_cnum -1)))
+                 ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+                  (pos_cnum 0)))
                 (loc_end
-                 ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-                  (pos_cnum -1)))
+                 ((pos_fname generated_locations.ml) (pos_lnum 3)
+                  (pos_bol 90) (pos_cnum 146)))
                 (loc_ghost true))))))
            (pexp_loc
             ((loc_start
-              ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-               (pos_cnum -1)))
+              ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+               (pos_cnum 0)))
              (loc_end
-              ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0)
-               (pos_cnum -1)))
+              ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+               (pos_cnum 146)))
              (loc_ghost true)))
            (pexp_loc_stack ()) (pexp_attributes ()))))
         (pexp_loc
@@ -1302,7 +1304,9 @@
         (loc_ghost false)))))))
   (pstr_loc
    ((loc_start
-     ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+     ((pos_fname generated_locations.ml) (pos_lnum 1) (pos_bol 0)
+      (pos_cnum 0)))
     (loc_end
-     ((pos_fname Generated_locations) (pos_lnum 1) (pos_bol 0) (pos_cnum -1)))
+     ((pos_fname generated_locations.ml) (pos_lnum 3) (pos_bol 90)
+      (pos_cnum 146)))
     (loc_ghost true)))))

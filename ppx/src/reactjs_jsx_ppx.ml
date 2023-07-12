@@ -762,18 +762,11 @@ let jsxMapper =
     (* let component = ... *)
     | { pstr_loc; pstr_desc = Pstr_value (recFlag, valueBindings) } ->
         let fileName = filenameFromLoc ~ctxt pstr_loc in
-        let emptyLoc = Location.in_file fileName in
+        let gloc = { pstr_loc with loc_ghost = true } in
         let mapBinding binding =
           if hasAttrOnBinding binding then
             let bindingLoc = binding.pvb_loc in
             let bindingPatLoc = binding.pvb_pat.ppat_loc in
-            let binding =
-              {
-                binding with
-                pvb_pat = { binding.pvb_pat with ppat_loc = emptyLoc };
-                pvb_loc = emptyLoc;
-              }
-            in
             let fnName = getFnName binding in
             let internalFnName = fnName ^ "$Internal" in
             let fullModuleName =
@@ -827,8 +820,7 @@ let jsxMapper =
               let unerasableIgnoreExp exp =
                 {
                   exp with
-                  pexp_attributes =
-                    unerasableIgnore emptyLoc :: exp.pexp_attributes;
+                  pexp_attributes = unerasableIgnore gloc :: exp.pexp_attributes;
                 }
               in
               (* TODO: there is a long-tail of unsupported features inside of
@@ -947,7 +939,7 @@ let jsxMapper =
               match reactComponentAttribute with
               | Some { attr_name = loc; attr_payload = payload; _ } ->
                   (loc.loc, Some payload)
-              | None -> (emptyLoc, None)
+              | None -> (gloc, None)
             in
             let props = getPropsAttr payload in
             (* do stuff here! *)
@@ -959,10 +951,10 @@ let jsxMapper =
             let namedArgListWithKeyAndRef =
               ( optional "key",
                 None,
-                Pat.var { txt = "key"; loc = emptyLoc },
+                Pat.var { txt = "key"; loc = gloc },
                 "key",
-                emptyLoc,
-                Some (keyType emptyLoc) )
+                gloc,
+                Some (keyType gloc) )
               :: namedArgList
             in
             let namedArgListWithKeyAndRef =
@@ -970,9 +962,9 @@ let jsxMapper =
               | Some _ ->
                   ( optional "ref",
                     None,
-                    Pat.var { txt = "key"; loc = emptyLoc },
+                    Pat.var { txt = "key"; loc = gloc },
                     "ref",
-                    emptyLoc,
+                    gloc,
                     None )
                   :: namedArgListWithKeyAndRef
               | None -> namedArgListWithKeyAndRef
@@ -984,9 +976,9 @@ let jsxMapper =
                   @ [
                       ( nolabel,
                         None,
-                        Pat.var { txt; loc = emptyLoc },
+                        Pat.var { txt; loc = gloc },
                         txt,
-                        emptyLoc,
+                        gloc,
                         None );
                     ]
               | None -> namedArgList
@@ -1013,7 +1005,7 @@ let jsxMapper =
                       ] )
             in
             let namedTypeList = List.fold_left argToType [] namedArgList in
-            let loc = emptyLoc in
+            let loc = gloc in
             let externalDecl =
               makeExternalDecl fnName loc namedArgListWithKeyAndRef
                 namedTypeList
@@ -1048,8 +1040,8 @@ let jsxMapper =
                         ( nolabel,
                           None,
                           {
-                            ppat_desc = Ppat_var { txt; loc = emptyLoc };
-                            ppat_loc = emptyLoc;
+                            ppat_desc = Ppat_var { txt; loc = gloc };
+                            ppat_loc = gloc;
                             ppat_loc_stack = [];
                             ppat_attributes = [];
                           },
@@ -1062,9 +1054,9 @@ let jsxMapper =
                 {
                   ppat_desc =
                     Ppat_constraint
-                      ( makePropsName ~loc:emptyLoc props.propsName,
-                        makePropsType ~loc:emptyLoc namedTypeList );
-                  ppat_loc = emptyLoc;
+                      ( makePropsName ~loc:gloc props.propsName,
+                        makePropsType ~loc:gloc namedTypeList );
+                  ppat_loc = gloc;
                   ppat_loc_stack = [];
                   ppat_attributes = [];
                 }
@@ -1076,26 +1068,25 @@ let jsxMapper =
               | txt ->
                   Exp.let_ Nonrecursive
                     [
-                      Vb.mk ~loc:emptyLoc ~attrs:[merlinHide]
-                        (Pat.var ~loc:emptyLoc { loc = emptyLoc; txt })
+                      Vb.mk ~loc:gloc ~attrs:[ merlinHide ]
+                        (Pat.var ~loc:gloc { loc = gloc; txt })
                         fullExpression;
                     ]
-                    (Exp.ident ~loc:emptyLoc
-                       { loc = emptyLoc; txt = Lident txt })
+                    (Exp.ident ~loc:gloc { loc = gloc; txt = Lident txt })
             in
             let bindings, newBinding =
               match recFlag with
               | Recursive ->
                   ( [
                       bindingWrapper
-                        (Exp.let_ ~loc:emptyLoc Recursive
+                        (Exp.let_ ~loc:gloc Recursive
                            [
                              makeNewBinding binding expression internalFnName;
                              Vb.mk
-                               (Pat.var { loc = emptyLoc; txt = fnName })
+                               (Pat.var { loc = gloc; txt = fnName })
                                fullExpression;
                            ]
-                           (Exp.ident { loc = emptyLoc; txt = Lident fnName }));
+                           (Exp.ident { loc = gloc; txt = Lident fnName }));
                     ],
                     None )
               | Nonrecursive ->
@@ -1133,7 +1124,7 @@ let jsxMapper =
           | newBindings ->
               [
                 {
-                  pstr_loc = emptyLoc;
+                  pstr_loc = gloc;
                   pstr_desc = Pstr_value (recFlag, newBindings);
                 };
               ])
