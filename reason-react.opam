@@ -20,8 +20,8 @@ depends: [
   "dune" {>= "3.8"}
   "ocaml" {>= "4.13.0"}
   "melange" {>= "1.0.0"}
-  "reason-react-ppx"
   "reason" {>= "3.6.0"}
+  "reason-react-ppx"
   "ocaml-lsp-server" {with-test}
   "odoc" {with-doc}
 ]
