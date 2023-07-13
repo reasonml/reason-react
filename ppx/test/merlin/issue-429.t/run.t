@@ -1,7 +1,7 @@
 Test some locations in reason-react components
 
   $ cat >dune-project <<EOF
-  > (lang dune 3.9)
+  > (lang dune 3.8)
   > (using melange 0.1)
   > EOF
 
