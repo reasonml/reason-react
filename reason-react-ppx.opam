@@ -14,9 +14,9 @@ homepage: "https://reasonml.github.io/reason-react"
 doc: "https://reasonml.github.io/reason-react"
 bug-reports: "https://github.com/reasonml/reason-react/issues"
 depends: [
-  "dune" {>= "3.9"}
+  "dune" {>= "3.8"}
   "ocaml" {>= "4.13.0"}
-  "reason" {>= "3.6.0"}
+  "reason" {>= "3.6.0" | "3.9.0" = with-test}
   "ppxlib" {>= "0.28.0"}
   "odoc" {with-doc}
 ]

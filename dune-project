@@ -1,4 +1,4 @@
-(lang dune 3.9)
+(lang dune 3.8)
 
 (using melange 0.1)
 
@@ -50,6 +50,6 @@
   (ocaml
    (>= 4.13.0))
   (reason
-   (>= 3.6.0))
+   (or (>= 3.6.0) (and (= 3.9.0 :with-test))))
   (ppxlib
    (>= 0.28.0))))
