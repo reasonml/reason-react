@@ -79,11 +79,11 @@ First child `onClick` prop `Click`
   [
     {
       "start": {
-        "line": 31,
+        "line": 30,
         "col": 35
       },
       "end": {
-        "line": 31,
+        "line": 30,
         "col": 40
       },
       "type": "((int)) => action",
@@ -98,11 +98,11 @@ First child `string`
   [
     {
       "start": {
-        "line": 31,
+        "line": 30,
         "col": 49
       },
       "end": {
-        "line": 31,
+        "line": 30,
         "col": 55
       },
       "type": "string => element",
@@ -135,11 +135,11 @@ Third child `string`
   [
     {
       "start": {
-        "line": 35,
+        "line": 34,
         "col": 18
       },
       "end": {
-        "line": 35,
+        "line": 34,
         "col": 24
       },
       "type": "string => element",
@@ -160,11 +160,11 @@ Third child `null`
   [
     {
       "start": {
-        "line": 35,
+        "line": 34,
         "col": 37
       },
       "end": {
-        "line": 35,
+        "line": 34,
         "col": 41
       },
       "type": "element",
