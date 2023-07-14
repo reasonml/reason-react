@@ -1,5 +1,4 @@
 open React;
-open! ReasonReact;
 
 type state = {
   count: int,

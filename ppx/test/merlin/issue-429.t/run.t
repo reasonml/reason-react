@@ -20,61 +20,61 @@ Let's test hovering over parts of the component
 
 `greeting` prop
 
-  $ ocamlmerlin single type-enclosing -position 16:19 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 15:19 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 `state` in `let (state, dispatch)`
 
-  $ ocamlmerlin single type-enclosing -position 17:11 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 16:11 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 `dispatch` in `let (state, dispatch)`
 
-  $ ocamlmerlin single type-enclosing -position 17:19 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 16:19 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 `message` in `let message`
 
-  $ ocamlmerlin single type-enclosing -position 27:11 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 26:11 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 Wrapping `div`
 
-  $ ocamlmerlin single type-enclosing -position 30:5 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 29:5 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 First child `button`
 
-  $ ocamlmerlin single type-enclosing -position 31:9 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 30:9 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 First child `onClick` prop
 
-  $ ocamlmerlin single type-enclosing -position 31:17 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 30:17 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 First child `onClick` callback argument (event)
 
-  $ ocamlmerlin single type-enclosing -position 31:23 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 30:23 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 First child `onClick` prop `dispatch`
 
-  $ ocamlmerlin single type-enclosing -position 31:30 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 30:30 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 First child `onClick` prop `Click`
 
-  $ ocamlmerlin single type-enclosing -position 31:39 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 30:39 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
     {
@@ -93,7 +93,7 @@ First child `onClick` prop `Click`
 
 First child `string`
 
-  $ ocamlmerlin single type-enclosing -position 31:53 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 30:53 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
     {
@@ -112,25 +112,25 @@ First child `string`
 
 First child `message`
 
-  $ ocamlmerlin single type-enclosing -position 31:62 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 30:62 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 Third child `state`
 
-  $ ocamlmerlin single type-enclosing -position 35:9 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 34:9 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 Third child `show` in `state.show`
 
-  $ ocamlmerlin single type-enclosing -position 35:15 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 34:15 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 Third child `string`
 
-  $ ocamlmerlin single type-enclosing -position 35:22 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 34:22 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
     {
@@ -149,13 +149,13 @@ Third child `string`
 
 Third child `greeting`
 
-  $ ocamlmerlin single type-enclosing -position 35:30 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 34:30 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   []
 
 Third child `null`
 
-  $ ocamlmerlin single type-enclosing -position 35:40 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 34:40 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
     {
