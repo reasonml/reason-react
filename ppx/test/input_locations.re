@@ -11,3 +11,12 @@ let make = (~initialValue=0, ()) => {
     value->React.int
   </button>;
 };
+
+module Uppercase = {
+  [@react.component]
+  let make = (~children as upperCaseChildren) => {
+    <Box>
+      {upperCaseChildren}
+    </Box>;
+  };
+};
