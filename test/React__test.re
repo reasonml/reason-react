@@ -589,6 +589,27 @@ describe("React", () => {
     expect(value.contents)->toEqual("My value");
   });
 
+  test("React.Fragment with key", () => {
+    let container = getContainer(container);
+    let title = Some("foo");
+
+    act(() => {
+      ReactDOM.render(
+        <React.Fragment key=?title>
+          <div> "Child"->React.string </div>
+        </React.Fragment>,
+        container,
+      )
+    });
+
+    expect(
+      container
+      ->DOM.findBySelectorAndPartialTextContent("div", "Child")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+  });
+  
   /* test("ErrorBoundary", () => {
     let container = getContainer(container);
 
