@@ -124,12 +124,14 @@ let unerasableIgnore loc =
 
 (* [merlinHide] tells merlin to not look at a node, or at any of its
    descendants. *)
-let merlinHide =
-  {
-    attr_name = { txt = "merlin.hide"; loc = Location.none };
-    attr_payload = PStr [];
-    attr_loc = Location.none;
-  }
+let merlinHideAttrs =
+  [
+    {
+      attr_name = { txt = "merlin.hide"; loc = Location.none };
+      attr_payload = PStr [];
+      attr_loc = Location.none;
+    };
+  ]
 
 let merlinFocus =
   {
@@ -497,7 +499,7 @@ let jsxMapper =
                "JSX name can't be the result of function applications")
     in
     let props =
-      Exp.apply ~attrs:[ merlinHide ] ~loc
+      Exp.apply ~attrs:merlinHideAttrs ~loc
         (Exp.ident ~loc { loc; txt = propsIdent })
         propsArg
     in
@@ -528,7 +530,7 @@ let jsxMapper =
 
       let propsCall =
         Exp.apply ~loc:parentExpLoc
-          (Exp.ident ~loc:parentExpLoc ~attrs:[ merlinHide ]
+          (Exp.ident ~loc:parentExpLoc ~attrs:merlinHideAttrs
              { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
           ((match childrenProp with
            | Some childrenProp ->
@@ -1071,7 +1073,7 @@ let jsxMapper =
               | txt ->
                   Exp.let_ Nonrecursive
                     [
-                      Vb.mk ~loc:gloc ~attrs:[ merlinHide ]
+                      Vb.mk ~loc:gloc ~attrs:merlinHideAttrs
                         (Pat.var ~loc:gloc { loc = gloc; txt })
                         fullExpression;
                     ]
