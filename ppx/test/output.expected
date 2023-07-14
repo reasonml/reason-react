@@ -35,7 +35,7 @@ let lower_children_multiple foo bar =
 let lower_child_with_upper_as_children =
   ReactDOM.jsx "div"
     (((ReactDOM.domProps)[@merlin.hide ])
-       ~children:(React.jsx App.make ((App.makeProps ())[@merlin.hide ])) ())
+       ~children:(React.jsx App.make (App.makeProps ())) ())
 let lower_children_nested =
   ReactDOM.jsx "div"
     (((ReactDOM.domProps)[@merlin.hide ])
@@ -97,42 +97,39 @@ let nested_fragment_with_lower foo =
   ReactDOM.createElement React.jsxFragment
     [|(ReactDOM.jsx "div"
          (((ReactDOM.domProps)[@merlin.hide ]) ~children:foo ()))|]
-let upper = React.jsx Upper.make ((Upper.makeProps ())[@merlin.hide ])
-let upper_prop =
-  React.jsx Upper.make ((Upper.makeProps ~count ())[@merlin.hide ])
+let upper = React.jsx Upper.make (Upper.makeProps ())
+let upper_prop = React.jsx Upper.make (Upper.makeProps ~count ())
 let upper_children_single foo =
-  React.jsx Upper.make ((Upper.makeProps ~children:foo ())[@merlin.hide ])
+  React.jsx Upper.make (Upper.makeProps ~children:foo ())
 let upper_children_multiple foo bar =
   React.jsxs Upper.make
-    ((Upper.makeProps ~children:(React.array [|foo;bar|]) ())[@merlin.hide ])
+    (Upper.makeProps ~children:(React.array [|foo;bar|]) ())
 let upper_children =
   React.jsx Page.make
-    ((Page.makeProps
-        ~children:(ReactDOM.jsx "h1"
-                     (((ReactDOM.domProps)[@merlin.hide ])
-                        ~children:(React.string "Yep") ()))
-        ~moreProps:"hgalo" ())[@merlin.hide ])
+    (Page.makeProps
+       ~children:(ReactDOM.jsx "h1"
+                    (((ReactDOM.domProps)[@merlin.hide ])
+                       ~children:(React.string "Yep") ())) ~moreProps:"hgalo"
+       ())
 let upper_nested_module =
-  React.jsx Foo.Bar.make ((Foo.Bar.makeProps ~a:1 ~b:"1" ())[@merlin.hide ])
+  React.jsx Foo.Bar.make (Foo.Bar.makeProps ~a:1 ~b:"1" ())
 let upper_child_expr =
-  React.jsx Div.make ((Div.makeProps ~children:(React.int 1) ())
-    [@merlin.hide ])
-let upper_child_ident =
-  React.jsx Div.make ((Div.makeProps ~children:lola ())[@merlin.hide ])
+  React.jsx Div.make (Div.makeProps ~children:(React.int 1) ())
+let upper_child_ident = React.jsx Div.make (Div.makeProps ~children:lola ())
 let upper_all_kinds_of_props =
   React.jsx MyComponent.make
-    ((MyComponent.makeProps
-        ~children:(ReactDOM.jsx "div"
-                     (((ReactDOM.domProps)[@merlin.hide ]) ~children:"hello"
-                        ())) ~booleanAttribute:true ~stringAttribute:"string"
-        ~intAttribute:1 ?forcedOptional:((Some "hello")[@explicit_arity ])
-        ~onClick:(send handleClick) ())[@merlin.hide ])
+    (MyComponent.makeProps
+       ~children:(ReactDOM.jsx "div"
+                    (((ReactDOM.domProps)[@merlin.hide ]) ~children:"hello"
+                       ())) ~booleanAttribute:true ~stringAttribute:"string"
+       ~intAttribute:1 ?forcedOptional:((Some "hello")[@explicit_arity ])
+       ~onClick:(send handleClick) ())
 let upper_ref_with_children =
   React.jsx FancyButton.make
-    ((FancyButton.makeProps
-        ~children:(ReactDOM.jsx "div"
-                     (((ReactDOM.domProps)[@merlin.hide ]) ()))
-        ~ref:buttonRef ())[@merlin.hide ])
+    (FancyButton.makeProps
+       ~children:(ReactDOM.jsx "div"
+                    (((ReactDOM.domProps)[@merlin.hide ]) ())) ~ref:buttonRef
+       ())
 let lower_ref_with_children =
   ReactDOM.jsx "button"
     (((ReactDOM.domProps)[@merlin.hide ]) ~children ~ref
@@ -177,13 +174,12 @@ module React_component_with_props =
       [@warning "-16"])
     let make =
       let Generated$React_component_with_props
-        (Props : < lola: 'lola   >  Js.t) = make ~lola:(Props ## lola)
-        [@@merlin.hide ] in
+        (Props : < lola: 'lola   >  Js.t) = make ~lola:(Props ## lola) in
       Generated$React_component_with_props
   end
 let react_component_with_props =
   React.jsx React_component_with_props.make
-    ((React_component_with_props.makeProps ~lola:"flores" ())[@merlin.hide ])
+    (React_component_with_props.makeProps ~lola:"flores" ())
 module Upper_case_with_fragment_as_root =
   struct
     external makeProps :
@@ -196,13 +192,12 @@ module Upper_case_with_fragment_as_root =
                  (((ReactDOM.domProps)[@merlin.hide ])
                     ~children:(React.string ("First " ^ name)) ()));(
               React.jsx Hello.make
-                ((Hello.makeProps ~children:(React.string ("2nd " ^ name))
-                    ~one:"1" ())[@merlin.hide ]))|])
+                (Hello.makeProps ~children:(React.string ("2nd " ^ name))
+                   ~one:"1" ()))|])
       [@warning "-16"])
     let make =
       let Generated$Upper_case_with_fragment_as_root
-        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name)
-        [@@merlin.hide ] in
+        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name) in
       Generated$Upper_case_with_fragment_as_root
   end
 module Forward_Ref =
@@ -226,8 +221,7 @@ module Forward_Ref =
         (let Generated$Forward_Ref
            (Props : < children: 'children  ;buttonRef: 'buttonRef   >  Js.t)
            =
-           make ~buttonRef:(Props ## buttonRef) ~children:(Props ## children)
-           [@@merlin.hide ] in
+           make ~buttonRef:(Props ## buttonRef) ~children:(Props ## children) in
          Generated$Forward_Ref)
   end
 module Onclick_handler_button =
@@ -250,8 +244,7 @@ module Onclick_handler_button =
     let make =
       let Generated$Onclick_handler_button
         (Props : < name: 'name  ;isDisabled: 'isDisabled option   >  Js.t) =
-        make ?isDisabled:(Props ## isDisabled) ~name:(Props ## name)[@@merlin.hide
-                                                                    ] in
+        make ?isDisabled:(Props ## isDisabled) ~name:(Props ## name) in
       Generated$Onclick_handler_button
   end
 module Children_as_string =
@@ -268,8 +261,7 @@ module Children_as_string =
       [@warning "-16"])
     let make =
       let Generated$Children_as_string
-        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name)
-        [@@merlin.hide ] in
+        (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name) in
       Generated$Children_as_string
   end
 let () = Dream.run ()
@@ -327,8 +319,7 @@ module Uppercase_with_SSR_components =
     let make =
       let Generated$Uppercase_with_SSR_components
         (Props : < children: 'children  ;moreProps: 'moreProps   >  Js.t) =
-        make ~moreProps:(Props ## moreProps) ~children:(Props ## children)
-        [@@merlin.hide ] in
+        make ~moreProps:(Props ## moreProps) ~children:(Props ## children) in
       Generated$Uppercase_with_SSR_components
   end
 module Upper_with_aria =
@@ -345,7 +336,7 @@ module Upper_with_aria =
       [@warning "-16"])
     let make =
       let Generated$Upper_with_aria (Props : < children: 'children   >  Js.t)
-        = make ~children:(Props ## children)[@@merlin.hide ] in
+        = make ~children:(Props ## children) in
       Generated$Upper_with_aria
   end
 let data_attributes_should_transform_to_kebabcase =
@@ -389,6 +380,6 @@ module Func(M:X_int) =
       [@warning "-16"])
     let make =
       let Generated$Func (Props : < a: 'a  ;b: 'b   >  Js.t) =
-        make ~b:(Props ## b) ~a:(Props ## a) ()[@@merlin.hide ] in
+        make ~b:(Props ## b) ~a:(Props ## a) () in
       Generated$Func
   end

@@ -499,9 +499,7 @@ let jsxMapper =
                "JSX name can't be the result of function applications")
     in
     let props =
-      Exp.apply ~attrs:merlinHideAttrs ~loc
-        (Exp.ident ~loc { loc; txt = propsIdent })
-        propsArg
+      Exp.apply ~loc (Exp.ident ~loc { loc; txt = propsIdent }) propsArg
     in
     let key_args =
       match key with
@@ -1073,7 +1071,7 @@ let jsxMapper =
               | txt ->
                   Exp.let_ Nonrecursive
                     [
-                      Vb.mk ~loc:gloc ~attrs:merlinHideAttrs
+                      Vb.mk ~loc:gloc
                         (Pat.var ~loc:gloc { loc = gloc; txt })
                         fullExpression;
                     ]
@@ -1225,9 +1223,9 @@ let jsxMapper =
               (Invalid_argument
                  "JSX: `createElement` should be preceeded by a module name.")
         (* Foo.createElement(~prop1=foo, ~prop2=bar, ~children=[], ()) *)
-        | { loc; txt = Ldot (modulePath, ("createElement" | "make")) } ->
-            transformUppercaseCall3 ~ctxt ~caller:"make" modulePath mapper loc
-              attrs callExpression callArguments
+        | { txt = Ldot (modulePath, ("createElement" | "make")) } ->
+            transformUppercaseCall3 ~ctxt ~caller:"make" modulePath mapper
+              parentExpLoc attrs callExpression callArguments
         (* div(~prop1=foo, ~prop2=bar, ~children=[bla], ()) *)
         (* turn that into
            ReactDOMRe.createElement(~props=ReactDOMRe.props(~props1=foo,
@@ -1238,9 +1236,9 @@ let jsxMapper =
         (* Foo.bar(~prop1=foo, ~prop2=bar, ~children=[], ()) *)
         (* Not only "createElement" or "make". See
            https://github.com/reasonml/reason/pull/2541 *)
-        | { loc; txt = Ldot (modulePath, anythingNotCreateElementOrMake) } ->
+        | { txt = Ldot (modulePath, anythingNotCreateElementOrMake) } ->
             transformUppercaseCall3 ~ctxt ~caller:anythingNotCreateElementOrMake
-              modulePath mapper loc attrs callExpression callArguments
+              modulePath mapper parentExpLoc attrs callExpression callArguments
         | { txt = Lapply _ } ->
             (* don't think there's ever a case where this is reached *)
             raise

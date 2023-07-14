@@ -25,6 +25,66 @@ Let's test hovering over parts of the component
   [
     {
       "start": {
+        "line": 14,
+        "col": 7
+      },
+      "end": {
+        "line": 14,
+        "col": 15
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 14,
+        "col": 6
+      },
+      "end": {
+        "line": 14,
+        "col": 16
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 12,
+        "col": 28
+      },
+      "end": {
+        "line": 16,
+        "col": 3
+      },
+      "type": "{. children: React.element}",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 12,
+        "col": 28
+      },
+      "end": {
+        "line": 16,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 12,
+        "col": 13
+      },
+      "end": {
+        "line": 16,
+        "col": 3
+      },
+      "type": "(~children: React.element) => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
         "line": 10,
         "col": 19
       },
