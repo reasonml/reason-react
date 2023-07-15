@@ -403,9 +403,9 @@ let jsxExprAndChildren =
       Option.map (transformChildrenIfListUpper ~loc ~mapper ~ctxt) children
     in
     match (childrenExpr, keyProps) with
-    | Some (Exact children), (_, key) :: _ ->
+    | Some (Exact children), (label, key) :: _ ->
         ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
-          Some key,
+          Some (label, key),
           (* [|moreCreateElementCallsHere|] *)
           Some children )
     | Some (Exact children), [] ->
@@ -414,10 +414,10 @@ let jsxExprAndChildren =
           (* [|moreCreateElementCallsHere|] *)
           Some children )
     | ( Some (ListLiteral ({ pexp_desc = Pexp_array list } as children)),
-        (_, key) :: _ )
+        (label, key) :: _ )
       when list = [] ->
         ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
-          Some key,
+          Some (label, key),
           (* [|moreCreateElementCallsHere|] *)
           Some (arr ~loc children) )
     | Some (ListLiteral { pexp_desc = Pexp_array list }), [] when list = [] ->
@@ -425,11 +425,11 @@ let jsxExprAndChildren =
           None,
           (* [|moreCreateElementCallsHere|] *)
           children )
-    | Some (ListLiteral children), (_, key) :: _ ->
+    | Some (ListLiteral children), (label, key) :: _ ->
         (* this is a hack to support react components that introspect into their
            children *)
         ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxsKeyed") },
-          Some key,
+          Some (label, key),
           Some (arr ~loc children) )
     | Some (ListLiteral children), [] ->
         (* this is a hack to support react components that introspect into their
@@ -437,9 +437,9 @@ let jsxExprAndChildren =
         ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxs") },
           None,
           Some (arr ~loc children) )
-    | None, (_, key) :: _ ->
+    | None, (label, key) :: _ ->
         ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
-          Some key,
+          Some (label, key),
           (* [|moreCreateElementCallsHere|] *)
           None )
     | None, [] ->
@@ -457,6 +457,7 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper =
+  let unit = Exp.construct { txt = Lident "()"; loc = Location.none } None in
   let transformUppercaseCall3 ~caller modulePath ~ctxt mapper loc attrs _
       callArguments =
     let children, argsWithLabels = extractChildren callArguments in
@@ -503,7 +504,8 @@ let jsxMapper =
     in
     let key_args =
       match key with
-      | Some key -> [ (nolabel, mapper#expression ctxt key) ]
+      | Some (label, key) ->
+          [ (label, mapper#expression ctxt key); (nolabel, unit) ]
       | None -> []
     in
     Exp.apply ~loc ~attrs jsxExpr
@@ -539,7 +541,8 @@ let jsxMapper =
       in
       let key_args =
         match key with
-        | Some key -> [ (nolabel, mapper#expression ctxt key) ]
+        | Some (label, key) ->
+            [ (label, mapper#expression ctxt key); (nolabel, unit) ]
         | None -> []
       in
       ( jsxExpr,
