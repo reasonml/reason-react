@@ -29,7 +29,9 @@ external createElementVariadic:
   "createElement";
 
 [@bs.module "react/jsx-runtime"]
-external jsxKeyed: (component('props), 'props, string) => element = "jsx";
+external jsxKeyed:
+  (component('props), 'props, ~key: string=?, unit) => element =
+  "jsx";
 
 [@bs.module "react/jsx-runtime"]
 external jsx: (component('props), 'props) => element = "jsx";
@@ -38,7 +40,9 @@ external jsx: (component('props), 'props) => element = "jsx";
 external jsxs: (component('props), 'props) => element = "jsxs";
 
 [@bs.module "react/jsx-runtime"]
-external jsxsKeyed: (component('props), 'props, string) => element = "jsxs";
+external jsxsKeyed:
+  (component('props), 'props, ~key: string=?, unit) => element =
+  "jsxs";
 
 [@bs.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
 
@@ -122,16 +126,15 @@ external memoCustomCompareProps:
 
 module Fragment = {
   [@bs.obj]
-  external makeProps:
-    (~children: element, ~key: 'key=?, unit) => {. "children": element};
+  external makeProps: (~children: element, unit) => {. "children": element};
+
   [@bs.module "react"]
   external make: component({. "children": element}) = "Fragment";
 };
 
 module StrictMode = {
   [@bs.obj]
-  external makeProps:
-    (~children: element, ~key: 'key=?, unit) => {. "children": element};
+  external makeProps: (~children: element, unit) => {. "children": element};
   [@bs.module "react"]
   external make: component({. "children": element}) = "StrictMode";
 };
@@ -139,7 +142,7 @@ module StrictMode = {
 module Suspense = {
   [@bs.obj]
   external makeProps:
-    (~children: element=?, ~fallback: element=?, ~key: 'key=?, unit) =>
+    (~children: element=?, ~fallback: element=?, unit) =>
     {
       .
       "children": option(element),

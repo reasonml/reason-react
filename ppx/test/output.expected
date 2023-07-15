@@ -80,7 +80,9 @@ let lower_children_nested =
                                                                     ReactRouter.push
                                                                     e.path)
                                                                     ())) ())
-                                                                    e.path)))
+                                                                    ~key:(
+                                                                    e.path)
+                                                                    ())))
                                                              |> React.list)
                                                            ()))
                                            ~className:"menu" ()))|])
