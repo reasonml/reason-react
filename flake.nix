@@ -71,6 +71,7 @@
           default = pkgs.mkShell {
             dontDetectOcamlConflicts = true;
             inputsFrom = pkgs.lib.attrValues packages;
+            nativeBuildInputs = with pkgs.ocamlPackages; [ ocamlformat ];
             propagatedBuildInputs = with pkgs.ocamlPackages; [ merlin ];
           };
         };
