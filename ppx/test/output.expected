@@ -1,60 +1,72 @@
-let lower = ReactDOM.jsx "div" (ReactDOM.domProps ())
+let lower = ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ())
 let lower_empty_attr =
-  ReactDOM.jsx "div" (ReactDOM.domProps ~className:"" ())
+  ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ~className:"" ())
 let lower_inline_styles =
   ReactDOM.jsx "div"
-    (ReactDOM.domProps
+    (((ReactDOM.domProps)[@merlin.hide ])
        ~style:(ReactDOM.Style.make ~backgroundColor:"gainsboro" ()) ())
 let lower_inner_html =
   ReactDOM.jsx "div"
-    (ReactDOM.domProps ~dangerouslySetInnerHTML:([%bs.obj { __html = text }])
-       ())
-let lower_opt_attr = ReactDOM.jsx "div" (ReactDOM.domProps ?tabIndex ())
+    (((ReactDOM.domProps)[@merlin.hide ])
+       ~dangerouslySetInnerHTML:([%bs.obj { __html = text }]) ())
+let lower_opt_attr =
+  ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ?tabIndex ())
 let lowerWithChildAndProps foo =
   ReactDOM.jsx "a"
-    (ReactDOM.domProps ~children:foo ~tabIndex:1 ~href:"https://example.com"
-       ())
+    (((ReactDOM.domProps)[@merlin.hide ]) ~children:foo ~tabIndex:1
+       ~href:"https://example.com" ())
 let lower_child_static =
   ReactDOM.jsx "div"
-    (ReactDOM.domProps ~children:(ReactDOM.jsx "span" (ReactDOM.domProps ()))
-       ())
+    (((ReactDOM.domProps)[@merlin.hide ])
+       ~children:(ReactDOM.jsx "span"
+                    (((ReactDOM.domProps)[@merlin.hide ]) ())) ())
 let lower_child_ident =
-  ReactDOM.jsx "div" (ReactDOM.domProps ~children:lolaspa ())
+  ReactDOM.jsx "div"
+    (((ReactDOM.domProps)[@merlin.hide ]) ~children:lolaspa ())
 let lower_child_single =
   ReactDOM.jsx "div"
-    (ReactDOM.domProps ~children:(ReactDOM.jsx "div" (ReactDOM.domProps ()))
-       ())
+    (((ReactDOM.domProps)[@merlin.hide ])
+       ~children:(ReactDOM.jsx "div"
+                    (((ReactDOM.domProps)[@merlin.hide ]) ())) ())
 let lower_children_multiple foo bar =
   ReactDOM.jsxs "lower"
-    (ReactDOM.domProps ~children:(React.array [|foo;bar|]) ())
+    (((ReactDOM.domProps)[@merlin.hide ]) ~children:(React.array [|foo;bar|])
+       ())
 let lower_child_with_upper_as_children =
   ReactDOM.jsx "div"
-    (ReactDOM.domProps ~children:(React.jsx App.make (App.makeProps ())) ())
+    (((ReactDOM.domProps)[@merlin.hide ])
+       ~children:(React.jsx App.make (App.makeProps ())) ())
 let lower_children_nested =
   ReactDOM.jsx "div"
-    (ReactDOM.domProps
+    (((ReactDOM.domProps)[@merlin.hide ])
        ~children:(ReactDOM.jsxs "div"
-                    (ReactDOM.domProps
+                    (((ReactDOM.domProps)[@merlin.hide ])
                        ~children:(React.array
                                     [|(ReactDOM.jsx "h2"
-                                         (ReactDOM.domProps
+                                         (((ReactDOM.domProps)
+                                            [@merlin.hide ])
                                             ~children:("jsoo-react" |> s)
                                             ~className:"title" ()));(
                                       ReactDOM.jsx "nav"
-                                        (ReactDOM.domProps
+                                        (((ReactDOM.domProps)[@merlin.hide ])
                                            ~children:(ReactDOM.jsx "ul"
-                                                        (ReactDOM.domProps
+                                                        (((ReactDOM.domProps)
+                                                           [@merlin.hide ])
                                                            ~children:(
                                                            (examples |>
                                                               (List.map
                                                                  (fun e ->
                                                                     ReactDOM.jsxKeyed
                                                                     "li"
-                                                                    (ReactDOM.domProps
+                                                                    (((ReactDOM.domProps)
+                                                                    [@merlin.hide
+                                                                    ])
                                                                     ~children:(
                                                                     ReactDOM.jsx
                                                                     "a"
-                                                                    (ReactDOM.domProps
+                                                                    (((ReactDOM.domProps)
+                                                                    [@merlin.hide
+                                                                    ])
                                                                     ~children:(
                                                                     e.title
                                                                     |> s)
@@ -83,7 +95,8 @@ let nested_fragment foo bar baz =
     [|foo;(ReactDOM.createElement React.jsxFragment [|bar;baz|])|]
 let nested_fragment_with_lower foo =
   ReactDOM.createElement React.jsxFragment
-    [|(ReactDOM.jsx "div" (ReactDOM.domProps ~children:foo ()))|]
+    [|(ReactDOM.jsx "div"
+         (((ReactDOM.domProps)[@merlin.hide ]) ~children:foo ()))|]
 let upper = React.jsx Upper.make (Upper.makeProps ())
 let upper_prop = React.jsx Upper.make (Upper.makeProps ~count ())
 let upper_children_single foo =
@@ -95,8 +108,9 @@ let upper_children =
   React.jsx Page.make
     (Page.makeProps
        ~children:(ReactDOM.jsx "h1"
-                    (ReactDOM.domProps ~children:(React.string "Yep") ()))
-       ~moreProps:"hgalo" ())
+                    (((ReactDOM.domProps)[@merlin.hide ])
+                       ~children:(React.string "Yep") ())) ~moreProps:"hgalo"
+       ())
 let upper_nested_module =
   React.jsx Foo.Bar.make (Foo.Bar.makeProps ~a:1 ~b:"1" ())
 let upper_child_expr =
@@ -105,41 +119,48 @@ let upper_child_ident = React.jsx Div.make (Div.makeProps ~children:lola ())
 let upper_all_kinds_of_props =
   React.jsx MyComponent.make
     (MyComponent.makeProps
-       ~children:(ReactDOM.jsx "div" (ReactDOM.domProps ~children:"hello" ()))
-       ~booleanAttribute:true ~stringAttribute:"string" ~intAttribute:1
-       ?forcedOptional:((Some "hello")[@explicit_arity ])
+       ~children:(ReactDOM.jsx "div"
+                    (((ReactDOM.domProps)[@merlin.hide ]) ~children:"hello"
+                       ())) ~booleanAttribute:true ~stringAttribute:"string"
+       ~intAttribute:1 ?forcedOptional:((Some "hello")[@explicit_arity ])
        ~onClick:(send handleClick) ())
 let upper_ref_with_children =
   React.jsx FancyButton.make
     (FancyButton.makeProps
-       ~children:(ReactDOM.jsx "div" (ReactDOM.domProps ())) ~ref:buttonRef
+       ~children:(ReactDOM.jsx "div"
+                    (((ReactDOM.domProps)[@merlin.hide ]) ())) ~ref:buttonRef
        ())
 let lower_ref_with_children =
   ReactDOM.jsx "button"
-    (ReactDOM.domProps ~children ~ref ~className:"FancyButton" ())
+    (((ReactDOM.domProps)[@merlin.hide ]) ~children ~ref
+       ~className:"FancyButton" ())
 let lower_with_many_props =
   ReactDOM.jsx "div"
-    (ReactDOM.domProps
+    (((ReactDOM.domProps)[@merlin.hide ])
        ~children:(ReactDOM.jsxs "picture"
-                    (ReactDOM.domProps
+                    (((ReactDOM.domProps)[@merlin.hide ])
                        ~children:(React.array
                                     [|(ReactDOM.jsx "img"
-                                         (ReactDOM.domProps
+                                         (((ReactDOM.domProps)
+                                            [@merlin.hide ])
                                             ~src:"picture/img.png"
                                             ~alt:"test picture/img.png"
                                             ~id:"idimg" ()));(ReactDOM.jsx
                                                                 "source"
-                                                                (ReactDOM.domProps
+                                                                (((ReactDOM.domProps)
+                                                                   [@merlin.hide
+                                                                    ])
                                                                    ~type_:"image/webp"
                                                                    ~src:"picture/img1.webp"
                                                                    ()));(
                                       ReactDOM.jsx "source"
-                                        (ReactDOM.domProps
+                                        (((ReactDOM.domProps)[@merlin.hide ])
                                            ~type_:"image/jpeg"
                                            ~src:"picture/img2.jpg" ()))|])
                        ~id:"idpicture" ())) ~translate:"yes" ())
 let some_random_html_element =
-  ReactDOM.jsx "text" (ReactDOM.domProps ~dx:"1 2" ~dy:"3 4" ())
+  ReactDOM.jsx "text"
+    (((ReactDOM.domProps)[@merlin.hide ]) ~dx:"1 2" ~dy:"3 4" ())
 module React_component_with_props =
   struct
     external makeProps :
@@ -148,7 +169,8 @@ module React_component_with_props =
     let make =
       ((fun ~lola ->
           ReactDOM.jsx "div"
-            (ReactDOM.domProps ~children:(React.string lola) ()))
+            (((ReactDOM.domProps)[@merlin.hide ])
+               ~children:(React.string lola) ()))
       [@warning "-16"])
     let make =
       let Generated$React_component_with_props
@@ -167,7 +189,7 @@ module Upper_case_with_fragment_as_root =
       ((fun ?(name= "") ->
           ReactDOM.createElement React.jsxFragment
             [|(ReactDOM.jsx "div"
-                 (ReactDOM.domProps
+                 (((ReactDOM.domProps)[@merlin.hide ])
                     ~children:(React.string ("First " ^ name)) ()));(
               React.jsx Hello.make
                 (Hello.makeProps ~children:(React.string ("2nd " ^ name))
@@ -190,8 +212,8 @@ module Forward_Ref =
       ((fun ~children ->
           ((fun ~buttonRef ->
               ReactDOM.jsx "button"
-                (ReactDOM.domProps ~children ~ref:buttonRef
-                   ~className:"FancyButton" ()))
+                (((ReactDOM.domProps)[@merlin.hide ]) ~children
+                   ~ref:buttonRef ~className:"FancyButton" ()))
           [@warning "-16"]))
       [@warning "-16"])
     let make =
@@ -215,7 +237,8 @@ module Onclick_handler_button =
           ((fun ?isDisabled ->
               let onClick event = Js.log event in
               ReactDOM.jsx "button"
-                (ReactDOM.domProps ~name ~onClick ~disabled:isDisabled ()))
+                (((ReactDOM.domProps)[@merlin.hide ]) ~name ~onClick
+                   ~disabled:isDisabled ()))
           [@warning "-16"]))
       [@warning "-16"])
     let make =
@@ -232,7 +255,7 @@ module Children_as_string =
     let make =
       ((fun ?(name= "joe") ->
           ReactDOM.jsx "div"
-            (ReactDOM.domProps
+            (((ReactDOM.domProps)[@merlin.hide ])
                ~children:((Printf.sprintf "`name` is %s" name) |>
                             React.string) ()))
       [@warning "-16"])
@@ -255,31 +278,38 @@ module Uppercase_with_SSR_components =
       ((fun ~children ->
           ((fun ~moreProps ->
               ReactDOM.jsxs "html"
-                (ReactDOM.domProps
+                (((ReactDOM.domProps)[@merlin.hide ])
                    ~children:(React.array
                                 [|(ReactDOM.jsx "head"
-                                     (ReactDOM.domProps
+                                     (((ReactDOM.domProps)[@merlin.hide ])
                                         ~children:(ReactDOM.jsx "title"
-                                                     (ReactDOM.domProps
+                                                     (((ReactDOM.domProps)
+                                                        [@merlin.hide ])
                                                         ~children:(React.string
                                                                     ("SSR React "
                                                                     ^
                                                                     moreProps))
                                                         ())) ()));(ReactDOM.jsxs
                                                                     "body"
-                                                                    (ReactDOM.domProps
+                                                                    (((ReactDOM.domProps)
+                                                                    [@merlin.hide
+                                                                    ])
                                                                     ~children:(
                                                                     React.array
                                                                     [|(
                                                                     ReactDOM.jsx
                                                                     "div"
-                                                                    (ReactDOM.domProps
+                                                                    (((ReactDOM.domProps)
+                                                                    [@merlin.hide
+                                                                    ])
                                                                     ~children
                                                                     ~id:"root"
                                                                     ()));(
                                                                     ReactDOM.jsx
                                                                     "script"
-                                                                    (ReactDOM.domProps
+                                                                    (((ReactDOM.domProps)
+                                                                    [@merlin.hide
+                                                                    ])
                                                                     ~src:"/static/client.js"
                                                                     ()))|])
                                                                     ()))|])
@@ -301,7 +331,8 @@ module Upper_with_aria =
     let make =
       ((fun ~children ->
           ReactDOM.jsx "div"
-            (ReactDOM.domProps ~children ~ariaHidden:"true" ()))
+            (((ReactDOM.domProps)[@merlin.hide ]) ~children
+               ~ariaHidden:"true" ()))
       [@warning "-16"])
     let make =
       let Generated$Upper_with_aria (Props : < children: 'children   >  Js.t)
@@ -311,12 +342,16 @@ module Upper_with_aria =
 let data_attributes_should_transform_to_kebabcase =
   ReactDOM.createElement React.jsxFragment
     [|(ReactDOM.jsx "div"
-         (ReactDOM.domProps ~dataAttribute:"" ~dataattribute:""
-            ~className:"md:w-1/3" ()));(ReactDOM.jsx "div"
-                                          (ReactDOM.domProps
-                                             ~className:"md:w-2/3" ()))|]
+         (((ReactDOM.domProps)[@merlin.hide ]) ~dataAttribute:""
+            ~dataattribute:"" ~className:"md:w-1/3" ()));(ReactDOM.jsx "div"
+                                                            (((ReactDOM.domProps)
+                                                               [@merlin.hide
+                                                                 ])
+                                                               ~className:"md:w-2/3"
+                                                               ()))|]
 let render_onclickPropsAsString =
-  ReactDOM.jsx "div" (ReactDOM.domProps ~_onclick:"alert('hello')" ())
+  ReactDOM.jsx "div"
+    (((ReactDOM.domProps)[@merlin.hide ]) ~_onclick:"alert('hello')" ())
 module External =
   struct
     external componentProps :
@@ -340,7 +375,7 @@ module Func(M:X_int) =
           ((fun ~b ->
               fun _ ->
                 print_endline "This function should be named `Test$Func`" M.x;
-                ReactDOM.jsx "div" (ReactDOM.domProps ()))
+                ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ()))
           [@warning "-16"]))
       [@warning "-16"])
     let make =

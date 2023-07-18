@@ -25,6 +25,78 @@ Let's test hovering over parts of the component
   [
     {
       "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 6,
+        "col": 11
+      },
+      "type": "string",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
         "line": 1,
         "col": 32
       },
@@ -66,6 +138,78 @@ Let's test hovering over parts of the component
   $ ocamlmerlin single type-enclosing -position 6:17 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
     {
       "start": {
         "line": 1,
@@ -111,6 +255,102 @@ Let's test hovering over parts of the component
   [
     {
       "start": {
+        "line": 6,
+        "col": 20
+      },
+      "end": {
+        "line": 6,
+        "col": 55
+      },
+      "type": "ReactEvent.Mouse.t => unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 20
+      },
+      "end": {
+        "line": 6,
+        "col": 55
+      },
+      "type": "option(ReactEvent.Mouse.t => unit)",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
         "line": 1,
         "col": 32
       },
@@ -152,6 +392,126 @@ Let's test hovering over parts of the component
   $ ocamlmerlin single type-enclosing -position 6:29 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
+    {
+      "start": {
+        "line": 6,
+        "col": 26
+      },
+      "end": {
+        "line": 6,
+        "col": 34
+      },
+      "type": "(int => int) => unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 26
+      },
+      "end": {
+        "line": 6,
+        "col": 54
+      },
+      "type": "unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 20
+      },
+      "end": {
+        "line": 6,
+        "col": 55
+      },
+      "type": "ReactEvent.Mouse.t => unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 20
+      },
+      "end": {
+        "line": 6,
+        "col": 55
+      },
+      "type": "option(ReactEvent.Mouse.t => unit)",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
     {
       "start": {
         "line": 1,
@@ -197,6 +557,138 @@ Let's test hovering over parts of the component
   [
     {
       "start": {
+        "line": 6,
+        "col": 35
+      },
+      "end": {
+        "line": 6,
+        "col": 40
+      },
+      "type": "int",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 35
+      },
+      "end": {
+        "line": 6,
+        "col": 53
+      },
+      "type": "int => int",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 26
+      },
+      "end": {
+        "line": 6,
+        "col": 54
+      },
+      "type": "unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 20
+      },
+      "end": {
+        "line": 6,
+        "col": 55
+      },
+      "type": "ReactEvent.Mouse.t => unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 20
+      },
+      "end": {
+        "line": 6,
+        "col": 55
+      },
+      "type": "option(ReactEvent.Mouse.t => unit)",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
         "line": 1,
         "col": 32
       },
@@ -240,6 +732,150 @@ Let's test hovering over parts of the component
   [
     {
       "start": {
+        "line": 6,
+        "col": 44
+      },
+      "end": {
+        "line": 6,
+        "col": 49
+      },
+      "type": "int",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 44
+      },
+      "end": {
+        "line": 6,
+        "col": 53
+      },
+      "type": "int",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 35
+      },
+      "end": {
+        "line": 6,
+        "col": 53
+      },
+      "type": "int => int",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 26
+      },
+      "end": {
+        "line": 6,
+        "col": 54
+      },
+      "type": "unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 20
+      },
+      "end": {
+        "line": 6,
+        "col": 55
+      },
+      "type": "ReactEvent.Mouse.t => unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 20
+      },
+      "end": {
+        "line": 6,
+        "col": 55
+      },
+      "type": "option(ReactEvent.Mouse.t => unit)",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
         "line": 1,
         "col": 32
       },
@@ -281,6 +917,114 @@ Let's test hovering over parts of the component
   $ ocamlmerlin single type-enclosing -position 7:9 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
+    {
+      "start": {
+        "line": 7,
+        "col": 6
+      },
+      "end": {
+        "line": 7,
+        "col": 11
+      },
+      "type": "int",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 7,
+        "col": 6
+      },
+      "end": {
+        "line": 7,
+        "col": 22
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 7,
+        "col": 6
+      },
+      "end": {
+        "line": 7,
+        "col": 22
+      },
+      "type": "option(React.element)",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
     {
       "start": {
         "line": 1,
@@ -338,6 +1082,102 @@ Let's test hovering over parts of the component
     },
     {
       "start": {
+        "line": 7,
+        "col": 6
+      },
+      "end": {
+        "line": 7,
+        "col": 22
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 7,
+        "col": 6
+      },
+      "end": {
+        "line": 7,
+        "col": 22
+      },
+      "type": "option(React.element)",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
         "line": 1,
         "col": 32
       },
@@ -379,6 +1219,90 @@ Closing `</button>`
   $ ocamlmerlin single type-enclosing -position 8:10 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
+    {
+      "start": {
+        "line": 8,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 13
+      },
+      "type": "unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 4
+      },
+      "end": {
+        "line": 8,
+        "col": 14
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 38
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 31
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "unit => React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 13
+      },
+      "end": {
+        "line": 9,
+        "col": 3
+      },
+      "type": "(~initialValue: int=?, unit) => React.element",
+      "tail": "no"
+    },
     {
       "start": {
         "line": 1,
