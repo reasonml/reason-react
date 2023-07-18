@@ -6,8 +6,9 @@ transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-tr
 * Add `suppressHydrationWarning` to supported props (@davesnx in
 [#721](https://github.com/reasonml/reason-react/pull/721))
 * Rename `reactjs-jsx-ppx` to `reason-react-ppx` ([@davesnx in #732](https://github.com/reasonml/reason-react/pull/732))
-- Fix locations for lower and uppercase components so that merlin / editor
+* Fix locations for lower and uppercase components so that merlin / editor
   integration can get type defs on hover ([@jchavarri in #748](https://github.com/reasonml/reason-react/pull/748))
+* Refine types for `key` attributes ([@anmonteiro in #750](https://github.com/reasonml/reason-react/pull/750))
 
 # 0.11.0
 
