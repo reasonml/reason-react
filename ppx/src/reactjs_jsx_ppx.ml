@@ -457,7 +457,8 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper =
-  let unit = Exp.construct { txt = Lident "()"; loc = Location.none } None in
+  let unit = Exp.construct { txt = Lident "()"; loc = Location.none } None
+  and key_var_txt = "reason_react_ppx_key_arg___x" in
   let transformUppercaseCall3 ~caller modulePath ~ctxt mapper loc attrs _
       callArguments =
     let children, argsWithLabels = extractChildren callArguments in
@@ -499,18 +500,30 @@ let jsxMapper =
             (Invalid_argument
                "JSX name can't be the result of function applications")
     in
-    let props =
-      Exp.apply ~loc (Exp.ident ~loc { loc; txt = propsIdent }) propsArg
+    let component = (nolabel, Exp.ident ~loc { txt = ident; loc })
+    and props =
+      ( nolabel,
+        Exp.apply ~loc (Exp.ident ~loc { loc; txt = propsIdent }) propsArg )
     in
-    let key_args =
-      match key with
-      | Some (label, key) ->
-          [ (label, mapper#expression ctxt key); (nolabel, unit) ]
-      | None -> []
-    in
-    Exp.apply ~loc ~attrs jsxExpr
-      ([ (nolabel, Exp.ident ~loc { txt = ident; loc }); (nolabel, props) ]
-      @ key_args)
+    match key with
+    | Some (label, key) ->
+        Exp.let_ ~loc Nonrecursive
+          [
+            {
+              pvb_pat = Pat.var { txt = key_var_txt; loc };
+              pvb_expr = mapper#expression ctxt key;
+              pvb_attributes = [];
+              pvb_loc = loc;
+            };
+          ]
+          (Exp.apply ~loc ~attrs jsxExpr
+             [
+               (label, Exp.ident { txt = Lident key_var_txt; loc });
+               component;
+               props;
+               (nolabel, unit);
+             ])
+    | None -> Exp.apply ~loc ~attrs jsxExpr [ component; props ]
   in
 
   let transformLowercaseCall3 ~ctxt parentExpLoc mapper loc attrs callArguments
@@ -522,33 +535,42 @@ let jsxMapper =
         (fun (arg_label, _) -> "key" = getLabel arg_label)
         nonChildrenProps
     in
-    let jsxExpr, args =
-      let jsxExpr, key, childrenProp =
-        jsxExprAndChildren ~ident:"ReactDOM" ~loc:parentExpLoc ~ctxt mapper
-          ~keyProps children
-      in
-
-      let propsCall =
-        Exp.apply ~loc:parentExpLoc
-          (Exp.ident ~loc:parentExpLoc ~attrs:merlinHideAttrs
-             { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
-          ((match childrenProp with
-           | Some childrenProp ->
-               (labelled "children", childrenProp) :: nonChildrenProps
-           | None -> nonChildrenProps)
-          |> List.map (fun (label, expression) ->
-                 (label, mapper#expression ctxt expression)))
-      in
-      let key_args =
-        match key with
-        | Some (label, key) ->
-            [ (label, mapper#expression ctxt key); (nolabel, unit) ]
-        | None -> []
-      in
-      ( jsxExpr,
-        [ (nolabel, componentNameExpr); (nolabel, propsCall) ] @ key_args )
+    let jsxExpr, key, childrenProp =
+      jsxExprAndChildren ~ident:"ReactDOM" ~loc:parentExpLoc ~ctxt mapper
+        ~keyProps children
     in
-    Exp.apply ~loc:parentExpLoc ~attrs jsxExpr args
+    let propsCall =
+      Exp.apply ~loc:parentExpLoc
+        (Exp.ident ~loc:parentExpLoc ~attrs:merlinHideAttrs
+           { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+        ((match childrenProp with
+         | Some childrenProp ->
+             (labelled "children", childrenProp) :: nonChildrenProps
+         | None -> nonChildrenProps)
+        |> List.map (fun (label, expression) ->
+               (label, mapper#expression ctxt expression)))
+    in
+    let component = (nolabel, componentNameExpr)
+    and props = (nolabel, propsCall) in
+    match key with
+    | Some (label, key) ->
+        Exp.let_ ~loc Nonrecursive
+          [
+            {
+              pvb_pat = Pat.var { txt = key_var_txt; loc };
+              pvb_expr = mapper#expression ctxt key;
+              pvb_attributes = [];
+              pvb_loc = loc;
+            };
+          ]
+          (Exp.apply ~loc:parentExpLoc ~attrs jsxExpr
+             [
+               (label, Exp.ident { txt = Lident key_var_txt; loc });
+               component;
+               props;
+               (nolabel, unit);
+             ])
+    | None -> Exp.apply ~loc:parentExpLoc ~attrs jsxExpr [ component; props ]
   in
 
   let rec recursivelyTransformNamedArgsForMake ~ctxt mapper expr list =
