@@ -56,7 +56,10 @@ let lower_children_nested =
                                                            (examples |>
                                                               (List.map
                                                                  (fun e ->
+                                                                    let reason_react_ppx_key_arg___x
+                                                                    = e.path in
                                                                     ReactDOM.jsxKeyed
+                                                                    ~key:reason_react_ppx_key_arg___x
                                                                     "li"
                                                                     (((ReactDOM.domProps)
                                                                     [@merlin.hide
@@ -80,8 +83,6 @@ let lower_children_nested =
                                                                     ReactRouter.push
                                                                     e.path)
                                                                     ())) ())
-                                                                    ~key:(
-                                                                    e.path)
                                                                     ())))
                                                              |> React.list)
                                                            ()))
