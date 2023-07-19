@@ -58,6 +58,8 @@ let lower_children_nested =
                                                                  (fun e ->
                                                                     ReactDOM.jsxKeyed
                                                                     "li"
+                                                                    ~key:(
+                                                                    e.path)
                                                                     (((ReactDOM.domProps)
                                                                     [@merlin.hide
                                                                     ])
@@ -79,10 +81,7 @@ let lower_children_nested =
                                                                     event;
                                                                     ReactRouter.push
                                                                     e.path)
-                                                                    ())) ())
-                                                                    ~key:(
-                                                                    e.path)
-                                                                    ())))
+                                                                    ())) ()))))
                                                              |> React.list)
                                                            ()))
                                            ~className:"menu" ()))|])

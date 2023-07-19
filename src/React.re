@@ -32,6 +32,7 @@ external createElementVariadic:
 external jsxKeyed:
   (component('props), 'props, ~key: string=?, unit) => element =
   "jsx";
+let jsxKeyed = (comp, ~key=?, props) => jsxKeyed(comp, props, ~key?, ());
 
 [@bs.module "react/jsx-runtime"]
 external jsx: (component('props), 'props) => element = "jsx";
@@ -43,6 +44,7 @@ external jsxs: (component('props), 'props) => element = "jsxs";
 external jsxsKeyed:
   (component('props), 'props, ~key: string=?, unit) => element =
   "jsxs";
+let jsxsKeyed = (comp, ~key=?, props) => jsxsKeyed(comp, props, ~key?, ());
 
 [@bs.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
 

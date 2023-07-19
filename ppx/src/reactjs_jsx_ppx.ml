@@ -457,7 +457,6 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper =
-  let unit = Exp.construct { txt = Lident "()"; loc = Location.none } None in
   let transformUppercaseCall3 ~caller modulePath ~ctxt mapper loc attrs _
       callArguments =
     let children, argsWithLabels = extractChildren callArguments in
@@ -502,15 +501,15 @@ let jsxMapper =
     let props =
       Exp.apply ~loc (Exp.ident ~loc { loc; txt = propsIdent }) propsArg
     in
-    let key_args =
+    let args =
+      let elementArg = (nolabel, Exp.ident ~loc { txt = ident; loc }) in
+      let propsArg = (nolabel, props) in
       match key with
       | Some (label, key) ->
-          [ (label, mapper#expression ctxt key); (nolabel, unit) ]
-      | None -> []
+          [ elementArg; (label, mapper#expression ctxt key); propsArg ]
+      | None -> [ elementArg; propsArg ]
     in
-    Exp.apply ~loc ~attrs jsxExpr
-      ([ (nolabel, Exp.ident ~loc { txt = ident; loc }); (nolabel, props) ]
-      @ key_args)
+    Exp.apply ~loc ~attrs jsxExpr args
   in
 
   let transformLowercaseCall3 ~ctxt parentExpLoc mapper loc attrs callArguments
@@ -539,14 +538,15 @@ let jsxMapper =
           |> List.map (fun (label, expression) ->
                  (label, mapper#expression ctxt expression)))
       in
-      let key_args =
+      let args =
+        let elementArg = (nolabel, componentNameExpr) in
+        let propsArg = (nolabel, propsCall) in
         match key with
         | Some (label, key) ->
-            [ (label, mapper#expression ctxt key); (nolabel, unit) ]
-        | None -> []
+            [ elementArg; (label, mapper#expression ctxt key); propsArg ]
+        | None -> [ elementArg; propsArg ]
       in
-      ( jsxExpr,
-        [ (nolabel, componentNameExpr); (nolabel, propsCall) ] @ key_args )
+      (jsxExpr, args)
     in
     Exp.apply ~loc:parentExpLoc ~attrs jsxExpr args
   in
