@@ -2138,8 +2138,6 @@ external createDOMElementVariadic:
 [@bs.module "react/jsx-runtime"]
 external jsxKeyed: (string, domProps, ~key: string=?, unit) => React.element =
   "jsx";
-let jsxKeyed = (element, ~key=?, props) =>
-  jsxKeyed(element, props, ~key?, ());
 
 [@bs.module "react/jsx-runtime"]
 external jsx: (string, domProps) => React.element = "jsx";
@@ -2150,5 +2148,3 @@ external jsxs: (string, domProps) => React.element = "jsxs";
 [@bs.module "react/jsx-runtime"]
 external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element =
   "jsxs";
-let jsxsKeyed = (element, ~key=?, props) =>
-  jsxsKeyed(element, props, ~key?, ());
