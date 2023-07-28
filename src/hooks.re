@@ -31,6 +31,16 @@ external useReducerWithMapState:
   "useReducer";
 
 [@mel.module "react"]
+external useSyncExternalStore:
+  (
+    ~subscribe: [@mel.uncurry] (unit => unit),
+    ~getSnapshot: [@mel.uncurry] (unit => 'snapshot),
+    ~getServerSnapshot: [@mel.uncurry] (unit => 'snapshot)=?
+  ) =>
+  'snapshot =
+  "useSyncExternalStore";
+
+[@mel.module "react"]
 external useEffect: ([@mel.uncurry] (unit => option(unit => unit))) => unit =
   "useEffect";
 [@mel.module "react"]
@@ -78,6 +88,56 @@ external useEffect7:
   ) =>
   unit =
   "useEffect";
+
+[@mel.module "react"]
+external useInsertionEffect:
+  ([@mel.uncurry] (unit => option(unit => unit))) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect0:
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    [@mel.as {json|[]|json}] _
+  ) =>
+  unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect1:
+  ([@mel.uncurry] (unit => option(unit => unit)), array('a)) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect2:
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect3:
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect4:
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect5:
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
+  unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect6:
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    ('a, 'b, 'c, 'd, 'e, 'f)
+  ) =>
+  unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect7:
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    ('a, 'b, 'c, 'd, 'e, 'f, 'g)
+  ) =>
+  unit =
+  "useInsertionEffect";
 
 [@mel.module "react"]
 external useLayoutEffect:
@@ -186,6 +246,9 @@ external useCallback7: ('fn, ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'fn =
 external useContext: Context.t('any) => 'any = "useContext";
 
 [@mel.module "react"] external useRef: 'value => ref('value) = "useRef";
+[@mel.module "react"] external useId: unit => string = "useId";
+
+[@mel.module "react"] external useDeferredValue: 'a => 'a = "useDeferredValue";
 
 [@mel.module "react"]
 external useImperativeHandle0:
@@ -335,10 +398,8 @@ module Uncurried = {
 };
 
 type callback('input, 'output) = 'input => 'output;
-type transitionConfig = {timeoutMs: int};
-
 [@mel.module "react"]
-external useTransition:
-  (~config: transitionConfig=?, unit) =>
-  (callback(callback(unit, unit), unit), bool) =
+external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
+
+[@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";

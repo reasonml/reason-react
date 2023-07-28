@@ -141,36 +141,6 @@ module Suspense = {
     "Suspense";
 };
 
-/* Experimental React.SuspenseList */
-module SuspenseList = {
-  type revealOrder;
-  type tail;
-  [@mel.obj]
-  external makeProps:
-    (
-      ~children: element=?,
-      ~revealOrder: [ | `forwards | `backwards | `together]=?,
-      ~tail: [ | `collapsed | `hidden]=?,
-      unit
-    ) =>
-    {
-      .
-      "children": option(element),
-      "revealOrder": option(revealOrder),
-      "tail": option(tail),
-    };
-
-  [@mel.module "react"]
-  external make:
-    component({
-      .
-      "children": option(element),
-      "revealOrder": option(revealOrder),
-      "tail": option(tail),
-    }) =
-    "SuspenseList";
-};
-
 include Hooks;
 
 [@mel.set]
@@ -178,3 +148,7 @@ external setDisplayName: (component('props), string) => unit = "displayName";
 
 [@mel.get] [@mel.return nullable]
 external displayName: component('props) => option(string) = "displayName";
+
+[@mel.module "react"]
+external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
+  "useDebugValue";

@@ -7,7 +7,7 @@ module Tester = {
   let make = () => <div> {React.string("Tester")} </div>;
 };
 
-describe("reactTestRenderer", () => {
+describe("ReactTestRenderer", () => {
   open Expect;
 
   test("create returns ReactTestInstance", () => {
