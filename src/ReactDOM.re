@@ -57,1033 +57,1034 @@ module Props = {
    * Watch out! There are two props types and the only difference is the type of ref.
    * Please keep in sync.
    */
-  [@deriving abstract]
+  [@bs.deriving abstract]
   type domProps = {
     [@bs.optional]
-    key: option(string),
+    key: string,
     [@bs.optional]
-    ref: option(domRef),
+    ref: domRef,
     [@bs.optional]
-    children: option(React.element),
+    children: React.element,
     /* accessibility */
     /* https://www.w3.org/TR/wai-aria-1.1/ */
     [@bs.optional] [@bs.as "aria-activedescendant"]
-    ariaActivedescendant: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescendat */
+    ariaActivedescendant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescendat */
     [@bs.optional] [@bs.as "aria-atomic"]
-    ariaAtomic: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic */
+    ariaAtomic: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic */
     [@bs.optional] [@bs.as "aria-autocomplete"]
-    ariaAutocomplete: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-autocomplete */
+    ariaAutocomplete: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-autocomplete */
     [@bs.optional] [@bs.as "aria-busy"]
-    ariaBusy: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy */
+    ariaBusy: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy */
     [@bs.optional] [@bs.as "aria-checked"]
-    ariaChecked: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-checked */
+    ariaChecked: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-checked */
     [@bs.optional] [@bs.as "aria-colcount"]
-    ariaColcount: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colcount */
+    ariaColcount: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colcount */
     [@bs.optional] [@bs.as "aria-colindex"]
-    ariaColindex: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colindex */
+    ariaColindex: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colindex */
     [@bs.optional] [@bs.as "aria-colspan"]
-    ariaColspan: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colspan */
+    ariaColspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colspan */
     [@bs.optional] [@bs.as "aria-controls"]
-    ariaControls: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls */
+    ariaControls: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls */
     [@bs.optional] [@bs.as "aria-current"]
-    ariaCurrent: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current */
+    ariaCurrent: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current */
     [@bs.optional] [@bs.as "aria-describedby"]
-    ariaDescribedby: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby */
+    ariaDescribedby: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby */
     [@bs.optional] [@bs.as "aria-details"]
-    ariaDetails: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-details */
+    ariaDetails: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-details */
     [@bs.optional] [@bs.as "aria-disabled"]
-    ariaDisabled: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled */
+    ariaDisabled: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled */
     [@bs.optional] [@bs.as "aria-errormessage"]
-    ariaErrormessage: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage */
+    ariaErrormessage: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage */
     [@bs.optional] [@bs.as "aria-expanded"]
-    ariaExpanded: option(bool), /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
+    ariaExpanded: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
     [@bs.optional] [@bs.as "aria-flowto"]
-    ariaFlowto: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
+    ariaFlowto: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
     [@bs.optional] [@bs.as "aria-grabbed"] /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
-    ariaGrabbed: option(bool),
+    ariaGrabbed: bool,
     [@bs.optional] [@bs.as "aria-haspopup"]
-    ariaHaspopup: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
+    ariaHaspopup: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
     [@bs.optional] [@bs.as "aria-hidden"]
-    ariaHidden: option(bool), /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
+    ariaHidden: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
     [@bs.optional] [@bs.as "aria-invalid"]
-    ariaInvalid: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-invalid */
+    ariaInvalid: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-invalid */
     [@bs.optional] [@bs.as "aria-keyshortcuts"]
-    ariaKeyshortcuts: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-keyshortcuts */
+    ariaKeyshortcuts: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-keyshortcuts */
     [@bs.optional] [@bs.as "aria-label"]
-    ariaLabel: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label */
+    ariaLabel: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label */
     [@bs.optional] [@bs.as "aria-labelledby"]
-    ariaLabelledby: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby */
+    ariaLabelledby: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby */
     [@bs.optional] [@bs.as "aria-level"]
-    ariaLevel: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-level */
+    ariaLevel: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-level */
     [@bs.optional] [@bs.as "aria-live"]
-    ariaLive: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live */
+    ariaLive: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live */
     [@bs.optional] [@bs.as "aria-modal"]
-    ariaModal: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-modal */
+    ariaModal: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-modal */
     [@bs.optional] [@bs.as "aria-multiline"]
-    ariaMultiline: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiline */
+    ariaMultiline: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiline */
     [@bs.optional] [@bs.as "aria-multiselectable"]
-    ariaMultiselectable: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiselectable */
+    ariaMultiselectable: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiselectable */
     [@bs.optional] [@bs.as "aria-orientation"]
-    ariaOrientation: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-orientation */
+    ariaOrientation: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-orientation */
     [@bs.optional] [@bs.as "aria-owns"]
-    ariaOwns: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-owns */
+    ariaOwns: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-owns */
     [@bs.optional] [@bs.as "aria-placeholder"]
-    ariaPlaceholder: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-placeholder */
+    ariaPlaceholder: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-placeholder */
     [@bs.optional] [@bs.as "aria-posinset"]
-    ariaPosinset: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-posinset */
+    ariaPosinset: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-posinset */
     [@bs.optional] [@bs.as "aria-pressed"]
-    ariaPressed: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-pressed */
+    ariaPressed: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-pressed */
     [@bs.optional] [@bs.as "aria-readonly"]
-    ariaReadonly: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-readonly */
+    ariaReadonly: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-readonly */
     [@bs.optional] [@bs.as "aria-relevant"]
-    ariaRelevant: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
+    ariaRelevant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
     [@bs.optional] [@bs.as "aria-required"]
-    ariaRequired: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-required */
+    ariaRequired: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-required */
     [@bs.optional] [@bs.as "aria-roledescription"]
-    ariaRoledescription: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-roledescription */
+    ariaRoledescription: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-roledescription */
     [@bs.optional] [@bs.as "aria-rowcount"]
-    ariaRowcount: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowcount */
+    ariaRowcount: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowcount */
     [@bs.optional] [@bs.as "aria-rowindex"]
-    ariaRowindex: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindex */
+    ariaRowindex: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindex */
     [@bs.optional] [@bs.as "aria-rowindextext"]
-    ariaRowindextext: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindextext */
+    ariaRowindextext: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindextext */
     [@bs.optional] [@bs.as "aria-rowspan"]
-    ariaRowspan: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowspan */
+    ariaRowspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowspan */
     [@bs.optional] [@bs.as "aria-selected"]
-    ariaSelected: option(bool), /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
+    ariaSelected: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
     [@bs.optional] [@bs.as "aria-setsize"]
-    ariaSetsize: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-setsize */
+    ariaSetsize: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-setsize */
     [@bs.optional] [@bs.as "aria-sort"]
-    ariaSort: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-sort */
+    ariaSort: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-sort */
     [@bs.optional] [@bs.as "aria-valuemax"]
-    ariaValuemax: option(float), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax */
+    ariaValuemax: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax */
     [@bs.optional] [@bs.as "aria-valuemin"]
-    ariaValuemin: option(float), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin */
+    ariaValuemin: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin */
     [@bs.optional] [@bs.as "aria-valuenow"]
-    ariaValuenow: option(float), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuenow */
+    ariaValuenow: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuenow */
     [@bs.optional] [@bs.as "aria-valuetext"]
-    ariaValuetext: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext */
+    ariaValuetext: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext */
     /* react textarea/input */
     [@bs.optional]
-    defaultChecked: option(bool),
+    defaultChecked: bool,
     [@bs.optional]
-    defaultValue: option(string),
+    defaultValue: string,
     /* global html attributes */
     [@bs.optional]
-    accessKey: option(string),
+    accessKey: string,
     [@bs.optional]
-    className: option(string), /* substitute for "class" */
+    className: string, /* substitute for "class" */
     [@bs.optional]
-    contentEditable: option(bool),
+    contentEditable: bool,
     [@bs.optional]
-    contextMenu: option(string),
+    contextMenu: string,
     [@bs.optional]
-    dir: option(string), /* "ltr", "rtl" or "auto" */
+    dir: string, /* "ltr", "rtl" or "auto" */
     [@bs.optional]
-    draggable: option(bool),
+    draggable: bool,
     [@bs.optional]
-    hidden: option(bool),
+    hidden: bool,
     [@bs.optional]
-    id: option(string),
+    id: string,
     [@bs.optional]
-    lang: option(string),
+    lang: string,
     [@bs.optional]
-    role: option(string), /* ARIA role */
+    role: string, /* ARIA role */
     [@bs.optional]
-    style: option(style),
+    style: style,
     [@bs.optional]
-    spellCheck: option(bool),
+    spellCheck: bool,
     [@bs.optional]
-    tabIndex: option(int),
+    tabIndex: int,
     [@bs.optional]
-    title: option(string),
+    title: string,
     /* html5 microdata */
     [@bs.optional]
-    itemID: option(string),
+    itemID: string,
     [@bs.optional]
-    itemProp: option(string),
+    itemProp: string,
     [@bs.optional]
-    itemRef: option(string),
+    itemRef: string,
     [@bs.optional]
-    itemScope: option(bool),
+    itemScope: bool,
     [@bs.optional]
-    itemType: option(string), /* uri */
+    itemType: string, /* uri */
     /* tag-specific html attributes */
     [@bs.optional] [@bs.as "as"]
-    as_: option(string),
+    as_: string,
     [@bs.optional]
-    accept: option(string),
+    accept: string,
     [@bs.optional]
-    acceptCharset: option(string),
+    acceptCharset: string,
     [@bs.optional]
-    action: option(string), /* uri */
+    action: string, /* uri */
     [@bs.optional]
-    allowFullScreen: option(bool),
+    allowFullScreen: bool,
     [@bs.optional]
-    alt: option(string),
+    alt: string,
     [@bs.optional]
-    async: option(bool),
+    async: bool,
     [@bs.optional]
-    autoComplete: option(string), /* has a fixed, but large-ish, set of possible values */
+    autoComplete: string, /* has a fixed, but large-ish, set of possible values */
     [@bs.optional]
-    autoCapitalize: option(string), /* Mobile Safari specific */
+    autoCapitalize: string, /* Mobile Safari specific */
     [@bs.optional]
-    autoFocus: option(bool),
+    autoFocus: bool,
     [@bs.optional]
-    autoPlay: option(bool),
+    autoPlay: bool,
     [@bs.optional]
-    challenge: option(string),
+    challenge: string,
     [@bs.optional]
-    charSet: option(string),
+    charSet: string,
     [@bs.optional]
-    checked: option(bool),
+    checked: bool,
     [@bs.optional]
-    cite: option(string), /* uri */
+    cite: string, /* uri */
     [@bs.optional]
-    crossOrigin: option(string), /* anonymous, use-credentials */
+    crossOrigin: string, /* anonymous, use-credentials */
     [@bs.optional]
-    cols: option(int),
+    cols: int,
     [@bs.optional]
-    colSpan: option(int),
+    colSpan: int,
     [@bs.optional]
-    content: option(string),
+    content: string,
     [@bs.optional]
-    controls: option(bool),
+    controls: bool,
     [@bs.optional]
-    coords: option(string), /* set of values specifying the coordinates of a region */
+    coords: string, /* set of values specifying the coordinates of a region */
     [@bs.optional]
-    data: option(string), /* uri */
+    data: string, /* uri */
     [@bs.optional]
-    dateTime: option(string), /* "valid date string with optional time" */
+    dateTime: string, /* "valid date string with optional time" */
     [@bs.optional]
-    default: option(bool),
+    default: bool,
     [@bs.optional]
-    defer: option(bool),
+    defer: bool,
     [@bs.optional]
-    disabled: option(bool),
+    disabled: bool,
     [@bs.optional]
-    download: option(string), /* should really be either a boolean, signifying presence, or a string */
+    download: string, /* should really be either a boolean, signifying presence, or a string */
     [@bs.optional]
-    encType: option(string), /* "application/x-www-form-urlencoded", "multipart/form-data" or "text/plain" */
+    encType: string, /* "application/x-www-form-urlencoded", "multipart/form-data" or "text/plain" */
     [@bs.optional]
-    form: option(string),
+    form: string,
     [@bs.optional]
-    formAction: option(string), /* uri */
+    formAction: string, /* uri */
     [@bs.optional]
-    formTarget: option(string), /* "_blank", "_self", etc. */
+    formTarget: string, /* "_blank", "_self", etc. */
     [@bs.optional]
-    formMethod: option(string), /* "post", "get", "put" */
+    formMethod: string, /* "post", "get", "put" */
     [@bs.optional]
-    headers: option(string),
+    headers: string,
     [@bs.optional]
-    height: option(string), /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
+    height: string, /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
     [@bs.optional]
-    high: option(int),
+    high: int,
     [@bs.optional]
-    href: option(string), /* uri */
+    href: string, /* uri */
     [@bs.optional]
-    hrefLang: option(string),
+    hrefLang: string,
     [@bs.optional]
-    htmlFor: option(string), /* substitute for "for" */
+    htmlFor: string, /* substitute for "for" */
     [@bs.optional]
-    httpEquiv: option(string), /* has a fixed set of possible values */
+    httpEquiv: string, /* has a fixed set of possible values */
     [@bs.optional]
-    icon: option(string), /* uri? */
+    icon: string, /* uri? */
     [@bs.optional]
-    inputMode: option(string), /* "verbatim", "latin", "numeric", etc. */
+    inputMode: string, /* "verbatim", "latin", "numeric", etc. */
     [@bs.optional]
-    integrity: option(string),
+    integrity: string,
     [@bs.optional]
-    keyType: option(string),
+    keyType: string,
     [@bs.optional]
-    kind: option(string), /* has a fixed set of possible values */
+    kind: string, /* has a fixed set of possible values */
     [@bs.optional]
-    label: option(string),
+    label: string,
     [@bs.optional]
-    list: option(string),
+    list: string,
     [@bs.optional]
-    loop: option(bool),
+    loop: bool,
     [@bs.optional]
-    low: option(int),
+    low: int,
     [@bs.optional]
-    manifest: option(string), /* uri */
+    manifest: string, /* uri */
     [@bs.optional]
-    max: option(string), /* should be int or Js.Date.t */
+    max: string, /* should be int or Js.Date.t */
     [@bs.optional]
-    maxLength: option(int),
+    maxLength: int,
     [@bs.optional]
-    media: option(string), /* a valid media query */
+    media: string, /* a valid media query */
     [@bs.optional]
-    mediaGroup: option(string),
+    mediaGroup: string,
     [@bs.optional]
-    method: option(string), /* "post" or "get" */
+    method: string, /* "post" or "get" */
     [@bs.optional]
-    min: option(string),
+    min: string,
     [@bs.optional]
-    minLength: option(int),
+    minLength: int,
     [@bs.optional]
-    multiple: option(bool),
+    multiple: bool,
     [@bs.optional]
-    muted: option(bool),
+    muted: bool,
     [@bs.optional]
-    name: option(string),
+    name: string,
     [@bs.optional]
-    nonce: option(string),
+    nonce: string,
     [@bs.optional]
-    noValidate: option(bool),
+    noValidate: bool,
     [@bs.optional] [@bs.as "open"]
-    open_: option(bool), /* use this one. Previous one is deprecated */
+    open_: bool, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    optimum: option(int),
+    optimum: int,
     [@bs.optional]
-    pattern: option(string), /* valid Js RegExp */
+    pattern: string, /* valid Js RegExp */
     [@bs.optional]
-    placeholder: option(string),
+    placeholder: string,
     [@bs.optional]
-    playsInline: option(bool),
+    playsInline: bool,
     [@bs.optional]
-    poster: option(string), /* uri */
+    poster: string, /* uri */
     [@bs.optional]
-    preload: option(string), /* "none", "metadata" or "auto" (and "" as a synonym for "auto") */
+    preload: string, /* "none", "metadata" or "auto" (and "" as a synonym for "auto") */
     [@bs.optional]
-    radioGroup: option(string),
+    radioGroup: string,
     [@bs.optional]
-    readOnly: option(bool),
+    readOnly: bool,
     [@bs.optional]
-    rel: option(string), /* a space- or comma-separated (depending on the element) list of a fixed set of "link types" */
+    rel: string, /* a space- or comma-separated (depending on the element) list of a fixed set of "link types" */
     [@bs.optional]
-    required: option(bool),
+    required: bool,
     [@bs.optional]
-    reversed: option(bool),
+    reversed: bool,
     [@bs.optional]
-    rows: option(int),
+    rows: int,
     [@bs.optional]
-    rowSpan: option(int),
+    rowSpan: int,
     [@bs.optional]
-    sandbox: option(string), /* has a fixed set of possible values */
+    sandbox: string, /* has a fixed set of possible values */
     [@bs.optional]
-    scope: option(string), /* has a fixed set of possible values */
+    scope: string, /* has a fixed set of possible values */
     [@bs.optional]
-    scoped: option(bool),
+    scoped: bool,
     [@bs.optional]
-    scrolling: option(string), /* html4 only, "auto", "yes" or "no" */
+    scrolling: string, /* html4 only, "auto", "yes" or "no" */
     /* seamless - supported by React, but removed from the html5 spec */
     [@bs.optional]
-    selected: option(bool),
+    selected: bool,
     [@bs.optional]
-    shape: option(string),
+    shape: string,
     [@bs.optional]
-    size: option(int),
+    size: int,
     [@bs.optional]
-    sizes: option(string),
+    sizes: string,
     [@bs.optional]
-    span: option(int),
+    span: int,
     [@bs.optional]
-    src: option(string), /* uri */
+    src: string, /* uri */
     [@bs.optional]
-    srcDoc: option(string),
+    srcDoc: string,
     [@bs.optional]
-    srcLang: option(string),
+    srcLang: string,
     [@bs.optional]
-    srcSet: option(string),
+    srcSet: string,
     [@bs.optional]
-    start: option(int),
+    start: int,
     [@bs.optional]
-    step: option(float),
+    step: float,
     [@bs.optional]
-    summary: option(string), /* deprecated */
+    summary: string, /* deprecated */
     [@bs.optional]
-    target: option(string),
+    target: string,
     [@bs.optional] [@bs.as "type"]
-    type_: option(string), /* has a fixed but large-ish set of possible values */ /* use this one. Previous one is deprecated */
+    type_: string, /* has a fixed but large-ish set of possible values */ /* use this one. Previous one is deprecated */
     [@bs.optional]
-    useMap: option(string),
+    useMap: string,
     [@bs.optional]
-    value: option(string),
+    value: string,
     [@bs.optional]
-    width: option(string), /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
+    width: string, /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
     [@bs.optional]
-    wrap: option(string), /* "hard" or "soft" */
+    wrap: string, /* "hard" or "soft" */
     /* Clipboard events */
     [@bs.optional]
-    onCopy: option(ReactEvent.Clipboard.t => unit),
+    onCopy: ReactEvent.Clipboard.t => unit,
     [@bs.optional]
-    onCut: option(ReactEvent.Clipboard.t => unit),
+    onCut: ReactEvent.Clipboard.t => unit,
     [@bs.optional]
-    onPaste: option(ReactEvent.Clipboard.t => unit),
+    onPaste: ReactEvent.Clipboard.t => unit,
     /* Composition events */
     [@bs.optional]
-    onCompositionEnd: option(ReactEvent.Composition.t => unit),
+    onCompositionEnd: ReactEvent.Composition.t => unit,
     [@bs.optional]
-    onCompositionStart: option(ReactEvent.Composition.t => unit),
+    onCompositionStart: ReactEvent.Composition.t => unit,
     [@bs.optional]
-    onCompositionUpdate: option(ReactEvent.Composition.t => unit),
+    onCompositionUpdate: ReactEvent.Composition.t => unit,
     /* Keyboard events */
     [@bs.optional]
-    onKeyDown: option(ReactEvent.Keyboard.t => unit),
+    onKeyDown: ReactEvent.Keyboard.t => unit,
     [@bs.optional]
-    onKeyPress: option(ReactEvent.Keyboard.t => unit),
+    onKeyPress: ReactEvent.Keyboard.t => unit,
     [@bs.optional]
-    onKeyUp: option(ReactEvent.Keyboard.t => unit),
+    onKeyUp: ReactEvent.Keyboard.t => unit,
     /* Focus events */
     [@bs.optional]
-    onFocus: option(ReactEvent.Focus.t => unit),
+    onFocus: ReactEvent.Focus.t => unit,
     [@bs.optional]
-    onBlur: option(ReactEvent.Focus.t => unit),
+    onBlur: ReactEvent.Focus.t => unit,
     /* Form events */
     [@bs.optional]
-    onChange: option(ReactEvent.Form.t => unit),
+    onChange: ReactEvent.Form.t => unit,
     [@bs.optional]
-    onInput: option(ReactEvent.Form.t => unit),
+    onInput: ReactEvent.Form.t => unit,
     [@bs.optional]
-    onSubmit: option(ReactEvent.Form.t => unit),
+    onSubmit: ReactEvent.Form.t => unit,
     [@bs.optional]
-    onInvalid: option(ReactEvent.Form.t => unit),
+    onInvalid: ReactEvent.Form.t => unit,
     /* Mouse events */
     [@bs.optional]
-    onClick: option(ReactEvent.Mouse.t => unit),
+    onClick: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onContextMenu: option(ReactEvent.Mouse.t => unit),
+    onContextMenu: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onDoubleClick: option(ReactEvent.Mouse.t => unit),
+    onDoubleClick: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onDrag: option(ReactEvent.Drag.t => unit),
+    onDrag: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragEnd: option(ReactEvent.Drag.t => unit),
+    onDragEnd: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragEnter: option(ReactEvent.Drag.t => unit),
+    onDragEnter: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragExit: option(ReactEvent.Drag.t => unit),
+    onDragExit: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragLeave: option(ReactEvent.Drag.t => unit),
+    onDragLeave: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragOver: option(ReactEvent.Drag.t => unit),
+    onDragOver: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragStart: option(ReactEvent.Drag.t => unit),
+    onDragStart: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDrop: option(ReactEvent.Drag.t => unit),
+    onDrop: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onMouseDown: option(ReactEvent.Mouse.t => unit),
+    onMouseDown: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseEnter: option(ReactEvent.Mouse.t => unit),
+    onMouseEnter: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseLeave: option(ReactEvent.Mouse.t => unit),
+    onMouseLeave: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseMove: option(ReactEvent.Mouse.t => unit),
+    onMouseMove: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseOut: option(ReactEvent.Mouse.t => unit),
+    onMouseOut: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseOver: option(ReactEvent.Mouse.t => unit),
+    onMouseOver: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseUp: option(ReactEvent.Mouse.t => unit),
+    onMouseUp: ReactEvent.Mouse.t => unit,
     /* Selection events */
     [@bs.optional]
-    onSelect: option(ReactEvent.Selection.t => unit),
+    onSelect: ReactEvent.Selection.t => unit,
     /* Touch events */
     [@bs.optional]
-    onTouchCancel: option(ReactEvent.Touch.t => unit),
+    onTouchCancel: ReactEvent.Touch.t => unit,
     [@bs.optional]
-    onTouchEnd: option(ReactEvent.Touch.t => unit),
+    onTouchEnd: ReactEvent.Touch.t => unit,
     [@bs.optional]
-    onTouchMove: option(ReactEvent.Touch.t => unit),
+    onTouchMove: ReactEvent.Touch.t => unit,
     [@bs.optional]
-    onTouchStart: option(ReactEvent.Touch.t => unit),
+    onTouchStart: ReactEvent.Touch.t => unit,
     // Pointer events
     [@bs.optional]
-    onPointerOver: option(ReactEvent.Pointer.t => unit),
+    onPointerOver: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerEnter: option(ReactEvent.Pointer.t => unit),
+    onPointerEnter: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerDown: option(ReactEvent.Pointer.t => unit),
+    onPointerDown: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerMove: option(ReactEvent.Pointer.t => unit),
+    onPointerMove: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerUp: option(ReactEvent.Pointer.t => unit),
+    onPointerUp: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerCancel: option(ReactEvent.Pointer.t => unit),
+    onPointerCancel: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerOut: option(ReactEvent.Pointer.t => unit),
+    onPointerOut: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerLeave: option(ReactEvent.Pointer.t => unit),
+    onPointerLeave: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onGotPointerCapture: option(ReactEvent.Pointer.t => unit),
+    onGotPointerCapture: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onLostPointerCapture: option(ReactEvent.Pointer.t => unit),
+    onLostPointerCapture: ReactEvent.Pointer.t => unit,
     /* UI events */
     [@bs.optional]
-    onScroll: option(ReactEvent.UI.t => unit),
+    onScroll: ReactEvent.UI.t => unit,
     /* Wheel events */
     [@bs.optional]
-    onWheel: option(ReactEvent.Wheel.t => unit),
+    onWheel: ReactEvent.Wheel.t => unit,
     /* Media events */
     [@bs.optional]
-    onAbort: option(ReactEvent.Media.t => unit),
+    onAbort: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onCanPlay: option(ReactEvent.Media.t => unit),
+    onCanPlay: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onCanPlayThrough: option(ReactEvent.Media.t => unit),
+    onCanPlayThrough: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onDurationChange: option(ReactEvent.Media.t => unit),
+    onDurationChange: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onEmptied: option(ReactEvent.Media.t => unit),
+    onEmptied: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onEncrypetd: option(ReactEvent.Media.t => unit),
+    onEncrypetd: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onEnded: option(ReactEvent.Media.t => unit),
+    onEnded: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onError: option(ReactEvent.Media.t => unit),
+    onError: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onLoadedData: option(ReactEvent.Media.t => unit),
+    onLoadedData: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onLoadedMetadata: option(ReactEvent.Media.t => unit),
+    onLoadedMetadata: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onLoadStart: option(ReactEvent.Media.t => unit),
+    onLoadStart: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onPause: option(ReactEvent.Media.t => unit),
+    onPause: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onPlay: option(ReactEvent.Media.t => unit),
+    onPlay: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onPlaying: option(ReactEvent.Media.t => unit),
+    onPlaying: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onProgress: option(ReactEvent.Media.t => unit),
+    onProgress: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onRateChange: option(ReactEvent.Media.t => unit),
+    onRateChange: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onSeeked: option(ReactEvent.Media.t => unit),
+    onSeeked: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onSeeking: option(ReactEvent.Media.t => unit),
+    onSeeking: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onStalled: option(ReactEvent.Media.t => unit),
+    onStalled: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onSuspend: option(ReactEvent.Media.t => unit),
+    onSuspend: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onTimeUpdate: option(ReactEvent.Media.t => unit),
+    onTimeUpdate: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onVolumeChange: option(ReactEvent.Media.t => unit),
+    onVolumeChange: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onWaiting: option(ReactEvent.Media.t => unit),
+    onWaiting: ReactEvent.Media.t => unit,
     /* Image events */
-    [@bs.optional]onLoad: option(ReactEvent.Image.t => unit) /* duplicate */, /*~onError: ReactEvent.Image.t => unit=?,*/
+    [@bs.optional]
+    onLoad: ReactEvent.Image.t => unit,
     /* Animation events */
     [@bs.optional]
-    onAnimationStart: option(ReactEvent.Animation.t => unit),
+    onAnimationStart: ReactEvent.Animation.t => unit,
     [@bs.optional]
-    onAnimationEnd: option(ReactEvent.Animation.t => unit),
+    onAnimationEnd: ReactEvent.Animation.t => unit,
     [@bs.optional]
-    onAnimationIteration: option(ReactEvent.Animation.t => unit),
+    onAnimationIteration: ReactEvent.Animation.t => unit,
     /* Transition events */
     [@bs.optional]
-    onTransitionEnd: option(ReactEvent.Transition.t => unit),
+    onTransitionEnd: ReactEvent.Transition.t => unit,
     /* svg */
     [@bs.optional]
-    accentHeight: option(string),
+    accentHeight: string,
     [@bs.optional]
-    accumulate: option(string),
+    accumulate: string,
     [@bs.optional]
-    additive: option(string),
+    additive: string,
     [@bs.optional]
-    alignmentBaseline: option(string),
+    alignmentBaseline: string,
     [@bs.optional]
-    allowReorder: option(string),
+    allowReorder: string,
     [@bs.optional]
-    alphabetic: option(string),
+    alphabetic: string,
     [@bs.optional]
-    amplitude: option(string),
+    amplitude: string,
     [@bs.optional]
-    arabicForm: option(string),
+    arabicForm: string,
     [@bs.optional]
-    ascent: option(string),
+    ascent: string,
     [@bs.optional]
-    attributeName: option(string),
+    attributeName: string,
     [@bs.optional]
-    attributeType: option(string),
+    attributeType: string,
     [@bs.optional]
-    autoReverse: option(string),
+    autoReverse: string,
     [@bs.optional]
-    azimuth: option(string),
+    azimuth: string,
     [@bs.optional]
-    baseFrequency: option(string),
+    baseFrequency: string,
     [@bs.optional]
-    baseProfile: option(string),
+    baseProfile: string,
     [@bs.optional]
-    baselineShift: option(string),
+    baselineShift: string,
     [@bs.optional]
-    bbox: option(string),
+    bbox: string,
     [@bs.optional] [@bs.as "begin"]
-    begin_: option(string), /* use this one. Previous one is deprecated */
+    begin_: string, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    bias: option(string),
+    bias: string,
     [@bs.optional]
-    by: option(string),
+    by: string,
     [@bs.optional]
-    calcMode: option(string),
+    calcMode: string,
     [@bs.optional]
-    capHeight: option(string),
+    capHeight: string,
     [@bs.optional]
-    clip: option(string),
+    clip: string,
     [@bs.optional]
-    clipPath: option(string),
+    clipPath: string,
     [@bs.optional]
-    clipPathUnits: option(string),
+    clipPathUnits: string,
     [@bs.optional]
-    clipRule: option(string),
+    clipRule: string,
     [@bs.optional]
-    colorInterpolation: option(string),
+    colorInterpolation: string,
     [@bs.optional]
-    colorInterpolationFilters: option(string),
+    colorInterpolationFilters: string,
     [@bs.optional]
-    colorProfile: option(string),
+    colorProfile: string,
     [@bs.optional]
-    colorRendering: option(string),
+    colorRendering: string,
     [@bs.optional]
-    contentScriptType: option(string),
+    contentScriptType: string,
     [@bs.optional]
-    contentStyleType: option(string),
+    contentStyleType: string,
     [@bs.optional]
-    cursor: option(string),
+    cursor: string,
     [@bs.optional]
-    cx: option(string),
+    cx: string,
     [@bs.optional]
-    cy: option(string),
+    cy: string,
     [@bs.optional]
-    d: option(string),
+    d: string,
     [@bs.optional]
-    decelerate: option(string),
+    decelerate: string,
     [@bs.optional]
-    descent: option(string),
+    descent: string,
     [@bs.optional]
-    diffuseConstant: option(string),
+    diffuseConstant: string,
     [@bs.optional]
-    direction: option(string),
+    direction: string,
     [@bs.optional]
-    display: option(string),
+    display: string,
     [@bs.optional]
-    divisor: option(string),
+    divisor: string,
     [@bs.optional]
-    dominantBaseline: option(string),
+    dominantBaseline: string,
     [@bs.optional]
-    dur: option(string),
+    dur: string,
     [@bs.optional]
-    dx: option(string),
+    dx: string,
     [@bs.optional]
-    dy: option(string),
+    dy: string,
     [@bs.optional]
-    edgeMode: option(string),
+    edgeMode: string,
     [@bs.optional]
-    elevation: option(string),
+    elevation: string,
     [@bs.optional]
-    enableBackground: option(string),
+    enableBackground: string,
     [@bs.optional] [@bs.as "end"]
-    end_: option(string), /* use this one. Previous one is deprecated */
+    end_: string, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    exponent: option(string),
+    exponent: string,
     [@bs.optional]
-    externalResourcesRequired: option(string),
+    externalResourcesRequired: string,
     [@bs.optional]
-    fill: option(string),
+    fill: string,
     [@bs.optional]
-    fillOpacity: option(string),
+    fillOpacity: string,
     [@bs.optional]
-    fillRule: option(string),
+    fillRule: string,
     [@bs.optional]
-    filter: option(string),
+    filter: string,
     [@bs.optional]
-    filterRes: option(string),
+    filterRes: string,
     [@bs.optional]
-    filterUnits: option(string),
+    filterUnits: string,
     [@bs.optional]
-    floodColor: option(string),
+    floodColor: string,
     [@bs.optional]
-    floodOpacity: option(string),
+    floodOpacity: string,
     [@bs.optional]
-    focusable: option(string),
+    focusable: string,
     [@bs.optional]
-    fontFamily: option(string),
+    fontFamily: string,
     [@bs.optional]
-    fontSize: option(string),
+    fontSize: string,
     [@bs.optional]
-    fontSizeAdjust: option(string),
+    fontSizeAdjust: string,
     [@bs.optional]
-    fontStretch: option(string),
+    fontStretch: string,
     [@bs.optional]
-    fontStyle: option(string),
+    fontStyle: string,
     [@bs.optional]
-    fontVariant: option(string),
+    fontVariant: string,
     [@bs.optional]
-    fontWeight: option(string),
+    fontWeight: string,
     [@bs.optional]
-    fomat: option(string),
+    fomat: string,
     [@bs.optional]
-    from: option(string),
+    from: string,
     [@bs.optional]
-    fx: option(string),
+    fx: string,
     [@bs.optional]
-    fy: option(string),
+    fy: string,
     [@bs.optional]
-    g1: option(string),
+    g1: string,
     [@bs.optional]
-    g2: option(string),
+    g2: string,
     [@bs.optional]
-    glyphName: option(string),
+    glyphName: string,
     [@bs.optional]
-    glyphOrientationHorizontal: option(string),
+    glyphOrientationHorizontal: string,
     [@bs.optional]
-    glyphOrientationVertical: option(string),
+    glyphOrientationVertical: string,
     [@bs.optional]
-    glyphRef: option(string),
+    glyphRef: string,
     [@bs.optional]
-    gradientTransform: option(string),
+    gradientTransform: string,
     [@bs.optional]
-    gradientUnits: option(string),
+    gradientUnits: string,
     [@bs.optional]
-    hanging: option(string),
+    hanging: string,
     [@bs.optional]
-    horizAdvX: option(string),
+    horizAdvX: string,
     [@bs.optional]
-    horizOriginX: option(string),
+    horizOriginX: string,
     [@bs.optional]
-    ideographic: option(string),
+    ideographic: string,
     [@bs.optional]
-    imageRendering: option(string),
+    imageRendering: string,
     [@bs.optional] [@bs.as "in"]
-    in_: option(string), /* use this one. Previous one is deprecated */
+    in_: string, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    in2: option(string),
+    in2: string,
     [@bs.optional]
-    intercept: option(string),
+    intercept: string,
     [@bs.optional]
-    k: option(string),
+    k: string,
     [@bs.optional]
-    k1: option(string),
+    k1: string,
     [@bs.optional]
-    k2: option(string),
+    k2: string,
     [@bs.optional]
-    k3: option(string),
+    k3: string,
     [@bs.optional]
-    k4: option(string),
+    k4: string,
     [@bs.optional]
-    kernelMatrix: option(string),
+    kernelMatrix: string,
     [@bs.optional]
-    kernelUnitLength: option(string),
+    kernelUnitLength: string,
     [@bs.optional]
-    kerning: option(string),
+    kerning: string,
     [@bs.optional]
-    keyPoints: option(string),
+    keyPoints: string,
     [@bs.optional]
-    keySplines: option(string),
+    keySplines: string,
     [@bs.optional]
-    keyTimes: option(string),
+    keyTimes: string,
     [@bs.optional]
-    lengthAdjust: option(string),
+    lengthAdjust: string,
     [@bs.optional]
-    letterSpacing: option(string),
+    letterSpacing: string,
     [@bs.optional]
-    lightingColor: option(string),
+    lightingColor: string,
     [@bs.optional]
-    limitingConeAngle: option(string),
+    limitingConeAngle: string,
     [@bs.optional]
-    local: option(string),
+    local: string,
     [@bs.optional]
-    markerEnd: option(string),
+    markerEnd: string,
     [@bs.optional]
-    markerHeight: option(string),
+    markerHeight: string,
     [@bs.optional]
-    markerMid: option(string),
+    markerMid: string,
     [@bs.optional]
-    markerStart: option(string),
+    markerStart: string,
     [@bs.optional]
-    markerUnits: option(string),
+    markerUnits: string,
     [@bs.optional]
-    markerWidth: option(string),
+    markerWidth: string,
     [@bs.optional]
-    mask: option(string),
+    mask: string,
     [@bs.optional]
-    maskContentUnits: option(string),
+    maskContentUnits: string,
     [@bs.optional]
-    maskUnits: option(string),
+    maskUnits: string,
     [@bs.optional]
-    mathematical: option(string),
+    mathematical: string,
     [@bs.optional]
-    mode: option(string),
+    mode: string,
     [@bs.optional]
-    numOctaves: option(string),
+    numOctaves: string,
     [@bs.optional]
-    offset: option(string),
+    offset: string,
     [@bs.optional]
-    opacity: option(string),
+    opacity: string,
     [@bs.optional]
-    operator: option(string),
+    operator: string,
     [@bs.optional]
-    order: option(string),
+    order: string,
     [@bs.optional]
-    orient: option(string),
+    orient: string,
     [@bs.optional]
-    orientation: option(string),
+    orientation: string,
     [@bs.optional]
-    origin: option(string),
+    origin: string,
     [@bs.optional]
-    overflow: option(string),
+    overflow: string,
     [@bs.optional]
-    overflowX: option(string),
+    overflowX: string,
     [@bs.optional]
-    overflowY: option(string),
+    overflowY: string,
     [@bs.optional]
-    overlinePosition: option(string),
+    overlinePosition: string,
     [@bs.optional]
-    overlineThickness: option(string),
+    overlineThickness: string,
     [@bs.optional]
-    paintOrder: option(string),
+    paintOrder: string,
     [@bs.optional]
-    panose1: option(string),
+    panose1: string,
     [@bs.optional]
-    pathLength: option(string),
+    pathLength: string,
     [@bs.optional]
-    patternContentUnits: option(string),
+    patternContentUnits: string,
     [@bs.optional]
-    patternTransform: option(string),
+    patternTransform: string,
     [@bs.optional]
-    patternUnits: option(string),
+    patternUnits: string,
     [@bs.optional]
-    pointerEvents: option(string),
+    pointerEvents: string,
     [@bs.optional]
-    points: option(string),
+    points: string,
     [@bs.optional]
-    pointsAtX: option(string),
+    pointsAtX: string,
     [@bs.optional]
-    pointsAtY: option(string),
+    pointsAtY: string,
     [@bs.optional]
-    pointsAtZ: option(string),
+    pointsAtZ: string,
     [@bs.optional]
-    preserveAlpha: option(string),
+    preserveAlpha: string,
     [@bs.optional]
-    preserveAspectRatio: option(string),
+    preserveAspectRatio: string,
     [@bs.optional]
-    primitiveUnits: option(string),
+    primitiveUnits: string,
     [@bs.optional]
-    r: option(string),
+    r: string,
     [@bs.optional]
-    radius: option(string),
+    radius: string,
     [@bs.optional]
-    refX: option(string),
+    refX: string,
     [@bs.optional]
-    refY: option(string),
+    refY: string,
     [@bs.optional]
-    renderingIntent: option(string),
+    renderingIntent: string,
     [@bs.optional]
-    repeatCount: option(string),
+    repeatCount: string,
     [@bs.optional]
-    repeatDur: option(string),
+    repeatDur: string,
     [@bs.optional]
-    requiredExtensions: option(string),
+    requiredExtensions: string,
     [@bs.optional]
-    requiredFeatures: option(string),
+    requiredFeatures: string,
     [@bs.optional]
-    restart: option(string),
+    restart: string,
     [@bs.optional]
-    result: option(string),
+    result: string,
     [@bs.optional]
-    rotate: option(string),
+    rotate: string,
     [@bs.optional]
-    rx: option(string),
+    rx: string,
     [@bs.optional]
-    ry: option(string),
+    ry: string,
     [@bs.optional]
-    scale: option(string),
+    scale: string,
     [@bs.optional]
-    seed: option(string),
+    seed: string,
     [@bs.optional]
-    shapeRendering: option(string),
+    shapeRendering: string,
     [@bs.optional]
-    slope: option(string),
+    slope: string,
     [@bs.optional]
-    spacing: option(string),
+    spacing: string,
     [@bs.optional]
-    specularConstant: option(string),
+    specularConstant: string,
     [@bs.optional]
-    specularExponent: option(string),
+    specularExponent: string,
     [@bs.optional]
-    speed: option(string),
+    speed: string,
     [@bs.optional]
-    spreadMethod: option(string),
+    spreadMethod: string,
     [@bs.optional]
-    startOffset: option(string),
+    startOffset: string,
     [@bs.optional]
-    stdDeviation: option(string),
+    stdDeviation: string,
     [@bs.optional]
-    stemh: option(string),
+    stemh: string,
     [@bs.optional]
-    stemv: option(string),
+    stemv: string,
     [@bs.optional]
-    stitchTiles: option(string),
+    stitchTiles: string,
     [@bs.optional]
-    stopColor: option(string),
+    stopColor: string,
     [@bs.optional]
-    stopOpacity: option(string),
+    stopOpacity: string,
     [@bs.optional]
-    strikethroughPosition: option(string),
+    strikethroughPosition: string,
     [@bs.optional]
-    strikethroughThickness: option(string),
+    strikethroughThickness: string,
     [@bs.optional]
-    string: option(string),
+    string: string,
     [@bs.optional]
-    stroke: option(string),
+    stroke: string,
     [@bs.optional]
-    strokeDasharray: option(string),
+    strokeDasharray: string,
     [@bs.optional]
-    strokeDashoffset: option(string),
+    strokeDashoffset: string,
     [@bs.optional]
-    strokeLinecap: option(string),
+    strokeLinecap: string,
     [@bs.optional]
-    strokeLinejoin: option(string),
+    strokeLinejoin: string,
     [@bs.optional]
-    strokeMiterlimit: option(string),
+    strokeMiterlimit: string,
     [@bs.optional]
-    strokeOpacity: option(string),
+    strokeOpacity: string,
     [@bs.optional]
-    strokeWidth: option(string),
+    strokeWidth: string,
     [@bs.optional]
-    surfaceScale: option(string),
+    surfaceScale: string,
     [@bs.optional]
-    systemLanguage: option(string),
+    systemLanguage: string,
     [@bs.optional]
-    tableValues: option(string),
+    tableValues: string,
     [@bs.optional]
-    targetX: option(string),
+    targetX: string,
     [@bs.optional]
-    targetY: option(string),
+    targetY: string,
     [@bs.optional]
-    textAnchor: option(string),
+    textAnchor: string,
     [@bs.optional]
-    textDecoration: option(string),
+    textDecoration: string,
     [@bs.optional]
-    textLength: option(string),
+    textLength: string,
     [@bs.optional]
-    textRendering: option(string),
+    textRendering: string,
     [@bs.optional] [@bs.as "to"]
-    to_: option(string), /* use this one. Previous one is deprecated */
+    to_: string, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    transform: option(string),
+    transform: string,
     [@bs.optional]
-    u1: option(string),
+    u1: string,
     [@bs.optional]
-    u2: option(string),
+    u2: string,
     [@bs.optional]
-    underlinePosition: option(string),
+    underlinePosition: string,
     [@bs.optional]
-    underlineThickness: option(string),
+    underlineThickness: string,
     [@bs.optional]
-    unicode: option(string),
+    unicode: string,
     [@bs.optional]
-    unicodeBidi: option(string),
+    unicodeBidi: string,
     [@bs.optional]
-    unicodeRange: option(string),
+    unicodeRange: string,
     [@bs.optional]
-    unitsPerEm: option(string),
+    unitsPerEm: string,
     [@bs.optional]
-    vAlphabetic: option(string),
+    vAlphabetic: string,
     [@bs.optional]
-    vHanging: option(string),
+    vHanging: string,
     [@bs.optional]
-    vIdeographic: option(string),
+    vIdeographic: string,
     [@bs.optional]
-    vMathematical: option(string),
+    vMathematical: string,
     [@bs.optional]
-    values: option(string),
+    values: string,
     [@bs.optional]
-    vectorEffect: option(string),
+    vectorEffect: string,
     [@bs.optional]
-    version: option(string),
+    version: string,
     [@bs.optional]
-    vertAdvX: option(string),
+    vertAdvX: string,
     [@bs.optional]
-    vertAdvY: option(string),
+    vertAdvY: string,
     [@bs.optional]
-    vertOriginX: option(string),
+    vertOriginX: string,
     [@bs.optional]
-    vertOriginY: option(string),
+    vertOriginY: string,
     [@bs.optional]
-    viewBox: option(string),
+    viewBox: string,
     [@bs.optional]
-    viewTarget: option(string),
+    viewTarget: string,
     [@bs.optional]
-    visibility: option(string),
+    visibility: string,
     /*width::string? =>*/
     [@bs.optional]
-    widths: option(string),
+    widths: string,
     [@bs.optional]
-    wordSpacing: option(string),
+    wordSpacing: string,
     [@bs.optional]
-    writingMode: option(string),
+    writingMode: string,
     [@bs.optional]
-    x: option(string),
+    x: string,
     [@bs.optional]
-    x1: option(string),
+    x1: string,
     [@bs.optional]
-    x2: option(string),
+    x2: string,
     [@bs.optional]
-    xChannelSelector: option(string),
+    xChannelSelector: string,
     [@bs.optional]
-    xHeight: option(string),
+    xHeight: string,
     [@bs.optional]
-    xlinkActuate: option(string),
+    xlinkActuate: string,
     [@bs.optional]
-    xlinkArcrole: option(string),
+    xlinkArcrole: string,
     [@bs.optional]
-    xlinkHref: option(string),
+    xlinkHref: string,
     [@bs.optional]
-    xlinkRole: option(string),
+    xlinkRole: string,
     [@bs.optional]
-    xlinkShow: option(string),
+    xlinkShow: string,
     [@bs.optional]
-    xlinkTitle: option(string),
+    xlinkTitle: string,
     [@bs.optional]
-    xlinkType: option(string),
+    xlinkType: string,
     [@bs.optional]
-    xmlns: option(string),
+    xmlns: string,
     [@bs.optional]
-    xmlnsXlink: option(string),
+    xmlnsXlink: string,
     [@bs.optional]
-    xmlBase: option(string),
+    xmlBase: string,
     [@bs.optional]
-    xmlLang: option(string),
+    xmlLang: string,
     [@bs.optional]
-    xmlSpace: option(string),
+    xmlSpace: string,
     [@bs.optional]
-    y: option(string),
+    y: string,
     [@bs.optional]
-    y1: option(string),
+    y1: string,
     [@bs.optional]
-    y2: option(string),
+    y2: string,
     [@bs.optional]
-    yChannelSelector: option(string),
+    yChannelSelector: string,
     [@bs.optional]
-    z: option(string),
+    z: string,
     [@bs.optional]
-    zoomAndPan: option(string),
+    zoomAndPan: string,
     /* RDFa */
     [@bs.optional]
-    about: option(string),
+    about: string,
     [@bs.optional]
-    datatype: option(string),
+    datatype: string,
     [@bs.optional]
-    inlist: option(string),
+    inlist: string,
     [@bs.optional]
-    prefix: option(string),
+    prefix: string,
     [@bs.optional]
-    property: option(string),
+    property: string,
     [@bs.optional]
-    resource: option(string),
+    resource: string,
     [@bs.optional]
-    typeof: option(string),
+    typeof: string,
     [@bs.optional]
-    vocab: option(string),
+    vocab: string,
     /* react-specific */
     [@bs.optional]
-    dangerouslySetInnerHTML: option({. "__html": string}),
+    dangerouslySetInnerHTML: {. "__html": string},
     [@bs.optional]
-    suppressContentEditableWarning: option(bool),
+    suppressContentEditableWarning: bool,
     [@bs.optional]
-    suppressHydrationWarning: option(bool),
+    suppressHydrationWarning: bool,
   };
 
   /* This list isn't exhaustive. We'll add more as we go. */
@@ -1094,1026 +1095,1027 @@ module Props = {
   [@deriving abstract]
   type props = {
     [@bs.optional]
-    key: option(string),
+    key: string,
     [@bs.optional]
-    ref: option(Js.nullable(Dom.element) => unit),
+    ref: Js.nullable(Dom.element) => unit,
     /* accessibility */
     /* https://www.w3.org/TR/wai-aria-1.1/ */
     [@bs.optional] [@bs.as "aria-activedescendant"]
-    ariaActivedescendant: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescendat */
+    ariaActivedescendant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-activedescendat */
     [@bs.optional] [@bs.as "aria-atomic"]
-    ariaAtomic: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic */
+    ariaAtomic: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic */
     [@bs.optional] [@bs.as "aria-autocomplete"]
-    ariaAutocomplete: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-autocomplete */
+    ariaAutocomplete: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-autocomplete */
     [@bs.optional] [@bs.as "aria-busy"]
-    ariaBusy: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy */
+    ariaBusy: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy */
     [@bs.optional] [@bs.as "aria-checked"]
-    ariaChecked: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-checked */
+    ariaChecked: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-checked */
     [@bs.optional] [@bs.as "aria-colcount"]
-    ariaColcount: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colcount */
+    ariaColcount: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colcount */
     [@bs.optional] [@bs.as "aria-colindex"]
-    ariaColindex: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colindex */
+    ariaColindex: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colindex */
     [@bs.optional] [@bs.as "aria-colspan"]
-    ariaColspan: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colspan */
+    ariaColspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-colspan */
     [@bs.optional] [@bs.as "aria-controls"]
-    ariaControls: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls */
+    ariaControls: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls */
     [@bs.optional] [@bs.as "aria-current"]
-    ariaCurrent: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current */
+    ariaCurrent: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current */
     [@bs.optional] [@bs.as "aria-describedby"]
-    ariaDescribedby: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby */
+    ariaDescribedby: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby */
     [@bs.optional] [@bs.as "aria-details"]
-    ariaDetails: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-details */
+    ariaDetails: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-details */
     [@bs.optional] [@bs.as "aria-disabled"]
-    ariaDisabled: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled */
+    ariaDisabled: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled */
     [@bs.optional] [@bs.as "aria-errormessage"]
-    ariaErrormessage: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage */
+    ariaErrormessage: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage */
     [@bs.optional] [@bs.as "aria-expanded"]
-    ariaExpanded: option(bool), /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
+    ariaExpanded: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded */
     [@bs.optional] [@bs.as "aria-flowto"]
-    ariaFlowto: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
+    ariaFlowto: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-flowto */
     [@bs.optional] [@bs.as "aria-grabbed"] /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
-    ariaGrabbed: option(bool),
+    ariaGrabbed: bool,
     [@bs.optional] [@bs.as "aria-haspopup"]
-    ariaHaspopup: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
+    ariaHaspopup: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup */
     [@bs.optional] [@bs.as "aria-hidden"]
-    ariaHidden: option(bool), /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
+    ariaHidden: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden */
     [@bs.optional] [@bs.as "aria-invalid"]
-    ariaInvalid: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-invalid */
+    ariaInvalid: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-invalid */
     [@bs.optional] [@bs.as "aria-keyshortcuts"]
-    ariaKeyshortcuts: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-keyshortcuts */
+    ariaKeyshortcuts: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-keyshortcuts */
     [@bs.optional] [@bs.as "aria-label"]
-    ariaLabel: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label */
+    ariaLabel: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label */
     [@bs.optional] [@bs.as "aria-labelledby"]
-    ariaLabelledby: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby */
+    ariaLabelledby: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby */
     [@bs.optional] [@bs.as "aria-level"]
-    ariaLevel: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-level */
+    ariaLevel: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-level */
     [@bs.optional] [@bs.as "aria-live"]
-    ariaLive: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live */
+    ariaLive: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live */
     [@bs.optional] [@bs.as "aria-modal"]
-    ariaModal: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-modal */
+    ariaModal: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-modal */
     [@bs.optional] [@bs.as "aria-multiline"]
-    ariaMultiline: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiline */
+    ariaMultiline: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiline */
     [@bs.optional] [@bs.as "aria-multiselectable"]
-    ariaMultiselectable: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiselectable */
+    ariaMultiselectable: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiselectable */
     [@bs.optional] [@bs.as "aria-orientation"]
-    ariaOrientation: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-orientation */
+    ariaOrientation: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-orientation */
     [@bs.optional] [@bs.as "aria-owns"]
-    ariaOwns: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-owns */
+    ariaOwns: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-owns */
     [@bs.optional] [@bs.as "aria-placeholder"]
-    ariaPlaceholder: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-placeholder */
+    ariaPlaceholder: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-placeholder */
     [@bs.optional] [@bs.as "aria-posinset"]
-    ariaPosinset: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-posinset */
+    ariaPosinset: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-posinset */
     [@bs.optional] [@bs.as "aria-pressed"]
-    ariaPressed: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-pressed */
+    ariaPressed: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-pressed */
     [@bs.optional] [@bs.as "aria-readonly"]
-    ariaReadonly: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-readonly */
+    ariaReadonly: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-readonly */
     [@bs.optional] [@bs.as "aria-relevant"]
-    ariaRelevant: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
+    ariaRelevant: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-relevant */
     [@bs.optional] [@bs.as "aria-required"]
-    ariaRequired: option(bool), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-required */
+    ariaRequired: bool, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-required */
     [@bs.optional] [@bs.as "aria-roledescription"]
-    ariaRoledescription: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-roledescription */
+    ariaRoledescription: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-roledescription */
     [@bs.optional] [@bs.as "aria-rowcount"]
-    ariaRowcount: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowcount */
+    ariaRowcount: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowcount */
     [@bs.optional] [@bs.as "aria-rowindex"]
-    ariaRowindex: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindex */
+    ariaRowindex: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindex */
     [@bs.optional] [@bs.as "aria-rowindextext"]
-    ariaRowindextext: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindextext */
+    ariaRowindextext: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowindextext */
     [@bs.optional] [@bs.as "aria-rowspan"]
-    ariaRowspan: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowspan */
+    ariaRowspan: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-rowspan */
     [@bs.optional] [@bs.as "aria-selected"]
-    ariaSelected: option(bool), /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
+    ariaSelected: bool, /* string */ /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-selected */
     [@bs.optional] [@bs.as "aria-setsize"]
-    ariaSetsize: option(int), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-setsize */
+    ariaSetsize: int, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-setsize */
     [@bs.optional] [@bs.as "aria-sort"]
-    ariaSort: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-sort */
+    ariaSort: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-sort */
     [@bs.optional] [@bs.as "aria-valuemax"]
-    ariaValuemax: option(float), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax */
+    ariaValuemax: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax */
     [@bs.optional] [@bs.as "aria-valuemin"]
-    ariaValuemin: option(float), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin */
+    ariaValuemin: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin */
     [@bs.optional] [@bs.as "aria-valuenow"]
-    ariaValuenow: option(float), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuenow */
+    ariaValuenow: float, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuenow */
     [@bs.optional] [@bs.as "aria-valuetext"]
-    ariaValuetext: option(string), /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext */
+    ariaValuetext: string, /* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext */
     /* react textarea/input */
     [@bs.optional]
-    defaultChecked: option(bool),
+    defaultChecked: bool,
     [@bs.optional]
-    defaultValue: option(string),
+    defaultValue: string,
     /* global html attributes */
     [@bs.optional]
-    accessKey: option(string),
+    accessKey: string,
     [@bs.optional]
-    className: option(string), /* substitute for "class" */
+    className: string, /* substitute for "class" */
     [@bs.optional]
-    contentEditable: option(bool),
+    contentEditable: bool,
     [@bs.optional]
-    contextMenu: option(string),
+    contextMenu: string,
     [@bs.optional]
-    dir: option(string), /* "ltr", "rtl" or "auto" */
+    dir: string, /* "ltr", "rtl" or "auto" */
     [@bs.optional]
-    draggable: option(bool),
+    draggable: bool,
     [@bs.optional]
-    hidden: option(bool),
+    hidden: bool,
     [@bs.optional]
-    id: option(string),
+    id: string,
     [@bs.optional]
-    lang: option(string),
+    lang: string,
     [@bs.optional]
-    role: option(string), /* ARIA role */
+    role: string, /* ARIA role */
     [@bs.optional]
-    style: option(style),
+    style: style,
     [@bs.optional]
-    spellCheck: option(bool),
+    spellCheck: bool,
     [@bs.optional]
-    tabIndex: option(int),
+    tabIndex: int,
     [@bs.optional]
-    title: option(string),
+    title: string,
     /* html5 microdata */
     [@bs.optional]
-    itemID: option(string),
+    itemID: string,
     [@bs.optional]
-    itemProp: option(string),
+    itemProp: string,
     [@bs.optional]
-    itemRef: option(string),
+    itemRef: string,
     [@bs.optional]
-    itemScope: option(bool),
+    itemScope: bool,
     [@bs.optional]
-    itemType: option(string), /* uri */
+    itemType: string, /* uri */
     /* tag-specific html attributes */
     [@bs.optional] [@bs.as "as"]
-    as_: option(string),
+    as_: string,
     [@bs.optional]
-    accept: option(string),
+    accept: string,
     [@bs.optional]
-    acceptCharset: option(string),
+    acceptCharset: string,
     [@bs.optional]
-    action: option(string), /* uri */
+    action: string, /* uri */
     [@bs.optional]
-    allowFullScreen: option(bool),
+    allowFullScreen: bool,
     [@bs.optional]
-    alt: option(string),
+    alt: string,
     [@bs.optional]
-    async: option(bool),
+    async: bool,
     [@bs.optional]
-    autoComplete: option(string), /* has a fixed, but large-ish, set of possible values */
+    autoComplete: string, /* has a fixed, but large-ish, set of possible values */
     [@bs.optional]
-    autoCapitalize: option(string), /* Mobile Safari specific */
+    autoCapitalize: string, /* Mobile Safari specific */
     [@bs.optional]
-    autoFocus: option(bool),
+    autoFocus: bool,
     [@bs.optional]
-    autoPlay: option(bool),
+    autoPlay: bool,
     [@bs.optional]
-    challenge: option(string),
+    challenge: string,
     [@bs.optional]
-    charSet: option(string),
+    charSet: string,
     [@bs.optional]
-    checked: option(bool),
+    checked: bool,
     [@bs.optional]
-    cite: option(string), /* uri */
+    cite: string, /* uri */
     [@bs.optional]
-    crossorigin: option(bool),
+    crossorigin: bool,
     [@bs.optional]
-    cols: option(int),
+    cols: int,
     [@bs.optional]
-    colSpan: option(int),
+    colSpan: int,
     [@bs.optional]
-    content: option(string),
+    content: string,
     [@bs.optional]
-    controls: option(bool),
+    controls: bool,
     [@bs.optional]
-    coords: option(string), /* set of values specifying the coordinates of a region */
+    coords: string, /* set of values specifying the coordinates of a region */
     [@bs.optional]
-    data: option(string), /* uri */
+    data: string, /* uri */
     [@bs.optional]
-    dateTime: option(string), /* "valid date string with optional time" */
+    dateTime: string, /* "valid date string with optional time" */
     [@bs.optional]
-    default: option(bool),
+    default: bool,
     [@bs.optional]
-    defer: option(bool),
+    defer: bool,
     [@bs.optional]
-    disabled: option(bool),
+    disabled: bool,
     [@bs.optional]
-    download: option(string), /* should really be either a boolean, signifying presence, or a string */
+    download: string, /* should really be either a boolean, signifying presence, or a string */
     [@bs.optional]
-    encType: option(string), /* "application/x-www-form-urlencoded", "multipart/form-data" or "text/plain" */
+    encType: string, /* "application/x-www-form-urlencoded", "multipart/form-data" or "text/plain" */
     [@bs.optional]
-    form: option(string),
+    form: string,
     [@bs.optional]
-    formAction: option(string), /* uri */
+    formAction: string, /* uri */
     [@bs.optional]
-    formTarget: option(string), /* "_blank", "_self", etc. */
+    formTarget: string, /* "_blank", "_self", etc. */
     [@bs.optional]
-    formMethod: option(string), /* "post", "get", "put" */
+    formMethod: string, /* "post", "get", "put" */
     [@bs.optional]
-    headers: option(string),
+    headers: string,
     [@bs.optional]
-    height: option(string), /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
+    height: string, /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
     [@bs.optional]
-    high: option(int),
+    high: int,
     [@bs.optional]
-    href: option(string), /* uri */
+    href: string, /* uri */
     [@bs.optional]
-    hrefLang: option(string),
+    hrefLang: string,
     [@bs.optional]
-    htmlFor: option(string), /* substitute for "for" */
+    htmlFor: string, /* substitute for "for" */
     [@bs.optional]
-    httpEquiv: option(string), /* has a fixed set of possible values */
+    httpEquiv: string, /* has a fixed set of possible values */
     [@bs.optional]
-    icon: option(string), /* uri? */
+    icon: string, /* uri? */
     [@bs.optional]
-    inputMode: option(string), /* "verbatim", "latin", "numeric", etc. */
+    inputMode: string, /* "verbatim", "latin", "numeric", etc. */
     [@bs.optional]
-    integrity: option(string),
+    integrity: string,
     [@bs.optional]
-    keyType: option(string),
+    keyType: string,
     [@bs.optional]
-    kind: option(string), /* has a fixed set of possible values */
+    kind: string, /* has a fixed set of possible values */
     [@bs.optional]
-    label: option(string),
+    label: string,
     [@bs.optional]
-    list: option(string),
+    list: string,
     [@bs.optional]
-    loop: option(bool),
+    loop: bool,
     [@bs.optional]
-    low: option(int),
+    low: int,
     [@bs.optional]
-    manifest: option(string), /* uri */
+    manifest: string, /* uri */
     [@bs.optional]
-    max: option(string), /* should be int or Js.Date.t */
+    max: string, /* should be int or Js.Date.t */
     [@bs.optional]
-    maxLength: option(int),
+    maxLength: int,
     [@bs.optional]
-    media: option(string), /* a valid media query */
+    media: string, /* a valid media query */
     [@bs.optional]
-    mediaGroup: option(string),
+    mediaGroup: string,
     [@bs.optional]
-    method: option(string), /* "post" or "get" */
+    method: string, /* "post" or "get" */
     [@bs.optional]
-    min: option(string),
+    min: string,
     [@bs.optional]
-    minLength: option(int),
+    minLength: int,
     [@bs.optional]
-    multiple: option(bool),
+    multiple: bool,
     [@bs.optional]
-    muted: option(bool),
+    muted: bool,
     [@bs.optional]
-    name: option(string),
+    name: string,
     [@bs.optional]
-    nonce: option(string),
+    nonce: string,
     [@bs.optional]
-    noValidate: option(bool),
+    noValidate: bool,
     [@bs.optional] [@bs.as "open"]
-    open_: option(bool), /* use this one. Previous one is deprecated */
+    open_: bool, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    optimum: option(int),
+    optimum: int,
     [@bs.optional]
-    pattern: option(string), /* valid Js RegExp */
+    pattern: string, /* valid Js RegExp */
     [@bs.optional]
-    placeholder: option(string),
+    placeholder: string,
     [@bs.optional]
-    poster: option(string), /* uri */
+    poster: string, /* uri */
     [@bs.optional]
-    preload: option(string), /* "none", "metadata" or "auto" (and "" as a synonym for "auto") */
+    preload: string, /* "none", "metadata" or "auto" (and "" as a synonym for "auto") */
     [@bs.optional]
-    radioGroup: option(string),
+    radioGroup: string,
     [@bs.optional]
-    readOnly: option(bool),
+    readOnly: bool,
     [@bs.optional]
-    rel: option(string), /* a space- or comma-separated (depending on the element) list of a fixed set of "link types" */
+    rel: string, /* a space- or comma-separated (depending on the element) list of a fixed set of "link types" */
     [@bs.optional]
-    required: option(bool),
+    required: bool,
     [@bs.optional]
-    reversed: option(bool),
+    reversed: bool,
     [@bs.optional]
-    rows: option(int),
+    rows: int,
     [@bs.optional]
-    rowSpan: option(int),
+    rowSpan: int,
     [@bs.optional]
-    sandbox: option(string), /* has a fixed set of possible values */
+    sandbox: string, /* has a fixed set of possible values */
     [@bs.optional]
-    scope: option(string), /* has a fixed set of possible values */
+    scope: string, /* has a fixed set of possible values */
     [@bs.optional]
-    scoped: option(bool),
+    scoped: bool,
     [@bs.optional]
-    scrolling: option(string), /* html4 only, "auto", "yes" or "no" */
+    scrolling: string, /* html4 only, "auto", "yes" or "no" */
     /* seamless - supported by React, but removed from the html5 spec */
     [@bs.optional]
-    selected: option(bool),
+    selected: bool,
     [@bs.optional]
-    shape: option(string),
+    shape: string,
     [@bs.optional]
-    size: option(int),
+    size: int,
     [@bs.optional]
-    sizes: option(string),
+    sizes: string,
     [@bs.optional]
-    span: option(int),
+    span: int,
     [@bs.optional]
-    src: option(string), /* uri */
+    src: string, /* uri */
     [@bs.optional]
-    srcDoc: option(string),
+    srcDoc: string,
     [@bs.optional]
-    srcLang: option(string),
+    srcLang: string,
     [@bs.optional]
-    srcSet: option(string),
+    srcSet: string,
     [@bs.optional]
-    start: option(int),
+    start: int,
     [@bs.optional]
-    step: option(float),
+    step: float,
     [@bs.optional]
-    summary: option(string), /* deprecated */
+    summary: string, /* deprecated */
     [@bs.optional]
-    target: option(string),
+    target: string,
     [@bs.optional] [@bs.as "type"]
-    type_: option(string), /* has a fixed but large-ish set of possible values */ /* use this one. Previous one is deprecated */
+    type_: string, /* has a fixed but large-ish set of possible values */ /* use this one. Previous one is deprecated */
     [@bs.optional]
-    useMap: option(string),
+    useMap: string,
     [@bs.optional]
-    value: option(string),
+    value: string,
     [@bs.optional]
-    width: option(string), /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
+    width: string, /* in html5 this can only be a number, but in html4 it can ba a percentage as well */
     [@bs.optional]
-    wrap: option(string), /* "hard" or "soft" */
+    wrap: string, /* "hard" or "soft" */
     /* Clipboard events */
     [@bs.optional]
-    onCopy: option(ReactEvent.Clipboard.t => unit),
+    onCopy: ReactEvent.Clipboard.t => unit,
     [@bs.optional]
-    onCut: option(ReactEvent.Clipboard.t => unit),
+    onCut: ReactEvent.Clipboard.t => unit,
     [@bs.optional]
-    onPaste: option(ReactEvent.Clipboard.t => unit),
+    onPaste: ReactEvent.Clipboard.t => unit,
     /* Composition events */
     [@bs.optional]
-    onCompositionEnd: option(ReactEvent.Composition.t => unit),
+    onCompositionEnd: ReactEvent.Composition.t => unit,
     [@bs.optional]
-    onCompositionStart: option(ReactEvent.Composition.t => unit),
+    onCompositionStart: ReactEvent.Composition.t => unit,
     [@bs.optional]
-    onCompositionUpdate: option(ReactEvent.Composition.t => unit),
+    onCompositionUpdate: ReactEvent.Composition.t => unit,
     /* Keyboard events */
     [@bs.optional]
-    onKeyDown: option(ReactEvent.Keyboard.t => unit),
+    onKeyDown: ReactEvent.Keyboard.t => unit,
     [@bs.optional]
-    onKeyPress: option(ReactEvent.Keyboard.t => unit),
+    onKeyPress: ReactEvent.Keyboard.t => unit,
     [@bs.optional]
-    onKeyUp: option(ReactEvent.Keyboard.t => unit),
+    onKeyUp: ReactEvent.Keyboard.t => unit,
     /* Focus events */
     [@bs.optional]
-    onFocus: option(ReactEvent.Focus.t => unit),
+    onFocus: ReactEvent.Focus.t => unit,
     [@bs.optional]
-    onBlur: option(ReactEvent.Focus.t => unit),
+    onBlur: ReactEvent.Focus.t => unit,
     /* Form events */
     [@bs.optional]
-    onChange: option(ReactEvent.Form.t => unit),
+    onChange: ReactEvent.Form.t => unit,
     [@bs.optional]
-    onInput: option(ReactEvent.Form.t => unit),
+    onInput: ReactEvent.Form.t => unit,
     [@bs.optional]
-    onSubmit: option(ReactEvent.Form.t => unit),
+    onSubmit: ReactEvent.Form.t => unit,
     [@bs.optional]
-    onInvalid: option(ReactEvent.Form.t => unit),
+    onInvalid: ReactEvent.Form.t => unit,
     /* Mouse events */
     [@bs.optional]
-    onClick: option(ReactEvent.Mouse.t => unit),
+    onClick: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onContextMenu: option(ReactEvent.Mouse.t => unit),
+    onContextMenu: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onDoubleClick: option(ReactEvent.Mouse.t => unit),
+    onDoubleClick: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onDrag: option(ReactEvent.Drag.t => unit),
+    onDrag: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragEnd: option(ReactEvent.Drag.t => unit),
+    onDragEnd: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragEnter: option(ReactEvent.Drag.t => unit),
+    onDragEnter: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragExit: option(ReactEvent.Drag.t => unit),
+    onDragExit: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragLeave: option(ReactEvent.Drag.t => unit),
+    onDragLeave: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragOver: option(ReactEvent.Drag.t => unit),
+    onDragOver: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDragStart: option(ReactEvent.Drag.t => unit),
+    onDragStart: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onDrop: option(ReactEvent.Drag.t => unit),
+    onDrop: ReactEvent.Drag.t => unit,
     [@bs.optional]
-    onMouseDown: option(ReactEvent.Mouse.t => unit),
+    onMouseDown: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseEnter: option(ReactEvent.Mouse.t => unit),
+    onMouseEnter: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseLeave: option(ReactEvent.Mouse.t => unit),
+    onMouseLeave: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseMove: option(ReactEvent.Mouse.t => unit),
+    onMouseMove: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseOut: option(ReactEvent.Mouse.t => unit),
+    onMouseOut: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseOver: option(ReactEvent.Mouse.t => unit),
+    onMouseOver: ReactEvent.Mouse.t => unit,
     [@bs.optional]
-    onMouseUp: option(ReactEvent.Mouse.t => unit),
+    onMouseUp: ReactEvent.Mouse.t => unit,
     /* Selection events */
     [@bs.optional]
-    onSelect: option(ReactEvent.Selection.t => unit),
+    onSelect: ReactEvent.Selection.t => unit,
     /* Touch events */
     [@bs.optional]
-    onTouchCancel: option(ReactEvent.Touch.t => unit),
+    onTouchCancel: ReactEvent.Touch.t => unit,
     [@bs.optional]
-    onTouchEnd: option(ReactEvent.Touch.t => unit),
+    onTouchEnd: ReactEvent.Touch.t => unit,
     [@bs.optional]
-    onTouchMove: option(ReactEvent.Touch.t => unit),
+    onTouchMove: ReactEvent.Touch.t => unit,
     [@bs.optional]
-    onTouchStart: option(ReactEvent.Touch.t => unit),
+    onTouchStart: ReactEvent.Touch.t => unit,
     // Pointer events
     [@bs.optional]
-    onPointerOver: option(ReactEvent.Pointer.t => unit),
+    onPointerOver: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerEnter: option(ReactEvent.Pointer.t => unit),
+    onPointerEnter: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerDown: option(ReactEvent.Pointer.t => unit),
+    onPointerDown: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerMove: option(ReactEvent.Pointer.t => unit),
+    onPointerMove: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerUp: option(ReactEvent.Pointer.t => unit),
+    onPointerUp: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerCancel: option(ReactEvent.Pointer.t => unit),
+    onPointerCancel: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerOut: option(ReactEvent.Pointer.t => unit),
+    onPointerOut: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onPointerLeave: option(ReactEvent.Pointer.t => unit),
+    onPointerLeave: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onGotPointerCapture: option(ReactEvent.Pointer.t => unit),
+    onGotPointerCapture: ReactEvent.Pointer.t => unit,
     [@bs.optional]
-    onLostPointerCapture: option(ReactEvent.Pointer.t => unit),
+    onLostPointerCapture: ReactEvent.Pointer.t => unit,
     /* UI events */
     [@bs.optional]
-    onScroll: option(ReactEvent.UI.t => unit),
+    onScroll: ReactEvent.UI.t => unit,
     /* Wheel events */
     [@bs.optional]
-    onWheel: option(ReactEvent.Wheel.t => unit),
+    onWheel: ReactEvent.Wheel.t => unit,
     /* Media events */
     [@bs.optional]
-    onAbort: option(ReactEvent.Media.t => unit),
+    onAbort: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onCanPlay: option(ReactEvent.Media.t => unit),
+    onCanPlay: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onCanPlayThrough: option(ReactEvent.Media.t => unit),
+    onCanPlayThrough: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onDurationChange: option(ReactEvent.Media.t => unit),
+    onDurationChange: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onEmptied: option(ReactEvent.Media.t => unit),
+    onEmptied: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onEncrypetd: option(ReactEvent.Media.t => unit),
+    onEncrypetd: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onEnded: option(ReactEvent.Media.t => unit),
+    onEnded: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onError: option(ReactEvent.Media.t => unit),
+    onError: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onLoadedData: option(ReactEvent.Media.t => unit),
+    onLoadedData: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onLoadedMetadata: option(ReactEvent.Media.t => unit),
+    onLoadedMetadata: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onLoadStart: option(ReactEvent.Media.t => unit),
+    onLoadStart: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onPause: option(ReactEvent.Media.t => unit),
+    onPause: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onPlay: option(ReactEvent.Media.t => unit),
+    onPlay: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onPlaying: option(ReactEvent.Media.t => unit),
+    onPlaying: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onProgress: option(ReactEvent.Media.t => unit),
+    onProgress: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onRateChange: option(ReactEvent.Media.t => unit),
+    onRateChange: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onSeeked: option(ReactEvent.Media.t => unit),
+    onSeeked: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onSeeking: option(ReactEvent.Media.t => unit),
+    onSeeking: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onStalled: option(ReactEvent.Media.t => unit),
+    onStalled: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onSuspend: option(ReactEvent.Media.t => unit),
+    onSuspend: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onTimeUpdate: option(ReactEvent.Media.t => unit),
+    onTimeUpdate: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onVolumeChange: option(ReactEvent.Media.t => unit),
+    onVolumeChange: ReactEvent.Media.t => unit,
     [@bs.optional]
-    onWaiting: option(ReactEvent.Media.t => unit),
+    onWaiting: ReactEvent.Media.t => unit,
     /* Image events */
-    [@bs.optional]onLoad: option(ReactEvent.Image.t => unit) /* duplicate */, /*~onError: ReactEvent.Image.t => unit=?,*/
+    [@bs.optional]
+    onLoad: ReactEvent.Image.t => unit,
     /* Animation events */
     [@bs.optional]
-    onAnimationStart: option(ReactEvent.Animation.t => unit),
+    onAnimationStart: ReactEvent.Animation.t => unit,
     [@bs.optional]
-    onAnimationEnd: option(ReactEvent.Animation.t => unit),
+    onAnimationEnd: ReactEvent.Animation.t => unit,
     [@bs.optional]
-    onAnimationIteration: option(ReactEvent.Animation.t => unit),
+    onAnimationIteration: ReactEvent.Animation.t => unit,
     /* Transition events */
     [@bs.optional]
-    onTransitionEnd: option(ReactEvent.Transition.t => unit),
+    onTransitionEnd: ReactEvent.Transition.t => unit,
     /* svg */
     [@bs.optional]
-    accentHeight: option(string),
+    accentHeight: string,
     [@bs.optional]
-    accumulate: option(string),
+    accumulate: string,
     [@bs.optional]
-    additive: option(string),
+    additive: string,
     [@bs.optional]
-    alignmentBaseline: option(string),
+    alignmentBaseline: string,
     [@bs.optional]
-    allowReorder: option(string),
+    allowReorder: string,
     [@bs.optional]
-    alphabetic: option(string),
+    alphabetic: string,
     [@bs.optional]
-    amplitude: option(string),
+    amplitude: string,
     [@bs.optional]
-    arabicForm: option(string),
+    arabicForm: string,
     [@bs.optional]
-    ascent: option(string),
+    ascent: string,
     [@bs.optional]
-    attributeName: option(string),
+    attributeName: string,
     [@bs.optional]
-    attributeType: option(string),
+    attributeType: string,
     [@bs.optional]
-    autoReverse: option(string),
+    autoReverse: string,
     [@bs.optional]
-    azimuth: option(string),
+    azimuth: string,
     [@bs.optional]
-    baseFrequency: option(string),
+    baseFrequency: string,
     [@bs.optional]
-    baseProfile: option(string),
+    baseProfile: string,
     [@bs.optional]
-    baselineShift: option(string),
+    baselineShift: string,
     [@bs.optional]
-    bbox: option(string),
+    bbox: string,
     [@bs.optional] [@bs.as "begin"]
-    begin_: option(string), /* use this one. Previous one is deprecated */
+    begin_: string, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    bias: option(string),
+    bias: string,
     [@bs.optional]
-    by: option(string),
+    by: string,
     [@bs.optional]
-    calcMode: option(string),
+    calcMode: string,
     [@bs.optional]
-    capHeight: option(string),
+    capHeight: string,
     [@bs.optional]
-    clip: option(string),
+    clip: string,
     [@bs.optional]
-    clipPath: option(string),
+    clipPath: string,
     [@bs.optional]
-    clipPathUnits: option(string),
+    clipPathUnits: string,
     [@bs.optional]
-    clipRule: option(string),
+    clipRule: string,
     [@bs.optional]
-    colorInterpolation: option(string),
+    colorInterpolation: string,
     [@bs.optional]
-    colorInterpolationFilters: option(string),
+    colorInterpolationFilters: string,
     [@bs.optional]
-    colorProfile: option(string),
+    colorProfile: string,
     [@bs.optional]
-    colorRendering: option(string),
+    colorRendering: string,
     [@bs.optional]
-    contentScriptType: option(string),
+    contentScriptType: string,
     [@bs.optional]
-    contentStyleType: option(string),
+    contentStyleType: string,
     [@bs.optional]
-    cursor: option(string),
+    cursor: string,
     [@bs.optional]
-    cx: option(string),
+    cx: string,
     [@bs.optional]
-    cy: option(string),
+    cy: string,
     [@bs.optional]
-    d: option(string),
+    d: string,
     [@bs.optional]
-    decelerate: option(string),
+    decelerate: string,
     [@bs.optional]
-    descent: option(string),
+    descent: string,
     [@bs.optional]
-    diffuseConstant: option(string),
+    diffuseConstant: string,
     [@bs.optional]
-    direction: option(string),
+    direction: string,
     [@bs.optional]
-    display: option(string),
+    display: string,
     [@bs.optional]
-    divisor: option(string),
+    divisor: string,
     [@bs.optional]
-    dominantBaseline: option(string),
+    dominantBaseline: string,
     [@bs.optional]
-    dur: option(string),
+    dur: string,
     [@bs.optional]
-    dx: option(string),
+    dx: string,
     [@bs.optional]
-    dy: option(string),
+    dy: string,
     [@bs.optional]
-    edgeMode: option(string),
+    edgeMode: string,
     [@bs.optional]
-    elevation: option(string),
+    elevation: string,
     [@bs.optional]
-    enableBackground: option(string),
+    enableBackground: string,
     [@bs.optional] [@bs.as "end"]
-    end_: option(string), /* use this one. Previous one is deprecated */
+    end_: string, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    exponent: option(string),
+    exponent: string,
     [@bs.optional]
-    externalResourcesRequired: option(string),
+    externalResourcesRequired: string,
     [@bs.optional]
-    fill: option(string),
+    fill: string,
     [@bs.optional]
-    fillOpacity: option(string),
+    fillOpacity: string,
     [@bs.optional]
-    fillRule: option(string),
+    fillRule: string,
     [@bs.optional]
-    filter: option(string),
+    filter: string,
     [@bs.optional]
-    filterRes: option(string),
+    filterRes: string,
     [@bs.optional]
-    filterUnits: option(string),
+    filterUnits: string,
     [@bs.optional]
-    floodColor: option(string),
+    floodColor: string,
     [@bs.optional]
-    floodOpacity: option(string),
+    floodOpacity: string,
     [@bs.optional]
-    focusable: option(string),
+    focusable: string,
     [@bs.optional]
-    fontFamily: option(string),
+    fontFamily: string,
     [@bs.optional]
-    fontSize: option(string),
+    fontSize: string,
     [@bs.optional]
-    fontSizeAdjust: option(string),
+    fontSizeAdjust: string,
     [@bs.optional]
-    fontStretch: option(string),
+    fontStretch: string,
     [@bs.optional]
-    fontStyle: option(string),
+    fontStyle: string,
     [@bs.optional]
-    fontVariant: option(string),
+    fontVariant: string,
     [@bs.optional]
-    fontWeight: option(string),
+    fontWeight: string,
     [@bs.optional]
-    fomat: option(string),
+    fomat: string,
     [@bs.optional]
-    from: option(string),
+    from: string,
     [@bs.optional]
-    fx: option(string),
+    fx: string,
     [@bs.optional]
-    fy: option(string),
+    fy: string,
     [@bs.optional]
-    g1: option(string),
+    g1: string,
     [@bs.optional]
-    g2: option(string),
+    g2: string,
     [@bs.optional]
-    glyphName: option(string),
+    glyphName: string,
     [@bs.optional]
-    glyphOrientationHorizontal: option(string),
+    glyphOrientationHorizontal: string,
     [@bs.optional]
-    glyphOrientationVertical: option(string),
+    glyphOrientationVertical: string,
     [@bs.optional]
-    glyphRef: option(string),
+    glyphRef: string,
     [@bs.optional]
-    gradientTransform: option(string),
+    gradientTransform: string,
     [@bs.optional]
-    gradientUnits: option(string),
+    gradientUnits: string,
     [@bs.optional]
-    hanging: option(string),
+    hanging: string,
     [@bs.optional]
-    horizAdvX: option(string),
+    horizAdvX: string,
     [@bs.optional]
-    horizOriginX: option(string),
+    horizOriginX: string,
     [@bs.optional]
-    ideographic: option(string),
+    ideographic: string,
     [@bs.optional]
-    imageRendering: option(string),
+    imageRendering: string,
     [@bs.optional] [@bs.as "in"]
-    in_: option(string), /* use this one. Previous one is deprecated */
+    in_: string, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    in2: option(string),
+    in2: string,
     [@bs.optional]
-    intercept: option(string),
+    intercept: string,
     [@bs.optional]
-    k: option(string),
+    k: string,
     [@bs.optional]
-    k1: option(string),
+    k1: string,
     [@bs.optional]
-    k2: option(string),
+    k2: string,
     [@bs.optional]
-    k3: option(string),
+    k3: string,
     [@bs.optional]
-    k4: option(string),
+    k4: string,
     [@bs.optional]
-    kernelMatrix: option(string),
+    kernelMatrix: string,
     [@bs.optional]
-    kernelUnitLength: option(string),
+    kernelUnitLength: string,
     [@bs.optional]
-    kerning: option(string),
+    kerning: string,
     [@bs.optional]
-    keyPoints: option(string),
+    keyPoints: string,
     [@bs.optional]
-    keySplines: option(string),
+    keySplines: string,
     [@bs.optional]
-    keyTimes: option(string),
+    keyTimes: string,
     [@bs.optional]
-    lengthAdjust: option(string),
+    lengthAdjust: string,
     [@bs.optional]
-    letterSpacing: option(string),
+    letterSpacing: string,
     [@bs.optional]
-    lightingColor: option(string),
+    lightingColor: string,
     [@bs.optional]
-    limitingConeAngle: option(string),
+    limitingConeAngle: string,
     [@bs.optional]
-    local: option(string),
+    local: string,
     [@bs.optional]
-    markerEnd: option(string),
+    markerEnd: string,
     [@bs.optional]
-    markerHeight: option(string),
+    markerHeight: string,
     [@bs.optional]
-    markerMid: option(string),
+    markerMid: string,
     [@bs.optional]
-    markerStart: option(string),
+    markerStart: string,
     [@bs.optional]
-    markerUnits: option(string),
+    markerUnits: string,
     [@bs.optional]
-    markerWidth: option(string),
+    markerWidth: string,
     [@bs.optional]
-    mask: option(string),
+    mask: string,
     [@bs.optional]
-    maskContentUnits: option(string),
+    maskContentUnits: string,
     [@bs.optional]
-    maskUnits: option(string),
+    maskUnits: string,
     [@bs.optional]
-    mathematical: option(string),
+    mathematical: string,
     [@bs.optional]
-    mode: option(string),
+    mode: string,
     [@bs.optional]
-    numOctaves: option(string),
+    numOctaves: string,
     [@bs.optional]
-    offset: option(string),
+    offset: string,
     [@bs.optional]
-    opacity: option(string),
+    opacity: string,
     [@bs.optional]
-    operator: option(string),
+    operator: string,
     [@bs.optional]
-    order: option(string),
+    order: string,
     [@bs.optional]
-    orient: option(string),
+    orient: string,
     [@bs.optional]
-    orientation: option(string),
+    orientation: string,
     [@bs.optional]
-    origin: option(string),
+    origin: string,
     [@bs.optional]
-    overflow: option(string),
+    overflow: string,
     [@bs.optional]
-    overflowX: option(string),
+    overflowX: string,
     [@bs.optional]
-    overflowY: option(string),
+    overflowY: string,
     [@bs.optional]
-    overlinePosition: option(string),
+    overlinePosition: string,
     [@bs.optional]
-    overlineThickness: option(string),
+    overlineThickness: string,
     [@bs.optional]
-    paintOrder: option(string),
+    paintOrder: string,
     [@bs.optional]
-    panose1: option(string),
+    panose1: string,
     [@bs.optional]
-    pathLength: option(string),
+    pathLength: string,
     [@bs.optional]
-    patternContentUnits: option(string),
+    patternContentUnits: string,
     [@bs.optional]
-    patternTransform: option(string),
+    patternTransform: string,
     [@bs.optional]
-    patternUnits: option(string),
+    patternUnits: string,
     [@bs.optional]
-    pointerEvents: option(string),
+    pointerEvents: string,
     [@bs.optional]
-    points: option(string),
+    points: string,
     [@bs.optional]
-    pointsAtX: option(string),
+    pointsAtX: string,
     [@bs.optional]
-    pointsAtY: option(string),
+    pointsAtY: string,
     [@bs.optional]
-    pointsAtZ: option(string),
+    pointsAtZ: string,
     [@bs.optional]
-    preserveAlpha: option(string),
+    preserveAlpha: string,
     [@bs.optional]
-    preserveAspectRatio: option(string),
+    preserveAspectRatio: string,
     [@bs.optional]
-    primitiveUnits: option(string),
+    primitiveUnits: string,
     [@bs.optional]
-    r: option(string),
+    r: string,
     [@bs.optional]
-    radius: option(string),
+    radius: string,
     [@bs.optional]
-    refX: option(string),
+    refX: string,
     [@bs.optional]
-    refY: option(string),
+    refY: string,
     [@bs.optional]
-    renderingIntent: option(string),
+    renderingIntent: string,
     [@bs.optional]
-    repeatCount: option(string),
+    repeatCount: string,
     [@bs.optional]
-    repeatDur: option(string),
+    repeatDur: string,
     [@bs.optional]
-    requiredExtensions: option(string),
+    requiredExtensions: string,
     [@bs.optional]
-    requiredFeatures: option(string),
+    requiredFeatures: string,
     [@bs.optional]
-    restart: option(string),
+    restart: string,
     [@bs.optional]
-    result: option(string),
+    result: string,
     [@bs.optional]
-    rotate: option(string),
+    rotate: string,
     [@bs.optional]
-    rx: option(string),
+    rx: string,
     [@bs.optional]
-    ry: option(string),
+    ry: string,
     [@bs.optional]
-    scale: option(string),
+    scale: string,
     [@bs.optional]
-    seed: option(string),
+    seed: string,
     [@bs.optional]
-    shapeRendering: option(string),
+    shapeRendering: string,
     [@bs.optional]
-    slope: option(string),
+    slope: string,
     [@bs.optional]
-    spacing: option(string),
+    spacing: string,
     [@bs.optional]
-    specularConstant: option(string),
+    specularConstant: string,
     [@bs.optional]
-    specularExponent: option(string),
+    specularExponent: string,
     [@bs.optional]
-    speed: option(string),
+    speed: string,
     [@bs.optional]
-    spreadMethod: option(string),
+    spreadMethod: string,
     [@bs.optional]
-    startOffset: option(string),
+    startOffset: string,
     [@bs.optional]
-    stdDeviation: option(string),
+    stdDeviation: string,
     [@bs.optional]
-    stemh: option(string),
+    stemh: string,
     [@bs.optional]
-    stemv: option(string),
+    stemv: string,
     [@bs.optional]
-    stitchTiles: option(string),
+    stitchTiles: string,
     [@bs.optional]
-    stopColor: option(string),
+    stopColor: string,
     [@bs.optional]
-    stopOpacity: option(string),
+    stopOpacity: string,
     [@bs.optional]
-    strikethroughPosition: option(string),
+    strikethroughPosition: string,
     [@bs.optional]
-    strikethroughThickness: option(string),
+    strikethroughThickness: string,
     [@bs.optional]
-    string: option(string),
+    string: string,
     [@bs.optional]
-    stroke: option(string),
+    stroke: string,
     [@bs.optional]
-    strokeDasharray: option(string),
+    strokeDasharray: string,
     [@bs.optional]
-    strokeDashoffset: option(string),
+    strokeDashoffset: string,
     [@bs.optional]
-    strokeLinecap: option(string),
+    strokeLinecap: string,
     [@bs.optional]
-    strokeLinejoin: option(string),
+    strokeLinejoin: string,
     [@bs.optional]
-    strokeMiterlimit: option(string),
+    strokeMiterlimit: string,
     [@bs.optional]
-    strokeOpacity: option(string),
+    strokeOpacity: string,
     [@bs.optional]
-    strokeWidth: option(string),
+    strokeWidth: string,
     [@bs.optional]
-    surfaceScale: option(string),
+    surfaceScale: string,
     [@bs.optional]
-    systemLanguage: option(string),
+    systemLanguage: string,
     [@bs.optional]
-    tableValues: option(string),
+    tableValues: string,
     [@bs.optional]
-    targetX: option(string),
+    targetX: string,
     [@bs.optional]
-    targetY: option(string),
+    targetY: string,
     [@bs.optional]
-    textAnchor: option(string),
+    textAnchor: string,
     [@bs.optional]
-    textDecoration: option(string),
+    textDecoration: string,
     [@bs.optional]
-    textLength: option(string),
+    textLength: string,
     [@bs.optional]
-    textRendering: option(string),
+    textRendering: string,
     [@bs.optional] [@bs.as "to"]
-    to_: option(string), /* use this one. Previous one is deprecated */
+    to_: string, /* use this one. Previous one is deprecated */
     [@bs.optional]
-    transform: option(string),
+    transform: string,
     [@bs.optional]
-    u1: option(string),
+    u1: string,
     [@bs.optional]
-    u2: option(string),
+    u2: string,
     [@bs.optional]
-    underlinePosition: option(string),
+    underlinePosition: string,
     [@bs.optional]
-    underlineThickness: option(string),
+    underlineThickness: string,
     [@bs.optional]
-    unicode: option(string),
+    unicode: string,
     [@bs.optional]
-    unicodeBidi: option(string),
+    unicodeBidi: string,
     [@bs.optional]
-    unicodeRange: option(string),
+    unicodeRange: string,
     [@bs.optional]
-    unitsPerEm: option(string),
+    unitsPerEm: string,
     [@bs.optional]
-    vAlphabetic: option(string),
+    vAlphabetic: string,
     [@bs.optional]
-    vHanging: option(string),
+    vHanging: string,
     [@bs.optional]
-    vIdeographic: option(string),
+    vIdeographic: string,
     [@bs.optional]
-    vMathematical: option(string),
+    vMathematical: string,
     [@bs.optional]
-    values: option(string),
+    values: string,
     [@bs.optional]
-    vectorEffect: option(string),
+    vectorEffect: string,
     [@bs.optional]
-    version: option(string),
+    version: string,
     [@bs.optional]
-    vertAdvX: option(string),
+    vertAdvX: string,
     [@bs.optional]
-    vertAdvY: option(string),
+    vertAdvY: string,
     [@bs.optional]
-    vertOriginX: option(string),
+    vertOriginX: string,
     [@bs.optional]
-    vertOriginY: option(string),
+    vertOriginY: string,
     [@bs.optional]
-    viewBox: option(string),
+    viewBox: string,
     [@bs.optional]
-    viewTarget: option(string),
+    viewTarget: string,
     [@bs.optional]
-    visibility: option(string),
+    visibility: string,
     /*width::string? =>*/
     [@bs.optional]
-    widths: option(string),
+    widths: string,
     [@bs.optional]
-    wordSpacing: option(string),
+    wordSpacing: string,
     [@bs.optional]
-    writingMode: option(string),
+    writingMode: string,
     [@bs.optional]
-    x: option(string),
+    x: string,
     [@bs.optional]
-    x1: option(string),
+    x1: string,
     [@bs.optional]
-    x2: option(string),
+    x2: string,
     [@bs.optional]
-    xChannelSelector: option(string),
+    xChannelSelector: string,
     [@bs.optional]
-    xHeight: option(string),
+    xHeight: string,
     [@bs.optional]
-    xlinkActuate: option(string),
+    xlinkActuate: string,
     [@bs.optional]
-    xlinkArcrole: option(string),
+    xlinkArcrole: string,
     [@bs.optional]
-    xlinkHref: option(string),
+    xlinkHref: string,
     [@bs.optional]
-    xlinkRole: option(string),
+    xlinkRole: string,
     [@bs.optional]
-    xlinkShow: option(string),
+    xlinkShow: string,
     [@bs.optional]
-    xlinkTitle: option(string),
+    xlinkTitle: string,
     [@bs.optional]
-    xlinkType: option(string),
+    xlinkType: string,
     [@bs.optional]
-    xmlns: option(string),
+    xmlns: string,
     [@bs.optional]
-    xmlnsXlink: option(string),
+    xmlnsXlink: string,
     [@bs.optional]
-    xmlBase: option(string),
+    xmlBase: string,
     [@bs.optional]
-    xmlLang: option(string),
+    xmlLang: string,
     [@bs.optional]
-    xmlSpace: option(string),
+    xmlSpace: string,
     [@bs.optional]
-    y: option(string),
+    y: string,
     [@bs.optional]
-    y1: option(string),
+    y1: string,
     [@bs.optional]
-    y2: option(string),
+    y2: string,
     [@bs.optional]
-    yChannelSelector: option(string),
+    yChannelSelector: string,
     [@bs.optional]
-    z: option(string),
+    z: string,
     [@bs.optional]
-    zoomAndPan: option(string),
+    zoomAndPan: string,
     /* RDFa */
     [@bs.optional]
-    about: option(string),
+    about: string,
     [@bs.optional]
-    datatype: option(string),
+    datatype: string,
     [@bs.optional]
-    inlist: option(string),
+    inlist: string,
     [@bs.optional]
-    prefix: option(string),
+    prefix: string,
     [@bs.optional]
-    property: option(string),
+    property: string,
     [@bs.optional]
-    resource: option(string),
+    resource: string,
     [@bs.optional]
-    typeof: option(string),
+    typeof: string,
     [@bs.optional]
-    vocab: option(string),
+    vocab: string,
     /* react-specific */
     [@bs.optional]
-    dangerouslySetInnerHTML: option({. "__html": string}),
+    dangerouslySetInnerHTML: {. "__html": string},
     [@bs.optional]
-    suppressHydrationWarning: option(bool),
+    suppressHydrationWarning: bool,
     [@bs.optional]
-    suppressContentEditableWarning: option(bool),
+    suppressContentEditableWarning: bool,
   };
 };
 
