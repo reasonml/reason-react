@@ -24,7 +24,7 @@ jobs:
           # disabling this for now
 
         ocaml-compiler:
-          - 4.14.x
+          - ocaml-variants.5.1.0+trunk
 
     runs-on: ${{ matrix.os }}
 
