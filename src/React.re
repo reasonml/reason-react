@@ -1,6 +1,6 @@
 type element;
 
-[@mel.val] external null: element = "null";
+external null: element = "null";
 
 external float: float => element = "%identity";
 external int: int => element = "%identity";
@@ -63,23 +63,23 @@ module Ref = {
 external createRef: unit => ref(Js.nullable('a)) = "createRef";
 
 module Children = {
-  [@mel.module "react"] [@mel.scope "Children"] [@mel.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external map: (element, element => element) => element = "map";
-  [@mel.module "react"] [@mel.scope "Children"] [@mel.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external mapWithIndex:
     (element, [@mel.uncurry] ((element, int) => element)) => element =
     "map";
-  [@mel.module "react"] [@mel.scope "Children"] [@mel.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external forEach: (element, element => unit) => unit = "forEach";
-  [@mel.module "react"] [@mel.scope "Children"] [@mel.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external forEachWithIndex:
     (element, [@mel.uncurry] ((element, int) => unit)) => unit =
     "forEach";
-  [@mel.module "react"] [@mel.scope "Children"] [@mel.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external count: element => int = "count";
-  [@mel.module "react"] [@mel.scope "Children"] [@mel.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external only: element => element = "only";
-  [@mel.module "react"] [@mel.scope "Children"] [@mel.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external toArray: element => array(element) = "toArray";
 };
 

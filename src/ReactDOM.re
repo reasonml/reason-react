@@ -6,7 +6,7 @@
    calls and add the appropriate `require("react-dom")` in the file calling this `render` */
 
 // Helper so that ReactDOM itself doesn't bring any runtime
-[@mel.val] [@mel.return nullable]
+[@mel.return nullable]
 external querySelector: string => option(Dom.element) =
   "document.querySelector";
 

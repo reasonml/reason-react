@@ -30,11 +30,11 @@ external replaceState:
   unit =
   "replaceState";
 
-[@mel.val] external event: 'a = "Event";
+external event: 'a = "Event";
 
 [@mel.new] external makeEventIE11Compatible: string => Dom.event = "Event";
 
-[@mel.val] [@mel.scope "document"]
+[@mel.scope "document"]
 external createEventNonIEBrowsers: string => Dom.event = "createEvent";
 
 [@mel.send]
