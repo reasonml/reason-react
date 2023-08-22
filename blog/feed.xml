@@ -4,7 +4,7 @@
         <title>ReasonReact Blog</title>
         <link>https://reasonml.github.io/reason-react/reason-react/blog</link>
         <description>The best place to stay up-to-date with the latest ReasonReact news and events.</description>
-        <lastBuildDate>Fri, 07 May 2021 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 11 Jun 2023 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -12,6 +12,13 @@
             <url>https://reasonml.github.io/reason-react/reason-react/img/reason-react-white.svg</url>
             <link>https://reasonml.github.io/reason-react/reason-react/blog</link>
         </image>
+        <item>
+            <title><![CDATA[ReasonReact is back (and powered by Melange)]]></title>
+            <link>https://reasonml.github.io/reason-react/reason-react/blog/2023/06/11/reborn.html</link>
+            <guid>https://reasonml.github.io/reason-react/reason-react/blog/2023/06/11/reborn.html</guid>
+            <pubDate>Sun, 11 Jun 2023 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>ReasonReact moved to <code>@rescript/react</code> after the ReScript announcement. The future of ReasonReact has been uncertain ever since. In the meantime, the Melange team announced the first major release of <a href="https://anmonteiro.substack.com/p/melange-10-is-here">Melange</a> and took the first steps towards deeper inte...</p>]]></description>
+        </item>
         <item>
             <title><![CDATA[We are rebranding to ReScript / React]]></title>
             <link>https://reasonml.github.io/reason-react/reason-react/blog/2021/05/07/rescript-migration.html</link>
