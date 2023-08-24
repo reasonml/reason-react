@@ -23,6 +23,7 @@ depends: [
   "reason-react-ppx"
   "reason" {>= "3.6.0"}
   "ocaml-lsp-server" {with-test}
+  "opam-check-npm-deps" {"1.0.0" = with-dev-setup}
   "odoc" {with-doc}
 ]
 build: [
@@ -40,3 +41,7 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/reasonml/reason-react.git"
+depexts: [
+  ["react"] {npm-version = "^16.0.0"}
+  ["react-dom"] {npm-version = "^16.0.0"}
+]
