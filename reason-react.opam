@@ -42,6 +42,6 @@ build: [
 ]
 dev-repo: "git+https://github.com/reasonml/reason-react.git"
 depexts: [
-  ["react"] {npm-version = "^16.0.0"}
-  ["react-dom"] {npm-version = "^16.0.0"}
+  ["react"] {npm-version = "^16.0.0 || ^17.0.0"}
+  ["react-dom"] {npm-version = "^16.0.0 || ^17.0.0"}
 ]
