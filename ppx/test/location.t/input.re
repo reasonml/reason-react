@@ -1,6 +1,8 @@
-[@react.component]
-let make = (~lola) => {
-  <div> {React.string(lola)} </div>;
+module Lola = {
+  [@react.component]
+  let make = (~lola) => {
+    <div> {React.string(lola)} </div>;
+  };
 };
 
 [@react.component]
@@ -20,3 +22,4 @@ module Uppercase = {
     </Box>;
   };
 };
+

@@ -1,44 +1,10 @@
-(executable
- (name standalone)
- (libraries reason-react-ppx ppxlib))
-
-(rule
- (targets result.ml)
- (deps generated.ml)
- (action
-  (run ./standalone.exe --impl %{deps} -o %{targets})))
-
-(rule
- (targets generated.ml)
- (deps input.re)
- (action
-  (with-stdout-to
-   %{targets}
-   (run refmt --parse=re --print=ml %{deps}))))
-
-(rule
- (alias runtest)
- (action
-  (diff output.expected result.ml)))
-
-(rule
- (targets output_locations.ml)
- (deps generated_locations.ml)
- (action
-  (run ./standalone.exe -dparsetree --impl %{deps} -o %{targets})))
-
-(rule
- (targets generated_locations.ml)
- (deps input_locations.re)
- (action
-  (with-stdout-to
-   %{targets}
-   (run refmt --parse=re --print=ml %{deps}))))
-
-(rule
- (alias runtest)
- (action
-  (diff output_locations.expected output_locations.ml)))
-
 (cram
- (package reason-react))
+ (package reason-react-ppx)
+ (deps
+  %{bin:reason-react-ppx.standalone}
+  %{bin:refmt}
+  ppx_with_refmt.sh
+  ppx.sh
+  %{bin:dune}
+  %{bin:jq}
+  %{bin:ocamlmerlin}))
