@@ -68,6 +68,9 @@ jobs:
       - name: Test
         run: make test
 
+      - name: Jest
+        run: make jest
+
       - name: Save cache when not Windows
         uses: actions/cache/save@v3
         if: steps.opam-cache.outputs.cache-hit != 'true' && runner.os != 'Windows'
