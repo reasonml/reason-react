@@ -2,6 +2,53 @@ open Ppxlib
 open Ast_helper
 open Asttypes
 open Parsetree
+module Helper = Ppxlib.Ast_helper
+
+module Builder = struct
+  (* Ast_builder.Default assigns attributes to be the empty.
+     This wrapper re-exports all used fns with attrs arg to override them. *)
+
+  include Ast_builder.Default
+
+  let pexp_apply ~loc ?(attrs = []) e args =
+    let e = Ast_builder.Default.pexp_apply ~loc e args in
+    { e with pexp_attributes = attrs }
+
+  let value_binding ~loc ~pat ~expr ~attrs =
+    let vb = Ast_builder.Default.value_binding ~loc ~pat ~expr in
+    { vb with pvb_attributes = attrs }
+
+  let value_description ~loc ~name ~type_ ~prim ~attrs =
+    let vd = Ast_builder.Default.value_description ~loc ~name ~type_ ~prim in
+    { vd with pval_attributes = attrs }
+end
+
+module Binding = struct
+  module React = struct
+    let createElement ~loc =
+      Builder.pexp_ident ~loc
+        { loc; txt = Ldot (Lident "React", "createElement") }
+
+    let null ~loc =
+      Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "null") }
+
+    let array ~loc = Exp.ident { loc; txt = Ldot (Lident "React", "array") }
+
+    let componentLike ~loc =
+      { loc; txt = Ldot (Lident "React", "componentLike") }
+
+    let jsxFragment ~loc =
+      Exp.ident ~loc { loc; txt = Ldot (Lident "React", "jsxFragment") }
+  end
+
+  module ReactDOM = struct
+    let createElement ~loc =
+      Exp.ident ~loc { loc; txt = Ldot (Lident "ReactDOM", "createElement") }
+
+    let domProps ~loc ~attrs =
+      Exp.ident ~loc ~attrs { loc; txt = Ldot (Lident "ReactDOM", "domProps") }
+  end
+end
 
 let rec find_opt p = function
   | [] -> None
