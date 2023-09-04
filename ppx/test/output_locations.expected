@@ -750,10 +750,10 @@
                       (loc
                        ((loc_start
                          ((pos_fname generated_locations.ml) (pos_lnum 1)
-                          (pos_bol 0) (pos_cnum 20)))
+                          (pos_bol 0) (pos_cnum 18)))
                         (loc_end
                          ((pos_fname generated_locations.ml) (pos_lnum 1)
-                          (pos_bol 0) (pos_cnum 23)))
+                          (pos_bol 0) (pos_cnum 65)))
                         (loc_ghost false))))))
                    (pexp_loc
                     ((loc_start
@@ -1771,10 +1771,10 @@
                             (loc
                              ((loc_start
                                ((pos_fname generated_locations.ml)
-                                (pos_lnum 5) (pos_bol 256) (pos_cnum 260)))
+                                (pos_lnum 5) (pos_bol 256) (pos_cnum 258)))
                               (loc_end
                                ((pos_fname generated_locations.ml)
-                                (pos_lnum 5) (pos_bol 256) (pos_cnum 266)))
+                                (pos_lnum 7) (pos_bol 362) (pos_cnum 374)))
                               (loc_ghost false))))))
                          (pexp_loc
                           ((loc_start
