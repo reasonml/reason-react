@@ -46,8 +46,8 @@ let labelled str = Labelled str
 let optional str = Optional str
 
 module Binding = struct
-  (* Binding is the interface that the ppx uses to interact with the bindings,
-  here  *)
+  (* Binding is the interface that the ppx uses to interact with the bindings. 
+    Here we define the same APIs as the bindings but it generates Parsetree *)
   module React = struct
     let null ~loc =
       Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "null") }
