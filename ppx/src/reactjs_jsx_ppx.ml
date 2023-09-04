@@ -23,6 +23,28 @@ module Builder = struct
     { vd with pval_attributes = attrs }
 end
 
+(* [merlinHide] tells merlin to not look at a node, or at any of its
+   descendants. *)
+let merlinHideAttrs =
+  [
+    {
+      attr_name = { txt = "merlin.hide"; loc = Location.none };
+      attr_payload = PStr [];
+      attr_loc = Location.none;
+    };
+  ]
+
+let merlinFocus =
+  {
+    attr_name = { loc = Location.none; txt = "merlin.focus" };
+    attr_payload = PStr [];
+    attr_loc = Location.none;
+  }
+
+let nolabel = Nolabel
+let labelled str = Labelled str
+let optional str = Optional str
+
 module Binding = struct
   module React = struct
     let createElement ~loc =
@@ -32,31 +54,35 @@ module Binding = struct
     let null ~loc =
       Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "null") }
 
-    let array ~loc = Exp.ident { loc; txt = Ldot (Lident "React", "array") }
+    (* let array ~loc = Exp.ident { loc; txt = Ldot (Lident "React", "array") } *)
+    let array ~loc children =
+      Exp.apply ~loc
+        (Exp.ident { txt = Longident.Ldot (Lident "React", "array"); loc })
+        [ (nolabel, children) ]
 
-    let componentLike ~loc =
-      { loc; txt = Ldot (Lident "React", "componentLike") }
+    let componentLike ~loc props return =
+      Ptyp_constr
+        ( { loc; txt = Ldot (Lident "React", "componentLike") },
+          [ props; return ] )
 
     let jsxFragment ~loc =
       Exp.ident ~loc { loc; txt = Ldot (Lident "React", "jsxFragment") }
   end
 
   module ReactDOM = struct
-    let createElement ~loc =
-      Exp.ident ~loc { loc; txt = Ldot (Lident "ReactDOM", "createElement") }
-
     let createElement ~loc ~attrs args =
       (* throw away the [@JSX] attribute and keep the others, if any *)
-      Exp.apply
-        ~loc
-        ~attrs
+      Exp.apply ~loc ~attrs
         (* ReactDOMRe.createElement *)
         (Exp.ident ~loc
-            { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
+           { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
         args
 
-    let domProps ~loc ~attrs =
-      Exp.ident ~loc ~attrs { loc; txt = Ldot (Lident "ReactDOM", "domProps") }
+    let domProps ~loc props =
+      Exp.apply ~loc
+        (Exp.ident ~loc ~attrs:merlinHideAttrs
+           { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+        props
   end
 end
 
@@ -64,9 +90,6 @@ let rec find_opt p = function
   | [] -> None
   | x :: l -> if p x then Some x else find_opt p l
 
-let nolabel = Nolabel
-let labelled str = Labelled str
-let optional str = Optional str
 let isOptional str = match str with Optional _ -> true | _ -> false
 let isLabelled str = match str with Labelled _ -> true | _ -> false
 
@@ -177,24 +200,6 @@ let unerasableIgnore loc =
       PStr
         [ Str.eval (Exp.constant (Pconst_string ("-16", Location.none, None))) ];
     attr_loc = loc;
-  }
-
-(* [merlinHide] tells merlin to not look at a node, or at any of its
-   descendants. *)
-let merlinHideAttrs =
-  [
-    {
-      attr_name = { txt = "merlin.hide"; loc = Location.none };
-      attr_payload = PStr [];
-      attr_loc = Location.none;
-    };
-  ]
-
-let merlinFocus =
-  {
-    attr_name = { loc = Location.none; txt = "merlin.focus" };
-    attr_payload = PStr [];
-    attr_loc = Location.none;
   }
 
 (* Helper method to look up the [@react.component] attribute *)
@@ -449,61 +454,52 @@ let makePropsType ~loc namedTypeList =
            };
          ] ))
 
-let jsxExprAndChildren =
-  let arr ~loc children =
-    Exp.apply ~loc
-      (Exp.ident { txt = Longident.Ldot (Lident "React", "array"); loc })
-      [ (nolabel, children) ]
+let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
+  let childrenExpr =
+    Option.map (transformChildrenIfListUpper ~loc ~mapper ~ctxt) children
   in
-  fun ?(ident = "React") ~loc ~ctxt mapper ~keyProps children ->
-    let childrenExpr =
-      Option.map (transformChildrenIfListUpper ~loc ~mapper ~ctxt) children
-    in
-    match (childrenExpr, keyProps) with
-    | Some (Exact children), (label, key) :: _ ->
-        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
-          Some (label, key),
-          (* [|moreCreateElementCallsHere|] *)
-          Some children )
-    | Some (Exact children), [] ->
-        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
-          None,
-          (* [|moreCreateElementCallsHere|] *)
-          Some children )
-    | ( Some (ListLiteral ({ pexp_desc = Pexp_array list } as children)),
-        (label, key) :: _ )
-      when list = [] ->
-        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
-          Some (label, key),
-          (* [|moreCreateElementCallsHere|] *)
-          Some (arr ~loc children) )
-    | Some (ListLiteral { pexp_desc = Pexp_array list }), [] when list = [] ->
-        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
-          None,
-          (* [|moreCreateElementCallsHere|] *)
-          children )
-    | Some (ListLiteral children), (label, key) :: _ ->
-        (* this is a hack to support react components that introspect into their
-           children *)
-        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxsKeyed") },
-          Some (label, key),
-          Some (arr ~loc children) )
-    | Some (ListLiteral children), [] ->
-        (* this is a hack to support react components that introspect into their
-           children *)
-        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxs") },
-          None,
-          Some (arr ~loc children) )
-    | None, (label, key) :: _ ->
-        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
-          Some (label, key),
-          (* [|moreCreateElementCallsHere|] *)
-          None )
-    | None, [] ->
-        ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
-          None,
-          (* [|moreCreateElementCallsHere|] *)
-          None )
+  match (childrenExpr, keyProps) with
+  | Some (Exact children), (label, key) :: _ ->
+      ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
+        Some (label, key),
+        Some children )
+  | Some (Exact children), [] ->
+      ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
+        None,
+        Some children )
+  | ( Some (ListLiteral ({ pexp_desc = Pexp_array list } as children)),
+      (label, key) :: _ )
+    when list = [] ->
+      ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
+        Some (label, key),
+        Some (Binding.React.array ~loc children) )
+  | Some (ListLiteral { pexp_desc = Pexp_array list }), [] when list = [] ->
+      (Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") }, None, children)
+  | Some (ListLiteral children), (label, key) :: _ ->
+      (* this is a hack to support react components that introspect into their
+         children *)
+      ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxsKeyed") },
+        Some (label, key),
+        Some (Binding.React.array ~loc children) )
+  | Some (ListLiteral children), [] ->
+      (* this is a hack to support react components that introspect into their
+         children *)
+      ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxs") },
+        None,
+        Some (Binding.React.array ~loc children) )
+  | None, (label, key) :: _ ->
+      ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
+        Some (label, key),
+        (* [|moreCreateElementCallsHere|] *)
+        None )
+  | None, [] ->
+      ( Exp.ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
+        None,
+        (* [|moreCreateElementCallsHere|] *)
+        None )
+
+let reactJsxExprAndChildren = jsxExprAndChildren ~ident:"React"
+let reactDomJsxExprAndChildren = jsxExprAndChildren ~ident:"ReactDOM"
 
 (* Builds an AST node for the entire `external` definition of props *)
 let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
@@ -525,7 +521,7 @@ let jsxMapper =
         argsForMake
     in
     let jsxExpr, key, childrenProp =
-      jsxExprAndChildren ~loc ~ctxt mapper ~keyProps children
+      reactJsxExprAndChildren ~loc ~ctxt mapper ~keyProps children
     in
     let propsArg =
       (match childrenProp with
@@ -581,20 +577,16 @@ let jsxMapper =
     in
     let jsxExpr, args =
       let jsxExpr, key, childrenProp =
-        jsxExprAndChildren ~ident:"ReactDOM" ~loc:parentExpLoc ~ctxt mapper
-          ~keyProps children
+        reactDomJsxExprAndChildren ~loc:parentExpLoc ~ctxt mapper ~keyProps
+          children
       in
-
-      let propsCall =
-        Exp.apply ~loc:parentExpLoc
-          (Exp.ident ~loc:parentExpLoc ~attrs:merlinHideAttrs
-             { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
-          ((match childrenProp with
-           | Some childrenProp ->
-               (labelled "children", childrenProp) :: nonChildrenProps
-           | None -> nonChildrenProps)
-          |> List.map (fun (label, expression) ->
-                 (label, mapper#expression ctxt expression)))
+      let props =
+        (match childrenProp with
+        | Some childrenProp ->
+            (labelled "children", childrenProp) :: nonChildrenProps
+        | None -> nonChildrenProps)
+        |> List.map (fun (label, expression) ->
+               (label, mapper#expression ctxt expression))
       in
       let key_args =
         match key with
@@ -603,7 +595,11 @@ let jsxMapper =
         | None -> []
       in
       ( jsxExpr,
-        [ (nolabel, componentNameExpr); (nolabel, propsCall) ] @ key_args )
+        [
+          (nolabel, componentNameExpr);
+          (nolabel, Binding.ReactDOM.domProps ~loc:parentExpLoc props);
+        ]
+        @ key_args )
     in
     Exp.apply ~loc:parentExpLoc ~attrs jsxExpr args
   in
@@ -793,12 +789,7 @@ let jsxMapper =
             in
             (* can't be an arrow because it will defensively uncurry *)
             let newExternalType =
-              Ptyp_constr
-                ( {
-                    loc = pstr_loc;
-                    txt = Ldot (Lident "React", "componentLike");
-                  },
-                  [ retPropsType; innerType ] )
+              Binding.React.componentLike ~loc:pstr_loc retPropsType innerType
             in
             let newStructure =
               {
@@ -1238,12 +1229,7 @@ let jsxMapper =
             in
             (* can't be an arrow because it will defensively uncurry *)
             let newExternalType =
-              Ptyp_constr
-                ( {
-                    loc = psig_loc;
-                    txt = Ldot (Lident "React", "componentLike");
-                  },
-                  [ retPropsType; innerType ] )
+              Binding.React.componentLike ~loc:psig_loc retPropsType innerType
             in
             let newStructure =
               {
