@@ -49,10 +49,6 @@ module Binding = struct
   (* Binding is the interface that the ppx uses to interact with the bindings,
   here  *)
   module React = struct
-    let createElement ~loc =
-      Builder.pexp_ident ~loc
-        { loc; txt = Ldot (Lident "React", "createElement") }
-
     let null ~loc =
       Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "null") }
 
