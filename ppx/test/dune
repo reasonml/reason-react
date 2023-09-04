@@ -1,10 +1,11 @@
 (cram
  (package reason-react-ppx)
  (deps
+  (package reason-react)
   %{bin:reason-react-ppx.standalone}
   %{bin:refmt}
-  ppx_with_refmt.sh
-  ppx.sh
   %{bin:dune}
   %{bin:jq}
-  %{bin:ocamlmerlin}))
+  %{bin:ocamlmerlin}
+  ppx_with_refmt.sh
+  ppx.sh))
