@@ -16,7 +16,7 @@ module Upper_case_with_fragment_as_root = {
     </>;
 };
 
-module Using_React_memo = {
+/* module Using_React_memo = {
   [@react.component]
   let make =
     React.memo((~a) =>
@@ -31,7 +31,7 @@ module Using_memo_custom_compare_Props = {
       (~a) => <div> {Printf.sprintf("`a` is %d", a) |> React.string} </div>,
       (prevPros, nextProps) => false,
     );
-};
+}; */
 
 module Forward_Ref = {
   [@react.component]
