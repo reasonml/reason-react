@@ -46,6 +46,8 @@ let labelled str = Labelled str
 let optional str = Optional str
 
 module Binding = struct
+  (* Binding is the interface that the ppx uses to interact with the bindings,
+  here  *)
   module React = struct
     let createElement ~loc =
       Builder.pexp_ident ~loc
@@ -70,13 +72,10 @@ module Binding = struct
   end
 
   module ReactDOM = struct
-    let createElement ~loc ~attrs args =
-      (* throw away the [@JSX] attribute and keep the others, if any *)
+    let createElement ~loc ~attrs element children =
       Exp.apply ~loc ~attrs
-        (* ReactDOMRe.createElement *)
-        (Exp.ident ~loc
-           { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
-        args
+        (Exp.ident ~loc { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
+        [ (nolabel, element); (nolabel, children) ]
 
     let domProps ~loc props =
       Exp.apply ~loc
@@ -1351,14 +1350,9 @@ let jsxMapper =
               let childrenExpr =
                 transformChildrenIfList ~loc ~ctxt ~mapper:self listItems
               in
-              let args =
-                [
-                  (nolabel, Binding.React.jsxFragment ~loc);
-                  (* [|moreCreateElementCallsHere|] *)
-                  (nolabel, childrenExpr);
-                ]
-              in
-              Binding.ReactDOM.createElement ~loc ~attrs:nonJSXAttributes args)
+              let fragment = Binding.React.jsxFragment ~loc in
+              (* throw away the [@JSX] attribute and keep the others, if any *)
+              Binding.ReactDOM.createElement ~loc ~attrs:nonJSXAttributes fragment childrenExpr)
       (* Delegate to the default mapper, a deep identity traversal *)
       | e -> super#expression ctxt e
     [@@raises Invalid_argument]
