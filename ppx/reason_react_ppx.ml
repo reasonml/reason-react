@@ -2,6 +2,53 @@ open Ppxlib
 open Ast_helper
 open Asttypes
 open Parsetree
+module Helper = Ppxlib.Ast_helper
+
+module Builder = struct
+  (* Ast_builder.Default assigns attributes to be the empty.
+     This wrapper re-exports all used fns with attrs arg to override them. *)
+
+  include Ast_builder.Default
+
+  let pexp_apply ~loc ?(attrs = []) e args =
+    let e = Ast_builder.Default.pexp_apply ~loc e args in
+    { e with pexp_attributes = attrs }
+
+  let value_binding ~loc ~pat ~expr ~attrs =
+    let vb = Ast_builder.Default.value_binding ~loc ~pat ~expr in
+    { vb with pvb_attributes = attrs }
+
+  let value_description ~loc ~name ~type_ ~prim ~attrs =
+    let vd = Ast_builder.Default.value_description ~loc ~name ~type_ ~prim in
+    { vd with pval_attributes = attrs }
+end
+
+module Binding = struct
+  module React = struct
+    let createElement ~loc =
+      Builder.pexp_ident ~loc
+        { loc; txt = Ldot (Lident "React", "createElement") }
+
+    let null ~loc =
+      Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "null") }
+
+    let array ~loc = Exp.ident { loc; txt = Ldot (Lident "React", "array") }
+
+    let componentLike ~loc =
+      { loc; txt = Ldot (Lident "React", "componentLike") }
+
+    let jsxFragment ~loc =
+      Exp.ident ~loc { loc; txt = Ldot (Lident "React", "jsxFragment") }
+  end
+
+  module ReactDOM = struct
+    let createElement ~loc =
+      Exp.ident ~loc { loc; txt = Ldot (Lident "ReactDOM", "createElement") }
+
+    let domProps ~loc ~attrs =
+      Exp.ident ~loc ~attrs { loc; txt = Ldot (Lident "ReactDOM", "domProps") }
+  end
+end
 
 let rec find_opt p = function
   | [] -> None
@@ -24,7 +71,7 @@ let constantString ~loc str =
 let safeTypeFromValue valueStr =
   let valueStr = getLabel valueStr in
   match String.sub valueStr 0 1 with "_" -> "T" ^ valueStr | _ -> valueStr
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 let keyType loc =
   Typ.constr ~loc { loc; txt = optionIdent }
@@ -84,11 +131,11 @@ let extractChildren ?(removeLastPositionUnit = false) propsAndChildren =
           (Invalid_argument
              "JSX: found non-labelled argument before the last position")
     | arg :: rest -> allButLast_ rest (arg :: acc)
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
   let allButLast lst =
     allButLast_ lst [] |> List.rev
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
   match
     List.partition
@@ -111,7 +158,7 @@ let extractChildren ?(removeLastPositionUnit = false) propsAndChildren =
   | _ ->
       raise
         (Invalid_argument "JSX: somehow there's more than one `children` label")
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 let unerasableIgnore loc =
   {
@@ -158,7 +205,7 @@ let getFnName binding =
   | { pvb_pat = { ppat_desc = Ppat_var { txt } } } -> txt
   | _ ->
       raise (Invalid_argument "react.component calls cannot be destructured.")
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 let makeNewBinding binding expression newName =
   match binding with
@@ -172,7 +219,7 @@ let makeNewBinding binding expression newName =
       }
   | _ ->
       raise (Invalid_argument "react.component calls cannot be destructured.")
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 (* Lookup the value of `props` otherwise raise Invalid_argument error *)
 let getPropsNameValue _acc (loc, exp) =
@@ -184,7 +231,7 @@ let getPropsNameValue _acc (loc, exp) =
         (Invalid_argument
            ("react.component only accepts props as an option, given: "
           ^ Longident.last_exn txt))
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 (* Lookup the `props` record or string as part of [@react.component] and store
    the name for use when rewriting *)
@@ -212,7 +259,7 @@ let getPropsAttr payload =
         (Invalid_argument
            "react.component accepts a record config with props as an options.")
   | _ -> defaultProps
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 (* Plucks the label, loc, and type_ from an AST node *)
 let pluckLabelDefaultLocType (label, default, _, _, loc, type_) =
@@ -309,7 +356,7 @@ let rec recursivelyMakeNamedArgsForExternal list args =
            | _label, Some type_, _ -> type_)
            args)
   | [] -> args
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 (* Build an AST node for the [@bs.obj] representing props for a component *)
 let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
@@ -337,7 +384,7 @@ let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
       ];
     pval_loc = loc;
   }
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 (* Build an AST node representing an `external` with the definition of the
    [@bs.obj] *)
@@ -348,7 +395,7 @@ let makePropsExternal fnName loc namedArgListWithKeyAndRef propsType =
       Pstr_primitive
         (makePropsValue fnName loc namedArgListWithKeyAndRef propsType);
   }
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 (* Build an AST node for the signature of the `external` definition *)
 let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
@@ -357,7 +404,7 @@ let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
     psig_desc =
       Psig_value (makePropsValue fnName loc namedArgListWithKeyAndRef propsType);
   }
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 (* Build an AST node for the props name when converted to an object inside the
    function signature *)
@@ -394,9 +441,7 @@ let makePropsType ~loc namedTypeList =
 
 let jsxExprAndChildren =
   let arr ~loc children =
-    Exp.apply ~loc
-      (Exp.ident { txt = Longident.Ldot (Lident "React", "array"); loc })
-      [ (nolabel, children) ]
+    Exp.apply ~loc (Binding.React.array ~loc) [ (nolabel, children) ]
   in
   fun ?(ident = "React") ~loc ~ctxt mapper ~keyProps children ->
     let childrenExpr =
@@ -453,7 +498,7 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
   makePropsExternal fnName loc
     (List.map pluckLabelDefaultLocType namedArgListWithKeyAndRef)
     (makePropsType ~loc namedTypeList)
-  [@@raises Invalid_argument]
+[@@raises Invalid_argument]
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper =
@@ -481,7 +526,7 @@ let jsxMapper =
       let first = String.sub str 0 1 [@@raises Invalid_argument] in
       let capped = String.uppercase_ascii first in
       first = capped
-      [@@raises Invalid_argument]
+        [@@raises Invalid_argument]
     in
     let ident =
       match modulePath with
@@ -530,8 +575,7 @@ let jsxMapper =
 
       let propsCall =
         Exp.apply ~loc:parentExpLoc
-          (Exp.ident ~loc:parentExpLoc ~attrs:merlinHideAttrs
-             { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+          (Binding.ReactDOM.domProps ~loc ~attrs:merlinHideAttrs)
           ((match childrenProp with
            | Some childrenProp ->
                (labelled "children", childrenProp) :: nonChildrenProps
@@ -625,7 +669,7 @@ let jsxMapper =
           "react-jsx-ppx: react.component refs only support plain arguments \
            and type annotations."
     | _ -> (list, None)
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
 
   let argToType types (name, default, _noLabelName, _alias, loc, type_) =
@@ -685,7 +729,7 @@ let jsxMapper =
           } )
         :: types
     | _ -> types
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
 
   let argToConcreteType types (name, loc, type_) =
@@ -706,7 +750,7 @@ let jsxMapper =
         pstr_desc =
           Pstr_primitive
             ({ pval_name = { txt = fnName }; pval_attributes; pval_type } as
-            value_description);
+             value_description);
       } as pstr -> (
         match List.filter hasAttr pval_attributes with
         | [] -> structure :: returnStructures
@@ -737,10 +781,7 @@ let jsxMapper =
             (* can't be an arrow because it will defensively uncurry *)
             let newExternalType =
               Ptyp_constr
-                ( {
-                    loc = pstr_loc;
-                    txt = Ldot (Lident "React", "componentLike");
-                  },
+                ( Binding.React.componentLike ~loc:pstr_loc,
                   [ retPropsType; innerType ] )
             in
             let newStructure =
@@ -799,7 +840,8 @@ let jsxMapper =
                 | {
                  pexp_desc =
                    Pexp_apply
-                     (_wrapperExpression, [ (Nolabel, innerFunctionExpression); _ ]);
+                     ( _wrapperExpression,
+                       [ (Nolabel, innerFunctionExpression); _ ] );
                 } ->
                     spelunkForFunExpression innerFunctionExpression
                 | {
@@ -811,9 +853,9 @@ let jsxMapper =
                     raise
                       (Invalid_argument
                          "react.component calls can only be on function \
-                          definitions or component wrappers (forwardRef, \
-                          memo or memoCustomCompareProps).")
-                [@@raises Invalid_argument]
+                          definitions or component wrappers (forwardRef, memo \
+                          or memoCustomCompareProps).")
+                  [@@raises Invalid_argument]
               in
               spelunkForFunExpression expression
             in
@@ -1110,7 +1152,7 @@ let jsxMapper =
             in
             (Some externalDecl, bindings, newBinding)
           else (None, [ binding ], None)
-          [@@raises Invalid_argument]
+            [@@raises Invalid_argument]
         in
         let structuresAndBinding = List.map mapBinding valueBindings in
         let otherStructures (extern, binding, newBinding)
@@ -1143,12 +1185,12 @@ let jsxMapper =
               ])
         @ returnStructures
     | structure -> structure :: returnStructures
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
 
   let reactComponentTransform ~ctxt mapper structures =
     List.fold_right (transformComponentDefinition ~ctxt mapper) structures []
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
 
   let transformComponentSignature _mapper signature returnSignatures =
@@ -1158,7 +1200,7 @@ let jsxMapper =
         psig_desc =
           Psig_value
             ({ pval_name = { txt = fnName }; pval_attributes; pval_type } as
-            psig_desc);
+             psig_desc);
       } as psig -> (
         match List.filter hasAttr pval_attributes with
         | [] -> signature :: returnSignatures
@@ -1189,10 +1231,7 @@ let jsxMapper =
             (* can't be an arrow because it will defensively uncurry *)
             let newExternalType =
               Ptyp_constr
-                ( {
-                    loc = psig_loc;
-                    txt = Ldot (Lident "React", "componentLike");
-                  },
+                ( Binding.React.componentLike ~loc:psig_loc,
                   [ retPropsType; innerType ] )
             in
             let newStructure =
@@ -1215,12 +1254,12 @@ let jsxMapper =
                  "Only one react.component call can exist on a component at \
                   one time"))
     | signature -> signature :: returnSignatures
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
 
   let reactComponentSignatureTransform mapper signatures =
     List.fold_right (transformComponentSignature mapper) signatures []
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
 
   let transformJsxCall ~ctxt parentExpLoc mapper callExpression callArguments
@@ -1238,7 +1277,7 @@ let jsxMapper =
               parentExpLoc attrs callExpression callArguments
         (* div(~prop1=foo, ~prop2=bar, ~children=[bla], ()) *)
         (* turn that into
-           ReactDOMRe.createElement(~props=ReactDOMRe.props(~props1=foo,
+           ReactDOM.createElement(~props=ReactDOM.makeProps(~props1=foo,
            ~props2=bar, ()), [|bla|]) *)
         | { loc; txt = Lident id } ->
             transformLowercaseCall3 ~ctxt parentExpLoc mapper loc attrs
@@ -1260,7 +1299,7 @@ let jsxMapper =
           (Invalid_argument
              "JSX: `createElement` should be preceeded by a simple, direct \
               module name.")
-    [@@raises Invalid_argument]
+      [@@raises Invalid_argument]
   in
 
   object (self)
@@ -1312,10 +1351,7 @@ let jsxMapper =
           (* no JSX attribute *)
           | [], _ -> super#expression ctxt expr
           | _, nonJSXAttributes ->
-              let fragment =
-                Exp.ident ~loc
-                  { loc; txt = Ldot (Lident "React", "jsxFragment") }
-              in
+              let fragment = Binding.React.jsxFragment ~loc in
               let childrenExpr =
                 transformChildrenIfList ~loc ~ctxt ~mapper:self listItems
               in
@@ -1332,9 +1368,7 @@ let jsxMapper =
                   (* throw away the [@JSX] attribute and keep the others, if
                      any *)
                 ~attrs:nonJSXAttributes
-                (* ReactDOMRe.createElement *)
-                (Exp.ident ~loc
-                   { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
+                (Binding.ReactDOM.createElement ~loc)
                 args)
       (* Delegate to the default mapper, a deep identity traversal *)
       | e -> super#expression ctxt e

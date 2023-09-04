@@ -775,10 +775,10 @@
                               (pexp_loc
                                ((loc_start
                                  ((pos_fname output.ml) (pos_lnum 3)
-                                  (pos_bol 23) (pos_cnum 45)))
+                                  (pos_bol 23) (pos_cnum 47)))
                                 (loc_end
                                  ((pos_fname output.ml) (pos_lnum 3)
-                                  (pos_bol 23) (pos_cnum 92)))
+                                  (pos_bol 23) (pos_cnum 50)))
                                 (loc_ghost false)))
                               (pexp_loc_stack ())
                               (pexp_attributes
@@ -1812,10 +1812,10 @@
                            (pexp_loc
                             ((loc_start
                               ((pos_fname output.ml) (pos_lnum 8) (pos_bol 229)
-                               (pos_cnum 231)))
+                               (pos_cnum 233)))
                              (loc_end
-                              ((pos_fname output.ml) (pos_lnum 10)
-                               (pos_bol 335) (pos_cnum 347)))
+                              ((pos_fname output.ml) (pos_lnum 8) (pos_bol 229)
+                               (pos_cnum 239)))
                              (loc_ghost false)))
                            (pexp_loc_stack ())
                            (pexp_attributes

@@ -1,4 +1,4 @@
-Demonstrate how to use the React JSX PPX
+Demonstrate how to use the reason-react-ppx with melange.emit
 
   $ cat > dune-project <<EOF
   > (lang dune 3.8)
