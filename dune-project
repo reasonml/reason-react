@@ -42,7 +42,9 @@
    (>= 3.6.0))
   (ocaml-lsp-server :with-test)
   (opam-check-npm-deps
-   (= 1.0.0 :with-dev-setup))))
+   (and
+    (= 1.0.0)
+    :with-dev-setup))))
 
 (package
  (name reason-react-ppx)
