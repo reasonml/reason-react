@@ -119,7 +119,7 @@ module Using_React_memo = {
 module Using_memo_custom_compare_Props = {
   [@react.component]
   let make =
-    React.memo(
+    React.memoCustomCompareProps(
       (~a) => <div> {Printf.sprintf("`a` is %d", a) |> React.string} </div>,
       (prevPros, nextProps) => false,
     );

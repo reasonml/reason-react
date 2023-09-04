@@ -795,7 +795,10 @@ let jsxMapper =
                      (_wrapperExpression, [ (Nolabel, innerFunctionExpression) ]);
                 } ->
                     spelunkForFunExpression innerFunctionExpression
-                (* let make = React.memoCustomCompareProps((~prop) => ...) *)
+                (* let make = React.memoCustomCompareProps(
+                    (~prop) => ...,
+                    (prevProps, nextProps) => false
+                  ) *)
                 | {
                  pexp_desc =
                    Pexp_apply

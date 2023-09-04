@@ -223,7 +223,7 @@ module Using_memo_custom_compare_Props =
     external makeProps :
       a:'a -> ?key:string -> unit -> < a: 'a   >  Js.t = ""[@@bs.obj ]
     let make =
-      React.memo
+      React.memoCustomCompareProps
         (fun ~a ->
            ReactDOM.jsx "div"
              (((ReactDOM.domProps)[@merlin.hide ])
