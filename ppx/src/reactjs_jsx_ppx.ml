@@ -45,6 +45,16 @@ module Binding = struct
     let createElement ~loc =
       Exp.ident ~loc { loc; txt = Ldot (Lident "ReactDOM", "createElement") }
 
+    let createElement ~loc ~attrs args =
+      (* throw away the [@JSX] attribute and keep the others, if any *)
+      Exp.apply
+        ~loc
+        ~attrs
+        (* ReactDOMRe.createElement *)
+        (Exp.ident ~loc
+            { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
+        args
+
     let domProps ~loc ~attrs =
       Exp.ident ~loc ~attrs { loc; txt = Ldot (Lident "ReactDOM", "domProps") }
   end
@@ -1352,30 +1362,17 @@ let jsxMapper =
           (* no JSX attribute *)
           | [], _ -> super#expression ctxt expr
           | _, nonJSXAttributes ->
-              let fragment =
-                Exp.ident ~loc
-                  { loc; txt = Ldot (Lident "React", "jsxFragment") }
-              in
               let childrenExpr =
                 transformChildrenIfList ~loc ~ctxt ~mapper:self listItems
               in
               let args =
                 [
-                  (* "div" *)
-                  (nolabel, fragment);
+                  (nolabel, Binding.React.jsxFragment ~loc);
                   (* [|moreCreateElementCallsHere|] *)
                   (nolabel, childrenExpr);
                 ]
               in
-              Exp.apply
-                ~loc
-                  (* throw away the [@JSX] attribute and keep the others, if
-                     any *)
-                ~attrs:nonJSXAttributes
-                (* ReactDOMRe.createElement *)
-                (Exp.ident ~loc
-                   { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
-                args)
+              Binding.ReactDOM.createElement ~loc ~attrs:nonJSXAttributes args)
       (* Delegate to the default mapper, a deep identity traversal *)
       | e -> super#expression ctxt e
     [@@raises Invalid_argument]
