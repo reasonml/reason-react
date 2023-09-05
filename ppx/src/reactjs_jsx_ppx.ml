@@ -14,13 +14,9 @@ module Builder = struct
     let e = Ast_builder.Default.pexp_ident ~loc e in
     { e with pexp_attributes = attrs }
 
-  let value_binding ~loc ~pat ~expr ~attrs =
+  let value_binding ~loc ~attrs ~pat ~expr =
     let vb = Ast_builder.Default.value_binding ~loc ~pat ~expr in
     { vb with pvb_attributes = attrs }
-
-  let value_description ~loc ~name ~type_ ~prim ~attrs =
-    let vd = Ast_builder.Default.value_description ~loc ~name ~type_ ~prim in
-    { vd with pval_attributes = attrs }
 end
 
 (* [merlinHide] tells merlin to not look at a node, or at any of its
@@ -191,14 +187,13 @@ let extractChildren ?(removeLastPositionUnit = false) propsAndChildren =
 [@@raises Invalid_argument]
 
 let unerasableIgnore loc =
-  let open Ast_helper in
-  {
-    attr_name = { loc; txt = "warning" };
-    attr_payload =
-      PStr
-        [ Str.eval (Exp.constant (Pconst_string ("-16", Location.none, None))) ];
-    attr_loc = loc;
-  }
+  let payload =
+    Ast_helper.Str.eval
+      (Builder.pexp_constant ~loc:Location.none
+         (Pconst_string ("-16", Location.none, None)))
+  in
+  Builder.attribute ~loc ~name:{ loc; txt = "warning" }
+    ~payload:(PStr [ payload ])
 
 (* Helper method to look up the [@react.component] attribute *)
 let hasAttr { attr_name = loc; _ } = loc.txt = "react.component"
@@ -318,7 +313,7 @@ let rec recursivelyMakeNamedArgsForExternal list args =
   match list with
   | (label, default, loc, interiorType) :: tl ->
       recursivelyMakeNamedArgsForExternal tl
-        (Ast_helper.Typ.arrow ~loc label
+        (Builder.ptyp_arrow ~loc label
            (match (label, interiorType, default) with
            (* ~foo=1 *)
            | label, None, Some _ ->
@@ -439,18 +434,17 @@ let makeObjectField loc (str, attrs, type_) =
 (* Build an AST node representing a "closed" object representing a component's
    props *)
 let makePropsType ~loc namedTypeList =
-  Ast_helper.Typ.mk ~loc
-    (Ptyp_constr
-       ( { txt = Ldot (Lident "Js", "t"); loc },
-         [
-           {
-             ptyp_desc =
-               Ptyp_object (List.map (makeObjectField loc) namedTypeList, Closed);
-             ptyp_loc = loc;
-             ptyp_loc_stack = [];
-             ptyp_attributes = [];
-           };
-         ] ))
+  Builder.ptyp_constr ~loc
+    { txt = Ldot (Lident "Js", "t"); loc }
+    [
+      {
+        ptyp_desc =
+          Ptyp_object (List.map (makeObjectField loc) namedTypeList, Closed);
+        ptyp_loc = loc;
+        ptyp_loc_stack = [];
+        ptyp_attributes = [];
+      };
+    ]
 
 let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
   let childrenExpr =
@@ -754,7 +748,7 @@ let jsxMapper =
     | name when isOptional name ->
         ( getLabel name,
           [],
-          Ast_helper.Typ.constr ~loc { loc; txt = optionIdent } [ type_ ] )
+          Builder.ptyp_constr ~loc { loc; txt = optionIdent } [ type_ ] )
         :: types
     | _ -> types
   in
@@ -870,11 +864,12 @@ let jsxMapper =
             let modifiedBinding binding =
               let hasApplication = ref false in
               let wrapExpressionWithBinding expressionFn expression =
-                Ast_helper.Vb.mk ~loc:bindingLoc
+                Builder.value_binding ~loc:bindingLoc
                   ~attrs:(List.filter otherAttrsPure binding.pvb_attributes)
-                  (Ast_helper.Pat.var ~loc:bindingPatLoc
-                     { loc = bindingPatLoc; txt = fnName })
-                  (expressionFn expression)
+                  ~pat:
+                    (Builder.ppat_var ~loc:bindingPatLoc
+                       { loc = bindingPatLoc; txt = fnName })
+                  ~expr:(expressionFn expression)
               in
               let expression = binding.pvb_expr in
               let unerasableIgnoreExp exp =
@@ -1014,7 +1009,7 @@ let jsxMapper =
             let namedArgListWithKeyAndRef =
               ( optional "key",
                 None,
-                Ast_helper.Pat.var { txt = "key"; loc = gloc },
+                Builder.ppat_var ~loc:gloc { loc = gloc; txt = "key" },
                 "key",
                 gloc,
                 Some (keyType gloc) )
@@ -1025,7 +1020,7 @@ let jsxMapper =
               | Some _ ->
                   ( optional "ref",
                     None,
-                    Ast_helper.Pat.var { txt = "key"; loc = gloc },
+                    Builder.ppat_var ~loc:gloc { loc = gloc; txt = "key" },
                     "ref",
                     gloc,
                     None )
@@ -1039,7 +1034,7 @@ let jsxMapper =
                   @ [
                       ( nolabel,
                         None,
-                        Ast_helper.Pat.var { txt; loc = gloc },
+                        Builder.ppat_var ~loc:gloc { loc = gloc; txt },
                         txt,
                         gloc,
                         None );
@@ -1136,9 +1131,9 @@ let jsxMapper =
               | txt ->
                   Builder.pexp_let ~loc:gloc Nonrecursive
                     [
-                      Ast_helper.Vb.mk ~loc:gloc
-                        (Ast_helper.Pat.var ~loc:gloc { loc = gloc; txt })
-                        fullExpression;
+                      Builder.value_binding ~loc:gloc ~attrs:[]
+                        ~pat:(Builder.ppat_var ~loc:gloc { loc = gloc; txt })
+                        ~expr:fullExpression;
                     ]
                     (Builder.pexp_ident ~loc:gloc
                        { loc = gloc; txt = Lident txt })
@@ -1151,9 +1146,11 @@ let jsxMapper =
                         (Builder.pexp_let ~loc:gloc Recursive
                            [
                              makeNewBinding binding expression internalFnName;
-                             Ast_helper.Vb.mk
-                               (Ast_helper.Pat.var { loc = gloc; txt = fnName })
-                               fullExpression;
+                             Builder.value_binding ~loc:gloc ~attrs:[]
+                               ~pat:
+                                 (Builder.ppat_var ~loc:gloc
+                                    { loc = gloc; txt = fnName })
+                               ~expr:fullExpression;
                            ]
                            (Builder.pexp_ident ~loc:gloc
                               { loc = gloc; txt = Lident fnName }));

@@ -916,10 +916,10 @@
                      ())))
                   (pexp_loc
                    ((loc_start
-                     ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                     ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
                       (pos_cnum -1)))
                     (loc_end
-                     ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                     ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
                       (pos_cnum -1)))
                     (loc_ghost true)))
                   (pexp_loc_stack ()) (pexp_attributes ()))
@@ -2199,10 +2199,10 @@
                      ())))
                   (pexp_loc
                    ((loc_start
-                     ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                     ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
                       (pos_cnum -1)))
                     (loc_end
-                     ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                     ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
                       (pos_cnum -1)))
                     (loc_ghost true)))
                   (pexp_loc_stack ()) (pexp_attributes ()))
@@ -3030,10 +3030,10 @@
                               ())))
                            (pexp_loc
                             ((loc_start
-                              ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                              ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
                                (pos_cnum -1)))
                              (loc_end
-                              ((pos_fname _none_) (pos_lnum 0) (pos_bol 0)
+                              ((pos_fname _none_) (pos_lnum 1) (pos_bol 0)
                                (pos_cnum -1)))
                              (loc_ghost true)))
                            (pexp_loc_stack ()) (pexp_attributes ()))
