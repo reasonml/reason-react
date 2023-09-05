@@ -187,13 +187,14 @@ let extractChildren ?(removeLastPositionUnit = false) propsAndChildren =
 [@@raises Invalid_argument]
 
 let unerasableIgnore loc =
-  let payload =
-    Ast_helper.Str.eval
+  let structure_item =
+    Builder.pstr_eval ~loc
       (Builder.pexp_constant ~loc:Location.none
          (Pconst_string ("-16", Location.none, None)))
+      []
   in
   Builder.attribute ~loc ~name:{ loc; txt = "warning" }
-    ~payload:(PStr [ payload ])
+    ~payload:(PStr [ structure_item ])
 
 (* Helper method to look up the [@react.component] attribute *)
 let hasAttr { attr_name = loc; _ } = loc.txt = "react.component"
