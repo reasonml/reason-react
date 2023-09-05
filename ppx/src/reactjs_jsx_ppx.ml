@@ -1288,7 +1288,7 @@ let jsxMapper =
               parentExpLoc attrs callExpression callArguments
         (* div(~prop1=foo, ~prop2=bar, ~children=[bla], ()) *)
         (* turn that into
-           ReactDOM.createElement("div", ~props=ReactDOM.domprops(~props1=foo,
+           ReactDOM.createElement("div", ~props=ReactDOM.domProps(~props1=foo,
            ~props2=bar, ()), [|bla|]) *)
         | { loc; txt = Lident id } ->
             transformLowercaseCall3 ~ctxt parentExpLoc mapper loc attrs
