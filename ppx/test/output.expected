@@ -202,6 +202,38 @@ module Upper_case_with_fragment_as_root =
         (Props : < name: 'name option   >  Js.t) = make ?name:(Props ## name) in
       Generated$Upper_case_with_fragment_as_root
   end
+module Using_React_memo =
+  struct
+    external makeProps :
+      a:'a -> ?key:string -> unit -> < a: 'a   >  Js.t = ""[@@bs.obj ]
+    let make =
+      ((fun ~a ->
+          ReactDOM.jsx "div"
+            (((ReactDOM.domProps)[@merlin.hide ])
+               ~children:((Printf.sprintf "`a` is %s" a) |> React.string) ()))
+      [@warning "-16"])
+    let make =
+      React.memo
+        (let Generated$Using_React_memo (Props : < a: 'a   >  Js.t) =
+           make ~a:(Props ## a) in
+         Generated$Using_React_memo)
+  end
+module Using_memo_custom_compare_Props =
+  struct
+    external makeProps :
+      a:'a -> ?key:string -> unit -> < a: 'a   >  Js.t = ""[@@bs.obj ]
+    let make =
+      React.memoCustomCompareProps
+        (fun ~a ->
+           ReactDOM.jsx "div"
+             (((ReactDOM.domProps)[@merlin.hide ])
+                ~children:((Printf.sprintf "`a` is %d" a) |> React.string) ()))
+        (fun prevPros -> fun nextProps -> false)
+    let make =
+      let Generated$Using_memo_custom_compare_Props
+        (Props : < a: 'a   >  Js.t) = make ~a:(Props ## a) in
+      Generated$Using_memo_custom_compare_Props
+  end
 module Forward_Ref =
   struct
     external makeProps :
