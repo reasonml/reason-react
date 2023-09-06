@@ -1,3 +1,0 @@
-(cram
- (package reason-react-ppx)
- (deps %{bin:dune} %{bin:jq} %{bin:ocamlmerlin}))
