@@ -10,5 +10,5 @@
  (name standalone)
  (modules standalone)
  (package reason-react-ppx)
- (public_name reason-react-ppx.standalone)
+ (public_name reason-react-ppx)
  (libraries reason-react-ppx ppxlib))

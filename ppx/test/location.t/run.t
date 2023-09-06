@@ -1,5 +1,5 @@
   $ refmt --parse re --print ml input.re > output.ml
-  $ reason-react-ppx.standalone -dparsetree --impl output.ml -o temp.ml
+  $ reason-react-ppx -dparsetree --impl output.ml -o temp.ml
   $ cat temp.ml
   (((pstr_desc
      (Pstr_attribute

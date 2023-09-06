@@ -2,7 +2,7 @@
  (package reason-react-ppx)
  (deps
   (package reason-react)
-  %{bin:reason-react-ppx.standalone}
+  %{bin:reason-react-ppx}
   %{bin:refmt}
   %{bin:dune}
   %{bin:jq}

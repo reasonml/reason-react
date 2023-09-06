@@ -8,5 +8,5 @@ if [ -z "$1" ]; then
 fi
 
 refmt --parse re --print ml "$1" > output.ml
-reason-react-ppx.standalone --impl output.ml -o temp.ml
+reason-react-ppx --impl output.ml -o temp.ml
 refmt --parse ml --print re temp.ml
