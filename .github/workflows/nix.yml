@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ocamlVersion: [4_14, 5_0]
+        ocamlVersion: [5_1]
     steps:
     - uses: actions/checkout@v2
     - uses: cachix/install-nix-action@v21
