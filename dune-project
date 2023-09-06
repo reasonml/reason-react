@@ -40,7 +40,11 @@
   reason-react-ppx
   (reason
    (>= 3.6.0))
-  (ocaml-lsp-server :with-test)))
+  (ocaml-lsp-server :with-test)
+  (opam-check-npm-deps
+   (and
+    (= 1.0.0)
+    :with-dev-setup))))
 
 (package
  (name reason-react-ppx)
@@ -50,10 +54,7 @@
   (ocaml
    (>= 4.13.0))
   (reason
-   (or
-    (>= 3.6.0)
-    (and
-     (= 3.9.0 :with-test))))
+   (>= 3.9.0))
   (ppxlib
    (>= 0.28.0))
   (merlin :with-test)))
