@@ -6,5 +6,5 @@ module Author = {
 };
 
 [@react.component]
-let make = author =>
+let make = (~author) =>
   <tr key={author.Author.name}> <td> <img src={author.Author.imageUrl} /> </td> </tr>;

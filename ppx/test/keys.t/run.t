@@ -15,33 +15,15 @@ Test some locations in reason-react components
   > EOF
 
   $ dune build
-  File "component.re", line 9, characters 11-17:
-  9 | let make = author =>
-                 ^^^^^^
-  Error: react-jsx-ppx: props need to be labelled arguments.
-    If you are working with refs be sure to wrap with React.forwardRef.
-    If your component doesn't have any props, use () (unit) or _ (wildcard) instead of a name.
-  [1]
 
 Let's test hovering over parts of the component
 
 key={author.Author.name}
 _^
 
-  $ ocamlmerlin single type-enclosing -position 10:8 -verbosity 0 \
+  $ ocamlmerlin single type-enclosing -position 10:7 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
-  {
-    "start": {
-      "line": 10,
-      "col": 2
-    },
-    "end": {
-      "line": 10,
-      "col": 85
-    },
-    "type": "'a",
-    "tail": "no"
-  }
+  null
 
 key={author.Author.name}
 _______^
@@ -111,7 +93,7 @@ __^
       "line": 10,
       "col": 41
     },
-    "type": "(~src: string, ~children: list('_weak1), unit) => '_weak2",
+    "type": "string",
     "tail": "no"
   }
 
