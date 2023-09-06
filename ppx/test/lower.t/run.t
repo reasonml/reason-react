@@ -1,4 +1,4 @@
-  $ ../ppx_with_refmt.sh input.re
+  $ ../ppx.sh --output re input.re
   let lower = ReactDOM.jsx("div", ([@merlin.hide] ReactDOM.domProps)());
   let lower_empty_attr =
     ReactDOM.jsx("div", ([@merlin.hide] ReactDOM.domProps)(~className="", ()));

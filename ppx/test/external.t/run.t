@@ -1,4 +1,4 @@
-  $ ../ppx_with_refmt.sh input.re
+  $ ../ppx.sh --output re input.re
   module External = {
     [@bs.obj]
     external componentProps:

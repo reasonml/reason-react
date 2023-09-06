@@ -7,5 +7,4 @@
   %{bin:dune}
   %{bin:jq}
   %{bin:ocamlmerlin}
-  ppx_with_refmt.sh
   ppx.sh))

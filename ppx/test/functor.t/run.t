@@ -1,4 +1,6 @@
-  $ ../ppx.sh input.re
+Since we generate invalid syntax for the argument of the make fn `(Props : <>)`
+We need to output ML syntax here, otherwise refmt could not parse it.
+  $ ../ppx.sh --output ml input.re
   module type X_int  = sig val x : int end
   module Func(M:X_int) =
     struct

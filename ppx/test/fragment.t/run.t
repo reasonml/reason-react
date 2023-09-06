@@ -1,4 +1,4 @@
-  $ ../ppx_with_refmt.sh input.re
+  $ ../ppx.sh --output re input.re
   let fragment = foo =>
     [@bla] ReactDOM.createElement(React.jsxFragment, [|foo|]);
   let poly_children_fragment = (foo, bar) =>
