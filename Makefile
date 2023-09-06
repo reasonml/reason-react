@@ -23,10 +23,17 @@ dev: ## Build in watch mode
 clean: ## Clean artifacts
 	@$(DUNE) clean
 
-.PHONY: test
-test: ## Run the unit tests
-	@$(DUNE) build @runtest
+.PHONY: jest
+jest: ## Run the jest unit tests
 	@npx jest
+
+.PHONY: jest-watch
+jest-watch: ## Run the jest unit tests in watch mode
+	@npx jest --watch
+
+.PHONY: test
+test: ## Run the runtests from dune (snapshot)
+	@$(DUNE) build @runtest
 
 .PHONY: test-watch
 test-watch: ## Run the unit tests in watch mode
