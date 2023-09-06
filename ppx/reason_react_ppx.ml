@@ -458,7 +458,7 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
 (* TODO: some line number might still be wrong *)
 let jsxMapper =
   let unit = Exp.construct { txt = Lident "()"; loc = Location.none } None
-  and key_var_txt = "reason_react_ppx_key_arg___x" in
+  and key_var_txt = "Key" in
   let transformUppercaseCall3 ~caller modulePath ~ctxt mapper loc attrs _
       callArguments =
     let children, argsWithLabels = extractChildren callArguments in
