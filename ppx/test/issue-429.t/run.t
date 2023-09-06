@@ -32,19 +32,43 @@ Let's test hovering over parts of the component
         "line": 15,
         "col": 21
       },
-      "type": "string",
+      "type": "{. greeting: string}",
       "tail": "no"
     },
     {
       "start": {
         "line": 15,
-        "col": 11
+        "col": 13
+      },
+      "end": {
+        "line": 15,
+        "col": 21
+      },
+      "type": "string",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 14,
+        "col": 0
       },
       "end": {
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 14,
+        "col": 0
+      },
+      "end": {
+        "line": 36,
+        "col": 1
+      },
+      "type": "{. greeting: string} => element",
       "tail": "no"
     }
   ]

@@ -44,6 +44,10 @@
   (opam-check-npm-deps
    (and
     (= 1.0.0)
+    :with-dev-setup))
+  (ocamlformat
+   (and
+    (= 0.24.0)
     :with-dev-setup))))
 
 (package
@@ -57,4 +61,8 @@
    (>= 3.9.0))
   (ppxlib
    (>= 0.28.0))
-  (merlin :with-test)))
+  (merlin :with-test)
+  (ocamlformat
+   (and
+    (= 0.24.0)
+    :with-dev-setup))))
