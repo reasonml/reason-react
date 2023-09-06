@@ -1,6 +1,6 @@
 type t('a);
 
-[@mel.val] external expect: 'a => t('a) = "expect";
+external expect: 'a => t('a) = "expect";
 
 [@mel.send] external toEqual: (t('a), 'a) => unit = "toEqual";
 [@mel.send] external toBe: (t('a), 'a) => unit = "toBe";
@@ -25,10 +25,10 @@ external rejects: t(Js.Promise.t('a)) => t(unit => 'a) = "rejects";
 
 // This isn't a real string, but it can be used to construct a predicate on a string
 // expect("hello world")->toEqual(stringContaining("hello"));
-[@mel.val] [@mel.scope "expect"]
+[@mel.scope "expect"]
 external stringContaining: string => string = "stringContaining";
 
 // This isn't a real array, but it can be used to construct a predicate on an array
 // expect([|"x", "y", "z"|])->toEqual(arrayContaining([|"x", "z"|]))
-[@mel.val] [@mel.scope "expect"]
+[@mel.scope "expect"]
 external arrayContaining: array('a) => array('a) = "arrayContaining";

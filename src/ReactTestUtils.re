@@ -82,7 +82,7 @@ module Simulate = {
   external focus: Dom.element => unit = "focus";
 };
 
-[@mel.val] external document: Dom.document = "document";
+external document: Dom.document = "document";
 
 [@mel.send]
 external querySelector: (Dom.element, string) => option(Dom.element) =

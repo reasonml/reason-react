@@ -1,6 +1,6 @@
 type t;
 
-[@mel.module "react-test-renderer"] [@mel.val]
+[@mel.module "react-test-renderer"]
 external create: React.element => t = "create";
 
 [@mel.send] external toJSON: t => Js.Json.t = "toJSON";
@@ -8,7 +8,7 @@ external create: React.element => t = "create";
 module Shallow = {
   type t;
 
-  [@mel.module "react-test-renderer/shallow"] [@mel.val]
+  [@mel.module "react-test-renderer/shallow"]
   external createRenderer: unit => t = "createRenderer";
 
   [@mel.send]

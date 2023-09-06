@@ -46,13 +46,14 @@ format-check: ## Checks if format is correct
 
 .PHONY: install
 install: ## Update the package dependencies when new deps are added to dune-project
-	@opam pin add -y melange --dev-repo
+	@opam pin add -y melange.dev --dev-repo
+	@opam pin add -y reason.dev --dev-repo
 	@opam install . --deps-only --with-test
 	@npm install
 
 .PHONY: init
 create-switch: ## Create a local opam switch
-	@opam switch create . 4.14.1 --no-install
+	@opam switch create . 5.1.0~alpha2 --no-install
 
 .PHONY: init
 init: create-switch install ## Create a local opam switch, install deps

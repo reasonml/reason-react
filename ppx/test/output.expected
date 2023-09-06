@@ -8,7 +8,7 @@ let lower_inline_styles =
 let lower_inner_html =
   ReactDOM.jsx "div"
     (((ReactDOM.domProps)[@merlin.hide ])
-       ~dangerouslySetInnerHTML:([%bs.obj { __html = text }]) ())
+       ~dangerouslySetInnerHTML:([%mel.obj { __html = text }]) ())
 let lower_opt_attr =
   ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ?tabIndex ())
 let lowerWithChildAndProps foo =
@@ -167,7 +167,7 @@ module React_component_with_props =
   struct
     external makeProps :
       lola:'lola -> ?key:string -> unit -> < lola: 'lola   >  Js.t = ""
-    [@@bs.obj ]
+    [@@mel.obj ]
     let make =
       ((fun ~lola ->
           ReactDOM.jsx "div"
@@ -186,7 +186,7 @@ module Upper_case_with_fragment_as_root =
   struct
     external makeProps :
       ?name:'name -> ?key:string -> unit -> < name: 'name option   >  Js.t =
-        ""[@@bs.obj ]
+        ""[@@mel.obj ]
     let make =
       ((fun ?(name= "") ->
           ReactDOM.createElement React.jsxFragment
@@ -209,7 +209,7 @@ module Forward_Ref =
         buttonRef:'buttonRef ->
           ?key:string ->
             unit -> < children: 'children  ;buttonRef: 'buttonRef   >  Js.t =
-        ""[@@bs.obj ]
+        ""[@@mel.obj ]
     let make =
       ((fun ~children ->
           ((fun ~buttonRef ->
@@ -233,7 +233,7 @@ module Onclick_handler_button =
         ?isDisabled:'isDisabled ->
           ?key:string ->
             unit -> < name: 'name  ;isDisabled: 'isDisabled option   >  Js.t
-        = ""[@@bs.obj ]
+        = ""[@@mel.obj ]
     let make =
       ((fun ~name ->
           ((fun ?isDisabled ->
@@ -253,7 +253,7 @@ module Children_as_string =
   struct
     external makeProps :
       ?name:'name -> ?key:string -> unit -> < name: 'name option   >  Js.t =
-        ""[@@bs.obj ]
+        ""[@@mel.obj ]
     let make =
       ((fun ?(name= "joe") ->
           ReactDOM.jsx "div"
@@ -275,7 +275,7 @@ module Uppercase_with_SSR_components =
         moreProps:'moreProps ->
           ?key:string ->
             unit -> < children: 'children  ;moreProps: 'moreProps   >  Js.t =
-        ""[@@bs.obj ]
+        ""[@@mel.obj ]
     let make =
       ((fun ~children ->
           ((fun ~moreProps ->
@@ -328,7 +328,7 @@ module Upper_with_aria =
   struct
     external makeProps :
       children:'children ->
-        ?key:string -> unit -> < children: 'children   >  Js.t = ""[@@bs.obj
+        ?key:string -> unit -> < children: 'children   >  Js.t = ""[@@mel.obj
                                                                     ]
     let make =
       ((fun ~children ->
@@ -359,7 +359,7 @@ module External =
     external componentProps :
       a:int ->
         b:string -> ?key:string -> unit -> < a: int  ;b: string   >  Js.t =
-        ""[@@bs.obj ]
+        ""[@@mel.obj ]
     external component :
       (< a: int  ;b: string   >  Js.t, React.element) React.componentLike =
         "require(\"my-react-library\").MyReactComponent"[@@otherAttribute
@@ -371,7 +371,7 @@ module Func(M:X_int) =
     let x = M.x + 1
     external makeProps :
       a:'a -> b:'b -> ?key:string -> unit -> < a: 'a  ;b: 'b   >  Js.t = ""
-    [@@bs.obj ]
+    [@@mel.obj ]
     let make =
       ((fun ~a ->
           ((fun ~b ->

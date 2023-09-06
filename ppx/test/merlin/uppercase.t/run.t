@@ -56,7 +56,7 @@ Let's test hovering over parts of the component
         "line": 16,
         "col": 3
       },
-      "type": "{. children: React.element}",
+      "type": "Js.t({.. \"children\": React.element})",
       "tail": "no"
     },
     {
@@ -92,7 +92,7 @@ Let's test hovering over parts of the component
         "line": 17,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~children: 'children, ~key: string=?, unit) => {. children: 'children}\n    = \"\" \"����\u0000\u0000\u0000\u001c\u0000\u0000\u0000\u000b\u0000\u0000\u0000\u001f\u0000\u0000\u0000\u001e���A�(children��A�#key@��@@@\";\n  let make: (~children: React.element) => React.element;\n  let make: {. children: React.element} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~children: 'children, ~key: string=?, unit) =>\n    {.. \"children\": 'children} = \"\"\n    \"����\u0000\u0000\u0000\u001c\u0000\u0000\u0000\u000b\u0000\u0000\u0000\u001f\u0000\u0000\u0000\u001e���A�(children��A�#key@��@@@\";\n  let make: (~children: React.element) => React.element;\n  let make: {.. \"children\": React.element} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -104,7 +104,7 @@ Let's test hovering over parts of the component
         "line": 17,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~children: 'children, ~key: string=?, unit) => {. children: 'children}\n    = \"\" \"����\u0000\u0000\u0000\u001c\u0000\u0000\u0000\u000b\u0000\u0000\u0000\u001f\u0000\u0000\u0000\u001e���A�(children��A�#key@��@@@\";\n  let make: {. children: React.element} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~children: 'children, ~key: string=?, unit) =>\n    {.. \"children\": 'children} = \"\"\n    \"����\u0000\u0000\u0000\u001c\u0000\u0000\u0000\u000b\u0000\u0000\u0000\u001f\u0000\u0000\u0000\u001e���A�(children��A�#key@��@@@\";\n  let make: {.. \"children\": React.element} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -116,7 +116,7 @@ Let's test hovering over parts of the component
         "line": 17,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~children: 'children, ~key: string=?, unit) => {. children: 'children}\n    = \"\" \"����\u0000\u0000\u0000\u001c\u0000\u0000\u0000\u000b\u0000\u0000\u0000\u001f\u0000\u0000\u0000\u001e���A�(children��A�#key@��@@@\";\n  let make: {. children: React.element} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~children: 'children, ~key: string=?, unit) =>\n    {.. \"children\": 'children} = \"\"\n    \"����\u0000\u0000\u0000\u001c\u0000\u0000\u0000\u000b\u0000\u0000\u0000\u001f\u0000\u0000\u0000\u001e���A�(children��A�#key@��@@@\";\n  let make: {.. \"children\": React.element} => React.element;\n}",
       "tail": "no"
     }
   ]

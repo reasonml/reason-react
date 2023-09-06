@@ -422,7 +422,6 @@ external make:
   t;
 
 /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
-[@mel.val]
 external combine: ([@mel.as {json|{}|json}] _, t, t) => t = "Object.assign";
 
 external _dictToStyle: Js.Dict.t(string) => t = "%identity";
@@ -433,6 +432,5 @@ let unsafeAddProp = (style, key, value) => {
   combine(style, _dictToStyle(dict));
 };
 
-[@mel.val]
 external unsafeAddStyle: ([@mel.as {json|{}|json}] _, t, Js.t({..})) => t =
   "Object.assign";
