@@ -20,7 +20,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages."${system}".appendOverlays [
-          (self: super: { ocamlPackages = super.ocaml-ng.ocamlPackages_4_14; })
+          (self: super: { ocamlPackages = super.ocaml-ng.ocamlPackages_5_1; })
           melange.overlays.default
         ];
       in

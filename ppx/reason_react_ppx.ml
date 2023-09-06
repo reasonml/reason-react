@@ -368,7 +368,7 @@ let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
     pval_attributes =
       [
         {
-          attr_name = { txt = "bs.obj"; loc };
+          attr_name = { txt = "mel.obj"; loc };
           attr_payload = PStr [];
           attr_loc = loc;
         };

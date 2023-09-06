@@ -44,7 +44,7 @@ Let's test hovering over parts of the component
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -87,7 +87,7 @@ Let's test hovering over parts of the component
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -99,7 +99,7 @@ Let's test hovering over parts of the component
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -142,7 +142,7 @@ Let's test hovering over parts of the component
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -154,7 +154,7 @@ Let's test hovering over parts of the component
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -185,7 +185,7 @@ Let's test hovering over parts of the component
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -197,7 +197,7 @@ Let's test hovering over parts of the component
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -209,7 +209,7 @@ Let's test hovering over parts of the component
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -240,7 +240,7 @@ Wrapping `div`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -252,7 +252,7 @@ Wrapping `div`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -264,7 +264,7 @@ Wrapping `div`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -276,7 +276,7 @@ Wrapping `div`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -307,7 +307,7 @@ First child `button`
         "line": 30,
         "col": 75
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -319,7 +319,7 @@ First child `button`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -331,7 +331,7 @@ First child `button`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -343,7 +343,7 @@ First child `button`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -367,7 +367,7 @@ First child `button`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -379,7 +379,7 @@ First child `button`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -391,7 +391,7 @@ First child `button`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -403,7 +403,7 @@ First child `button`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -434,7 +434,7 @@ First child `onClick` prop
         "line": 30,
         "col": 75
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -446,7 +446,7 @@ First child `onClick` prop
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -458,7 +458,7 @@ First child `onClick` prop
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -470,7 +470,7 @@ First child `onClick` prop
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -494,7 +494,7 @@ First child `onClick` prop
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -506,7 +506,7 @@ First child `onClick` prop
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -518,7 +518,7 @@ First child `onClick` prop
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -530,7 +530,7 @@ First child `onClick` prop
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -585,7 +585,7 @@ First child `onClick` callback argument (event)
         "line": 30,
         "col": 75
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -597,7 +597,7 @@ First child `onClick` callback argument (event)
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -609,7 +609,7 @@ First child `onClick` callback argument (event)
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -621,7 +621,7 @@ First child `onClick` callback argument (event)
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -645,7 +645,7 @@ First child `onClick` callback argument (event)
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -657,7 +657,7 @@ First child `onClick` callback argument (event)
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -669,7 +669,7 @@ First child `onClick` callback argument (event)
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -681,7 +681,7 @@ First child `onClick` callback argument (event)
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -760,7 +760,7 @@ First child `onClick` prop `dispatch`
         "line": 30,
         "col": 75
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -772,7 +772,7 @@ First child `onClick` prop `dispatch`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -784,7 +784,7 @@ First child `onClick` prop `dispatch`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -796,7 +796,7 @@ First child `onClick` prop `dispatch`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -820,7 +820,7 @@ First child `onClick` prop `dispatch`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -832,7 +832,7 @@ First child `onClick` prop `dispatch`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -844,7 +844,7 @@ First child `onClick` prop `dispatch`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -856,7 +856,7 @@ First child `onClick` prop `dispatch`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -947,7 +947,7 @@ First child `onClick` prop `Click`
         "line": 30,
         "col": 75
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -959,7 +959,7 @@ First child `onClick` prop `Click`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -971,7 +971,7 @@ First child `onClick` prop `Click`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -983,7 +983,7 @@ First child `onClick` prop `Click`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1007,7 +1007,7 @@ First child `onClick` prop `Click`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1019,7 +1019,7 @@ First child `onClick` prop `Click`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1031,7 +1031,7 @@ First child `onClick` prop `Click`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1043,7 +1043,7 @@ First child `onClick` prop `Click`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -1062,7 +1062,7 @@ First child `string`
         "line": 30,
         "col": 55
       },
-      "type": "string => element",
+      "type": "string => React.element",
       "tail": "no"
     },
     {
@@ -1074,7 +1074,7 @@ First child `string`
         "line": 30,
         "col": 65
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1086,7 +1086,7 @@ First child `string`
         "line": 30,
         "col": 65
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1110,7 +1110,7 @@ First child `string`
         "line": 30,
         "col": 75
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1122,7 +1122,7 @@ First child `string`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -1134,7 +1134,7 @@ First child `string`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1146,7 +1146,7 @@ First child `string`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1170,7 +1170,7 @@ First child `string`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1182,7 +1182,7 @@ First child `string`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1194,7 +1194,7 @@ First child `string`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1206,7 +1206,7 @@ First child `string`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -1237,7 +1237,7 @@ First child `message`
         "line": 30,
         "col": 65
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1249,7 +1249,7 @@ First child `message`
         "line": 30,
         "col": 65
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1273,7 +1273,7 @@ First child `message`
         "line": 30,
         "col": 75
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1285,7 +1285,7 @@ First child `message`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -1297,7 +1297,7 @@ First child `message`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1309,7 +1309,7 @@ First child `message`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1333,7 +1333,7 @@ First child `message`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1345,7 +1345,7 @@ First child `message`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1357,7 +1357,7 @@ First child `message`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1369,7 +1369,7 @@ First child `message`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -1412,7 +1412,7 @@ Third child `state`
         "line": 34,
         "col": 42
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1424,7 +1424,7 @@ Third child `state`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -1436,7 +1436,7 @@ Third child `state`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1448,7 +1448,7 @@ Third child `state`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1472,7 +1472,7 @@ Third child `state`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1484,7 +1484,7 @@ Third child `state`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1496,7 +1496,7 @@ Third child `state`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1508,7 +1508,7 @@ Third child `state`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -1551,7 +1551,7 @@ Third child `show` in `state.show`
         "line": 34,
         "col": 42
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1563,7 +1563,7 @@ Third child `show` in `state.show`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -1575,7 +1575,7 @@ Third child `show` in `state.show`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1587,7 +1587,7 @@ Third child `show` in `state.show`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1611,7 +1611,7 @@ Third child `show` in `state.show`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1623,7 +1623,7 @@ Third child `show` in `state.show`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1635,7 +1635,7 @@ Third child `show` in `state.show`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1647,7 +1647,7 @@ Third child `show` in `state.show`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -1666,7 +1666,7 @@ Third child `string`
         "line": 34,
         "col": 24
       },
-      "type": "string => element",
+      "type": "string => React.element",
       "tail": "no"
     },
     {
@@ -1678,7 +1678,7 @@ Third child `string`
         "line": 34,
         "col": 34
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1690,7 +1690,7 @@ Third child `string`
         "line": 34,
         "col": 42
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1702,7 +1702,7 @@ Third child `string`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -1714,7 +1714,7 @@ Third child `string`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1726,7 +1726,7 @@ Third child `string`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1750,7 +1750,7 @@ Third child `string`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1762,7 +1762,7 @@ Third child `string`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1774,7 +1774,7 @@ Third child `string`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1786,7 +1786,7 @@ Third child `string`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -1817,7 +1817,7 @@ Third child `greeting`
         "line": 34,
         "col": 34
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1829,7 +1829,7 @@ Third child `greeting`
         "line": 34,
         "col": 42
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1841,7 +1841,7 @@ Third child `greeting`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -1853,7 +1853,7 @@ Third child `greeting`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1865,7 +1865,7 @@ Third child `greeting`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -1889,7 +1889,7 @@ Third child `greeting`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1901,7 +1901,7 @@ Third child `greeting`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1913,7 +1913,7 @@ Third child `greeting`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1925,7 +1925,7 @@ Third child `greeting`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]
@@ -1944,7 +1944,7 @@ Third child `null`
         "line": 34,
         "col": 41
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1956,7 +1956,7 @@ Third child `null`
         "line": 34,
         "col": 42
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1968,7 +1968,7 @@ Third child `null`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
+      "type": "array(React.element)",
       "tail": "no"
     },
     {
@@ -1980,7 +1980,7 @@ Third child `null`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -1992,7 +1992,7 @@ Third child `null`
         "line": 35,
         "col": 9
       },
-      "type": "option(element)",
+      "type": "option(React.element)",
       "tail": "no"
     },
     {
@@ -2016,7 +2016,7 @@ Third child `null`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -2028,7 +2028,7 @@ Third child `null`
         "line": 35,
         "col": 9
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -2040,7 +2040,7 @@ Third child `null`
         "line": 36,
         "col": 1
       },
-      "type": "element",
+      "type": "React.element",
       "tail": "no"
     },
     {
@@ -2052,7 +2052,7 @@ Third child `null`
         "line": 36,
         "col": 1
       },
-      "type": "(~greeting: string) => element",
+      "type": "(~greeting: string) => React.element",
       "tail": "no"
     }
   ]

@@ -41,29 +41,29 @@ type synthetic('a);
 module Synthetic: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: synthetic('a) => bool = "bubbles";
-  [@bs.get] external cancelable: synthetic('a) => bool = "cancelable";
-  [@bs.get]
+  [@mel.get] external bubbles: synthetic('a) => bool = "bubbles";
+  [@mel.get] external cancelable: synthetic('a) => bool = "cancelable";
+  [@mel.get]
   external currentTarget: synthetic('a) => Js.t({..}) = "currentTarget";
-  [@bs.get]
+  [@mel.get]
   external defaultPrevented: synthetic('a) => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: synthetic('a) => int = "eventPhase";
-  [@bs.get] external isTrusted: synthetic('a) => bool = "isTrusted";
-  [@bs.get]
+  [@mel.get] external eventPhase: synthetic('a) => int = "eventPhase";
+  [@mel.get] external isTrusted: synthetic('a) => bool = "isTrusted";
+  [@mel.get]
   external nativeEvent: synthetic('a) => Js.t({..}) = "nativeEvent";
-  [@bs.send]
+  [@mel.send]
   external preventDefault: synthetic('a) => unit = "preventDefault";
-  [@bs.send]
+  [@mel.send]
   external isDefaultPrevented: synthetic('a) => bool = "isDefaultPrevented";
-  [@bs.send]
+  [@mel.send]
   external stopPropagation: synthetic('a) => unit = "stopPropagation";
-  [@bs.send]
+  [@mel.send]
   external isPropagationStopped: synthetic('a) => bool =
     "isPropagationStopped";
-  [@bs.get] external target: synthetic('a) => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: synthetic('a) => float = "timeStamp";
-  [@bs.get] external type_: synthetic('a) => string = "type";
-  [@bs.send] external persist: synthetic('a) => unit = "persist";
+  [@mel.get] external target: synthetic('a) => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: synthetic('a) => float = "timeStamp";
+  [@mel.get] external type_: synthetic('a) => string = "type";
+  [@mel.send] external persist: synthetic('a) => unit = "persist";
 };
 
 /* Cast any event type to the general synthetic type. This is safe, since synthetic is more general */
@@ -72,43 +72,45 @@ external toSyntheticEvent: synthetic('a) => Synthetic.t = "%identity";
 module Clipboard: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external clipboardData: t => Js.t({..}) = "clipboardData"; /* Should return Dom.dataTransfer */
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external clipboardData: t => Js.t({..}) = "clipboardData"; /* Should return Dom.dataTransfer */
 };
 
 module Composition: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external data: t => string = "data";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external data: t => string = "data";
 };
 
 module Drag: {
@@ -116,156 +118,161 @@ module Drag: {
   type t = synthetic(tag);
 
   // SyntheticEvent
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
 
   // MouseEvent
-  [@bs.get] external altKey: t => bool = "altKey";
-  [@bs.get] external button: t => int = "button";
-  [@bs.get] external buttons: t => int = "buttons";
-  [@bs.get] external clientX: t => int = "clientX";
-  [@bs.get] external clientY: t => int = "clientY";
-  [@bs.get] external ctrlKey: t => bool = "ctrlKey";
-  [@bs.send]
+  [@mel.get] external altKey: t => bool = "altKey";
+  [@mel.get] external button: t => int = "button";
+  [@mel.get] external buttons: t => int = "buttons";
+  [@mel.get] external clientX: t => int = "clientX";
+  [@mel.get] external clientY: t => int = "clientY";
+  [@mel.get] external ctrlKey: t => bool = "ctrlKey";
+  [@mel.send]
   external getModifierState: (t, string) => bool = "getModifierState";
-  [@bs.get] external metaKey: t => bool = "metaKey";
-  [@bs.get] external movementX: t => int = "movementX";
-  [@bs.get] external movementY: t => int = "movementY";
-  [@bs.get] external pageX: t => int = "pageX";
-  [@bs.get] external pageY: t => int = "pageY";
-  [@bs.get] [@bs.return nullable]
+  [@mel.get] external metaKey: t => bool = "metaKey";
+  [@mel.get] external movementX: t => int = "movementX";
+  [@mel.get] external movementY: t => int = "movementY";
+  [@mel.get] external pageX: t => int = "pageX";
+  [@mel.get] external pageY: t => int = "pageY";
+  [@mel.get] [@mel.return nullable]
   external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
-  [@bs.get] external screenX: t => int = "screenX";
-  [@bs.get] external screenY: t => int = "screenY";
-  [@bs.get] external shiftKey: t => bool = "shiftKey";
+  [@mel.get] external screenX: t => int = "screenX";
+  [@mel.get] external screenY: t => int = "screenY";
+  [@mel.get] external shiftKey: t => bool = "shiftKey";
 
-  [@bs.get] external dataTransfer: t => Js.t({..}) = "dataTransfer"; /* Should return Dom.dataTransfer */
+  [@mel.get] external dataTransfer: t => Js.t({..}) = "dataTransfer"; /* Should return Dom.dataTransfer */
 };
 
 module Keyboard: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external altKey: t => bool = "altKey";
-  [@bs.get] external charCode: t => int = "charCode";
-  [@bs.get] external ctrlKey: t => bool = "ctrlKey";
-  [@bs.send]
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external altKey: t => bool = "altKey";
+  [@mel.get] external charCode: t => int = "charCode";
+  [@mel.get] external ctrlKey: t => bool = "ctrlKey";
+  [@mel.send]
   external getModifierState: (t, string) => bool = "getModifierState";
-  [@bs.get] external key: t => string = "key";
-  [@bs.get] external keyCode: t => int = "keyCode";
-  [@bs.get] external locale: t => string = "locale";
-  [@bs.get] external location: t => int = "location";
-  [@bs.get] external metaKey: t => bool = "metaKey";
-  [@bs.get] external repeat: t => bool = "repeat";
-  [@bs.get] external shiftKey: t => bool = "shiftKey";
-  [@bs.get] external which: t => int = "which";
+  [@mel.get] external key: t => string = "key";
+  [@mel.get] external keyCode: t => int = "keyCode";
+  [@mel.get] external locale: t => string = "locale";
+  [@mel.get] external location: t => int = "location";
+  [@mel.get] external metaKey: t => bool = "metaKey";
+  [@mel.get] external repeat: t => bool = "repeat";
+  [@mel.get] external shiftKey: t => bool = "shiftKey";
+  [@mel.get] external which: t => int = "which";
 };
 
 module Focus: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] [@bs.return nullable]
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] [@mel.return nullable]
   external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
 };
 
 module Form: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
 };
 
 module Mouse: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external altKey: t => bool = "altKey";
-  [@bs.get] external button: t => int = "button";
-  [@bs.get] external buttons: t => int = "buttons";
-  [@bs.get] external clientX: t => int = "clientX";
-  [@bs.get] external clientY: t => int = "clientY";
-  [@bs.get] external ctrlKey: t => bool = "ctrlKey";
-  [@bs.send]
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external altKey: t => bool = "altKey";
+  [@mel.get] external button: t => int = "button";
+  [@mel.get] external buttons: t => int = "buttons";
+  [@mel.get] external clientX: t => int = "clientX";
+  [@mel.get] external clientY: t => int = "clientY";
+  [@mel.get] external ctrlKey: t => bool = "ctrlKey";
+  [@mel.send]
   external getModifierState: (t, string) => bool = "getModifierState";
-  [@bs.get] external metaKey: t => bool = "metaKey";
-  [@bs.get] external movementX: t => int = "movementX";
-  [@bs.get] external movementY: t => int = "movementY";
-  [@bs.get] external pageX: t => int = "pageX";
-  [@bs.get] external pageY: t => int = "pageY";
-  [@bs.get] [@bs.return nullable]
+  [@mel.get] external metaKey: t => bool = "metaKey";
+  [@mel.get] external movementX: t => int = "movementX";
+  [@mel.get] external movementY: t => int = "movementY";
+  [@mel.get] external pageX: t => int = "pageX";
+  [@mel.get] external pageY: t => int = "pageY";
+  [@mel.get] [@mel.return nullable]
   external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
-  [@bs.get] external screenX: t => int = "screenX";
-  [@bs.get] external screenY: t => int = "screenY";
-  [@bs.get] external shiftKey: t => bool = "shiftKey";
+  [@mel.get] external screenX: t => int = "screenX";
+  [@mel.get] external screenY: t => int = "screenY";
+  [@mel.get] external shiftKey: t => bool = "shiftKey";
 };
 
 module Pointer: {
@@ -273,244 +280,253 @@ module Pointer: {
   type t = synthetic(tag);
 
   // Event
-  [@bs.get] external type_: t => string = "type";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
 
-  [@bs.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
 
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation"; // aka cancelBubble
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation"; // aka cancelBubble
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
 
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
 
   // SyntheticEvent
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.send] external persist: t => unit = "persist";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.send] external persist: t => unit = "persist";
 
   // UIEvent
-  [@bs.get] external detail: t => int = "detail";
-  [@bs.get] external view: t => Dom.window = "view"; /* Should return DOMAbstractView/WindowProxy */
+  [@mel.get] external detail: t => int = "detail";
+  [@mel.get] external view: t => Dom.window = "view"; /* Should return DOMAbstractView/WindowProxy */
 
   // MouseEvent
-  [@bs.get] external screenX: t => int = "screenX";
-  [@bs.get] external screenY: t => int = "screenY";
-  [@bs.get] external clientX: t => int = "clientX";
-  [@bs.get] external clientY: t => int = "clientY";
-  [@bs.get] external pageX: t => int = "pageX";
-  [@bs.get] external pageY: t => int = "pageY";
-  [@bs.get] external movementX: t => int = "movementX";
-  [@bs.get] external movementY: t => int = "movementY";
+  [@mel.get] external screenX: t => int = "screenX";
+  [@mel.get] external screenY: t => int = "screenY";
+  [@mel.get] external clientX: t => int = "clientX";
+  [@mel.get] external clientY: t => int = "clientY";
+  [@mel.get] external pageX: t => int = "pageX";
+  [@mel.get] external pageY: t => int = "pageY";
+  [@mel.get] external movementX: t => int = "movementX";
+  [@mel.get] external movementY: t => int = "movementY";
 
-  [@bs.get] external ctrlKey: t => bool = "ctrlKey";
-  [@bs.get] external shiftKey: t => bool = "shiftKey";
-  [@bs.get] external altKey: t => bool = "altKey";
-  [@bs.get] external metaKey: t => bool = "metaKey";
-  [@bs.send]
+  [@mel.get] external ctrlKey: t => bool = "ctrlKey";
+  [@mel.get] external shiftKey: t => bool = "shiftKey";
+  [@mel.get] external altKey: t => bool = "altKey";
+  [@mel.get] external metaKey: t => bool = "metaKey";
+  [@mel.send]
   external getModifierState: (t, string) => bool = "getModifierState";
 
-  [@bs.get] external button: t => int = "button";
-  [@bs.get] external buttons: t => int = "buttons";
+  [@mel.get] external button: t => int = "button";
+  [@mel.get] external buttons: t => int = "buttons";
 
-  [@bs.get] [@bs.return nullable]
+  [@mel.get] [@mel.return nullable]
   external relatedTarget: t => option(Js.t({..})) = "relatedTarget"; /* Should return Dom.eventTarget */
 
   // PointerEvent
-  [@bs.get] external pointerId: t => Dom.eventPointerId = "pointerId";
-  [@bs.get] external width: t => float = "width";
-  [@bs.get] external height: t => float = "height";
-  [@bs.get] external pressure: t => float = "pressure";
-  [@bs.get] external tangentialPressure: t => float = "tangentialPressure";
-  [@bs.get] external tiltX: t => int = "tiltX";
-  [@bs.get] external tiltY: t => int = "tiltY";
-  [@bs.get] external twist: t => int = "twist";
-  [@bs.get] external pointerType: t => string = "pointerType";
-  [@bs.get] external isPrimary: t => bool = "isPrimary";
+  [@mel.get] external pointerId: t => Dom.eventPointerId = "pointerId";
+  [@mel.get] external width: t => float = "width";
+  [@mel.get] external height: t => float = "height";
+  [@mel.get] external pressure: t => float = "pressure";
+  [@mel.get] external tangentialPressure: t => float = "tangentialPressure";
+  [@mel.get] external tiltX: t => int = "tiltX";
+  [@mel.get] external tiltY: t => int = "tiltY";
+  [@mel.get] external twist: t => int = "twist";
+  [@mel.get] external pointerType: t => string = "pointerType";
+  [@mel.get] external isPrimary: t => bool = "isPrimary";
 };
 
 module Selection: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
 };
 
 module Touch: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external altKey: t => bool = "altKey";
-  [@bs.get] external changedTouches: t => Js.t({..}) = "changedTouches"; /* Should return Dom.touchList */
-  [@bs.get] external ctrlKey: t => bool = "ctrlKey";
-  [@bs.send]
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external altKey: t => bool = "altKey";
+  [@mel.get] external changedTouches: t => Js.t({..}) = "changedTouches"; /* Should return Dom.touchList */
+  [@mel.get] external ctrlKey: t => bool = "ctrlKey";
+  [@mel.send]
   external getModifierState: (t, string) => bool = "getModifierState";
-  [@bs.get] external metaKey: t => bool = "metaKey";
-  [@bs.get] external shiftKey: t => bool = "shiftKey";
-  [@bs.get] external targetTouches: t => Js.t({..}) = "targetTouches"; /* Should return Dom.touchList */
-  [@bs.get] external touches: t => Js.t({..}) = "touches"; /* Should return Dom.touchList */
+  [@mel.get] external metaKey: t => bool = "metaKey";
+  [@mel.get] external shiftKey: t => bool = "shiftKey";
+  [@mel.get] external targetTouches: t => Js.t({..}) = "targetTouches"; /* Should return Dom.touchList */
+  [@mel.get] external touches: t => Js.t({..}) = "touches"; /* Should return Dom.touchList */
 };
 
 module UI: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external detail: t => int = "detail";
-  [@bs.get] external view: t => Dom.window = "view"; /* Should return DOMAbstractView/WindowProxy */
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external detail: t => int = "detail";
+  [@mel.get] external view: t => Dom.window = "view"; /* Should return DOMAbstractView/WindowProxy */
 };
 
 module Wheel: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external deltaMode: t => int = "deltaMode";
-  [@bs.get] external deltaX: t => float = "deltaX";
-  [@bs.get] external deltaY: t => float = "deltaY";
-  [@bs.get] external deltaZ: t => float = "deltaZ";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external deltaMode: t => int = "deltaMode";
+  [@mel.get] external deltaX: t => float = "deltaX";
+  [@mel.get] external deltaY: t => float = "deltaY";
+  [@mel.get] external deltaZ: t => float = "deltaZ";
 };
 
 module Media: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
 };
 
 module Image: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
 };
 
 module Animation: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external animationName: t => string = "animationName";
-  [@bs.get] external pseudoElement: t => string = "pseudoElement";
-  [@bs.get] external elapsedTime: t => float = "elapsedTime";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external animationName: t => string = "animationName";
+  [@mel.get] external pseudoElement: t => string = "pseudoElement";
+  [@mel.get] external elapsedTime: t => float = "elapsedTime";
 };
 
 module Transition: {
   type tag;
   type t = synthetic(tag);
-  [@bs.get] external bubbles: t => bool = "bubbles";
-  [@bs.get] external cancelable: t => bool = "cancelable";
-  [@bs.get] external currentTarget: t => Js.t({..}) = "currentTarget";
-  [@bs.get] external defaultPrevented: t => bool = "defaultPrevented";
-  [@bs.get] external eventPhase: t => int = "eventPhase";
-  [@bs.get] external isTrusted: t => bool = "isTrusted";
-  [@bs.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
-  [@bs.send] external preventDefault: t => unit = "preventDefault";
-  [@bs.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
-  [@bs.send] external stopPropagation: t => unit = "stopPropagation";
-  [@bs.send] external isPropagationStopped: t => bool = "isPropagationStopped";
-  [@bs.get] external target: t => Js.t({..}) = "target";
-  [@bs.get] external timeStamp: t => float = "timeStamp";
-  [@bs.get] external type_: t => string = "type";
-  [@bs.send] external persist: t => unit = "persist";
-  [@bs.get] external propertyName: t => string = "propertyName";
-  [@bs.get] external pseudoElement: t => string = "pseudoElement";
-  [@bs.get] external elapsedTime: t => float = "elapsedTime";
+  [@mel.get] external bubbles: t => bool = "bubbles";
+  [@mel.get] external cancelable: t => bool = "cancelable";
+  [@mel.get] external currentTarget: t => Js.t({..}) = "currentTarget";
+  [@mel.get] external defaultPrevented: t => bool = "defaultPrevented";
+  [@mel.get] external eventPhase: t => int = "eventPhase";
+  [@mel.get] external isTrusted: t => bool = "isTrusted";
+  [@mel.get] external nativeEvent: t => Js.t({..}) = "nativeEvent";
+  [@mel.send] external preventDefault: t => unit = "preventDefault";
+  [@mel.send] external isDefaultPrevented: t => bool = "isDefaultPrevented";
+  [@mel.send] external stopPropagation: t => unit = "stopPropagation";
+  [@mel.send]
+  external isPropagationStopped: t => bool = "isPropagationStopped";
+  [@mel.get] external target: t => Js.t({..}) = "target";
+  [@mel.get] external timeStamp: t => float = "timeStamp";
+  [@mel.get] external type_: t => string = "type";
+  [@mel.send] external persist: t => unit = "persist";
+  [@mel.get] external propertyName: t => string = "propertyName";
+  [@mel.get] external pseudoElement: t => string = "pseudoElement";
+  [@mel.get] external elapsedTime: t => float = "elapsedTime";
 };

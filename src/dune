@@ -6,4 +6,5 @@
  (preprocess
   (pps melange.ppx reason-react-ppx))
  (wrapped false)
+ (libraries melange.dom)
  (modes melange))

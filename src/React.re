@@ -1,6 +1,6 @@
 type element;
 
-[@bs.val] external null: element = "null";
+external null: element = "null";
 
 external float: float => element = "%identity";
 external int: int => element = "%identity";
@@ -16,35 +16,35 @@ type component('props) = componentLike('props, element);
 external component: componentLike('props, element) => component('props) =
   "%identity";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external createElement: (component('props), 'props) => element =
   "createElement";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external cloneElement: (element, 'props) => element = "cloneElement";
 
-[@bs.splice] [@bs.module "react"]
+[@mel.splice] [@mel.module "react"]
 external createElementVariadic:
   (component('props), 'props, array(element)) => element =
   "createElement";
 
-[@bs.module "react/jsx-runtime"]
+[@mel.module "react/jsx-runtime"]
 external jsxKeyed:
   (component('props), 'props, ~key: string=?, unit) => element =
   "jsx";
 
-[@bs.module "react/jsx-runtime"]
+[@mel.module "react/jsx-runtime"]
 external jsx: (component('props), 'props) => element = "jsx";
 
-[@bs.module "react/jsx-runtime"]
+[@mel.module "react/jsx-runtime"]
 external jsxs: (component('props), 'props) => element = "jsxs";
 
-[@bs.module "react/jsx-runtime"]
+[@mel.module "react/jsx-runtime"]
 external jsxsKeyed:
   (component('props), 'props, ~key: string=?, unit) => element =
   "jsxs";
 
-[@bs.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
+[@mel.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
 
 type ref('value) = {mutable current: 'value};
 
@@ -52,41 +52,41 @@ module Ref = {
   [@deprecated "Please use the type React.ref instead"]
   type t('value) = ref('value);
 
-  [@deprecated "Please directly read from ref.current instead"] [@bs.get]
+  [@deprecated "Please directly read from ref.current instead"] [@mel.get]
   external current: ref('value) => 'value = "current";
 
-  [@deprecated "Please directly assign to ref.current instead"] [@bs.set]
+  [@deprecated "Please directly assign to ref.current instead"] [@mel.set]
   external setCurrent: (ref('value), 'value) => unit = "current";
 };
 
-[@bs.module "react"]
+[@mel.module "react"]
 external createRef: unit => ref(Js.nullable('a)) = "createRef";
 
 module Children = {
-  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external map: (element, element => element) => element = "map";
-  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external mapWithIndex:
-    (element, [@bs.uncurry] ((element, int) => element)) => element =
+    (element, [@mel.uncurry] ((element, int) => element)) => element =
     "map";
-  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external forEach: (element, element => unit) => unit = "forEach";
-  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external forEachWithIndex:
-    (element, [@bs.uncurry] ((element, int) => unit)) => unit =
+    (element, [@mel.uncurry] ((element, int) => unit)) => unit =
     "forEach";
-  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external count: element => int = "count";
-  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external only: element => element = "only";
-  [@bs.module "react"] [@bs.scope "Children"] [@bs.val]
+  [@mel.module "react"] [@mel.scope "Children"]
   external toArray: element => array(element) = "toArray";
 };
 
 module Context = {
   type t('props);
 
-  [@bs.obj]
+  [@mel.obj]
   external makeProps:
     (~value: 'props, ~children: element, unit) =>
     {
@@ -95,7 +95,7 @@ module Context = {
       "children": element,
     };
 
-  [@bs.get]
+  [@mel.get]
   external provider:
     t('props) =>
     component({
@@ -106,41 +106,41 @@ module Context = {
     "Provider";
 };
 
-[@bs.module "react"]
+[@mel.module "react"]
 external createContext: 'a => Context.t('a) = "createContext";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external forwardRef:
-  ([@bs.uncurry] (('props, Js.Nullable.t(ref('a))) => element)) =>
+  ([@mel.uncurry] (('props, Js.Nullable.t(ref('a))) => element)) =>
   component('props) =
   "forwardRef";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external memo: component('props) => component('props) = "memo";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external memoCustomCompareProps:
-  (component('props), [@bs.uncurry] (('props, 'props) => bool)) =>
+  (component('props), [@mel.uncurry] (('props, 'props) => bool)) =>
   component('props) =
   "memo";
 
 module Fragment = {
-  [@bs.obj]
+  [@mel.obj]
   external makeProps: (~children: element, unit) => {. "children": element};
 
-  [@bs.module "react"]
+  [@mel.module "react"]
   external make: component({. "children": element}) = "Fragment";
 };
 
 module StrictMode = {
-  [@bs.obj]
+  [@mel.obj]
   external makeProps: (~children: element, unit) => {. "children": element};
-  [@bs.module "react"]
+  [@mel.module "react"]
   external make: component({. "children": element}) = "StrictMode";
 };
 
 module Suspense = {
-  [@bs.obj]
+  [@mel.obj]
   external makeProps:
     (~children: element=?, ~fallback: element=?, unit) =>
     {
@@ -148,7 +148,7 @@ module Suspense = {
       "children": option(element),
       "fallback": option(element),
     };
-  [@bs.module "react"]
+  [@mel.module "react"]
   external make:
     component({
       .
@@ -162,7 +162,7 @@ module Suspense = {
 module SuspenseList = {
   type revealOrder;
   type tail;
-  [@bs.obj]
+  [@mel.obj]
   external makeProps:
     (
       ~children: element=?,
@@ -177,7 +177,7 @@ module SuspenseList = {
       "tail": option(tail),
     };
 
-  [@bs.module "react"]
+  [@mel.module "react"]
   external make:
     component({
       .
@@ -195,349 +195,366 @@ module SuspenseList = {
  * them differently. Lazy initializer + callback which returns state is the
  * only way to safely have any type of state and be able to update it correctly.
  */
-[@bs.module "react"]
+[@mel.module "react"]
 external useState:
-  ([@bs.uncurry] (unit => 'state)) => ('state, ('state => 'state) => unit) =
+  ([@mel.uncurry] (unit => 'state)) => ('state, ('state => 'state) => unit) =
   "useState";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useReducer:
-  ([@bs.uncurry] (('state, 'action) => 'state), 'state) =>
+  ([@mel.uncurry] (('state, 'action) => 'state), 'state) =>
   ('state, 'action => unit) =
   "useReducer";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useReducerWithMapState:
   (
-    [@bs.uncurry] (('state, 'action) => 'state),
+    [@mel.uncurry] (('state, 'action) => 'state),
     'initialState,
-    [@bs.uncurry] ('initialState => 'state)
+    [@mel.uncurry] ('initialState => 'state)
   ) =>
   ('state, 'action => unit) =
   "useReducer";
 
-[@bs.module "react"]
-external useEffect: ([@bs.uncurry] (unit => option(unit => unit))) => unit =
+[@mel.module "react"]
+external useEffect: ([@mel.uncurry] (unit => option(unit => unit))) => unit =
   "useEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useEffect0:
-  ([@bs.uncurry] (unit => option(unit => unit)), [@bs.as {json|[]|json}] _) =>
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    [@mel.as {json|[]|json}] _
+  ) =>
   unit =
   "useEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useEffect1:
-  ([@bs.uncurry] (unit => option(unit => unit)), array('a)) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit)), array('a)) => unit =
   "useEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useEffect2:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
   "useEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useEffect3:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
   "useEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useEffect4:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
   "useEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useEffect5:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
   unit =
   "useEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useEffect6:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    ('a, 'b, 'c, 'd, 'e, 'f)
+  ) =>
   unit =
   "useEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useEffect7:
   (
-    [@bs.uncurry] (unit => option(unit => unit)),
+    [@mel.uncurry] (unit => option(unit => unit)),
     ('a, 'b, 'c, 'd, 'e, 'f, 'g)
   ) =>
   unit =
   "useEffect";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect:
-  ([@bs.uncurry] (unit => option(unit => unit))) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit))) => unit =
   "useLayoutEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect0:
-  ([@bs.uncurry] (unit => option(unit => unit)), [@bs.as {json|[]|json}] _) =>
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    [@mel.as {json|[]|json}] _
+  ) =>
   unit =
   "useLayoutEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect1:
-  ([@bs.uncurry] (unit => option(unit => unit)), array('a)) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit)), array('a)) => unit =
   "useLayoutEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect2:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
   "useLayoutEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect3:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
   "useLayoutEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect4:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
   "useLayoutEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect5:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
   unit =
   "useLayoutEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect6:
-  ([@bs.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    ('a, 'b, 'c, 'd, 'e, 'f)
+  ) =>
   unit =
   "useLayoutEffect";
-[@bs.module "react"]
+[@mel.module "react"]
 external useLayoutEffect7:
   (
-    [@bs.uncurry] (unit => option(unit => unit)),
+    [@mel.uncurry] (unit => option(unit => unit)),
     ('a, 'b, 'c, 'd, 'e, 'f, 'g)
   ) =>
   unit =
   "useLayoutEffect";
 
-[@bs.module "react"]
-external useMemo: ([@bs.uncurry] (unit => 'any)) => 'any = "useMemo";
-[@bs.module "react"]
+[@mel.module "react"]
+external useMemo: ([@mel.uncurry] (unit => 'any)) => 'any = "useMemo";
+[@mel.module "react"]
 external useMemo0:
-  ([@bs.uncurry] (unit => 'any), [@bs.as {json|[]|json}] _) => 'any =
+  ([@mel.uncurry] (unit => 'any), [@mel.as {json|[]|json}] _) => 'any =
   "useMemo";
-[@bs.module "react"]
-external useMemo1: ([@bs.uncurry] (unit => 'any), array('a)) => 'any =
+[@mel.module "react"]
+external useMemo1: ([@mel.uncurry] (unit => 'any), array('a)) => 'any =
   "useMemo";
-[@bs.module "react"]
-external useMemo2: ([@bs.uncurry] (unit => 'any), ('a, 'b)) => 'any =
+[@mel.module "react"]
+external useMemo2: ([@mel.uncurry] (unit => 'any), ('a, 'b)) => 'any =
   "useMemo";
-[@bs.module "react"]
-external useMemo3: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c)) => 'any =
+[@mel.module "react"]
+external useMemo3: ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c)) => 'any =
   "useMemo";
-[@bs.module "react"]
-external useMemo4: ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd)) => 'any =
+[@mel.module "react"]
+external useMemo4: ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd)) => 'any =
   "useMemo";
-[@bs.module "react"]
+[@mel.module "react"]
 external useMemo5:
-  ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e)) => 'any =
+  ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e)) => 'any =
   "useMemo";
-[@bs.module "react"]
+[@mel.module "react"]
 external useMemo6:
-  ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f)) => 'any =
+  ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f)) => 'any =
   "useMemo";
-[@bs.module "react"]
+[@mel.module "react"]
 external useMemo7:
-  ([@bs.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'any =
+  ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'any =
   "useMemo";
 
 /* This is used as return values  */
 type callback('input, 'output) = 'input => 'output;
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback:
-  ([@bs.uncurry] ('input => 'output)) => callback('input, 'output) =
+  ([@mel.uncurry] ('input => 'output)) => callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback0:
-  ([@bs.uncurry] ('input => 'output), [@bs.as {json|[]|json}] _) =>
+  ([@mel.uncurry] ('input => 'output), [@mel.as {json|[]|json}] _) =>
   callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback1:
-  ([@bs.uncurry] ('input => 'output), array('a)) => callback('input, 'output) =
+  ([@mel.uncurry] ('input => 'output), array('a)) =>
+  callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback2:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b)) => callback('input, 'output) =
+  ([@mel.uncurry] ('input => 'output), ('a, 'b)) => callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback3:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
+  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
   callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback4:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
+  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
   callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback5:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
+  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
   callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback6:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
   callback('input, 'output) =
   "useCallback";
-[@bs.module "react"]
+[@mel.module "react"]
 external useCallback7:
-  ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
+  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
   callback('input, 'output) =
   "useCallback";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useContext: Context.t('any) => 'any = "useContext";
 
-[@bs.module "react"] external useRef: 'value => ref('value) = "useRef";
+[@mel.module "react"] external useRef: 'value => ref('value) = "useRef";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useImperativeHandle0:
   (
     Js.Nullable.t(ref('value)),
-    [@bs.uncurry] (unit => 'value),
-    [@bs.as {json|[]|json}] _
+    [@mel.uncurry] (unit => 'value),
+    [@mel.as {json|[]|json}] _
   ) =>
   unit =
   "useImperativeHandle";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useImperativeHandle1:
-  (Js.Nullable.t(ref('value)), [@bs.uncurry] (unit => 'value), array('a)) =>
+  (
+    Js.Nullable.t(ref('value)),
+    [@mel.uncurry] (unit => 'value),
+    array('a)
+  ) =>
   unit =
   "useImperativeHandle";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useImperativeHandle2:
-  (Js.Nullable.t(ref('value)), [@bs.uncurry] (unit => 'value), ('a, 'b)) =>
+  (Js.Nullable.t(ref('value)), [@mel.uncurry] (unit => 'value), ('a, 'b)) =>
   unit =
   "useImperativeHandle";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useImperativeHandle3:
   (
     Js.Nullable.t(ref('value)),
-    [@bs.uncurry] (unit => 'value),
+    [@mel.uncurry] (unit => 'value),
     ('a, 'b, 'c)
   ) =>
   unit =
   "useImperativeHandle";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useImperativeHandle4:
   (
     Js.Nullable.t(ref('value)),
-    [@bs.uncurry] (unit => 'value),
+    [@mel.uncurry] (unit => 'value),
     ('a, 'b, 'c, 'd)
   ) =>
   unit =
   "useImperativeHandle";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useImperativeHandle5:
   (
     Js.Nullable.t(ref('value)),
-    [@bs.uncurry] (unit => 'value),
+    [@mel.uncurry] (unit => 'value),
     ('a, 'b, 'c, 'd, 'e)
   ) =>
   unit =
   "useImperativeHandle";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useImperativeHandle6:
   (
     Js.Nullable.t(ref('value)),
-    [@bs.uncurry] (unit => 'value),
+    [@mel.uncurry] (unit => 'value),
     ('a, 'b, 'c, 'd, 'e, 'f)
   ) =>
   unit =
   "useImperativeHandle";
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useImperativeHandle7:
   (
     Js.Nullable.t(ref('value)),
-    [@bs.uncurry] (unit => 'value),
+    [@mel.uncurry] (unit => 'value),
     ('a, 'b, 'c, 'd, 'e, 'f, 'g)
   ) =>
   unit =
   "useImperativeHandle";
 
 module Uncurried = {
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useState:
-    ([@bs.uncurry] (unit => 'state)) =>
+    ([@mel.uncurry] (unit => 'state)) =>
     ('state, (. ('state => 'state)) => unit) =
     "useState";
 
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useReducer:
-    ([@bs.uncurry] (('state, 'action) => 'state), 'state) =>
+    ([@mel.uncurry] (('state, 'action) => 'state), 'state) =>
     ('state, (. 'action) => unit) =
     "useReducer";
 
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useReducerWithMapState:
     (
-      [@bs.uncurry] (('state, 'action) => 'state),
+      [@mel.uncurry] (('state, 'action) => 'state),
       'initialState,
-      [@bs.uncurry] ('initialState => 'state)
+      [@mel.uncurry] ('initialState => 'state)
     ) =>
     ('state, (. 'action) => unit) =
     "useReducer";
 
   type callback('input, 'output) = (. 'input) => 'output;
 
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback:
-    ([@bs.uncurry] ('input => 'output)) => callback('input, 'output) =
+    ([@mel.uncurry] ('input => 'output)) => callback('input, 'output) =
     "useCallback";
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback0:
-    ([@bs.uncurry] ('input => 'output), [@bs.as {json|[]|json}] _) =>
+    ([@mel.uncurry] ('input => 'output), [@mel.as {json|[]|json}] _) =>
     callback('input, 'output) =
     "useCallback";
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback1:
-    ([@bs.uncurry] ('input => 'output), array('a)) =>
+    ([@mel.uncurry] ('input => 'output), array('a)) =>
     callback('input, 'output) =
     "useCallback";
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback2:
-    ([@bs.uncurry] ('input => 'output), ('a, 'b)) =>
+    ([@mel.uncurry] ('input => 'output), ('a, 'b)) =>
     callback('input, 'output) =
     "useCallback";
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback3:
-    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
+    ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
     callback('input, 'output) =
     "useCallback";
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback4:
-    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
+    ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
     callback('input, 'output) =
     "useCallback";
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback5:
-    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
+    ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
     callback('input, 'output) =
     "useCallback";
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback6:
-    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
+    ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
     callback('input, 'output) =
     "useCallback";
-  [@bs.module "react"]
+  [@mel.module "react"]
   external useCallback7:
-    ([@bs.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
+    ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
     callback('input, 'output) =
     "useCallback";
 };
 
 type transitionConfig = {timeoutMs: int};
 
-[@bs.module "react"]
+[@mel.module "react"]
 external useTransition:
   (~config: transitionConfig=?, unit) =>
   (callback(callback(unit, unit), unit), bool) =
   "useTransition";
 
-[@bs.set]
+[@mel.set]
 external setDisplayName: (component('props), string) => unit = "displayName";
 
-[@bs.get] [@bs.return nullable]
+[@mel.get] [@mel.return nullable]
 external displayName: component('props) => option(string) = "displayName";

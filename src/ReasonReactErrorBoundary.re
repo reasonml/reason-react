@@ -11,7 +11,8 @@ type params('error) = {
   info,
 };
 
-[%%bs.raw {|
+[%%mel.raw
+  {|
   var React = require("react");
   var ErrorBoundary = (function (Component) {
     function ErrorBoundary(props) {
@@ -29,10 +30,11 @@ type params('error) = {
     };
     return ErrorBoundary;
   })(React.Component);
-|}];
+|}
+];
 
-[@react.component] [@bs.val]
-external make: (
-  ~children: React.element,
-  ~fallback: params('error) => React.element,
-) => React.element = "ErrorBoundary"
+[@react.component]
+external make:
+  (~children: React.element, ~fallback: params('error) => React.element) =>
+  React.element =
+  "ErrorBoundary";
