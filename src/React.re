@@ -541,3 +541,12 @@ external setDisplayName: (component('props), string) => unit = "displayName";
 
 [@bs.get] [@bs.return nullable]
 external displayName: component('props) => option(string) = "displayName";
+
+module DOM = ReactDOM
+module DOMServer = ReactDOMServer
+module DOMStyle = ReactDOMStyle 
+module ErrorBoundary = ReasonReactErrorBoundary 
+module Event = ReactEvent
+module TestRenderer = ReactTestRenderer
+module TestUtils = ReactTestUtils
+module Router = ReasonReactRouter
