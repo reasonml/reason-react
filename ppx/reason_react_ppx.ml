@@ -528,10 +528,10 @@ let jsxMapper =
     | None -> Exp.apply ~loc ~attrs jsxExpr [ component; props ]
   in
 
-  let transformLowercaseCall3 ~ctxt parentExpLoc mapper loc attrs callArguments
+  let transformLowercaseCall3 ~ctxt parentExpLoc mapper callerLoc attrs callArguments
       id =
     let children, nonChildrenProps = extractChildren callArguments in
-    let componentNameExpr = constantString ~loc id in
+    let componentNameExpr = constantString ~loc:callerLoc id in
     let keyProps, nonChildrenProps =
       List.partition
         (fun (arg_label, _) -> "key" = getLabel arg_label)
@@ -544,7 +544,7 @@ let jsxMapper =
     let propsCall =
       Exp.apply ~loc:parentExpLoc
         (Exp.ident ~loc:parentExpLoc ~attrs:merlinHideAttrs
-           { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+           { loc = callerLoc; txt = Ldot (Lident "ReactDOM", "domProps") })
         ((match childrenProp with
          | Some childrenProp ->
              (labelled "children", childrenProp) :: nonChildrenProps
@@ -558,18 +558,18 @@ let jsxMapper =
     | Some (label, key) ->
         (* We create a let binding with the value of the key to ensure
            the inferred type https://github.com/reasonml/reason-react/pull/752 *)
-        Exp.let_ ~loc Nonrecursive
+        Exp.let_ ~loc:parentExpLoc Nonrecursive
           [
             {
-              pvb_pat = Pat.var { txt = key_var_txt; loc };
+              pvb_pat = Pat.var { txt = key_var_txt; loc = parentExpLoc };
               pvb_expr = mapper#expression ctxt key;
               pvb_attributes = [];
-              pvb_loc = loc;
+              pvb_loc = parentExpLoc;
             };
           ]
           (Exp.apply ~loc:parentExpLoc ~attrs jsxExpr
              [
-               (label, Exp.ident { txt = Lident key_var_txt; loc });
+               (label, Exp.ident { txt = Lident key_var_txt; loc = parentExpLoc });
                component;
                props;
                (nolabel, unit);
