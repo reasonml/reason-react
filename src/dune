@@ -5,7 +5,6 @@
  (public_name reason-react)
  (preprocess
   (pps melange.ppx reason-react-ppx))
- (libraries melange.dom)
  (wrapped false)
  (libraries melange.dom)
  (modes melange))
