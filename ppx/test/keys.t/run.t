@@ -30,18 +30,7 @@ _______^
 
   $ ocamlmerlin single type-enclosing -position 10:14 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
-  {
-    "start": {
-      "line": 10,
-      "col": 11
-    },
-    "end": {
-      "line": 10,
-      "col": 17
-    },
-    "type": "Author.t",
-    "tail": "no"
-  }
+  null
 
 key={author.Author.name}
 ______________^
@@ -66,72 +55,28 @@ ____________________^
 
   $ ocamlmerlin single type-enclosing -position 10:28 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
-  {
-    "start": {
-      "line": 10,
-      "col": 18
-    },
-    "end": {
-      "line": 10,
-      "col": 29
-    },
-    "type": "string",
-    "tail": "no"
-  }
+  null
 
 <img src={author.Author.imageUrl} />
 __^
 
   $ ocamlmerlin single type-enclosing -position 10:41 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
-  {
-    "start": {
-      "line": 10,
-      "col": 37
-    },
-    "end": {
-      "line": 10,
-      "col": 41
-    },
-    "type": "string",
-    "tail": "no"
-  }
+  null
 
 <img src={author.Author.imageUrl} />
 ______^
 
   $ ocamlmerlin single type-enclosing -position 10:44 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
-  {
-    "start": {
-      "line": 10,
-      "col": 37
-    },
-    "end": {
-      "line": 10,
-      "col": 73
-    },
-    "type": "unit",
-    "tail": "no"
-  }
+  null
 
 <img src={author.Author.imageUrl} />
 _____________^
 
   $ ocamlmerlin single type-enclosing -position 10:51 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
-  {
-    "start": {
-      "line": 10,
-      "col": 47
-    },
-    "end": {
-      "line": 10,
-      "col": 53
-    },
-    "type": "Author.t",
-    "tail": "no"
-  }
+  null
 
 <img src={author.Author.imageUrl} />
 ____________________^
@@ -156,15 +101,4 @@ ___________________________^
 
   $ ocamlmerlin single type-enclosing -position 10:66 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
-  {
-    "start": {
-      "line": 10,
-      "col": 54
-    },
-    "end": {
-      "line": 10,
-      "col": 69
-    },
-    "type": "string",
-    "tail": "no"
-  }
+  null
