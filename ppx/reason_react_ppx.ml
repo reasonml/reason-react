@@ -71,9 +71,9 @@ module Binding = struct
            { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
         [ (nolabel, element); (nolabel, children) ]
 
-    let domProps ~loc props =
-      Builder.pexp_apply ~loc
-        (Builder.pexp_ident ~loc ~attrs:merlinHideAttrs
+    let domProps ~parentExpLoc ~loc props =
+      Builder.pexp_apply ~loc:parentExpLoc
+        (Builder.pexp_ident ~loc:parentExpLoc ~attrs:merlinHideAttrs
            { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
         props
   end
@@ -599,7 +599,7 @@ let jsxMapper =
       ( jsxExpr,
         [
           (nolabel, componentNameExpr);
-          (nolabel, Binding.ReactDOM.domProps ~loc:parentExpLoc props);
+          (nolabel, Binding.ReactDOM.domProps ~parentExpLoc ~loc props);
         ]
         @ key_args )
     in
@@ -848,13 +848,14 @@ let jsxMapper =
                 } ->
                     spelunkForFunExpression innerFunctionExpression
                 (* let make = React.memoCustomCompareProps(
-                    (~prop) => ...,
-                    (prevProps, nextProps) => false
-                  ) *)
+                     (~prop) => ...,
+                     (prevProps, nextProps) => false
+                   ) *)
                 | {
                  pexp_desc =
                    Pexp_apply
-                     (_wrapperExpression, [ (Nolabel, innerFunctionExpression); _ ]);
+                     ( _wrapperExpression,
+                       [ (Nolabel, innerFunctionExpression); _ ] );
                 } ->
                     spelunkForFunExpression innerFunctionExpression
                 | {
@@ -866,9 +867,9 @@ let jsxMapper =
                     raise
                       (Invalid_argument
                          "react.component calls can only be on function \
-                          definitions or component wrappers (forwardRef, \
-                          memo or memoCustomCompareProps).")
-                [@@raises Invalid_argument]
+                          definitions or component wrappers (forwardRef, memo \
+                          or memoCustomCompareProps).")
+                  [@@raises Invalid_argument]
               in
               spelunkForFunExpression expression
             in
@@ -1086,8 +1087,8 @@ let jsxMapper =
               if hasUnit then
                 [
                   ( Nolabel,
-                    Builder.pexp_construct ~loc:Location.none { loc; txt = Lident "()" } None
-                  );
+                    Builder.pexp_construct ~loc:Location.none
+                      { loc; txt = Lident "()" } None );
                 ]
               else []
             in
