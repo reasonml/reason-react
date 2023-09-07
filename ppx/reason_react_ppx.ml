@@ -188,7 +188,7 @@ let extractChildren ?(removeLastPositionUnit = false) propsAndChildren =
 
 let unerasableIgnore loc =
   let structure_item =
-    Builder.pstr_eval ~loc
+    Builder.pstr_eval ~loc:Location.none
       (Builder.pexp_constant ~loc:Location.none
          (Pconst_string ("-16", Location.none, None)))
       []
@@ -314,7 +314,7 @@ let rec recursivelyMakeNamedArgsForExternal list args =
   match list with
   | (label, default, loc, interiorType) :: tl ->
       recursivelyMakeNamedArgsForExternal tl
-        (Builder.ptyp_arrow ~loc label
+        (Builder.ptyp_arrow ~loc:Location.none label
            (match (label, interiorType, default) with
            (* ~foo=1 *)
            | label, None, Some _ ->
@@ -1086,7 +1086,7 @@ let jsxMapper =
               if hasUnit then
                 [
                   ( Nolabel,
-                    Builder.pexp_construct ~loc { loc; txt = Lident "()" } None
+                    Builder.pexp_construct ~loc:Location.none { loc; txt = Lident "()" } None
                   );
                 ]
               else []
