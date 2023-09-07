@@ -95,7 +95,9 @@
                             ~children=
                               examples
                               |> List.map(e =>
+                                   let Key = e.path;
                                    ReactDOM.jsxKeyed(
+                                     ~key=Key,
                                      "li",
                                      ([@merlin.hide] ReactDOM.domProps)(
                                        ~children=
@@ -116,9 +118,8 @@
                                          ),
                                        (),
                                      ),
-                                     ~key=e.path,
                                      (),
-                                   )
+                                   );
                                  )
                               |> React.list,
                             (),

@@ -8,7 +8,7 @@ module DummyStatefulComponent = {
   let make = (~initialValue=0, ()) => {
     let (value, setValue) = React.useState(() => initialValue);
 
-    <button onClick={_ => setValue(value => value + 1)}>
+    <button key="asdf" onClick={_ => setValue(value => value + 1)}>
       value->React.int
     </button>;
   };
@@ -172,7 +172,8 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndTextContent("div", "Hello world!")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("can render null elements", () => {
@@ -184,7 +185,8 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndPartialTextContent("div", "")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("can render string elements", () => {
@@ -198,7 +200,8 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndPartialTextContent("div", "Hello")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("can render int elements", () => {
@@ -210,7 +213,8 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndPartialTextContent("div", "12345")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("can render float elements", () => {
@@ -222,7 +226,8 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndPartialTextContent("div", "12.345")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("can render array of elements", () => {
@@ -237,19 +242,22 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndPartialTextContent("div", "1")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     expect(
       container
       ->DOM.findBySelectorAndPartialTextContent("div", "2")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     expect(
       container
       ->DOM.findBySelectorAndPartialTextContent("div", "3")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("can clone an element", () => {
@@ -272,19 +280,21 @@ describe("React", () => {
           "Hello",
         )
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("can render react components", () => {
     let container = getContainer(container);
 
-    act(() => {ReactDOM.render(<DummyStatefulComponent />, container)});
+    act(() => {ReactDOM.render(<DummyStatefulComponent key="imp" />, container)});
 
     expect(
       container
       ->DOM.findBySelectorAndTextContent("button", "0")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     let button = container->DOM.findBySelector("button");
 
@@ -299,13 +309,15 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndTextContent("button", "0")
       ->Option.isSome,
-    )->toBe(false);
+    )
+    ->toBe(false);
 
     expect(
       container
       ->DOM.findBySelectorAndTextContent("button", "1")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("can render react components with reducers", () => {
@@ -317,7 +329,8 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndTextContent(".value", "0")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     let button =
       container->DOM.findBySelectorAndPartialTextContent(
@@ -336,13 +349,15 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndTextContent(".value", "0")
       ->Option.isSome,
-    )->toBe(false);
+    )
+    ->toBe(false);
 
     expect(
       container
       ->DOM.findBySelectorAndTextContent(".value", "1")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     let button =
       container->DOM.findBySelectorAndPartialTextContent(
@@ -361,13 +376,15 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndTextContent(".value", "0")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     expect(
       container
       ->DOM.findBySelectorAndTextContent(".value", "1")
       ->Option.isSome,
-    )->toBe(false);
+    )
+    ->toBe(false);
   });
 
   test("can render react components with reducers (map state)", () => {
@@ -381,7 +398,8 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndTextContent(".value", "1")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     let button =
       container->DOM.findBySelectorAndPartialTextContent(
@@ -400,13 +418,15 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndTextContent(".value", "1")
       ->Option.isSome,
-    )->toBe(false);
+    )
+    ->toBe(false);
 
     expect(
       container
       ->DOM.findBySelectorAndTextContent(".value", "2")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     let button =
       container->DOM.findBySelectorAndPartialTextContent(
@@ -425,13 +445,15 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndTextContent(".value", "1")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     expect(
       container
       ->DOM.findBySelectorAndTextContent(".value", "2")
       ->Option.isSome,
-    )->toBe(false);
+    )
+    ->toBe(false);
   });
 
   test("can render react components with effects", () => {
@@ -457,10 +479,7 @@ describe("React", () => {
       )
     });
 
-    expect(callback->Mock.getMock->Mock.calls)->toEqual([|
-      [|0|],
-      [|1|],
-    |]);
+    expect(callback->Mock.getMock->Mock.calls)->toEqual([|[|0|], [|1|]|]);
   });
 
   test("can render react components with layout effects", () => {
@@ -486,10 +505,7 @@ describe("React", () => {
       )
     });
 
-    expect(callback->Mock.getMock->Mock.calls)->toEqual([|
-      [|0|],
-      [|1|],
-    |]);
+    expect(callback->Mock.getMock->Mock.calls)->toEqual([|[|0|], [|1|]|]);
   });
 
   test("can work with React refs", () => {
@@ -510,9 +526,8 @@ describe("React", () => {
       ReactDOM.render(<DummyComponentWithRefAndEffect callback />, container)
     });
 
-    expect(myRef.contents->Option.map(item => item.current))->toEqual(
-      Some(2),
-    );
+    expect(myRef.contents->Option.map(item => item.current))
+    ->toEqual(Some(2));
   });
 
   test("Children", () => {
@@ -533,19 +548,22 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndPartialTextContent("div[data-index='0']", "1")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     expect(
       container
       ->DOM.findBySelectorAndPartialTextContent("div[data-index='1']", "2")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
 
     expect(
       container
       ->DOM.findBySelectorAndPartialTextContent("div[data-index='2']", "3")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("Context", () => {
@@ -564,7 +582,8 @@ describe("React", () => {
       container
       ->DOM.findBySelectorAndPartialTextContent("div", "10")
       ->Option.isSome,
-    )->toBe(true);
+    )
+    ->toBe(true);
   });
 
   test("Events", () => {
@@ -609,30 +628,54 @@ describe("React", () => {
     )
     ->toBe(true);
   });
-  
-  /* test("ErrorBoundary", () => {
+
+  test("Type inference with keys", () => {
     let container = getContainer(container);
+
+    module Author = {
+      type t = {
+        name: string,
+        imageUrl: string,
+      };
+    };
+
+    let render = author =>
+      <tr key={author.Author.name}>
+        <td> <img src={author.imageUrl} /> </td>
+      </tr>;
 
     act(() => {
       ReactDOM.render(
-        <ReasonReactErrorBoundary
-          fallback={({error: _, info}) => {
-            expect(
-              info.componentStack->Js.String2.includes("ComponentThatThrows"),
-            ).
-              toBe(true);
-            <strong> "An error occured"->React.string </strong>;
-          }}>
-          <ComponentThatThrows value=1 />
-        </ReasonReactErrorBoundary>,
+        render({name: "Joe", imageUrl: "https://foo.png"}),
         container,
       )
     });
 
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("strong", "An error occured")
-      ->Option.isSome,
-    )->toBe(true);
-  }); */
+    expect(container->DOM.findBySelector("img")->Option.isSome)->toBe(true);
+  });
+  /* test("ErrorBoundary", () => {
+       let container = getContainer(container);
+
+       act(() => {
+         ReactDOM.render(
+           <ReasonReactErrorBoundary
+             fallback={({error: _, info}) => {
+               expect(
+                 info.componentStack->Js.String2.includes("ComponentThatThrows"),
+               ).
+                 toBe(true);
+               <strong> "An error occured"->React.string </strong>;
+             }}>
+             <ComponentThatThrows value=1 />
+           </ReasonReactErrorBoundary>,
+           container,
+         )
+       });
+
+       expect(
+         container
+         ->DOM.findBySelectorAndTextContent("strong", "An error occured")
+         ->Option.isSome,
+       )->toBe(true);
+     }); */
 });
