@@ -25,14 +25,14 @@ _^
   > -filename component.re < component.re | jq '.value[0]'
   {
     "start": {
-      "line": 8,
-      "col": 0
+      "line": 10,
+      "col": 2
     },
     "end": {
       "line": 10,
       "col": 85
     },
-    "type": "(~author: Author.t) => React.element",
+    "type": "ReactDOM.domProps",
     "tail": "no"
   }
 
