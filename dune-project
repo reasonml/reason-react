@@ -41,6 +41,10 @@
   (reason
    (>= 3.6.0))
   (ocaml-lsp-server :with-test)
+  (merlin
+   (and
+    (= 4.10-414)
+    :with-test))
   (opam-check-npm-deps
    (and
     (= 1.0.0)
