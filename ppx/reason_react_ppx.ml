@@ -71,9 +71,9 @@ module Binding = struct
            { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
         [ (nolabel, element); (nolabel, children) ]
 
-    let domProps ~parentExpLoc ~loc props =
-      Builder.pexp_apply ~loc:parentExpLoc
-        (Builder.pexp_ident ~loc:parentExpLoc ~attrs:merlinHideAttrs
+    let domProps ~applyLoc ~loc props =
+      Builder.pexp_apply ~loc:applyLoc
+        (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
            { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
         props
   end
@@ -508,7 +508,7 @@ let jsxMapper =
       { txt = Lident "()"; loc = Location.none }
       None
   and key_var_txt = "Key" in
-  let transformUppercaseCall3 ~caller modulePath ~ctxt mapper loc attrs _
+  let transformUppercaseCall3 ~caller ~ctxt modulePath mapper parentExpLoc attrs
       callArguments =
     let children, argsWithLabels = extractChildren callArguments in
     let argsForMake = argsWithLabels in
@@ -518,7 +518,7 @@ let jsxMapper =
         argsForMake
     in
     let jsxExpr, key, childrenProp =
-      reactJsxExprAndChildren ~loc ~ctxt mapper ~keyProps children
+      reactJsxExprAndChildren ~loc:parentExpLoc ~ctxt ~keyProps mapper children
     in
     let propsArg =
       (match childrenProp with
@@ -549,20 +549,78 @@ let jsxMapper =
             (Invalid_argument
                "JSX name can't be the result of function applications")
     in
-    let component = (nolabel, Builder.pexp_ident ~loc { txt = ident; loc })
+    let component =
+      ( nolabel,
+        Builder.pexp_ident ~loc:parentExpLoc { txt = ident; loc = parentExpLoc }
+      )
     and props =
-    (nolabel,
-      Builder.pexp_apply ~loc
-        (Builder.pexp_ident ~loc { loc; txt = propsIdent })
-        propsArg
-    )
+      ( nolabel,
+        Builder.pexp_apply ~loc:parentExpLoc
+          (Builder.pexp_ident ~loc:parentExpLoc
+             { loc = parentExpLoc; txt = propsIdent })
+          propsArg )
     in
     match key with
-      | None -> Builder.pexp_apply ~loc ~attrs jsxExpr [ component; props ]
-      | Some (label, key) ->
+    | None ->
+        Builder.pexp_apply ~loc:parentExpLoc ~attrs jsxExpr [ component; props ]
+    | Some (label, key) ->
         (* We create a let binding with the value of the key to ensure
-        the inferred type https://github.com/reasonml/reason-react/pull/752 *)
+           the inferred type https://github.com/reasonml/reason-react/pull/752 *)
+        let loc = parentExpLoc in
         Builder.pexp_let ~loc Nonrecursive
+          [
+            {
+              pvb_pat = Builder.ppat_var ~loc { txt = key_var_txt; loc };
+              pvb_expr = mapper#expression ctxt key;
+              pvb_attributes = [];
+              pvb_loc = loc;
+            };
+          ]
+          (Builder.pexp_apply ~loc:parentExpLoc ~attrs jsxExpr
+             [
+               ( label,
+                 Builder.pexp_ident ~loc:parentExpLoc
+                   { txt = Lident key_var_txt; loc = parentExpLoc } );
+               component;
+               props;
+               (nolabel, unit);
+             ])
+  in
+
+  let transformLowercaseCall3 ~ctxt parentExpLoc mapper callerLoc attrs
+      callArguments id =
+    let children, nonChildrenProps = extractChildren callArguments in
+    let componentNameExpr = constantString ~loc:callerLoc id in
+    let keyProps, nonChildrenProps =
+      List.partition
+        (fun (arg_label, _) -> "key" = getLabel arg_label)
+        nonChildrenProps
+    in
+
+    let jsxExpr, key, childrenProp =
+      reactDomJsxExprAndChildren ~loc:parentExpLoc ~ctxt mapper ~keyProps
+        children
+    in
+    let props =
+      (match childrenProp with
+      | Some childrenProp ->
+          (labelled "children", childrenProp) :: nonChildrenProps
+      | None -> nonChildrenProps)
+      |> List.map (fun (label, expression) ->
+             (label, mapper#expression ctxt expression))
+    in
+    let component = (nolabel, componentNameExpr)
+    and props =
+      ( nolabel,
+        Binding.ReactDOM.domProps ~applyLoc:parentExpLoc ~loc:callerLoc props )
+    in
+    let loc = parentExpLoc in
+    let gloc = { loc with loc_ghost = true } in
+    match key with
+    | Some (label, key) ->
+        (* We create a let binding with the value of the key to ensure
+           the inferred type https://github.com/reasonml/reason-react/pull/752 *)
+        Builder.pexp_let ~loc:gloc Nonrecursive
           [
             {
               pvb_pat = Builder.ppat_var ~loc { txt = key_var_txt; loc };
@@ -578,44 +636,7 @@ let jsxMapper =
                props;
                (nolabel, unit);
              ])
-  in
-
-  let transformLowercaseCall3 ~ctxt parentExpLoc mapper callerLoc attrs callArguments
-      id =
-    let children, nonChildrenProps = extractChildren callArguments in
-    let componentNameExpr = constantString ~loc:callerLoc id in
-    let keyProps, nonChildrenProps =
-      List.partition
-        (fun (arg_label, _) -> "key" = getLabel arg_label)
-        nonChildrenProps
-    in
-    let jsxExpr, args =
-      let jsxExpr, key, childrenProp =
-        reactDomJsxExprAndChildren ~loc:parentExpLoc ~ctxt mapper ~keyProps
-          children
-      in
-      let props =
-        (match childrenProp with
-        | Some childrenProp ->
-            (labelled "children", childrenProp) :: nonChildrenProps
-        | None -> nonChildrenProps)
-        |> List.map (fun (label, expression) ->
-               (label, mapper#expression ctxt expression))
-      in
-      let key_args =
-        match key with
-        | Some (label, key) ->
-            [ (label, mapper#expression ctxt key); (nolabel, unit) ]
-        | None -> []
-      in
-      ( jsxExpr,
-        [
-          (nolabel, componentNameExpr);
-          (nolabel, Binding.ReactDOM.domProps ~parentExpLoc ~loc:callerLoc props);
-        ]
-        @ key_args )
-    in
-    Builder.pexp_apply ~loc:parentExpLoc ~attrs jsxExpr args
+    | None -> Builder.pexp_apply ~loc ~attrs jsxExpr [ component; props ]
   in
 
   let rec recursivelyTransformNamedArgsForMake ~ctxt mapper expr list =
@@ -1308,7 +1329,7 @@ let jsxMapper =
         (* Foo.createElement(~prop1=foo, ~prop2=bar, ~children=[], ()) *)
         | { txt = Ldot (modulePath, ("createElement" | "make")) } ->
             transformUppercaseCall3 ~ctxt ~caller:"make" modulePath mapper
-              parentExpLoc attrs callExpression callArguments
+              parentExpLoc attrs callArguments
         (* div(~prop1=foo, ~prop2=bar, ~children=[bla], ()) *)
         (* turn that into
            ReactDOM.createElement("div", ~props=ReactDOM.domProps(~props1=foo,
@@ -1321,7 +1342,7 @@ let jsxMapper =
            https://github.com/reasonml/reason/pull/2541 *)
         | { txt = Ldot (modulePath, anythingNotCreateElementOrMake) } ->
             transformUppercaseCall3 ~ctxt ~caller:anythingNotCreateElementOrMake
-              modulePath mapper parentExpLoc attrs callExpression callArguments
+              modulePath mapper parentExpLoc attrs callArguments
         | { txt = Lapply _ } ->
             (* don't think there's ever a case where this is reached *)
             raise

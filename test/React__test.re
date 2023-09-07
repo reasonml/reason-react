@@ -8,7 +8,7 @@ module DummyStatefulComponent = {
   let make = (~initialValue=0, ()) => {
     let (value, setValue) = React.useState(() => initialValue);
 
-    <button onClick={_ => setValue(value => value + 1)}>
+    <button key="asdf" onClick={_ => setValue(value => value + 1)}>
       value->React.int
     </button>;
   };
@@ -287,7 +287,7 @@ describe("React", () => {
   test("can render react components", () => {
     let container = getContainer(container);
 
-    act(() => {ReactDOM.render(<DummyStatefulComponent />, container)});
+    act(() => {ReactDOM.render(<DummyStatefulComponent key="imp" />, container)});
 
     expect(
       container
