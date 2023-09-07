@@ -1125,7 +1125,7 @@ let jsxMapper =
               | None -> innerExpression
             in
             let fullExpression =
-              Builder.pexp_fun ~loc nolabel None
+              Builder.pexp_fun ~loc:Location.none nolabel None
                 {
                   ppat_desc =
                     Ppat_constraint
