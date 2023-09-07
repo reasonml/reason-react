@@ -32,7 +32,7 @@ _^
       "line": 10,
       "col": 85
     },
-    "type": "ReactDOM.domProps",
+    "type": "string",
     "tail": "no"
   }
 
