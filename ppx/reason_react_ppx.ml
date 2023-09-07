@@ -99,9 +99,7 @@ let safeTypeFromValue valueStr =
   match String.sub valueStr 0 1 with "_" -> "T" ^ valueStr | _ -> valueStr
 [@@raises Invalid_argument]
 
-let keyType loc =
-  Builder.ptyp_constr ~loc { loc; txt = optionIdent }
-    [ Builder.ptyp_constr ~loc { loc; txt = Lident "string" } [] ]
+let keyType loc = Builder.ptyp_constr ~loc { loc; txt = Lident "string" } []
 
 type 'a children = ListLiteral of 'a | Exact of 'a
 type componentConfig = { propsName : string }
@@ -318,21 +316,17 @@ let rec recursivelyMakeNamedArgsForExternal list args =
            (match (label, interiorType, default) with
            (* ~foo=1 *)
            | label, None, Some _ ->
-               {
-                 ptyp_desc = Ptyp_var (safeTypeFromValue label);
-                 ptyp_loc = loc;
-                 ptyp_loc_stack = [];
-                 ptyp_attributes = [];
-               }
+               Builder.ptyp_var ~loc (safeTypeFromValue label)
            (* ~foo: int=1 *)
            | _label, Some type_, Some _ -> type_
            (* ~foo: option(int)=? *)
-           | ( label,
+           | ( _label,
                Some
                  {
                    ptyp_desc = Ptyp_constr ({ txt = Lident "option" }, [ type_ ]);
                  },
-               _ )
+               _ ) ->
+               Builder.ptyp_constr ~loc { loc; txt = optionIdent } [ type_ ]
            | ( label,
                Some
                  {
@@ -341,27 +335,16 @@ let rec recursivelyMakeNamedArgsForExternal list args =
                        ({ txt = Ldot (Lident "*predef*", "option") }, [ type_ ]);
                  },
                _ )
-           (* ~foo: int=? - note this isnt valid. but we want to get a type
-              error *)
-           | label, Some type_, _
              when isOptional label ->
+               print_endline "wat not";
                type_
+           (* ~foo: int=? - note this isnt valid. but we want to get a type error *)
+           | label, Some type_, _ when isOptional label -> type_
            (* ~foo=? *)
            | label, None, _ when isOptional label ->
-               {
-                 ptyp_desc = Ptyp_var (safeTypeFromValue label);
-                 ptyp_loc = loc;
-                 ptyp_loc_stack = [];
-                 ptyp_attributes = [];
-               }
+               Builder.ptyp_var ~loc (safeTypeFromValue label)
            (* ~foo *)
-           | label, None, _ ->
-               {
-                 ptyp_desc = Ptyp_var (safeTypeFromValue label);
-                 ptyp_loc_stack = [];
-                 ptyp_loc = loc;
-                 ptyp_attributes = [];
-               }
+           | label, None, _ -> Builder.ptyp_var ~loc (safeTypeFromValue label)
            | _label, Some type_, _ -> type_)
            args)
   | [] -> args
