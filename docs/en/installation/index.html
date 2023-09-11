@@ -109,7 +109,7 @@ make serve <span class="hljs-comment"># Serves the application with a local HTTP
 <ol start="2">
 <li>Enable melange inside dune under a <code>dune-project</code> file in the root of your project with the following:</li>
 </ol>
-<pre><code class="hljs css language-sh">(dune lang 3.8)
+<pre><code class="hljs css language-sh">(lang dune 3.8)
 (using melange 0.1)
 </code></pre>
 <p>Check <a href="https://dune.readthedocs.io/en/latest/melange.html">dune docs</a> for all fields available.</p>
@@ -121,6 +121,7 @@ make serve <span class="hljs-comment"># Serves the application with a local HTTP
   (<span class="hljs-name">libraries</span> reason-react)
   (<span class="hljs-name">preprocess</span> (<span class="hljs-name">pps</span> reactjs-jsx-ppx)))
 </code></pre>
+<p>The target name is the name of the folder where the compiled code will live and also an &quot;alias&quot; to run the build commands (see below).</p>
 <ol start="4">
 <li>Run those commands to build your code:</li>
 </ol>
