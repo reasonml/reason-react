@@ -1,8 +1,4 @@
-Since we generate invalid syntax for the argument of the make fn `(Props : <>)`
-We need to output ML syntax here, otherwise refmt could not parse it.
-  $ refmt --parse re --print ml input.re > output.ml
-  $ reason-react-ppx --impl output.ml -o temp.ml
-  $ refmt --parse ml --print re temp.ml
+  $ ../ppx.sh --output re input.re
   module Example = {
     [@bs.obj]
     external makeProps:
