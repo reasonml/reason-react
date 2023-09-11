@@ -336,7 +336,6 @@ let rec recursivelyMakeNamedArgsForExternal list args =
                  },
                _ )
              when isOptional label ->
-               print_endline "wat not";
                type_
            (* ~foo: int=? - note this isnt valid. but we want to get a type error *)
            | label, Some type_, _ when isOptional label -> type_
