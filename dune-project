@@ -39,7 +39,7 @@
    (>= 1.0.0))
   reason-react-ppx
   (reason
-   (>= 3.6.0))
+   (and (>= 3.6.0) (< 3.10.0)))
   (ocaml-lsp-server :with-test)
   (merlin
    (and
@@ -62,7 +62,7 @@
   (ocaml
    (>= 4.13.0))
   (reason
-   (>= 3.9.0))
+   (and (>= 3.6.0) (< 3.10.0)))
   (ppxlib
    (>= 0.28.0))
   (merlin :with-test)
