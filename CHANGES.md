@@ -9,6 +9,9 @@ transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-tr
 * Fix locations for lower and uppercase components so that merlin / editor
   integration can get type defs on hover ([@jchavarri in #748](https://github.com/reasonml/reason-react/pull/748))
 * Refine types for `key` attributes ([@anmonteiro in #750](https://github.com/reasonml/reason-react/pull/750))
+* Bump React depext to v17-18 #777 ([@jchavarri in #777](https://github.com/reasonml/reason-react/pull/777/files))
+* Make optional props optional properly
+ ([@davesnx in #776](https://github.com/reasonml/reason-react/commit/0a98c07abaeea7ad5d217f8d4c157289e38aa639))
 
 # 0.11.0
 
