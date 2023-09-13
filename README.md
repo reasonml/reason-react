@@ -3,8 +3,6 @@
 
 # [ReasonReact](https://reasonml.github.io/reason-react/)
 
-[![npm version](https://badge.fury.io/js/reason-react.svg)](https://www.npmjs.com/package/reason-react)
-![npm](https://img.shields.io/npm/dt/reason-react)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 ![contributors](https://img.shields.io/github/contributors/reasonml/reason-react)
 [![discord](https://img.shields.io/discord/235176658175262720.svg?logo=discord&colorb=blue)](https://discord.gg/reasonml)
