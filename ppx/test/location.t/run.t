@@ -613,7 +613,7 @@
        (pval_prim (""))
        (pval_attributes
         (((attr_name
-           ((txt bs.obj)
+           ((txt mel.obj)
             (loc
              ((loc_start
                ((pos_fname output.ml) (pos_lnum 1) (pos_bol 0) (pos_cnum 0)))
@@ -1396,7 +1396,7 @@
        (pval_prim (""))
        (pval_attributes
         (((attr_name
-           ((txt bs.obj)
+           ((txt mel.obj)
             (loc
              ((loc_start
                ((pos_fname output.ml) (pos_lnum 3) (pos_bol 153)
@@ -2656,7 +2656,7 @@
                 (pval_prim (""))
                 (pval_attributes
                  (((attr_name
-                    ((txt bs.obj)
+                    ((txt mel.obj)
                      (loc
                       ((loc_start
                         ((pos_fname output.ml) (pos_lnum 10) (pos_bol 423)
