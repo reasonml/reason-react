@@ -37,7 +37,7 @@
    (>= 4.13.0))
   (melange
    (>= 1.0.0))
-  reason-react-ppx
+  (reason-react-ppx (= :version))
   (reason
    (and (>= 3.6.0) (< 3.10.0)))
   (ocaml-lsp-server :with-test)
