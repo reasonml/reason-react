@@ -36,10 +36,11 @@
   (ocaml
    (>= 4.13.0))
   (melange
-   (>= 1.0.0))
-  (reason-react-ppx (= :version))
+   (>= 2.0.0))
+  (reason-react-ppx
+   (= :version))
   (reason
-   (and (>= 3.6.0) (< 3.10.0)))
+   (>= 3.10.0))
   (ocaml-lsp-server :with-test)
   (opam-check-npm-deps
    (and
@@ -58,7 +59,7 @@
   (ocaml
    (>= 4.13.0))
   (reason
-   (and (>= 3.6.0) (< 3.10.0)))
+   (>= 3.10.0))
   (ppxlib
    (>= 0.28.0))
   (merlin
