@@ -2,9 +2,11 @@
 title: `reason-react-ppx` is now on opam!
 ---
 
-ReasonReact 0.12 provides the JSX transformation from `reason-react-ppx` (previously named `reactjs-jsx-ppx`) with a bunch of improvements.
+Today, we're releasing ReasonReact 0.12! The most important changes are renaming the JSX transform PPX from `reactjs-jsx-ppx` to `reason-react-ppx`, along with many other improvements:
 
-The biggest changes are the new JSX transformation from React 17 and a great improvement on locations for props. A few bug fixes and some small breaking changes are also included (check below for more details).
+- `reason-react-ppx` now emits the React 17 [JSX transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html).
+- prop locations have been greatly improved, resulting in much better editor integration.
+- check the full changes below for more details around other fixes and small breaking changes.
 
 ### Locations from domProps in action (Thanks @jchavarri)
 ![download](https://github.com/reasonml/reason-react/assets/3763599/db505599-8fee-4889-80a3-d2056ece291c)
