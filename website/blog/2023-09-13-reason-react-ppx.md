@@ -1,5 +1,5 @@
 ---
-title: `reason-react-ppx` is now on opam!
+title: Support for the JSX transform under a new name `reason-react-ppx`
 ---
 
 Today, we're releasing ReasonReact 0.12! The most important changes are renaming the JSX transform PPX from `reactjs-jsx-ppx` to `reason-react-ppx`, along with many other improvements:
