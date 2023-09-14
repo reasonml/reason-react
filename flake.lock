@@ -5,11 +5,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1689068808,
-        "narHash": "sha256-6ixXo3wt24N/melDWjq70UuHQLxGV8jZvooRanIHXw0=",
+        "lastModified": 1694529238,
+        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "919d646de7be200f3bf08cb76ae1f09402b6f9b4",
+        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
         "type": "github"
       },
       "original": {
@@ -32,16 +32,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1685563568,
-        "narHash": "sha256-nbdH3TKhgCfofhRxOyl5pv4nz9EiuOqZM4ExFkwTgAw=",
+        "lastModified": 1694652454,
+        "narHash": "sha256-pTpVWB3d831iy85K2N7yliLIvswBmW7xpOI48TfluXE=",
         "owner": "melange-re",
         "repo": "melange",
-        "rev": "c989a91761a9b1bcc8af80fb9653eab897360325",
+        "rev": "465101328e0e1ec90e246b0a2e8622e6cbdc0584",
         "type": "github"
       },
       "original": {
         "owner": "melange-re",
-        "ref": "1.0.0",
         "repo": "melange",
         "type": "github"
       }
@@ -58,42 +57,26 @@
         ]
       },
       "locked": {
-        "lastModified": 1685926663,
-        "narHash": "sha256-P+HhbuBJBWSPVe5cUEZQxkwjYcrCw8g+pOhd2u2YTHM=",
+        "lastModified": 1694035969,
+        "narHash": "sha256-QJnOPSxduX34SAPJJXORukEusOLUe/rpMdOI2qOxnGo=",
         "owner": "melange-re",
         "repo": "melange-compiler-libs",
-        "rev": "38bb9de36cb1f0af85b039943521c3e1244dbcb9",
+        "rev": "6e6646c6f8b6e2d785e12b8c38e14af2e8e47893",
         "type": "github"
       },
       "original": {
         "owner": "melange-re",
         "repo": "melange-compiler-libs",
-        "rev": "38bb9de36cb1f0af85b039943521c3e1244dbcb9",
         "type": "github"
       }
     },
     "nix-filter": {
       "locked": {
-        "lastModified": 1687178632,
-        "narHash": "sha256-HS7YR5erss0JCaUijPeyg2XrisEb959FIct3n2TMGbE=",
+        "lastModified": 1694434370,
+        "narHash": "sha256-7yfdTR4mCvWZ39Q6HUcsa18tr0mg+fJZSaHE/63rwoo=",
         "owner": "numtide",
         "repo": "nix-filter",
-        "rev": "d90c75e8319d0dd9be67d933d8eb9d0894ec9174",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "type": "github"
-      }
-    },
-    "nix-filter_2": {
-      "locked": {
-        "lastModified": 1681154353,
-        "narHash": "sha256-MCJ5FHOlbfQRFwN0brqPbCunLEVw05D/3sRVoNVt2tI=",
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "rev": "f529f42792ade8e32c4be274af6b6d60857fbee7",
+        "rev": "d6381c442f79f2f1fdfde00521c3d15d6c21218e",
         "type": "github"
       },
       "original": {
@@ -110,11 +93,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1689290902,
-        "narHash": "sha256-PIaAOnx3FKhX+8Sd3NXDJWV39xOhA+/PMLxS6MoCIGw=",
+        "lastModified": 1694661199,
+        "narHash": "sha256-Z1ipUiuiN8D/6PAsCGaLg87NkCZoCyYZldL8fr+we9k=",
         "owner": "nix-ocaml",
         "repo": "nix-overlays",
-        "rev": "9bde209329b262d0e72076b14debf0b414604277",
+        "rev": "b406bb5a45ce2c88c99b281c1956b8d7941f7e18",
         "type": "github"
       },
       "original": {
@@ -125,17 +108,17 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1689266139,
-        "narHash": "sha256-EhZf5w0eVWG55m++EK6oOqwkou9acK7EwhsSruca8bE=",
+        "lastModified": 1694565417,
+        "narHash": "sha256-51a7dGQ8Q5kJ23nM2R7iiWbsU/r16osqu4W1s8v1C2w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ee5e438359f45b5344acb0d3dcb1a9291eba63b2",
+        "rev": "0be5bebfd4a6cecba668ae410b368f0b91d0af08",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ee5e438359f45b5344acb0d3dcb1a9291eba63b2",
+        "rev": "0be5bebfd4a6cecba668ae410b368f0b91d0af08",
         "type": "github"
       }
     },
@@ -143,7 +126,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "melange": "melange",
-        "nix-filter": "nix-filter_2",
+        "nix-filter": "nix-filter",
         "nixpkgs": "nixpkgs"
       }
     },

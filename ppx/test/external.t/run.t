@@ -1,6 +1,6 @@
   $ ../ppx.sh --output re input.re
   module External = {
-    [@bs.obj]
+    [@mel.obj]
     external componentProps:
       (~a: int, ~b: string, ~key: string=?, unit) =>
       {

@@ -1,1 +1,1 @@
-[@bs.module "react"] external fragment: 'a = "Fragment";
+[@mel.module "react"] external fragment: 'a = "Fragment";

@@ -1,6 +1,6 @@
   $ ../ppx.sh --output re input.re
   module Example = {
-    [@bs.obj]
+    [@mel.obj]
     external makeProps:
       (
         ~cond: bool,
@@ -39,7 +39,7 @@
       );
   };
   module MyPropIsOptionBool = {
-    [@bs.obj]
+    [@mel.obj]
     external makeProps:
       (~myProp: bool=?, ~key: string=?, unit) => {. "myProp": option(bool)};
     external make:
@@ -47,7 +47,7 @@
       "A";
   };
   module MyPropIsOptionOptionBool = {
-    [@bs.obj]
+    [@mel.obj]
     external makeProps:
       (~myProp: option(bool)=?, ~key: string=?, unit) =>
       {. "myProp": option(option(bool))};

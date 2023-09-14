@@ -9,7 +9,8 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     melange = {
-      url = "github:melange-re/melange/1.0.0";
+      url = "github:melange-re/melange";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nix-filter.follows = "nix-filter";
     };
@@ -19,7 +20,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages."${system}".appendOverlays [
-          (self: super: { ocamlPackages = super.ocaml-ng.ocamlPackages_4_14; })
+          (self: super: { ocamlPackages = super.ocaml-ng.ocamlPackages_5_1; })
           melange.overlays.default
         ];
       in
