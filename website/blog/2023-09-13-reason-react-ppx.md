@@ -29,7 +29,7 @@ Next:
 
 - Update opam repository with `opam update`
 - Install the latest versions: `opam install reason-react reason-react-ppx`
-- In your dune file, add `reason-react` to `libraries` and `reason-react-ppx` to preprocess:
+- In your dune file, add `reason-react` to `libraries` and `reason-react-ppx` to `preprocess`:
 
 > (libraries reason-react)
 > (preprocess (pps reason-react-ppx))
