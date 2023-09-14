@@ -36,7 +36,7 @@
   (ocaml
    (>= 4.13.0))
   (melange
-   (>= 2.0.0))
+   (>= 1.0.0))
   (reason-react-ppx
    (= :version))
   (reason
