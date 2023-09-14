@@ -64,7 +64,7 @@
    (>= 0.28.0))
   (merlin
    (and
-    (= 4.10-414)
+    (= 4.9-501preview)
     :with-test))
   (ocamlformat
    (and
