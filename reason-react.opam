@@ -27,6 +27,11 @@ depends: [
   "ocamlformat" {= "0.24.0" & with-dev-setup}
   "odoc" {with-doc}
 ]
+dev-repo: "git+https://github.com/reasonml/reason-react.git"
+depexts: [
+  ["react"] {npm-version = "^17.0.0 || ^18.0.0"}
+  ["react-dom"] {npm-version = "^17.0.0 || ^18.0.0"}
+]
 build: [
   ["dune" "subst"] {dev}
   [
@@ -37,12 +42,6 @@ build: [
     "-j"
     jobs
     "@install"
-    "@runtest" {with-test}
     "@doc" {with-doc}
   ]
-]
-dev-repo: "git+https://github.com/reasonml/reason-react.git"
-depexts: [
-  ["react"] {npm-version = "^17.0.0 || ^18.0.0"}
-  ["react-dom"] {npm-version = "^17.0.0 || ^18.0.0"}
 ]

@@ -1,7 +1,3 @@
-depexts: [
-  ["react"] {npm-version = "^17.0.0 || ^18.0.0"}
-  ["react-dom"] {npm-version = "^17.0.0 || ^18.0.0"}
-]
 build: [
   ["dune" "subst"] {dev}
   [
