@@ -16,7 +16,7 @@ Today, we're releasing ReasonReact 0.12! The most important changes are renaming
 
 ## What's changing?
 
-Track `reacjs-jsx-ppx` in the same repository as `reason-react`, and rename it to `reason-react-ppx`, a more suitable name with a few improvements:
+Track `reactjs-jsx-ppx` in the same repository as `reason-react`, and rename it to `reason-react-ppx`, a more suitable name with a few improvements:
 - Use the [new JSX transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) from React 17
 - Fix code-generation locations for JSX and props
 - Fix to allow using `React.memoCustomCompareProps`
@@ -32,7 +32,7 @@ ReasonReact works best with Melange. [Get started here](https://melange.re/v1.0.
 Next:
 
 - Update the package definitions with `opam update`
-- Install the latest versions: `opam install reason-react reason-react-ppx`
+- Install the latest versions with `opam install reason-react reason-react-ppx` (or upgrade `opam upgrade reason-react` & install `opam install reason-react-ppx`)
 - In your dune file, add `reason-react` to `libraries` and `reason-react-ppx` to `preprocess`:
 
 > (libraries reason-react)
