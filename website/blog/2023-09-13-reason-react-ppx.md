@@ -35,12 +35,15 @@ Next:
 - Install the latest versions with `opam install reason-react reason-react-ppx` (or upgrade `opam upgrade reason-react` & install `opam install reason-react-ppx`)
 - In your dune file, add `reason-react` to `libraries` and `reason-react-ppx` to `preprocess`:
 
-> (libraries reason-react)
-> (preprocess (pps reason-react-ppx))
+  ```clojure
+    (libraries reason-react)
+    (preprocess (pps reason-react-ppx))
+  ```
 
 - Remove any usage of `ReactDOM.props`
 - Bump React.js version to v17/v18 to use the new JSX transformation
 - We added `depexts` in opam for `react` and `react-dom` to ensure you have the correct versions installed from npm. [`depexts`](https://opam.ocaml.org/packages/opam-depext/) is the mechanism by opam to ensure the correct versions of external dependencies are present in your system. Learn more here on the Melange documentation page about [bindings and package managment](https://melange.re/unstable/package-management/#bindings-and-package-management):
+
   ```clojure
     depexts: [
       ["react"] {npm-version = "^16.0.0 || ^17.0.0"}
