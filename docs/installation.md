@@ -55,7 +55,7 @@ Set up manually is straight forward. Install native dependencies, add some scrip
 1. Install the following dependencies in your opam switch with
 
 ```sh
-opam install melange dune reason reason-react reactjs-jsx-ppx -y
+opam install melange dune reason reason-react reason-react-ppx -y
 ```
 
 2. Enable melange inside dune under a `dune-project` file in the root of your project with the following:
@@ -72,7 +72,7 @@ Check [dune docs](https://dune.readthedocs.io/en/latest/melange.html) for all fi
 (melange.emit
   (target melange) ; or any target name you want
   (libraries reason-react)
-  (preprocess (pps reactjs-jsx-ppx)))
+  (preprocess (pps reason-react-ppx)))
 ```
 
 The target name is the name of the folder where the compiled code will live and also an "alias" to run the build commands (see below).
