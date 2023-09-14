@@ -31,7 +31,7 @@ ReasonReact works best with Melange. [Get started here](https://melange.re/v1.0.
 
 Next:
 
-- Update opam repository with `opam update`
+- Update the package definitions with `opam update`
 - Install the latest versions: `opam install reason-react reason-react-ppx`
 - In your dune file, add `reason-react` to `libraries` and `reason-react-ppx` to `preprocess`:
 
