@@ -1,5 +1,5 @@
 ---
-title: reason-react-ppx is on opam!
+title: `reason-react-ppx` is now on opam!
 ---
 
 ReasonReact 0.12 provides the JSX transformation from `reason-react-ppx` (previously named `reactjs-jsx-ppx`) with a bunch of improvements.
