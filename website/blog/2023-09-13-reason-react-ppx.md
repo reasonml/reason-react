@@ -17,7 +17,7 @@ The biggest changes are the new JSX transformation from React 17 and a great imp
 Track `reacjs-jsx-ppx` in the same repository as `reason-react`, and rename it to `reason-react-ppx`, a more suitable name with a few improvements:
 - Use the [new JSX transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) from React 17
 - Fix code-generation locations for JSX and props
-- Fix to allow memoCustomCompareProps
+- Fix to allow using `React.memoCustomCompareProps`
 - Fix Type of optional prop not checked correctly in JSX
 - The ppx will be synced with reason-react (and tested together)
 
