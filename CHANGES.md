@@ -2,6 +2,8 @@
 
 * Remove legacy `ReactDOMRe` and `ReasonReact` modules (@anmonteiro in
   [#782](https://github.com/reasonml/reason-react/pull/782))
+* Wrap the `React` library, exposing just a single top-level module
+  (@anmonteiro in [#783](https://github.com/reasonml/reason-react/pull/783))
 
 # 0.12.0
 

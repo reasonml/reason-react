@@ -68,13 +68,13 @@ module Binding = struct
     let createElement ~loc ~attrs element children =
       Builder.pexp_apply ~loc ~attrs
         (Builder.pexp_ident ~loc
-           { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
+           { loc; txt = Ldot (Ldot (Lident "React", "DOM"), "createElement") })
         [ (nolabel, element); (nolabel, children) ]
 
     let domProps ~applyLoc ~loc props =
       Builder.pexp_apply ~loc:applyLoc
         (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
-           { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+           { loc; txt = Ldot (Ldot (Lident "React", "DOM"), "domProps") })
         props
   end
 end
@@ -435,46 +435,46 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
   in
   match (childrenExpr, keyProps) with
   | Some (Exact children), (label, key) :: _ ->
-      ( Builder.pexp_ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
+      ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
         Some children )
   | Some (Exact children), [] ->
-      ( Builder.pexp_ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
+      ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsx") },
         None,
         Some children )
   | ( Some (ListLiteral ({ pexp_desc = Pexp_array list } as children)),
       (label, key) :: _ )
     when list = [] ->
-      ( Builder.pexp_ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
+      ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
         Some (Binding.React.array ~loc children) )
   | Some (ListLiteral { pexp_desc = Pexp_array list }), [] when list = [] ->
-      ( Builder.pexp_ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
+      ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsx") },
         None,
         children )
   | Some (ListLiteral children), (label, key) :: _ ->
       (* this is a hack to support react components that introspect into their
          children *)
-      ( Builder.pexp_ident ~loc { loc; txt = Ldot (Lident ident, "jsxsKeyed") },
+      ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxsKeyed") },
         Some (label, key),
         Some (Binding.React.array ~loc children) )
   | Some (ListLiteral children), [] ->
       (* this is a hack to support react components that introspect into their
          children *)
-      ( Builder.pexp_ident ~loc { loc; txt = Ldot (Lident ident, "jsxs") },
+      ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxs") },
         None,
         Some (Binding.React.array ~loc children) )
   | None, (label, key) :: _ ->
-      ( Builder.pexp_ident ~loc { loc; txt = Ldot (Lident ident, "jsxKeyed") },
+      ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
         None )
   | None, [] ->
-      ( Builder.pexp_ident ~loc { loc; txt = Ldot (Lident ident, "jsx") },
-        None,
-        None )
+      (Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsx") }, None, None)
 
-let reactJsxExprAndChildren = jsxExprAndChildren ~ident:"React"
-let reactDomJsxExprAndChildren = jsxExprAndChildren ~ident:"ReactDOM"
+let reactJsxExprAndChildren = jsxExprAndChildren ~ident:(Lident "React")
+
+let reactDomJsxExprAndChildren =
+  jsxExprAndChildren ~ident:(Ldot (Lident "React", "DOM"))
 
 (* Builds an AST node for the entire `external` definition of props *)
 let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =

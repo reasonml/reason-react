@@ -13,9 +13,9 @@
       Page.make,
       Page.makeProps(
         ~children=
-          ReactDOM.jsx(
+          React.DOM.jsx(
             "h1",
-            ([@merlin.hide] ReactDOM.domProps)(
+            ([@merlin.hide] React.DOM.domProps)(
               ~children=React.string("Yep"),
               (),
             ),
@@ -35,9 +35,9 @@
       MyComponent.make,
       MyComponent.makeProps(
         ~children=
-          ReactDOM.jsx(
+          React.DOM.jsx(
             "div",
-            ([@merlin.hide] ReactDOM.domProps)(~children="hello", ()),
+            ([@merlin.hide] React.DOM.domProps)(~children="hello", ()),
           ),
         ~booleanAttribute=true,
         ~stringAttribute="string",
@@ -51,7 +51,7 @@
     React.jsx(
       FancyButton.make,
       FancyButton.makeProps(
-        ~children=ReactDOM.jsx("div", ([@merlin.hide] ReactDOM.domProps)()),
+        ~children=React.DOM.jsx("div", ([@merlin.hide] React.DOM.domProps)()),
         ~ref=buttonRef,
         (),
       ),

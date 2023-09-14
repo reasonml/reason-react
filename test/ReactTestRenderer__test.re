@@ -1,6 +1,6 @@
 open Jest;
 
-external toObject: ReactTestRenderer.t => Js.t({.}) = "%identity";
+external toObject: ReactTest.Renderer.t => Js.t({.}) = "%identity";
 
 module Tester = {
   [@react.component]
@@ -11,7 +11,7 @@ describe("reactTestRenderer", () => {
   open Expect;
 
   test("create returns ReactTestInstance", () => {
-    let component = ReactTestRenderer.create(<Tester />);
+    let component = ReactTest.Renderer.create(<Tester />);
     let keys = Js.Obj.keys(component);
 
     expect(keys)
@@ -30,8 +30,8 @@ describe("reactTestRenderer", () => {
   });
 
   test("toJSON returns test rendered JSON", () => {
-    let component = ReactTestRenderer.create(<Tester />);
-    let json = ReactTestRenderer.toJSON(component);
+    let component = ReactTest.Renderer.create(<Tester />);
+    let json = ReactTest.Renderer.toJSON(component);
     let expected =
       Js.Json.parseExn(
         {|
@@ -52,7 +52,7 @@ describe("reactShallowRenderer", () => {
   open Expect;
 
   test("createRenderer", () => {
-    let renderer = ReactTestRenderer.Shallow.createRenderer();
+    let renderer = ReactTest.Renderer.Shallow.createRenderer();
     let isDefined =
       renderer
       |> Js.Undefined.return
@@ -62,47 +62,44 @@ describe("reactShallowRenderer", () => {
   });
 
   test("render accepts renderer", () => {
-    let renderer = ReactTestRenderer.Shallow.createRenderer();
-    let render = ReactTestRenderer.Shallow.render(renderer);
+    let renderer = ReactTest.Renderer.Shallow.createRenderer();
+    let render = ReactTest.Renderer.Shallow.render(renderer);
     expect(Js.typeof(render))->toEqual("function");
   });
 
   test("render will render a component", () => {
-    let renderer = ReactTestRenderer.Shallow.createRenderer();
+    let renderer = ReactTest.Renderer.Shallow.createRenderer();
     let component =
-      ReactTestRenderer.Shallow.render(renderer, <Tester />)
-      ->Option.get;
+      ReactTest.Renderer.Shallow.render(renderer, <Tester />)->Option.get;
     expect(component == element)->toBe(true);
   });
 
   test("renderWithRenderer will render a component", () => {
     let component =
-      ReactTestRenderer.Shallow.renderWithRenderer(<Tester />)
-      ->Option.get;
+      ReactTest.Renderer.Shallow.renderWithRenderer(<Tester />)->Option.get;
 
     expect(component == element)->toBe(true);
   });
 
   test("getRenderOutput returns element", () => {
-    let renderer = ReactTestRenderer.Shallow.createRenderer();
+    let renderer = ReactTest.Renderer.Shallow.createRenderer();
 
-    ReactTestRenderer.Shallow.render(renderer, <Tester />) |> ignore;
+    ReactTest.Renderer.Shallow.render(renderer, <Tester />) |> ignore;
 
     let component =
-      ReactTestRenderer.Shallow.getRenderOutput(renderer)
-      ->Option.get;
+      ReactTest.Renderer.Shallow.getRenderOutput(renderer)->Option.get;
 
     expect(component == element)->toBe(true);
   });
 
   test("unmount removes the node", () => {
-    let renderer = ReactTestRenderer.Shallow.createRenderer();
+    let renderer = ReactTest.Renderer.Shallow.createRenderer();
 
-    ReactTestRenderer.Shallow.render(renderer, <Tester />) |> ignore;
-    ReactTestRenderer.Shallow.unmount(renderer);
+    ReactTest.Renderer.Shallow.render(renderer, <Tester />) |> ignore;
+    ReactTest.Renderer.Shallow.unmount(renderer);
 
     let component =
-      ReactTestRenderer.Shallow.getRenderOutput(renderer)
+      ReactTest.Renderer.Shallow.getRenderOutput(renderer)
       ->Option.get
       ->Js.Null.return;
 
