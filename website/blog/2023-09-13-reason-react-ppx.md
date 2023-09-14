@@ -23,7 +23,7 @@ Track `reacjs-jsx-ppx` in the same repository as `reason-react`, and rename it t
 
 ## Updating to latest
 
-To use ReasonReact, you must be using Melange. [Get started here](https://melange.re/v1.0.0/getting-started/).
+ReasonReact works best with Melange. [Get started here](https://melange.re/v1.0.0/getting-started/).
 
 Next:
 
