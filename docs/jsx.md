@@ -4,7 +4,7 @@ title: JSX
 
 Reason comes with the [JSX](https://reasonml.github.io/docs/en/jsx.html) syntax! ReasonReact works very similar to how [the ReactJS JSX transform](https://reactjs.org/docs/introducing-jsx.html) does.
 
-To use it, you would need to install [`reactjs-jsx-ppx`](https://opam.ocaml.org/packages/reactjs-jsx-ppx/) and add `(preprocess (pps reactjs-jsx-ppx))` in [`melange.emit or library`](https://dune.readthedocs.io/en/stable/melange.html) stanzas in your `dune` file.
+To use it, you would need to install [`reason-react-ppx`](https://opam.ocaml.org/packages/reason-react-ppx/) and add `(preprocess (pps reason-react-ppx))` in [`melange.emit or library`](https://dune.readthedocs.io/en/stable/melange.html) stanzas in your `dune` file.
 
 Here's a list of transformations made by the [ppx](https://ocaml.org/docs/metaprogramming):
 

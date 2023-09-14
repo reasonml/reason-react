@@ -17,11 +17,11 @@ homepage: "https://reasonml.github.io/reason-react"
 doc: "https://reasonml.github.io/reason-react"
 bug-reports: "https://github.com/reasonml/reason-react/issues"
 depends: [
-  "dune" {>= "3.8"}
+  "dune" {>= "3.9"}
   "ocaml" {>= "4.13.0"}
   "melange" {>= "1.0.0"}
-  "reason-react-ppx"
-  "reason" {>= "3.6.0"}
+  "reason-react-ppx" {= version}
+  "reason" {>= "3.10.0"}
   "ocaml-lsp-server" {with-test}
   "opam-check-npm-deps" {= "1.0.0" & with-dev-setup}
   "ocamlformat" {= "0.24.0" & with-dev-setup}
@@ -43,6 +43,6 @@ build: [
 ]
 dev-repo: "git+https://github.com/reasonml/reason-react.git"
 depexts: [
-  ["react"] {npm-version = "^16.0.0 || ^17.0.0"}
-  ["react-dom"] {npm-version = "^16.0.0 || ^17.0.0"}
+  ["react"] {npm-version = "^17.0.0 || ^18.0.0"}
+  ["react-dom"] {npm-version = "^17.0.0 || ^18.0.0"}
 ]

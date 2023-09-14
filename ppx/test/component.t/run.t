@@ -5,7 +5,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
     struct
       external makeProps :
         lola:'lola -> ?key:string -> unit -> < lola: 'lola   >  Js.t = ""
-      [@@bs.obj ]
+      [@@mel.obj ]
       let make =
         ((fun ~lola ->
             ReactDOM.jsx "div"
@@ -24,7 +24,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
     struct
       external makeProps :
         ?name:'name -> ?key:string -> unit -> < name: 'name option   >  Js.t =
-          ""[@@bs.obj ]
+          ""[@@mel.obj ]
       let make =
         ((fun ?(name= "") ->
             ReactDOM.createElement React.jsxFragment
@@ -47,7 +47,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           buttonRef:'buttonRef ->
             ?key:string ->
               unit -> < children: 'children  ;buttonRef: 'buttonRef   >  Js.t =
-          ""[@@bs.obj ]
+          ""[@@mel.obj ]
       let make =
         ((fun ~children ->
             ((fun ~buttonRef ->
@@ -71,7 +71,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           ?isDisabled:'isDisabled ->
             ?key:string ->
               unit -> < name: 'name  ;isDisabled: 'isDisabled option   >  Js.t
-          = ""[@@bs.obj ]
+          = ""[@@mel.obj ]
       let make =
         ((fun ~name ->
             ((fun ?isDisabled ->
@@ -91,7 +91,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
     struct
       external makeProps :
         ?name:'name -> ?key:string -> unit -> < name: 'name option   >  Js.t =
-          ""[@@bs.obj ]
+          ""[@@mel.obj ]
       let make =
         ((fun ?(name= "joe") ->
             ReactDOM.jsx "div"
@@ -113,7 +113,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           moreProps:'moreProps ->
             ?key:string ->
               unit -> < children: 'children  ;moreProps: 'moreProps   >  Js.t =
-          ""[@@bs.obj ]
+          ""[@@mel.obj ]
       let make =
         ((fun ~children ->
             ((fun ~moreProps ->
@@ -166,7 +166,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
     struct
       external makeProps :
         children:'children ->
-          ?key:string -> unit -> < children: 'children   >  Js.t = ""[@@bs.obj
+          ?key:string -> unit -> < children: 'children   >  Js.t = ""[@@mel.obj
                                                                       ]
       let make =
         ((fun ~children ->

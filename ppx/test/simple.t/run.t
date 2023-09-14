@@ -104,7 +104,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -116,7 +116,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -128,7 +128,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]
@@ -219,7 +219,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -231,7 +231,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -243,7 +243,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]
@@ -358,7 +358,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -370,7 +370,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -382,7 +382,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]
@@ -521,7 +521,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -533,7 +533,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -545,7 +545,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]
@@ -696,7 +696,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -708,7 +708,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -720,7 +720,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]
@@ -883,7 +883,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -895,7 +895,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -907,7 +907,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]
@@ -1034,7 +1034,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -1046,7 +1046,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -1058,7 +1058,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]
@@ -1185,7 +1185,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -1197,7 +1197,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -1209,7 +1209,7 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]
@@ -1312,7 +1312,7 @@ Closing `</button>`
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -1324,7 +1324,7 @@ Closing `</button>`
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -1336,7 +1336,7 @@ Closing `</button>`
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {. initialValue: option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {. initialValue: option(int)} => React.element;\n}",
+      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     }
   ]

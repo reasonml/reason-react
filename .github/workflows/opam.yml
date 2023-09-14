@@ -24,7 +24,7 @@ jobs:
           # disabling this for now
 
         ocaml-compiler:
-          - 4.14.x
+          - 5.1.x
 
     runs-on: ${{ matrix.os }}
 

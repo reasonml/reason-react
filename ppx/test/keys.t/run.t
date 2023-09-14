@@ -23,7 +23,18 @@ _^
 
   $ ocamlmerlin single type-enclosing -position 10:7 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
-  null
+  {
+    "start": {
+      "line": 8,
+      "col": 0
+    },
+    "end": {
+      "line": 10,
+      "col": 85
+    },
+    "type": "{.. \"author\": Author.t} => React.element",
+    "tail": "no"
+  }
 
 key={author.Author.name}
 _______^

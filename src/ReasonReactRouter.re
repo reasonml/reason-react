@@ -1,43 +1,43 @@
-[@bs.get] external location: Dom.window => Dom.location = "location";
+[@mel.get] external location: Dom.window => Dom.location = "location";
 
-[@bs.send]
+[@mel.send]
 /* actually the cb is Dom.event => unit, but let's restrict the access for now */
 external addEventListener: (Dom.window, string, unit => unit) => unit =
   "addEventListener";
 
-[@bs.send]
+[@mel.send]
 external removeEventListener: (Dom.window, string, unit => unit) => unit =
   "removeEventListener";
 
-[@bs.send]
+[@mel.send]
 external dispatchEvent: (Dom.window, Dom.event) => unit = "dispatchEvent";
 
-[@bs.get] external pathname: Dom.location => string = "pathname";
+[@mel.get] external pathname: Dom.location => string = "pathname";
 
-[@bs.get] external hash: Dom.location => string = "hash";
+[@mel.get] external hash: Dom.location => string = "hash";
 
-[@bs.get] external search: Dom.location => string = "search";
+[@mel.get] external search: Dom.location => string = "search";
 
-[@bs.send]
+[@mel.send]
 external pushState:
-  (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
+  (Dom.history, [@mel.as {json|null|json}] _, [@mel.as ""] _, ~href: string) =>
   unit =
   "pushState";
 
-[@bs.send]
+[@mel.send]
 external replaceState:
-  (Dom.history, [@bs.as {json|null|json}] _, [@bs.as ""] _, ~href: string) =>
+  (Dom.history, [@mel.as {json|null|json}] _, [@mel.as ""] _, ~href: string) =>
   unit =
   "replaceState";
 
-[@bs.val] external event: 'a = "Event";
+external event: 'a = "Event";
 
-[@bs.new] external makeEventIE11Compatible: string => Dom.event = "Event";
+[@mel.new] external makeEventIE11Compatible: string => Dom.event = "Event";
 
-[@bs.val] [@bs.scope "document"]
+[@mel.scope "document"]
 external createEventNonIEBrowsers: string => Dom.event = "createEvent";
 
-[@bs.send]
+[@mel.send]
 external initEventNonIEBrowsers: (Dom.event, string, bool, bool) => unit =
   "initEvent";
 
@@ -96,13 +96,13 @@ let path = (~serverUrlString=?, ()) =>
   switch (serverUrlString, [%external window]) {
   | (None, None) => []
   | (Some(serverUrlString), _) => pathParse(serverUrlString)
-  | (_, Some((window: Dom.window))) =>
+  | (_, Some(window: Dom.window)) =>
     pathParse(window |> location |> pathname)
   };
 let hash = () =>
   switch ([%external window]) {
   | None => ""
-  | Some((window: Dom.window)) =>
+  | Some(window: Dom.window) =>
     switch (window |> location |> hash) {
     | ""
     | "#" => ""
@@ -126,14 +126,14 @@ let search = (~serverUrlString=?, ()) =>
   switch (serverUrlString, [%external window]) {
   | (None, None) => ""
   | (Some(serverUrlString), _) => searchParse(serverUrlString)
-  | (_, Some((window: Dom.window))) =>
+  | (_, Some(window: Dom.window)) =>
     searchParse(window |> location |> search)
   };
 let push = path =>
   switch ([%external history], [%external window]) {
   | (None, _)
   | (_, None) => ()
-  | (Some((history: Dom.history)), Some((window: Dom.window))) =>
+  | (Some(history: Dom.history), Some(window: Dom.window)) =>
     pushState(history, ~href=path);
     dispatchEvent(window, safeMakeEvent("popstate"));
   };
@@ -141,7 +141,7 @@ let replace = path =>
   switch ([%external history], [%external window]) {
   | (None, _)
   | (_, None) => ()
-  | (Some((history: Dom.history)), Some((window: Dom.window))) =>
+  | (Some(history: Dom.history), Some(window: Dom.window)) =>
     replaceState(history, ~href=path);
     dispatchEvent(window, safeMakeEvent("popstate"));
   };
@@ -176,7 +176,7 @@ let dangerouslyGetInitialUrl = url;
 let watchUrl = callback =>
   switch ([%external window]) {
   | None => (() => ())
-  | Some((window: Dom.window)) =>
+  | Some(window: Dom.window) =>
     let watcherID = () => callback(url());
     addEventListener(window, "popstate", watcherID);
     watcherID;
@@ -184,7 +184,7 @@ let watchUrl = callback =>
 let unwatchUrl = watcherID =>
   switch ([%external window]) {
   | None => ()
-  | Some((window: Dom.window)) =>
+  | Some(window: Dom.window) =>
     removeEventListener(window, "popstate", watcherID)
   };
 let useUrl = (~serverUrl=?, ()) => {

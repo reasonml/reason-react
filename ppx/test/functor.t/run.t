@@ -7,7 +7,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
       let x = M.x + 1
       external makeProps :
         a:'a -> b:'b -> ?key:string -> unit -> < a: 'a  ;b: 'b   >  Js.t = ""
-      [@@bs.obj ]
+      [@@mel.obj ]
       let make =
         ((fun ~a ->
             ((fun ~b ->

@@ -7,10 +7,10 @@ function usage() {
   echo "       $(basename "$0") --output ml [file.re]"
 }
 
-# if [ -z "$3" ]; then
-  # usage
-  # exit
-# fi
+if [ -z "$3" ]; then
+  usage
+  exit
+fi
 
 refmt --parse re --print ml "$3" > output.ml
 reason-react-ppx --impl output.ml -o temp.ml

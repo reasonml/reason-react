@@ -1,4 +1,4 @@
-(lang dune 3.8)
+(lang dune 3.9)
 
 (using melange 0.1)
 
@@ -37,9 +37,10 @@
    (>= 4.13.0))
   (melange
    (>= 1.0.0))
-  reason-react-ppx
+  (reason-react-ppx
+   (= :version))
   (reason
-   (>= 3.6.0))
+   (>= 3.10.0))
   (ocaml-lsp-server :with-test)
   (opam-check-npm-deps
    (and
@@ -58,10 +59,13 @@
   (ocaml
    (>= 4.13.0))
   (reason
-   (>= 3.9.0))
+   (>= 3.10.0))
   (ppxlib
    (>= 0.28.0))
-  (merlin :with-test)
+  (merlin
+   (and
+    (= 4.9-501preview)
+    :with-test))
   (ocamlformat
    (and
     (= 0.24.0)
