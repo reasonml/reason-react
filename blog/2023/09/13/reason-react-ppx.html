@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Support for the JSX transform under a new name `reason-react-ppx` · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Today, we&#x27;re releasing ReasonReact 0.12! The most important changes are renaming the JSX transform PPX from `reactjs-jsx-ppx` to `reason-react-ppx`, along with many other improvements:"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Support for the JSX transform under a new name `reason-react-ppx` · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/blog/2023/09/13/reason-react-ppx"/><meta property="og:description" content="Today, we&#x27;re releasing ReasonReact 0.12! The most important changes are renaming the JSX transform PPX from `reactjs-jsx-ppx` to `reason-react-ppx`, along with many other improvements:"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><script src="/reason-react/js/scrollSpy.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/><script src="/reason-react/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/en"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/en/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/en/playground" target="_self">Try</a></li><li class=""><a href="/reason-react/docs/en/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/en/community" target="_self">Community</a></li><li class="siteNavGroupActive"><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/ja">日本語</a></li><li><a href="/reason-react/es-ES">Español</a></li><li><a href="/reason-react/fr">Français</a></li><li><a href="/reason-react/ko">한국어</a></li><li><a href="/reason-react/pt-BR">Português (Brasil)</a></li><li><a href="/reason-react/ru">Русский</a></li><li><a href="/reason-react/zh-CN">中文</a></li><li><a href="/reason-react/zh-Hant">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+        const languagesMenuItem = document.getElementById("languages-menu");
+        const languagesDropDown = document.getElementById("languages-dropdown");
+        languagesMenuItem.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          if (languagesDropDown.className == "hide") {
+            languagesDropDown.className = "visible";
+          } else {
+            languagesDropDown.className = "hide";
+          }
+        });
+      </script></span><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li><li class=""><a href="https://github.com/reasonml/reason-react" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Recent Posts</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/reason-react/blog/2023/09/13/reason-react-ppx">Support for the JSX transform under a new name `reason-react-ppx`</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2023/06/11/reborn">ReasonReact is back (and powered by Melange)</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2021/05/07/rescript-migration">We are rebranding to ReScript / React</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2020/06/08/090-release">ReasonReact 0.9.0 - Uncurried and Code Cleanup</a></li><li class="navListItem"><a class="navItem" href="/reason-react/blog/2020/05/05/080-release">ReasonReact 0.8.0 🎉 BuckleScript Upgrade &amp; More!</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/reason-react/blog/2023/09/13/reason-react-ppx">Support for the JSX transform under a new name `reason-react-ppx`</a></h1><p class="post-meta">September 13, 2023</p><div class="authorBlock"></div></header><div><span><p>Today, we're releasing ReasonReact 0.12! The most important changes are renaming the JSX transform PPX from <code>reactjs-jsx-ppx</code> to <code>reason-react-ppx</code>, along with many other improvements:</p>
+<ul>
+<li><code>reason-react-ppx</code> now emits the React 17 <a href="https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html">JSX transform</a>.</li>
+<li>Prop locations have been greatly improved, resulting in much better editor integration.</li>
+<li>Check the full changes below for more details around other fixes and small breaking changes.</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="locations-from-domprops-in-action-thanks-jchavarri"></a><a href="#locations-from-domprops-in-action-thanks-jchavarri" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Locations from domProps in action (Thanks @jchavarri)</h3>
+<p><img src="https://github.com/reasonml/reason-react/assets/3763599/db505599-8fee-4889-80a3-d2056ece291c" alt="download"></p>
+<h3><a class="anchor" aria-hidden="true" id="new-jsx-transform-thanks-anmonteiro"></a><a href="#new-jsx-transform-thanks-anmonteiro" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>new JSX transform (Thanks @anmonteiro)</h3>
+<p><img width="1508" alt="Screenshot 2023-09-13 at 16 11 17" src="https://github.com/reasonml/reason-react/assets/3763599/b7fec116-131a-48cd-8be1-1496544131d1"></p>
+<h2><a class="anchor" aria-hidden="true" id="whats-changing"></a><a href="#whats-changing" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What's changing?</h2>
+<p>Track <code>reactjs-jsx-ppx</code> in the same repository as <code>reason-react</code>, and rename it to <code>reason-react-ppx</code>, a more suitable name with a few improvements:</p>
+<ul>
+<li>Use the <a href="https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html">new JSX transform</a> from React 17</li>
+<li>Fix code-generation locations for JSX and props</li>
+<li>Fix to allow using <code>React.memoCustomCompareProps</code></li>
+<li>Fix Type of optional prop not checked correctly in JSX</li>
+<li>The ppx will be synced with reason-react (and tested together)</li>
+</ul>
+<p>Take a look at <a href="https://github.com/reasonml/reason-react/releases/tag/0.12.0">reasonml/reason-react/releases/tag/0.12.0</a> for a full listing of all the changes.</p>
+<h2><a class="anchor" aria-hidden="true" id="updating-to-latest"></a><a href="#updating-to-latest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Updating to latest</h2>
+<p>ReasonReact works best with Melange. <a href="https://melange.re/v1.0.0/getting-started/">Get started here</a>.</p>
+<p>Next:</p>
+<ul>
+<li>Update the package definitions with <code>opam update</code></li>
+<li>Install the latest versions with <code>opam install reason-react reason-react-ppx</code> (or upgrade <code>opam upgrade reason-react</code> &amp; install <code>opam install reason-react-ppx</code>)</li>
+<li>In your dune file, add <code>reason-react</code> to <code>libraries</code> and <code>reason-react-ppx</code> to <code>preprocess</code>:</li>
+</ul>
+<blockquote>
+<p>(libraries reason-react)
+(preprocess (pps reason-react-ppx))</p>
+</blockquote>
+<ul>
+<li>Remove any usage of <code>ReactDOM.props</code></li>
+<li>Bump React.js version to v17/v18 to use the new JSX transformation</li>
+<li>We added <code>depexts</code> in opam for <code>react</code> and <code>react-dom</code> to ensure you have the correct versions installed from npm. <a href="https://opam.ocaml.org/packages/opam-depext/"><code>depexts</code></a> is the mechanism by opam to ensure the correct versions of external dependencies are present in your system. Learn more here on the Melange documentation page about <a href="https://melange.re/unstable/package-management/#bindings-and-package-management">bindings and package managment</a>:
+<pre><code class="hljs css language-clojure">  depexts: [
+    ["react"] {npm-version = "^16.0.0 || ^17.0.0"}
+    ["react-dom"] {npm-version = "^16.0.0 || ^17.0.0"}
+  ]
+</code></pre></li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="future-plans"></a><a href="#future-plans" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Future plans</h2>
+<ul>
+<li>OCaml 5.1 + Melange v2</li>
+<li>Reason 3.10 support</li>
+<li>React 18 bindings</li>
+<li>Continue improving the state of the ppx (locations, avoid raising, etc..)</li>
+<li>Deprecate some legacy modules: <code>ReasonReact</code> and <code>ReactDOMRe</code></li>
+<li>Work on interface files</li>
+</ul>
+<p>Feel free to reach out if you have any feedback or want to get involved. You can <a href="https://github.com/reasonml/reason-react/issues">open an issue</a> in this repository, or join the <a href="https://discord.gg/reasonml">ReasonML Discord</a> and contact me (@davesnx) directly.</p>
+</span></div></div><div class="blogSocialSection"></div></div><div class="blog-recent"><a class="button" href="/reason-react/blog">Recent Posts</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#whats-changing">What's changing?</a></li><li><a href="#updating-to-latest">Updating to latest</a></li><li><a href="#future-plans">Future plans</a></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+          areas: [
+            // try to use the first query.
+            '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
+            // fallback
+            'body'
+          ],
+          link: '.docsNavContainer:not(.docsSliderActive) a',
+          update: {
+            script: false,
+          }
+        });
+        var languagesMenuItemCopy = document.getElementById("languages-menu");
+        languagesMenuItemCopy.addEventListener("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        });</script></span></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '55156da6520de795d3a2c2d23786f08e',
+                indexName: 'react-reason',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["lang:en"]}
+              });
+            </script></body></html>

@@ -2,11 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://reasonml.github.io/reason-react/reason-react/blog</id>
     <title>ReasonReact Blog</title>
-    <updated>2023-06-11T06:00:00Z</updated>
+    <updated>2023-09-13T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
     <link rel="alternate" href="https://reasonml.github.io/reason-react/reason-react/blog"/>
     <subtitle>The best place to stay up-to-date with the latest ReasonReact news and events.</subtitle>
     <logo>https://reasonml.github.io/reason-react/reason-react/img/reason-react-white.svg</logo>
+    <entry>
+        <title type="html"><![CDATA[Support for the JSX transform under a new name `reason-react-ppx`]]></title>
+        <id>https://reasonml.github.io/reason-react/reason-react/blog/2023/09/13/reason-react-ppx.html</id>
+        <link href="https://reasonml.github.io/reason-react/reason-react/blog/2023/09/13/reason-react-ppx.html">
+        </link>
+        <updated>2023-09-13T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>Today, we're releasing ReasonReact 0.12! The most important changes are renaming the JSX transform PPX from <code>reactjs-jsx-ppx</code> to <code>reason-react-ppx</code>, along with many other improvements:</p> <ul> <li><code>reason-react-ppx</code> now emits the React 17 <a href="https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html">JSX transform</a>.</li> <li>Prop location...</li></ul>]]></summary>
+        <author>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ReasonReact is back (and powered by Melange)]]></title>
         <id>https://reasonml.github.io/reason-react/reason-react/blog/2023/06/11/reborn.html</id>
