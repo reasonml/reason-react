@@ -1,4 +1,9 @@
-# 0.12.0 (Unreleased)
+# Unreleased
+
+* Remove legacy `ReactDOMRe` and `ReasonReact` modules (@anmonteiro in
+  [#782](https://github.com/reasonml/reason-react/pull/782))
+
+# 0.12.0
 
 * Migrate the reason-react PPX and library to the [new React JSX
 transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)
