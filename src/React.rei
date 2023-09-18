@@ -348,46 +348,39 @@ external useMemo7:
 type callback('input, 'output) = 'input => 'output;
 
 [@mel.module "react"]
-external useCallback:
-  ([@mel.uncurry] ('input => 'output)) => callback('input, 'output) =
+external useCallback: ('input => 'output) => callback('input, 'output) =
   "useCallback";
 [@mel.module "react"]
 external useCallback0:
-  ([@mel.uncurry] ('input => 'output), [@mel.as {json|[]|json}] _) =>
-  callback('input, 'output) =
+  ('input => 'output, [@mel.as {json|[]|json}] _) => callback('input, 'output) =
   "useCallback";
 [@mel.module "react"]
 external useCallback1:
-  ([@mel.uncurry] ('input => 'output), array('a)) =>
-  callback('input, 'output) =
+  ('input => 'output, array('a)) => callback('input, 'output) =
   "useCallback";
 [@mel.module "react"]
 external useCallback2:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b)) => callback('input, 'output) =
+  ('input => 'output, ('a, 'b)) => callback('input, 'output) =
   "useCallback";
 [@mel.module "react"]
 external useCallback3:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
-  callback('input, 'output) =
+  ('input => 'output, ('a, 'b, 'c)) => callback('input, 'output) =
   "useCallback";
 [@mel.module "react"]
 external useCallback4:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
-  callback('input, 'output) =
+  ('input => 'output, ('a, 'b, 'c, 'd)) => callback('input, 'output) =
   "useCallback";
 [@mel.module "react"]
 external useCallback5:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
-  callback('input, 'output) =
+  ('input => 'output, ('a, 'b, 'c, 'd, 'e)) => callback('input, 'output) =
   "useCallback";
 [@mel.module "react"]
 external useCallback6:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
-  callback('input, 'output) =
+  ('input => 'output, ('a, 'b, 'c, 'd, 'e, 'f)) => callback('input, 'output) =
   "useCallback";
 [@mel.module "react"]
 external useCallback7:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
+  ('input => 'output, ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
   callback('input, 'output) =
   "useCallback";
 
