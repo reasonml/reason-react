@@ -10,7 +10,7 @@ There are other alternatives available, such as [esy](https://esy.sh/) or [nix](
 
 #### Requirements
 
-- [melange](https://opam.ocaml.org/packages/melange) v1.0.0 or higher
+- [melange](https://opam.ocaml.org/packages/melange) v2.0.0 or higher
 - [dune](https://opam.ocaml.org/packages/dune/) v3.8.0 or higher
 
 ## Melange
