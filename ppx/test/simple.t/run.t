@@ -147,7 +147,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -262,7 +262,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "React.Event.Mouse.t => unit",
+      "type": "ReactEvent.Mouse.t => unit",
       "tail": "no"
     },
     {
@@ -274,7 +274,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "option(React.Event.Mouse.t => unit)",
+      "type": "option(ReactEvent.Mouse.t => unit)",
       "tail": "no"
     },
     {
@@ -286,7 +286,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -425,7 +425,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "React.Event.Mouse.t => unit",
+      "type": "ReactEvent.Mouse.t => unit",
       "tail": "no"
     },
     {
@@ -437,7 +437,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "option(React.Event.Mouse.t => unit)",
+      "type": "option(ReactEvent.Mouse.t => unit)",
       "tail": "no"
     },
     {
@@ -449,7 +449,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -600,7 +600,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "React.Event.Mouse.t => unit",
+      "type": "ReactEvent.Mouse.t => unit",
       "tail": "no"
     },
     {
@@ -612,7 +612,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "option(React.Event.Mouse.t => unit)",
+      "type": "option(ReactEvent.Mouse.t => unit)",
       "tail": "no"
     },
     {
@@ -624,7 +624,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -787,7 +787,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "React.Event.Mouse.t => unit",
+      "type": "ReactEvent.Mouse.t => unit",
       "tail": "no"
     },
     {
@@ -799,7 +799,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "option(React.Event.Mouse.t => unit)",
+      "type": "option(ReactEvent.Mouse.t => unit)",
       "tail": "no"
     },
     {
@@ -811,7 +811,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -962,7 +962,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1113,7 +1113,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1240,7 +1240,7 @@ Closing `</button>`
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
