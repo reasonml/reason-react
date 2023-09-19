@@ -2,6 +2,8 @@
 
 * Remove legacy `ReactDOMRe` and `ReasonReact` modules (@anmonteiro in
   [#782](https://github.com/reasonml/reason-react/pull/782))
+* Fix `React.useCallback*` for callbacks with multiple arguments (@anmonteiro
+  in [#786](https://github.com/reasonml/reason-react/pull/786))
 
 # 0.12.0
 
