@@ -9,7 +9,7 @@ Today, we're releasing ReasonReact 0.12! The most important changes are renaming
 - Check the full changes below for more details around other fixes and small breaking changes.
 
 ### Locations from domProps in action (Thanks @jchavarri)
-![download](https://github.com/reasonml/reason-react/assets/220424/90ca1df6-81c7-4009-b696-269950fb4741)
+![download](https://github.com/reasonml/reason-react/assets/3763599/db505599-8fee-4889-80a3-d2056ece291c)
 
 ### new JSX transform (Thanks @anmonteiro)
 <img width="1508" alt="Screenshot 2023-09-13 at 16 11 17" src="https://github.com/reasonml/reason-react/assets/3763599/b7fec116-131a-48cd-8be1-1496544131d1">
