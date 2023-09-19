@@ -6,22 +6,22 @@ ReasonReact is built to work with [Melange](https://melange.re/) and [Reason](ht
 
 If you want to build a new app or a new website with ReasonReact and Melange, we recommend to use a package manager such as [opam](https://opam.ocaml.org/) to download and install the required dependencies.
 
-There are other alternatives available, such as [esy](https://esy.sh/) or [nix](https://nixos.org/). See [Melange documentation](https://melange.re/v1.0.0/getting-started/#alternative-package-managers-experimental) for details.
+There are other alternatives available, such as [esy](https://esy.sh/) or [nix](https://nixos.org/). See [Melange documentation](https://melange.re/v2.0.0/getting-started/#alternative-package-managers-experimental) for details.
 
 #### Requirements
 
-- [melange](https://opam.ocaml.org/packages/melange) v1.0.0 or higher
+- [melange](https://opam.ocaml.org/packages/melange) v2.0.0 or higher
 - [dune](https://opam.ocaml.org/packages/dune/) v3.8.0 or higher
 
 ## Melange
 
 Melange is the toolchain that compiles Reason and OCaml to JavaScript. It integrates with dune to provide a seamless experience for building and running your project.
 
-Follow the getting started guide on [Melange's documentation](https://melange.re/v1.0.0/getting-started/) to continue.
+Follow the getting started guide on [Melange's documentation](https://melange.re/v2.0.0/getting-started/) to continue.
 
 ## Editor Setup
 
-Since Reason is an alternative syntax for OCaml, we integrate seamlessly into the official OCaml editor toolchain. Following the recommendation from [Melange's documentation](https://melange.re/v1.0.0/getting-started/#editor-integration).
+Since Reason is an alternative syntax for OCaml, we integrate seamlessly into the official OCaml editor toolchain. Following the recommendation from [Melange's documentation](https://melange.re/v2.0.0/getting-started/#editor-integration).
 
 - For VSCode, we recommend using the [vscode-ocaml-platform](https://github.com/ocamllabs/vscode-ocaml-platform) plugin
 - For other editors (Emacs and Vim), we recommend using a language server client plugin of your choice, and pairing it with [ocaml-lsp](https://github.com/ocaml/ocaml-lsp).

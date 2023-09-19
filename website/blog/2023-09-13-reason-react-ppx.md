@@ -27,7 +27,7 @@ Take a look at [reasonml/reason-react/releases/tag/0.12.0](https://github.com/re
 
 ## Updating to latest
 
-ReasonReact works best with Melange. [Get started here](https://melange.re/v1.0.0/getting-started/).
+ReasonReact works best with Melange. [Get started here](https://melange.re/v2.0.0/getting-started/).
 
 Next:
 

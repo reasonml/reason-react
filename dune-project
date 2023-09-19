@@ -34,9 +34,9 @@
   "ReasonReact helps you use Reason to build React components with deeply integrated, strong, static type safety.\n\nIt is designed and built by people using Reason and React in large, mission critical production React codebases.")
  (depends
   (ocaml
-   (>= 4.13.0))
+   (and (>= 5.1.0) (< 5.2.0)))
   (melange
-   (>= 1.0.0))
+   (>= 2.0.0))
   (reason-react-ppx
    (= :version))
   (reason
@@ -56,8 +56,8 @@
  (synopsis "React.js JSX PPX")
  (description "ReasonReact JSX PPX")
  (depends
-  (ocaml
-   (>= 4.13.0))
+    (ocaml
+   (and (>= 5.1.0) (< 5.2.0)))
   (reason
    (>= 3.10.0))
   (ppxlib
