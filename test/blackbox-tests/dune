@@ -1,0 +1,4 @@
+(cram
+ (package reason-react)
+ (deps
+  (package reason-react)))
