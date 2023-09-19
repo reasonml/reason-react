@@ -1,7 +1,7 @@
 (library
- (name react)
- (public_name reason-react)
+ (name reactTest)
+ (public_name reason-react.test)
  (preprocess
   (pps melange.ppx reason-react-ppx))
- (libraries melange.dom)
+ (libraries reason-react)
  (modes melange))

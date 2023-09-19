@@ -682,7 +682,7 @@
               (Pexp_apply
                ((pexp_desc
                  (Pexp_ident
-                  ((txt (Ldot (Lident ReactDOM) jsx))
+                  ((txt (Ldot (Ldot (Lident React) DOM) jsx))
                    (loc
                     ((loc_start
                       ((pos_fname output.ml) (pos_lnum 1) (pos_bol 0)
@@ -726,7 +726,7 @@
                    (Pexp_apply
                     ((pexp_desc
                       (Pexp_ident
-                       ((txt (Ldot (Lident ReactDOM) domProps))
+                       ((txt (Ldot (Ldot (Lident React) DOM) domProps))
                         (loc
                          ((loc_start
                            ((pos_fname output.ml) (pos_lnum 1) (pos_bol 0)
@@ -1669,7 +1669,7 @@
                     (Pexp_apply
                      ((pexp_desc
                        (Pexp_ident
-                        ((txt (Ldot (Lident ReactDOM) jsx))
+                        ((txt (Ldot (Ldot (Lident React) DOM) jsx))
                          (loc
                           ((loc_start
                             ((pos_fname output.ml) (pos_lnum 5) (pos_bol 256)
@@ -1713,7 +1713,7 @@
                          (Pexp_apply
                           ((pexp_desc
                             (Pexp_ident
-                             ((txt (Ldot (Lident ReactDOM) domProps))
+                             ((txt (Ldot (Ldot (Lident React) DOM) domProps))
                               (loc
                                ((loc_start
                                  ((pos_fname output.ml) (pos_lnum 5)
