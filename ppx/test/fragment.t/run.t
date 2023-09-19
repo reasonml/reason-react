@@ -1,20 +1,20 @@
   $ ../ppx.sh --output re input.re
   let fragment = foo =>
-    [@bla] ReactDOM.createElement(React.jsxFragment, [|foo|]);
+    [@bla] React.DOM.createElement(React.jsxFragment, [|foo|]);
   let poly_children_fragment = (foo, bar) =>
-    ReactDOM.createElement(React.jsxFragment, [|foo, bar|]);
+    React.DOM.createElement(React.jsxFragment, [|foo, bar|]);
   let nested_fragment = (foo, bar, baz) =>
-    ReactDOM.createElement(
+    React.DOM.createElement(
       React.jsxFragment,
-      [|foo, ReactDOM.createElement(React.jsxFragment, [|bar, baz|])|],
+      [|foo, React.DOM.createElement(React.jsxFragment, [|bar, baz|])|],
     );
   let nested_fragment_with_lower = foo =>
-    ReactDOM.createElement(
+    React.DOM.createElement(
       React.jsxFragment,
       [|
-        ReactDOM.jsx(
+        React.DOM.jsx(
           "div",
-          ([@merlin.hide] ReactDOM.domProps)(~children=foo, ()),
+          ([@merlin.hide] React.DOM.domProps)(~children=foo, ()),
         ),
       |],
     );

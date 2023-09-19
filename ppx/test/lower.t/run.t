@@ -1,29 +1,32 @@
   $ ../ppx.sh --output re input.re
-  let lower = ReactDOM.jsx("div", ([@merlin.hide] ReactDOM.domProps)());
+  let lower = React.DOM.jsx("div", ([@merlin.hide] React.DOM.domProps)());
   let lower_empty_attr =
-    ReactDOM.jsx("div", ([@merlin.hide] ReactDOM.domProps)(~className="", ()));
-  let lower_inline_styles =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "div",
-      ([@merlin.hide] ReactDOM.domProps)(
+      ([@merlin.hide] React.DOM.domProps)(~className="", ()),
+    );
+  let lower_inline_styles =
+    React.DOM.jsx(
+      "div",
+      ([@merlin.hide] React.DOM.domProps)(
         ~style=ReactDOM.Style.make(~backgroundColor="gainsboro", ()),
         (),
       ),
     );
   let lower_inner_html =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "div",
-      ([@merlin.hide] ReactDOM.domProps)(
+      ([@merlin.hide] React.DOM.domProps)(
         ~dangerouslySetInnerHTML={"__html": text},
         (),
       ),
     );
   let lower_opt_attr =
-    ReactDOM.jsx("div", ([@merlin.hide] ReactDOM.domProps)(~tabIndex?, ()));
+    React.DOM.jsx("div", ([@merlin.hide] React.DOM.domProps)(~tabIndex?, ()));
   let lowerWithChildAndProps = foo =>
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "a",
-      ([@merlin.hide] ReactDOM.domProps)(
+      ([@merlin.hide] React.DOM.domProps)(
         ~children=foo,
         ~tabIndex=1,
         ~href="https://example.com",
@@ -31,79 +34,79 @@
       ),
     );
   let lower_child_static =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "div",
-      ([@merlin.hide] ReactDOM.domProps)(
-        ~children=ReactDOM.jsx("span", ([@merlin.hide] ReactDOM.domProps)()),
+      ([@merlin.hide] React.DOM.domProps)(
+        ~children=React.DOM.jsx("span", ([@merlin.hide] React.DOM.domProps)()),
         (),
       ),
     );
   let lower_child_ident =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "div",
-      ([@merlin.hide] ReactDOM.domProps)(~children=lolaspa, ()),
+      ([@merlin.hide] React.DOM.domProps)(~children=lolaspa, ()),
     );
   let lower_child_single =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "div",
-      ([@merlin.hide] ReactDOM.domProps)(
-        ~children=ReactDOM.jsx("div", ([@merlin.hide] ReactDOM.domProps)()),
+      ([@merlin.hide] React.DOM.domProps)(
+        ~children=React.DOM.jsx("div", ([@merlin.hide] React.DOM.domProps)()),
         (),
       ),
     );
   let lower_children_multiple = (foo, bar) =>
-    ReactDOM.jsxs(
+    React.DOM.jsxs(
       "lower",
-      ([@merlin.hide] ReactDOM.domProps)(
+      ([@merlin.hide] React.DOM.domProps)(
         ~children=React.array([|foo, bar|]),
         (),
       ),
     );
   let lower_child_with_upper_as_children =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "div",
-      ([@merlin.hide] ReactDOM.domProps)(
+      ([@merlin.hide] React.DOM.domProps)(
         ~children=React.jsx(App.make, App.makeProps()),
         (),
       ),
     );
   let lower_children_nested =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "div",
-      ([@merlin.hide] ReactDOM.domProps)(
+      ([@merlin.hide] React.DOM.domProps)(
         ~children=
-          ReactDOM.jsxs(
+          React.DOM.jsxs(
             "div",
-            ([@merlin.hide] ReactDOM.domProps)(
+            ([@merlin.hide] React.DOM.domProps)(
               ~children=
                 React.array([|
-                  ReactDOM.jsx(
+                  React.DOM.jsx(
                     "h2",
-                    ([@merlin.hide] ReactDOM.domProps)(
+                    ([@merlin.hide] React.DOM.domProps)(
                       ~children="jsoo-react" |> s,
                       ~className="title",
                       (),
                     ),
                   ),
-                  ReactDOM.jsx(
+                  React.DOM.jsx(
                     "nav",
-                    ([@merlin.hide] ReactDOM.domProps)(
+                    ([@merlin.hide] React.DOM.domProps)(
                       ~children=
-                        ReactDOM.jsx(
+                        React.DOM.jsx(
                           "ul",
-                          ([@merlin.hide] ReactDOM.domProps)(
+                          ([@merlin.hide] React.DOM.domProps)(
                             ~children=
                               examples
                               |> List.map(e =>
                                    let Key = e.path;
-                                   ReactDOM.jsxKeyed(
+                                   React.DOM.jsxKeyed(
                                      ~key=Key,
                                      "li",
-                                     ([@merlin.hide] ReactDOM.domProps)(
+                                     ([@merlin.hide] React.DOM.domProps)(
                                        ~children=
-                                         ReactDOM.jsx(
+                                         React.DOM.jsx(
                                            "a",
-                                           ([@merlin.hide] ReactDOM.domProps)(
+                                           ([@merlin.hide] React.DOM.domProps)(
                                              ~children=e.title |> s,
                                              ~href=e.path,
                                              ~onClick=
@@ -139,9 +142,9 @@
       ),
     );
   let lower_ref_with_children =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "button",
-      ([@merlin.hide] ReactDOM.domProps)(
+      ([@merlin.hide] React.DOM.domProps)(
         ~children,
         ~ref,
         ~className="FancyButton",
@@ -149,35 +152,35 @@
       ),
     );
   let lower_with_many_props =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "div",
-      ([@merlin.hide] ReactDOM.domProps)(
+      ([@merlin.hide] React.DOM.domProps)(
         ~children=
-          ReactDOM.jsxs(
+          React.DOM.jsxs(
             "picture",
-            ([@merlin.hide] ReactDOM.domProps)(
+            ([@merlin.hide] React.DOM.domProps)(
               ~children=
                 React.array([|
-                  ReactDOM.jsx(
+                  React.DOM.jsx(
                     "img",
-                    ([@merlin.hide] ReactDOM.domProps)(
+                    ([@merlin.hide] React.DOM.domProps)(
                       ~src="picture/img.png",
                       ~alt="test picture/img.png",
                       ~id="idimg",
                       (),
                     ),
                   ),
-                  ReactDOM.jsx(
+                  React.DOM.jsx(
                     "source",
-                    ([@merlin.hide] ReactDOM.domProps)(
+                    ([@merlin.hide] React.DOM.domProps)(
                       ~type_="image/webp",
                       ~src="picture/img1.webp",
                       (),
                     ),
                   ),
-                  ReactDOM.jsx(
+                  React.DOM.jsx(
                     "source",
-                    ([@merlin.hide] ReactDOM.domProps)(
+                    ([@merlin.hide] React.DOM.domProps)(
                       ~type_="image/jpeg",
                       ~src="picture/img2.jpg",
                       (),
@@ -193,7 +196,7 @@
       ),
     );
   let some_random_html_element =
-    ReactDOM.jsx(
+    React.DOM.jsx(
       "text",
-      ([@merlin.hide] ReactDOM.domProps)(~dx="1 2", ~dy="3 4", ()),
+      ([@merlin.hide] React.DOM.domProps)(~dx="1 2", ~dy="3 4", ()),
     );
