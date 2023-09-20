@@ -8,20 +8,13 @@
       url = "github:nix-ocaml/nix-overlays";
       inputs.flake-utils.follows = "flake-utils";
     };
-    melange = {
-      url = "github:melange-re/melange";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nix-filter.follows = "nix-filter";
-    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, melange, nix-filter }:
+  outputs = { self, nixpkgs, flake-utils, nix-filter }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages."${system}".appendOverlays [
           (self: super: { ocamlPackages = super.ocaml-ng.ocamlPackages_5_1; })
-          melange.overlays.default
         ];
       in
 
@@ -36,6 +29,7 @@
                 "dune-project"
                 "dune"
                 "reason-react-ppx.opam"
+                "reason-react.opam"
                 "ppx"
               ];
             };
@@ -54,6 +48,8 @@
               include = [
                 "dune-project"
                 "dune"
+                "reason-react-ppx.opam"
+                "reason-react.opam"
                 "src"
                 "test"
               ];
