@@ -161,50 +161,25 @@ external useMemo7:
   "useMemo";
 
 /* This is used as return values  */
-type callback('input, 'output) = 'input => 'output;
 
+[@mel.module "react"] external useCallback: 'fn => 'fn = "useCallback";
 [@mel.module "react"]
-external useCallback:
-  ([@mel.uncurry] ('input => 'output)) => callback('input, 'output) =
+external useCallback0: ('fn, [@mel.as {json|[]|json}] _) => 'fn =
   "useCallback";
 [@mel.module "react"]
-external useCallback0:
-  ([@mel.uncurry] ('input => 'output), [@mel.as {json|[]|json}] _) =>
-  callback('input, 'output) =
-  "useCallback";
+external useCallback1: ('fn, array('a)) => 'fn = "useCallback";
 [@mel.module "react"]
-external useCallback1:
-  ([@mel.uncurry] ('input => 'output), array('a)) =>
-  callback('input, 'output) =
-  "useCallback";
+external useCallback2: ('fn, ('a, 'b)) => 'fn = "useCallback";
 [@mel.module "react"]
-external useCallback2:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b)) => callback('input, 'output) =
-  "useCallback";
+external useCallback3: ('fn, ('a, 'b, 'c)) => 'fn = "useCallback";
 [@mel.module "react"]
-external useCallback3:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c)) =>
-  callback('input, 'output) =
-  "useCallback";
+external useCallback4: ('fn, ('a, 'b, 'c, 'd)) => 'fn = "useCallback";
 [@mel.module "react"]
-external useCallback4:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd)) =>
-  callback('input, 'output) =
-  "useCallback";
+external useCallback5: ('fn, ('a, 'b, 'c, 'd, 'e)) => 'fn = "useCallback";
 [@mel.module "react"]
-external useCallback5:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e)) =>
-  callback('input, 'output) =
-  "useCallback";
+external useCallback6: ('fn, ('a, 'b, 'c, 'd, 'e, 'f)) => 'fn = "useCallback";
 [@mel.module "react"]
-external useCallback6:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f)) =>
-  callback('input, 'output) =
-  "useCallback";
-[@mel.module "react"]
-external useCallback7:
-  ([@mel.uncurry] ('input => 'output), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) =>
-  callback('input, 'output) =
+external useCallback7: ('fn, ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'fn =
   "useCallback";
 
 [@mel.module "react"]
@@ -359,6 +334,7 @@ module Uncurried = {
     "useCallback";
 };
 
+type callback('input, 'output) = 'input => 'output;
 type transitionConfig = {timeoutMs: int};
 
 [@mel.module "react"]
