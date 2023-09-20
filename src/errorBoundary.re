@@ -33,6 +33,8 @@ type params('error) = {
 |}
 ];
 
+module React = Types;
+
 [@react.component]
 external make:
   (~children: React.element, ~fallback: params('error) => React.element) =>

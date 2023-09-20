@@ -1,6 +1,6 @@
 open Jest;
 open Jest.Expect;
-open ReactTestUtils;
+open ReactTest.Utils;
 open Belt;
 
 module DummyStatefulComponent = {
@@ -165,7 +165,7 @@ describe("React", () => {
     let container = getContainer(container);
 
     act(() => {
-      ReactDOM.render(<div> "Hello world!"->React.string </div>, container)
+      React.DOM.render(<div> "Hello world!"->React.string </div>, container)
     });
 
     expect(
@@ -179,7 +179,7 @@ describe("React", () => {
   test("can render null elements", () => {
     let container = getContainer(container);
 
-    act(() => {ReactDOM.render(<div> React.null </div>, container)});
+    act(() => {React.DOM.render(<div> React.null </div>, container)});
 
     expect(
       container
@@ -193,7 +193,7 @@ describe("React", () => {
     let container = getContainer(container);
 
     act(() => {
-      ReactDOM.render(<div> "Hello"->React.string </div>, container)
+      React.DOM.render(<div> "Hello"->React.string </div>, container)
     });
 
     expect(
@@ -207,7 +207,7 @@ describe("React", () => {
   test("can render int elements", () => {
     let container = getContainer(container);
 
-    act(() => {ReactDOM.render(<div> 12345->React.int </div>, container)});
+    act(() => {React.DOM.render(<div> 12345->React.int </div>, container)});
 
     expect(
       container
@@ -220,7 +220,9 @@ describe("React", () => {
   test("can render float elements", () => {
     let container = getContainer(container);
 
-    act(() => {ReactDOM.render(<div> 12.345->React.float </div>, container)});
+    act(() => {
+      React.DOM.render(<div> 12.345->React.float </div>, container)
+    });
 
     expect(
       container
@@ -236,7 +238,7 @@ describe("React", () => {
       [|1, 2, 3|]
       ->Array.map(item => {<div key={j|$item|j}> item->React.int </div>});
 
-    act(() => {ReactDOM.render(<div> array->React.array </div>, container)});
+    act(() => {React.DOM.render(<div> array->React.array </div>, container)});
 
     expect(
       container
@@ -264,7 +266,7 @@ describe("React", () => {
     let container = getContainer(container);
 
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         React.cloneElement(
           <div> "Hello"->React.string </div>,
           {"data-name": "World"},
@@ -287,7 +289,9 @@ describe("React", () => {
   test("can render react components", () => {
     let container = getContainer(container);
 
-    act(() => {ReactDOM.render(<DummyStatefulComponent key="imp" />, container)});
+    act(() => {
+      React.DOM.render(<DummyStatefulComponent key="imp" />, container)
+    });
 
     expect(
       container
@@ -323,7 +327,7 @@ describe("React", () => {
   test("can render react components with reducers", () => {
     let container = getContainer(container);
 
-    act(() => {ReactDOM.render(<DummyReducerComponent />, container)});
+    act(() => {React.DOM.render(<DummyReducerComponent />, container)});
 
     expect(
       container
@@ -391,7 +395,7 @@ describe("React", () => {
     let container = getContainer(container);
 
     act(() => {
-      ReactDOM.render(<DummyReducerWithMapStateComponent />, container)
+      React.DOM.render(<DummyReducerWithMapStateComponent />, container)
     });
 
     expect(
@@ -461,19 +465,19 @@ describe("React", () => {
     let callback = Mock.fn();
 
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <DummyComponentWithEffect value=0 callback />,
         container,
       )
     });
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <DummyComponentWithEffect value=1 callback />,
         container,
       )
     });
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <DummyComponentWithEffect value=1 callback />,
         container,
       )
@@ -487,19 +491,19 @@ describe("React", () => {
     let callback = Mock.fn();
 
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <DummyComponentWithLayoutEffect value=0 callback />,
         container,
       )
     });
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <DummyComponentWithLayoutEffect value=1 callback />,
         container,
       )
     });
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <DummyComponentWithLayoutEffect value=1 callback />,
         container,
       )
@@ -523,7 +527,7 @@ describe("React", () => {
     };
 
     act(() => {
-      ReactDOM.render(<DummyComponentWithRefAndEffect callback />, container)
+      React.DOM.render(<DummyComponentWithRefAndEffect callback />, container)
     });
 
     expect(myRef.contents->Option.map(item => item.current))
@@ -534,7 +538,7 @@ describe("React", () => {
     let container = getContainer(container);
 
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <DummyComponentThatMapsChildren>
           <div> 1->React.int </div>
           <div> 2->React.int </div>
@@ -570,7 +574,7 @@ describe("React", () => {
     let container = getContainer(container);
 
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <DummyContext.Provider value=10>
           <DummyContext.Consumer />
         </DummyContext.Provider>,
@@ -591,10 +595,10 @@ describe("React", () => {
     let value = ref("");
 
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <input
           name="test-input"
-          onChange={event => {value :=  event->ReactEvent.Form.target##value}}
+          onChange={event => {value :=  event->React.Event.Form.target##value}}
         />,
         container,
       )
@@ -613,7 +617,7 @@ describe("React", () => {
     let title = Some("foo");
 
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         <React.Fragment key=?title>
           <div> "Child"->React.string </div>
         </React.Fragment>,
@@ -645,7 +649,7 @@ describe("React", () => {
       </tr>;
 
     act(() => {
-      ReactDOM.render(
+      React.DOM.render(
         render({name: "Joe", imageUrl: "https://foo.png"}),
         container,
       )
@@ -657,7 +661,7 @@ describe("React", () => {
        let container = getContainer(container);
 
        act(() => {
-         ReactDOM.render(
+         React.DOM.render(
            <ReasonReactErrorBoundary
              fallback={({error: _, info}) => {
                expect(

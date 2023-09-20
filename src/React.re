@@ -1,4 +1,8 @@
-type element;
+module DOM = DOM;
+module ErrorBoundary = ErrorBoundary;
+module Event = Event;
+module Router = Router;
+type element = Types.element;
 
 external null: element = "null";
 
@@ -8,7 +12,7 @@ external string: string => element = "%identity";
 
 external array: array(element) => element = "%identity";
 
-type componentLike('props, 'return) = 'props => 'return;
+type componentLike('props, 'return) = Types.componentLike('props, 'return);
 
 type component('props) = componentLike('props, element);
 
@@ -46,7 +50,7 @@ external jsxsKeyed:
 
 [@mel.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
 
-type ref('value) = {mutable current: 'value};
+type ref('value) = Types.ref('value) = {mutable current: 'value};
 
 module Ref = {
   [@deprecated "Please use the type React.ref instead"]
@@ -83,28 +87,7 @@ module Children = {
   external toArray: element => array(element) = "toArray";
 };
 
-module Context = {
-  type t('props);
-
-  [@mel.obj]
-  external makeProps:
-    (~value: 'props, ~children: element, unit) =>
-    {
-      .
-      "value": 'props,
-      "children": element,
-    };
-
-  [@mel.get]
-  external provider:
-    t('props) =>
-    component({
-      .
-      "value": 'props,
-      "children": element,
-    }) =
-    "Provider";
-};
+module Context = Context;
 
 [@mel.module "react"]
 external createContext: 'a => Context.t('a) = "createContext";
@@ -187,300 +170,8 @@ module SuspenseList = {
     }) =
     "SuspenseList";
 };
-/* HOOKS */
 
-/*
- * Yeah, we know this api isn't great. tl;dr: useReducer instead.
- * It's because useState can take functions or non-function values and treats
- * them differently. Lazy initializer + callback which returns state is the
- * only way to safely have any type of state and be able to update it correctly.
- */
-[@mel.module "react"]
-external useState:
-  ([@mel.uncurry] (unit => 'state)) => ('state, ('state => 'state) => unit) =
-  "useState";
-
-[@mel.module "react"]
-external useReducer:
-  ([@mel.uncurry] (('state, 'action) => 'state), 'state) =>
-  ('state, 'action => unit) =
-  "useReducer";
-
-[@mel.module "react"]
-external useReducerWithMapState:
-  (
-    [@mel.uncurry] (('state, 'action) => 'state),
-    'initialState,
-    [@mel.uncurry] ('initialState => 'state)
-  ) =>
-  ('state, 'action => unit) =
-  "useReducer";
-
-[@mel.module "react"]
-external useEffect: ([@mel.uncurry] (unit => option(unit => unit))) => unit =
-  "useEffect";
-[@mel.module "react"]
-external useEffect0:
-  (
-    [@mel.uncurry] (unit => option(unit => unit)),
-    [@mel.as {json|[]|json}] _
-  ) =>
-  unit =
-  "useEffect";
-[@mel.module "react"]
-external useEffect1:
-  ([@mel.uncurry] (unit => option(unit => unit)), array('a)) => unit =
-  "useEffect";
-[@mel.module "react"]
-external useEffect2:
-  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
-  "useEffect";
-[@mel.module "react"]
-external useEffect3:
-  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
-  "useEffect";
-[@mel.module "react"]
-external useEffect4:
-  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
-  "useEffect";
-[@mel.module "react"]
-external useEffect5:
-  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
-  unit =
-  "useEffect";
-[@mel.module "react"]
-external useEffect6:
-  (
-    [@mel.uncurry] (unit => option(unit => unit)),
-    ('a, 'b, 'c, 'd, 'e, 'f)
-  ) =>
-  unit =
-  "useEffect";
-[@mel.module "react"]
-external useEffect7:
-  (
-    [@mel.uncurry] (unit => option(unit => unit)),
-    ('a, 'b, 'c, 'd, 'e, 'f, 'g)
-  ) =>
-  unit =
-  "useEffect";
-
-[@mel.module "react"]
-external useLayoutEffect:
-  ([@mel.uncurry] (unit => option(unit => unit))) => unit =
-  "useLayoutEffect";
-[@mel.module "react"]
-external useLayoutEffect0:
-  (
-    [@mel.uncurry] (unit => option(unit => unit)),
-    [@mel.as {json|[]|json}] _
-  ) =>
-  unit =
-  "useLayoutEffect";
-[@mel.module "react"]
-external useLayoutEffect1:
-  ([@mel.uncurry] (unit => option(unit => unit)), array('a)) => unit =
-  "useLayoutEffect";
-[@mel.module "react"]
-external useLayoutEffect2:
-  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
-  "useLayoutEffect";
-[@mel.module "react"]
-external useLayoutEffect3:
-  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
-  "useLayoutEffect";
-[@mel.module "react"]
-external useLayoutEffect4:
-  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
-  "useLayoutEffect";
-[@mel.module "react"]
-external useLayoutEffect5:
-  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
-  unit =
-  "useLayoutEffect";
-[@mel.module "react"]
-external useLayoutEffect6:
-  (
-    [@mel.uncurry] (unit => option(unit => unit)),
-    ('a, 'b, 'c, 'd, 'e, 'f)
-  ) =>
-  unit =
-  "useLayoutEffect";
-[@mel.module "react"]
-external useLayoutEffect7:
-  (
-    [@mel.uncurry] (unit => option(unit => unit)),
-    ('a, 'b, 'c, 'd, 'e, 'f, 'g)
-  ) =>
-  unit =
-  "useLayoutEffect";
-
-[@mel.module "react"]
-external useMemo: ([@mel.uncurry] (unit => 'any)) => 'any = "useMemo";
-[@mel.module "react"]
-external useMemo0:
-  ([@mel.uncurry] (unit => 'any), [@mel.as {json|[]|json}] _) => 'any =
-  "useMemo";
-[@mel.module "react"]
-external useMemo1: ([@mel.uncurry] (unit => 'any), array('a)) => 'any =
-  "useMemo";
-[@mel.module "react"]
-external useMemo2: ([@mel.uncurry] (unit => 'any), ('a, 'b)) => 'any =
-  "useMemo";
-[@mel.module "react"]
-external useMemo3: ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c)) => 'any =
-  "useMemo";
-[@mel.module "react"]
-external useMemo4: ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd)) => 'any =
-  "useMemo";
-[@mel.module "react"]
-external useMemo5:
-  ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e)) => 'any =
-  "useMemo";
-[@mel.module "react"]
-external useMemo6:
-  ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f)) => 'any =
-  "useMemo";
-[@mel.module "react"]
-external useMemo7:
-  ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'any =
-  "useMemo";
-
-[@mel.module "react"] external useCallback: 'fn => 'fn = "useCallback";
-[@mel.module "react"]
-external useCallback0: ('fn, [@mel.as {json|[]|json}] _) => 'fn =
-  "useCallback";
-[@mel.module "react"]
-external useCallback1: ('fn, array('a)) => 'fn = "useCallback";
-[@mel.module "react"]
-external useCallback2: ('fn, ('a, 'b)) => 'fn = "useCallback";
-[@mel.module "react"]
-external useCallback3: ('fn, ('a, 'b, 'c)) => 'fn = "useCallback";
-[@mel.module "react"]
-external useCallback4: ('fn, ('a, 'b, 'c, 'd)) => 'fn = "useCallback";
-[@mel.module "react"]
-external useCallback5: ('fn, ('a, 'b, 'c, 'd, 'e)) => 'fn = "useCallback";
-[@mel.module "react"]
-external useCallback6: ('fn, ('a, 'b, 'c, 'd, 'e, 'f)) => 'fn = "useCallback";
-[@mel.module "react"]
-external useCallback7: ('fn, ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'fn =
-  "useCallback";
-
-[@mel.module "react"]
-external useContext: Context.t('any) => 'any = "useContext";
-
-[@mel.module "react"] external useRef: 'value => ref('value) = "useRef";
-
-[@mel.module "react"]
-external useImperativeHandle0:
-  (
-    Js.Nullable.t(ref('value)),
-    [@mel.uncurry] (unit => 'value),
-    [@mel.as {json|[]|json}] _
-  ) =>
-  unit =
-  "useImperativeHandle";
-
-[@mel.module "react"]
-external useImperativeHandle1:
-  (
-    Js.Nullable.t(ref('value)),
-    [@mel.uncurry] (unit => 'value),
-    array('a)
-  ) =>
-  unit =
-  "useImperativeHandle";
-
-[@mel.module "react"]
-external useImperativeHandle2:
-  (Js.Nullable.t(ref('value)), [@mel.uncurry] (unit => 'value), ('a, 'b)) =>
-  unit =
-  "useImperativeHandle";
-
-[@mel.module "react"]
-external useImperativeHandle3:
-  (
-    Js.Nullable.t(ref('value)),
-    [@mel.uncurry] (unit => 'value),
-    ('a, 'b, 'c)
-  ) =>
-  unit =
-  "useImperativeHandle";
-
-[@mel.module "react"]
-external useImperativeHandle4:
-  (
-    Js.Nullable.t(ref('value)),
-    [@mel.uncurry] (unit => 'value),
-    ('a, 'b, 'c, 'd)
-  ) =>
-  unit =
-  "useImperativeHandle";
-
-[@mel.module "react"]
-external useImperativeHandle5:
-  (
-    Js.Nullable.t(ref('value)),
-    [@mel.uncurry] (unit => 'value),
-    ('a, 'b, 'c, 'd, 'e)
-  ) =>
-  unit =
-  "useImperativeHandle";
-
-[@mel.module "react"]
-external useImperativeHandle6:
-  (
-    Js.Nullable.t(ref('value)),
-    [@mel.uncurry] (unit => 'value),
-    ('a, 'b, 'c, 'd, 'e, 'f)
-  ) =>
-  unit =
-  "useImperativeHandle";
-
-[@mel.module "react"]
-external useImperativeHandle7:
-  (
-    Js.Nullable.t(ref('value)),
-    [@mel.uncurry] (unit => 'value),
-    ('a, 'b, 'c, 'd, 'e, 'f, 'g)
-  ) =>
-  unit =
-  "useImperativeHandle";
-
-module Uncurried = {
-  [@mel.module "react"]
-  external useState:
-    ([@mel.uncurry] (unit => 'state)) =>
-    ('state, (. ('state => 'state)) => unit) =
-    "useState";
-
-  [@mel.module "react"]
-  external useReducer:
-    ([@mel.uncurry] (('state, 'action) => 'state), 'state) =>
-    ('state, (. 'action) => unit) =
-    "useReducer";
-
-  [@mel.module "react"]
-  external useReducerWithMapState:
-    (
-      [@mel.uncurry] (('state, 'action) => 'state),
-      'initialState,
-      [@mel.uncurry] ('initialState => 'state)
-    ) =>
-    ('state, (. 'action) => unit) =
-    "useReducer";
-};
-
-/* This is used as return values  */
-type callback('input, 'output) = 'input => 'output;
-
-type transitionConfig = {timeoutMs: int};
-
-[@mel.module "react"]
-external useTransition:
-  (~config: transitionConfig=?, unit) =>
-  (callback(callback(unit, unit), unit), bool) =
-  "useTransition";
+include Hooks;
 
 [@mel.set]
 external setDisplayName: (component('props), string) => unit = "displayName";
