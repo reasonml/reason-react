@@ -323,16 +323,13 @@ let rec recursivelyMakeNamedArgsForExternal list args =
            | ( _label,
                Some
                  {
-                   ptyp_desc = Ptyp_constr ({ txt = Lident "option" }, [ type_ ]);
-                 },
-               _ ) ->
-               Builder.ptyp_constr ~loc { loc; txt = optionIdent } [ type_ ]
-           | ( label,
-               Some
-                 {
                    ptyp_desc =
                      Ptyp_constr
-                       ({ txt = Ldot (Lident "*predef*", "option") }, [ type_ ]);
+                       ( {
+                           txt =
+                             Lident "option" | Ldot (Lident "*predef*", "option");
+                         },
+                         [ type_ ] );
                  },
                _ )
              when isOptional label ->
