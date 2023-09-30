@@ -314,7 +314,7 @@ type domProps = {
   media: option(string), /* a valid media query */
   [@mel.optional]
   mediaGroup: option(string),
-  [@mel.optional]
+  [@mel.optional] [@mel.as "method"]
   method: option(string), /* "post" or "get" */
   [@mel.optional]
   min: option(string),
