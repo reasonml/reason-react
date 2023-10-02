@@ -564,7 +564,10 @@ module Uncurried: {
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
-[@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
+module Experimental: {
+  /* This module is used to bind to APIs for future versions of React. There are no garanties of backwards compatibiltiy or stability. */
+  [@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
+};
 
 [@mel.set]
 external setDisplayName: (component('props), string) => unit = "displayName";

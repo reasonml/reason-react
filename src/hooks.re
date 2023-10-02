@@ -411,4 +411,12 @@ type callback('input, 'output) = 'input => 'output;
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
-[@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
+[@mel.module "react"]
+external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
+  "useDebugValue";
+
+module Experimental = {
+  /* This module is used to bind to APIs for future versions of React. There are no garanties of backwards compatibiltiy or stability. */
+
+  [@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
+};
