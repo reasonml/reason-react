@@ -2,14 +2,13 @@ module DOM = DOM;
 module ErrorBoundary = ErrorBoundary;
 module Event = Event;
 module Router = Router;
+
 type element = Types.element;
 
 external null: element = "null";
-
 external float: float => element = "%identity";
 external int: int => element = "%identity";
 external string: string => element = "%identity";
-
 external array: array(element) => element = "%identity";
 
 type componentLike('props, 'return) = Types.componentLike('props, 'return);

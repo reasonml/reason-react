@@ -668,36 +668,39 @@ describe("React", () => {
     };
 
     let render = author =>
-      <tr key={author.Author.name}>
-        <td> <img src={author.imageUrl} /> </td>
-      </tr>;
+      <div key={author.Author.name}>
+        <div> <img src={author.imageUrl} /> </div>
+      </div>;
 
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         render({name: "Joe", imageUrl: "https://foo.png"}),
-        container,
       )
     });
 
     expect(container->DOM.findBySelector("img")->Option.isSome)->toBe(true);
   });
+
   test("ErrorBoundary", () => {
     let container = getContainer(container);
     let root = React.DOM.Client.createRoot(container);
 
-    React.DOM.Client.render(
-      root,
-      <React.ErrorBoundary
-        fallback={({error: _, info}) => {
-          expect(
-            info.componentStack->Js.String2.includes("ComponentThatThrows"),
-          )
-          ->toBe(true);
-          <strong> "An error occured"->React.string </strong>;
-        }}>
-        <ComponentThatThrows value=1 />
-      </React.ErrorBoundary>,
-    );
+    act(() => {
+      React.DOM.Client.render(
+        root,
+        <React.ErrorBoundary
+          fallback={({error: _, info}) => {
+            expect(
+              info.componentStack->Js.String2.includes("ComponentThatThrows"),
+            )
+            ->toBe(true);
+            <strong> "An error occured"->React.string </strong>;
+          }}>
+          <ComponentThatThrows value=1 />
+        </React.ErrorBoundary>,
+      );
+    });
 
     expect(
       container
