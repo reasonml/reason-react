@@ -41,4 +41,4 @@ external make:
   React.element =
   "ErrorBoundary";
 
-let make = make
+let make = make;

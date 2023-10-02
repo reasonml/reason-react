@@ -186,9 +186,18 @@ external useReducerWithMapState:
 [@mel.module "react"]
 external useSyncExternalStore:
   (
-    ~subscribe: [@mel.uncurry] (unit => unit),
-    ~getSnapshot: [@mel.uncurry] (unit => 'snapshot),
-    ~getServerSnapshot: [@mel.uncurry] (unit => 'snapshot)=?
+    ~subscribe: (unit => unit) => (unit) => unit,
+    ~getSnapshot: unit => 'snapshot
+  ) =>
+  'snapshot =
+  "useSyncExternalStore";
+
+[@mel.module "react"]
+external useSyncExternalStoreWithServerSnapshot:
+  (
+    ~subscribe: (unit => unit) => (unit) => unit,
+    ~getSnapshot: unit => 'snapshot,
+    ~getServerSnapshot: unit => 'snapshot
   ) =>
   'snapshot =
   "useSyncExternalStore";
@@ -1616,11 +1625,15 @@ module DOM: {
     external hydrateRoot: (Dom.element, element) => root = "hydrateRoot";
   };
 
-  [@deprecated "Please use React.DOM.Client.render instead. It will be removed in the next release. Disable this warning with `[@alert \"-deprecated\"]` before React.DOM.render."]
+  [@deprecated
+    "Please use React.DOM.Client.render instead. It will be removed in the next release. Disable this warning with `[@alert \"-deprecated\"]` before React.DOM.render."
+  ]
   [@mel.module "react-dom"]
   external render: (element, Dom.element) => unit = "render";
 
-  [@deprecated "Please use React.DOM.Client.hydrateRoot instead. It will be removed in the next release. Disable this warning with `[@alert \"-deprecated\"]` before React.DOM.hydrate."]
+  [@deprecated
+    "Please use React.DOM.Client.hydrateRoot instead. It will be removed in the next release. Disable this warning with `[@alert \"-deprecated\"]` before React.DOM.hydrate."
+  ]
   [@mel.module "react-dom"]
   external hydrate: (element, Dom.element) => unit = "hydrate";
 

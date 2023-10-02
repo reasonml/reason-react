@@ -699,7 +699,7 @@ describe("React", () => {
           }}>
           <ComponentThatThrows value=1 />
         </React.ErrorBoundary>,
-      );
+      )
     });
 
     expect(
