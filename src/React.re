@@ -147,7 +147,3 @@ external setDisplayName: (component('props), string) => unit = "displayName";
 
 [@mel.get] [@mel.return nullable]
 external displayName: component('props) => option(string) = "displayName";
-
-[@mel.module "react"]
-external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
-  "useDebugValue";
