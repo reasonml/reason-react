@@ -40,3 +40,5 @@ external make:
   (~children: React.element, ~fallback: params('error) => React.element) =>
   React.element =
   "ErrorBoundary";
+
+let make = make
