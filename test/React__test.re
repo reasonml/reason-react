@@ -405,9 +405,10 @@ describe("React", () => {
 
   test("can render react components with reducers (map state)", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(<DummyReducerWithMapStateComponent />, container)
+      React.DOM.Client.render(root, <DummyReducerWithMapStateComponent />)
     });
 
     expect(
@@ -657,6 +658,7 @@ describe("React", () => {
 
   test("Type inference with keys", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     module Author = {
       type t = {
