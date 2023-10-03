@@ -12,7 +12,6 @@ external string: string => element = "%identity";
 external array: array(element) => element = "%identity";
 
 type componentLike('props, 'return) = Types.componentLike('props, 'return);
-
 type component('props) = componentLike('props, element);
 
 /* this function exists to prepare for making `component` abstract */

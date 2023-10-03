@@ -40,7 +40,7 @@ external useSyncExternalStore:
   "useSyncExternalStore";
 
 [@mel.module "react"]
-external useSyncExternalStoreWithServerSnapshot:
+external useSyncExternalStoreWithServer:
   (
     ~subscribe: (([@mel.uncurry] (unit => unit)) => ([@mel.uncurry] (unit => unit))),
     ~getSnapshot: unit => 'snapshot,
