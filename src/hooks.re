@@ -1,14 +1,13 @@
 /* HOOKS */
 
+open Types;
+
 /*
  * Yeah, we know this api isn't great. tl;dr: useReducer instead.
  * It's because useState can take functions or non-function values and treats
  * them differently. Lazy initializer + callback which returns state is the
  * only way to safely have any type of state and be able to update it correctly.
  */
-
-open Types;
-
 [@mel.module "react"]
 external useState:
   ([@mel.uncurry] (unit => 'state)) => ('state, ('state => 'state) => unit) =
