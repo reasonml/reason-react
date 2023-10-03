@@ -34,7 +34,7 @@ external useReducerWithMapState:
 external useSyncExternalStore:
   (
     ~subscribe: (([@mel.uncurry] (unit => unit)) => ([@mel.uncurry] (unit => unit))),
-    ~getSnapshot: [@mel.uncurry] (unit => 'snapshot)
+    ~getSnapshot: unit => 'snapshot
   ) =>
   'snapshot =
   "useSyncExternalStore";
@@ -43,7 +43,7 @@ external useSyncExternalStore:
 external useSyncExternalStoreWithServerSnapshot:
   (
     ~subscribe: (([@mel.uncurry] (unit => unit)) => ([@mel.uncurry] (unit => unit))),
-    ~getSnapshot: [@mel.uncurry] (unit => 'snapshot),
+    ~getSnapshot: unit => 'snapshot,
     ~getServerSnapshot: [@mel.uncurry] (unit => 'snapshot)
   ) =>
   'snapshot =
