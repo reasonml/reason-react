@@ -33,8 +33,8 @@ external useReducerWithMapState:
 [@mel.module "react"]
 external useSyncExternalStore:
   (
-    ~subscribe: ((unit => unit) => (unit) => unit),
-    ~getSnapshot: (unit => 'snapshot)
+    ~subscribe: (([@mel.uncurry] (unit => unit)) => ([@mel.uncurry] (unit => unit))),
+    ~getSnapshot: [@mel.uncurry] (unit => 'snapshot)
   ) =>
   'snapshot =
   "useSyncExternalStore";
@@ -42,9 +42,9 @@ external useSyncExternalStore:
 [@mel.module "react"]
 external useSyncExternalStoreWithServerSnapshot:
   (
-    ~subscribe: ((unit => unit) => (unit) => unit),
-    ~getSnapshot: (unit => 'snapshot),
-    ~getServerSnapshot: (unit => 'snapshot)
+    ~subscribe: (([@mel.uncurry] (unit => unit)) => ([@mel.uncurry] (unit => unit))),
+    ~getSnapshot: [@mel.uncurry] (unit => 'snapshot),
+    ~getServerSnapshot: [@mel.uncurry] (unit => 'snapshot)
   ) =>
   'snapshot =
   "useSyncExternalStore";
