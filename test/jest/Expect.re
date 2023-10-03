@@ -17,6 +17,7 @@ external toBeGreaterThanOrEqual: (t('a), 'a) => unit =
   "toBeGreaterThanOrEqual";
 [@mel.send]
 external toBeLessThanOrEqual: (t('a), 'a) => unit = "toBeLessThanOrEqual";
+[@mel.send] external toHaveLength: (t(array('a)), 'a) => unit = "toHaveLength";
 
 [@mel.get]
 external rejects: t(Js.Promise.t('a)) => t(unit => 'a) = "rejects";

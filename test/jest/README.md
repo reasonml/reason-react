@@ -1,7 +1,7 @@
 # Jest bindings
 
 > Simpler bindings for Jest, taken from [draftbit/re-jest](https://github.com/draftbit/re-jest) and
-> vendored here to avoid a dependency
+> vendored here to avoid a dependency and have control over them
 
 - Write tests with the same approach as JavaScript
 - Uses pipe first `->` for chaining assertions (expect)
@@ -19,8 +19,9 @@ test("number", () => {
   expect(myNumber->float_of_int)->toBeLessThan(124.0);
 });
 
-testAsync("promise", () => {
+testAsync("promise", (finish) => {
   expect(Js.Promise.resolve(123))->resolves->toEqual(123);
+  finish();
 });
 
 test("array", () => {

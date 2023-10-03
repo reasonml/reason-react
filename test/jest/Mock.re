@@ -23,5 +23,7 @@ let mockImplementation = (mock, value) => {
 };
 [@mel.get] [@mel.scope "mock"]
 external calls: t('a) => array(array('b)) = "calls";
+[@mel.get] [@mel.scope "mock"] [@mel.return nullable]
+external lastCall: t('a) => option(array('b)) = "lastCall";
 [@mel.set] [@mel.scope "mock"]
 external clearCalls: (t('a), [@mel.as {json|[]|json}] _) => unit = "calls";
