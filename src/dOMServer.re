@@ -5,8 +5,6 @@ external renderToString: Types.element => string = "renderToString";
 external renderToStaticMarkup: Types.element => string =
   "renderToStaticMarkup";
 
-type error = {.};
-
 [@deriving abstract]
 type options = {
   [@mel.optional]
@@ -24,18 +22,18 @@ type options = {
   [@mel.optional]
   onAllReady: option(unit => unit),
   [@mel.optional]
-  onError: option(error => unit),
+  onError: option(Js.Exn.t => unit),
   [@mel.optional]
   onShellReady: option(unit => unit),
   [@mel.optional]
-  onShellError: option(error => unit),
+  onShellError: option(Js.Exn.t => unit),
   [@mel.optional]
   progressiveChunkSize: option(int),
 };
 
 type pipeableStream = {
   /* Using empty object instead of Node.stream since Melange don't provide a binding to node's Stream (https://nodejs.org/api/stream.html) */
-  pipe: {.} => unit,
+  pipe: Js.t({.}) => unit,
   abort: unit => unit,
 };
 

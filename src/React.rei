@@ -1558,8 +1558,6 @@ module DOM: {
     [@mel.module "react-dom/server"]
     external renderToStaticMarkup: element => string = "renderToStaticMarkup";
 
-    type error = {.};
-
     [@deriving abstract]
     type options = {
       [@mel.optional]
@@ -1577,11 +1575,11 @@ module DOM: {
       [@mel.optional]
       onAllReady: option(unit => unit),
       [@mel.optional]
-      onError: option(error => unit),
+      onError: option(Js.Exn.t => unit),
       [@mel.optional]
       onShellReady: option(unit => unit),
       [@mel.optional]
-      onShellError: option(error => unit),
+      onShellError: option(Js.Exn.t => unit),
       [@mel.optional]
       progressiveChunkSize: option(int),
     };
@@ -1601,9 +1599,9 @@ module DOM: {
         ~namespaceURI: string=?,
         ~nonce: string=?,
         ~onAllReady: unit => unit=?,
-        ~onError: error => unit=?,
+        ~onError: Js.Exn.t => unit=?,
         ~onShellReady: unit => unit=?,
-        ~onShellError: error => unit=?,
+        ~onShellError: Js.Exn.t => unit=?,
         ~progressiveChunkSize: int=?,
         element
       ) =>

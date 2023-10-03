@@ -2,7 +2,7 @@ open Jest;
 open Jest.Expect;
 
 module Stream = {
-  type writable;
+  type writable = Js.t({.});
 
   [@mel.send] external setEncoding: (writable, string) => unit = "setEncoding";
 
@@ -57,9 +57,7 @@ describe("React.DOM", () => {
         React.DOM.Server.renderToPipeableStream(
           <div> "Hello world!"->React.string </div>,
         );
-      /* Since we bind to {. } in ReactDOM.Server.pipeableStream, we need to cast */
-      let streamAsObject: {.} = Obj.magic(stream);
-      pipe(streamAsObject);
+      pipe(stream);
     });
   })
 });
