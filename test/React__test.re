@@ -682,6 +682,8 @@ describe("React", () => {
     expect(container->DOM.findBySelector("img")->Option.isSome)->toBe(true);
   });
 
+  try {
+
   test("ErrorBoundary", () => {
     let container = getContainer(container);
     let root = React.DOM.Client.createRoot(container);
@@ -709,4 +711,9 @@ describe("React", () => {
     )
     ->toBe(true);
   });
+  } {
+    | _error =>
+      /* We catch the exception here to not populate the error to the toplevel */
+      ()
+  }
 });
