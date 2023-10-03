@@ -50,11 +50,370 @@ let store = (initialState: 'a) => {
   {getState, setState, subscribe};
 };
 
+module DummyStatefulComponent = {
+  [@react.component]
+  let make = (~initialValue=0, ()) => {
+    let (value, setValue) = React.useState(() => initialValue);
+
+    <button key="asdf" onClick={_ => setValue(value => value + 1)}>
+      value->React.int
+    </button>;
+  };
+};
+
+module DummyReducerComponent = {
+  type action =
+    | Increment
+    | Decrement;
+  [@react.component]
+  let make = (~initialValue=0, ()) => {
+    let (state, send) =
+      React.useReducer(
+        (state, action) =>
+          switch (action) {
+          | Increment => state + 1
+          | Decrement => state - 1
+          },
+        initialValue,
+      );
+
+    <>
+      <div className="value"> state->React.int </div>
+      <button onClick={_ => send(Increment)}>
+        "Increment"->React.string
+      </button>
+      <button onClick={_ => send(Decrement)}>
+        "Decrement"->React.string
+      </button>
+    </>;
+  };
+};
+
+module DummyReducerWithMapStateComponent = {
+  type action =
+    | Increment
+    | Decrement;
+  [@react.component]
+  let make = (~initialValue=0, ()) => {
+    let (state, send) =
+      React.useReducerWithMapState(
+        (state, action) =>
+          switch (action) {
+          | Increment => state + 1
+          | Decrement => state - 1
+          },
+        initialValue,
+        initialValue => initialValue + 1,
+      );
+
+    <>
+      <div className="value"> state->React.int </div>
+      <button onClick={_ => send(Increment)}>
+        "Increment"->React.string
+      </button>
+      <button onClick={_ => send(Decrement)}>
+        "Decrement"->React.string
+      </button>
+    </>;
+  };
+};
+
+module DummyComponentWithEffect = {
+  [@react.component]
+  let make = (~value=0, ~callback, ()) => {
+    React.useEffect1(
+      () => {
+        callback(value);
+        None;
+      },
+      [|value|],
+    );
+
+    <div />;
+  };
+};
+
+module DummyComponentWithLayoutEffect = {
+  [@react.component]
+  let make = (~value=0, ~callback, ()) => {
+    React.useLayoutEffect1(
+      () => {
+        callback(value);
+        None;
+      },
+      [|value|],
+    );
+
+    <div />;
+  };
+};
+
+module DummyComponentWithRefAndEffect = {
+  [@react.component]
+  let make = (~callback, ()) => {
+    let myRef = React.useRef(1);
+    React.useEffect0(() => {
+      myRef.current = myRef.current + 1;
+      callback(myRef);
+      None;
+    });
+    <div />;
+  };
+};
+
 describe("Hooks", () => {
   let container = ref(None);
 
   beforeEach(prepareContainer(container));
   afterEach(cleanupContainer(container));
+
+  test("can render react components", () => {
+    let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
+
+    act(() => {React.DOM.Client.render(root, <DummyStatefulComponent />)});
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent("button", "0")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    let button = container->DOM.findBySelector("button");
+
+    act(() => {
+      switch (button) {
+      | Some(button) => Simulate.click(button)
+      | None => ()
+      }
+    });
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent("button", "0")
+      ->Option.isSome,
+    )
+    ->toBe(false);
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent("button", "1")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+  });
+
+  test("can render react components with reducers", () => {
+    let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
+
+    act(() => {React.DOM.Client.render(root, <DummyReducerComponent />)});
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "0")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    let button =
+      container->DOM.findBySelectorAndPartialTextContent(
+        "button",
+        "Increment",
+      );
+
+    act(() => {
+      switch (button) {
+      | Some(button) => Simulate.click(button)
+      | None => ()
+      }
+    });
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "0")
+      ->Option.isSome,
+    )
+    ->toBe(false);
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "1")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    let button =
+      container->DOM.findBySelectorAndPartialTextContent(
+        "button",
+        "Decrement",
+      );
+
+    act(() => {
+      switch (button) {
+      | Some(button) => Simulate.click(button)
+      | None => ()
+      }
+    });
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "0")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "1")
+      ->Option.isSome,
+    )
+    ->toBe(false);
+  });
+
+  test("can render react components with reducers (map state)", () => {
+    let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
+
+    act(() => {
+      React.DOM.Client.render(root, <DummyReducerWithMapStateComponent />)
+    });
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "1")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    let button =
+      container->DOM.findBySelectorAndPartialTextContent(
+        "button",
+        "Increment",
+      );
+
+    act(() => {
+      switch (button) {
+      | Some(button) => Simulate.click(button)
+      | None => ()
+      }
+    });
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "1")
+      ->Option.isSome,
+    )
+    ->toBe(false);
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "2")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    let button =
+      container->DOM.findBySelectorAndPartialTextContent(
+        "button",
+        "Decrement",
+      );
+
+    act(() => {
+      switch (button) {
+      | Some(button) => Simulate.click(button)
+      | None => ()
+      }
+    });
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "1")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent(".value", "2")
+      ->Option.isSome,
+    )
+    ->toBe(false);
+  });
+
+  test("can render react components with effects", () => {
+    let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
+    let callback = Mock.fn();
+
+    act(() => {
+      React.DOM.Client.render(
+        root,
+        <DummyComponentWithEffect value=0 callback />,
+      )
+    });
+    act(() => {
+      React.DOM.Client.render(
+        root,
+        <DummyComponentWithEffect value=1 callback />,
+      )
+    });
+    act(() => {
+      React.DOM.Client.render(
+        root,
+        <DummyComponentWithEffect value=1 callback />,
+      )
+    });
+
+    expect(callback->Mock.getMock->Mock.calls)->toEqual([|[|0|], [|1|]|]);
+  });
+
+  test("can render react components with layout effects", () => {
+    let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
+    let callback = Mock.fn();
+
+    act(() => {
+      React.DOM.Client.render(
+        root,
+        <DummyComponentWithLayoutEffect value=0 callback />,
+      )
+    });
+    act(() => {
+      React.DOM.Client.render(
+        root,
+        <DummyComponentWithLayoutEffect value=1 callback />,
+      )
+    });
+    act(() => {
+      React.DOM.Client.render(
+        root,
+        <DummyComponentWithLayoutEffect value=1 callback />,
+      )
+    });
+
+    expect(callback->Mock.getMock->Mock.calls)->toEqual([|[|0|], [|1|]|]);
+  });
+
+    test("can work with useRef", () => {
+    let container = getContainer(container);
+    let myRef = ref(None);
+    let callback = reactRef => {
+      myRef := Some(reactRef);
+    };
+    let root = React.DOM.Client.createRoot(container);
+
+    act(() => {
+      React.DOM.Client.render(
+        root,
+        <DummyComponentWithRefAndEffect callback />,
+      )
+    });
+
+    expect(myRef.contents->Option.map(item => item.current))
+    ->toEqual(Some(2));
+  });
 
   testAsync("useSyncExternalStore", finish => {
     let {subscribe, getState, setState} = store("initial");
