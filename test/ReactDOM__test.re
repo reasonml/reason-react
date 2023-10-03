@@ -12,7 +12,7 @@ module Stream = {
   external make: unit => writable = "PassThrough";
 };
 
-describe("ReactDOM", () => {
+describe("React.DOM", () => {
   describe("React.DOM.Server", () => {
     test("renderToString", () => {
       let string =
