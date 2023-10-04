@@ -156,35 +156,6 @@ module Suspense: {
     "Suspense";
 };
 
-/* Experimental React.SuspenseList */
-module SuspenseList: {
-  type revealOrder;
-  type tail;
-  [@mel.obj]
-  external makeProps:
-    (
-      ~children: element=?,
-      ~revealOrder: [ | `forwards | `backwards | `together]=?,
-      ~tail: [ | `collapsed | `hidden]=?,
-      unit
-    ) =>
-    {
-      .
-      "children": option(element),
-      "revealOrder": option(revealOrder),
-      "tail": option(tail),
-    };
-
-  [@mel.module "react"]
-  external make:
-    component({
-      .
-      "children": option(element),
-      "revealOrder": option(revealOrder),
-      "tail": option(tail),
-    }) =
-    "SuspenseList";
-};
 /* HOOKS */
 
 /*
@@ -213,6 +184,16 @@ external useReducerWithMapState:
   ) =>
   ('state, 'action => unit) =
   "useReducer";
+
+[@mel.module "react"]
+external useSyncExternalStore:
+  (
+    ~subscribe: [@mel.uncurry] (unit => unit),
+    ~getSnapshot: [@mel.uncurry] (unit => 'snapshot),
+    ~getServerSnapshot: [@mel.uncurry] (unit => 'snapshot)=?
+  ) =>
+  'snapshot =
+  "useSyncExternalStore";
 
 [@mel.module "react"]
 external useEffect: ([@mel.uncurry] (unit => option(unit => unit))) => unit =
@@ -262,6 +243,56 @@ external useEffect7:
   ) =>
   unit =
   "useEffect";
+
+[@mel.module "react"]
+external useInsertionEffect:
+  ([@mel.uncurry] (unit => option(unit => unit))) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect0:
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    [@mel.as {json|[]|json}] _
+  ) =>
+  unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect1:
+  ([@mel.uncurry] (unit => option(unit => unit)), array('a)) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect2:
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b)) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect3:
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c)) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect4:
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd)) => unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect5:
+  ([@mel.uncurry] (unit => option(unit => unit)), ('a, 'b, 'c, 'd, 'e)) =>
+  unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect6:
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    ('a, 'b, 'c, 'd, 'e, 'f)
+  ) =>
+  unit =
+  "useInsertionEffect";
+[@mel.module "react"]
+external useInsertionEffect7:
+  (
+    [@mel.uncurry] (unit => option(unit => unit)),
+    ('a, 'b, 'c, 'd, 'e, 'f, 'g)
+  ) =>
+  unit =
+  "useInsertionEffect";
 
 [@mel.module "react"]
 external useLayoutEffect:
@@ -371,6 +402,9 @@ external useCallback7: ('fn, ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'fn =
 external useContext: Context.t('any) => 'any = "useContext";
 
 [@mel.module "react"] external useRef: 'value => ref('value) = "useRef";
+[@mel.module "react"] external useId: unit => string = "useId";
+
+[@mel.module "react"] external useDeferredValue: 'a => 'a = "useDeferredValue";
 
 [@mel.module "react"]
 external useImperativeHandle0:
@@ -519,19 +553,21 @@ module Uncurried: {
     "useCallback";
 };
 
-type transitionConfig = {timeoutMs: int};
-
 [@mel.module "react"]
-external useTransition:
-  (~config: transitionConfig=?, unit) =>
-  (callback(callback(unit, unit), unit), bool) =
+external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
+
+[@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
 
 [@mel.set]
 external setDisplayName: (component('props), string) => unit = "displayName";
 
 [@mel.get] [@mel.return nullable]
 external displayName: component('props) => option(string) = "displayName";
+
+[@mel.module "react"]
+external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
+  "useDebugValue";
 
 module Event: {
   /* This is the whole synthetic event system of ReactJS/ReasonReact. The first module `Synthetic` represents
@@ -1511,27 +1547,82 @@ module DOM: {
 
     [@mel.module "react-dom/server"]
     external renderToStaticMarkup: element => string = "renderToStaticMarkup";
+
+    type error = {.};
+
+    [@deriving abstract]
+    type options = {
+      [@mel.optional]
+      bootstrapScriptContent: option(string),
+      [@mel.optional]
+      bootstrapScripts: option(array(string)),
+      [@mel.optional]
+      bootstrapModules: option(array(string)),
+      [@mel.optional]
+      identifierPrefix: option(string),
+      [@mel.optional]
+      namespaceURI: option(string),
+      [@mel.optional]
+      nonce: option(string),
+      [@mel.optional]
+      onAllReady: option(unit => unit),
+      [@mel.optional]
+      onError: option(error => unit),
+      [@mel.optional]
+      onShellReady: option(unit => unit),
+      [@mel.optional]
+      onShellError: option(error => unit),
+      [@mel.optional]
+      progressiveChunkSize: option(int),
+    };
+
+    type pipeableStream = {
+      /* Using empty object instead of Node.stream since Melange don't provide a binding to node's Stream (https://nodejs.org/api/stream.html) */
+      pipe: {.} => unit,
+      abort: unit => unit,
+    };
+
+    let renderToPipeableStream:
+      (
+        ~bootstrapScriptContent: string=?,
+        ~bootstrapScripts: array(string)=?,
+        ~bootstrapModules: array(string)=?,
+        ~identifierPrefix: string=?,
+        ~namespaceURI: string=?,
+        ~nonce: string=?,
+        ~onAllReady: unit => unit=?,
+        ~onError: error => unit=?,
+        ~onShellReady: unit => unit=?,
+        ~onShellError: error => unit=?,
+        ~progressiveChunkSize: int=?,
+        element
+      ) =>
+      pipeableStream;
   };
 
   [@mel.return nullable]
   external querySelector: string => option(Dom.element) =
     "document.querySelector";
 
+  module Client: {
+    type root;
+
+    [@mel.send] external render: (root, element) => unit = "render";
+
+    [@mel.send] external unmount: (root, unit) => unit = "unmount";
+
+    [@mel.module "react-dom/client"]
+    external createRoot: Dom.element => root = "createRoot";
+
+    [@mel.module "react-dom/client"]
+    external hydrateRoot: (Dom.element, element) => root = "hydrateRoot";
+  };
+
+  [@deprecated "Please use React.DOM.Client.render instead. It will be removed in the next release. Disable this warning with `[@alert \"-deprecated\"]` before React.DOM.render."]
   [@mel.module "react-dom"]
   external render: (element, Dom.element) => unit = "render";
 
-  module Experimental: {
-    type root;
-
-    [@mel.module "react-dom"]
-    external createRoot: Dom.element => root = "createRoot";
-
-    [@mel.module "react-dom"]
-    external createBlockingRoot: Dom.element => root = "createBlockingRoot";
-
-    [@mel.send] external render: (root, element) => unit = "render";
-  };
-
+  [@deprecated "Please use React.DOM.Client.hydrateRoot instead. It will be removed in the next release. Disable this warning with `[@alert \"-deprecated\"]` before React.DOM.hydrate."]
   [@mel.module "react-dom"]
   external hydrate: (element, Dom.element) => unit = "hydrate";
 
@@ -1541,6 +1632,9 @@ module DOM: {
   [@mel.module "react-dom"]
   external unmountComponentAtNode: Dom.element => unit =
     "unmountComponentAtNode";
+
+  [@mel.module "react-dom"]
+  external flushSync: (unit => unit) => unit = "flushSync";
 
   external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 

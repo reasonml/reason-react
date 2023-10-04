@@ -3,6 +3,9 @@ open Jest.Expect;
 open ReactTest.Utils;
 open Belt;
 
+/* https://react.dev/blog/2022/03/08/react-18-upgrade-guide#configuring-your-testing-environment */
+[%%mel.raw "globalThis.IS_REACT_ACT_ENVIRONMENT = true"];
+
 module DummyStatefulComponent = {
   [@react.component]
   let make = (~initialValue=0, ()) => {
@@ -163,9 +166,10 @@ describe("React", () => {
 
   test("can render DOM elements", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(<div> "Hello world!"->React.string </div>, container)
+      React.DOM.Client.render(root, <div> "Hello world!"->React.string </div>)
     });
 
     expect(
@@ -178,8 +182,9 @@ describe("React", () => {
 
   test("can render null elements", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
-    act(() => {React.DOM.render(<div> React.null </div>, container)});
+    act(() => {React.DOM.Client.render(root, <div> React.null </div>)});
 
     expect(
       container
@@ -191,9 +196,10 @@ describe("React", () => {
 
   test("can render string elements", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(<div> "Hello"->React.string </div>, container)
+      React.DOM.Client.render(root, <div> "Hello"->React.string </div>)
     });
 
     expect(
@@ -206,8 +212,9 @@ describe("React", () => {
 
   test("can render int elements", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
-    act(() => {React.DOM.render(<div> 12345->React.int </div>, container)});
+    act(() => {React.DOM.Client.render(root, <div> 12345->React.int </div>)});
 
     expect(
       container
@@ -219,9 +226,10 @@ describe("React", () => {
 
   test("can render float elements", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(<div> 12.345->React.float </div>, container)
+      React.DOM.Client.render(root, <div> 12.345->React.float </div>)
     });
 
     expect(
@@ -237,8 +245,11 @@ describe("React", () => {
     let array =
       [|1, 2, 3|]
       ->Array.map(item => {<div key={j|$item|j}> item->React.int </div>});
+    let root = React.DOM.Client.createRoot(container);
 
-    act(() => {React.DOM.render(<div> array->React.array </div>, container)});
+    act(() => {
+      React.DOM.Client.render(root, <div> array->React.array </div>)
+    });
 
     expect(
       container
@@ -264,14 +275,15 @@ describe("React", () => {
 
   test("can clone an element", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         React.cloneElement(
           <div> "Hello"->React.string </div>,
           {"data-name": "World"},
         ),
-        container,
       )
     });
 
@@ -288,10 +300,9 @@ describe("React", () => {
 
   test("can render react components", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
-    act(() => {
-      React.DOM.render(<DummyStatefulComponent key="imp" />, container)
-    });
+    act(() => {React.DOM.Client.render(root, <DummyStatefulComponent />)});
 
     expect(
       container
@@ -326,8 +337,9 @@ describe("React", () => {
 
   test("can render react components with reducers", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
-    act(() => {React.DOM.render(<DummyReducerComponent />, container)});
+    act(() => {React.DOM.Client.render(root, <DummyReducerComponent />)});
 
     expect(
       container
@@ -393,9 +405,10 @@ describe("React", () => {
 
   test("can render react components with reducers (map state)", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(<DummyReducerWithMapStateComponent />, container)
+      React.DOM.Client.render(root, <DummyReducerWithMapStateComponent />)
     });
 
     expect(
@@ -462,24 +475,25 @@ describe("React", () => {
 
   test("can render react components with effects", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
     let callback = Mock.fn();
 
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <DummyComponentWithEffect value=0 callback />,
-        container,
       )
     });
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <DummyComponentWithEffect value=1 callback />,
-        container,
       )
     });
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <DummyComponentWithEffect value=1 callback />,
-        container,
       )
     });
 
@@ -488,24 +502,25 @@ describe("React", () => {
 
   test("can render react components with layout effects", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
     let callback = Mock.fn();
 
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <DummyComponentWithLayoutEffect value=0 callback />,
-        container,
       )
     });
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <DummyComponentWithLayoutEffect value=1 callback />,
-        container,
       )
     });
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <DummyComponentWithLayoutEffect value=1 callback />,
-        container,
       )
     });
 
@@ -525,9 +540,13 @@ describe("React", () => {
     let callback = reactRef => {
       myRef := Some(reactRef);
     };
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(<DummyComponentWithRefAndEffect callback />, container)
+      React.DOM.Client.render(
+        root,
+        <DummyComponentWithRefAndEffect callback />,
+      )
     });
 
     expect(myRef.contents->Option.map(item => item.current))
@@ -536,15 +555,16 @@ describe("React", () => {
 
   test("Children", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <DummyComponentThatMapsChildren>
           <div> 1->React.int </div>
           <div> 2->React.int </div>
           <div> 3->React.int </div>
         </DummyComponentThatMapsChildren>,
-        container,
       )
     });
 
@@ -572,13 +592,14 @@ describe("React", () => {
 
   test("Context", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <DummyContext.Provider value=10>
           <DummyContext.Consumer />
         </DummyContext.Provider>,
-        container,
       )
     });
 
@@ -593,14 +614,15 @@ describe("React", () => {
   test("Events", () => {
     let container = getContainer(container);
     let value = ref("");
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <input
           name="test-input"
           onChange={event => {value :=  event->React.Event.Form.target##value}}
         />,
-        container,
       )
     });
 
@@ -615,13 +637,14 @@ describe("React", () => {
   test("React.Fragment with key", () => {
     let container = getContainer(container);
     let title = Some("foo");
+    let root = React.DOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.render(
+      React.DOM.Client.render(
+        root,
         <React.Fragment key=?title>
           <div> "Child"->React.string </div>
         </React.Fragment>,
-        container,
       )
     });
 
@@ -635,6 +658,7 @@ describe("React", () => {
 
   test("Type inference with keys", () => {
     let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
     module Author = {
       type t = {
@@ -657,29 +681,29 @@ describe("React", () => {
 
     expect(container->DOM.findBySelector("img")->Option.isSome)->toBe(true);
   });
-  /* test("ErrorBoundary", () => {
-       let container = getContainer(container);
+  test("ErrorBoundary", () => {
+    let container = getContainer(container);
+    let root = React.DOM.Client.createRoot(container);
 
-       act(() => {
-         React.DOM.render(
-           <ReasonReactErrorBoundary
-             fallback={({error: _, info}) => {
-               expect(
-                 info.componentStack->Js.String2.includes("ComponentThatThrows"),
-               ).
-                 toBe(true);
-               <strong> "An error occured"->React.string </strong>;
-             }}>
-             <ComponentThatThrows value=1 />
-           </ReasonReactErrorBoundary>,
-           container,
-         )
-       });
+    React.DOM.Client.render(
+      root,
+      <React.ErrorBoundary
+        fallback={({error: _, info}) => {
+          expect(
+            info.componentStack->Js.String2.includes("ComponentThatThrows"),
+          )
+          ->toBe(true);
+          <strong> "An error occured"->React.string </strong>;
+        }}>
+        <ComponentThatThrows value=1 />
+      </React.ErrorBoundary>,
+    );
 
-       expect(
-         container
-         ->DOM.findBySelectorAndTextContent("strong", "An error occured")
-         ->Option.isSome,
-       )->toBe(true);
-     }); */
+    expect(
+      container
+      ->DOM.findBySelectorAndTextContent("strong", "An error occured")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+  });
 });
