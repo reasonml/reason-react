@@ -308,10 +308,11 @@ let makeModuleName fileName nestedModules fnName =
 
 (* Build an AST node representing all named args for the `external` definition
    for a component's props *)
-let rec recursivelyMakeNamedArgsForExternal list args =
+let rec recursivelyMakeNamedArgsForExternal ~types_come_from_signature list args
+    =
   match list with
   | (label, default, loc, interiorType) :: tl ->
-      recursivelyMakeNamedArgsForExternal tl
+      recursivelyMakeNamedArgsForExternal ~types_come_from_signature tl
         (Builder.ptyp_arrow ~loc:Location.none label
            (match (label, interiorType, default) with
            (* ~foo=1 *)
@@ -320,27 +321,24 @@ let rec recursivelyMakeNamedArgsForExternal list args =
            (* ~foo: int=1 *)
            | _label, Some type_, Some _ -> type_
            (* ~foo: option(int)=? *)
-           | ( _label,
-               Some
-                 {
-                   ptyp_desc = Ptyp_constr ({ txt = Lident "option" }, [ type_ ]);
-                 },
-               _ ) ->
-               Builder.ptyp_constr ~loc { loc; txt = optionIdent } [ type_ ]
-           | ( label,
+           | ( Optional _,
                Some
                  {
                    ptyp_desc =
                      Ptyp_constr
-                       ({ txt = Ldot (Lident "*predef*", "option") }, [ type_ ]);
+                       ( {
+                           txt =
+                             Lident "option" | Ldot (Lident "*predef*", "option");
+                         },
+                         [ type_ ] );
                  },
                _ )
-             when isOptional label ->
+             when not types_come_from_signature ->
                type_
            (* ~foo: int=? - note this isnt valid. but we want to get a type error *)
-           | label, Some type_, _ when isOptional label -> type_
+           | Optional _, Some type_, _ -> type_
            (* ~foo=? *)
-           | label, None, _ when isOptional label ->
+           | Optional _, None, _ ->
                Builder.ptyp_var ~loc (safeTypeFromValue label)
            (* ~foo *)
            | label, None, _ -> Builder.ptyp_var ~loc (safeTypeFromValue label)
@@ -350,12 +348,14 @@ let rec recursivelyMakeNamedArgsForExternal list args =
 [@@raises Invalid_argument]
 
 (* Build an AST node for the [@bs.obj] representing props for a component *)
-let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
+let makePropsValue fnName ~types_come_from_signature loc
+    namedArgListWithKeyAndRef propsType =
   let propsName = fnName ^ "Props" in
   {
     pval_name = { txt = propsName; loc };
     pval_type =
-      recursivelyMakeNamedArgsForExternal namedArgListWithKeyAndRef
+      recursivelyMakeNamedArgsForExternal ~types_come_from_signature
+        namedArgListWithKeyAndRef
         (Builder.ptyp_arrow ~loc nolabel
            {
              ptyp_desc = Ptyp_constr ({ txt = Lident "unit"; loc }, []);
@@ -379,12 +379,14 @@ let makePropsValue fnName loc namedArgListWithKeyAndRef propsType =
 
 (* Build an AST node representing an `external` with the definition of the
    [@bs.obj] *)
-let makePropsExternal fnName loc namedArgListWithKeyAndRef propsType =
+let makePropsExternal fnName loc ~component_is_external
+    namedArgListWithKeyAndRef propsType =
   {
     pstr_loc = loc;
     pstr_desc =
       Pstr_primitive
-        (makePropsValue fnName loc namedArgListWithKeyAndRef propsType);
+        (makePropsValue ~types_come_from_signature:component_is_external fnName
+           loc namedArgListWithKeyAndRef propsType);
   }
 [@@raises Invalid_argument]
 
@@ -393,7 +395,9 @@ let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
   {
     psig_loc = loc;
     psig_desc =
-      Psig_value (makePropsValue fnName loc namedArgListWithKeyAndRef propsType);
+      Psig_value
+        (makePropsValue ~types_come_from_signature:true fnName loc
+           namedArgListWithKeyAndRef propsType);
   }
 [@@raises Invalid_argument]
 
@@ -801,7 +805,7 @@ let jsxMapper =
             in
             let retPropsType = makePropsType ~loc:pstr_loc namedTypeList in
             let externalPropsDecl =
-              makePropsExternal fnName pstr_loc
+              makePropsExternal ~component_is_external:true fnName pstr_loc
                 ((optional "key", None, pstr_loc, Some (keyType pstr_loc))
                 :: List.map pluckLabelAndLoc propTypes)
                 retPropsType
@@ -1093,8 +1097,8 @@ let jsxMapper =
             let namedTypeList = List.fold_left argToType [] namedArgList in
             let loc = gloc in
             let externalDecl =
-              makeExternalDecl fnName loc namedArgListWithKeyAndRef
-                namedTypeList
+              makeExternalDecl ~component_is_external:false fnName loc
+                namedArgListWithKeyAndRef namedTypeList
             in
             let innerExpressionArgs =
               List.map pluckArg namedArgListWithKeyAndRefForNew
