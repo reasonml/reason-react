@@ -18,5 +18,6 @@ module MyPropIsOptionBool = {
 };
 
 module MyPropIsOptionOptionBool = {
-  [@react.component] external make: (~myProp: option(bool)=?) => React.element = "B";
+  [@react.component]
+  external make: (~myProp: option(bool)=?) => React.element = "B";
 };
