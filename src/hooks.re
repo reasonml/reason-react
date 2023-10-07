@@ -415,7 +415,7 @@ external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
   "useDebugValue";
 
 module Experimental = {
-  /* This module is used to bind to APIs for future versions of React. There are no garanties of backwards compatibiltiy or stability. */
+  /* This module is used to bind to APIs for future versions of React. There is no guarantee of backwards compatibility or stability. */
 
   [@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
 };
