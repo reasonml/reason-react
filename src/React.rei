@@ -1633,7 +1633,7 @@ module DOM: {
   external render: (element, Dom.element) => unit = "render";
 
   [@deprecated
-    "Please use React.DOM.Client.hydrateRoot instead. It will be removed in the next release. Disable this warning with `[@alert \"-deprecated\"]` before React.DOM.hydrate."
+    "This function will be removed in the next release. Use React.DOM.Client.hydrateRoot instead."
   ]
   [@mel.module "react-dom"]
   external hydrate: (element, Dom.element) => unit = "hydrate";
