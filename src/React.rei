@@ -1627,7 +1627,7 @@ module DOM: {
   };
 
   [@deprecated
-    "Please use React.DOM.Client.render instead. It will be removed in the next release. Disable this warning with `[@alert \"-deprecated\"]` before React.DOM.render."
+    "This function will be removed in the next release. Use React.DOM.Client.render instead."
   ]
   [@mel.module "react-dom"]
   external render: (element, Dom.element) => unit = "render";
