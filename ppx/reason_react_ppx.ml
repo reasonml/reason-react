@@ -482,7 +482,7 @@ let reactDomJsxExprAndChildren =
 
 (* Builds an AST node for the entire `external` definition of props *)
 let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
-  makePropsExternal fnName loc
+  makePropsExternal ~component_is_external:false fnName loc
     (List.map pluckLabelDefaultLocType namedArgListWithKeyAndRef)
     (makePropsType ~loc namedTypeList)
 [@@raises Invalid_argument]
@@ -1097,8 +1097,8 @@ let jsxMapper =
             let namedTypeList = List.fold_left argToType [] namedArgList in
             let loc = gloc in
             let externalDecl =
-              makeExternalDecl ~component_is_external:false fnName loc
-                namedArgListWithKeyAndRef namedTypeList
+              makeExternalDecl fnName loc namedArgListWithKeyAndRef
+                namedTypeList
             in
             let innerExpressionArgs =
               List.map pluckArg namedArgListWithKeyAndRefForNew
