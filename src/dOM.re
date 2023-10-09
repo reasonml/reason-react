@@ -10,20 +10,22 @@
 external querySelector: string => option(Dom.element) =
   "document.querySelector";
 
-[@mel.module "react-dom"]
-external render: (Types.element, Dom.element) => unit = "render";
-
-module Experimental = {
+module Client = {
   type root;
 
-  [@mel.module "react-dom"]
+  [@mel.send] external render: (root, Types.element) => unit = "render";
+
+  [@mel.send] external unmount: (root, unit) => unit = "unmount";
+
+  [@mel.module "react-dom/client"]
   external createRoot: Dom.element => root = "createRoot";
 
-  [@mel.module "react-dom"]
-  external createBlockingRoot: Dom.element => root = "createBlockingRoot";
-
-  [@mel.send] external render: (root, Types.element) => unit = "render";
+  [@mel.module "react-dom/client"]
+  external hydrateRoot: (Dom.element, Types.element) => root = "hydrateRoot";
 };
+
+[@mel.module "react-dom"]
+external render: (Types.element, Dom.element) => unit = "render";
 
 [@mel.module "react-dom"]
 external hydrate: (Types.element, Dom.element) => unit = "hydrate";
@@ -35,6 +37,9 @@ external createPortal: (Types.element, Dom.element) => Types.element =
 [@mel.module "react-dom"]
 external unmountComponentAtNode: Dom.element => unit =
   "unmountComponentAtNode";
+
+[@mel.module "react-dom"]
+external flushSync: (unit => unit) => unit = "flushSync";
 
 external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 

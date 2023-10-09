@@ -9,7 +9,7 @@ help: ## Print this help message
 
 .PHONY: build
 build: ## Build the project, including non installable libraries and executables
-	@$(DUNE) build @@default
+	@$(DUNE) build @all
 
 .PHONY: build-prod
 build-prod: ## Build for production (--profile=prod)

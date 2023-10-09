@@ -26,9 +26,9 @@
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
     "jest": "^26.0.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-test-renderer": "^18.0.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-test-renderer": "^18.2.0"
   },
   "jest": {
     "moduleDirectories": [
