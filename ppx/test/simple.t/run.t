@@ -147,7 +147,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -286,7 +286,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -449,7 +449,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -624,7 +624,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -811,7 +811,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -962,7 +962,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1113,7 +1113,7 @@ Let's test hovering over parts of the component
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1240,7 +1240,7 @@ Closing `</button>`
         "line": 8,
         "col": 14
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {

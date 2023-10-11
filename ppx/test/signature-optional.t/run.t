@@ -15,8 +15,8 @@
       [@@mel.obj ]
       let make =
         ((fun ?mockup:(mockup : string option) ->
-            React.DOM.jsx "button"
-              (((React.DOM.domProps)[@merlin.hide ])
+            ReactDOM.jsx "button"
+              (((ReactDOM.domProps)[@merlin.hide ])
                  ~children:(React.string "Hello!") ()))
         [@warning "-16"])
       let make =
