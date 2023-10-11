@@ -1,6 +1,10 @@
 (library
  (name react)
  (public_name reason-react)
+ (wrapped false)
+ ; Explicitly adding modules isn't necessary, but it's a good idea
+ ; if wrapped is false, so we don't export something by accident
+ (modules React ReactDOM ReactTestRenderer ReasonReactRouter ErrorBoundary)
  (preprocess
   (pps melange.ppx reason-react-ppx))
  (libraries melange.dom)

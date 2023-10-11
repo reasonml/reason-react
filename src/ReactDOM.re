@@ -1,9 +1,441 @@
-/* First time reading an OCaml/Reason/BuckleScript file? */
-/* `external` is the foreign function call in OCaml. */
-/* here we're saying `I guarantee that on the JS side, we have a `render` function in the module "react-dom"
-   that takes in a reactElement, a dom element, and returns unit (nothing) */
-/* It's like `let`, except you're pointing the implementation to the JS side. The compiler will inline these
-   calls and add the appropriate `require("react-dom")` in the file calling this `render` */
+module Style = {
+  type t;
+
+  [@mel.obj]
+  external make:
+    (
+      ~azimuth: string=?,
+      ~background: string=?,
+      ~backgroundAttachment: string=?,
+      ~backgroundColor: string=?,
+      ~backgroundImage: string=?,
+      ~backgroundPosition: string=?,
+      ~backgroundRepeat: string=?,
+      ~border: string=?,
+      ~borderCollapse: string=?,
+      ~borderColor: string=?,
+      ~borderSpacing: string=?,
+      ~borderStyle: string=?,
+      ~borderTop: string=?,
+      ~borderRight: string=?,
+      ~borderBottom: string=?,
+      ~borderLeft: string=?,
+      ~borderTopColor: string=?,
+      ~borderRightColor: string=?,
+      ~borderBottomColor: string=?,
+      ~borderLeftColor: string=?,
+      ~borderTopStyle: string=?,
+      ~borderRightStyle: string=?,
+      ~borderBottomStyle: string=?,
+      ~borderLeftStyle: string=?,
+      ~borderTopWidth: string=?,
+      ~borderRightWidth: string=?,
+      ~borderBottomWidth: string=?,
+      ~borderLeftWidth: string=?,
+      ~borderWidth: string=?,
+      ~bottom: string=?,
+      ~captionSide: string=?,
+      ~clear: string=?,
+      ~clip: string=?,
+      ~color: string=?,
+      ~content: string=?,
+      ~counterIncrement: string=?,
+      ~counterReset: string=?,
+      ~cue: string=?,
+      ~cueAfter: string=?,
+      ~cueBefore: string=?,
+      ~cursor: string=?,
+      ~direction: string=?,
+      ~display: string=?,
+      ~elevation: string=?,
+      ~emptyCells: string=?,
+      ~float: string=?,
+      ~font: string=?,
+      ~fontFamily: string=?,
+      ~fontSize: string=?,
+      ~fontSizeAdjust: string=?,
+      ~fontStretch: string=?,
+      ~fontStyle: string=?,
+      ~fontVariant: string=?,
+      ~fontWeight: string=?,
+      ~height: string=?,
+      ~left: string=?,
+      ~letterSpacing: string=?,
+      ~lineHeight: string=?,
+      ~listStyle: string=?,
+      ~listStyleImage: string=?,
+      ~listStylePosition: string=?,
+      ~listStyleType: string=?,
+      ~margin: string=?,
+      ~marginTop: string=?,
+      ~marginRight: string=?,
+      ~marginBottom: string=?,
+      ~marginLeft: string=?,
+      ~markerOffset: string=?,
+      ~marks: string=?,
+      ~maxHeight: string=?,
+      ~maxWidth: string=?,
+      ~minHeight: string=?,
+      ~minWidth: string=?,
+      ~orphans: string=?,
+      ~outline: string=?,
+      ~outlineColor: string=?,
+      ~outlineStyle: string=?,
+      ~outlineWidth: string=?,
+      ~overflow: string=?,
+      ~overflowX: string=?,
+      ~overflowY: string=?,
+      ~padding: string=?,
+      ~paddingTop: string=?,
+      ~paddingRight: string=?,
+      ~paddingBottom: string=?,
+      ~paddingLeft: string=?,
+      ~page: string=?,
+      ~pageBreakAfter: string=?,
+      ~pageBreakBefore: string=?,
+      ~pageBreakInside: string=?,
+      ~pause: string=?,
+      ~pauseAfter: string=?,
+      ~pauseBefore: string=?,
+      ~pitch: string=?,
+      ~pitchRange: string=?,
+      ~playDuring: string=?,
+      ~position: string=?,
+      ~quotes: string=?,
+      ~richness: string=?,
+      ~right: string=?,
+      ~size: string=?,
+      ~speak: string=?,
+      ~speakHeader: string=?,
+      ~speakNumeral: string=?,
+      ~speakPunctuation: string=?,
+      ~speechRate: string=?,
+      ~stress: string=?,
+      ~tableLayout: string=?,
+      ~textAlign: string=?,
+      ~textDecoration: string=?,
+      ~textIndent: string=?,
+      ~textShadow: string=?,
+      ~textTransform: string=?,
+      ~top: string=?,
+      ~unicodeBidi: string=?,
+      ~verticalAlign: string=?,
+      ~visibility: string=?,
+      ~voiceFamily: string=?,
+      ~volume: string=?,
+      ~whiteSpace: string=?,
+      ~widows: string=?,
+      ~width: string=?,
+      ~wordSpacing: string=?,
+      ~zIndex: string=?,
+      /* Below properties based on https://www.w3.org/Style/CSS/all-properties */
+      /* Color Level 3 - REC */
+      ~opacity: string=?,
+      /* Backgrounds and Borders Level 3 - CR */
+      /* backgroundRepeat - already defined by CSS2Properties */
+      /* backgroundAttachment - already defined by CSS2Properties */
+      ~backgroundOrigin: string=?,
+      ~backgroundSize: string=?,
+      ~backgroundClip: string=?,
+      ~borderRadius: string=?,
+      ~borderTopLeftRadius: string=?,
+      ~borderTopRightRadius: string=?,
+      ~borderBottomLeftRadius: string=?,
+      ~borderBottomRightRadius: string=?,
+      ~borderImage: string=?,
+      ~borderImageSource: string=?,
+      ~borderImageSlice: string=?,
+      ~borderImageWidth: string=?,
+      ~borderImageOutset: string=?,
+      ~borderImageRepeat: string=?,
+      ~boxShadow: string=?,
+      /* Multi-column Layout - CR */
+      ~columns: string=?,
+      ~columnCount: string=?,
+      ~columnFill: string=?,
+      ~columnGap: string=?,
+      ~columnRule: string=?,
+      ~columnRuleColor: string=?,
+      ~columnRuleStyle: string=?,
+      ~columnRuleWidth: string=?,
+      ~columnSpan: string=?,
+      ~columnWidth: string=?,
+      ~breakAfter: string=?,
+      ~breakBefore: string=?,
+      ~breakInside: string=?,
+      /* Speech - CR */
+      ~rest: string=?,
+      ~restAfter: string=?,
+      ~restBefore: string=?,
+      ~speakAs: string=?,
+      ~voiceBalance: string=?,
+      ~voiceDuration: string=?,
+      ~voicePitch: string=?,
+      ~voiceRange: string=?,
+      ~voiceRate: string=?,
+      ~voiceStress: string=?,
+      ~voiceVolume: string=?,
+      /* Image Values and Replaced Content Level 3 - CR */
+      ~objectFit: string=?,
+      ~objectPosition: string=?,
+      ~imageResolution: string=?,
+      ~imageOrientation: string=?,
+      /* Flexible Box Layout - CR */
+      ~alignContent: string=?,
+      ~alignItems: string=?,
+      ~alignSelf: string=?,
+      ~flex: string=?,
+      ~flexBasis: string=?,
+      ~flexDirection: string=?,
+      ~flexFlow: string=?,
+      ~flexGrow: string=?,
+      ~flexShrink: string=?,
+      ~flexWrap: string=?,
+      ~justifyContent: string=?,
+      ~order: string=?,
+      /* Text Decoration Level 3 - CR */
+      /* textDecoration - already defined by CSS2Properties */
+      ~textDecorationColor: string=?,
+      ~textDecorationLine: string=?,
+      ~textDecorationSkip: string=?,
+      ~textDecorationStyle: string=?,
+      ~textEmphasis: string=?,
+      ~textEmphasisColor: string=?,
+      ~textEmphasisPosition: string=?,
+      ~textEmphasisStyle: string=?,
+      /* textShadow - already defined by CSS2Properties */
+      ~textUnderlinePosition: string=?,
+      /* Fonts Level 3 - CR */
+      ~fontFeatureSettings: string=?,
+      ~fontKerning: string=?,
+      ~fontLanguageOverride: string=?,
+      /* fontSizeAdjust - already defined by CSS2Properties */
+      /* fontStretch - already defined by CSS2Properties */
+      ~fontSynthesis: string=?,
+      ~forntVariantAlternates: string=?,
+      ~fontVariantCaps: string=?,
+      ~fontVariantEastAsian: string=?,
+      ~fontVariantLigatures: string=?,
+      ~fontVariantNumeric: string=?,
+      ~fontVariantPosition: string=?,
+      /* Cascading and Inheritance Level 3 - CR */
+      ~all: string=?,
+      /* Writing Modes Level 3 - CR */
+      ~glyphOrientationVertical: string=?,
+      ~textCombineUpright: string=?,
+      ~textOrientation: string=?,
+      ~writingMode: string=?,
+      /* Shapes Level 1 - CR */
+      ~shapeImageThreshold: string=?,
+      ~shapeMargin: string=?,
+      ~shapeOutside: string=?,
+      /* Masking Level 1 - CR */
+      ~clipPath: string=?,
+      ~clipRule: string=?,
+      ~mask: string=?,
+      ~maskBorder: string=?,
+      ~maskBorderMode: string=?,
+      ~maskBorderOutset: string=?,
+      ~maskBorderRepeat: string=?,
+      ~maskBorderSlice: string=?,
+      ~maskBorderSource: string=?,
+      ~maskBorderWidth: string=?,
+      ~maskClip: string=?,
+      ~maskComposite: string=?,
+      ~maskImage: string=?,
+      ~maskMode: string=?,
+      ~maskOrigin: string=?,
+      ~maskPosition: string=?,
+      ~maskRepeat: string=?,
+      ~maskSize: string=?,
+      ~maskType: string=?,
+      /* Compositing and Blending Level 1 - CR */
+      ~backgroundBlendMode: string=?,
+      ~isolation: string=?,
+      ~mixBlendMode: string=?,
+      /* Fragmentation Level 3 - CR */
+      ~boxDecorationBreak: string=?,
+      /* breakAfter - already defined by Multi-column Layout */
+      /* breakBefore - already defined by Multi-column Layout */
+      /* breakInside - already defined by Multi-column Layout */
+      /* Basic User Interface Level 3 - CR */
+      ~boxSizing: string=?,
+      ~caretColor: string=?,
+      ~navDown: string=?,
+      ~navLeft: string=?,
+      ~navRight: string=?,
+      ~navUp: string=?,
+      ~outlineOffset: string=?,
+      ~resize: string=?,
+      ~textOverflow: string=?,
+      /* Grid Layout Level 1 - CR */
+      ~grid: string=?,
+      ~gridArea: string=?,
+      ~gridAutoColumns: string=?,
+      ~gridAutoFlow: string=?,
+      ~gridAutoRows: string=?,
+      ~gridColumn: string=?,
+      ~gridColumnEnd: string=?,
+      ~gridColumnGap: string=?,
+      ~gridColumnStart: string=?,
+      ~gridGap: string=?,
+      ~gridRow: string=?,
+      ~gridRowEnd: string=?,
+      ~gridRowGap: string=?,
+      ~gridRowStart: string=?,
+      ~gridTemplate: string=?,
+      ~gridTemplateAreas: string=?,
+      ~gridTemplateColumns: string=?,
+      ~gridTemplateRows: string=?,
+      /* Will Change Level 1 - CR */
+      ~willChange: string=?,
+      /* Text Level 3 - LC */
+      ~hangingPunctuation: string=?,
+      ~hyphens: string=?,
+      /* letterSpacing - already defined by CSS2Properties */
+      ~lineBreak: string=?,
+      ~overflowWrap: string=?,
+      ~tabSize: string=?,
+      /* textAlign - already defined by CSS2Properties */
+      ~textAlignLast: string=?,
+      ~textJustify: string=?,
+      ~wordBreak: string=?,
+      ~wordWrap: string=?,
+      /* Animations - WD */
+      ~animation: string=?,
+      ~animationDelay: string=?,
+      ~animationDirection: string=?,
+      ~animationDuration: string=?,
+      ~animationFillMode: string=?,
+      ~animationIterationCount: string=?,
+      ~animationName: string=?,
+      ~animationPlayState: string=?,
+      ~animationTimingFunction: string=?,
+      /* Transitions - WD */
+      ~transition: string=?,
+      ~transitionDelay: string=?,
+      ~transitionDuration: string=?,
+      ~transitionProperty: string=?,
+      ~transitionTimingFunction: string=?,
+      /* Transforms Level 1 - WD */
+      ~backfaceVisibility: string=?,
+      ~perspective: string=?,
+      ~perspectiveOrigin: string=?,
+      ~transform: string=?,
+      ~transformOrigin: string=?,
+      ~transformStyle: string=?,
+      /* Box Alignment Level 3 - WD */
+      /* alignContent - already defined by Flexible Box Layout */
+      /* alignItems - already defined by Flexible Box Layout */
+      ~justifyItems: string=?,
+      ~justifySelf: string=?,
+      ~placeContent: string=?,
+      ~placeItems: string=?,
+      ~placeSelf: string=?,
+      /* Basic User Interface Level 4 - FPWD */
+      ~appearance: string=?,
+      ~caret: string=?,
+      ~caretAnimation: string=?,
+      ~caretShape: string=?,
+      ~userSelect: string=?,
+      /* Overflow Level 3 - WD */
+      ~maxLines: string=?,
+      /* Basix Box Model - WD */
+      ~marqueeDirection: string=?,
+      ~marqueeLoop: string=?,
+      ~marqueeSpeed: string=?,
+      ~marqueeStyle: string=?,
+      ~overflowStyle: string=?,
+      ~rotation: string=?,
+      ~rotationPoint: string=?,
+      /* SVG 1.1 - REC */
+      ~alignmentBaseline: string=?,
+      ~baselineShift: string=?,
+      ~clip: string=?,
+      ~clipPath: string=?,
+      ~clipRule: string=?,
+      ~colorInterpolation: string=?,
+      ~colorInterpolationFilters: string=?,
+      ~colorProfile: string=?,
+      ~colorRendering: string=?,
+      ~cursor: string=?,
+      ~dominantBaseline: string=?,
+      ~fill: string=?,
+      ~fillOpacity: string=?,
+      ~fillRule: string=?,
+      ~filter: string=?,
+      ~floodColor: string=?,
+      ~floodOpacity: string=?,
+      ~glyphOrientationHorizontal: string=?,
+      ~glyphOrientationVertical: string=?,
+      ~imageRendering: string=?,
+      ~kerning: string=?,
+      ~lightingColor: string=?,
+      ~markerEnd: string=?,
+      ~markerMid: string=?,
+      ~markerStart: string=?,
+      ~pointerEvents: string=?,
+      ~shapeRendering: string=?,
+      ~stopColor: string=?,
+      ~stopOpacity: string=?,
+      ~stroke: string=?,
+      ~strokeDasharray: string=?,
+      ~strokeDashoffset: string=?,
+      ~strokeLinecap: string=?,
+      ~strokeLinejoin: string=?,
+      ~strokeMiterlimit: string=?,
+      ~strokeOpacity: string=?,
+      ~strokeWidth: string=?,
+      ~textAnchor: string=?,
+      ~textRendering: string=?,
+      /* Ruby Layout Level 1 - WD */
+      ~rubyAlign: string=?,
+      ~rubyMerge: string=?,
+      ~rubyPosition: string=?,
+      /* Lists and Counters Level 3 - WD */
+      /* listStyle - already defined by CSS2Properties */
+      /* listStyleImage - already defined by CSS2Properties */
+      /* listStylePosition - already defined by CSS2Properties */
+      /* listStyleType - already defined by CSS2Properties */
+      /* counterIncrement - already defined by CSS2Properties */
+      /* counterReset - already defined by CSS2Properties */
+      /* Not added yet
+       * -------------
+       * Generated Content for Paged Media - WD
+       * Generated Content Level 3 - WD
+       * Line Grid Level 1 - WD
+       * Regions - WD
+       * Inline Layout Level 3 - WD
+       * Round Display Level 1 - WD
+       * Image Values and Replaced Content Level 4 - WD
+       * Positioned Layout Level 3 - WD
+       * Filter Effects Level 1 -  -WD
+       * Exclusions Level 1 - WD
+       * Text Level 4 - FPWD
+       * SVG Markers - FPWD
+       * Motion Path Level 1 - FPWD
+       * Color Level 4 - FPWD
+       * SVG Strokes - FPWD
+       * Table Level 3 - FPWD
+       */
+      unit
+    ) =>
+    t;
+
+  /* CSS2Properties: https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties */
+  external combine: ([@mel.as {json|{}|json}] _, t, t) => t = "Object.assign";
+
+  external _dictToStyle: Js.Dict.t(string) => t = "%identity";
+
+  let unsafeAddProp = (style, key, value) => {
+    let dict = Js.Dict.empty();
+    Js.Dict.set(dict, key, value);
+    combine(style, _dictToStyle(dict));
+  };
+
+  external unsafeAddStyle: ([@mel.as {json|{}|json}] _, t, Js.t({..})) => t =
+    "Object.assign";
+};
 
 // Helper so that ReactDOM itself doesn't bring any runtime
 [@mel.return nullable]
@@ -13,7 +445,7 @@ external querySelector: string => option(Dom.element) =
 module Client = {
   type root;
 
-  [@mel.send] external render: (root, Types.element) => unit = "render";
+  [@mel.send] external render: (root, React.element) => unit = "render";
 
   [@mel.send] external unmount: (root, unit) => unit = "unmount";
 
@@ -21,17 +453,17 @@ module Client = {
   external createRoot: Dom.element => root = "createRoot";
 
   [@mel.module "react-dom/client"]
-  external hydrateRoot: (Dom.element, Types.element) => root = "hydrateRoot";
+  external hydrateRoot: (Dom.element, React.element) => root = "hydrateRoot";
 };
 
 [@mel.module "react-dom"]
-external render: (Types.element, Dom.element) => unit = "render";
+external render: (React.element, Dom.element) => unit = "render";
 
 [@mel.module "react-dom"]
-external hydrate: (Types.element, Dom.element) => unit = "hydrate";
+external hydrate: (React.element, Dom.element) => unit = "hydrate";
 
 [@mel.module "react-dom"]
-external createPortal: (Types.element, Dom.element) => Types.element =
+external createPortal: (React.element, Dom.element) => React.element =
   "createPortal";
 
 [@mel.module "react-dom"]
@@ -43,13 +475,13 @@ external flushSync: (unit => unit) => unit = "flushSync";
 
 external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 
-type style = DOMStyle.t;
+type style = Style.t;
 
 type domRef;
 
 module Ref = {
   type t = domRef;
-  type currentDomRef = Types.ref(Js.nullable(Dom.element));
+  type currentDomRef = React.ref(Js.nullable(Dom.element));
   type callbackDomRef = Js.nullable(Dom.element) => unit;
 
   external domRef: currentDomRef => domRef = "%identity";
@@ -57,10 +489,6 @@ module Ref = {
 };
 
 /* This list isn't exhaustive. We'll add more as we go. */
-/*
- * Watch out! There are two props types and the only difference is the type of ref.
- * Please keep in sync.
- */
 [@deriving abstract]
 type domProps = {
   [@mel.optional]
@@ -68,7 +496,7 @@ type domProps = {
   [@mel.optional]
   ref: option(domRef),
   [@mel.optional]
-  children: option(Types.element),
+  children: option(React.element),
   /* accessibility */
   /* https://www.w3.org/TR/wai-aria-1.1/ */
   [@mel.optional] [@mel.as "aria-activedescendant"]
@@ -410,174 +838,174 @@ type domProps = {
   wrap: option(string), /* "hard" or "soft" */
   /* Clipboard events */
   [@mel.optional]
-  onCopy: option(Event.Clipboard.t => unit),
+  onCopy: option(React.Event.Clipboard.t => unit),
   [@mel.optional]
-  onCut: option(Event.Clipboard.t => unit),
+  onCut: option(React.Event.Clipboard.t => unit),
   [@mel.optional]
-  onPaste: option(Event.Clipboard.t => unit),
+  onPaste: option(React.Event.Clipboard.t => unit),
   /* Composition events */
   [@mel.optional]
-  onCompositionEnd: option(Event.Composition.t => unit),
+  onCompositionEnd: option(React.Event.Composition.t => unit),
   [@mel.optional]
-  onCompositionStart: option(Event.Composition.t => unit),
+  onCompositionStart: option(React.Event.Composition.t => unit),
   [@mel.optional]
-  onCompositionUpdate: option(Event.Composition.t => unit),
+  onCompositionUpdate: option(React.Event.Composition.t => unit),
   /* Keyboard events */
   [@mel.optional]
-  onKeyDown: option(Event.Keyboard.t => unit),
+  onKeyDown: option(React.Event.Keyboard.t => unit),
   [@mel.optional]
-  onKeyPress: option(Event.Keyboard.t => unit),
+  onKeyPress: option(React.Event.Keyboard.t => unit),
   [@mel.optional]
-  onKeyUp: option(Event.Keyboard.t => unit),
+  onKeyUp: option(React.Event.Keyboard.t => unit),
   /* Focus events */
   [@mel.optional]
-  onFocus: option(Event.Focus.t => unit),
+  onFocus: option(React.Event.Focus.t => unit),
   [@mel.optional]
-  onBlur: option(Event.Focus.t => unit),
+  onBlur: option(React.Event.Focus.t => unit),
   /* Form events */
   [@mel.optional]
-  onChange: option(Event.Form.t => unit),
+  onChange: option(React.Event.Form.t => unit),
   [@mel.optional]
-  onInput: option(Event.Form.t => unit),
+  onInput: option(React.Event.Form.t => unit),
   [@mel.optional]
-  onSubmit: option(Event.Form.t => unit),
+  onSubmit: option(React.Event.Form.t => unit),
   [@mel.optional]
-  onInvalid: option(Event.Form.t => unit),
+  onInvalid: option(React.Event.Form.t => unit),
   /* Mouse events */
   [@mel.optional]
-  onClick: option(Event.Mouse.t => unit),
+  onClick: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onContextMenu: option(Event.Mouse.t => unit),
+  onContextMenu: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onDoubleClick: option(Event.Mouse.t => unit),
+  onDoubleClick: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onDrag: option(Event.Drag.t => unit),
+  onDrag: option(React.Event.Drag.t => unit),
   [@mel.optional]
-  onDragEnd: option(Event.Drag.t => unit),
+  onDragEnd: option(React.Event.Drag.t => unit),
   [@mel.optional]
-  onDragEnter: option(Event.Drag.t => unit),
+  onDragEnter: option(React.Event.Drag.t => unit),
   [@mel.optional]
-  onDragExit: option(Event.Drag.t => unit),
+  onDragExit: option(React.Event.Drag.t => unit),
   [@mel.optional]
-  onDragLeave: option(Event.Drag.t => unit),
+  onDragLeave: option(React.Event.Drag.t => unit),
   [@mel.optional]
-  onDragOver: option(Event.Drag.t => unit),
+  onDragOver: option(React.Event.Drag.t => unit),
   [@mel.optional]
-  onDragStart: option(Event.Drag.t => unit),
+  onDragStart: option(React.Event.Drag.t => unit),
   [@mel.optional]
-  onDrop: option(Event.Drag.t => unit),
+  onDrop: option(React.Event.Drag.t => unit),
   [@mel.optional]
-  onMouseDown: option(Event.Mouse.t => unit),
+  onMouseDown: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onMouseEnter: option(Event.Mouse.t => unit),
+  onMouseEnter: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onMouseLeave: option(Event.Mouse.t => unit),
+  onMouseLeave: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onMouseMove: option(Event.Mouse.t => unit),
+  onMouseMove: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onMouseOut: option(Event.Mouse.t => unit),
+  onMouseOut: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onMouseOver: option(Event.Mouse.t => unit),
+  onMouseOver: option(React.Event.Mouse.t => unit),
   [@mel.optional]
-  onMouseUp: option(Event.Mouse.t => unit),
+  onMouseUp: option(React.Event.Mouse.t => unit),
   /* Selection events */
   [@mel.optional]
-  onSelect: option(Event.Selection.t => unit),
+  onSelect: option(React.Event.Selection.t => unit),
   /* Touch events */
   [@mel.optional]
-  onTouchCancel: option(Event.Touch.t => unit),
+  onTouchCancel: option(React.Event.Touch.t => unit),
   [@mel.optional]
-  onTouchEnd: option(Event.Touch.t => unit),
+  onTouchEnd: option(React.Event.Touch.t => unit),
   [@mel.optional]
-  onTouchMove: option(Event.Touch.t => unit),
+  onTouchMove: option(React.Event.Touch.t => unit),
   [@mel.optional]
-  onTouchStart: option(Event.Touch.t => unit),
+  onTouchStart: option(React.Event.Touch.t => unit),
   // Pointer events
   [@mel.optional]
-  onPointerOver: option(Event.Pointer.t => unit),
+  onPointerOver: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onPointerEnter: option(Event.Pointer.t => unit),
+  onPointerEnter: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onPointerDown: option(Event.Pointer.t => unit),
+  onPointerDown: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onPointerMove: option(Event.Pointer.t => unit),
+  onPointerMove: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onPointerUp: option(Event.Pointer.t => unit),
+  onPointerUp: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onPointerCancel: option(Event.Pointer.t => unit),
+  onPointerCancel: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onPointerOut: option(Event.Pointer.t => unit),
+  onPointerOut: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onPointerLeave: option(Event.Pointer.t => unit),
+  onPointerLeave: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onGotPointerCapture: option(Event.Pointer.t => unit),
+  onGotPointerCapture: option(React.Event.Pointer.t => unit),
   [@mel.optional]
-  onLostPointerCapture: option(Event.Pointer.t => unit),
+  onLostPointerCapture: option(React.Event.Pointer.t => unit),
   /* UI events */
   [@mel.optional]
-  onScroll: option(Event.UI.t => unit),
+  onScroll: option(React.Event.UI.t => unit),
   /* Wheel events */
   [@mel.optional]
-  onWheel: option(Event.Wheel.t => unit),
+  onWheel: option(React.Event.Wheel.t => unit),
   /* Media events */
   [@mel.optional]
-  onAbort: option(Event.Media.t => unit),
+  onAbort: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onCanPlay: option(Event.Media.t => unit),
+  onCanPlay: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onCanPlayThrough: option(Event.Media.t => unit),
+  onCanPlayThrough: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onDurationChange: option(Event.Media.t => unit),
+  onDurationChange: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onEmptied: option(Event.Media.t => unit),
+  onEmptied: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onEncrypetd: option(Event.Media.t => unit),
+  onEncrypetd: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onEnded: option(Event.Media.t => unit),
+  onEnded: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onError: option(Event.Media.t => unit),
+  onError: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onLoadedData: option(Event.Media.t => unit),
+  onLoadedData: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onLoadedMetadata: option(Event.Media.t => unit),
+  onLoadedMetadata: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onLoadStart: option(Event.Media.t => unit),
+  onLoadStart: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onPause: option(Event.Media.t => unit),
+  onPause: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onPlay: option(Event.Media.t => unit),
+  onPlay: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onPlaying: option(Event.Media.t => unit),
+  onPlaying: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onProgress: option(Event.Media.t => unit),
+  onProgress: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onRateChange: option(Event.Media.t => unit),
+  onRateChange: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onSeeked: option(Event.Media.t => unit),
+  onSeeked: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onSeeking: option(Event.Media.t => unit),
+  onSeeking: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onStalled: option(Event.Media.t => unit),
+  onStalled: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onSuspend: option(Event.Media.t => unit),
+  onSuspend: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onTimeUpdate: option(Event.Media.t => unit),
+  onTimeUpdate: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onVolumeChange: option(Event.Media.t => unit),
+  onVolumeChange: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onWaiting: option(Event.Media.t => unit),
+  onWaiting: option(React.Event.Media.t => unit),
   /* Image events */
-  [@mel.optional]onLoad: option(Event.Image.t => unit) /* duplicate */, /*~onError: Event.Image.t => unit=?,*/
+  [@mel.optional]onLoad: option(React.Event.Image.t => unit) /* duplicate */, /*~onError: React.Event.Image.t => unit=?,*/
   /* Animation events */
   [@mel.optional]
-  onAnimationStart: option(Event.Animation.t => unit),
+  onAnimationStart: option(React.Event.Animation.t => unit),
   [@mel.optional]
-  onAnimationEnd: option(Event.Animation.t => unit),
+  onAnimationEnd: option(React.Event.Animation.t => unit),
   [@mel.optional]
-  onAnimationIteration: option(Event.Animation.t => unit),
+  onAnimationIteration: option(React.Event.Animation.t => unit),
   /* Transition events */
   [@mel.optional]
-  onTransitionEnd: option(Event.Transition.t => unit),
+  onTransitionEnd: option(React.Event.Transition.t => unit),
   /* svg */
   [@mel.optional]
   accentHeight: option(string),
@@ -1091,32 +1519,266 @@ type domProps = {
 };
 
 // As we've removed `ReactDOMRe.createElement`, this enables patterns like
-// Types.createElement(ReactDOM.stringToComponent(multiline ? "textarea" : "input"), ...)
-external stringToComponent: string => Types.component(domProps) = "%identity";
-
-module Style = DOMStyle;
-module Server = DOMServer;
+// React.createElement(ReactDOM.stringToComponent(multiline ? "textarea" : "input"), ...)
+external stringToComponent: string => React.component(domProps) = "%identity";
 
 [@mel.variadic] [@mel.module "react"]
 external createElement:
-  (string, ~props: domProps=?, array(Types.element)) => Types.element =
+  (string, ~props: domProps=?, array(React.element)) => React.element =
   "createElement";
 
 [@mel.variadic] [@mel.module "react"]
 external createDOMElementVariadic:
-  (string, ~props: domProps=?, array(Types.element)) => Types.element =
+  (string, ~props: domProps=?, array(React.element)) => React.element =
   "createElement";
 
 [@mel.module "react/jsx-runtime"]
-external jsxKeyed: (string, domProps, ~key: string=?, unit) => Types.element =
+external jsxKeyed: (string, domProps, ~key: string=?, unit) => React.element =
   "jsx";
 
 [@mel.module "react/jsx-runtime"]
-external jsx: (string, domProps) => Types.element = "jsx";
+external jsx: (string, domProps) => React.element = "jsx";
 
 [@mel.module "react/jsx-runtime"]
-external jsxs: (string, domProps) => Types.element = "jsxs";
+external jsxs: (string, domProps) => React.element = "jsxs";
 
 [@mel.module "react/jsx-runtime"]
-external jsxsKeyed: (string, domProps, ~key: string=?, unit) => Types.element =
+external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element =
   "jsxs";
+
+module Server = {
+  [@mel.module "react-dom/server"]
+  external renderToString: React.element => string = "renderToString";
+
+  [@mel.module "react-dom/server"]
+  external renderToStaticMarkup: React.element => string =
+    "renderToStaticMarkup";
+
+  [@deriving abstract]
+  type options = {
+    [@mel.optional]
+    bootstrapScriptContent: option(string),
+    [@mel.optional]
+    bootstrapScripts: option(array(string)),
+    [@mel.optional]
+    bootstrapModules: option(array(string)),
+    [@mel.optional]
+    identifierPrefix: option(string),
+    [@mel.optional]
+    namespaceURI: option(string),
+    [@mel.optional]
+    nonce: option(string),
+    [@mel.optional]
+    onAllReady: option(unit => unit),
+    [@mel.optional]
+    onError: option(Js.Exn.t => unit),
+    [@mel.optional]
+    onShellReady: option(unit => unit),
+    [@mel.optional]
+    onShellError: option(Js.Exn.t => unit),
+    [@mel.optional]
+    progressiveChunkSize: option(int),
+  };
+
+  type pipeableStream = {
+    /* Using empty object instead of Node.stream since Melange don't provide a binding to node's Stream (https://nodejs.org/api/stream.html) */
+    pipe: Js.t({.}) => unit,
+    abort: unit => unit,
+  };
+
+  [@mel.module "react-dom/server"]
+  external renderToPipeableStream: (React.element, options) => pipeableStream =
+    "renderToPipeableStream";
+
+  let renderToPipeableStream =
+      (
+        ~bootstrapScriptContent=?,
+        ~bootstrapScripts=?,
+        ~bootstrapModules=?,
+        ~identifierPrefix=?,
+        ~namespaceURI=?,
+        ~nonce=?,
+        ~onAllReady=?,
+        ~onError=?,
+        ~onShellReady=?,
+        ~onShellError=?,
+        ~progressiveChunkSize=?,
+        element,
+      ) =>
+    renderToPipeableStream(
+      element,
+      options(
+        ~bootstrapScriptContent?,
+        ~bootstrapScripts?,
+        ~bootstrapModules?,
+        ~identifierPrefix?,
+        ~namespaceURI?,
+        ~nonce?,
+        ~onAllReady?,
+        ~onError?,
+        ~onShellReady?,
+        ~onShellError?,
+        ~progressiveChunkSize?,
+        (),
+      ),
+    );
+};
+
+module TestUtils = {
+  type undefined = Js.undefined(unit);
+
+  let undefined: undefined = Js.Undefined.empty;
+
+  [@mel.module "react-dom/test-utils"]
+  external reactAct: ((. unit) => undefined) => unit = "act";
+
+  let act: (unit => unit) => unit =
+    func => {
+      let reactFunc =
+        (.) => {
+          func();
+          undefined;
+        };
+      reactAct(reactFunc);
+    };
+
+  [@mel.module "react-dom/test-utils"]
+  external reactActAsync:
+    ((. unit) => Js.Promise.t('a)) => Js.Promise.t(unit) =
+    "act";
+
+  let actAsync = func => {
+    let reactFunc =
+      (.) => {
+        func();
+      };
+    reactActAsync(reactFunc);
+  };
+
+  [@mel.module "react-dom/test-utils"]
+  external isElement: 'element => bool = "isElement";
+
+  [@mel.module "react-dom/test-utils"]
+  external isElementOfType: ('element, React.component('props)) => bool =
+    "isElementOfType";
+
+  [@mel.module "react-dom/test-utils"]
+  external isDOMComponent: 'element => bool = "isDOMComponent";
+
+  [@mel.module "react-dom/test-utils"]
+  external isCompositeComponent: 'element => bool = "isCompositeComponent";
+
+  [@mel.module "react-dom/test-utils"]
+  external isCompositeComponentWithType:
+    ('element, React.component('props)) => bool =
+    "isCompositeComponentWithType";
+
+  module Simulate = {
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external click: Dom.element => unit = "click";
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external clickWithEvent: (Dom.element, 'event) => unit = "click";
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external change: Dom.element => unit = "change";
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external blur: Dom.element => unit = "blur";
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external changeWithEvent: (Dom.element, 'event) => unit = "change";
+    let changeWithValue = (element, value) => {
+      let event = {
+        "target": {
+          "value": value,
+        },
+      };
+      changeWithEvent(element, event);
+    };
+    let changeWithChecked = (element, value) => {
+      let event = {
+        "target": {
+          "checked": value,
+        },
+      };
+      changeWithEvent(element, event);
+    };
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external canPlay: Dom.element => unit = "canPlay";
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external timeUpdate: Dom.element => unit = "timeUpdate";
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external ended: Dom.element => unit = "ended";
+    [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+    external focus: Dom.element => unit = "focus";
+  };
+
+  external document: Dom.document = "document";
+
+  [@mel.send]
+  external querySelector: (Dom.element, string) => option(Dom.element) =
+    "querySelector";
+
+  [@mel.send]
+  external querySelectorAll:
+    (Dom.element, string) => Js.Array.array_like(Dom.element) =
+    "querySelectorAll";
+
+  [@mel.get] external textContent: Dom.element => string = "textContent";
+  [@mel.get] external body: Dom.document => option(Dom.element) = "body";
+  [@mel.send]
+  external createElement: (Dom.document, string) => Dom.element =
+    "createElement";
+  [@mel.send] external remove: Dom.element => unit = "remove";
+  [@mel.send]
+  external appendChild: (Dom.element, Dom.element) => Dom.element =
+    "appendChild";
+
+  let querySelectorAll = (element, string) => {
+    Js.Array.from(querySelectorAll(element, string));
+  };
+
+  module DOM = {
+    open Belt;
+
+    [@mel.return nullable] [@mel.get]
+    external value: Dom.element => option(string) = "value";
+
+    let findBySelector = (element, selector) =>
+      querySelector(element, selector);
+
+    let findByAllSelector = (element, selector) =>
+      querySelectorAll(element, selector);
+
+    let findBySelectorAndTextContent = (element, selector, content) =>
+      querySelectorAll(element, selector)
+      ->Array.getBy(node => node->textContent === content);
+
+    let findBySelectorAndPartialTextContent = (element, selector, content) =>
+      querySelectorAll(element, selector)
+      ->Array.getBy(node => node->textContent->Js.String2.includes(content));
+  };
+
+  let prepareContainer = (container: ref(option(Dom.element)), ()) => {
+    Belt.(
+      {
+        let containerElement = document->createElement("div");
+        let _ =
+          document
+          ->body
+          ->Option.map(body => body->appendChild(containerElement));
+        container := Some(containerElement);
+      }
+    );
+  };
+
+  let cleanupContainer = (container: ref(option(Dom.element)), ()) => {
+    Belt.(
+      {
+        let _ = container.contents->Option.map(remove);
+        container := None;
+      }
+    );
+  };
+
+  let getContainer = container => {
+    Belt.(container.contents->Option.getExn);
+  };
+};

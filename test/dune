@@ -3,6 +3,6 @@
  (target test)
  (module_systems
   (commonjs bs.js))
- (libraries reason-react reason-react.test jest)
+ (libraries reason-react jest)
  (preprocess
   (pps melange.ppx reason-react-ppx)))
