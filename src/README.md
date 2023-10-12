@@ -7,16 +7,15 @@ Files overview:
 ## Bindings
 
 - `React`: bindings to React
-  |- `React.Event`: bindings to React's custom events system
-  |- `React.Context`: bindings to React's Context
+  - `React.Event`: bindings to React's custom events system
+  - `React.Context`: bindings to React's Context
 - `ReactDOM`: bindings to ReactDOM
-  |- `ReactDOM.Server`: bindings to ReactDOMServer
-  |- `ReactDOM.Style`: bindings to create `style` objects
-  |- `ReactDOM.TestUtils`: helpers for testing your components
+  - `ReactDOM.Server`: bindings to ReactDOMServer
+  - `ReactDOM.Style`: bindings to create `style` objects
+  - `ReactDOM.TestUtils`: helpers for testing your components
 
-## Extra (not part of React)
-
-- `ReasonReactRouter`: a simple, yet fully featured router with minimal memory allocations
+## Extra (not part of react)
 - `ErrorBoundary`: component to catch errors within your component tree
+- `ReasonReactRouter`: a simple, yet fully featured router with minimal memory allocations
 
-Eventually this modules could live into their own packages, but for now they are part of ReasonReact (and we will keep them here for backwards compatibility).
+Eventually `React.ErrorBoundary` and `ReasonReactRouter` could live into their own packages, but for now they are part of ReasonReact (and we will keep them here for backwards compatibility).
