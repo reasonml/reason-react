@@ -512,6 +512,7 @@ module Uncurried: {
     ('state, (. 'action) => unit) =
     "useReducer";
 
+  /* This is used as return values */
   type callback('input, 'output) = (. 'input) => 'output;
 
   [@mel.module "react"]

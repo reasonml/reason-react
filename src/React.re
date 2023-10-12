@@ -690,8 +690,6 @@ external useMemo7:
   ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'any =
   "useMemo";
 
-/* This is used as return values  */
-
 [@mel.module "react"] external useCallback: 'fn => 'fn = "useCallback";
 [@mel.module "react"]
 external useCallback0: ('fn, [@mel.as {json|[]|json}] _) => 'fn =
@@ -819,6 +817,7 @@ module Uncurried = {
     ('state, (. 'action) => unit) =
     "useReducer";
 
+  /* This is used as return values */
   type callback('input, 'output) = (. 'input) => 'output;
 
   [@mel.module "react"]
