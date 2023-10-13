@@ -331,7 +331,7 @@ describe("React", () => {
       act(() => {
         ReactDOM.Client.render(
           root,
-          <ErrorBoundary
+          <ReasonReactErrorBoundary
             fallback={({error: _, info}) => {
               expect(
                 info.componentStack
@@ -341,7 +341,7 @@ describe("React", () => {
               <strong> "An error occured"->React.string </strong>;
             }}>
             <ComponentThatThrows value=1 />
-          </ErrorBoundary>,
+          </ReasonReactErrorBoundary>,
         )
       });
 
