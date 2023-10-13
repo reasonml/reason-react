@@ -190,14 +190,14 @@ let unwatchUrl = watcherID =>
 
 let useUrl = (~serverUrl=?, ()) => {
   let (url, setUrl) =
-    Hooks.useState(() =>
+    React.useState(() =>
       switch (serverUrl) {
       | Some(url) => url
       | None => dangerouslyGetInitialUrl()
       }
     );
 
-  Hooks.useEffect0(() => {
+  React.useEffect0(() => {
     let watcherId = watchUrl(url => setUrl(_ => url));
 
     /**

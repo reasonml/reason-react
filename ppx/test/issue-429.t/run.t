@@ -355,7 +355,7 @@ First child `button`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -422,7 +422,7 @@ First child `onClick` prop
         "line": 30,
         "col": 75
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -482,7 +482,7 @@ First child `onClick` prop
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -573,7 +573,7 @@ First child `onClick` callback argument (event)
         "line": 30,
         "col": 75
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -633,7 +633,7 @@ First child `onClick` callback argument (event)
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -748,7 +748,7 @@ First child `onClick` prop `dispatch`
         "line": 30,
         "col": 75
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -808,7 +808,7 @@ First child `onClick` prop `dispatch`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -935,7 +935,7 @@ First child `onClick` prop `Click`
         "line": 30,
         "col": 75
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -995,7 +995,7 @@ First child `onClick` prop `Click`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1098,7 +1098,7 @@ First child `string`
         "line": 30,
         "col": 75
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1158,7 +1158,7 @@ First child `string`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1261,7 +1261,7 @@ First child `message`
         "line": 30,
         "col": 75
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1321,7 +1321,7 @@ First child `message`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1460,7 +1460,7 @@ Third child `state`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1599,7 +1599,7 @@ Third child `show` in `state.show`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1738,7 +1738,7 @@ Third child `string`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1877,7 +1877,7 @@ Third child `greeting`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -2004,7 +2004,7 @@ Third child `null`
         "line": 35,
         "col": 9
       },
-      "type": "React.DOM.domProps",
+      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {

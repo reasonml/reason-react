@@ -1,6 +1,6 @@
 open Jest;
 open Jest.Expect;
-open React.Router;
+open ReasonReactRouter;
 
 describe("it allows to create url from string", () => {
   test("it supports basic paths", () => {

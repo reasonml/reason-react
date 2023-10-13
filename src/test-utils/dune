@@ -1,7 +1,0 @@
-(library
- (name reactTest)
- (public_name reason-react.test)
- (preprocess
-  (pps melange.ppx reason-react-ppx))
- (libraries reason-react)
- (modes melange))

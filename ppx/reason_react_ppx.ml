@@ -68,13 +68,13 @@ module Binding = struct
     let createElement ~loc ~attrs element children =
       Builder.pexp_apply ~loc ~attrs
         (Builder.pexp_ident ~loc
-           { loc; txt = Ldot (Ldot (Lident "React", "DOM"), "createElement") })
+           { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
         [ (nolabel, element); (nolabel, children) ]
 
     let domProps ~applyLoc ~loc props =
       Builder.pexp_apply ~loc:applyLoc
         (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
-           { loc; txt = Ldot (Ldot (Lident "React", "DOM"), "domProps") })
+           { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
         props
   end
 end
@@ -478,7 +478,7 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
 let reactJsxExprAndChildren = jsxExprAndChildren ~ident:(Lident "React")
 
 let reactDomJsxExprAndChildren =
-  jsxExprAndChildren ~ident:(Ldot (Lident "React", "DOM"))
+  jsxExprAndChildren ~ident:(Lident "ReactDOM")
 
 (* Builds an AST node for the entire `external` definition of props *)
 let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =

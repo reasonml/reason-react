@@ -1,13 +1,13 @@
 open Jest;
 open Jest.Expect;
-open ReactTest.Utils;
+open ReactDOM.TestUtils;
 open Belt;
 
 /* https://react.dev/blog/2022/03/08/react-18-upgrade-guide#configuring-your-testing-environment */
 [%%mel.raw "globalThis.IS_REACT_ACT_ENVIRONMENT = true"];
 
 type store('a) = {
-  subscribe: (unit => unit) => unit => unit,
+  subscribe: (unit => unit, unit) => unit,
   getState: unit => 'a,
   setState: 'a => unit,
 };
@@ -169,9 +169,9 @@ describe("Hooks", () => {
 
   test("can render react components", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
-    act(() => {React.DOM.Client.render(root, <DummyStatefulComponent />)});
+    act(() => {ReactDOM.Client.render(root, <DummyStatefulComponent />)});
 
     expect(
       container
@@ -206,9 +206,9 @@ describe("Hooks", () => {
 
   test("can render react components with reducers", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
-    act(() => {React.DOM.Client.render(root, <DummyReducerComponent />)});
+    act(() => {ReactDOM.Client.render(root, <DummyReducerComponent />)});
 
     expect(
       container
@@ -274,10 +274,10 @@ describe("Hooks", () => {
 
   test("can render react components with reducers (map state)", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(root, <DummyReducerWithMapStateComponent />)
+      ReactDOM.Client.render(root, <DummyReducerWithMapStateComponent />)
     });
 
     expect(
@@ -344,23 +344,23 @@ describe("Hooks", () => {
 
   test("can render react components with effects", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
     let callback = Mock.fn();
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyComponentWithEffect value=0 callback />,
       )
     });
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyComponentWithEffect value=1 callback />,
       )
     });
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyComponentWithEffect value=1 callback />,
       )
@@ -371,23 +371,23 @@ describe("Hooks", () => {
 
   test("can render react components with layout effects", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
     let callback = Mock.fn();
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyComponentWithLayoutEffect value=0 callback />,
       )
     });
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyComponentWithLayoutEffect value=1 callback />,
       )
     });
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyComponentWithLayoutEffect value=1 callback />,
       )
@@ -396,16 +396,16 @@ describe("Hooks", () => {
     expect(callback->Mock.getMock->Mock.calls)->toEqual([|[|0|], [|1|]|]);
   });
 
-    test("can work with useRef", () => {
+  test("can work with useRef", () => {
     let container = getContainer(container);
     let myRef = ref(None);
     let callback = reactRef => {
       myRef := Some(reactRef);
     };
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyComponentWithRefAndEffect callback />,
       )
@@ -420,10 +420,10 @@ describe("Hooks", () => {
     let mock = Mock.fn();
 
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     let subscribeWithMock = args => {
-      let _ = mock(. ());
+      let _ = mock(.);
       subscribe(args);
     };
 
@@ -439,7 +439,7 @@ describe("Hooks", () => {
       };
     };
 
-    act(() => React.DOM.Client.render(root, <App />));
+    act(() => ReactDOM.Client.render(root, <App />));
 
     /* Ensure initial value is passed */
     expect(
@@ -456,7 +456,7 @@ describe("Hooks", () => {
     expect(nextState)->toBe("changed");
 
     /* on next render */
-    act(() => React.DOM.Client.render(root, <App />));
+    act(() => ReactDOM.Client.render(root, <App />));
 
     /* the state should be propagated to App */
     expect(

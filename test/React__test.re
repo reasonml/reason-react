@@ -1,6 +1,6 @@
 open Jest;
 open Jest.Expect;
-open ReactTest.Utils;
+open ReactDOM.TestUtils;
 open Belt;
 
 /* https://react.dev/blog/2022/03/08/react-18-upgrade-guide#configuring-your-testing-environment */
@@ -55,10 +55,10 @@ describe("React", () => {
 
   test("can render DOM elements", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(root, <div> "Hello world!"->React.string </div>)
+      ReactDOM.Client.render(root, <div> "Hello world!"->React.string </div>)
     });
 
     expect(
@@ -71,9 +71,9 @@ describe("React", () => {
 
   test("can render null elements", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
-    act(() => {React.DOM.Client.render(root, <div> React.null </div>)});
+    act(() => ReactDOM.Client.render(root, <div> React.null </div>));
 
     expect(
       container
@@ -85,10 +85,10 @@ describe("React", () => {
 
   test("can render string elements", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(root, <div> "Hello"->React.string </div>)
+      ReactDOM.Client.render(root, <div> "Hello"->React.string </div>)
     });
 
     expect(
@@ -101,9 +101,9 @@ describe("React", () => {
 
   test("can render int elements", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
-    act(() => {React.DOM.Client.render(root, <div> 12345->React.int </div>)});
+    act(() => ReactDOM.Client.render(root, <div> 12345->React.int </div>));
 
     expect(
       container
@@ -115,10 +115,10 @@ describe("React", () => {
 
   test("can render float elements", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(root, <div> 12.345->React.float </div>)
+      ReactDOM.Client.render(root, <div> 12.345->React.float </div>)
     });
 
     expect(
@@ -134,10 +134,10 @@ describe("React", () => {
     let array =
       [|1, 2, 3|]
       ->Array.map(item => {<div key={j|$item|j}> item->React.int </div>});
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(root, <div> array->React.array </div>)
+      ReactDOM.Client.render(root, <div> array->React.array </div>)
     });
 
     expect(
@@ -164,10 +164,10 @@ describe("React", () => {
 
   test("can clone an element", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         React.cloneElement(
           <div> "Hello"->React.string </div>,
@@ -196,10 +196,10 @@ describe("React", () => {
 
   test("Children", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyComponentThatMapsChildren>
           <div> 1->React.int </div>
@@ -233,10 +233,10 @@ describe("React", () => {
 
   test("Context", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <DummyContext.Provider value=10>
           <DummyContext.Consumer />
@@ -255,10 +255,10 @@ describe("React", () => {
   test("Events", () => {
     let container = getContainer(container);
     let value = ref("");
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <input
           name="test-input"
@@ -278,10 +278,10 @@ describe("React", () => {
   test("React.Fragment with key", () => {
     let container = getContainer(container);
     let title = Some("foo");
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         <React.Fragment key=?title>
           <div> "Child"->React.string </div>
@@ -299,7 +299,7 @@ describe("React", () => {
 
   test("Type inference with keys", () => {
     let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+    let root = ReactDOM.Client.createRoot(container);
 
     module Author = {
       type t = {
@@ -314,7 +314,7 @@ describe("React", () => {
       </div>;
 
     act(() => {
-      React.DOM.Client.render(
+      ReactDOM.Client.render(
         root,
         render({name: "Joe", imageUrl: "https://foo.png"}),
       )
@@ -323,38 +323,38 @@ describe("React", () => {
     expect(container->DOM.findBySelector("img")->Option.isSome)->toBe(true);
   });
 
-  try {
+  try(
+    test("ErrorBoundary", () => {
+      let container = getContainer(container);
+      let root = ReactDOM.Client.createRoot(container);
 
-  test("ErrorBoundary", () => {
-    let container = getContainer(container);
-    let root = React.DOM.Client.createRoot(container);
+      act(() => {
+        ReactDOM.Client.render(
+          root,
+          <ReasonReactErrorBoundary
+            fallback={({error: _, info}) => {
+              expect(
+                info.componentStack
+                ->Js.String2.includes("ComponentThatThrows"),
+              )
+              ->toBe(true);
+              <strong> "An error occured"->React.string </strong>;
+            }}>
+            <ComponentThatThrows value=1 />
+          </ReasonReactErrorBoundary>,
+        )
+      });
 
-    act(() => {
-      React.DOM.Client.render(
-        root,
-        <React.ErrorBoundary
-          fallback={({error: _, info}) => {
-            expect(
-              info.componentStack->Js.String2.includes("ComponentThatThrows"),
-            )
-            ->toBe(true);
-            <strong> "An error occured"->React.string </strong>;
-          }}>
-          <ComponentThatThrows value=1 />
-        </React.ErrorBoundary>,
+      expect(
+        container
+        ->DOM.findBySelectorAndTextContent("strong", "An error occured")
+        ->Option.isSome,
       )
-    });
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("strong", "An error occured")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-  });
-  } {
-    | _error =>
-      /* We catch the exception here to not populate the error to the toplevel */
-      ()
-  }
+      ->toBe(true);
+    })
+  ) {
+  | _error =>
+    /* We catch the exception here to not populate the error to the toplevel */
+    ()
+  };
 });
