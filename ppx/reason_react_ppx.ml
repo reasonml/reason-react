@@ -658,8 +658,8 @@ let jsxMapper =
                   Ocaml_common.Location.prerr_warning pattern.ppat_loc
                     (Preprocessor
                        (Printf.sprintf
-                          "react-jsx-ppx: optional argument annotations must \
-                           have an explicit `option` type. Did you mean \
+                          "reason-react-ppx: optional argument annotations \
+                           must have an explicit `option` type. Did you mean \
                            `option(%s)=?`?"
                           currentType)))
           | _ -> ()
@@ -696,7 +696,7 @@ let jsxMapper =
         (list, Some txt)
     | Pexp_fun (Nolabel, _, pattern, _expression) ->
         Location.raise_errorf ~loc:pattern.ppat_loc
-          "react-jsx-ppx: react.component refs only support plain arguments \
+          "reason-react-ppx: react.component refs only support plain arguments \
            and type annotations."
     | _ -> (list, None)
       [@@raises Invalid_argument]
@@ -965,7 +965,7 @@ let jsxMapper =
                       ((fun a -> a), false, unerasableIgnoreExp expression)
                     else
                       Location.raise_errorf ~loc:pattern.ppat_loc
-                        "react-jsx-ppx: props need to be labelled arguments.\n\
+                        "reason-react-ppx: props need to be labelled arguments.\n\
                         \  If you are working with refs be sure to wrap with \
                          React.forwardRef.\n\
                         \  If your component doesn't have any props, use () \
