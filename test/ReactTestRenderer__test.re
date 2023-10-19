@@ -12,7 +12,7 @@ describe("ReactTestRenderer", () => {
 
   test("create returns ReactTestInstance", () => {
     let component = ReactTestRenderer.create(<Tester />);
-    let keys = Js.Obj.keys(component);
+    let keys = Js.Obj.keys(Obj.magic(component): Js.t({..}));
 
     expect(keys)
     ->toEqual(

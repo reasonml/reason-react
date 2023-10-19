@@ -469,7 +469,7 @@ module Server: {
 
   type pipeableStream = {
     /* Using empty object instead of Node.stream since Melange don't provide a binding to node's Stream (https://nodejs.org/api/stream.html) */
-    pipe: {.} => unit,
+    pipe: Js.t({.}) => unit,
     abort: unit => unit,
   };
 
