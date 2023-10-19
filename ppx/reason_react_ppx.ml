@@ -640,8 +640,8 @@ let jsxMapper =
           pattern,
           expression ) ->
         let () =
-          match (isOptional arg, pattern, default) with
-          | true, { ppat_desc = Ppat_constraint (_, { ptyp_desc }) }, None -> (
+          match (arg, pattern, default) with
+          | Optional _, { ppat_desc = Ppat_constraint (_, { ptyp_desc }) }, None -> (
               match ptyp_desc with
               | Ptyp_constr ({ txt = Lident "option" }, [ _ ]) -> ()
               | _ ->
