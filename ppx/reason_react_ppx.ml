@@ -639,29 +639,6 @@ let jsxMapper =
           default,
           pattern,
           expression ) ->
-        let () =
-          match (arg, pattern, default) with
-          | Optional _, { ppat_desc = Ppat_constraint (_, { ptyp_desc }) }, None -> (
-              match ptyp_desc with
-              | Ptyp_constr ({ txt = Lident "option" }, [ _ ]) -> ()
-              | _ ->
-                  let currentType =
-                    match ptyp_desc with
-                    | Ptyp_constr ({ txt }, []) ->
-                        String.concat "." (Longident.flatten_exn txt)
-                    | Ptyp_constr ({ txt }, _innerTypeArgs) ->
-                        String.concat "." (Longident.flatten_exn txt) ^ "(...)"
-                    | _ -> "..."
-                  in
-                  Ocaml_common.Location.prerr_warning pattern.ppat_loc
-                    (Preprocessor
-                       (Printf.sprintf
-                          "reason-react-ppx: optional argument annotations \
-                           must have an explicit `option` type. Did you mean \
-                           `option(%s)=?`?"
-                          currentType)))
-          | _ -> ()
-        in
         let alias =
           match pattern with
           | { ppat_desc = Ppat_alias (_, { txt }) | Ppat_var { txt } } -> txt
