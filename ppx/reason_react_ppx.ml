@@ -83,9 +83,6 @@ let rec find_opt p = function
   | [] -> None
   | x :: l -> if p x then Some x else find_opt p l
 
-let isOptional str = match str with Optional _ -> true | _ -> false
-let isLabelled str = match str with Labelled _ -> true | _ -> false
-
 let getLabel str =
   match str with Optional str | Labelled str -> str | Nolabel -> ""
 
@@ -476,9 +473,7 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
       (Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsx") }, None, None)
 
 let reactJsxExprAndChildren = jsxExprAndChildren ~ident:(Lident "React")
-
-let reactDomJsxExprAndChildren =
-  jsxExprAndChildren ~ident:(Lident "ReactDOM")
+let reactDomJsxExprAndChildren = jsxExprAndChildren ~ident:(Lident "ReactDOM")
 
 (* Builds an AST node for the entire `external` definition of props *)
 let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
@@ -639,8 +634,11 @@ let jsxMapper =
           (Invalid_argument
              "Ref cannot be passed as a normal prop. Please use `forwardRef` \
               API instead.")
-    | Pexp_fun (arg, default, pattern, expression)
-      when isOptional arg || isLabelled arg ->
+    | Pexp_fun
+        ( ((Optional label | Labelled label) as arg),
+          default,
+          pattern,
+          expression ) ->
         let () =
           match (isOptional arg, pattern, default) with
           | true, { ppat_desc = Ppat_constraint (_, { ptyp_desc }) }, None -> (
@@ -668,7 +666,7 @@ let jsxMapper =
           match pattern with
           | { ppat_desc = Ppat_alias (_, { txt }) | Ppat_var { txt } } -> txt
           | { ppat_desc = Ppat_any } -> "_"
-          | _ -> getLabel arg
+          | _ -> label
         in
         let type_ =
           match pattern with
@@ -705,10 +703,9 @@ let jsxMapper =
   let argToType types (name, default, _noLabelName, _alias, loc, type_) =
     match (type_, name, default) with
     | ( Some { ptyp_desc = Ptyp_constr ({ txt = Lident "option" }, [ type_ ]) },
-        name,
-        _ )
-      when isOptional name ->
-        ( getLabel name,
+        Optional label,
+        _ ) ->
+        ( label,
           [],
           {
             type_ with
@@ -728,8 +725,8 @@ let jsxMapper =
           } )
         :: types
     | Some type_, name, _ -> (getLabel name, [], type_) :: types
-    | None, name, _ when isOptional name ->
-        ( getLabel name,
+    | None, Optional label, _ ->
+        ( label,
           [],
           {
             ptyp_desc =
@@ -748,8 +745,8 @@ let jsxMapper =
             ptyp_attributes = [];
           } )
         :: types
-    | None, name, _ when isLabelled name ->
-        ( getLabel name,
+    | None, Labelled label, _ ->
+        ( label,
           [],
           {
             ptyp_desc = Ptyp_var (safeTypeFromValue name);
@@ -764,9 +761,9 @@ let jsxMapper =
 
   let argToConcreteType types (name, loc, type_) =
     match name with
-    | name when isLabelled name -> (getLabel name, [], type_) :: types
-    | name when isOptional name ->
-        ( getLabel name,
+    | Labelled label -> (label, [], type_) :: types
+    | Optional label ->
+        ( label,
           [],
           Builder.ptyp_constr ~loc { loc; txt = optionIdent } [ type_ ] )
         :: types
@@ -789,12 +786,14 @@ let jsxMapper =
         | [ _ ] ->
             let rec getPropTypes types ({ ptyp_loc; ptyp_desc } as fullType) =
               match ptyp_desc with
-              | Ptyp_arrow (name, type_, ({ ptyp_desc = Ptyp_arrow _ } as rest))
-                when isLabelled name || isOptional name ->
+              | Ptyp_arrow
+                  ( ((Labelled _ | Optional _) as name),
+                    type_,
+                    ({ ptyp_desc = Ptyp_arrow _ } as rest) ) ->
                   getPropTypes ((name, ptyp_loc, type_) :: types) rest
               | Ptyp_arrow (Nolabel, _type, rest) -> getPropTypes types rest
-              | Ptyp_arrow (name, type_, returnValue)
-                when isLabelled name || isOptional name ->
+              | Ptyp_arrow
+                  (((Labelled _ | Optional _) as name), type_, returnValue) ->
                   (returnValue, (name, returnValue.ptyp_loc, type_) :: types)
               | _ -> (fullType, types)
             in
@@ -1073,14 +1072,8 @@ let jsxMapper =
               | None -> namedArgList
             in
             let pluckArg (label, _, _, alias, loc, _) =
-              let labelString =
-                match label with
-                | label when isOptional label || isLabelled label ->
-                    getLabel label
-                | _ -> ""
-              in
               ( label,
-                match labelString with
+                match getLabel label with
                 | "" -> Builder.pexp_ident ~loc { txt = Lident alias; loc }
                 | labelString ->
                     Builder.pexp_apply ~loc
@@ -1250,12 +1243,14 @@ let jsxMapper =
         | [ _ ] ->
             let rec getPropTypes types ({ ptyp_loc; ptyp_desc } as fullType) =
               match ptyp_desc with
-              | Ptyp_arrow (name, type_, ({ ptyp_desc = Ptyp_arrow _ } as rest))
-                when isOptional name || isLabelled name ->
+              | Ptyp_arrow
+                  ( ((Labelled _ | Optional _) as name),
+                    type_,
+                    ({ ptyp_desc = Ptyp_arrow _ } as rest) ) ->
                   getPropTypes ((name, ptyp_loc, type_) :: types) rest
               | Ptyp_arrow (Nolabel, _type, rest) -> getPropTypes types rest
-              | Ptyp_arrow (name, type_, returnValue)
-                when isOptional name || isLabelled name ->
+              | Ptyp_arrow
+                  (((Labelled _ | Optional _) as name), type_, returnValue) ->
                   (returnValue, (name, returnValue.ptyp_loc, type_) :: types)
               | _ -> (fullType, types)
             in
