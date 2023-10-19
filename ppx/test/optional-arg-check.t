@@ -25,10 +25,6 @@ Show the error message when an optionally labelled argument has the wrong type
   File "x.re", line 3, characters 15-27:
   3 |   let make = (~myProp: bool=?) => React.null;
                      ^^^^^^^^^^^^
-  Warning 22 [preprocessor]: react-jsx-ppx: optional argument annotations must have an explicit `option` type. Did you mean `option(bool)=?`?
-  File "x.re", line 3, characters 15-27:
-  3 |   let make = (~myProp: bool=?) => React.null;
-                     ^^^^^^^^^^^^
   Error: This pattern matches values of type bool
          but a pattern was expected which matches values of type 'a option
   [1]
