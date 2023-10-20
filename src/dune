@@ -7,6 +7,8 @@
  (modules
   React
   ReactDOM
+  ReactDOMServer
+  ReactDOMTestUtils
   ReactTestRenderer
   ReasonReactRouter
   ReasonReactErrorBoundary)
