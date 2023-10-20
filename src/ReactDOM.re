@@ -1736,8 +1736,6 @@ module TestUtils = {
   };
 
   module DOM = {
-    open Belt;
-
     [@mel.return nullable] [@mel.get]
     external value: Dom.element => option(string) = "value";
 
@@ -1749,36 +1747,31 @@ module TestUtils = {
 
     let findBySelectorAndTextContent = (element, selector, content) =>
       querySelectorAll(element, selector)
-      ->Array.getBy(node => node->textContent === content);
+      |> Array.find_opt(node => node->textContent === content);
 
     let findBySelectorAndPartialTextContent = (element, selector, content) =>
       querySelectorAll(element, selector)
-      ->Array.getBy(node => node->textContent->Js.String2.includes(content));
+      |> Array.find_opt(node =>
+           node->textContent->Js.String2.includes(content)
+         );
   };
 
   let prepareContainer = (container: ref(option(Dom.element)), ()) => {
-    Belt.(
-      {
-        let containerElement = document->createElement("div");
-        let _ =
-          document
-          ->body
-          ->Option.map(body => body->appendChild(containerElement));
-        container := Some(containerElement);
-      }
-    );
+    let containerElement = document->createElement("div");
+    let _: option(_) =
+      Option.map(
+        body => body->appendChild(containerElement),
+        document->body,
+      );
+    container := Some(containerElement);
   };
 
   let cleanupContainer = (container: ref(option(Dom.element)), ()) => {
-    Belt.(
-      {
-        let _ = container.contents->Option.map(remove);
-        container := None;
-      }
-    );
+    let _: option(_) = Option.map(remove, container^);
+    container := None;
   };
 
   let getContainer = container => {
-    Belt.(container.contents->Option.getExn);
+    container.contents->Option.get;
   };
 };
