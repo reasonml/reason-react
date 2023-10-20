@@ -1,7 +1,5 @@
 open Jest;
 
-external toObject: ReactTestRenderer.t => Js.t({.}) = "%identity";
-
 module Tester = {
   [@react.component]
   let make = () => <div> {React.string("Tester")} </div>;
@@ -12,7 +10,7 @@ describe("ReactTestRenderer", () => {
 
   test("create returns ReactTestInstance", () => {
     let component = ReactTestRenderer.create(<Tester />);
-    let keys = Js.Obj.keys(Obj.magic(component): Js.t({..}));
+    let keys = Js.Obj.keys(ReactTestRenderer.toObject(component));
 
     expect(keys)
     ->toEqual(
