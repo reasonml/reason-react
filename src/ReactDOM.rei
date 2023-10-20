@@ -841,6 +841,8 @@ type domProps = {
   [@mel.optional]
   readOnly: option(bool),
   [@mel.optional]
+  referrerPolicy: option(string),
+  [@mel.optional]
   rel: option(string), /* a space- or comma-separated (depending on the element) list of a fixed set of "link types" */
   [@mel.optional]
   required: option(bool),
