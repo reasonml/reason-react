@@ -4,6 +4,7 @@ type t;
 external create: React.element => t = "create";
 
 [@mel.send] external toJSON: t => Js.Json.t = "toJSON";
+[@mel.send] external toObject: t => Js.t({..}) = "%identity";
 
 module Shallow = {
   type t;
