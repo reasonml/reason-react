@@ -1,6 +1,6 @@
 ### Welcome to the source of ReasonReact
 
-We want to expose as minimum modules to the toplevel as possible, and at the same time want to map closely to the npm packages. So each module maps to a npm package, and each sub-module maps to a sub-module. For example: `react-dom` -> `ReactDOM` and `react-dom/server` -> `ReactDOMServer`.
+We want to expose the minimum amount of top-level modules possible, and at the same time want to map closely to the npm packages. So each module maps to a npm package, and each sub-module maps to a sub-module. For example: `react-dom` -> `ReactDOM` and `react-dom/server` -> `ReactDOMServer`.
 
 Files overview:
 
