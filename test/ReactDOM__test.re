@@ -12,8 +12,8 @@ module Stream = {
   external make: unit => writable = "PassThrough";
 };
 
-describe("React.DOM", () => {
-  describe("React.DOM.Server", () => {
+describe("ReactDOM", () => {
+  describe("ReactDOM.Server", () => {
     test("renderToString", () => {
       let string =
         ReactDOM.Server.renderToString(
