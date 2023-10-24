@@ -1,0 +1,6 @@
+(copy_files# "../React.re")
+
+(library
+ (name unused_native_compat)
+ (libraries melange.dom)
+ (modes melange))
