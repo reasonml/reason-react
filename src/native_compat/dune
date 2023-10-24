@@ -3,4 +3,6 @@
 (library
  (name unused_native_compat)
  (libraries melange.dom)
- (modes melange))
+ (public_name reason-react.virtual)
+ (modes melange)
+ (preprocess (pps melange.ppx)))

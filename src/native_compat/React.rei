@@ -137,11 +137,15 @@ let useReducerWithMapState:
   ('state, 'action => unit);
 
 let useSyncExternalStore:
-  (~subscribe: unit => unit, ~getSnapshot: unit => 'snapshot) => 'snapshot;
+  (
+    ~subscribe: (unit => unit, unit) => unit,
+    ~getSnapshot: unit => 'snapshot
+  ) =>
+  'snapshot;
 
 let useSyncExternalStoreWithServer:
   (
-    ~subscribe: unit => unit,
+    ~subscribe: (unit => unit, unit) => unit,
     ~getSnapshot: unit => 'snapshot,
     ~getServerSnapshot: unit => 'snapshot
   ) =>
@@ -149,7 +153,7 @@ let useSyncExternalStoreWithServer:
 
 let useEffect: (unit => option(unit => unit)) => unit;
 
-let useEffect0: (unit => option(unit => unit), _) => unit;
+let useEffect0: (unit => option(unit => unit)) => unit;
 
 let useEffect1: (unit => option(unit => unit), array('a)) => unit;
 
@@ -169,7 +173,7 @@ let useEffect7:
 
 let useInsertionEffect: (unit => option(unit => unit)) => unit;
 
-let useInsertionEffect0: (unit => option(unit => unit), _) => unit;
+let useInsertionEffect0: (unit => option(unit => unit)) => unit;
 
 let useInsertionEffect1: (unit => option(unit => unit), array('a)) => unit;
 
@@ -192,7 +196,7 @@ let useInsertionEffect7:
 
 let useLayoutEffect: (unit => option(unit => unit)) => unit;
 
-let useLayoutEffect0: (unit => option(unit => unit), _) => unit;
+let useLayoutEffect0: (unit => option(unit => unit)) => unit;
 
 let useLayoutEffect1: (unit => option(unit => unit), array('a)) => unit;
 
@@ -214,7 +218,7 @@ let useLayoutEffect7:
 
 let useMemo: (unit => 'any) => 'any;
 
-let useMemo0: _ => 'any;
+let useMemo0: (unit => 'any) => 'any;
 
 let useMemo1: (unit => 'any, array('a)) => 'any;
 
@@ -235,7 +239,7 @@ type callback('input, 'output) = 'input => 'output;
 
 let useCallback: 'fn => 'fn;
 
-let useCallback0: ('fn, _) => 'fn;
+let useCallback0: 'fn => 'fn;
 
 let useCallback1: ('fn, array('a)) => 'fn;
 
@@ -259,7 +263,7 @@ let useId: unit => string;
 let useDeferredValue: 'a => 'a;
 
 let useImperativeHandle0:
-  (Js.Nullable.t(ref('value)), unit => 'value, _) => unit;
+  (Js.Nullable.t(ref('value)), unit => 'value) => unit;
 
 let useImperativeHandle1:
   (Js.Nullable.t(ref('value)), unit => 'value, array('a)) => unit;
@@ -303,7 +307,7 @@ module Uncurried: {
 
   let useCallback: ('input => 'output) => callback('input, 'output);
 
-  let useCallback0: _ => callback('input, 'output);
+  let useCallback0: ('input => 'output) => callback('input, 'output);
 
   let useCallback1:
     ('input => 'output, array('a)) => callback('input, 'output);
