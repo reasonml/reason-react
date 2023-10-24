@@ -510,7 +510,7 @@ module Client: {
 };
 
 [@deprecated
-  "This function will be removed in the next release. Use ReactDOM.Client.render instead."
+  "This function will be removed in the next release. Use ReactDOM.Client.createRoot and ReactDOM.Client.render instead."
 ]
 [@mel.module "react-dom"]
 external render: (React.element, Dom.element) => unit = "render";
