@@ -4,6 +4,8 @@
  (public_name reason-react-ppx)
  (flags :standard -w -9)
  (kind ppx_rewriter)
+ (preprocess
+  (pps ppxlib.metaquot))
  (libraries ppxlib))
 
 (executable
