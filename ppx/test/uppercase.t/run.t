@@ -56,7 +56,7 @@ Let's test hovering over parts of the component
         "line": 16,
         "col": 3
       },
-      "type": "Js.t({.. \"children\": React.element})",
+      "type": "{.. \"children\": React.element}",
       "tail": "no"
     },
     {
