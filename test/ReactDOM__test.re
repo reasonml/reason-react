@@ -16,14 +16,14 @@ describe("ReactDOM", () => {
   describe("ReactDOM.Server", () => {
     test("renderToString", () => {
       let string =
-        ReactDOM.Server.renderToString(
+        ReactDOMServer.renderToString(
           <div> "Hello world!"->React.string </div>,
         );
       expect(string)->toBe("<div>Hello world!</div>");
     });
     test("renderToStaticMarkup", () => {
       let string =
-        ReactDOM.Server.renderToStaticMarkup(
+        ReactDOMServer.renderToStaticMarkup(
           <div> "Hello world!"->React.string </div>,
         );
       expect(string)->toBe("<div>Hello world!</div>");
@@ -53,8 +53,8 @@ describe("ReactDOM", () => {
           hasErrored := true;
         },
       );
-      let {pipe, abort: _}: ReactDOM.Server.pipeableStream =
-        ReactDOM.Server.renderToPipeableStream(
+      let {pipe, abort: _}: ReactDOMServer.pipeableStream =
+        ReactDOMServer.renderToPipeableStream(
           <div> "Hello world!"->React.string </div>,
         );
       pipe(stream);
