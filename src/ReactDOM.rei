@@ -510,13 +510,13 @@ module Client: {
 };
 
 [@deprecated
-  "This function will be removed in the next release. Use React.DOM.Client.render instead."
+  "This function will be removed in the next release. Use ReactDOM.Client.createRoot and ReactDOM.Client.render instead."
 ]
 [@mel.module "react-dom"]
 external render: (React.element, Dom.element) => unit = "render";
 
 [@deprecated
-  "This function will be removed in the next release. Use React.DOM.Client.hydrateRoot instead."
+  "This function will be removed in the next release. Use ReactDOM.Client.hydrateRoot instead."
 ]
 [@mel.module "react-dom"]
 external hydrate: (React.element, Dom.element) => unit = "hydrate";
