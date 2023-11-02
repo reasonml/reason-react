@@ -445,7 +445,7 @@ external querySelector: string => option(Dom.element) =
 module Client = {
   type root;
 
-  [@mel.send] external render: (root, React.element) => unit = "render";
+  [@mel.send] external render: (root, React.element('a)) => unit = "render";
 
   [@mel.send] external unmount: (root, unit) => unit = "unmount";
 
@@ -453,17 +453,18 @@ module Client = {
   external createRoot: Dom.element => root = "createRoot";
 
   [@mel.module "react-dom/client"]
-  external hydrateRoot: (Dom.element, React.element) => root = "hydrateRoot";
+  external hydrateRoot: (Dom.element, React.element('a)) => root =
+    "hydrateRoot";
 };
 
 [@mel.module "react-dom"]
-external render: (React.element, Dom.element) => unit = "render";
+external render: (React.element('a), Dom.element) => unit = "render";
 
 [@mel.module "react-dom"]
-external hydrate: (React.element, Dom.element) => unit = "hydrate";
+external hydrate: (React.element('a), Dom.element) => unit = "hydrate";
 
 [@mel.module "react-dom"]
-external createPortal: (React.element, Dom.element) => React.element =
+external createPortal: (React.element('a), Dom.element) => React.element('a) =
   "createPortal";
 
 [@mel.module "react-dom"]
@@ -490,13 +491,13 @@ module Ref = {
 
 /* This list isn't exhaustive. We'll add more as we go. */
 [@deriving abstract]
-type domProps = {
+type domProps('a) = {
   [@mel.optional]
   key: option(string),
   [@mel.optional]
   ref: option(domRef),
   [@mel.optional]
-  children: option(React.element),
+  children: option(React.element('a)),
   /* accessibility */
   /* https://www.w3.org/TR/wai-aria-1.1/ */
   [@mel.optional] [@mel.as "aria-activedescendant"]
@@ -1522,38 +1523,47 @@ type domProps = {
 
 // As we've removed `ReactDOMRe.createElement`, this enables patterns like
 // React.createElement(ReactDOM.stringToComponent(multiline ? "textarea" : "input"), ...)
-external stringToComponent: string => React.component(domProps) = "%identity";
+external stringToComponent: string => React.component(domProps('a), 'a) =
+  "%identity";
 
 [@mel.variadic] [@mel.module "react"]
 external createElement:
-  (string, ~props: domProps=?, array(React.element)) => React.element =
+  (string, ~props: domProps('a)=?, array(React.element('a))) =>
+  React.element('a) =
   "createElement";
 
 [@mel.variadic] [@mel.module "react"]
 external createDOMElementVariadic:
-  (string, ~props: domProps=?, array(React.element)) => React.element =
+  (
+    string,
+    ~props: domProps('a)=?,
+    array(React.element('children))
+  ) =>
+  React.element('a) =
   "createElement";
 
 [@mel.module "react/jsx-runtime"]
-external jsxKeyed: (string, domProps, ~key: string=?, unit) => React.element =
+external jsx: (string, domProps('a)) => React.element('a) = "jsx";
+
+[@mel.module "react/jsx-runtime"]
+external jsxs: (string, domProps('a)) => React.element('a) = "jsxs";
+
+[@mel.module "react/jsx-runtime"]
+external jsxKeyed:
+  (string, domProps('a), ~key: string=?, unit) => React.element_with_key =
   "jsx";
 
 [@mel.module "react/jsx-runtime"]
-external jsx: (string, domProps) => React.element = "jsx";
-
-[@mel.module "react/jsx-runtime"]
-external jsxs: (string, domProps) => React.element = "jsxs";
-
-[@mel.module "react/jsx-runtime"]
-external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element =
+external jsxsKeyed:
+  (string, domProps('a), ~key: string=?, unit) => React.element_with_key =
   "jsxs";
 
 module Server = {
   [@mel.module "react-dom/server"]
-  external renderToString: React.element => string = "renderToString";
+  external renderToString: React.element('a) => string = "renderToString";
 
   [@mel.module "react-dom/server"]
-  external renderToStaticMarkup: React.element => string =
+  external renderToStaticMarkup: React.element('a) => string =
     "renderToStaticMarkup";
 
   [@deriving abstract]
@@ -1589,7 +1599,8 @@ module Server = {
   };
 
   [@mel.module "react-dom/server"]
-  external renderToPipeableStream: (React.element, options) => pipeableStream =
+  external renderToPipeableStream:
+    (React.element('a), options) => pipeableStream =
     "renderToPipeableStream";
 
   let renderToPipeableStream =
@@ -1661,7 +1672,7 @@ module TestUtils = {
   external isElement: 'element => bool = "isElement";
 
   [@mel.module "react-dom/test-utils"]
-  external isElementOfType: ('element, React.component('props)) => bool =
+  external isElementOfType: ('element, React.component('props, 'a)) => bool =
     "isElementOfType";
 
   [@mel.module "react-dom/test-utils"]
@@ -1672,7 +1683,7 @@ module TestUtils = {
 
   [@mel.module "react-dom/test-utils"]
   external isCompositeComponentWithType:
-    ('element, React.component('props)) => bool =
+    ('element, React.component('props, 'a)) => bool =
     "isCompositeComponentWithType";
 
   module Simulate = {

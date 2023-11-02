@@ -35,8 +35,11 @@ type params('error) = {
 
 [@react.component]
 external make:
-  (~children: React.element, ~fallback: params('error) => React.element) =>
-  React.element =
+  (
+    ~children: React.element('children),
+    ~fallback: params('error) => React.element('fallback)
+  ) =>
+  React.element('a) =
   "ErrorBoundary";
 
 let make = make;

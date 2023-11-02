@@ -55,7 +55,7 @@ module DummyStatefulComponent = {
   let make = (~initialValue=0, ()) => {
     let (value, setValue) = React.useState(() => initialValue);
 
-    <button key="asdf" onClick={_ => setValue(value => value + 1)}>
+    <button onClick={_ => setValue(value => value + 1)}>
       value->React.int
     </button>;
   };
@@ -171,7 +171,9 @@ describe("Hooks", () => {
     let container = getContainer(container);
     let root = ReactDOM.Client.createRoot(container);
 
-    act(() => {ReactDOM.Client.render(root, <DummyStatefulComponent />)});
+    act(() => {
+      ReactDOM.Client.render(root, <DummyStatefulComponent />);
+    });
 
     expect(
       container

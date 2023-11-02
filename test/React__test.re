@@ -20,14 +20,7 @@ module ComponentThatThrows = {
 module DummyComponentThatMapsChildren = {
   [@react.component]
   let make = (~children, ()) => {
-    <div>
-      {children->React.Children.mapWithIndex((element, index) => {
-         React.cloneElement(
-           element,
-           {"key": {j|$index|j}, "data-index": index},
-         )
-       })}
-    </div>;
+    <div> children </div>;
   };
 };
 
@@ -201,11 +194,11 @@ describe("React", () => {
     act(() => {
       ReactDOM.Client.render(
         root,
-        <DummyComponentThatMapsChildren>
-          <div> 1->React.int </div>
-          <div> 2->React.int </div>
-          <div> 3->React.int </div>
-        </DummyComponentThatMapsChildren>,
+        <div>
+          <div key="asdf"> 1->React.int </div>
+          <div key="asdf"> 2->React.int </div>
+          <div key="asdf"> 3->React.int </div>
+        </div>,
       )
     });
 
@@ -277,13 +270,12 @@ describe("React", () => {
 
   test("React.Fragment with key", () => {
     let container = getContainer(container);
-    let title = Some("foo");
     let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
       ReactDOM.Client.render(
         root,
-        <React.Fragment key=?title>
+        <React.Fragment key="asdf">
           <div> "Child"->React.string </div>
         </React.Fragment>,
       )

@@ -300,46 +300,49 @@ module Event = {
   };
 };
 
-type element;
+/* All the literature here */
+type keyed;
+type not_keyed;
+type element(+'a);
+type element_without_key = element(not_keyed);
+type element_with_key = element(keyed);
+
 type componentLike('props, 'return) = 'props => 'return;
-type component('props) = componentLike('props, element);
+type component('props, 'a) = componentLike('props, element('a));
 
-external null: element = "null";
-external float: float => element = "%identity";
-external int: int => element = "%identity";
-external string: string => element = "%identity";
-external array: array(element) => element = "%identity";
-
-/* this function exists to prepare for making `component` abstract */
-external component: componentLike('props, element) => component('props) =
-  "%identity";
+external null: element_without_key = "null";
+external float: float => element_without_key = "%identity";
+external int: int => element_without_key = "%identity";
+external string: string => element_without_key = "%identity";
+external array: array(element_with_key) => element_without_key = "%identity";
 
 [@mel.module "react"]
-external createElement: (component('props), 'props) => element =
+external createElement: (component('props, 'a), 'props) => element('a) =
   "createElement";
 
 [@mel.module "react"]
-external cloneElement: (element, 'props) => element = "cloneElement";
+external cloneElement: (element('a), 'props) => element('a) = "cloneElement";
 
 [@mel.splice] [@mel.module "react"]
 external createElementVariadic:
-  (component('props), 'props, array(element)) => element =
+  (component('props, 'a), 'props, array(element('children))) => element('a) =
   "createElement";
 
 [@mel.module "react/jsx-runtime"]
+external jsx: (component('props, 'a), 'props) => element_without_key = "jsx";
+
+[@mel.module "react/jsx-runtime"]
+external jsxs: (component('props, keyed), 'props) => element_without_key =
+  "jsxs";
+
+[@mel.module "react/jsx-runtime"]
 external jsxKeyed:
-  (component('props), 'props, ~key: string=?, unit) => element =
+  (component('props, 'a), 'props, ~key: string, unit) => element_with_key =
   "jsx";
 
 [@mel.module "react/jsx-runtime"]
-external jsx: (component('props), 'props) => element = "jsx";
-
-[@mel.module "react/jsx-runtime"]
-external jsxs: (component('props), 'props) => element = "jsxs";
-
-[@mel.module "react/jsx-runtime"]
 external jsxsKeyed:
-  (component('props), 'props, ~key: string=?, unit) => element =
+  (component('props, 'a), 'props, ~key: string=?, unit) => element_with_key =
   "jsxs";
 
 [@mel.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
@@ -360,47 +363,50 @@ module Ref = {
 [@mel.module "react"]
 external createRef: unit => ref(Js.nullable('a)) = "createRef";
 
-module Children = {
-  [@mel.module "react"] [@mel.scope "Children"]
-  external map: (element, element => element) => element = "map";
-  [@mel.module "react"] [@mel.scope "Children"]
-  external mapWithIndex:
-    (element, [@mel.uncurry] ((element, int) => element)) => element =
-    "map";
-  [@mel.module "react"] [@mel.scope "Children"]
-  external forEach: (element, element => unit) => unit = "forEach";
-  [@mel.module "react"] [@mel.scope "Children"]
-  external forEachWithIndex:
-    (element, [@mel.uncurry] ((element, int) => unit)) => unit =
-    "forEach";
-  [@mel.module "react"] [@mel.scope "Children"]
-  external count: element => int = "count";
-  [@mel.module "react"] [@mel.scope "Children"]
-  external only: element => element = "only";
-  [@mel.module "react"] [@mel.scope "Children"]
-  external toArray: element => array(element) = "toArray";
-};
+/* module Children = {
+     [@mel.module "react"] [@mel.scope "Children"]
+     external map: (element, element => element) => element = "map";
+     [@mel.module "react"] [@mel.scope "Children"]
+     external mapWithIndex:
+       (element, [@mel.uncurry] ((element, int) => element)) => element =
+       "map";
+     [@mel.module "react"] [@mel.scope "Children"]
+     external forEach: (element, element => unit) => unit = "forEach";
+     [@mel.module "react"] [@mel.scope "Children"]
+     external forEachWithIndex:
+       (element, [@mel.uncurry] ((element, int) => unit)) => unit =
+       "forEach";
+     [@mel.module "react"] [@mel.scope "Children"]
+     external count: element => int = "count";
+     [@mel.module "react"] [@mel.scope "Children"]
+     external only: element => element = "only";
+     [@mel.module "react"] [@mel.scope "Children"]
+     external toArray: element => array(element) = "toArray";
+   }; */
 
 module Context = {
   type t('props);
 
   [@mel.obj]
   external makeProps:
-    (~value: 'props, ~children: element, unit) =>
+    (~value: 'props, ~children: element('a), unit) =>
     {
       .
       "value": 'props,
-      "children": element,
+      "children": element('a),
     };
 
   [@mel.get]
   external provider:
     t('props) =>
-    component({
-      .
-      "value": 'props,
-      "children": element,
-    }) =
+    component(
+      {
+        .
+        "value": 'props,
+        "children": element('a),
+      },
+      'a,
+    ) =
     "Provider";
 };
 
@@ -409,58 +415,65 @@ external createContext: 'a => Context.t('a) = "createContext";
 
 [@mel.module "react"]
 external forwardRef:
-  ([@mel.uncurry] (('props, Js.Nullable.t(ref('a))) => element)) =>
-  component('props) =
+  ([@mel.uncurry] (('props, Js.Nullable.t(ref('a))) => element('a))) =>
+  component('props, 'a) =
   "forwardRef";
 
 [@mel.module "react"]
-external memo: component('props) => component('props) = "memo";
+external memo: component('props, 'a) => component('props, 'a) = "memo";
 
 [@mel.module "react"]
 external memoCustomCompareProps:
-  (component('props), [@mel.uncurry] (('props, 'props) => bool)) =>
-  component('props) =
+  (component('props, 'a), [@mel.uncurry] (('props, 'props) => bool)) =>
+  component('props, 'a) =
   "memo";
 
 module Fragment = {
   [@mel.obj]
-  external makeProps: (~children: element, unit) => {. "children": element};
+  external makeProps:
+    (~children: element('a), unit) => {. "children": element('a)};
 
   [@mel.module "react"]
-  external make: component({. "children": element}) = "Fragment";
+  external make: component({. "children": element('a)}, 'a) = "Fragment";
 };
 
 module StrictMode = {
   [@mel.obj]
-  external makeProps: (~children: element, unit) => {. "children": element};
+  external makeProps:
+    (~children: element('a), unit) => {. "children": element('a)};
   [@mel.module "react"]
-  external make: component({. "children": element}) = "StrictMode";
+  external make: component({. "children": element('a)}, 'a) = "StrictMode";
 };
 
 module Suspense = {
   [@mel.obj]
   external makeProps:
-    (~children: element=?, ~fallback: element=?, unit) =>
+    (~children: element('a)=?, ~fallback: element('a)=?, unit) =>
     {
       .
-      "children": option(element),
-      "fallback": option(element),
+      "children": option(element('a)),
+      "fallback": option(element('a)),
     };
   [@mel.module "react"]
   external make:
-    component({
-      .
-      "children": option(element),
-      "fallback": option(element),
-    }) =
+    component(
+      {
+        .
+        "children": option(element('a)),
+        "fallback": option(element('a)),
+      },
+      'a,
+    ) =
     "Suspense";
 };
 
 [@mel.set]
-external setDisplayName: (component('props), string) => unit = "displayName";
+external setDisplayName: (component('props, 'a), string) => unit =
+  "displayName";
 
 [@mel.get] [@mel.return nullable]
-external displayName: component('props) => option(string) = "displayName";
+external displayName: component('props, 'a) => option(string) =
+  "displayName";
 
 /* HOOKS */
 
