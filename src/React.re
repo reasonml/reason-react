@@ -300,10 +300,11 @@ module Event = {
   };
 };
 
-/* All the literature here */
-type keyed;
-type not_keyed;
-type element(+'a);
+type element('a); /* 'a captures any type information to differenciate with others 'a's */
+
+type keyed; /* Flag to mark element('a) to be keyed */
+type not_keyed; /* Flag to mark element('a) to be not keyed */
+
 type element_without_key = element(not_keyed);
 type element_with_key = element(keyed);
 
