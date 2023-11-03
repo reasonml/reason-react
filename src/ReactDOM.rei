@@ -1546,5 +1546,5 @@ external jsx: (string, domProps) => React.element = "jsx";
 external jsxs: (string, domProps) => React.element = "jsxs";
 
 [@mel.module "react/jsx-runtime"]
-external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element =
+external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.elementKeyed =
   "jsxs";

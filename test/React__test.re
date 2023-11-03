@@ -364,3 +364,44 @@ describe("React", () => {
     ()
   };
 });
+
+module Foo = {
+  [@react.component]
+  let make = () => {
+    <div />;
+  };
+};
+
+module Bar = {
+  [@react.component]
+  let make = () => {
+    let ks = Array.init(10, string_of_int);
+    <div> {Array.map(ks, id => <Foo key=id />)->React.array} </div>;
+  };
+};
+
+let _ =
+  <div>
+    {[|1, 2, 3|]
+     ->Array.map(id => {
+         <React.Fragment key={string_of_int(id)}>
+           <div />
+           <div />
+           <div />
+         </React.Fragment>
+       })
+     ->React.array}
+  </div>;
+
+let _ =
+  <div>
+    {[|1, 2, 3|]
+     ->Array.map(id => {
+         <div key={string_of_int(id)}>
+           <div />
+           <div />
+           <div />
+         </div>
+       })
+     ->React.array}
+  </div>;

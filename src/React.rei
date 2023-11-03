@@ -39,7 +39,7 @@ external jsxs: (component('props), 'props) => element = "jsxs";
 
 [@mel.module "react/jsx-runtime"]
 external jsxsKeyed:
-  (component('props), 'props, ~key: string=?, unit) => element =
+  (component('props), 'props, ~key: string=?, unit) => elementKeyed =
   "jsxs";
 
 [@mel.module "react/jsx-runtime"] external jsxFragment: 'element = "Fragment";
