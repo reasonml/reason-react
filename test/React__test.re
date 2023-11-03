@@ -22,7 +22,7 @@ module DummyComponentThatMapsChildren = {
   let make = (~children, ()) => {
     <div>
       {children->React.Children.mapWithIndex((element, index) => {
-         React.cloneElement(
+         React.cloneElementWithKey(
            element,
            {"key": {j|$index|j}, "data-index": index},
          )
@@ -405,3 +405,11 @@ let _ =
        })
      ->React.array}
   </div>;
+
+[@react.component]
+let make = (~children) =>
+  <ol>
+    {children->React.Children.mapWithIndex((element, index) =>
+       <li key={string_of_int(index)}> element </li>
+     )}
+  </ol>;

@@ -323,6 +323,10 @@ external createElement: (component('props), 'props) => element =
 [@mel.module "react"]
 external cloneElement: (element, 'props) => element = "cloneElement";
 
+[@mel.module "react"]
+external cloneElementWithKey: (element, {.. "key": string}) => elementKeyed =
+  "cloneElement";
+
 [@mel.splice] [@mel.module "react"]
 external createElementVariadic:
   (component('props), 'props, array(element)) => element =
@@ -367,7 +371,7 @@ module Children = {
   external map: (element, element => element) => element = "map";
   [@mel.module "react"] [@mel.scope "Children"]
   external mapWithIndex:
-    (element, [@mel.uncurry] ((element, int) => element)) => element =
+    (element, [@mel.uncurry] ((element, int) => elementKeyed)) => element =
     "map";
   [@mel.module "react"] [@mel.scope "Children"]
   external forEach: (element, element => unit) => unit = "forEach";
