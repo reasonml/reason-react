@@ -1,4 +1,5 @@
 type element;
+type elementKeyed;
 type componentLike('props, 'return) = 'props => 'return;
 type component('props) = componentLike('props, element);
 
@@ -6,7 +7,8 @@ external null: element = "null";
 external float: float => element = "%identity";
 external int: int => element = "%identity";
 external string: string => element = "%identity";
-external array: array(element) => element = "%identity";
+external array: array(elementKeyed) => element = "%identity";
+external unsafeArray: array(element) => element = "%identity";
 
 /* this function exists to prepare for making `component` abstract */
 external component: componentLike('props, element) => component('props) =
@@ -26,7 +28,7 @@ external createElementVariadic:
 
 [@mel.module "react/jsx-runtime"]
 external jsxKeyed:
-  (component('props), 'props, ~key: string=?, unit) => element =
+  (component('props), 'props, ~key: string=?, unit) => elementKeyed =
   "jsx";
 
 [@mel.module "react/jsx-runtime"]

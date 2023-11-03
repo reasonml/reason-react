@@ -283,9 +283,12 @@ describe("React", () => {
     act(() => {
       ReactDOM.Client.render(
         root,
-        <React.Fragment key=?title>
-          <div> "Child"->React.string </div>
-        </React.Fragment>,
+        [|
+          <React.Fragment key=?title>
+            <div> "Child"->React.string </div>
+          </React.Fragment>,
+        |]
+        ->React.array,
       )
     });
 
@@ -309,9 +312,12 @@ describe("React", () => {
     };
 
     let render = author =>
-      <div key={author.Author.name}>
-        <div> <img src={author.imageUrl} /> </div>
-      </div>;
+      [|
+        <div key={author.Author.name}>
+          <div> <img src={author.imageUrl} /> </div>
+        </div>,
+      |]
+      ->React.array;
 
     act(() => {
       ReactDOM.Client.render(

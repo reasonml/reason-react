@@ -55,7 +55,7 @@ module DummyStatefulComponent = {
   let make = (~initialValue=0, ()) => {
     let (value, setValue) = React.useState(() => initialValue);
 
-    <button key="asdf" onClick={_ => setValue(value => value + 1)}>
+    <button onClick={_ => setValue(value => value + 1)}>
       value->React.int
     </button>;
   };

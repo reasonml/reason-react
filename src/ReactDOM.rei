@@ -1536,7 +1536,7 @@ external createDOMElementVariadic:
   "createElement";
 
 [@mel.module "react/jsx-runtime"]
-external jsxKeyed: (string, domProps, ~key: string=?, unit) => React.element =
+external jsxKeyed: (string, domProps, ~key: string=?, unit) => React.elementKeyed =
   "jsx";
 
 [@mel.module "react/jsx-runtime"]

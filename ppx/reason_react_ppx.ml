@@ -54,6 +54,12 @@ module Binding = struct
            { txt = Longident.Ldot (Lident "React", "array"); loc })
         [ (nolabel, children) ]
 
+    let unsafeArray ~loc children =
+      Builder.pexp_apply ~loc
+        (Builder.pexp_ident ~loc
+           { txt = Longident.Ldot (Lident "React", "unsafeArray"); loc })
+        [ (nolabel, children) ]
+
     let componentLike ~loc props return =
       Ptyp_constr
         ( { loc; txt = Ldot (Lident "React", "componentLike") },
@@ -448,7 +454,7 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
     when list = [] ->
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
-        Some (Binding.React.array ~loc children) )
+        Some (Binding.React.unsafeArray ~loc children) )
   | Some (ListLiteral { pexp_desc = Pexp_array list }), [] when list = [] ->
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsx") },
         None,
@@ -458,13 +464,13 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
          children *)
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxsKeyed") },
         Some (label, key),
-        Some (Binding.React.array ~loc children) )
+        Some (Binding.React.unsafeArray ~loc children) )
   | Some (ListLiteral children), [] ->
       (* this is a hack to support react components that introspect into their
          children *)
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxs") },
         None,
-        Some (Binding.React.array ~loc children) )
+        Some (Binding.React.unsafeArray ~loc children) )
   | None, (label, key) :: _ ->
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
