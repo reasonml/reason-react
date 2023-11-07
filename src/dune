@@ -16,3 +16,12 @@
   (pps melange.ppx reason-react-ppx))
  (libraries melange.dom)
  (modes melange))
+
+(library
+ (name ReactDOMServerNodeOnly)
+ (public_name reason-react.node)
+ (modules ReactDOMServerNodeOnly)
+ (libraries react)
+ (preprocess
+  (pps melange.ppx))
+ (modes melange))
