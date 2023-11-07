@@ -19,7 +19,7 @@
 
 (library
  (name ReactDOMServerNodeOnly)
- (public_name reason-react.node-only)
+ (public_name reason-react.node)
  (modules ReactDOMServerNodeOnly)
  (libraries react)
  (preprocess
