@@ -1,8 +1,7 @@
 (library
  (name reason_react_ppx)
- (modules reason_react_ppx)
+ (modules :standard \ standalone)
  (public_name reason-react-ppx)
- (flags :standard -w -9)
  (kind ppx_rewriter)
  (libraries ppxlib))
 
