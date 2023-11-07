@@ -22,7 +22,7 @@ module DummyComponentThatMapsChildren = {
   let make = (~children, ()) => {
     <div>
       {children->React.Children.mapWithIndex((element, index) => {
-         React.cloneElement(
+         React.cloneElementWithKey(
            element,
            {"key": {j|$index|j}, "data-index": index},
          )
@@ -283,9 +283,12 @@ describe("React", () => {
     act(() => {
       ReactDOM.Client.render(
         root,
-        <React.Fragment key=?title>
-          <div> "Child"->React.string </div>
-        </React.Fragment>,
+        [|
+          <React.Fragment key=?title>
+            <div> "Child"->React.string </div>
+          </React.Fragment>,
+        |]
+        ->React.array,
       )
     });
 
@@ -309,9 +312,12 @@ describe("React", () => {
     };
 
     let render = author =>
-      <div key={author.Author.name}>
-        <div> <img src={author.imageUrl} /> </div>
-      </div>;
+      [|
+        <div key={author.Author.name}>
+          <div> <img src={author.imageUrl} /> </div>
+        </div>,
+      |]
+      ->React.array;
 
     act(() => {
       ReactDOM.Client.render(
@@ -358,3 +364,52 @@ describe("React", () => {
     ()
   };
 });
+
+module Foo = {
+  [@react.component]
+  let make = () => {
+    <div />;
+  };
+};
+
+module Bar = {
+  [@react.component]
+  let make = () => {
+    let ks = Array.init(10, string_of_int);
+    <div> {Array.map(ks, id => <Foo key=id />)->React.array} </div>;
+  };
+};
+
+let _ =
+  <div>
+    {[|1, 2, 3|]
+     ->Array.map(id => {
+         <React.Fragment key={string_of_int(id)}>
+           <div />
+           <div />
+           <div />
+         </React.Fragment>
+       })
+     ->React.array}
+  </div>;
+
+let _ =
+  <div>
+    {[|1, 2, 3|]
+     ->Array.map(id => {
+         <div key={string_of_int(id)}>
+           <div />
+           <div />
+           <div />
+         </div>
+       })
+     ->React.array}
+  </div>;
+
+[@react.component]
+let make = (~children) =>
+  <ol>
+    {children->React.Children.mapWithIndex((element, index) =>
+       <li key={string_of_int(index)}> element </li>
+     )}
+  </ol>;
