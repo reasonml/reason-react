@@ -101,6 +101,29 @@ let keyType loc = Builder.ptyp_constr ~loc { loc; txt = Lident "string" } []
 type 'a children = ListLiteral of 'a | Exact of 'a
 type componentConfig = { propsName : string }
 
+let rec wrap_constant = function
+  | { pexp_desc = Pexp_constant constant; pexp_loc; _ } as exp ->
+      let f : string =
+        match constant with
+        | Pconst_integer (_, _) -> "int"
+        | Pconst_char _ -> "char"
+        | Pconst_string (_, _, _) -> "string"
+        | Pconst_float (_, _) -> "float"
+      in
+      Builder.pexp_apply ~loc:pexp_loc
+        (Builder.pexp_ident ~loc:pexp_loc
+           { loc = pexp_loc; txt = Ldot (Lident "React", f) })
+        [ (Nolabel, exp) ]
+  | { pexp_desc = Pexp_array xs; pexp_loc; _ } as exp ->
+      Builder.pexp_apply ~loc:pexp_loc
+        (Builder.pexp_ident ~loc:pexp_loc
+           { loc = pexp_loc; txt = Ldot (Lident "React", "array") })
+        [
+          ( Nolabel,
+            { exp with pexp_desc = Pexp_array (List.map wrap_constant xs) } );
+        ]
+  | exp -> exp
+
 (* if children is a list, convert it to an array while mapping each element. If
    not, just map over it, as usual *)
 let transformChildrenIfListUpper ~ctxt ~loc ~mapper theList =
@@ -119,7 +142,8 @@ let transformChildrenIfListUpper ~ctxt ~loc ~mapper theList =
            Some { pexp_desc = Pexp_tuple [ v; acc ]; _ } );
      _;
     } ->
-        transformChildren_ acc (mapper#expression ctxt v :: accum)
+        transformChildren_ acc
+          (mapper#expression ctxt (wrap_constant v) :: accum)
     | notAList -> Exact (mapper#expression ctxt notAList)
   in
   transformChildren_ theList []

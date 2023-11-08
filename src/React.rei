@@ -2,6 +2,7 @@ type element;
 type componentLike('props, 'return) = 'props => 'return;
 type component('props) = componentLike('props, element);
 
+external char: char => element = "%identity";
 external null: element = "null";
 external float: float => element = "%identity";
 external int: int => element = "%identity";
