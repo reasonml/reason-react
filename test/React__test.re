@@ -335,7 +335,7 @@ describe("React", () => {
             fallback={({error: _, info}) => {
               expect(
                 info.componentStack
-                ->Js.String2.includes("ComponentThatThrows"),
+                ->Js.String.includes(~sub="ComponentThatThrows", ()),
               )
               ->toBe(true);
               <strong> "An error occured"->React.string </strong>;

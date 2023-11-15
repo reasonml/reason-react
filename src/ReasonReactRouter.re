@@ -73,23 +73,22 @@ let pathParse = str =>
   | "/" => []
   | raw =>
     /* remove the preceeding /, which every pathname seems to have */
-    let raw = Js.String.sliceToEnd(~from=1, raw);
+    let raw = Js.String.slice(~start=1, raw, ());
     /* remove the trailing /, which some pathnames might have. Ugh */
     let raw =
       switch (Js.String.get(raw, Js.String.length(raw) - 1)) {
-      | "/" => Js.String.slice(~from=0, ~to_=-1, raw)
+      | "/" => Js.String.slice(~start=0, ~end_=-1, raw, ())
       | _ => raw
       };
     /* remove search portion if present in string */
     let raw =
-      switch (raw |> Js.String.splitAtMost("?", ~limit=2)) {
+      switch (Js.String.split(~sep="?", ~limit=2, raw, ())) {
       | [|path, _|] => path
       | _ => raw
       };
 
-    raw
-    |> Js.String.split("/")
-    |> Js.Array.filter(item => String.length(item) != 0)
+    Js.String.split(~sep="/", raw, ())
+    |> Js.Array.filter(~f=item => String.length(item) != 0)
     |> arrayToList;
   };
 let path = (~serverUrlString=?, ()) =>
@@ -109,7 +108,7 @@ let hash = () =>
     | raw =>
       /* remove the preceeding #, which every hash seems to have.
          Why is this even included in location.hash?? */
-      raw |> Js.String.sliceToEnd(~from=1)
+      Js.String.slice(~start=1, raw, ())
     }
   };
 let searchParse = str =>
@@ -117,7 +116,7 @@ let searchParse = str =>
   | ""
   | "?" => ""
   | raw =>
-    switch (raw |> Js.String.splitAtMost("?", ~limit=2)) {
+    switch (Js.String.split(~sep="?", ~limit=2, raw, ())) {
     | [|_, search|] => search
     | _ => ""
     }
