@@ -1,3 +1,8 @@
+# Unreleased
+
+* BREAKING, ppx: Allow passing an array of custom children to a component
+  without having to wrap in array literal ([@jchavarri in #748](https://github.com/reasonml/reason-react/pull/823))
+
 # 0.15.0
 
 * Add `isValidElement` (@r17x in
