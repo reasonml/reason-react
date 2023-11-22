@@ -1,8 +1,13 @@
 (melange.emit
- (alias runtest)
+ (alias jest)
  (target test)
  (module_systems
   (commonjs bs.js))
  (libraries reason-react reason-react.node jest melange.belt)
  (preprocess
   (pps melange.ppx reason-react-ppx)))
+
+(rule
+ (alias runtest)
+ (deps (alias_rec jest))
+ (action (run npx jest)))
