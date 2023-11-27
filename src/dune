@@ -18,9 +18,9 @@
  (modes melange))
 
 (library
- (name ReactDOMServerNodeOnly)
+ (name ReactDOMServerNode)
  (public_name reason-react.node)
- (modules ReactDOMServerNodeOnly)
+ (modules ReactDOMServerNode)
  (libraries react)
  (preprocess
   (pps melange.ppx))
