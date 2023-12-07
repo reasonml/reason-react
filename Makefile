@@ -58,7 +58,7 @@ install: ## Update the package dependencies when new deps are added to dune-proj
 
 .PHONY: init
 create-switch: ## Create a local opam switch
-	@opam switch create . 5.1.0 --no-install
+	@opam switch create . 5.1.1~rc1 --no-install
 
 .PHONY: init
 init: create-switch install ## Create a local opam switch, install deps
