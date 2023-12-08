@@ -7,6 +7,8 @@
 * Wrap the `React` library, exposing just a single top-level module
   (@anmonteiro in [#783](https://github.com/reasonml/reason-react/pull/783))
 * Re-organise toplevel modules (@davesnx in [#794](https://github.com/reasonml/reason-react/pull/794))
+* BREAKING, ppx: Allow passing an array of custom children to a component
+  without having to wrap in array literal ([@jchavarri in #748](https://github.com/reasonml/reason-react/pull/823))
 
 # 0.12.0
 

@@ -21,12 +21,14 @@ module DummyComponentThatMapsChildren = {
   [@react.component]
   let make = (~children, ()) => {
     <div>
-      {children->React.Children.mapWithIndex((element, index) => {
-         React.cloneElement(
-           element,
-           {"key": {j|$index|j}, "data-index": index},
-         )
-       })}
+      {children
+       ->React.array
+       ->React.Children.mapWithIndex((element, index) => {
+           React.cloneElement(
+             element,
+             {"key": {j|$index|j}, "data-index": index},
+           )
+         })}
     </div>;
   };
 };
@@ -357,4 +359,27 @@ describe("React", () => {
     /* We catch the exception here to not populate the error to the toplevel */
     ()
   };
+
+  test("Can define components with custom children", () => {
+    let container = getContainer(container);
+    let root = ReactDOM.Client.createRoot(container);
+
+    module Test = {
+      type t = {name: string};
+      [@react.component]
+      let make = (~children) => {
+        Array.map(children, c => <div> {React.string(c.name)} </div>)
+        ->React.array;
+      };
+    };
+
+    act(() => {
+      ReactDOM.Client.render(
+        root,
+        <Test> {Test.name: "foo"} {name: "bar"} </Test>,
+      )
+    });
+
+    expect(container->DOM.findBySelector("img")->Option.isSome)->toBe(true);
+  });
 });

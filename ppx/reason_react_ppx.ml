@@ -443,7 +443,14 @@ let makePropsType ~loc namedTypeList =
       };
     ]
 
-let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
+type component_type = Uppercase | Lowercase
+
+let jsxExprAndChildren ~component_type ~loc ~ctxt mapper ~keyProps children =
+  let ident =
+    match component_type with
+    | Uppercase -> Lident "React"
+    | Lowercase -> Lident "ReactDOM"
+  in
   let childrenExpr =
     Option.map (transformChildrenIfListUpper ~loc ~mapper ~ctxt) children
   in
@@ -477,7 +484,10 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
          children *)
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxs") },
         None,
-        Some (Binding.React.array ~loc children) )
+        Some
+          (match component_type with
+          | Uppercase -> children
+          | Lowercase -> Binding.React.array ~loc children) )
   | None, (label, key) :: _ ->
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
@@ -485,8 +495,8 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
   | None, [] ->
       (Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsx") }, None, None)
 
-let reactJsxExprAndChildren = jsxExprAndChildren ~ident:(Lident "React")
-let reactDomJsxExprAndChildren = jsxExprAndChildren ~ident:(Lident "ReactDOM")
+let reactJsxExprAndChildren = jsxExprAndChildren ~component_type:Uppercase
+let reactDomJsxExprAndChildren = jsxExprAndChildren ~component_type:Lowercase
 
 (* Builds an AST node for the entire `external` definition of props *)
 let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
