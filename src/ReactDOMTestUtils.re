@@ -84,7 +84,7 @@ module Simulate = {
 
 external document: Dom.document = "document";
 
-[@mel.send]
+[@mel.return nullable] [@mel.send]
 external querySelector: (Dom.element, string) => option(Dom.element) =
   "querySelector";
 
@@ -94,7 +94,10 @@ external querySelectorAll:
   "querySelectorAll";
 
 [@mel.get] external textContent: Dom.element => string = "textContent";
-[@mel.get] external body: Dom.document => option(Dom.element) = "body";
+
+[@mel.return nullable] [@mel.get]
+external body: Dom.document => option(Dom.element) = "body";
+
 [@mel.send]
 external createElement: (Dom.document, string) => Dom.element =
   "createElement";
