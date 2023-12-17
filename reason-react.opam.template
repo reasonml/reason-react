@@ -2,8 +2,3 @@ depexts: [
   ["react"] {npm-version = "^18.0.0"}
   ["react-dom"] {npm-version = "^18.0.0"}
 ]
-pin-depends: [
-  ["melange.dev" "git+https://github.com/melange-re/melange#982cba971fa662439f0675465ef854424771ca3d"]
-  [ "merlin-lib.4.13.1-501" "https://github.com/voodoos/merlin/archive/15491d05db13ec6beaf3c84632914c29b674270d.tar.gz" ]
-  [ "merlin.4.13.1-501" "https://github.com/voodoos/merlin/archive/15491d05db13ec6beaf3c84632914c29b674270d.tar.gz" ]
-]

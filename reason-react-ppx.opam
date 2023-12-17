@@ -15,7 +15,7 @@ doc: "https://reasonml.github.io/reason-react"
 bug-reports: "https://github.com/reasonml/reason-react/issues"
 depends: [
   "dune" {>= "3.9"}
-  "ocaml" {>= "5.1.0" & < "5.2.0"}
+  "ocaml" {>= "5.1.1" & < "5.2.0"}
   "reason" {>= "3.10.0"}
   "ppxlib" {>= "0.28.0"}
   "merlin" {= "4.13.1-501" & with-test}
