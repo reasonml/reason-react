@@ -24,7 +24,7 @@ module DummyComponentThatMapsChildren = {
       {children->React.Children.mapWithIndex((element, index) => {
          React.cloneElement(
            element,
-           {"key": {j|$index|j}, "data-index": index},
+           {"key": string_of_int(index), "data-index": index},
          )
        })}
     </div>;
@@ -133,7 +133,9 @@ describe("React", () => {
     let container = getContainer(container);
     let array =
       [|1, 2, 3|]
-      ->Array.map(item => {<div key={j|$item|j}> item->React.int </div>});
+      ->Array.map(item => {
+          <div key={string_of_int(item)}> item->React.int </div>
+        });
     let root = ReactDOM.Client.createRoot(container);
 
     act(() => {
