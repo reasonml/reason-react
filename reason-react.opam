@@ -19,7 +19,7 @@ bug-reports: "https://github.com/reasonml/reason-react/issues"
 depends: [
   "dune" {>= "3.9"}
   "ocaml" {>= "5.1.1" & < "5.2.0"}
-  "melange" {>= "2.0.0"}
+  "melange" {>= "3.0.0"}
   "reason-react-ppx" {= version}
   "reason" {>= "3.10.0"}
   "ocaml-lsp-server" {with-test}

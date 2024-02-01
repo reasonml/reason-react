@@ -38,7 +38,7 @@
     (>= 5.1.1)
     (< 5.2.0)))
   (melange
-   (>= 2.0.0))
+   (>= 3.0.0))
   (reason-react-ppx
    (= :version))
   (reason
