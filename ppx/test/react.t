@@ -11,7 +11,7 @@ Demonstrate how to use the React JSX PPX
   >  (alias mel)
   >  (compile_flags :standard -w -20)
   >  (emit_stdlib false)
-  >  (libraries reason-react)
+  >  (libraries reason-react melange.belt)
   >  (preprocess (pps melange.ppx reason-react-ppx)))
   > EOF
 
