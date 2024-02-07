@@ -321,7 +321,7 @@ external createElement: (component('props), 'props) => element =
 [@mel.module "react"]
 external cloneElement: (element, 'props) => element = "cloneElement";
 
-[@mel.splice] [@mel.module "react"]
+[@mel.variadic] [@mel.module "react"]
 external createElementVariadic:
   (component('props), 'props, array(element)) => element =
   "createElement";

@@ -1,4 +1,4 @@
-[@deriving abstract]
+[@deriving (jsProperties, getSet)]
 type options = {
   [@mel.optional]
   bootstrapScriptContent: option(string),
@@ -45,5 +45,4 @@ let renderToPipeableStream:
     ~progressiveChunkSize: int=?,
     React.element
   ) =>
-
   pipeableStream;
