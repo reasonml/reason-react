@@ -1,13 +1,16 @@
-# Unreleased
+# 0.14.0
+
+* Wrap the `React` library, exposing just a single top-level module
+  (@anmonteiro in [#783](https://github.com/reasonml/reason-react/pull/783))
+* Re-organise toplevel modules (@davesnx in [#794](https://github.com/reasonml/reason-react/pull/794))
+* Require and adapt to Melange v3 (@anmonteiro in [#821](https://github.com/reasonml/reason-react/pull/821))
+
+# 0.13.0
 
 * Remove legacy `ReactDOMRe` and `ReasonReact` modules (@anmonteiro in
   [#782](https://github.com/reasonml/reason-react/pull/782))
 * Fix `React.useCallback*` for callbacks with multiple arguments (@anmonteiro
   in [#786](https://github.com/reasonml/reason-react/pull/786))
-* Wrap the `React` library, exposing just a single top-level module
-  (@anmonteiro in [#783](https://github.com/reasonml/reason-react/pull/783))
-* Re-organise toplevel modules (@davesnx in [#794](https://github.com/reasonml/reason-react/pull/794))
-* Require and adapt to Melange v3 (@anmonteiro in [#821](https://github.com/reasonml/reason-react/pull/821))
 
 # 0.12.0
 
