@@ -1547,3 +1547,20 @@ external jsxs: (string, domProps) => React.element = "jsxs";
 [@mel.module "react/jsx-runtime"]
 external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element =
   "jsxs";
+
+module Experimental = {
+  [@mel.module "react-dom"]
+  external useFormState:
+    ('state => 'state, 'state, ~permalink: string=?) => ('state, unit => unit) =
+    "useFormState";
+
+  type formStatus('formData) = {
+    pending: bool,
+    data: 'formData,
+    method: string,
+    action: Js.Nullable.t(unit => unit),
+  };
+
+  [@mel.module "react-dom"]
+  external useFormStatus: unit => formStatus('formData) = "useFormStatus";
+};
