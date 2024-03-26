@@ -109,6 +109,18 @@ useEffect1(effect, [|dep|])
 
 However, as the length of the array is not specified, you could pass an array of arbitrary length, including the empty array, `[||]`.
 
+> *NOTE*: When using `useEffectN` for `N` greater than 1, do not try to gather like types into arrays. Instead, leave each item separate in the tuple. 
+> As an example, consider the case where your effect has three deps, with the first and second dep the same type. The reason call:
+> ```reason
+> useEffect1(effect, ([|dep1, dep2|], dep3))
+> ```
+> would be expressed in javascript as:
+> ```javascript
+> useEffect(effect, [[dep1, dep2], dep3])
+> ```
+> Because arrays are compared by reference, this `useEffect` call will identify an update in its dependency array every time. 
+
+
 Reason also always opts for the safest form of a given hook as well. So `React.useState` in JS can take an initial value or a function that returns an initial value. The former cannot be used safely in all situations, so ReasonReact only supports the second form which takes a function and uses the return.
 
 ## Hand-writing components
