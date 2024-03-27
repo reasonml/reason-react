@@ -112,7 +112,7 @@ However, as the length of the array is not specified, you could pass an array of
 > *NOTE*: When using `useEffectN` for `N` greater than 1, do not try to gather like types into arrays. Instead, leave each item separate in the tuple. 
 > As an example, consider the case where your effect has three deps, with the first and second dep the same type. The reason call:
 > ```reason
-> useEffect1(effect, ([|dep1, dep2|], dep3))
+> useEffect2(effect, ([|dep1, dep2|], dep3))
 > ```
 > would be expressed in javascript as:
 > ```javascript
