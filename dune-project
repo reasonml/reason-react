@@ -40,7 +40,7 @@
    (= :version))
   (reason
    (>= 3.10.0))
-  (ocaml-lsp-server :with-test)
+  (ocaml-lsp-server :with-dev-setup)
   (opam-check-npm-deps
    (and
     (= 1.0.0)
