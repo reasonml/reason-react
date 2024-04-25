@@ -60,10 +60,7 @@
    (>= 3.10.0))
   (ppxlib
    (>= 0.28.0))
-  (merlin
-   (and
-    (= 4.13.1-501)
-    :with-test))
+  (merlin :with-test)
   (ocamlformat
    (and
     (= 0.24.0)

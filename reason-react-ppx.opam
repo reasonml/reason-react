@@ -18,7 +18,7 @@ depends: [
   "ocaml"
   "reason" {>= "3.10.0"}
   "ppxlib" {>= "0.28.0"}
-  "merlin" {= "4.13.1-501" & with-test}
+  "merlin" {with-test}
   "ocamlformat" {= "0.24.0" & with-dev-setup}
   "odoc" {with-doc}
 ]
