@@ -27,7 +27,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           ""[@@mel.obj ]
       let make =
         ((fun ?(name= "") ->
-            ReactDOM.createElement React.jsxFragment
+            React.jsx React.jsxFragment
               [|(ReactDOM.jsx "div"
                    (((ReactDOM.domProps)[@merlin.hide ])
                       ~children:(React.string ("First " ^ name)) ()));(

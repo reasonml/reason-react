@@ -59,18 +59,17 @@ module Binding = struct
         ( { loc; txt = Ldot (Lident "React", "componentLike") },
           [ props; return ] )
 
-    let jsxFragment ~loc =
-      Builder.pexp_ident ~loc
-        { loc; txt = Ldot (Lident "React", "jsxFragment") }
+    let jsxFragment ~loc ~attrs children =
+      let fragment =
+        Builder.pexp_ident ~loc
+          { loc; txt = Ldot (Lident "React", "jsxFragment") }
+      in
+      Builder.pexp_apply ~loc ~attrs
+        (Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "jsx") })
+        [ (nolabel, fragment); (nolabel, children) ]
   end
 
   module ReactDOM = struct
-    let createElement ~loc ~attrs element children =
-      Builder.pexp_apply ~loc ~attrs
-        (Builder.pexp_ident ~loc
-           { loc; txt = Ldot (Lident "ReactDOM", "createElement") })
-        [ (nolabel, element); (nolabel, children) ]
-
     let domProps ~applyLoc ~loc props =
       Builder.pexp_apply ~loc:applyLoc
         (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
@@ -1410,10 +1409,9 @@ let jsxMapper =
               let childrenExpr =
                 transformChildrenIfList ~loc ~ctxt ~mapper:self listItems
               in
-              let fragment = Binding.React.jsxFragment ~loc in
               (* throw away the [@JSX] attribute and keep the others, if any *)
-              Binding.ReactDOM.createElement ~loc ~attrs:nonJSXAttributes
-                fragment childrenExpr)
+              Binding.React.jsxFragment ~loc ~attrs:nonJSXAttributes
+                childrenExpr)
       (* Delegate to the default mapper, a deep identity traversal *)
       | e -> super#expression ctxt e
     [@@raises Invalid_argument]
