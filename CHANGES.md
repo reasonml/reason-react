@@ -1,3 +1,8 @@
+# Unreleased
+
+* Support JSX transform with fragments (@tatchi in
+  [#835](https://github.com/reasonml/reason-react/pull/835))
+
 # 0.14.0
 
 * Wrap the `React` library, exposing just a single top-level module
