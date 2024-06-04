@@ -3,24 +3,36 @@
     [@bla]
     React.jsx(
       React.jsxFragment,
-      ([@merlin.hide] ReactDOM.domProps)(~children=[|foo|], ()),
+      ([@merlin.hide] ReactDOM.domProps)(~children=React.array([|foo|]), ()),
+    );
+  let just_one_child = foo =>
+    React.jsx(
+      React.jsxFragment,
+      ([@merlin.hide] ReactDOM.domProps)(~children=React.array([|bar|]), ()),
     );
   let poly_children_fragment = (foo, bar) =>
     React.jsx(
       React.jsxFragment,
-      ([@merlin.hide] ReactDOM.domProps)(~children=[|foo, bar|], ()),
+      ([@merlin.hide] ReactDOM.domProps)(
+        ~children=React.array([|foo, bar|]),
+        (),
+      ),
     );
   let nested_fragment = (foo, bar, baz) =>
     React.jsx(
       React.jsxFragment,
       ([@merlin.hide] ReactDOM.domProps)(
-        ~children=[|
-          foo,
-          React.jsx(
-            React.jsxFragment,
-            ([@merlin.hide] ReactDOM.domProps)(~children=[|bar, baz|], ()),
-          ),
-        |],
+        ~children=
+          React.array([|
+            foo,
+            React.jsx(
+              React.jsxFragment,
+              ([@merlin.hide] ReactDOM.domProps)(
+                ~children=React.array([|bar, baz|]),
+                (),
+              ),
+            ),
+          |]),
         (),
       ),
     );
@@ -28,12 +40,13 @@
     React.jsx(
       React.jsxFragment,
       ([@merlin.hide] ReactDOM.domProps)(
-        ~children=[|
-          ReactDOM.jsx(
-            "div",
-            ([@merlin.hide] ReactDOM.domProps)(~children=foo, ()),
-          ),
-        |],
+        ~children=
+          React.array([|
+            ReactDOM.jsx(
+              "div",
+              ([@merlin.hide] ReactDOM.domProps)(~children=foo, ()),
+            ),
+          |]),
         (),
       ),
     );

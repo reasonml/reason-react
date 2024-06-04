@@ -1417,7 +1417,7 @@ let jsxMapper =
               in
               (* throw away the [@JSX] attribute and keep the others, if any *)
               Binding.React.jsxFragment ~loc ~attrs:nonJSXAttributes
-                childrenExpr)
+                (Binding.React.array ~loc childrenExpr))
       (* Delegate to the default mapper, a deep identity traversal *)
       | e -> super#expression ctxt e
     [@@raises Invalid_argument]
