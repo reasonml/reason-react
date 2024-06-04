@@ -27,13 +27,17 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           ""[@@mel.obj ]
       let make =
         ((fun ?(name= "") ->
-            ReactDOM.createElement React.jsxFragment
-              [|(ReactDOM.jsx "div"
-                   (((ReactDOM.domProps)[@merlin.hide ])
-                      ~children:(React.string ("First " ^ name)) ()));(
-                React.jsx Hello.make
-                  (Hello.makeProps ~children:(React.string ("2nd " ^ name))
-                     ~one:"1" ()))|])
+            React.jsx React.jsxFragment
+              (((ReactDOM.domProps)[@merlin.hide ])
+                 ~children:(React.array
+                              [|(ReactDOM.jsx "div"
+                                   (((ReactDOM.domProps)[@merlin.hide ])
+                                      ~children:(React.string ("First " ^ name))
+                                      ()));(React.jsx Hello.make
+                                              (Hello.makeProps
+                                                 ~children:(React.string
+                                                              ("2nd " ^ name))
+                                                 ~one:"1" ()))|]) ()))
         [@warning "-16"])
       let make =
         let Output$Upper_case_with_fragment_as_root

@@ -1,20 +1,52 @@
   $ ../ppx.sh --output re input.re
   let fragment = foo =>
-    [@bla] ReactDOM.createElement(React.jsxFragment, [|foo|]);
-  let poly_children_fragment = (foo, bar) =>
-    ReactDOM.createElement(React.jsxFragment, [|foo, bar|]);
-  let nested_fragment = (foo, bar, baz) =>
-    ReactDOM.createElement(
+    [@bla]
+    React.jsx(
       React.jsxFragment,
-      [|foo, ReactDOM.createElement(React.jsxFragment, [|bar, baz|])|],
+      ([@merlin.hide] ReactDOM.domProps)(~children=React.array([|foo|]), ()),
+    );
+  let just_one_child = foo =>
+    React.jsx(
+      React.jsxFragment,
+      ([@merlin.hide] ReactDOM.domProps)(~children=React.array([|bar|]), ()),
+    );
+  let poly_children_fragment = (foo, bar) =>
+    React.jsx(
+      React.jsxFragment,
+      ([@merlin.hide] ReactDOM.domProps)(
+        ~children=React.array([|foo, bar|]),
+        (),
+      ),
+    );
+  let nested_fragment = (foo, bar, baz) =>
+    React.jsx(
+      React.jsxFragment,
+      ([@merlin.hide] ReactDOM.domProps)(
+        ~children=
+          React.array([|
+            foo,
+            React.jsx(
+              React.jsxFragment,
+              ([@merlin.hide] ReactDOM.domProps)(
+                ~children=React.array([|bar, baz|]),
+                (),
+              ),
+            ),
+          |]),
+        (),
+      ),
     );
   let nested_fragment_with_lower = foo =>
-    ReactDOM.createElement(
+    React.jsx(
       React.jsxFragment,
-      [|
-        ReactDOM.jsx(
-          "div",
-          ([@merlin.hide] ReactDOM.domProps)(~children=foo, ()),
-        ),
-      |],
+      ([@merlin.hide] ReactDOM.domProps)(
+        ~children=
+          React.array([|
+            ReactDOM.jsx(
+              "div",
+              ([@merlin.hide] ReactDOM.domProps)(~children=foo, ()),
+            ),
+          |]),
+        (),
+      ),
     );
