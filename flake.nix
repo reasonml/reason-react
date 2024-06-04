@@ -14,7 +14,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages."${system}".appendOverlays [
-          (self: super: { ocamlPackages = super.ocaml-ng.ocamlPackages_5_1; })
+          (self: super: { ocamlPackages = super.ocaml-ng.ocamlPackages_5_2; })
         ];
       in
 
@@ -61,7 +61,9 @@
               reason-react-ppx
             ];
           };
-        } // { default = packages.reason-react; };
+
+          default = packages.reason-react;
+        };
 
         devShells = {
           default = pkgs.mkShell {

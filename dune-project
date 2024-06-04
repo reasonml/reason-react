@@ -40,7 +40,7 @@
    (= :version))
   (reason
    (>= 3.10.0))
-  (ocaml-lsp-server :with-test)
+  (ocaml-lsp-server :with-dev-setup)
   (opam-check-npm-deps
    (and
     (= 1.0.0)
@@ -60,10 +60,7 @@
    (>= 3.10.0))
   (ppxlib
    (>= 0.28.0))
-  (merlin
-   (and
-    (= 4.13.1-501)
-    :with-test))
+  (merlin :with-test)
   (ocamlformat
    (and
     (= 0.24.0)

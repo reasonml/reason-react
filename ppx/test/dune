@@ -8,3 +8,8 @@
   %{bin:jq}
   %{bin:ocamlmerlin}
   ppx.sh))
+
+(cram
+ (applies_to simple uppercase)
+ ;; Disabled until https://github.com/reasonml/reason/issues/2737 is fixed
+ (enabled_if false))
