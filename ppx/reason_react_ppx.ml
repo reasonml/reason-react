@@ -17,6 +17,11 @@ module Builder = struct
   let value_binding ~loc ~attrs ~pat ~expr =
     let vb = Ast_builder.Default.value_binding ~loc ~pat ~expr in
     { vb with pvb_attributes = attrs }
+
+  let unit =
+    pexp_construct ~loc:Location.none
+      { txt = Lident "()"; loc = Location.none }
+      None
 end
 
 (* [merlinHide] tells merlin to not look at a node, or at any of its
@@ -44,6 +49,14 @@ let optional str = Optional str
 module Binding = struct
   (* Binding is the interface that the ppx uses to interact with the bindings.
      Here we define the same APIs as the bindings but it generates Parsetree *)
+  module ReactDOM = struct
+    let domProps ~applyLoc ~loc props =
+      Builder.pexp_apply ~loc:applyLoc
+        (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
+           { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+        props
+  end
+
   module React = struct
     let null ~loc =
       Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "null") }
@@ -66,15 +79,12 @@ module Binding = struct
       in
       Builder.pexp_apply ~loc ~attrs
         (Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "jsx") })
-        [ (nolabel, fragment); (nolabel, children) ]
-  end
-
-  module ReactDOM = struct
-    let domProps ~applyLoc ~loc props =
-      Builder.pexp_apply ~loc:applyLoc
-        (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
-           { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
-        props
+        [
+          (nolabel, fragment);
+          ( nolabel,
+            ReactDOM.domProps ~applyLoc:loc ~loc
+              [ (labelled "children", children); (nolabel, Builder.unit) ] );
+        ]
   end
 end
 
@@ -496,11 +506,7 @@ let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper =
-  let unit =
-    Builder.pexp_construct ~loc:Location.none
-      { txt = Lident "()"; loc = Location.none }
-      None
-  and key_var_txt = "Key" in
+  let key_var_txt = "Key" in
   let transformUppercaseCall3 ~caller ~ctxt modulePath mapper parentExpLoc attrs
       callArguments =
     let children, argsWithLabels = extractChildren callArguments in
@@ -576,7 +582,7 @@ let jsxMapper =
                    { txt = Lident key_var_txt; loc = parentExpLoc } );
                component;
                props;
-               (nolabel, unit);
+               (nolabel, Builder.unit);
              ])
   in
 
@@ -627,7 +633,7 @@ let jsxMapper =
                (label, Builder.pexp_ident ~loc { txt = Lident key_var_txt; loc });
                component;
                props;
-               (nolabel, unit);
+               (nolabel, Builder.unit);
              ])
     | None -> Builder.pexp_apply ~loc ~attrs jsxExpr [ component; props ]
   in
