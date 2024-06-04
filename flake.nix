@@ -16,6 +16,22 @@
         pkgs = nixpkgs.legacyPackages."${system}".appendOverlays [
           (self: super: { ocamlPackages = super.ocaml-ng.ocamlPackages_5_2; })
         ];
+
+        makeDevShell = { packages, release-mode ? false }:
+          pkgs.mkShell {
+            # dontDetectOcamlConflicts = true;
+            inputsFrom = pkgs.lib.attrValues packages;
+            nativeBuildInputs =
+              with pkgs.ocamlPackages; [ ocamlformat pkgs.nodejs_latest ]
+                ++ pkgs.lib.optionals release-mode (with pkgs; [
+                cacert
+                curl
+                ocamlPackages.dune-release
+                ocamlPackages.odoc
+                git
+              ]);
+            propagatedBuildInputs = with pkgs.ocamlPackages; [ merlin ];
+          };
       in
 
       rec {
@@ -35,8 +51,10 @@
             };
             # Due to a Reason version mismatch, the generated OCaml PPX diff
             # looks different
-            doCheck = false;
-            nativeCheckInputs = [ reason ];
+            doCheck = true;
+            checkInputs = [ ];
+            checkPhase = "dune build @runtest -p reason-react,reason-react-ppx";
+            nativeCheckInputs = [ reason merlin pkgs.jq ];
             propagatedBuildInputs = [ ppxlib ];
           };
 
@@ -66,11 +84,10 @@
         };
 
         devShells = {
-          default = pkgs.mkShell {
-            dontDetectOcamlConflicts = true;
-            inputsFrom = pkgs.lib.attrValues packages;
-            nativeBuildInputs = with pkgs.ocamlPackages; [ ocamlformat pkgs.nodejs_latest ];
-            propagatedBuildInputs = with pkgs.ocamlPackages; [ merlin ];
+          default = makeDevShell { inherit packages; };
+          release = makeDevShell {
+            inherit packages;
+            release-mode = true;
           };
         };
       });

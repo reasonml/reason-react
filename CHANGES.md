@@ -1,4 +1,4 @@
-# Unreleased
+# 0.14.1
 
 * Support JSX transform with fragments (@tatchi in
   [#835](https://github.com/reasonml/reason-react/pull/835))
