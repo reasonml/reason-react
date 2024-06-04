@@ -359,4 +359,54 @@ describe("React", () => {
     /* We catch the exception here to not populate the error to the toplevel */
     ()
   };
+
+  test(
+    "Memo and normal components rendering with equal and different props", () => {
+    let container = getContainer(container);
+    let root = ReactDOM.Client.createRoot(container);
+
+    module Normal = {
+      let renders = ref(0);
+
+      [@react.component]
+      let make = (~a) => {
+        renders := renders^ + 1;
+        <div> {Printf.sprintf("`a` is %s", a) |> React.string} </div>;
+      };
+    };
+
+    module Memo = {
+      let renders = ref(0);
+
+      [@react.component]
+      let make =
+        React.memo((~a) => {
+          renders := renders^ + 1;
+          <div> {Printf.sprintf("`a` is %s", a) |> React.string} </div>;
+        });
+    };
+
+    act(() => {
+      ReactDOM.Client.render(
+        root,
+        <div> <Normal a="a" /> <Memo a="a" /> </div>,
+      )
+    });
+    act(() => {
+      ReactDOM.Client.render(
+        root,
+        <div> <Normal a="a" /> <Memo a="a" /> </div>,
+      )
+    });
+    act(() => {
+      ReactDOM.Client.render(
+        root,
+        <div> <Normal a="b" /> <Memo a="b" /> </div>,
+      )
+    });
+
+    expect(Normal.renders^)->toBe(3);
+
+    expect(Memo.renders^)->toBe(2);
+  });
 });
