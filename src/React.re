@@ -866,6 +866,9 @@ module Uncurried = {
     "useCallback";
 };
 
+[@mel.module "react"]
+external startTransition: ([@mel.uncurry] (unit => unit)) => unit = "startTransition";
+
 type callback('input, 'output) = 'input => 'output;
 [@mel.module "react"]
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
