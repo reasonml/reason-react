@@ -24,20 +24,18 @@ type componentPrototype;
 [@mel.get]
 external componentPrototype: reactComponentClass => componentPrototype =
   "prototype";
-[@mel.set] external setPrototype: (_, _) => unit = "prototype";
 
 [@ocaml.warning "-21"]
 let errorBoundary =
   [@mel.this]
   (
-    (self, _props) => (
-      {
-        componentCall(component, self);
-        self##state #= {"error": Js.undefined};
-      }: unit
-    )
+    (self, _props) => {
+      componentCall(component, self);
+      self##state #= {"error": Js.undefined};
+    }
   );
 
+[@mel.set] external setPrototype: (_, _) => unit = "prototype";
 setPrototype(errorBoundary, objCreate(componentPrototype(component)));
 
 [@mel.set] [@mel.scope "prototype"]
