@@ -13,8 +13,6 @@ type params('error) = {
 
 [@mel.scope "Object"] external objCreate: 'a => Js.t({..}) = "create";
 
-[@ocaml.warning "-69"]
-type state('error) = {error: params('error)};
 type reactComponentClass;
 
 [@mel.module "react"] external component: reactComponentClass = "Component";
@@ -25,7 +23,6 @@ type componentPrototype;
 external componentPrototype: reactComponentClass => componentPrototype =
   "prototype";
 
-[@ocaml.warning "-21"]
 let errorBoundary =
   [@mel.this]
   (
@@ -45,7 +42,7 @@ external setComponentDidCatch:
 
 setComponentDidCatch(errorBoundary, [@mel.this] (self, error, info) => {
   self##setState({
-    error: {
+    "error": {
       error,
       info,
     },
