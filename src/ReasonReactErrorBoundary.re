@@ -11,32 +11,62 @@ type params('error) = {
   info,
 };
 
-[%%mel.raw
-  {|
-  var React = require("react");
-  var ErrorBoundary = (function (Component) {
-    function ErrorBoundary(props) {
-      Component.call(this);
-      this.state = {error: undefined};
-    };
-    ErrorBoundary.prototype = Object.create(Component.prototype);
-    ErrorBoundary.prototype.componentDidCatch = function(error, info) {
-      this.setState({error: {error: error, info: info}});
-    };
-    ErrorBoundary.prototype.render = function() {
-      return this.state.error != undefined
-        ? this.props.fallback(this.state.error)
-        : this.props.children
-    };
-    return ErrorBoundary;
-  })(React.Component);
-|}
-];
+[@mel.scope "Object"] external objCreate: 'a => Js.t({..}) = "create";
+
+[@ocaml.warning "-69"]
+type state('error) = {error: params('error)};
+type reactComponentClass;
+
+[@mel.module "react"] external component: reactComponentClass = "Component";
+[@mel.send] external componentCall: (reactComponentClass, _) => unit = "call";
+
+type componentPrototype;
+[@mel.get]
+external componentPrototype: reactComponentClass => componentPrototype =
+  "prototype";
+[@mel.set] external setPrototype: (_, _) => unit = "prototype";
+
+[@ocaml.warning "-21"]
+let errorBoundary =
+  [@mel.this]
+  (
+    (self, _props) => (
+      {
+        componentCall(component, self);
+        self##state #= {"error": Js.undefined};
+      }: unit
+    )
+  );
+
+setPrototype(errorBoundary, objCreate(componentPrototype(component)));
+
+[@mel.set] [@mel.scope "prototype"]
+external setComponentDidCatch:
+  (_, [@mel.this] (('self, 'error, 'info) => unit)) => unit =
+  "componentDidCatch";
+
+setComponentDidCatch(errorBoundary, [@mel.this] (self, error, info) => {
+  self##setState({
+    error: {
+      error,
+      info,
+    },
+  })
+});
+
+[@mel.set] [@mel.scope "prototype"]
+external setRender: (_, [@mel.this] ('self => unit)) => unit = "render";
+setRender(errorBoundary, [@mel.this] self => {
+  switch (Js.Undefined.testAny(self##state##error)) {
+  | false => self##props##fallback(self##state##error)
+  | true => self##props##children
+  }
+});
 
 [@react.component]
 external make:
   (~children: React.element, ~fallback: params('error) => React.element) =>
   React.element =
-  "ErrorBoundary";
+  "errorBoundary";
 
 let make = make;
