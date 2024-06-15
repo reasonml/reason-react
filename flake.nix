@@ -51,7 +51,7 @@
             };
             # Due to a Reason version mismatch, the generated OCaml PPX diff
             # looks different
-            doCheck = true;
+            doCheck = false;
             checkInputs = [ ];
             checkPhase = "dune build @runtest -p reason-react,reason-react-ppx";
             nativeCheckInputs = [ reason merlin pkgs.jq ];
