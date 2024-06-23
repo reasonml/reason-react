@@ -464,6 +464,9 @@ external displayName: component('props) => option(string) = "displayName";
 
 /* HOOKS */
 
+/* This is used as return values */
+type callback('input, 'output) = 'input => 'output;
+
 /*
  * Yeah, we know this api isn't great. tl;dr: useReducer instead.
  * It's because useState can take functions or non-function values and treats
@@ -488,13 +491,13 @@ external useReducerWithMapState:
     'initialState,
     [@mel.uncurry] ('initialState => 'state)
   ) =>
-  ('state, 'action => unit) =
+  ('state, callback('action, unit)) =
   "useReducer";
 
 [@mel.module "react"]
 external useSyncExternalStore:
   (
-    ~subscribe: ([@mel.uncurry] (unit => unit)) => [@mel.uncurry] (unit => unit),
+    ~subscribe: (unit => unit) => callback(unit, unit),
     ~getSnapshot: unit => 'snapshot
   ) =>
   'snapshot =
@@ -503,7 +506,7 @@ external useSyncExternalStore:
 [@mel.module "react"]
 external useSyncExternalStoreWithServer:
   (
-    ~subscribe: ([@mel.uncurry] (unit => unit)) => [@mel.uncurry] (unit => unit),
+    ~subscribe: (unit => unit) => callback(unit, unit),
     ~getSnapshot: unit => 'snapshot,
     ~getServerSnapshot: [@mel.uncurry] (unit => 'snapshot)
   ) =>
@@ -866,7 +869,6 @@ module Uncurried = {
     "useCallback";
 };
 
-type callback('input, 'output) = 'input => 'output;
 [@mel.module "react"]
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
