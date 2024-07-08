@@ -37,13 +37,13 @@ The `.re`/`.ml` files compile to straightforward `.js` files inside your `_build
 git clone https://github.com/melange-re/melange-opam-template my-reason-react-app
 
 # This will initialise the opam switch and install all the dependencies (from both opam and npm)
-cd my-reason-react-app && make init
+cd my-reason-react-app && npm run init
 # We install native dependencies (melange, dune, reason and reason-react) from opam
 # while JavaScript dependencies (react, react-dom, webpack) from npm
 
 # In separate terminals:
-make watch # It will watch for changes in your Reason/OCaml files and compile them to JavaScript
-make serve # Serves the application with a local HTTP server
+npm run watch # It will watch for changes in your Reason/OCaml files and compile them to JavaScript
+npm run serve # Serves the application with a local HTTP server
 ```
 
 Read more about the template in the [opam-template README](https://github.com/melange-re/melange-opam-template).
