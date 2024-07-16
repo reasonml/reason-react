@@ -1,17 +1,13 @@
 module Box = {
   [@react.component]
   let make = (~children) => {
-    <div>
-      {children}
-    </div>;
+    <div> children </div>;
   };
 };
 
 module Uppercase = {
   [@react.component]
   let make = (~children) => {
-    <Box>
-      {children}
-    </Box>;
+    <Box> children </Box>;
   };
 };
