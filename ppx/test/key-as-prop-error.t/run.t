@@ -15,3 +15,8 @@ Test some locations in reason-react components
   > EOF
 
   $ dune build
+  File "component.re", line 2, characters 11-51:
+  2 | let make = (~key) => <div> key->React.string </div>;
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  Error: Key cannot be accessed inside of a component. Don't worry - you can always key a component from its parent!
+  [1]
