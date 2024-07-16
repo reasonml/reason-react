@@ -901,7 +901,7 @@ module Experimental = {
     data: Dom.FormData.t,
     [@mel.as "method"]
     method_: [ | `get | `post],
-    action: Js.Nullable.t(Dom.FormData.t => unit),
+    action: Js.Nullable.t(unit => unit),
   };
 
   /* https://react.dev/reference/react-dom/hooks/useFormStatus#use-form-status */
