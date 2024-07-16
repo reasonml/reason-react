@@ -466,6 +466,7 @@ external displayName: component('props) => option(string) = "displayName";
 
 /* This is used as return values */
 type callback('input, 'output) = 'input => 'output;
+type callbackAsync('input, 'output) = 'input => Js.Promise.t('output);
 
 /*
  * Yeah, we know this api isn't great. tl;dr: useReducer instead.
@@ -871,6 +872,11 @@ module Uncurried = {
 
 [@mel.module "react"]
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
+  "useTransition";
+
+[@mel.module "react"]
+external useTransitionAsync:
+  unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
   "useTransition";
 
 [@mel.module "react"]
