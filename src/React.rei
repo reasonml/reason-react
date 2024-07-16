@@ -183,8 +183,9 @@ external useReducerWithMapState:
   ('state, 'action => unit) =
   "useReducer";
 
-/* This is used as return values  */
+/* This is used as return values */
 type callback('input, 'output) = 'input => 'output;
+type callbackAsync('input, 'output) = 'input => Js.Promise.t('output);
 
 [@mel.module "react"]
 external useSyncExternalStore:
@@ -563,6 +564,11 @@ module Uncurried: {
 
 [@mel.module "react"]
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
+  "useTransition";
+
+[@mel.module "react"]
+external useTransitionAsync:
+  unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
   "useTransition";
 
 module Experimental: {
