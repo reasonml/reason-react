@@ -582,6 +582,22 @@ module Experimental: {
     ('state, ('state, 'optimisticValue) => 'state) =>
     ('state, 'optimisticValue => unit) =
     "useOptimistic";
+
+  [@mel.module "react"]
+  external useTransitionAsync:
+    unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
+    "useTransition";
+
+  type formStatus = {
+    pending: bool,
+    data: Dom.FormData.t,
+    [@mel.as "method"]
+    method_: [ | `get | `post],
+    action: Js.Nullable.t(Dom.FormData.t => unit),
+  };
+
+  [@mel.module "react"]
+  external useFormStatus: unit => formStatus = "useFormStatus";
 };
 
 [@mel.set]

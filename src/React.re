@@ -896,7 +896,15 @@ module Experimental = {
     ('state, 'optimisticValue => unit) =
     "useOptimistic";
 
+  type formStatus = {
+    pending: bool,
+    data: Dom.FormData.t,
+    [@mel.as "method"]
+    method_: [ | `get | `post],
+    action: Js.Nullable.t(Dom.FormData.t => unit),
+  };
+
   /* https://react.dev/reference/react-dom/hooks/useFormStatus#use-form-status */
   [@mel.module "react"]
-  external useFormStatus: unit => formatStatus = "useFormStatus";
+  external useFormStatus: unit => formStatus = "useFormStatus";
 };
