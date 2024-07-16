@@ -875,11 +875,6 @@ external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
 [@mel.module "react"]
-external useTransitionAsync:
-  unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
-  "useTransition";
-
-[@mel.module "react"]
 external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
   "useDebugValue";
 
@@ -889,18 +884,10 @@ module Experimental = {
   [@mel.module "react"] external useContext: Context.t('a) => 'a = "use";
   [@mel.module "react"] external use: 'a => 'b = "use";
 
-  module FormData = {
-    /* TODO: Add FormData type to melange.js */
-    type t;
-  };
-
-  type formatStatus = {
-    pending: bool,
-    data: FormData.t,
-    [@mel.as "method"]
-    method_: [ | `get | `post],
-    /* action: Js.Nullable.t(fn), */
-  };
+  [@mel.module "react"]
+  external useTransitionAsync:
+    unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
+    "useTransition";
 
   /* https://es.react.dev/reference/react/useOptimistic */
   [@mel.module "react"]
