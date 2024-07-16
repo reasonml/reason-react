@@ -218,14 +218,12 @@ let otherAttrsPure { attr_name = loc; _ } = loc.txt <> "react.component"
 let hasAttrOnBinding { pvb_attributes; _ } =
   find_opt hasAttr pvb_attributes <> None
 
-(* Finds the name of the variable the binding is assigned to, otherwise raises
-   Invalid_argument *)
+(* Finds the name of the variable the binding is assigned to, otherwise raises an error *)
 let getFnName binding =
   match binding with
   | { pvb_pat = { ppat_desc = Ppat_var { txt; _ }; _ }; _ } -> txt
-  | _ ->
-      raise (Invalid_argument "react.component calls cannot be destructured.")
-[@@raises Invalid_argument]
+  | { pvb_loc; _} ->
+      Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
 
 let makeNewBinding binding expression newName =
   match binding with
