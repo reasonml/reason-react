@@ -239,16 +239,13 @@ let makeNewBinding binding expression newName =
       Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
 
 (* Lookup the value of `props` otherwise raise Invalid_argument error *)
-let getPropsNameValue _acc (loc, exp) =
-  match (loc, exp) with
+let getPropsNameValue _acc (loc, expr) =
+  match (loc, expr) with
   | ( { txt = Lident "props"; _ },
       { pexp_desc = Pexp_ident { txt = Lident str; _ }; _ } ) ->
       { propsName = str }
-  | { txt; _ }, _ ->
-      raise
-        (Invalid_argument
-           ("react.component only accepts props as an option, given: "
-          ^ Longident.last_exn txt))
+  | { txt; loc }, _ ->
+      Location.raise_errorf ~loc "[@react.component] only accepts 'props' as a field, given: %s" (Longident.last_exn txt)
 [@@raises Invalid_argument]
 
 (* Lookup the `props` record or string as part of [@react.component] and store
@@ -275,12 +272,10 @@ let getPropsAttr payload =
          }
         :: _rest)) ->
       { propsName = "props" }
-  | Some (PStr ({ pstr_desc = Pstr_eval (_, _); _ } :: _rest)) ->
-      raise
-        (Invalid_argument
-           "react.component accepts a record config with props as an options.")
+  | Some (PStr ({ pstr_desc = Pstr_eval (_, _); pstr_loc; _ } :: _rest)) ->
+      Location.raise_errorf ~loc:pstr_loc
+        "[@react.component] accepts a record config with 'props' as a field."
   | _ -> defaultProps
-[@@raises Invalid_argument]
 
 (* Plucks the label, loc, and type_ from an AST node *)
 let pluckLabelDefaultLocType (label, default, _, _, loc, type_) =
