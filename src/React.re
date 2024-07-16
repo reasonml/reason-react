@@ -887,4 +887,28 @@ module Experimental = {
   /* This module is used to bind to APIs for future versions of React. There is no guarantee of backwards compatibility or stability. */
 
   [@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
+
+  module FormData = {
+    /* TODO: Add FormData type to melange.js */
+    type t;
+  };
+
+  type formatStatus = {
+    pending: bool,
+    data: FormData.t,
+    [@mel.as "method"]
+    method_: [ | `get | `post],
+    /* action: Js.Nullable.t(fn), */
+  };
+
+  /* https://es.react.dev/reference/react/useOptimistic */
+  [@mel.module "react"]
+  external useOptimistic:
+    ('state, ('state, 'optimisticValue) => 'state) =>
+    ('state, 'optimisticValue => unit) =
+    "useOptimistic";
+
+  /* https://react.dev/reference/react-dom/hooks/useFormStatus#use-form-status */
+  [@mel.module "react"]
+  external useFormStatus: unit => formatStatus = "useFormStatus";
 };
