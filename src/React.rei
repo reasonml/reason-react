@@ -566,11 +566,6 @@ module Uncurried: {
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
-[@mel.module "react"]
-external useTransitionAsync:
-  unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
-  "useTransition";
-
 module Experimental: {
   /* This module is used to bind to APIs for future versions of React. There is no guarantee of backwards compatibility or stability. */
   [@mel.module "react"] external usePromise: Js.Promise.t('a) => 'a = "use";
