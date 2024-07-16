@@ -276,12 +276,12 @@ module Style = {
       ~gridAutoRows: string=?,
       ~gridColumn: string=?,
       ~gridColumnEnd: string=?,
-      ~gridColumnGap: string=?,
+      ~gridColumnGap: string=?, /* Deprecated in favor of column-gap */
       ~gridColumnStart: string=?,
-      ~gridGap: string=?,
+      ~gridGap: string=?, /* Deprecated in favor of gap */
       ~gridRow: string=?,
       ~gridRowEnd: string=?,
-      ~gridRowGap: string=?,
+      ~gridRowGap: string=?, /* Deprecated in favor of row-gap */
       ~gridRowStart: string=?,
       ~gridTemplate: string=?,
       ~gridTemplateAreas: string=?,
@@ -392,6 +392,10 @@ module Style = {
       ~rubyAlign: string=?,
       ~rubyMerge: string=?,
       ~rubyPosition: string=?,
+      /* CSS Box Alignment Module Level 3 */
+      ~gap: string=?,
+      ~columnGap: string=?,
+      ~rowGap: string=?,
       /* Lists and Counters Level 3 - WD */
       /* listStyle - already defined by CSS2Properties */
       /* listStyleImage - already defined by CSS2Properties */
