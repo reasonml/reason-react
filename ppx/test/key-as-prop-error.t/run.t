@@ -18,5 +18,5 @@ Test some locations in reason-react components
   File "component.re", line 2, characters 11-51:
   2 | let make = (~key) => <div> key->React.string </div>;
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  Error: Key cannot be accessed inside of a component. Don't worry - you can always key a component from its parent!
+  Error: ~key cannot be accessed from the component props. Please set the key where the component is being used.
   [1]

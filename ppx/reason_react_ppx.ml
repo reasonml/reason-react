@@ -659,8 +659,7 @@ let jsxMapper =
     match expr.pexp_desc with
     | Pexp_fun (Labelled "key", _, _, _) | Pexp_fun (Optional "key", _, _, _) ->
         Location.raise_errorf ~loc:expr.pexp_loc
-          ("Key cannot be accessed inside of a component. Don't worry - you \
-              can always key a component from its parent!")
+          ("~key cannot be accessed from the component props. Please set the key where the component is being used.")
     | Pexp_fun
         ( ((Optional label | Labelled label) as arg),
           default,
