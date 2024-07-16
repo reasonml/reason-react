@@ -68,6 +68,27 @@ We need to output ML syntax here, otherwise refmt could not parse it.
              make ~buttonRef:(Props ## buttonRef) ~children:(Props ## children) in
            Output$Forward_Ref)
     end
+  module Ref_as_prop =
+    struct
+      external makeProps :
+        children:'children ->
+          ref:'ref ->
+            ?key:string -> unit -> < children: 'children  ;ref: 'ref   >  Js.t
+          = ""[@@mel.obj ]
+      let make =
+        ((fun ~children ->
+            ((fun ~ref ->
+                ReactDOM.jsx "button"
+                  (((ReactDOM.domProps)[@merlin.hide ]) ~children ~ref
+                     ~className:"FancyButton" ()))
+            [@warning "-16"]))
+        [@warning "-16"])
+      let make =
+        let Output$Ref_as_prop
+          (Props : < children: 'children  ;ref: 'ref   >  Js.t) =
+          make ~ref:(Props ## ref) ~children:(Props ## children) in
+        Output$Ref_as_prop
+    end
   module Onclick_handler_button =
     struct
       external makeProps :
