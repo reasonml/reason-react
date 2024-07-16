@@ -18,5 +18,5 @@ Test some locations in reason-react components
   File "component.re", lines 1-2, characters 0-54:
   1 | [@react.component]
   2 | let (pageState, setPageState) = React.useState(_ => 0).
-  Error: react.component calls cannot be destructured.
+  Error: [@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead.
   [1]

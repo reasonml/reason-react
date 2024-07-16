@@ -235,9 +235,8 @@ let makeNewBinding binding expression newName =
         pvb_expr = expression;
         pvb_attributes = [ merlinFocus ];
       }
-  | _ ->
-      raise (Invalid_argument "react.component calls cannot be destructured.")
-[@@raises Invalid_argument]
+  | { pvb_loc; _ } ->
+      Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
 
 (* Lookup the value of `props` otherwise raise Invalid_argument error *)
 let getPropsNameValue _acc (loc, exp) =
