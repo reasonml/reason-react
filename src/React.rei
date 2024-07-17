@@ -17,6 +17,9 @@ external createElement: (component('props), 'props) => element =
   "createElement";
 
 [@mel.module "react"]
+external isValidElement: element => bool = "isValidElement";
+
+[@mel.module "react"]
 external cloneElement: (element, 'props) => element = "cloneElement";
 
 [@mel.variadic] [@mel.module "react"]
@@ -560,6 +563,9 @@ module Uncurried: {
     callback('input, 'output) =
     "useCallback";
 };
+
+[@mel.module "react"]
+external startTransition: ([@mel.uncurry] (unit => unit)) => unit = "startTransition";
 
 [@mel.module "react"]
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
