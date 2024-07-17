@@ -1,3 +1,10 @@
+# Unreleased
+
+* Convert `ReasonReactErrorBoundary` to Reason instead of `%raw` JS. This has
+  the benefit of skipping a hardcoded `require('react')` call (@anmonteiro in
+  [#839](https://github.com/reasonml/reason-react/pull/839))
+
+
 # 0.14.1
 
 * Support JSX transform with fragments (@tatchi in

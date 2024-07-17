@@ -17,6 +17,9 @@ external createElement: (component('props), 'props) => element =
   "createElement";
 
 [@mel.module "react"]
+external isValidElement: element => bool = "isValidElement";
+
+[@mel.module "react"]
 external cloneElement: (element, 'props) => element = "cloneElement";
 
 [@mel.variadic] [@mel.module "react"]
@@ -183,10 +186,13 @@ external useReducerWithMapState:
   ('state, 'action => unit) =
   "useReducer";
 
+/* This is used as return values  */
+type callback('input, 'output) = 'input => 'output;
+
 [@mel.module "react"]
 external useSyncExternalStore:
   (
-    ~subscribe: ([@mel.uncurry] (unit => unit)) => [@mel.uncurry] (unit => unit),
+    ~subscribe: (unit => unit) => callback(unit, unit),
     ~getSnapshot: unit => 'snapshot
   ) =>
   'snapshot =
@@ -195,7 +201,7 @@ external useSyncExternalStore:
 [@mel.module "react"]
 external useSyncExternalStoreWithServer:
   (
-    ~subscribe: ([@mel.uncurry] (unit => unit)) => [@mel.uncurry] (unit => unit),
+    ~subscribe: (unit => unit) => callback(unit, unit),
     ~getSnapshot: unit => 'snapshot,
     ~getServerSnapshot: [@mel.uncurry] (unit => 'snapshot)
   ) =>
@@ -381,9 +387,6 @@ external useMemo6:
 external useMemo7:
   ([@mel.uncurry] (unit => 'any), ('a, 'b, 'c, 'd, 'e, 'f, 'g)) => 'any =
   "useMemo";
-
-/* This is used as return values  */
-type callback('input, 'output) = 'input => 'output;
 
 [@mel.module "react"] external useCallback: 'fn => 'fn = "useCallback";
 [@mel.module "react"]
