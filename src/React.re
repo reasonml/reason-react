@@ -319,6 +319,9 @@ external createElement: (component('props), 'props) => element =
   "createElement";
 
 [@mel.module "react"]
+external isValidElement: element => bool = "isValidElement";
+
+[@mel.module "react"]
 external cloneElement: (element, 'props) => element = "cloneElement";
 
 [@mel.variadic] [@mel.module "react"]
