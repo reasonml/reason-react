@@ -873,14 +873,13 @@ module Uncurried = {
     "useCallback";
 };
 
-type callback('input, 'output) = 'input => 'output;
-
 [@mel.module "react"]
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
 [@mel.module "react"]
-external startTransition: ([@mel.uncurry] (unit => unit)) => unit = "startTransition";
+external startTransition: ([@mel.uncurry] (unit => unit)) => unit =
+  "startTransition";
 
 [@mel.module "react"]
 external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
@@ -906,7 +905,7 @@ module Experimental = {
 
   type formStatus = {
     pending: bool,
-    data: Dom.FormData.t,
+    data: FormData.t,
     [@mel.as "method"]
     method_: [ | `get | `post],
     action: Js.Nullable.t(unit => unit),

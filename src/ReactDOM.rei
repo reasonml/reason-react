@@ -649,11 +649,7 @@ type domProps = {
   [@mel.optional]
   acceptCharset: option(string),
   [@mel.optional]
-  action: option(string), /* uri */
-  [@mel.optional] [@mel.as "action"]
-  action_: option(Dom.FormData.t => unit),
-  [@mel.optional] [@mel.as "action"]
-  action_Async: option(Dom.FormData.t => Js.Promise.t(unit)),
+  action: option(FormData.t => Js.Promise.t(unit)),
   [@mel.optional]
   allowFullScreen: option(bool),
   [@mel.optional]

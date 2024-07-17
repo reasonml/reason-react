@@ -648,11 +648,7 @@ type domProps = {
   [@mel.optional]
   acceptCharset: option(string),
   [@mel.optional]
-  action: option(string), /* uri */
-  [@mel.optional] [@mel.as "action"]
-  action_: option(Dom.FormData.t => unit), /* Since action is taken by "form" as string and React 19 accepts a callback we keep a 'action_' field to avoid a breaking change. */
-  [@mel.optional] [@mel.as "action"]
-  action_Async: option(Dom.FormData.t => Js.Promise.t(unit)), /* Since action_ works syncronously action_Async is the Async version of it. Currently named `action_Async` but in future releases will becme actionAsync. */
+  action: option(FormData.t => Js.Promise.t(unit)), /* Since action is taken by "form" as string and React 19 accepts a callback we keep a 'action_' field to avoid a breaking change. */
   [@mel.optional]
   allowFullScreen: option(bool),
   [@mel.optional]
