@@ -478,6 +478,53 @@ external unmountComponentAtNode: Dom.element => unit =
 [@mel.module "react-dom"]
 external flushSync: (unit => unit) => unit = "flushSync";
 
+module Experimental: {
+  /* This module is used to bind to APIs for future versions of ReactDOM. There is no guarantee of backwards compatibility or stability. */
+
+  /*
+     preinitModule and preloadModule options.
+     https://react.dev/reference/react-dom/preinitModule#parameters
+     https://react.dev/reference/react-dom/preloadModule#parameters
+   */
+  [@deriving jsProperties]
+  type preOptions = {
+    /* a required string. It must be 'script'. */
+    [@mel.as "as"] [@mel.optional]
+    _as: option([ | `script ]),
+    /*
+        a required string. It must be "anonymous", "use-credentials", and "".
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin
+     */
+    [@mel.optional]
+    crossOrigin: option(string),
+    /*
+        A cryptographic hash of the module, to verify its authenticity.
+        https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+     */
+    [@mel.optional]
+    integrity: option(string),
+    /*
+        A cryptographic nonce to allow the module when using a strict Content Security Policy.
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
+     */
+    [@mel.optional]
+    nonce: option(string),
+  };
+
+  [@mel.module "react-dom"]
+  external preconnect: string => unit = "preconnect";
+  [@mel.module "react-dom"]
+  external prefetchDNS: string => unit = "prefetchDNS";
+  [@mel.module "react-dom"]
+  external preinit: string => unit = "preinit";
+  [@mel.module "react-dom"]
+  external preinitModule: (string, ~options: preOptions=?, unit) => unit = "preinitModule";
+  [@mel.module "react-dom"]
+  external preload: string => unit = "preload";
+  [@mel.module "react-dom"]
+  external preloadModule: (string, ~options: preOptions=?, unit) => unit = "preloadModule";
+} 
+
 external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 
 type style = Style.t;
