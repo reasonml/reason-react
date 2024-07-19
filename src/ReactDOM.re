@@ -477,6 +477,33 @@ external unmountComponentAtNode: Dom.element => unit =
 [@mel.module "react-dom"]
 external flushSync: (unit => unit) => unit = "flushSync";
 
+module Experimental = {
+  [@deriving jsProperties]
+  type preOptions = {
+    [@mel.as "as"] [@mel.optional]
+    _as: option([ | `script ]),
+    [@mel.optional]
+    crossOrigin: option(string),
+    [@mel.optional]
+    integrity: option(string),
+    [@mel.optional]
+    nonce: option(string),
+  };
+
+  [@mel.module "react-dom"]
+  external preconnect: string => unit = "preconnect";
+  [@mel.module "react-dom"]
+  external prefetchDNS: string => unit = "prefetchDNS";
+  [@mel.module "react-dom"]
+  external preinit: string => unit = "preinit";
+  [@mel.module "react-dom"]
+  external preinitModule: (string, ~options: preOptions=?, unit) => unit = "preinitModule";
+  [@mel.module "react-dom"]
+  external preload: string => unit = "preload";
+  [@mel.module "react-dom"]
+  external preloadModule: (string, ~options: preOptions=?, unit) => unit = "preloadModule";
+} 
+
 external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 
 type style = Style.t;
