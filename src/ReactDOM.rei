@@ -482,6 +482,48 @@ module Experimental: {
   /* This module is used to bind to APIs for future versions of ReactDOM. There is no guarantee of backwards compatibility or stability. */
 
   /*
+     preinit options.
+     https://react.dev/reference/react-dom/preinit#parameters
+   */
+  [@deriving jsProperties]
+  type preinitOptions = {
+    /* possible values: "script" or "style" */
+    [@mel.as "as"] [@mel.optional]
+    _as: option([ | `script | `style ]),
+    /*
+      Suggests a relative priority for fetching the resource.
+      The possible values are auto (the default), high, and low.
+     */
+    [@mel.optional]
+    fetchPriority: option([ `auto | `high | `low ]),
+    /*
+      Required with Stylesheets (`style). Says where to insert the stylesheet relative to others.
+      Stylesheets with higher precedence can override those with lower precedence.
+      The possible values are reset, low, medium, high.
+     */
+    [@mel.optional]
+    precedence: option([ `reset | `low | `medium | `high ]),
+    /*
+        a required string. It must be "anonymous", "use-credentials", and "".
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin
+     */
+    [@mel.optional]
+    crossOrigin: option(string),
+    /*
+        A cryptographic hash of the module, to verify its authenticity.
+        https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+     */
+    [@mel.optional]
+    integrity: option(string),
+    /*
+        A cryptographic nonce to allow the module when using a strict Content Security Policy.
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
+     */
+    [@mel.optional]
+    nonce: option(string),
+  };
+
+  /*
      preinitModule and preloadModule options.
      https://react.dev/reference/react-dom/preinitModule#parameters
      https://react.dev/reference/react-dom/preloadModule#parameters
@@ -516,7 +558,7 @@ module Experimental: {
   [@mel.module "react-dom"]
   external prefetchDNS: string => unit = "prefetchDNS";
   [@mel.module "react-dom"]
-  external preinit: string => unit = "preinit";
+  external preinit: (string, ~options: preinitOptions=?, unit) => unit = "preinit";
   [@mel.module "react-dom"]
   external preinitModule: (string, ~options: preOptions=?, unit) => unit = "preinitModule";
   [@mel.module "react-dom"]
