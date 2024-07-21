@@ -479,6 +479,22 @@ external flushSync: (unit => unit) => unit = "flushSync";
 
 module Experimental = {
   [@deriving jsProperties]
+  type preinitOptions = {
+    [@mel.as "as"] [@mel.optional]
+    _as: option([ | `script | `style ]),
+    [@mel.optional]
+    fetchPriority: option([ `auto | `high | `low ]),
+    [@mel.optional]
+    precedence: option([ `reset | `low | `medium | `high ]),
+    [@mel.optional]
+    crossOrigin: option(string),
+    [@mel.optional]
+    integrity: option(string),
+    [@mel.optional]
+    nonce: option(string),
+  };
+
+  [@deriving jsProperties]
   type preOptions = {
     [@mel.as "as"] [@mel.optional]
     _as: option([ | `script ]),
@@ -495,7 +511,7 @@ module Experimental = {
   [@mel.module "react-dom"]
   external prefetchDNS: string => unit = "prefetchDNS";
   [@mel.module "react-dom"]
-  external preinit: string => unit = "preinit";
+  external preinit: (string, ~options: preinitOptions=?, unit) => unit = "preinit";
   [@mel.module "react-dom"]
   external preinitModule: (string, ~options: preOptions=?, unit) => unit = "preinitModule";
   [@mel.module "react-dom"]
