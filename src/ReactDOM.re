@@ -478,6 +478,40 @@ external unmountComponentAtNode: Dom.element => unit =
 external flushSync: (unit => unit) => unit = "flushSync";
 
 module Experimental = {
+  type preloadOptions;
+  
+  [@mel.obj]
+  external preloadOptions: (
+    ~_as: [ 
+        | `audio
+        | `document
+        | `embed
+        | `fetch
+        | `font
+        | `image
+        | [@mel.as "object"] `object_
+        | `script
+        | `style
+        | `track
+        | `video
+        | `worker 
+      ],
+      ~fetchPriority: [ `auto | `high | `low ]=?,
+      ~referrerPolicy: [ 
+        | [@mel.as "no-referrer"] `noReferrer 
+        | [@mel.as "no-referrer-when-downgrade"] `noReferrerWhenDowngrade
+        | [@mel.as "origin"] `origin
+        | [@mel.as "origin-when-cross-origin"] `originWhenCrossOrigin
+        | [@mel.as "unsafe-url"] `unsafeUrl
+      ]=?,
+      ~imageSrcSet: string=?,
+      ~imageSizes: string=?,
+      ~crossOrigin: string=?,
+      ~integrity: string=?,
+      ~nonce: string=?,
+    unit
+  ) => preloadOptions;
+
   [@deriving jsProperties]
   type preinitOptions = {
     [@mel.as "as"] [@mel.optional]
@@ -515,7 +549,7 @@ module Experimental = {
   [@mel.module "react-dom"]
   external preinitModule: (string, ~options: preOptions=?, unit) => unit = "preinitModule";
   [@mel.module "react-dom"]
-  external preload: string => unit = "preload";
+  external preload: (string, ~options: preloadOptions=?, unit) => unit = "preload";
   [@mel.module "react-dom"]
   external preloadModule: (string, ~options: preOptions=?, unit) => unit = "preloadModule";
 } 
