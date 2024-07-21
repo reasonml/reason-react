@@ -480,6 +480,72 @@ external flushSync: (unit => unit) => unit = "flushSync";
 
 module Experimental: {
   /* This module is used to bind to APIs for future versions of ReactDOM. There is no guarantee of backwards compatibility or stability. */
+  /*
+     preload options.
+     https://react.dev/reference/react-dom/preload#parameters
+   */
+  type preloadOptions;
+
+  [@mel.obj]
+  external preloadOptions: (
+    /* Its possible values are audio, document, embed, fetch, font, image, object, script, style, track, video, worker. */
+    ~_as: [ 
+      | `audio
+      | `document
+      | `embed
+      | `fetch
+      | `font
+      | `image
+      | [@mel.as "object"] `object_
+      | `script
+      | `style
+      | `track
+      | `video
+      | `worker 
+    ],
+    /*
+        Suggests a relative priority for fetching the resource.
+        The possible values are auto (the default), high, and low.
+     */
+    ~fetchPriority: [ `auto | `high | `low ]=?,
+    /*
+        The Referrer header to send when fetching.
+        Its possible values are no-referrer-when-downgrade (the default), no-referrer, origin, origin-when-cross-origin, and unsafe-url.
+     */
+    ~referrerPolicy: [ 
+      | [@mel.as "no-referrer"] `noReferrer 
+      | [@mel.as "no-referrer-when-downgrade"] `noReferrerWhenDowngrade
+      | [@mel.as "origin"] `origin
+      | [@mel.as "origin-when-cross-origin"] `originWhenCrossOrigin
+      | [@mel.as "unsafe-url"] `unsafeUrl
+    ]=?,
+    /* 
+        For use only with as: "image". Specifies the source set of the image.
+        https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images
+     */
+    ~imageSrcSet: string=?,
+    /* 
+        For use only with as: "image". Specifies the source sizes of the image.
+        https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images
+     */
+    ~imageSizes: string=?,
+    /*
+        a required string. It must be "anonymous", "use-credentials", and "".
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin
+     */
+    ~crossOrigin: string=?,
+    /*
+        A cryptographic hash of the module, to verify its authenticity.
+        https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+     */
+    ~integrity: string=?,
+    /*
+        A cryptographic nonce to allow the module when using a strict Content Security Policy.
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
+     */
+    ~nonce: string=?,
+    unit
+  ) => preloadOptions;
 
   /*
      preinit options.
@@ -562,7 +628,7 @@ module Experimental: {
   [@mel.module "react-dom"]
   external preinitModule: (string, ~options: preOptions=?, unit) => unit = "preinitModule";
   [@mel.module "react-dom"]
-  external preload: string => unit = "preload";
+  external preload: (string, ~options: preloadOptions=?, unit) => unit = "preload";
   [@mel.module "react-dom"]
   external preloadModule: (string, ~options: preOptions=?, unit) => unit = "preloadModule";
 } 
