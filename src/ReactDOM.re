@@ -479,47 +479,52 @@ external flushSync: (unit => unit) => unit = "flushSync";
 
 module Experimental = {
   type preloadOptions;
-  
+
   [@mel.obj]
-  external preloadOptions: (
-    ~_as: [ 
-        | `audio
-        | `document
-        | `embed
-        | `fetch
-        | `font
-        | `image
-        | [@mel.as "object"] `object_
-        | `script
-        | `style
-        | `track
-        | `video
-        | `worker 
-      ],
-      ~fetchPriority: [ `auto | `high | `low ]=?,
-      ~referrerPolicy: [ 
-        | [@mel.as "no-referrer"] `noReferrer 
-        | [@mel.as "no-referrer-when-downgrade"] `noReferrerWhenDowngrade
-        | [@mel.as "origin"] `origin
-        | [@mel.as "origin-when-cross-origin"] `originWhenCrossOrigin
-        | [@mel.as "unsafe-url"] `unsafeUrl
-      ]=?,
+  external preloadOptions:
+    (
+      ~_as: [
+              | `audio
+              | `document
+              | `embed
+              | `fetch
+              | `font
+              | `image
+              | [@mel.as "object"] `object_
+              | `script
+              | `style
+              | `track
+              | `video
+              | `worker
+            ],
+      ~fetchPriority: [ | `auto | `high | `low]=?,
+      ~referrerPolicy: [
+                         | [@mel.as "no-referrer"] `noReferrer
+                         | [@mel.as "no-referrer-when-downgrade"]
+                           `noReferrerWhenDowngrade
+                         | [@mel.as "origin"] `origin
+                         | [@mel.as "origin-when-cross-origin"]
+                           `originWhenCrossOrigin
+                         | [@mel.as "unsafe-url"] `unsafeUrl
+                       ]
+                         =?,
       ~imageSrcSet: string=?,
       ~imageSizes: string=?,
       ~crossOrigin: string=?,
       ~integrity: string=?,
       ~nonce: string=?,
-    unit
-  ) => preloadOptions;
+      unit
+    ) =>
+    preloadOptions;
 
   [@deriving jsProperties]
   type preinitOptions = {
     [@mel.as "as"]
-    _as: [ | `script | `style ],
+    _as: [ | `script | `style],
     [@mel.optional]
-    fetchPriority: option([ `auto | `high | `low ]),
+    fetchPriority: option([ | `auto | `high | `low]),
     [@mel.optional]
-    precedence: option([ `reset | `low | `medium | `high ]),
+    precedence: option([ | `reset | `low | `medium | `high]),
     [@mel.optional]
     crossOrigin: option(string),
     [@mel.optional]
@@ -531,7 +536,7 @@ module Experimental = {
   [@deriving jsProperties]
   type preOptions = {
     [@mel.as "as"]
-    _as: [ | `script ],
+    _as: [ | `script],
     [@mel.optional]
     crossOrigin: option(string),
     [@mel.optional]
@@ -540,19 +545,22 @@ module Experimental = {
     nonce: option(string),
   };
 
-  [@mel.module "react-dom"]
-  external preconnect: string => unit = "preconnect";
+  [@mel.module "react-dom"] external preconnect: string => unit = "preconnect";
   [@mel.module "react-dom"]
   external prefetchDNS: string => unit = "prefetchDNS";
   [@mel.module "react-dom"]
-  external preinit: (string, ~options: preinitOptions=?, unit) => unit = "preinit";
+  external preinit: (string, ~options: preinitOptions=?, unit) => unit =
+    "preinit";
   [@mel.module "react-dom"]
-  external preinitModule: (string, ~options: preOptions=?, unit) => unit = "preinitModule";
+  external preinitModule: (string, ~options: preOptions=?, unit) => unit =
+    "preinitModule";
   [@mel.module "react-dom"]
-  external preload: (string, ~options: preloadOptions=?, unit) => unit = "preload";
+  external preload: (string, ~options: preloadOptions=?, unit) => unit =
+    "preload";
   [@mel.module "react-dom"]
-  external preloadModule: (string, ~options: preOptions=?, unit) => unit = "preloadModule";
-} 
+  external preloadModule: (string, ~options: preOptions=?, unit) => unit =
+    "preloadModule";
+};
 
 external domElementToObj: Dom.element => Js.t({..}) = "%identity";
 
