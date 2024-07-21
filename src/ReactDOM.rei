@@ -554,8 +554,8 @@ module Experimental: {
   [@deriving jsProperties]
   type preinitOptions = {
     /* possible values: "script" or "style" */
-    [@mel.as "as"] [@mel.optional]
-    _as: option([ | `script | `style ]),
+    [@mel.as "as"]
+    _as: [ | `script | `style ],
     /*
       Suggests a relative priority for fetching the resource.
       The possible values are auto (the default), high, and low.
@@ -596,9 +596,9 @@ module Experimental: {
    */
   [@deriving jsProperties]
   type preOptions = {
-    /* a required string. It must be 'script'. */
-    [@mel.as "as"] [@mel.optional]
-    _as: option([ | `script ]),
+    /* It must be 'script'. */
+    [@mel.as "as"]
+    _as: [ | `script ],
     /*
         a required string. It must be "anonymous", "use-credentials", and "".
         https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin

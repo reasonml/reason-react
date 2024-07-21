@@ -514,8 +514,8 @@ module Experimental = {
 
   [@deriving jsProperties]
   type preinitOptions = {
-    [@mel.as "as"] [@mel.optional]
-    _as: option([ | `script | `style ]),
+    [@mel.as "as"]
+    _as: [ | `script | `style ],
     [@mel.optional]
     fetchPriority: option([ `auto | `high | `low ]),
     [@mel.optional]
@@ -530,8 +530,8 @@ module Experimental = {
 
   [@deriving jsProperties]
   type preOptions = {
-    [@mel.as "as"] [@mel.optional]
-    _as: option([ | `script ]),
+    [@mel.as "as"]
+    _as: [ | `script ],
     [@mel.optional]
     crossOrigin: option(string),
     [@mel.optional]
