@@ -44,14 +44,98 @@ Let's test hovering over parts of the component
     },
     {
       "start": {
-        "line": 1,
-        "col": 0
+        "line": 3,
+        "col": 17
+      },
+      "end": {
+        "line": 3,
+        "col": 33
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
       },
       "end": {
         "line": 4,
         "col": 15
       },
-      "type": "< bar : int; foo : string > Js.t -> React.element",
+      "type": "React.element array",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "React.element option",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 1,
+        "col": 32
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "bar:int -> React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 1,
+        "col": 27
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "foo:string -> bar:int -> React.element",
       "tail": "no"
     }
   ]
@@ -63,14 +147,110 @@ The `foo` variable inside the component body
   [
     {
       "start": {
-        "line": 1,
-        "col": 0
+        "line": 3,
+        "col": 30
+      },
+      "end": {
+        "line": 3,
+        "col": 33
+      },
+      "type": "string",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 17
+      },
+      "end": {
+        "line": 3,
+        "col": 33
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
       },
       "end": {
         "line": 4,
         "col": 15
       },
-      "type": "< bar : int; foo : string > Js.t -> React.element",
+      "type": "React.element array",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "React.element option",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "ReactDOM.domProps",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 2,
+        "col": 2
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 1,
+        "col": 32
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "bar:int -> React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 1,
+        "col": 27
+      },
+      "end": {
+        "line": 4,
+        "col": 15
+      },
+      "type": "foo:string -> bar:int -> React.element",
       "tail": "no"
     }
   ]
