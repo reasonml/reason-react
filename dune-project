@@ -39,7 +39,7 @@
   (reason-react-ppx
    (= :version))
   (reason
-   (>= 3.10.0))
+   (>= 3.12.0))
   (ocaml-lsp-server :with-dev-setup)
   (opam-check-npm-deps
    (and
@@ -57,9 +57,9 @@
  (depends
   ocaml
   (reason
-   (>= 3.10.0))
+   (>= 3.12.0))
   (ppxlib
-   (>= 0.28.0))
+   (>= 0.33.0))
   (merlin :with-test)
   (ocamlformat
    (and
