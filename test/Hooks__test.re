@@ -171,7 +171,7 @@ describe("Hooks", () => {
     let container = getContainer(container);
     let root = ReactDOM.Client.createRoot(container);
 
-    act(() => {ReactDOM.Client.render(root, <DummyStatefulComponent />)});
+    act(() => ReactDOM.Client.render(root, <DummyStatefulComponent />));
 
     expect(
       container

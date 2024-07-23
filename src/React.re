@@ -469,6 +469,7 @@ external displayName: component('props) => option(string) = "displayName";
 
 /* This is used as return values */
 type callback('input, 'output) = 'input => 'output;
+type callbackAsync('input, 'output) = 'input => Js.Promise.t('output);
 
 /*
  * Yeah, we know this api isn't great. tl;dr: useReducer instead.
@@ -886,6 +887,31 @@ external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
 
 module Experimental = {
   /* This module is used to bind to APIs for future versions of React. There is no guarantee of backwards compatibility or stability. */
+  [@mel.module "react"] external usePromise: Js.Promise.t('a) => 'a = "use";
+  [@mel.module "react"] external useContext: Context.t('a) => 'a = "use";
+  [@mel.module "react"] external use: 'a => 'b = "use";
 
-  [@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
+  [@mel.module "react"]
+  external useTransitionAsync:
+    unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
+    "useTransition";
+
+  /* https://es.react.dev/reference/react/useOptimistic */
+  [@mel.module "react"]
+  external useOptimistic:
+    ('state, ('state, 'optimisticValue) => 'state) =>
+    ('state, 'optimisticValue => unit) =
+    "useOptimistic";
+
+  type formStatus = {
+    pending: bool,
+    data: FormData.t,
+    [@mel.as "method"]
+    method_: [ | `get | `post],
+    action: Js.Nullable.t(unit => unit),
+  };
+
+  /* https://react.dev/reference/react-dom/hooks/useFormStatus#use-form-status */
+  [@mel.module "react"]
+  external useFormStatus: unit => formStatus = "useFormStatus";
 };
