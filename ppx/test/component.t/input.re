@@ -17,21 +17,21 @@ module Upper_case_with_fragment_as_root = {
 };
 
 /* module Using_React_memo = {
-  [@react.component]
-  let make =
-    React.memo((~a) =>
-      <div> {Printf.sprintf("`a` is %s", a) |> React.string} </div>
-    );
-};
+     [@react.component]
+     let make =
+       React.memo((~a) =>
+         <div> {Printf.sprintf("`a` is %s", a) |> React.string} </div>
+       );
+   };
 
-module Using_memo_custom_compare_Props = {
-  [@react.component]
-  let make =
-    React.memoCustomCompareProps(
-      (~a) => <div> {Printf.sprintf("`a` is %d", a) |> React.string} </div>,
-      (prevPros, nextProps) => false,
-    );
-}; */
+   module Using_memo_custom_compare_Props = {
+     [@react.component]
+     let make =
+       React.memoCustomCompareProps(
+         (~a) => <div> {Printf.sprintf("`a` is %d", a) |> React.string} </div>,
+         (prevPros, nextProps) => false,
+       );
+   }; */
 
 module Forward_Ref = {
   [@react.component]
@@ -39,6 +39,13 @@ module Forward_Ref = {
     React.forwardRef((~children, ~buttonRef) => {
       <button ref=buttonRef className="FancyButton"> children </button>
     });
+};
+
+module Ref_as_prop = {
+  [@react.component]
+  let make = (~children, ~ref) => {
+    <button ref className="FancyButton"> children </button>;
+  };
 };
 
 module Onclick_handler_button = {
