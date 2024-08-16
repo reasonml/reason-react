@@ -1402,24 +1402,7 @@ let jsxMapper =
          [@JSX][foo]
          This will match either <> </> or <> foo </> *)
       | {
-          pexp_desc =
-            ( Pexp_construct ({ txt = Lident "[]"; loc }, None)
-            | Pexp_construct
-                ( { txt = Lident "::"; loc },
-                  Some
-                    {
-                      pexp_desc =
-                        Pexp_tuple
-                          [
-                            _;
-                            {
-                              pexp_desc =
-                                Pexp_construct ({ txt = Lident "[]"; _ }, None);
-                              _;
-                            };
-                          ];
-                      _;
-                    } ) );
+          pexp_desc = Pexp_construct ({ txt = Lident ("[]" | "::"); loc }, lst);
           pexp_attributes;
           _;
         } as listItems -> (
@@ -1431,50 +1414,34 @@ let jsxMapper =
           match (jsxAttribute, nonJSXAttributes) with
           (* no JSX attribute *)
           | [], _ -> super#expression ctxt expr
-          | _, nonJSXAttributes ->
+          | _, nonJSXAttributes -> (
               let childrenExpr =
                 transformChildrenIfList ~loc ~ctxt ~mapper:self listItems
               in
               (* throw away the [@JSX] attribute and keep the others, if any *)
-              Binding.React.jsxFragment ~loc ~attrs:nonJSXAttributes
-                (Binding.React.array ~loc childrenExpr))
-      (* Fragment with two or more children: <> foo bar </> *)
-      | {
-          pexp_desc =
-            Pexp_construct
-              ( { txt = Lident "::"; loc },
-                Some
+              match lst with
+              | None
+              | Some
                   {
                     pexp_desc =
                       Pexp_tuple
                         [
-                          _firstElement;
+                          _;
                           {
                             pexp_desc =
-                              Pexp_construct ({ txt = Lident "::"; _ }, Some _);
+                              Pexp_construct ({ txt = Lident "[]"; _ }, None);
                             _;
                           };
                         ];
                     _;
-                  } );
-          pexp_attributes;
-          _;
-        } as listItems -> (
-          let jsxAttribute, nonJSXAttributes =
-            List.partition
-              (fun { attr_name = attribute; _ } -> attribute.txt = "JSX")
-              pexp_attributes
-          in
-          match (jsxAttribute, nonJSXAttributes) with
-          (* no JSX attribute *)
-          | [], _ -> super#expression ctxt expr
-          | _, nonJSXAttributes ->
-              let childrenExpr =
-                transformChildrenIfList ~loc ~ctxt ~mapper:self listItems
-              in
-              (* throw away the [@JSX] attribute and keep the others, if any *)
-              Binding.React.jsxsFragment ~loc ~attrs:nonJSXAttributes
-                (Binding.React.array ~loc childrenExpr))
+                  } ->
+                  Binding.React.jsxFragment ~loc ~attrs:nonJSXAttributes
+                    (Binding.React.array ~loc childrenExpr)
+              | Some { pexp_desc = Pexp_tuple (_ :: _); _ } ->
+                  (* Fragment with two or more children: <> foo bar </> *)
+                  Binding.React.jsxsFragment ~loc ~attrs:nonJSXAttributes
+                    (Binding.React.array ~loc childrenExpr)
+              | _ -> assert false))
       (* Delegate to the default mapper, a deep identity traversal *)
       | e -> super#expression ctxt e
     [@@raises Invalid_argument]
