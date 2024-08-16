@@ -3,7 +3,8 @@
 * Convert `ReasonReactErrorBoundary` to Reason instead of `%raw` JS. This has
   the benefit of skipping a hardcoded `require('react')` call (@anmonteiro in
   [#839](https://github.com/reasonml/reason-react/pull/839))
-
+* Fix: Remove "unique `key` prop" warnings from multi-child fragment elements
+  (@jchavarri in https://github.com/reasonml/reason-react/pull/852)
 
 # 0.14.1
 
