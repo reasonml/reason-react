@@ -55,7 +55,8 @@
  (synopsis "React.js JSX PPX")
  (description "ReasonReact JSX PPX")
  (depends
-  ocaml
+  (ocaml
+   (>= 4.14))
   (reason
    (>= 3.12.0))
   (ppxlib
