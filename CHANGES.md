@@ -1,8 +1,14 @@
-# Unreleased
+# 0.15.0
 
+* Add `isValidElement` (@r17x in
+  https://github.com/reasonml/reason-react/pull/837)
+* Add `startTransition` (@r17x in
+  https://github.com/reasonml/reason-react/pull/838)
 * Convert `ReasonReactErrorBoundary` to Reason instead of `%raw` JS. This has
   the benefit of skipping a hardcoded `require('react')` call (@anmonteiro in
   [#839](https://github.com/reasonml/reason-react/pull/839))
+* Add CSS Box Alignment Module Level 3 (@davesnx in
+  https://github.com/reasonml/reason-react/pull/847)
 * Fix: Remove "unique `key` prop" warnings from multi-child fragment elements
   (@jchavarri in https://github.com/reasonml/reason-react/pull/852)
 
