@@ -53,7 +53,7 @@ describe("ReactDOM", () => {
           hasErrored := true;
         },
       );
-      let {pipe, abort: _}: ReactDOMServerNode.pipeableStream =
+      let {pipe, abort: _}: ReactDOMServerNode.pipeableStream(_) =
         ReactDOMServerNode.renderToPipeableStream(
           <div> "Hello world!"->React.string </div>,
         );
