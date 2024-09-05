@@ -24,14 +24,15 @@ type options = {
   progressiveChunkSize: option(int),
 };
 
-type pipeableStream = {
+type pipeableStream('a) = {
   /* Using empty object instead of Node.stream since Melange don't provide a binding to node's Stream (https://nodejs.org/api/stream.html) */
-  pipe: Js.t({.}) => unit,
+  pipe: Js.t({..} as 'a) => unit,
   abort: unit => unit,
 };
 
 [@mel.module "react-dom/server"]
-external renderToPipeableStream: (React.element, options) => pipeableStream =
+external renderToPipeableStream:
+  (React.element, options) => pipeableStream('a) =
   "renderToPipeableStream";
 
 let renderToPipeableStream =
