@@ -653,7 +653,7 @@ type domProps = {
   [@mel.optional]
   acceptCharset: option(string),
   [@mel.optional]
-  action: option(string), /* uri */
+  action: option(FormData.t => Js.Promise.t(unit)),
   [@mel.optional]
   allowFullScreen: option(bool),
   [@mel.optional]

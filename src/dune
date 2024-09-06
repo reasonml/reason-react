@@ -11,10 +11,11 @@
   ReactDOMTestUtils
   ReactTestRenderer
   ReasonReactRouter
+  FormData
   ReasonReactErrorBoundary)
  (preprocess
   (pps melange.ppx reason-react-ppx))
- (libraries melange.dom)
+ (libraries melange.dom melange.js)
  (modes melange))
 
 (library
