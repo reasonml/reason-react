@@ -2177,9 +2177,9 @@
                 ((pos_fname output.ml) (pos_lnum 3) (pos_bol 151)
                  (pos_cnum 179)))
                (loc_end
-                ((pos_fname output.ml) (pos_lnum 3) (pos_bol 151)
-                 (pos_cnum 181)))
-               (loc_ghost false)))
+                ((pos_fname output.ml) (pos_lnum 7) (pos_bol 359)
+                 (pos_cnum 371)))
+               (loc_ghost true)))
              (pexp_loc_stack ()) (pexp_attributes ()))))
           (pexp_loc
            ((loc_start

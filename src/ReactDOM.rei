@@ -392,6 +392,10 @@ module Style: {
       ~rubyAlign: string=?,
       ~rubyMerge: string=?,
       ~rubyPosition: string=?,
+      /* CSS Box Alignment Module Level 3 */
+      ~gap: string=?,
+      ~columnGap: string=?,
+      ~rowGap: string=?,
       /* Lists and Counters Level 3 - WD */
       /* listStyle - already defined by CSS2Properties */
       /* listStyleImage - already defined by CSS2Properties */

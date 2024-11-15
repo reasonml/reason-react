@@ -21,7 +21,7 @@ depends: [
   "ocaml"
   "melange" {>= "3.0.0"}
   "reason-react-ppx" {= version}
-  "reason" {>= "3.10.0"}
+  "reason" {>= "3.12.0"}
   "ocaml-lsp-server" {with-dev-setup}
   "opam-check-npm-deps" {= "1.0.0" & with-dev-setup}
   "ocamlformat" {= "0.24.0" & with-dev-setup}

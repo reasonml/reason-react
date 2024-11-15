@@ -62,30 +62,6 @@ Let's test hovering over parts of the component
     {
       "start": {
         "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
         "col": 13
       },
       "end": {
@@ -172,30 +148,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
       "tail": "no"
     },
     {
@@ -311,30 +263,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
       "tail": "no"
     },
     {
@@ -474,30 +402,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
       "tail": "no"
     },
     {
@@ -649,30 +553,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
       "tail": "no"
     },
     {
@@ -841,30 +721,6 @@ Let's test hovering over parts of the component
     {
       "start": {
         "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
         "col": 13
       },
       "end": {
@@ -987,30 +843,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
       "tail": "no"
     },
     {
@@ -1143,30 +975,6 @@ Let's test hovering over parts of the component
     {
       "start": {
         "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
         "col": 13
       },
       "end": {
@@ -1265,30 +1073,6 @@ Closing `</button>`
         "col": 3
       },
       "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 31
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 3,
-        "col": 13
-      },
-      "end": {
-        "line": 9,
-        "col": 3
-      },
-      "type": "unit => React.element",
       "tail": "no"
     },
     {
