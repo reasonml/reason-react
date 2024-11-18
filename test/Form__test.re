@@ -65,7 +65,10 @@ module Thread = {
          ReactDOM.createElement(
            "form",
            ~props=ReactDOM.domProps(~ref=ReactDOM.Ref.domRef(formRef), ()),
-           [||],
+           [|
+             <input type_="text" name="message" placeholder="Hola!" />,
+             <button type_="submit"> {React.string("Enviar")} </button>,
+           |],
          ),
          {"action": formAction},
        )}

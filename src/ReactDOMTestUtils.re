@@ -2,7 +2,7 @@ type undefined = Js.undefined(unit);
 
 let undefined: undefined = Js.Undefined.empty;
 
-[@mel.module "react-dom/test-utils"]
+[@mel.module "react"]
 external reactAct: ((. unit) => undefined) => unit = "act";
 
 let act: (unit => unit) => unit =
@@ -15,7 +15,7 @@ let act: (unit => unit) => unit =
     reactAct(reactFunc);
   };
 
-[@mel.module "react-dom/test-utils"]
+[@mel.module "react"]
 external reactActAsync: ((. unit) => Js.Promise.t('a)) => Js.Promise.t(unit) =
   "act";
 
