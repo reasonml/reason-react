@@ -8,7 +8,7 @@
   reason-react.node
   jest
   melange.belt
-  melange-testing-library.dom
-  melange-testing-library.react)
+  melange_testing_library_dom
+  melange_testing_library_react)
  (preprocess
   (pps melange.ppx reason-react-ppx)))
