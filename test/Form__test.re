@@ -3,6 +3,8 @@ open Jest.Expect;
 open ReactDOMTestUtils;
 open Belt;
 
+module FormData = React.Experimental.FormData;
+
 /* https://react.dev/blog/2022/03/08/react-18-upgrade-guide#configuring-your-testing-environment */
 [%%mel.raw "globalThis.IS_REACT_ACT_ENVIRONMENT = true"];
 
@@ -29,7 +31,7 @@ module Thread = {
       );
 
     let formAction = formData => {
-      let formMessage = ReactDOM.FormData.get("message", formData);
+      let formMessage = FormData.get("message", formData);
       switch (formMessage) {
       | Some(entry) =>
         switch (Js.Types.classify(entry)) {
@@ -59,10 +61,14 @@ module Thread = {
        }
        ->Belt.List.toArray
        ->React.array}
-      <form action=formAction ref={ReactDOM.Ref.domRef(formRef)}>
-        <input type_="text" name="message" placeholder="Hola!" />
-        <button type_="submit"> {React.string("Enviar")} </button>
-      </form>
+      {React.cloneElement(
+         ReactDOM.createElement(
+           "form",
+           ~props=ReactDOM.domProps(~ref=ReactDOM.Ref.domRef(formRef), ()),
+           [||],
+         ),
+         {"action": formAction},
+       )}
     </>;
   };
 };
@@ -78,7 +84,7 @@ module App = {
       React.useState(() => [{text: "¡Hola!", sending: false, key: 1}]);
 
     let sendMessage = formData => {
-      let formMessage = ReactDOM.FormData.get("message", formData);
+      let formMessage = FormData.get("message", formData);
       switch (formMessage) {
       | Some(message) =>
         let.await entry = deliverMessage(message);
