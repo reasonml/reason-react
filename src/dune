@@ -11,7 +11,6 @@
   ReactDOMTestUtils
   ReactTestRenderer
   ReasonReactRouter
-  FormData
   ReasonReactErrorBoundary)
  (preprocess
   (pps melange.ppx reason-react-ppx))

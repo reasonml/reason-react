@@ -29,11 +29,11 @@ module Thread = {
       );
 
     let formAction = formData => {
-      let formMessage = FormData.get("message", formData);
+      let formMessage = ReactDOM.FormData.get("message", formData);
       switch (formMessage) {
       | Some(entry) =>
-        switch (FormData.classify(entry)) {
-        | `String(text) =>
+        switch (Js.Types.classify(entry)) {
+        | JSString(text) =>
           addOptimisticMessage(text);
           switch (Js.Nullable.toOption(formRef.current)) {
           | Some(form) => reset(form)
@@ -78,12 +78,12 @@ module App = {
       React.useState(() => [{text: "¡Hola!", sending: false, key: 1}]);
 
     let sendMessage = formData => {
-      let formMessage = FormData.get("message", formData);
+      let formMessage = ReactDOM.FormData.get("message", formData);
       switch (formMessage) {
       | Some(message) =>
         let.await entry = deliverMessage(message);
-        switch (FormData.classify(entry)) {
-        | `String(text) =>
+        switch (Js.Types.classify(entry)) {
+        | JSString(text) =>
           let _ =
             setMessages(messages =>
               [{text, sending: true, key: 1}, ...messages]
