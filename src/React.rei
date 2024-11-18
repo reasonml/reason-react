@@ -589,18 +589,6 @@ module Experimental: {
   external useTransitionAsync:
     unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
     "useTransition";
-
-  type formStatus = {
-    pending: bool,
-    data: FormData.t,
-    [@mel.as "method"]
-    method_: [ | `get | `post],
-    action: Js.Nullable.t(unit => unit),
-  };
-
-  /* https://react.dev/reference/react-dom/hooks/useFormStatus#use-form-status */
-  [@mel.module "react"]
-  external useFormStatus: unit => formStatus = "useFormStatus";
 };
 
 [@mel.set]
