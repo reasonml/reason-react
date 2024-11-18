@@ -652,7 +652,7 @@ type domProps = {
   [@mel.optional]
   acceptCharset: option(string),
   [@mel.optional]
-  action: option(FormData.t => Js.Promise.t(unit)), /* Since action is taken by "form" as string and React 19 accepts a callback we keep a 'action_' field to avoid a breaking change. */
+  action: option(string),
   [@mel.optional]
   allowFullScreen: option(bool),
   [@mel.optional]
