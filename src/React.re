@@ -479,7 +479,8 @@ type callbackAsync('input, 'output) = 'input => Js.Promise.t('output);
  */
 [@mel.module "react"]
 external useState:
-  ([@mel.uncurry] (unit => 'state)) => ('state, ('state => 'state) => unit) =
+  ([@mel.uncurry] (unit => 'state)) =>
+  ('state, (. ('state => 'state)) => unit) =
   "useState";
 
 [@mel.module "react"]
