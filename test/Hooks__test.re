@@ -52,8 +52,8 @@ let store = (initialState: 'a) => {
 module DummyStatefulComponent = {
   [@react.component]
   let make = (~initialValue=0, ()) => {
-    let (value, setValue) = React.useState(() => initialValue);
-    let onClick = _ => setValue(value => value + 1);
+    let (value, setValue) = React.Uncurried.useState(() => initialValue);
+    let onClick = _ => setValue(. value => value + 1);
     <button onClick> {React.int(value)} </button>;
   };
 };
@@ -65,7 +65,7 @@ module DummyIncrementReducerComponent = {
   [@react.component]
   let make = (~initialValue=0) => {
     let (state, send) =
-      React.useReducer(
+      React.Uncurried.useReducer(
         (state, action) =>
           switch (action) {
           | Increment => state + 1
@@ -73,16 +73,9 @@ module DummyIncrementReducerComponent = {
         initialValue,
       );
 
-    Js.log2("state", state);
-
     <section>
       <main> {React.int(state)} </main>
-      <button
-        onClick={_ => {
-          Js.log("incccccc");
-          [%debugger];
-          send(Increment);
-        }}>
+      <button role="Increment" onClick={_ => {send(. Increment)}}>
         {React.string("Increment")}
       </button>
     </section>;
@@ -97,7 +90,7 @@ module DummyReducerComponent = {
   [@react.component]
   let make = (~initialValue=0) => {
     let (state, send) =
-      React.useReducer(
+      React.Uncurried.useReducer(
         (state, action) =>
           switch (action) {
           | Increment => state + 1
@@ -110,10 +103,10 @@ module DummyReducerComponent = {
 
     <>
       <main> {React.int(state)} </main>
-      <button onClick={_ => send(Increment)}>
+      <button role="Increment" onClick={_ => send(. Increment)}>
         {React.string("Increment")}
       </button>
-      <button onClick={_ => send(Decrement)}>
+      <button role="Decrement" onClick={_ => send(. Decrement)}>
         {React.string("Decrement")}
       </button>
     </>;
@@ -124,10 +117,11 @@ module DummyReducerWithMapStateComponent = {
   type action =
     | Increment
     | Decrement;
+
   [@react.component]
   let make = (~initialValue=0, ()) => {
     let (state, send) =
-      React.useReducerWithMapState(
+      React.Uncurried.useReducerWithMapState(
         (state, action) =>
           switch (action) {
           | Increment => state + 1
@@ -137,15 +131,15 @@ module DummyReducerWithMapStateComponent = {
         initialValue => initialValue + 1,
       );
 
-    <>
-      <main> state->React.int </main>
-      <button onClick={_ => send(Increment)}>
-        "Increment"->React.string
+    <section>
+      <main role="Counter"> state->React.int </main>
+      <button role="Increment" onClick={_ => send(. Increment)}>
+        {React.string("Increment")}
       </button>
-      <button onClick={_ => send(Decrement)}>
-        "Decrement"->React.string
+      <button role="Decrement" onClick={_ => send(. Decrement)}>
+        {React.string("Decrement")}
       </button>
-    </>;
+    </section>;
   };
 };
 
@@ -167,13 +161,13 @@ module WithEffect = {
 module RerenderOnEachClick = {
   [@react.component]
   let make = (~initialValue=0, ~maxValue=3, ~callback) => {
-    let (value, setValue) = React.useState(() => initialValue);
+    let (value, setValue) = React.Uncurried.useState(() => initialValue);
     let onClick = _ =>
       if (value < maxValue) {
-        setValue(value => value + 1);
+        setValue(. value => value + 1);
       } else {
         /* Fire a setState with the same value */
-        setValue(value => value);
+        setValue(. value => value);
       };
 
     <section>
@@ -211,8 +205,6 @@ module DummyComponentWithRefAndEffect = {
   };
 };
 
-let (let.await) = (p, f) => Js.Promise.then_(f, p);
-
 let getByString = (text, container) =>
   ReactTestingLibrary.getByText(~matcher=`Str(text), container);
 
@@ -221,22 +213,16 @@ let findByPlaceholderText = (text, container) =>
 
 [@mel.get] external tagName: Dom.element => string = "tagName";
 [@mel.get] external innerHTML: Dom.element => string = "innerHTML";
-type domTokenList;
-[@mel.get] external classList: Dom.element => domTokenList = "classList";
-[@mel.send] external contains: (domTokenList, string) => bool = "contains";
-
-let findByClass = (tag, container) => {
-  let fn = (_string, element: Dom.element) => {
-    element->classList->contains(tag);
-  };
-  ReactTestingLibrary.findByText(~matcher=`Func(fn), container);
-};
 
 let getByTag = (tag, container) => {
   let fn = (_string, element: Dom.element) => {
     element->tagName->Js.String.toLowerCase == tag;
   };
   ReactTestingLibrary.getByText(~matcher=`Func(fn), container);
+};
+
+let getByRole = (role, container) => {
+  ReactTestingLibrary.getByRole(~matcher=`Str(role), container);
 };
 
 let getByInnerHTML = (text, container) => {
@@ -371,36 +357,33 @@ describe("Hooks", () => {
     | None => failwith("no ref")
     };
   });
-  /* Reducer tests are disabled */
-  /* test("can render react components with reducers", () => {
-       let container =
-         ReactTestingLibrary.render(
-           <DummyIncrementReducerComponent initialValue=0 />,
-         );
 
-       let counter = getByTag("main", container);
-       let button = getByTag("button", container);
-       expect(counter->innerHTML)->toBe("0");
-       FireEvent.click(button);
-       expect(counter->innerHTML)->toBe("1");
-     }); */
-  /* testPromise("can render react components with reducers (map state)", finish => {
-       let container =
-         ReactTestingLibrary.render(<DummyReducerWithMapStateComponent />);
+  test("can render react components with reducers", () => {
+    let container =
+      ReactTestingLibrary.render(
+        <DummyIncrementReducerComponent initialValue=0 />,
+      );
 
-       ReactTestingLibrary.actAsync(() => {
-         let.await value = findByClass("value", container);
-         expect(value->innerHTML)->toBe("0");
+    let counter = getByTag("main", container);
+    let button = getByTag("button", container);
+    expect(counter->innerHTML)->toBe("0");
+    FireEvent.click(button);
+    expect(counter->innerHTML)->toBe("1");
+  });
 
-         let.await incrementButton = findByString("Increment", container);
-         FireEvent.click(incrementButton);
-         expect(value->innerHTML)->toBe("2");
+  test("can render react components with reducers and initial map state", () => {
+    let container =
+      ReactTestingLibrary.render(<DummyReducerWithMapStateComponent />);
 
-         let.await decrementButton = findByString("Decrement", container);
-         FireEvent.click(decrementButton);
-         expect(value->innerHTML)->toBe("1");
+    let counter = getByRole("Counter", container);
+    expect(counter->innerHTML)->toBe("1");
 
-         finish();
-       });
-     }); */
+    let incrementButton = getByRole("Increment", container);
+    FireEvent.click(incrementButton);
+    expect(counter->innerHTML)->toBe("2");
+
+    let decrementButton = getByRole("Decrement", container);
+    FireEvent.click(decrementButton);
+    expect(counter->innerHTML)->toBe("1");
+  });
 });
