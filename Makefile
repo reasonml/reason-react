@@ -59,7 +59,7 @@ format-check: ## Checks if format is correct
 .PHONY: install
 install: ## Update the package dependencies when new deps are added to dune-project
 	@opam install . --deps-only --with-test
-	@npm install
+	@npm install --force
 
 .PHONY: init
 create-switch: ## Create a local opam switch
