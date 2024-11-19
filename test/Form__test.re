@@ -127,7 +127,6 @@ module App = {
 };
 
 let (let.await) = (p, f) => Js.Promise.then_(f, p);
-let (let.catch) = (p, f) => Js.Promise.then_(f, p);
 
 let findByString = (text, container) =>
   ReactTestingLibrary.findByText(~matcher=`Str(text), container);
