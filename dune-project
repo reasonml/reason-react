@@ -41,12 +41,6 @@
   (reason
    (>= 3.12.0))
   (ocaml-lsp-server :with-dev-setup)
-  (melange-testing-library
-   (and
-    (= "0.1.0")
-    :with-test
-    :with-dev-setup
-    :post))
   (opam-check-npm-deps
    (and
     (= 1.0.0)

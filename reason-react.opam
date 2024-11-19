@@ -23,7 +23,6 @@ depends: [
   "reason-react-ppx" {= version}
   "reason" {>= "3.12.0"}
   "ocaml-lsp-server" {with-dev-setup}
-  "melange-testing-library" {= "0.1.0" & with-test & with-dev-setup & post}
   "opam-check-npm-deps" {= "1.0.0" & with-dev-setup}
   "ocamlformat" {= "0.24.0" & with-dev-setup}
   "odoc" {with-doc}
