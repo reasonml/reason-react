@@ -75,7 +75,7 @@ external _waitFor:
   (unit => unit, Js.undefined(WaitFor.options)) => Js.Promise.t('a) =
   "waitFor";
 
-let waitFor = (~callback, ~options=?, ()) =>
+let waitFor = (~options=?, callback) =>
   _waitFor(callback, Js.Undefined.fromOption(options));
 
 [@mel.module "@testing-library/dom"]
@@ -84,7 +84,7 @@ external _waitForPromise:
   Js.Promise.t('b) =
   "waitFor";
 
-let waitForPromise = (~callback, ~options=?, ()) =>
+let waitForPromise = (~options=?, callback) =>
   _waitForPromise(callback, Js.Undefined.fromOption(options));
 
 [@mel.module "@testing-library/dom"]
@@ -102,7 +102,11 @@ let waitForElement = (~callback=?, ~options=?, ()) =>
 [@mel.module "@testing-library/dom"]
 external _waitForElementToBeRemoved:
   (
-    ~callback: [@mel.unwrap] [ | `Func(unit => 'a) | `Value('a)],
+    ~callback:
+      [@mel.unwrap] [
+        | `Func(unit => 'a)
+        | `Value('a)
+      ],
     Js.undefined(WaitFor.options)
   ) =>
   Js.Promise.t(unit) =

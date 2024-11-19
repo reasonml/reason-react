@@ -2,9 +2,6 @@ open Jest;
 
 module FormData = React.Experimental.FormData;
 
-/* https://react.dev/blog/2022/03/08/react-18-upgrade-guide#configuring-your-testing-environment */
-[%%mel.raw "globalThis.IS_REACT_ACT_ENVIRONMENT = true"];
-
 type message = {
   text: string,
   sending: bool,

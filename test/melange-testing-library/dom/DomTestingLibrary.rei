@@ -186,13 +186,10 @@ module WaitForElement: {
     options;
 };
 
-let waitFor:
-  (~callback: unit => unit, ~options: WaitFor.options=?, unit) =>
-  Js.Promise.t('a);
+let waitFor: (~options: WaitFor.options=?, unit => unit) => Js.Promise.t('a);
 
 let waitForPromise:
-  (~callback: unit => Js.Promise.t('a), ~options: WaitFor.options=?, unit) =>
-  Js.Promise.t('b);
+  (~options: WaitFor.options=?, unit => Js.Promise.t('a)) => Js.Promise.t('b);
 
 let waitForElement:
   (~callback: unit => 'a=?, ~options: WaitForElement.options=?, unit) =>
