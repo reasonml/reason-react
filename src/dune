@@ -9,7 +9,6 @@
   ReactDOM
   ReactDOMServer
   ReactDOMTestUtils
-  ReactTestRenderer
   ReasonReactRouter
   ReasonReactErrorBoundary)
  (preprocess
