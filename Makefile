@@ -33,6 +33,7 @@ jest-watch: ## Run the jest unit tests in watch mode
 
 .PHONY: jest-devtools
 jest-devtools: ## Run the jest unit tests in watch mode
+	@echo "open Chrome and go to chrome://inspect"
 	@node --inspect-brk node_modules/.bin/jest --runInBand --detectOpenHandles
 
 .PHONY: test
