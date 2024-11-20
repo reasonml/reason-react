@@ -3,7 +3,8 @@ module Foo = {
   let createElement = (~lola) => <div> {React.string(lola)} </div>;
 };
 
-module Bar = {
+/* This isn't valid running code, since Foo gets transformed into Foo.make, not createElement. */
+module Invalid_case = {
   [@react.component]
   let make = (~lola) => {
     <Foo lola />;

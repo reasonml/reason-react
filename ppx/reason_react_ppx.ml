@@ -1330,8 +1330,8 @@ let jsxMapper =
               (Invalid_argument
                  "JSX: `createElement` should be preceeded by a module name.")
         (* Foo.createElement(~prop1=foo, ~prop2=bar, ~children=[], ()) *)
-        | { txt = Ldot (modulePath, ("createElement" | "make" as caller)); _ } ->
-            transformUppercaseCall3 ~ctxt ~caller modulePath mapper
+        | { txt = Ldot (modulePath, ("createElement" | "make")); _ } ->
+            transformUppercaseCall3 ~ctxt ~caller:"make" modulePath mapper
               parentExpLoc attrs callArguments
         (* div(~prop1=foo, ~prop2=bar, ~children=[bla], ()) *)
         (* turn that into
