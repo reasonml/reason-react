@@ -663,11 +663,6 @@ let jsxMapper =
           (Invalid_argument
              "Key cannot be accessed inside of a component. Don't worry - you \
               can always key a component from its parent!")
-    | Pexp_fun (Labelled "ref", _, _, _) | Pexp_fun (Optional "ref", _, _, _) ->
-        raise
-          (Invalid_argument
-             "Ref cannot be passed as a normal prop. Please use `forwardRef` \
-              API instead.")
     | Pexp_fun
         ( ((Optional label | Labelled label) as arg),
           default,
