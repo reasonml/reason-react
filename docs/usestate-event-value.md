@@ -31,7 +31,7 @@ let make = () => {
   <input
     type_="text"
     value={name}
-    onChange={event => setName(_ => ReactEvent.Form.target(event)##value)
+    onChange={event => setName(_ => React.Event.Form.target(event)##value)
   />;
 };
 ```
@@ -62,7 +62,7 @@ let make = () => {
     value={name}
     onChange={
       event => {
-        let value = ReactEvent.Form.target(event)##value;
+        let value = React.Event.Form.target(event)##value;
         setName(_ => value)
       }
     }

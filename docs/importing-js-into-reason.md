@@ -16,7 +16,7 @@ export default function Greeting({ name }) {
 /* App.re */
 
 module Greeting = {
-  [@bs.module "./MyJavascriptFile.js"] [@react.component]
+  [@mel.module "./MyJavascriptFile.js"] [@react.component]
   external make: (~name: string) => React.element = "default";
 };
 
@@ -45,7 +45,7 @@ as its signature is concerned. To bind to it, we just make the prop optional.
 
 ```reason
 module Greeting = {
-  [@bs.module "./Greeting.js"] [@react.component]
+  [@mel.module "./Greeting.js"] [@react.component]
   external make: (~name: string=?) => React.element = "default";
 };
 ```
@@ -62,11 +62,11 @@ wrap it with our own component to add the logic.
 
 ```reason
 module GreetingJs = {
-  [@bs.module "./Greeting.js"] [@react.component]
+  [@mel.module "./Greeting.js"] [@react.component]
   external make: (~name: string) => React.element = "default";
 };
 
-module Greeting = { 
+module Greeting = {
   [@react.component]
   let make = (~name="Peter") => <GreetingJs name />;
 };

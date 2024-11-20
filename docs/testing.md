@@ -2,6 +2,8 @@
 title: Testing ReasonReact components
 ---
 
+<!-- TODO: Fix this -->
+
 Even though types make your code safer, it doesn't remove the need for testing!
 If you want to test your ReasonReact components using your JavaScript testing stack, that's perfectly alright, but if you prefer to write them in Reason, here are some testing frameworks and bindings to make your life easier:
 

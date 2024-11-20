@@ -8,12 +8,6 @@
       "adding-data-props": {
         "title": "Adding data-* attributes"
       },
-      "callback-handlers": {
-        "title": "Callback Handlers"
-      },
-      "children": {
-        "title": "Children"
-      },
       "clone-element": {
         "title": "cloneElement"
       },
@@ -26,14 +20,8 @@
       "components": {
         "title": "Components"
       },
-      "context-mixins": {
-        "title": "Context & Mixins"
-      },
-      "creation-props-self": {
-        "title": "Creation, Props & Self"
-      },
-      "custom-class-component-property": {
-        "title": "Custom Class/Component Property"
+      "context": {
+        "title": "Context"
       },
       "dom": {
         "title": "Working with DOM"
@@ -49,12 +37,6 @@
       },
       "example-projects": {
         "title": "Example Projects"
-      },
-      "functional-component": {
-        "title": "Functional Component"
-      },
-      "gentype": {
-        "title": "Gentype & Typescript"
       },
       "graphql-apollo": {
         "title": "GraphQL & Apollo"
@@ -77,12 +59,6 @@
       "installation": {
         "title": "Installation"
       },
-      "instance-variables": {
-        "title": "Instance Variables"
-      },
-      "interop": {
-        "title": "Talk to Existing ReactJS Code"
-      },
       "intro-example": {
         "title": "Intro Example"
       },
@@ -92,14 +68,8 @@
       "js-using-reason": {
         "title": "ReactJS using ReasonReact"
       },
-      "jsx-2": {
-        "title": "JSX (Old, Version 2)"
-      },
       "jsx": {
         "title": "JSX"
-      },
-      "lifecycles": {
-        "title": "Lifecycles"
       },
       "playground": {
         "title": "Playground"
@@ -107,17 +77,8 @@
       "props-spread": {
         "title": "Props Spread"
       },
-      "react-ref": {
-        "title": "React Ref"
-      },
       "reason-using-js": {
         "title": "ReasonReact using ReactJS"
-      },
-      "reasonreactcompat": {
-        "title": "ReasonReactCompat: migrating to 0.7.0 and JSX v3"
-      },
-      "record-field-send-handle-not-found": {
-        "title": "Record Field send/handle Not Found"
       },
       "refs": {
         "title": "Refs in React"
@@ -125,32 +86,14 @@
       "render-props": {
         "title": "Render Props"
       },
-      "render": {
-        "title": "Render"
-      },
-      "roadmap": {
-        "title": "Roadmap & Contribution"
-      },
-      "router-2": {
-        "title": "Router"
-      },
       "router": {
         "title": "Router"
-      },
-      "send-handle-callbacks-having-incompatible-types": {
-        "title": "send/handle callbacks having Incompatible Types"
       },
       "simple": {
         "title": "A List of Simple Examples"
       },
-      "state-actions-reducer": {
-        "title": "State, Actions & Reducer"
-      },
       "style": {
         "title": "Style"
-      },
-      "subscriptions-helper": {
-        "title": "Subscriptions Helper"
       },
       "tailwind-css": {
         "title": "Styling: Tailwind CSS"
@@ -165,19 +108,19 @@
         "title": "useState, useEffect in a Form"
       },
       "usedebounce-custom-hook": {
-        "title": "A Custom useDebounce Hook"
+        "title": "Custom Hooks"
       },
       "useeffect-hook": {
-        "title": "useEffect Hook"
+        "title": "useEffect"
       },
       "usereducer-hook": {
-        "title": "useReducer Hook"
+        "title": "useReducer"
       },
       "usestate-event-value": {
         "title": "Using Event Values With useState"
       },
       "usestate-hook": {
-        "title": "useState Hook"
+        "title": "useState"
       },
       "what-and-why": {
         "title": "What & Why"
@@ -197,6 +140,7 @@
     "categories": {
       "Getting Started": "Getting Started",
       "Core": "Core",
+      "Hooks": "Hooks",
       "ReactJS Idioms Equivalents": "ReactJS Idioms Equivalents",
       "FAQ": "FAQ",
       "Recipes & Snippets": "Recipes & Snippets",
