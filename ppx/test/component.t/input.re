@@ -41,6 +41,13 @@ module Forward_Ref = {
     });
 };
 
+module Ref_as_prop = {
+  [@react.component]
+  let make = (~children, ~ref) => {
+    <button ref className="FancyButton"> children </button>;
+  };
+};
+
 module Onclick_handler_button = {
   [@react.component]
   let make = (~name, ~isDisabled=?) => {
