@@ -25,5 +25,11 @@ describe("ref", () => {
       );
     let button = getByRole("FancyButton", container);
     expect(button->innerHTML)->toBe("Click me");
+    let content =
+      switch (Js.Nullable.toOption(domRef.current)) {
+      | Some(element) => element->innerHTML
+      | None => failwith("No element found")
+      };
+    expect(content)->toBe("Click me");
   })
 });
