@@ -15,14 +15,19 @@
       "refs",
       "testing"
     ],
+    "Hooks": [
+      "usestate-hook",
+      "usereducer-hook",
+      "useeffect-hook",
+      "custom-hooks"
+    ],
     "ReactJS Idioms Equivalents": [
       "invalid-prop-name",
       "props-spread",
       "component-as-prop",
       "ternary-shortcut",
-      "context-mixins",
+      "context",
       "custom-class-component-property",
-      "usestate-event-value",
       "error-boundaries"
     ],
     "FAQ": [
@@ -30,18 +35,12 @@
       "record-field-send-handle-not-found",
       "send-handle-callbacks-having-incompatible-types",
       "i-really-need-feature-x-from-reactjs",
-      "element-type-is-invalid",
       "i-want-to-create-a-dom-element-without-jsx"
     ]
   },
   "examples": {
     "Recipes & Snippets": [
       "simple",
-      "usestate-hook",
-      "usereducer-hook",
-      "useeffect-hook",
-      "use-state-use-effect",
-      "usedebounce-custom-hook",
       "adding-data-props",
       "working-with-optional-data",
       "render-props",
