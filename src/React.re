@@ -894,7 +894,7 @@ module Experimental = {
     unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
     "useTransition";
 
-  /* https://es.react.dev/reference/react/useOptimistic */
+  /* https://react.dev/reference/react/useOptimistic */
   [@mel.module "react"]
   external useOptimistic:
     ('state, ('state, 'optimisticValue) => 'state) =>
