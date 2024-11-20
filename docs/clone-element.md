@@ -2,7 +2,7 @@
 title: cloneElement
 ---
 
-Signature: `let cloneElement: (reactElement, ~props: Js.t({..})=?, 'anyChildrenType) => reactElement`
+Signature: `let cloneElement: (React.element, ~props: Js.t({..})=?, 'anyChildrenType) => React.element`
 
 Same as ReactJS' [cloneElement](https://reactjs.org/docs/react-api.html#cloneelement). However, adding extra props to a ReasonReact component doesn't make sense; you'd use a [**render prop**](https://reactjs.org/docs/render-props.html). Therefore, `ReasonReact.cloneElement` is only used in edge-cases.
 
