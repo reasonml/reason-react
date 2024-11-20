@@ -889,6 +889,7 @@ module Experimental = {
   /* This module is used to bind to APIs for future versions of React. There is no guarantee of backwards compatibility or stability. */
   [@mel.module "react"] external usePromise: Js.Promise.t('a) => 'a = "use";
   [@mel.module "react"] external useContext: Context.t('a) => 'a = "use";
+  /* https://react.dev/reference/react/useTransition */
   [@mel.module "react"]
   external useTransitionAsync:
     unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
