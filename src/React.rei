@@ -565,7 +565,8 @@ module Uncurried: {
 };
 
 [@mel.module "react"]
-external startTransition: ([@mel.uncurry] (unit => unit)) => unit = "startTransition";
+external startTransition: ([@mel.uncurry] (unit => unit)) => unit =
+  "startTransition";
 
 [@mel.module "react"]
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
@@ -591,11 +592,11 @@ module Event: {
      the generic synthetic event. The rest are the specific ones.
 
      In each module, the type `t` commonly means "the type of that module" (OCaml convention). In our case, e.g.
-     `ReactEvent.Mouse.t` represents a ReactJS synthetic mouse event. You'd use it to type your props:
+     `React.Event.Mouse.t` represents a ReactJS synthetic mouse event. You'd use it to type your props:
 
      ```
      type props = {
-       onClick: ReactEvent.Mouse.t => unit
+       onClick: React.Event.Mouse.t => unit
      };
      ```
 
@@ -607,13 +608,13 @@ module Event: {
 
      ```
      let handleClick = ({state, props}, event) => {
-       ReactEvent.Mouse.preventDefault(event);
+       React.Event.Mouse.preventDefault(event);
        ...
      };
      let handleSubmit = ({state, props}, event) => {
        /* this handler can be triggered by either a Keyboard or a Mouse event; conveniently use the generic
           preventDefault */
-       ReactEvent.Synthetic.preventDefault(event);
+       React.Event.Synthetic.preventDefault(event);
        ...
      };
 
@@ -622,8 +623,8 @@ module Event: {
 
      How to translate idioms from ReactJS:
 
-     1. myMouseEvent.preventDefault() -> ReactEvent.Mouse.preventDefault(myMouseEvent)
-     2. myKeyboardEvent.which -> ReactEvent.Keyboard.which(myKeyboardEvent)
+     1. myMouseEvent.preventDefault() -> React.Event.Mouse.preventDefault(myMouseEvent)
+     2. myKeyboardEvent.which -> React.Event.Keyboard.which(myKeyboardEvent)
      */
   type synthetic('a);
 

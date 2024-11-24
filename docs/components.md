@@ -23,7 +23,7 @@ let make = (~name) => {
 This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells ReasonReact that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JS object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
 
 ```reason
-[@bs.obj]
+[@mel.obj]
 external makeProps: (~name: 'name, ~key: string=?, unit) => {. "name": 'name} = "";
 
 let make = (Props) => {
@@ -39,7 +39,7 @@ let make = (Props) => {
 };
 ```
 
-It has added a new function called  `makeProps` which uses [`[@bs.obj]`](https://melange.re/v2.0.0/communicate-with-javascript/#using-jst-objects) to create your props object. This function gets compiled away by Melange and will be replaced by object literals when used.
+It has added a new function called `makeProps` which uses [`[@mel.obj]`](https://melange.re/v4.0.0/communicate-with-javascript#using-js-t-objects) to create your props object. This function gets compiled away by Melange and will be replaced by object literals when used.
 
 ### A note on `children`
 
@@ -113,7 +113,7 @@ Reason also always opts for the safest form of a given hook as well. So `React.u
 
 ## Hand-writing components
 
-You don't need to use the `[@react.component]` declaration to write components. Instead you can write a pair of `foo` and `fooProps` functions such that `type fooProps: 'a => props and foo: props => React.element` and these will always work as React components! This works with your own version of [`[@bs.obj]`](https://melange.re/v2.0.0/communicate-with-javascript/#using-jst-objects), [`[bs.deriving abstract]`](https://melange.re/v2.0.0/communicate-with-javascript/#convert-records-into-abstract-types), or any other function that takes named args and returns a single props structure.
+You don't need to use the `[@react.component]` declaration to write components. Instead you can write a pair of `foo` and `fooProps` functions such that `type fooProps: 'a => props and foo: props => React.element` and these will always work as React components! This works with your own version of [`[@mel.obj]`](https://melange.re/v4.0.0/communicate-with-javascript#using-js-t-objects), [`[bs.deriving abstract]`](https://melange.re/v4.0.0/communicate-with-javascript#using-external-functions), or any other function that takes named args and returns a single props structure.
 
 ## Interop
 
@@ -122,7 +122,7 @@ You don't need to use the `[@react.component]` declaration to write components. 
 The make function above is a normal React component, you can use it today with code like:
 
 ```js
-const MyComponent = require('./path/to/Component.bs.js').make;
+const MyComponent = require('./path/to/Component.js').make;
 
 <MyComponent name="Regina" />
 ```
@@ -134,21 +134,21 @@ It also works seamlessly with [`[@genType]`](https://github.com/cristianoc/genTy
 Using a component written in JS requires a single external to annotate the types it takes.
 
 ```reason
-[@bs.module "./path/to/Component.js"][@react.component]
+[@mel.module "./path/to/Component.js"][@react.component]
 external make: (~name: string) => React.element = "default";
 ```
 
 This `[@react.component]` annotation will, again, generate both `make` and `makeProps` functions for you with the correct types. Here's an example of what this desugars to without `[@react.component]`:
 
 ```reason
-[@bs.obj]
+[@mel.obj]
 external makeProps: (~name: 'name, ~key: string=?, unit) => {. "name": 'name} = "";
 
-[@bs.module "./path/to/Component.js"]
+[@mel.module "./path/to/Component.js"]
 external make: ({. "name": string}) => React.element = "default";
 ```
 
-**Note on `default`:** to understand what `default` means, see [the Melange docs on ES6](https://melange.re/v2.0.0/communicate-with-javascript/#default-es6-values).
+**Note on `default`:** to understand what `default` means, see [the Melange docs on ES6](https://melange.re/v4.0.0/communicate-with-javascript#default-es6-values).
 
 ## Component Naming
 
