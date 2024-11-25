@@ -47,8 +47,8 @@ let labelled str = Labelled str
 let optional str = Optional str
 
 module Binding = struct
-  (* Binding is the interface that the ppx uses to interact with the bindings.
-     Here we define the same APIs as the bindings but it generates Parsetree *)
+  (* Binding is the interface that the ppx relies on to interact with the react bindings.
+     Here we define the same APIs as the bindings but it generates Parsetree nodes *)
   module ReactDOM = struct
     let domProps ~applyLoc ~loc props =
       Builder.pexp_apply ~loc:applyLoc
@@ -58,9 +58,6 @@ module Binding = struct
   end
 
   module React = struct
-    let null ~loc =
-      Builder.pexp_ident ~loc { loc; txt = Ldot (Lident "React", "null") }
-
     let array ~loc children =
       Builder.pexp_apply ~loc
         (Builder.pexp_ident ~loc
@@ -98,8 +95,11 @@ let rec find_opt p = function
   | [] -> None
   | x :: l -> if p x then Some x else find_opt p l
 
-let getLabel str =
+let getLabelOrEmpty str =
   match str with Optional str | Labelled str -> str | Nolabel -> ""
+
+let getLabel str =
+  match str with Optional str | Labelled str -> Some str | Nolabel -> None
 
 let optionIdent = Lident "option"
 
@@ -107,9 +107,10 @@ let constantString ~loc str =
   Builder.pexp_constant ~loc (Pconst_string (str, Location.none, None))
 
 let safeTypeFromValue valueStr =
-  let valueStr = getLabel valueStr in
-  match String.sub valueStr 0 1 with "_" -> "T" ^ valueStr | _ -> valueStr
-[@@raises Invalid_argument]
+  match getLabel valueStr with
+  | Some valueStr when String.sub valueStr 0 1 = "_" -> ("T" ^ valueStr)
+  | Some valueStr -> valueStr
+  | None -> ""
 
 let keyType loc = Builder.ptyp_constr ~loc { loc; txt = Lident "string" } []
 
@@ -224,14 +225,12 @@ let otherAttrsPure { attr_name = loc; _ } = loc.txt <> "react.component"
 let hasAttrOnBinding { pvb_attributes; _ } =
   find_opt hasAttr pvb_attributes <> None
 
-(* Finds the name of the variable the binding is assigned to, otherwise raises
-   Invalid_argument *)
+(* Finds the name of the variable the binding is assigned to, otherwise raises an error *)
 let getFnName binding =
   match binding with
   | { pvb_pat = { ppat_desc = Ppat_var { txt; _ }; _ }; _ } -> txt
-  | _ ->
-      raise (Invalid_argument "react.component calls cannot be destructured.")
-[@@raises Invalid_argument]
+  | { pvb_loc; _} ->
+      Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
 
 let makeNewBinding binding expression newName =
   match binding with
@@ -243,22 +242,17 @@ let makeNewBinding binding expression newName =
         pvb_expr = expression;
         pvb_attributes = [ merlinFocus ];
       }
-  | _ ->
-      raise (Invalid_argument "react.component calls cannot be destructured.")
-[@@raises Invalid_argument]
+  | { pvb_loc; _ } ->
+      Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
 
-(* Lookup the value of `props` otherwise raise Invalid_argument error *)
-let getPropsNameValue _acc (loc, exp) =
-  match (loc, exp) with
+(* Lookup the value of `props` otherwise raise errorf *)
+let getPropsNameValue _acc (loc, expr) =
+  match (loc, expr) with
   | ( { txt = Lident "props"; _ },
       { pexp_desc = Pexp_ident { txt = Lident str; _ }; _ } ) ->
       { propsName = str }
-  | { txt; _ }, _ ->
-      raise
-        (Invalid_argument
-           ("react.component only accepts props as an option, given: "
-          ^ Longident.last_exn txt))
-[@@raises Invalid_argument]
+  | { txt; loc }, _ ->
+      Location.raise_errorf ~loc "[@react.component] only accepts 'props' as a field, given: %s" (Longident.last_exn txt)
 
 (* Lookup the `props` record or string as part of [@react.component] and store
    the name for use when rewriting *)
@@ -284,12 +278,10 @@ let getPropsAttr payload =
          }
         :: _rest)) ->
       { propsName = "props" }
-  | Some (PStr ({ pstr_desc = Pstr_eval (_, _); _ } :: _rest)) ->
-      raise
-        (Invalid_argument
-           "react.component accepts a record config with props as an options.")
+  | Some (PStr ({ pstr_desc = Pstr_eval (_, _); pstr_loc; _ } :: _rest)) ->
+      Location.raise_errorf ~loc:pstr_loc
+        "[@react.component] accepts a record config with 'props' as a field."
   | _ -> defaultProps
-[@@raises Invalid_argument]
 
 (* Plucks the label, loc, and type_ from an AST node *)
 let pluckLabelDefaultLocType (label, default, _, _, loc, type_) =
@@ -370,7 +362,6 @@ let rec recursivelyMakeNamedArgsForExternal ~types_come_from_signature list args
            | _label, Some type_, _ -> type_)
            args)
   | [] -> args
-[@@raises Invalid_argument]
 
 (* Build an AST node for the [@bs.obj] representing props for a component *)
 let makePropsValue fnName ~types_come_from_signature loc
@@ -400,7 +391,6 @@ let makePropsValue fnName ~types_come_from_signature loc
       ];
     pval_loc = loc;
   }
-[@@raises Invalid_argument]
 
 (* Build an AST node representing an `external` with the definition of the
    [@bs.obj] *)
@@ -413,7 +403,6 @@ let makePropsExternal fnName loc ~component_is_external
         (makePropsValue ~types_come_from_signature:component_is_external fnName
            loc namedArgListWithKeyAndRef propsType);
   }
-[@@raises Invalid_argument]
 
 (* Build an AST node for the signature of the `external` definition *)
 let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
@@ -424,7 +413,6 @@ let makePropsExternalSig fnName loc namedArgListWithKeyAndRef propsType =
         (makePropsValue ~types_come_from_signature:true fnName loc
            namedArgListWithKeyAndRef propsType);
   }
-[@@raises Invalid_argument]
 
 (* Build an AST node for the props name when converted to an object inside the
    function signature *)
@@ -458,7 +446,14 @@ let makePropsType ~loc namedTypeList =
       };
     ]
 
-let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
+type component_type = Uppercase | Lowercase
+
+let jsxExprAndChildren ~component_type ~loc ~ctxt mapper ~keyProps children =
+  let ident =
+    match component_type with
+    | Uppercase -> Lident "React"
+    | Lowercase -> Lident "ReactDOM"
+  in
   let childrenExpr =
     Option.map (transformChildrenIfListUpper ~loc ~mapper ~ctxt) children
   in
@@ -492,7 +487,10 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
          children *)
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxs") },
         None,
-        Some (Binding.React.array ~loc children) )
+        Some
+          (match component_type with
+          | Uppercase -> children
+          | Lowercase -> Binding.React.array ~loc children) )
   | None, (label, key) :: _ ->
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
@@ -500,15 +498,14 @@ let jsxExprAndChildren ~ident ~loc ~ctxt mapper ~keyProps children =
   | None, [] ->
       (Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsx") }, None, None)
 
-let reactJsxExprAndChildren = jsxExprAndChildren ~ident:(Lident "React")
-let reactDomJsxExprAndChildren = jsxExprAndChildren ~ident:(Lident "ReactDOM")
+let reactJsxExprAndChildren = jsxExprAndChildren ~component_type:Uppercase
+let reactDomJsxExprAndChildren = jsxExprAndChildren ~component_type:Lowercase
 
 (* Builds an AST node for the entire `external` definition of props *)
 let makeExternalDecl fnName loc namedArgListWithKeyAndRef namedTypeList =
   makePropsExternal ~component_is_external:false fnName loc
     (List.map pluckLabelDefaultLocType namedArgListWithKeyAndRef)
     (makePropsType ~loc namedTypeList)
-[@@raises Invalid_argument]
 
 (* TODO: some line number might still be wrong *)
 let jsxMapper =
@@ -519,7 +516,7 @@ let jsxMapper =
     let argsForMake = argsWithLabels in
     let keyProps, otherProps =
       List.partition
-        (fun (arg_label, _) -> "key" = getLabel arg_label)
+        (fun (arg_label, _) -> "key" = getLabelOrEmpty arg_label)
         argsForMake
     in
     let jsxExpr, key, childrenProp =
@@ -533,10 +530,12 @@ let jsxMapper =
              (label, mapper#expression ctxt expression))
     in
     let isCap str =
-      let first = String.sub str 0 1 [@@raises Invalid_argument] in
-      let capped = String.uppercase_ascii first in
-      first = capped
-        [@@raises Invalid_argument]
+      match String.length str with
+      | 0 -> false
+      | _ ->
+          let first = String.sub str 0 1 in
+          let capped = String.uppercase_ascii first in
+          first = capped
     in
     let ident =
       match modulePath with
@@ -598,7 +597,7 @@ let jsxMapper =
     let componentNameExpr = constantString ~loc:callerLoc id in
     let keyProps, nonChildrenProps =
       List.partition
-        (fun (arg_label, _) -> "key" = getLabel arg_label)
+        (fun (arg_label, _) -> "key" = getLabelOrEmpty arg_label)
         nonChildrenProps
     in
 
@@ -647,17 +646,9 @@ let jsxMapper =
   let rec recursivelyTransformNamedArgsForMake ~ctxt mapper expr list =
     let expr = mapper#expression ctxt expr in
     match expr.pexp_desc with
-    (* TODO: make this show up with a loc. *)
     | Pexp_fun (Labelled "key", _, _, _) | Pexp_fun (Optional "key", _, _, _) ->
-        raise
-          (Invalid_argument
-             "Key cannot be accessed inside of a component. Don't worry - you \
-              can always key a component from its parent!")
-    | Pexp_fun (Labelled "ref", _, _, _) | Pexp_fun (Optional "ref", _, _, _) ->
-        raise
-          (Invalid_argument
-             "Ref cannot be passed as a normal prop. Please use `forwardRef` \
-              API instead.")
+        Location.raise_errorf ~loc:expr.pexp_loc
+          ("~key cannot be accessed from the component props. Please set the key where the component is being used.")
     | Pexp_fun
         ( ((Optional label | Labelled label) as arg),
           default,
@@ -704,7 +695,6 @@ let jsxMapper =
           "reason-react-ppx: react.component refs only support plain arguments \
            and type annotations."
     | _ -> (list, None)
-      [@@raises Invalid_argument]
   in
 
   let argToType types (name, default, _noLabelName, _alias, loc, type_) =
@@ -726,7 +716,7 @@ let jsxMapper =
           } )
         :: types
     | Some type_, name, Some _default ->
-        ( getLabel name,
+        ( getLabelOrEmpty name,
           [],
           {
             ptyp_desc = Ptyp_constr ({ loc; txt = optionIdent }, [ type_ ]);
@@ -735,7 +725,7 @@ let jsxMapper =
             ptyp_attributes = [];
           } )
         :: types
-    | Some type_, name, _ -> (getLabel name, [], type_) :: types
+    | Some type_, name, _ -> (getLabelOrEmpty name, [], type_) :: types
     | None, Optional label, _ ->
         ( label,
           [],
@@ -767,7 +757,6 @@ let jsxMapper =
           } )
         :: types
     | _ -> types
-      [@@raises Invalid_argument]
   in
 
   let argToConcreteType types (name, loc, type_) =
@@ -1100,7 +1089,7 @@ let jsxMapper =
             in
             let pluckArg (label, _, _, alias, loc, _) =
               ( label,
-                match getLabel label with
+                match getLabelOrEmpty label with
                 | "" -> Builder.pexp_ident ~loc { txt = Lident alias; loc }
                 | labelString ->
                     Builder.pexp_apply ~loc
