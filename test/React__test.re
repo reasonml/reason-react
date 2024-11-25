@@ -233,6 +233,38 @@ describe("React", () => {
     expect(image->getAttribute("src"))->toEqual(Some("https://foo.png"));
   });
 
+  test("React.act", () => {
+    module Counter = {
+      [@react.component]
+      let make = () => {
+        let (count, setCount) = React.useState(() => 0);
+
+        <div>
+          <button role="Increment" onClick={_ => setCount(prev => prev + 1)}>
+            {React.string("Increment")}
+          </button>
+          <span role="counter"> {React.string(string_of_int(count))} </span>
+        </div>;
+      };
+    };
+
+    let containerRef: ref(Js.nullable(ReactTestingLibrary.renderResult)) =
+      ref(Js.Nullable.null);
+
+    React.act(() => {
+      let container = ReactTestingLibrary.render(<Counter />);
+      let button = getByRole("Increment", container);
+      FireEvent.click(button);
+      containerRef.contents = Js.Nullable.return(container);
+    });
+
+    switch (Js.Nullable.toOption(containerRef.contents)) {
+    | Some(container) =>
+      expect(getByRole("counter", container)->innerHTML)->toBe("1")
+    | None => failwith("Container is null")
+    };
+  });
+
   test("ErrorBoundary + Suspense", () => {
     [%mel.raw "console.error = () => {}"] |> ignore;
 

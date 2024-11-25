@@ -87,7 +87,7 @@ module App = {
       React.useState(() =>
         [
           {
-            text: "Hola!",
+            text: {j|¡Hola!|j},
             sending: false,
             key: 1,
           },
@@ -136,7 +136,7 @@ describe("Form with useOptimistic", () => {
     let container = ReactTestingLibrary.render(<App />);
 
     ReactTestingLibrary.actAsync(() => {
-      let.await _ = findByString("Hola!", container);
+      let.await _ = findByString({j|¡Hola!|j}, container);
 
       let.await button = findByString("Enviar", container);
       let.await input = findByPlaceholderText("message", container);
