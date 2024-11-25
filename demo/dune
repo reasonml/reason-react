@@ -3,7 +3,7 @@
  (alias melange-app)
  (module_systems
   (es6 mjs))
- (libraries reason-react jest melange.belt melange.dom)
+ (libraries reason-react melange.belt melange.dom)
  (runtime_deps index.html)
  (preprocess
   (pps melange.ppx reason-react-ppx)))

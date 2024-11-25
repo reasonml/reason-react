@@ -87,7 +87,7 @@ module App = {
       React.useState(() =>
         [
           {
-            text: "Hola!",
+            text: {j|¡Hola!|j},
             sending: false,
             key: 1,
           },
