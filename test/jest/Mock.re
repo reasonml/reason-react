@@ -5,7 +5,7 @@ let undefined: undefined = Js.Undefined.empty;
 type mock('a);
 
 type t('a) = mock('a);
-[@mel.scope "jest"] external fn: unit => 'a = "fn";
+[@mel.scope "jest"] external fn: [@mel.unwrap] (unit => 'a) = "fn";
 [@mel.scope "jest"] external fnWithImplementation: 'a => 'a = "fn";
 [@mel.scope "jest"] external mockModule: string => unit = "mock";
 external getMock: 'a => t('a) = "%identity";

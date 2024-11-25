@@ -31,5 +31,54 @@ describe("ref", () => {
       | None => failwith("No element found")
       };
     expect(content)->toBe("Click me");
-  })
+  });
+
+  test("with callback ref", () => {
+    let callbackRef = Mock.fn();
+
+    let refWithCleanup =
+      ReactDOM.Ref.callbackDomRef(_ref => {ignore(callbackRef())});
+
+    let _container =
+      ReactTestingLibrary.render(
+        <Button_with_ref ref=refWithCleanup>
+          {React.string("Click me")}
+        </Button_with_ref>,
+      );
+
+    expect(callbackRef->Mock.getMock)->toHaveBeenCalled();
+  });
+
+  let (let.await) = (p, f) => Js.Promise.then_(f, p);
+
+  testPromise("with callback ref and cleanup", finish => {
+    let callbackRef = Mock.fnWithImplementation(_ => ());
+    let callbackCleanupRef = Mock.fnWithImplementation(_ => ());
+
+    let refWithCleanup =
+      ReactDOM.Ref.callbackRefWithCleanup(_ref => {
+        callbackRef();
+        () => {
+          callbackCleanupRef();
+        };
+      });
+
+    let.await _ =
+      ReactTestingLibrary.actAsync(() => {
+        let _container =
+          ReactTestingLibrary.render(
+            <Button_with_ref ref=refWithCleanup>
+              {React.string("Click me")}
+            </Button_with_ref>,
+          );
+        Js.Promise.resolve();
+      });
+
+    expect(callbackRef->Mock.getMock)->toHaveBeenCalledTimes(1);
+    expect(callbackCleanupRef->Mock.getMock)->toHaveBeenCalledTimes(0);
+
+    ReactTestingLibrary.cleanup();
+    expect(callbackCleanupRef->Mock.getMock)->toHaveBeenCalledTimes(1);
+    finish();
+  });
 });

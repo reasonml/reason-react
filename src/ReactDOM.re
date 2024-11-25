@@ -487,9 +487,13 @@ module Ref = {
   type t = domRef;
   type currentDomRef = React.ref(Js.nullable(Dom.element));
   type callbackDomRef = Js.nullable(Dom.element) => unit;
+  type callbackRefWithCleanup = (Js.nullable(Dom.element), unit) => unit;
 
   external domRef: currentDomRef => domRef = "%identity";
   external callbackDomRef: callbackDomRef => domRef = "%identity";
+  external callbackRefWithCleanup:
+    [@mel.unwrap] (callbackRefWithCleanup => domRef) =
+    "%identity";
 };
 
 /* This list isn't exhaustive. We'll add more as we go. */
