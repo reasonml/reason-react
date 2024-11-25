@@ -652,7 +652,7 @@ type domProps = {
   [@mel.optional]
   acceptCharset: option(string),
   [@mel.optional]
-  action: option(string),
+  action: option(string), /* uri */
   [@mel.optional]
   allowFullScreen: option(bool),
   [@mel.optional]
