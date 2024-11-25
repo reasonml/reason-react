@@ -47,6 +47,7 @@ module DummyContext = {
 
 [@mel.get] external tagName: Dom.element => string = "tagName";
 [@mel.get] external innerHTML: Dom.element => string = "innerHTML";
+[@mel.set] external setInnerHTML: (Dom.element, string) => unit = "innerHTML";
 
 let getByRole = (role, container) => {
   ReactTestingLibrary.getByRole(~matcher=`Str(role), container);
@@ -62,6 +63,24 @@ let getByTag = (tag, container) => {
 [@mel.send]
 external getAttribute: (Dom.element, string) => option(string) =
   "getAttribute";
+[@mel.set] external setTitle: (Dom.element, string) => unit = "title";
+[@mel.get] external getTitle: Dom.element => string = "title";
+
+let (let.await) = (p, f) => Js.Promise.then_(f, p);
+
+external createElement: string => Dom.element = "document.createElement";
+[@mel.send]
+external appendChild: (Dom.element, Dom.element) => unit = "appendChild";
+external document: Dom.element = "document";
+external body: Dom.element = "document.body";
+external querySelector: (string, Dom.element) => option(Dom.element) =
+  "document.querySelector";
+
+[@mel.new]
+external mouseEvent: (string, Js.t('a)) => Dom.event = "MouseEvent";
+
+[@mel.send]
+external dispatchEvent: (Dom.element, Dom.event) => unit = "dispatchEvent";
 
 describe("React", () => {
   test("can render DOM elements", () => {
@@ -233,37 +252,120 @@ describe("React", () => {
     expect(image->getAttribute("src"))->toEqual(Some("https://foo.png"));
   });
 
-  test("React.act", () => {
-    module Counter = {
-      [@react.component]
-      let make = () => {
-        let (count, setCount) = React.useState(() => 0);
+  module Counter = {
+    [@react.component]
+    let make = () => {
+      let (count, setCount) = React.Uncurried.useState(() => 0);
 
-        <div>
-          <button role="Increment" onClick={_ => setCount(prev => prev + 1)}>
-            {React.string("Increment")}
-          </button>
-          <span role="counter"> {React.string(string_of_int(count))} </span>
-        </div>;
-      };
+      React.useEffect1(
+        () => {
+          document->setTitle(
+            "You clicked " ++ Int.to_string(count) ++ " times",
+          );
+          None;
+        },
+        [|count|],
+      );
+
+      <div>
+        <button
+          className="Increment" onClick={_ => setCount(. prev => prev + 1)}>
+          {React.string("Increment")}
+        </button>
+        <span className="Value"> {React.string(string_of_int(count))} </span>
+      </div>;
+    };
+  };
+
+  testPromise("act", finish => {
+    /* This test doesn't use ReactTestingLibrary to test the act API, and the code comes from
+       https://react.dev/reference/react/act example */
+
+    let container: Dom.element = createElement("div");
+    body->appendChild(container);
+
+    let.await () =
+      React.act(() => {
+        let root = ReactDOM.Client.createRoot(container);
+        ReactDOM.Client.render(root, <Counter />);
+      });
+
+    let valueElement = querySelector(".Value", container);
+    switch (valueElement) {
+    | Some(value) => expect(value->innerHTML)->toBe("0")
+    | None => failwith("Can't find 'Value' element")
     };
 
-    let containerRef: ref(option(ReactTestingLibrary.renderResult)) =
-      ref(None);
+    let title = getTitle(document);
+    expect(title)->toBe("You clicked 0 times");
 
-    React.act(() => {
-      let container = ReactTestingLibrary.render(<Counter />);
-      let button = getByRole("Increment", container);
-      FireEvent.click(button);
-      containerRef.contents = Some(container);
-      Js.Promise.resolve();
-    });
+    let.await () =
+      React.act(() => {
+        let buttonElement = querySelector(".Increment", container);
+        switch (buttonElement) {
+        | Some(button) =>
+          dispatchEvent(button, mouseEvent("click", {"bubbles": true}))
+        | None => failwith("Can't find 'Increment' button")
+        };
+      });
 
-    switch (containerRef.contents) {
-    | Some(container) =>
-      expect(getByRole("counter", container)->innerHTML)->toBe("1")
-    | None => failwith("Container is null")
+    let valueElement = querySelector(".Value", container);
+    switch (valueElement) {
+    | Some(value) => expect(value->innerHTML)->toBe("1")
+    | None => failwith("Can't find 'Value' element")
     };
+
+    let title = getTitle(document);
+    expect(title)->toBe("You clicked 1 times");
+
+    finish();
+  });
+
+  testPromise("actAsync", finish => {
+    /* This test doesn't use ReactTestingLibrary to test the act API, and the code comes from
+       https://react.dev/reference/react/act example */
+
+    body->setInnerHTML("");
+    let container: Dom.element = createElement("div");
+    body->appendChild(container);
+
+    let.await () =
+      React.actAsync(() => {
+        let root = ReactDOM.Client.createRoot(container);
+        ReactDOM.Client.render(root, <Counter />);
+        Js.Promise.resolve();
+      });
+
+    let valueElement = querySelector(".Value", container);
+    switch (valueElement) {
+    | Some(value) => expect(value->innerHTML)->toBe("0")
+    | None => failwith("Can't find 'Value' element")
+    };
+
+    let title = getTitle(document);
+    expect(title)->toBe("You clicked 0 times");
+
+    let.await () =
+      React.actAsync(() => {
+        let buttonElement = querySelector(".Increment", container);
+        switch (buttonElement) {
+        | Some(button) =>
+          dispatchEvent(button, mouseEvent("click", {"bubbles": true}))
+        | None => failwith("Can't find 'Increment' button")
+        };
+        Js.Promise.resolve();
+      });
+
+    let valueElement = querySelector(".Value", container);
+    switch (valueElement) {
+    | Some(value) => expect(value->innerHTML)->toBe("1")
+    | None => failwith("Can't find 'Value' element")
+    };
+
+    let title = getTitle(document);
+    expect(title)->toBe("You clicked 1 times");
+
+    finish();
   });
 
   test("ErrorBoundary + Suspense", () => {
