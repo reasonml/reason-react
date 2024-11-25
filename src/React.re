@@ -905,7 +905,7 @@ module Experimental = {
   /* https://react.dev/reference/react/useOptimistic */
   [@mel.module "react"]
   external useOptimistic:
-    ('state, ('state, 'optimisticValue) => 'state) =>
+    ('state, [@mel.uncurry] (('state, 'optimisticValue) => 'state)) =>
     ('state, 'optimisticValue => unit) =
     "useOptimistic";
 
