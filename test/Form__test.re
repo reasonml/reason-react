@@ -1,3 +1,5 @@
+[@alert "-deprecated"];
+
 open Jest;
 open Jest.Expect;
 open ReactDOMTestUtils;
@@ -25,7 +27,11 @@ module Thread = {
     let (optimisticMessages, addOptimisticMessage) =
       React.Experimental.useOptimistic(messages, (state, newMessage) =>
         [
-          {text: newMessage, sending: true, key: List.length(state) + 1},
+          {
+            text: newMessage,
+            sending: true,
+            key: List.length(state) + 1,
+          },
           ...state,
         ]
       );
@@ -84,7 +90,15 @@ module App = {
   [@react.component]
   let make = () => {
     let (messages, setMessages) =
-      React.useState(() => [{text: "¡Hola!", sending: false, key: 1}]);
+      React.useState(() =>
+        [
+          {
+            text: "¡Hola!",
+            sending: false,
+            key: 1,
+          },
+        ]
+      );
 
     let sendMessage = formData => {
       let formMessage = FormData.get("message", formData);
@@ -95,7 +109,14 @@ module App = {
         | JSString(text) =>
           let _ =
             setMessages(messages =>
-              [{text, sending: true, key: 1}, ...messages]
+              [
+                {
+                  text,
+                  sending: true,
+                  key: 1,
+                },
+                ...messages,
+              ]
             );
           Js.Promise.resolve();
         | _ => Js.Promise.resolve()

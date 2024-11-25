@@ -1,3 +1,5 @@
+[@alert "-deprecated"];
+
 open Jest;
 open Jest.Expect;
 open ReactDOMTestUtils;
@@ -47,7 +49,11 @@ let store = (initialState: 'a) => {
     };
   };
 
-  {getState, setState, subscribe};
+  {
+    getState,
+    setState,
+    subscribe,
+  };
 };
 
 module DummyStatefulComponent = {

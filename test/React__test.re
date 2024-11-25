@@ -1,3 +1,5 @@
+[@alert "-deprecated"];
+
 open Jest;
 open Jest.Expect;
 open ReactDOMTestUtils;
@@ -24,7 +26,10 @@ module DummyComponentThatMapsChildren = {
       {children->React.Children.mapWithIndex((element, index) => {
          React.cloneElement(
            element,
-           {"key": string_of_int(index), "data-index": index},
+           {
+             "key": string_of_int(index),
+             "data-index": index,
+           },
          )
        })}
     </div>;
@@ -318,7 +323,10 @@ describe("React", () => {
     act(() => {
       ReactDOM.Client.render(
         root,
-        render({name: "Joe", imageUrl: "https://foo.png"}),
+        render({
+          name: "Joe",
+          imageUrl: "https://foo.png",
+        }),
       )
     });
 

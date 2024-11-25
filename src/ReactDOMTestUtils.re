@@ -2,39 +2,32 @@ type undefined = Js.undefined(unit);
 
 let undefined: undefined = Js.Undefined.empty;
 
-[@deprecated "use React.act instead"] [@mel.module "react"]
+[@mel.module "react"]
 external reactAct: ((. unit) => undefined) => unit = "act";
 
 [@deprecated "use React.act instead"]
 let act: (unit => unit) => unit =
-  [@alert "-deprecated"]
-  (
-    func => {
-      let reactFunc =
-        (.) => {
-          func();
-          undefined;
-        };
-      reactAct(reactFunc);
-    }
-  );
+  func => {
+    let reactFunc =
+      (.) => {
+        func();
+        undefined;
+      };
+    reactAct(reactFunc);
+  };
 
-[@deprecated "use React.actAsync instead"] [@mel.module "react"]
+[@mel.module "react"]
 external reactActAsync: ((. unit) => Js.Promise.t('a)) => Js.Promise.t(unit) =
   "act";
 
 [@deprecated "use React.actAsync instead"]
-let actAsync =
-  [@alert "-deprecated"]
-  (
-    func => {
-      let reactFunc =
-        (.) => {
-          func();
-        };
-      reactActAsync(reactFunc);
-    }
-  );
+let actAsync = func => {
+  let reactFunc =
+    (.) => {
+      func();
+    };
+  reactActAsync(reactFunc);
+};
 
 [@deprecated
   "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
@@ -97,49 +90,49 @@ module Simulate = {
   [@mel.scope "Simulate"]
   external blur: Dom.element => unit = "blur";
 
-  [@deprecated
-    "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
-  ]
-  [@mel.module "react-dom/test-utils"]
-  [@mel.scope "Simulate"]
+  [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
   external changeWithEvent: (Dom.element, 'event) => unit = "change";
 
   [@deprecated
     "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
   ]
-  let changeWithValue =
-    [@alert "-deprecated"]
-    (
-      (element, value) => {
-        let event = {
-          "target": {
-            "value": value,
-          },
-        };
-        changeWithEvent(element, event);
-      }
-    );
+  let changeWithValue = (element, value) => {
+    let event = {
+      "target": {
+        "value": value,
+      },
+    };
+    changeWithEvent(element, event);
+  };
 
   [@deprecated
     "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
   ]
-  let changeWithChecked =
-    [@alert "-deprecated"]
-    (
-      (element, value) => {
-        let event = {
-          "target": {
-            "checked": value,
-          },
-        };
-        changeWithEvent(element, event);
-      }
-    );
-  [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+  let changeWithChecked = (element, value) => {
+    let event = {
+      "target": {
+        "checked": value,
+      },
+    };
+    changeWithEvent(element, event);
+  };
+  [@deprecated
+    "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
+  ]
+  [@mel.module "react-dom/test-utils"]
+  [@mel.scope "Simulate"]
   external canPlay: Dom.element => unit = "canPlay";
-  [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+  [@deprecated
+    "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
+  ]
+  [@mel.module "react-dom/test-utils"]
+  [@mel.scope "Simulate"]
   external timeUpdate: Dom.element => unit = "timeUpdate";
-  [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
+  [@deprecated
+    "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
+  ]
+  [@mel.module "react-dom/test-utils"]
+  [@mel.scope "Simulate"]
   external ended: Dom.element => unit = "ended";
   [@mel.module "react-dom/test-utils"] [@mel.scope "Simulate"]
   external focus: Dom.element => unit = "focus";
@@ -147,65 +140,33 @@ module Simulate = {
 
 external document: Dom.document = "document";
 
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
-]
-[@mel.return nullable]
-[@mel.send]
+[@mel.return nullable] [@mel.send]
 external querySelector: (Dom.element, string) => option(Dom.element) =
   "querySelector";
 
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
-]
 [@mel.send]
 external querySelectorAll:
   (Dom.element, string) => Js.Array.array_like(Dom.element) =
   "querySelectorAll";
 
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
-]
-[@mel.get]
-external textContent: Dom.element => string = "textContent";
+[@mel.get] external textContent: Dom.element => string = "textContent";
 
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
-]
-[@mel.return nullable]
-[@mel.get]
+[@mel.return nullable] [@mel.get]
 external body: Dom.document => option(Dom.element) = "body";
 
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
-]
 [@mel.send]
 external createElement: (Dom.document, string) => Dom.element =
   "createElement";
 
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
-]
-[@mel.send]
-external remove: Dom.element => unit = "remove";
+[@mel.send] external remove: Dom.element => unit = "remove";
 
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
-]
 [@mel.send]
 external appendChild: (Dom.element, Dom.element) => Dom.element =
   "appendChild";
 
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
-]
-let querySelectorAll =
-  [@alert "-deprecated"]
-  (
-    (element, string) => {
-      Js.Array.from(querySelectorAll(element, string));
-    }
-  );
+let querySelectorAll = (element, string) => {
+  Js.Array.from(querySelectorAll(element, string));
+};
 
 module DOM = {
   [@deprecated
@@ -218,9 +179,8 @@ module DOM = {
   [@deprecated
     "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
   ]
-  let findBySelector =
-    [@alert "-deprecated"]
-    ((element, selector) => querySelector(element, selector));
+  let findBySelector = (element, selector) =>
+    querySelector(element, selector);
 
   [@deprecated
     "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
@@ -231,56 +191,37 @@ module DOM = {
   [@deprecated
     "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
   ]
-  let findBySelectorAndTextContent =
-    [@alert "-deprecated"]
-    (
-      (element, selector, content) =>
-        querySelectorAll(element, selector)
-        |> Array.find_opt(node => node->textContent === content)
-    );
+  let findBySelectorAndTextContent = (element, selector, content) =>
+    querySelectorAll(element, selector)
+    |> Array.find_opt(node => node->textContent === content);
 
   [@deprecated
     "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-webapi instead."
   ]
-  let findBySelectorAndPartialTextContent =
-    [@alert "-deprecated"]
-    (
-      (element, selector, content) =>
-        querySelectorAll(element, selector)
-        |> Array.find_opt(node =>
-             Js.String.includes(~search=content, node->textContent)
-           )
-    );
+  let findBySelectorAndPartialTextContent = (element, selector, content) =>
+    querySelectorAll(element, selector)
+    |> Array.find_opt(node =>
+         Js.String.includes(~search=content, node->textContent)
+       );
 };
 
 [@deprecated
   "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
 ]
-let prepareContainer =
-  [@alert "-deprecated"]
-  (
-    (container: ref(option(Dom.element)), ()) => {
-      let containerElement = document->createElement("div");
-      let _: option(_) =
-        Option.map(
-          body => body->appendChild(containerElement),
-          document->body,
-        );
-      container := Some(containerElement);
-    }
-  );
+let prepareContainer = (container: ref(option(Dom.element)), ()) => {
+  let containerElement = document->createElement("div");
+  let _: option(_) =
+    Option.map(body => body->appendChild(containerElement), document->body);
+  container := Some(containerElement);
+};
 
 [@deprecated
   "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
 ]
-let cleanupContainer =
-  [@alert "-deprecated"]
-  (
-    (container: ref(option(Dom.element)), ()) => {
-      let _: option(_) = Option.map(remove, container^);
-      container := None;
-    }
-  );
+let cleanupContainer = (container: ref(option(Dom.element)), ()) => {
+  let _: option(_) = Option.map(remove, container^);
+  container := None;
+};
 
 [@deprecated
   "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
