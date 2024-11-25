@@ -248,17 +248,18 @@ describe("React", () => {
       };
     };
 
-    let containerRef: ref(Js.nullable(ReactTestingLibrary.renderResult)) =
-      ref(Js.Nullable.null);
+    let containerRef: ref(option(ReactTestingLibrary.renderResult)) =
+      ref(None);
 
     React.act(() => {
       let container = ReactTestingLibrary.render(<Counter />);
       let button = getByRole("Increment", container);
       FireEvent.click(button);
-      containerRef.contents = Js.Nullable.return(container);
+      containerRef.contents = Some(container);
+      Js.Promise.resolve();
     });
 
-    switch (Js.Nullable.toOption(containerRef.contents)) {
+    switch (containerRef.contents) {
     | Some(container) =>
       expect(getByRole("counter", container)->innerHTML)->toBe("1")
     | None => failwith("Container is null")
