@@ -1,14 +1,6 @@
-[@alert "-deprecated"];
-
 open Jest;
-open Jest.Expect;
-open ReactDOMTestUtils;
-open Belt;
 
 module FormData = React.Experimental.FormData;
-
-/* https://react.dev/blog/2022/03/08/react-18-upgrade-guide#configuring-your-testing-environment */
-[%%mel.raw "globalThis.IS_REACT_ACT_ENVIRONMENT = true"];
 
 type message = {
   text: string,
@@ -55,24 +47,26 @@ module Thread = {
       };
     };
     <>
-      {{
-         optimisticMessages->Belt.List.map(message =>
-           <div key={Int.toString(message.key)}>
-             {React.string(message.text)}
-             {message.sending
-                ? React.null
-                : <small> {React.string("(Enviando...)")} </small>}
-           </div>
-         );
-       }
-       ->Belt.List.toArray
-       ->React.array}
+      <div id="messages">
+        {{
+           optimisticMessages->Belt.List.map(message =>
+             <span key={Belt.Int.toString(message.key)}>
+               {React.string(message.text)}
+               {message.sending
+                  ? React.null
+                  : <small> {React.string("(Enviando...)")} </small>}
+             </span>
+           );
+         }
+         ->Belt.List.toArray
+         ->React.array}
+      </div>
       {React.cloneElement(
          ReactDOM.createElement(
            "form",
            ~props=ReactDOM.domProps(~ref=ReactDOM.Ref.domRef(formRef), ()),
            [|
-             <input type_="text" name="message" placeholder="Hola!" />,
+             <input type_="text" name="message" placeholder="message" />,
              <button type_="submit"> {React.string("Enviar")} </button>,
            |],
          ),
@@ -93,7 +87,7 @@ module App = {
       React.useState(() =>
         [
           {
-            text: "¡Hola!",
+            text: {j|¡Hola!|j},
             sending: false,
             key: 1,
           },
@@ -129,46 +123,37 @@ module App = {
   };
 };
 
+let (let.await) = (p, f) => Js.Promise.then_(f, p);
+
+let findByString = (text, container) =>
+  ReactTestingLibrary.findByText(~matcher=`Str(text), container);
+
+let findByPlaceholderText = (text, container) =>
+  ReactTestingLibrary.findByPlaceholderText(~matcher=`Str(text), container);
+
 describe("Form with useOptimistic", () => {
-  let container = ref(None);
+  testPromise("should render the form", finish => {
+    let container = ReactTestingLibrary.render(<App />);
 
-  beforeEach(prepareContainer(container));
-  afterEach(cleanupContainer(container));
+    ReactTestingLibrary.actAsync(() => {
+      let.await _ = findByString({j|¡Hola!|j}, container);
 
-  test("should render the form", () => {
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
+      let.await button = findByString("Enviar", container);
+      let.await input = findByPlaceholderText("message", container);
 
-    act(() => ReactDOM.Client.render(root, <App />));
+      FireEvent.change(
+        input,
+        ~eventInit={
+          "target": {
+            "value": "Let's go!",
+          },
+        },
+      );
 
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("button", "0")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-
-    let button = container->DOM.findBySelector("button");
-
-    act(() => {
-      switch (button) {
-      | Some(button) => Simulate.click(button)
-      | None => ()
-      }
+      FireEvent.click(button);
+      let.await _newMessage = findByString("Let's go!", container);
+      /* If the promise resolve, means the node is found in the DOM */
+      finish();
     });
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("button", "0")
-      ->Option.isSome,
-    )
-    ->toBe(false);
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("button", "1")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-  });
+  })
 });
