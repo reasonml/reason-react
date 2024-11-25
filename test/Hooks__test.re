@@ -1,10 +1,5 @@
 open Jest;
 open Jest.Expect;
-open ReactDOMTestUtils;
-open Belt;
-
-/* https://react.dev/blog/2022/03/08/react-18-upgrade-guide#configuring-your-testing-environment */
-[%%mel.raw "globalThis.IS_REACT_ACT_ENVIRONMENT = true"];
 
 type store('a) = {
   subscribe: (unit => unit, unit) => unit,
@@ -47,17 +42,43 @@ let store = (initialState: 'a) => {
     };
   };
 
-  {getState, setState, subscribe};
+  {
+    getState,
+    setState,
+    subscribe,
+  };
 };
 
 module DummyStatefulComponent = {
   [@react.component]
   let make = (~initialValue=0, ()) => {
-    let (value, setValue) = React.useState(() => initialValue);
+    let (value, setValue) = React.Uncurried.useState(() => initialValue);
+    let onClick = _ => setValue(. value => value + 1);
+    <button onClick> {React.int(value)} </button>;
+  };
+};
 
-    <button key="asdf" onClick={_ => setValue(value => value + 1)}>
-      value->React.int
-    </button>;
+module DummyIncrementReducerComponent = {
+  type action =
+    | Increment;
+
+  [@react.component]
+  let make = (~initialValue=0) => {
+    let (state, send) =
+      React.Uncurried.useReducer(
+        (state, action) =>
+          switch (action) {
+          | Increment => state + 1
+          },
+        initialValue,
+      );
+
+    <section>
+      <main> {React.int(state)} </main>
+      <button role="Increment" onClick={_ => {send(. Increment)}}>
+        {React.string("Increment")}
+      </button>
+    </section>;
   };
 };
 
@@ -65,10 +86,11 @@ module DummyReducerComponent = {
   type action =
     | Increment
     | Decrement;
+
   [@react.component]
-  let make = (~initialValue=0, ()) => {
+  let make = (~initialValue=0) => {
     let (state, send) =
-      React.useReducer(
+      React.Uncurried.useReducer(
         (state, action) =>
           switch (action) {
           | Increment => state + 1
@@ -77,13 +99,15 @@ module DummyReducerComponent = {
         initialValue,
       );
 
+    Js.log2("state", state);
+
     <>
-      <div className="value"> state->React.int </div>
-      <button onClick={_ => send(Increment)}>
-        "Increment"->React.string
+      <main> {React.int(state)} </main>
+      <button role="Increment" onClick={_ => send(. Increment)}>
+        {React.string("Increment")}
       </button>
-      <button onClick={_ => send(Decrement)}>
-        "Decrement"->React.string
+      <button role="Decrement" onClick={_ => send(. Decrement)}>
+        {React.string("Decrement")}
       </button>
     </>;
   };
@@ -93,10 +117,11 @@ module DummyReducerWithMapStateComponent = {
   type action =
     | Increment
     | Decrement;
+
   [@react.component]
   let make = (~initialValue=0, ()) => {
     let (state, send) =
-      React.useReducerWithMapState(
+      React.Uncurried.useReducerWithMapState(
         (state, action) =>
           switch (action) {
           | Increment => state + 1
@@ -106,21 +131,21 @@ module DummyReducerWithMapStateComponent = {
         initialValue => initialValue + 1,
       );
 
-    <>
-      <div className="value"> state->React.int </div>
-      <button onClick={_ => send(Increment)}>
-        "Increment"->React.string
+    <section>
+      <main role="Counter"> state->React.int </main>
+      <button role="Increment" onClick={_ => send(. Increment)}>
+        {React.string("Increment")}
       </button>
-      <button onClick={_ => send(Decrement)}>
-        "Decrement"->React.string
+      <button role="Decrement" onClick={_ => send(. Decrement)}>
+        {React.string("Decrement")}
       </button>
-    </>;
+    </section>;
   };
 };
 
-module DummyComponentWithEffect = {
+module WithEffect = {
   [@react.component]
-  let make = (~value=0, ~callback, ()) => {
+  let make = (~value, ~callback) => {
     React.useEffect1(
       () => {
         callback(value);
@@ -129,7 +154,26 @@ module DummyComponentWithEffect = {
       [|value|],
     );
 
-    <div />;
+    <span> {React.int(value)} </span>;
+  };
+};
+
+module RerenderOnEachClick = {
+  [@react.component]
+  let make = (~initialValue=0, ~maxValue=3, ~callback) => {
+    let (value, setValue) = React.Uncurried.useState(() => initialValue);
+    let onClick = _ =>
+      if (value < maxValue) {
+        setValue(. value => value + 1);
+      } else {
+        /* Fire a setState with the same value */
+        setValue(. value => value);
+      };
+
+    <section>
+      <h3> {React.string("RerenderOnEachClick")} </h3>
+      <button onClick> <WithEffect value callback /> </button>
+    </section>;
   };
 };
 
@@ -150,7 +194,7 @@ module DummyComponentWithLayoutEffect = {
 
 module DummyComponentWithRefAndEffect = {
   [@react.component]
-  let make = (~callback, ()) => {
+  let make = (~callback) => {
     let myRef = React.useRef(1);
     React.useEffect0(() => {
       myRef.current = myRef.current + 1;
@@ -161,266 +205,81 @@ module DummyComponentWithRefAndEffect = {
   };
 };
 
-describe("Hooks", () => {
-  let container = ref(None);
+let getByString = (text, container) =>
+  ReactTestingLibrary.getByText(~matcher=`Str(text), container);
 
-  beforeEach(prepareContainer(container));
-  afterEach(cleanupContainer(container));
+let findByPlaceholderText = (text, container) =>
+  ReactTestingLibrary.findByPlaceholderText(~matcher=`Str(text), container);
+
+[@mel.get] external tagName: Dom.element => string = "tagName";
+[@mel.get] external innerHTML: Dom.element => string = "innerHTML";
+
+let getByTag = (tag, container) => {
+  let fn = (_string, element: Dom.element) => {
+    element->tagName->Js.String.toLowerCase == tag;
+  };
+  ReactTestingLibrary.getByText(~matcher=`Func(fn), container);
+};
+
+let getByRole = (role, container) => {
+  ReactTestingLibrary.getByRole(~matcher=`Str(role), container);
+};
+
+let getByInnerHTML = (text, container) => {
+  let fn = (inner, _element: Dom.element) => {
+    String.equal(inner, text);
+  };
+  ReactTestingLibrary.getByText(~matcher=`Func(fn), container);
+};
+
+describe("Hooks", () => {
+  beforeEach(() => ReactTestingLibrary.cleanup());
 
   test("can render react components", () => {
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
-
-    act(() => {ReactDOM.Client.render(root, <DummyStatefulComponent />)});
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("button", "0")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-
-    let button = container->DOM.findBySelector("button");
-
-    act(() => {
-      switch (button) {
-      | Some(button) => Simulate.click(button)
-      | None => ()
-      }
-    });
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("button", "0")
-      ->Option.isSome,
-    )
-    ->toBe(false);
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("button", "1")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-  });
-
-  test("can render react components with reducers", () => {
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
-
-    act(() => {ReactDOM.Client.render(root, <DummyReducerComponent />)});
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "0")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-
-    let button =
-      container->DOM.findBySelectorAndPartialTextContent(
-        "button",
-        "Increment",
-      );
-
-    act(() => {
-      switch (button) {
-      | Some(button) => Simulate.click(button)
-      | None => ()
-      }
-    });
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "0")
-      ->Option.isSome,
-    )
-    ->toBe(false);
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "1")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-
-    let button =
-      container->DOM.findBySelectorAndPartialTextContent(
-        "button",
-        "Decrement",
-      );
-
-    act(() => {
-      switch (button) {
-      | Some(button) => Simulate.click(button)
-      | None => ()
-      }
-    });
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "0")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "1")
-      ->Option.isSome,
-    )
-    ->toBe(false);
-  });
-
-  test("can render react components with reducers (map state)", () => {
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
-
-    act(() => {
-      ReactDOM.Client.render(root, <DummyReducerWithMapStateComponent />)
-    });
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "1")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-
-    let button =
-      container->DOM.findBySelectorAndPartialTextContent(
-        "button",
-        "Increment",
-      );
-
-    act(() => {
-      switch (button) {
-      | Some(button) => Simulate.click(button)
-      | None => ()
-      }
-    });
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "1")
-      ->Option.isSome,
-    )
-    ->toBe(false);
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "2")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-
-    let button =
-      container->DOM.findBySelectorAndPartialTextContent(
-        "button",
-        "Decrement",
-      );
-
-    act(() => {
-      switch (button) {
-      | Some(button) => Simulate.click(button)
-      | None => ()
-      }
-    });
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "1")
-      ->Option.isSome,
-    )
-    ->toBe(true);
-
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent(".value", "2")
-      ->Option.isSome,
-    )
-    ->toBe(false);
+    let container = ReactTestingLibrary.render(<DummyStatefulComponent />);
+    let button = getByTag("button", container);
+    expect(DomTestingLibrary.getNodeText(button))->toBe("0");
+    FireEvent.click(button);
+    expect(DomTestingLibrary.getNodeText(button))->toBe("1");
   });
 
   test("can render react components with effects", () => {
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
+    let container =
+      ReactTestingLibrary.render(
+        <RerenderOnEachClick initialValue=0 maxValue=2 callback={_ => ()} />,
+      );
+    let button = getByTag("button", container);
+    let counter = getByTag("span", container);
+    FireEvent.click(button); /* 0 -> 1 */
+    expect(DomTestingLibrary.getNodeText(counter))->toBe("1");
+    FireEvent.click(button); /* 1 -> 2 */
+    expect(DomTestingLibrary.getNodeText(counter))->toBe("2");
+    /* Limit reached, counter doesn't increase, so no rerenders */
+    FireEvent.click(button); /* 2 -> 2 */
+    expect(DomTestingLibrary.getNodeText(counter))->toBe("2");
+  });
+
+  test("can render react components with effects", () => {
     let callback = Mock.fn();
 
-    act(() => {
-      ReactDOM.Client.render(
-        root,
-        <DummyComponentWithEffect value=0 callback />,
-      )
-    });
-    act(() => {
-      ReactDOM.Client.render(
-        root,
-        <DummyComponentWithEffect value=1 callback />,
-      )
-    });
-    act(() => {
-      ReactDOM.Client.render(
-        root,
-        <DummyComponentWithEffect value=1 callback />,
-      )
-    });
+    let container =
+      ReactTestingLibrary.render(
+        <RerenderOnEachClick initialValue=0 maxValue=2 callback />,
+      );
+    let button = getByTag("button", container);
+    FireEvent.click(button); /* 0 -> 1 */
+    FireEvent.click(button); /* 1 -> 2 */
+    /* Limit reached, counter doesn't increase, so no rerenders */
+    FireEvent.click(button); /* 2 -> 2 */
+    FireEvent.click(button); /* 2 -> 2 */
 
-    expect(callback->Mock.getMock->Mock.calls)->toEqual([|[|0|], [|1|]|]);
+    let allCalls = callback->Mock.getMock->Mock.calls;
+    expect(allCalls)->toEqual([|[|0|], [|1|], [|2|]|]);
   });
 
-  test("can render react components with layout effects", () => {
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
-    let callback = Mock.fn();
-
-    act(() => {
-      ReactDOM.Client.render(
-        root,
-        <DummyComponentWithLayoutEffect value=0 callback />,
-      )
-    });
-    act(() => {
-      ReactDOM.Client.render(
-        root,
-        <DummyComponentWithLayoutEffect value=1 callback />,
-      )
-    });
-    act(() => {
-      ReactDOM.Client.render(
-        root,
-        <DummyComponentWithLayoutEffect value=1 callback />,
-      )
-    });
-
-    expect(callback->Mock.getMock->Mock.calls)->toEqual([|[|0|], [|1|]|]);
-  });
-
-  test("can work with useRef", () => {
-    let container = getContainer(container);
-    let myRef = ref(None);
-    let callback = reactRef => {
-      myRef := Some(reactRef);
-    };
-    let root = ReactDOM.Client.createRoot(container);
-
-    act(() => {
-      ReactDOM.Client.render(
-        root,
-        <DummyComponentWithRefAndEffect callback />,
-      )
-    });
-
-    expect(myRef.contents->Option.map(item => item.current))
-    ->toEqual(Some(2));
-  });
-
-  testAsync("useSyncExternalStore", finish => {
-    let {subscribe, getState, setState} = store("initial");
+  test("useSyncExternalStore", () => {
     let mock = Mock.fn();
-
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
+    let {subscribe, getState, setState} = store("initial");
 
     let subscribeWithMock = args => {
       let _ = mock(.);
@@ -439,33 +298,92 @@ describe("Hooks", () => {
       };
     };
 
-    act(() => ReactDOM.Client.render(root, <App />));
+    let container = ReactTestingLibrary.render(<App />);
 
     /* Ensure initial value is passed */
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("span", "initial")
-      ->Option.isSome,
-    )
-    ->toBe(true);
+    let span = getByTag("span", container);
+    expect(DomTestingLibrary.getNodeText(span))->toBe("initial");
 
-    act(() => setState("changed"));
+    ReactTestingLibrary.act(() => setState("changed"));
 
     /* Ensure store is being updated */
     let nextState = getState();
     expect(nextState)->toBe("changed");
 
-    /* on next render */
-    act(() => ReactDOM.Client.render(root, <App />));
-
     /* the state should be propagated to App */
-    expect(
-      container
-      ->DOM.findBySelectorAndTextContent("span", "changed")
-      ->Option.isSome,
-    )
-    ->toBe(true);
+    expect(DomTestingLibrary.getNodeText(span))->toBe("changed");
 
-    finish();
+    /* on the next render */
+    ReactTestingLibrary.rerender(<App />, container);
+
+    /* the state should stay 'changed' */
+    expect(DomTestingLibrary.getNodeText(span))->toBe("changed");
+  });
+
+  test("can render react components with layout effects", () => {
+    let callback = Mock.fn();
+
+    let container =
+      ReactTestingLibrary.render(
+        <DummyComponentWithLayoutEffect value=0 callback />,
+      );
+
+    ReactTestingLibrary.act(() => {
+      ReactTestingLibrary.rerender(
+        <DummyComponentWithLayoutEffect value=1 callback />,
+        container,
+      )
+    });
+    ReactTestingLibrary.act(() => {
+      ReactTestingLibrary.rerender(
+        <DummyComponentWithLayoutEffect value=1 callback />,
+        container,
+      )
+    });
+    expect(callback->Mock.getMock->Mock.calls)->toEqual([|[|0|], [|1|]|]);
+  });
+
+  test("can work with useRef", () => {
+    let myRef = ref(None);
+    let callback = reactRef => {
+      myRef := Some(reactRef);
+    };
+
+    let _ =
+      ReactTestingLibrary.render(<DummyComponentWithRefAndEffect callback />);
+
+    switch (myRef.contents) {
+    | Some(ref) => expect(ref.current)->toBe(2)
+    | None => failwith("no ref")
+    };
+  });
+
+  test("can render react components with reducers", () => {
+    let container =
+      ReactTestingLibrary.render(
+        <DummyIncrementReducerComponent initialValue=0 />,
+      );
+
+    let counter = getByTag("main", container);
+    let button = getByTag("button", container);
+    expect(counter->innerHTML)->toBe("0");
+    FireEvent.click(button);
+    expect(counter->innerHTML)->toBe("1");
+  });
+
+  test("can render react components with reducers and initial map state", () => {
+    let container =
+      ReactTestingLibrary.render(<DummyReducerWithMapStateComponent />);
+
+    let counter = getByRole("Counter", container);
+    expect(counter->innerHTML)->toBe("1");
+
+    let incrementButton = getByRole("Increment", container);
+    FireEvent.click(incrementButton);
+    expect(counter->innerHTML)->toBe("2");
+
+    let decrementButton = getByRole("Decrement", container);
+    FireEvent.click(decrementButton);
+    expect(counter->innerHTML)->toBe("1");
   });
 });
