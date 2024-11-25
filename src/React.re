@@ -959,7 +959,12 @@ module Experimental = {
   /* https://react.dev/reference/react/useActionState */
   [@mel.module "react"]
   external useActionState:
-    (('state, FormData.t) => unit, 'state, ~permalink: bool=?) =>
+    (
+      [@mel.uncurry] (('state, FormData.t) => unit),
+      'state,
+      ~permalink: bool=?,
+      unit
+    ) =>
     ('state, formAction, bool) =
     "useActionState";
 };
