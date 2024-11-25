@@ -23,7 +23,7 @@ module DummyComponentThatMapsChildren = {
              element,
              {
                "key": string_of_int(index),
-               "data-index": index,
+               "role": Int.to_string(index),
              },
            )
          })}
