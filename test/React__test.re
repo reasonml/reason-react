@@ -447,28 +447,27 @@ describe("React", () => {
   });
 
   test("Can define components with custom children", () => {
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
-
     module Test = {
       type t = {name: string};
       [@react.component]
       let make = (~children) => {
-        Array.map(children, c =>
-          <div name={c.name}> {React.string(c.name)} </div>
-        )
-        ->React.array;
+        React.array(
+          Belt.Array.map(children, c =>
+            <div role={c.name}> {React.string(c.name)} </div>
+          ),
+        );
       };
     };
 
-    act(() => {
-      ReactDOM.Client.render(
-        root,
+    let container =
+      ReactTestingLibrary.render(
         <Test> {Test.name: "foo"} {name: "bar"} </Test>,
-      )
-    });
+      );
 
-    expect(container->DOM.findBySelector("div[name='foo']")->Option.isSome)
-    ->toBe(true);
+    let foo = getByRole("foo", container);
+    expect(foo->innerHTML)->toBe("foo");
+
+    let bar = getByRole("bar", container);
+    expect(bar->innerHTML)->toBe("bar");
   });
 });
