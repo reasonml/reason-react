@@ -1,2 +1,3 @@
 *.re linguist-language=Reason
 *.rei linguist-language=Reason
+*.t text eol=lf -linguist-detectable
