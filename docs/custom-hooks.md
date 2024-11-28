@@ -1,9 +1,8 @@
 ---
-title: A Custom useDebounce Hook
+title: Custom Hooks
 ---
 
 ```reason
-/* this is a hook that takes 2 arguments */
 let useDebounce = (value, delay) => {
   let (debouncedValue, setDebouncedValue) = React.useState(_ => value);
 

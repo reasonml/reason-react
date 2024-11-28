@@ -2,7 +2,11 @@
 title: Working with Optional Data
 ---
 
-If you're coming from Javascript, optional data can be a real pain in the butt. ReasonML removes a *whole class* of `null` and `undefined` bugs which makes your code WAY safer and easier to write, but it takes some good examples to get you there :smile:
+If you're coming from JavaScript, optional data can be a real pain in the butt. ReasonML removes a *whole class* of `null` and `undefined` bugs which makes your code safer and easier to write, but it takes some good examples to get you there :smile:
+
+ReasonML uses the `option` type to represent optional data. As defined in the standard library [here](https://reasonml.github.io/api/Option.html).
+
+Here there are a few examples of how to work with optional data in ReasonML, using the [Belt](https://melange.re/v4.0.0/api/re/melange/Belt) library from `melange.belt`.
 
 ### Accessing Optional Nested Data
 

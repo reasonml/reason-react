@@ -1,5 +1,5 @@
 ---
-title: useEffect Hook
+title: useEffect
 ---
 
 [React.js docs for useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect)
