@@ -1063,6 +1063,8 @@ type domProps = {
   [@mel.optional]
   clipRule: option(string),
   [@mel.optional]
+  color: option(string),
+  [@mel.optional]
   colorInterpolation: option(string),
   [@mel.optional]
   colorInterpolationFilters: option(string),
