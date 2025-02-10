@@ -2,11 +2,10 @@
   description = "Reason React Nix Flake";
 
   inputs = {
-    nix-filter.url = "github:numtide/nix-filter";
     nixpkgs.url = "github:nix-ocaml/nix-overlays";
   };
 
-  outputs = { self, nixpkgs, nix-filter }:
+  outputs = { self, nixpkgs }:
     let
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (system:
         let
@@ -29,39 +28,42 @@
             reason-react-ppx = buildDunePackage {
               pname = "reason-react-ppx";
               version = "n/a";
-              src = with nix-filter.lib; filter {
-                root = ./.;
-                include = [
-                  "dune-project"
-                  "dune"
-                  "reason-react-ppx.opam"
-                  "reason-react.opam"
-                  "ppx"
-                ];
-              };
+
+              src =
+                let fs = pkgs.lib.fileset; in
+                fs.toSource {
+                  root = ./.;
+                  fileset = fs.unions [
+                    ./dune-project
+                    ./dune
+                    ./reason-react-ppx.opam
+                    ./ppx
+                  ];
+                };
+
               # Due to a Reason version mismatch, the generated OCaml PPX diff
               # looks different
               doCheck = false;
-              checkInputs = [ ];
-              checkPhase = "dune build @runtest -p reason-react,reason-react-ppx";
-              nativeCheckInputs = [ reason merlin pkgs.jq ];
               propagatedBuildInputs = [ ppxlib ];
             };
 
             reason-react = buildDunePackage {
               pname = "reason-react";
               version = "n/a";
-              src = with nix-filter.lib; filter {
-                root = ./.;
-                include = [
-                  "dune-project"
-                  "dune"
-                  "reason-react-ppx.opam"
-                  "reason-react.opam"
-                  "src"
-                  "test"
-                ];
-              };
+
+              src =
+                let fs = pkgs.lib.fileset; in
+                fs.toSource {
+                  root = ./.;
+                  fileset = fs.unions [
+                    ./dune-project
+                    ./dune
+                    ./reason-react.opam
+                    ./src
+                    ./test
+                  ];
+                };
+
               doCheck = true;
               nativeBuildInputs = [ melange reason ];
               propagatedBuildInputs = [ melange reason-react-ppx ];
