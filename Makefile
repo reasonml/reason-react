@@ -31,6 +31,11 @@ jest: ## Run the jest unit tests
 jest-watch: ## Run the jest unit tests in watch mode
 	@npx jest --watch
 
+.PHONY: jest-devtools
+jest-devtools: ## Run the jest unit tests in watch mode
+	@echo "open Chrome and go to chrome://inspect"
+	@node --inspect-brk node_modules/.bin/jest --runInBand --detectOpenHandles
+
 .PHONY: test
 test: ## Run the runtests from dune (snapshot)
 	@$(DUNE) build @runtest
@@ -54,7 +59,10 @@ format-check: ## Checks if format is correct
 .PHONY: install
 install: ## Update the package dependencies when new deps are added to dune-project
 	@opam install . --deps-only --with-test
-	@npm install
+# --force is needed because we are installing react@19 while other dependencies
+# require react@18. It's a good workaround to bypass the npm validation error
+# and test the rc versions of React
+	@npm install --force
 
 .PHONY: init
 create-switch: ## Create a local opam switch
@@ -62,3 +70,11 @@ create-switch: ## Create a local opam switch
 
 .PHONY: init
 init: create-switch install ## Create a local opam switch, install deps
+
+.PHONY: demo-watch
+demo-watch: ## Build the demo in watch mode
+	@$(DUNE) build @melange-app --watch
+
+.PHONY: demo-serve
+demo-serve: ## Build the demo and serve it
+	npx http-server -p 8080 _build/default/demo/
