@@ -169,6 +169,39 @@ describe("React", () => {
     ->toBe(true);
   });
 
+  test("can render list of elements", () => {
+    let container = getContainer(container);
+    let list =
+      [1, 2, 3]
+      ->List.map(item => {
+          <div key={string_of_int(item)}> item->React.int </div>
+        });
+    let root = ReactDOM.Client.createRoot(container);
+
+    act(() => {ReactDOM.Client.render(root, <div> list->React.list </div>)});
+
+    expect(
+      container
+      ->DOM.findBySelectorAndPartialTextContent("div", "1")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    expect(
+      container
+      ->DOM.findBySelectorAndPartialTextContent("div", "2")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+
+    expect(
+      container
+      ->DOM.findBySelectorAndPartialTextContent("div", "3")
+      ->Option.isSome,
+    )
+    ->toBe(true);
+  });
+
   test("can clone an element", () => {
     let container = getContainer(container);
     let root = ReactDOM.Client.createRoot(container);
