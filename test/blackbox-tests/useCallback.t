@@ -24,10 +24,12 @@
   const React = require("react");
   
   const cb = React.useCallback((function (a, b) {
-          return a + b | 0;
-        }), []);
+    return a + b | 0;
+  }), []);
   
-  exports.cb = cb;
+  module.exports = {
+    cb,
+  }
   /* cb Not a pure module */
 
 Using an Uncurried function:
@@ -45,9 +47,11 @@ Using an Uncurried function:
   const React = require("react");
   
   const cb = React.useCallback((function (a, b) {
-          return a + b | 0;
-        }), []);
+    return a + b | 0;
+  }), []);
   
-  exports.cb = cb;
+  module.exports = {
+    cb,
+  }
   /* cb Not a pure module */
 
