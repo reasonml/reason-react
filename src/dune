@@ -8,6 +8,7 @@
   React
   ReactDOM
   ReactDOMServer
+  ReactServerDOMWebpackClient
   ReactDOMTestUtils
   ReasonReactRouter
   ReasonReactErrorBoundary)
