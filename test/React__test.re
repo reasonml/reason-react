@@ -257,7 +257,7 @@ describe("React", () => {
   module Counter = {
     [@react.component]
     let make = () => {
-      let (count, setCount) = React.Uncurried.useState(() => 0);
+      let (count, setCount) = React.useState(() => 0);
 
       React.useEffect1(
         () => {
@@ -271,7 +271,7 @@ describe("React", () => {
 
       <div>
         <button
-          className="Increment" onClick={_ => setCount(. prev => prev + 1)}>
+          className="Increment" onClick={_ => setCount(prev => prev + 1)}>
           {React.string("Increment")}
         </button>
         <span className="Value"> {React.string(string_of_int(count))} </span>

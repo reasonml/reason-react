@@ -25,12 +25,12 @@
   },
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
-    "jest": "^26.0.1",
-    "react": "19.0.0-rc.1",
-    "react-dom": "19.0.0-rc.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.1",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "jest": "^26.0.1",
+    "react": "^19.1.0-canary-662957cc-20250221",
+    "react-dom": "^19.1.0-canary-662957cc-20250221"
   },
   "jest": {
     "moduleDirectories": [
