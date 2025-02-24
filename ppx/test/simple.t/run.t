@@ -80,18 +80,6 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
       "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
@@ -114,18 +102,6 @@ Let's test hovering over parts of the component
   $ ocamlmerlin single type-enclosing -position 6:17 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
-    {
-      "start": {
-        "line": 6,
-        "col": 4
-      },
-      "end": {
-        "line": 8,
-        "col": 14
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
     {
       "start": {
         "line": 6,
@@ -160,18 +136,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "(~initialValue: int=?, unit) => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -214,31 +178,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "React.Event.Mouse.t => unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 20
-      },
-      "end": {
-        "line": 6,
-        "col": 55
-      },
       "type": "option(React.Event.Mouse.t => unit)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 4
-      },
-      "end": {
-        "line": 8,
-        "col": 14
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -275,18 +215,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "(~initialValue: int=?, unit) => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -339,6 +267,18 @@ Let's test hovering over parts of the component
       },
       "end": {
         "line": 6,
+        "col": 34
+      },
+      "type": "(int => int) => unit",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 6,
+        "col": 26
+      },
+      "end": {
+        "line": 6,
         "col": 54
       },
       "type": "unit",
@@ -353,31 +293,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "React.Event.Mouse.t => unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 20
-      },
-      "end": {
-        "line": 6,
-        "col": 55
-      },
       "type": "option(React.Event.Mouse.t => unit)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 4
-      },
-      "end": {
-        "line": 8,
-        "col": 14
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -414,18 +330,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "(~initialValue: int=?, unit) => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -504,31 +408,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "React.Event.Mouse.t => unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 20
-      },
-      "end": {
-        "line": 6,
-        "col": 55
-      },
       "type": "option(React.Event.Mouse.t => unit)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 4
-      },
-      "end": {
-        "line": 8,
-        "col": 14
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -576,18 +456,6 @@ Let's test hovering over parts of the component
         "line": 10,
         "col": 1
       },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
       "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
@@ -610,6 +478,18 @@ Let's test hovering over parts of the component
   $ ocamlmerlin single type-enclosing -position 6:47 -verbosity 0 \
   > -filename component.re < component.re | jq '.value'
   [
+    {
+      "start": {
+        "line": 6,
+        "col": 44
+      },
+      "end": {
+        "line": 6,
+        "col": 49
+      },
+      "type": "int",
+      "tail": "no"
+    },
     {
       "start": {
         "line": 6,
@@ -667,31 +547,7 @@ Let's test hovering over parts of the component
         "line": 6,
         "col": 55
       },
-      "type": "React.Event.Mouse.t => unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 20
-      },
-      "end": {
-        "line": 6,
-        "col": 55
-      },
       "type": "option(React.Event.Mouse.t => unit)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 4
-      },
-      "end": {
-        "line": 8,
-        "col": 14
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -728,18 +584,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "(~initialValue: int=?, unit) => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -792,9 +636,9 @@ Let's test hovering over parts of the component
       },
       "end": {
         "line": 7,
-        "col": 22
+        "col": 11
       },
-      "type": "React.element",
+      "type": "int",
       "tail": "no"
     },
     {
@@ -807,18 +651,6 @@ Let's test hovering over parts of the component
         "col": 22
       },
       "type": "option(React.element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 4
-      },
-      "end": {
-        "line": 8,
-        "col": 14
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -855,18 +687,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "(~initialValue: int=?, unit) => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -915,13 +735,13 @@ Let's test hovering over parts of the component
     {
       "start": {
         "line": 7,
-        "col": 6
+        "col": 13
       },
       "end": {
         "line": 7,
         "col": 22
       },
-      "type": "React.element",
+      "type": "int => React.element",
       "tail": "no"
     },
     {
@@ -934,18 +754,6 @@ Let's test hovering over parts of the component
         "col": 22
       },
       "type": "option(React.element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 4
-      },
-      "end": {
-        "line": 8,
-        "col": 14
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -982,18 +790,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "(~initialValue: int=?, unit) => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {
@@ -1048,18 +844,6 @@ Closing `</button>`
         "line": 8,
         "col": 14
       },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 6,
-        "col": 4
-      },
-      "end": {
-        "line": 8,
-        "col": 14
-      },
       "type": "React.element",
       "tail": "no"
     },
@@ -1085,18 +869,6 @@ Closing `</button>`
         "col": 3
       },
       "type": "(~initialValue: int=?, unit) => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 10,
-        "col": 1
-      },
-      "type": "{\n  external makeProps:\n    (~initialValue: 'initialValue=?, ~key: string=?, unit) =>\n    {.. \"initialValue\": option('initialValue)} = \"\"\n    \"����\u0000\u0000\u0000!\u0000\u0000\u0000\u000b\u0000\u0000\u0000!\u0000\u0000\u0000\u001f���A�,initialValue@��A�#key@��@@@\";\n  let make: (~initialValue: int=?, unit) => React.element;\n  let make: {.. \"initialValue\": option(int)} => React.element;\n}",
       "tail": "no"
     },
     {

@@ -49,57 +49,21 @@ Let's test hovering over parts of the component
       },
       "end": {
         "line": 3,
+        "col": 29
+      },
+      "type": "string -> React.element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
+        "col": 17
+      },
+      "end": {
+        "line": 3,
         "col": 33
       },
       "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element array",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element option",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -160,6 +124,18 @@ The `foo` variable inside the component body
     {
       "start": {
         "line": 3,
+        "col": 30
+      },
+      "end": {
+        "line": 3,
+        "col": 33
+      },
+      "type": "string",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 3,
         "col": 17
       },
       "end": {
@@ -167,54 +143,6 @@ The `foo` variable inside the component body
         "col": 33
       },
       "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element array",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element option",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {

@@ -32,7 +32,7 @@ _^
       "line": 10,
       "col": 85
     },
-    "type": "string",
+    "type": "React.element",
     "tail": "no"
   }
 
@@ -122,7 +122,7 @@ ______^
       "line": 10,
       "col": 73
     },
-    "type": "unit",
+    "type": "option(React.element)",
     "tail": "no"
   }
 

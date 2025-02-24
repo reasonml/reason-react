@@ -56,18 +56,6 @@ Let's test hovering over parts of the component
         "line": 16,
         "col": 3
       },
-      "type": "{.. \"children\": React.element}",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 12,
-        "col": 28
-      },
-      "end": {
-        "line": 16,
-        "col": 3
-      },
       "type": "React.element",
       "tail": "no"
     },
@@ -81,18 +69,6 @@ Let's test hovering over parts of the component
         "col": 3
       },
       "type": "(~children: React.element) => React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 10,
-        "col": 19
-      },
-      "end": {
-        "line": 17,
-        "col": 1
-      },
-      "type": "{\n  external makeProps:\n    (~children: 'children, ~key: string=?, unit) =>\n    {.. \"children\": 'children} = \"\"\n    \"����\u0000\u0000\u0000\u001c\u0000\u0000\u0000\u000b\u0000\u0000\u0000\u001f\u0000\u0000\u0000\u001e���A�(children��A�#key@��@@@\";\n  let make: (~children: React.element) => React.element;\n  let make: {.. \"children\": React.element} => React.element;\n}",
       "tail": "no"
     },
     {

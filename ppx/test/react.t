@@ -40,16 +40,16 @@ Demonstrate how to use the React JSX PPX
   
   function X$App(Props) {
     return Belt__Belt_List.toArray(Belt__Belt_List.map({
-      hd: "Hello!",
-      tl: {
-        hd: "This is React!",
-        tl: /* [] */ 0
-      }
-    }, (function (greeting) {
-      return JsxRuntime.jsx("h1", {
-        children: greeting
-      });
-    })));
+                    hd: "Hello!",
+                    tl: {
+                      hd: "This is React!",
+                      tl: /* [] */0
+                    }
+                  }, (function (greeting) {
+                      return JsxRuntime.jsx("h1", {
+                                  children: greeting
+                                });
+                    })));
   }
   
   const App = {
@@ -60,7 +60,5 @@ Demonstrate how to use the React JSX PPX
   
   JsxRuntime.jsx(X$App, {});
   
-  module.exports = {
-    App,
-  }
+  exports.App = App;
   /*  Not a pure module */

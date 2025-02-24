@@ -319,54 +319,6 @@ First child `button`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
       "type": "element",
       "tail": "no"
     },
@@ -422,67 +374,7 @@ First child `onClick` prop
         "line": 30,
         "col": 75
       },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -549,18 +441,6 @@ First child `onClick` callback argument (event)
         "line": 30,
         "col": 46
       },
-      "type": "Event.Mouse.t => unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 20
-      },
-      "end": {
-        "line": 30,
-        "col": 46
-      },
       "type": "option(Event.Mouse.t => unit)",
       "tail": "no"
     },
@@ -573,67 +453,7 @@ First child `onClick` callback argument (event)
         "line": 30,
         "col": 75
       },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -710,21 +530,21 @@ First child `onClick` prop `dispatch`
       },
       "end": {
         "line": 30,
-        "col": 45
+        "col": 34
       },
-      "type": "unit",
+      "type": "action => unit",
       "tail": "no"
     },
     {
       "start": {
         "line": 30,
-        "col": 20
+        "col": 26
       },
       "end": {
         "line": 30,
-        "col": 46
+        "col": 45
       },
-      "type": "Event.Mouse.t => unit",
+      "type": "unit",
       "tail": "no"
     },
     {
@@ -748,67 +568,7 @@ First child `onClick` prop `dispatch`
         "line": 30,
         "col": 75
       },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -911,18 +671,6 @@ First child `onClick` prop `Click`
         "line": 30,
         "col": 46
       },
-      "type": "Event.Mouse.t => unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 20
-      },
-      "end": {
-        "line": 30,
-        "col": 46
-      },
       "type": "option(Event.Mouse.t => unit)",
       "tail": "no"
     },
@@ -935,67 +683,7 @@ First child `onClick` prop `Click`
         "line": 30,
         "col": 75
       },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1068,13 +756,13 @@ First child `string`
     {
       "start": {
         "line": 30,
-        "col": 48
+        "col": 49
       },
       "end": {
         "line": 30,
-        "col": 65
+        "col": 55
       },
-      "type": "element",
+      "type": "string => element",
       "tail": "no"
     },
     {
@@ -1098,67 +786,7 @@ First child `string`
         "line": 30,
         "col": 75
       },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1231,13 +859,13 @@ First child `message`
     {
       "start": {
         "line": 30,
-        "col": 48
+        "col": 56
       },
       "end": {
         "line": 30,
-        "col": 65
+        "col": 63
       },
-      "type": "element",
+      "type": "string",
       "tail": "no"
     },
     {
@@ -1261,67 +889,7 @@ First child `message`
         "line": 30,
         "col": 75
       },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1398,6 +966,18 @@ Third child `state`
       },
       "end": {
         "line": 34,
+        "col": 10
+      },
+      "type": "state",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 34,
+        "col": 5
+      },
+      "end": {
+        "line": 34,
         "col": 15
       },
       "type": "bool",
@@ -1413,54 +993,6 @@ Third child `state`
         "col": 42
       },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1563,54 +1095,6 @@ Third child `show` in `state.show`
         "line": 35,
         "col": 9
       },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
       "type": "element",
       "tail": "no"
     },
@@ -1676,6 +1160,18 @@ Third child `string`
       },
       "end": {
         "line": 34,
+        "col": 24
+      },
+      "type": "string => element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 34,
+        "col": 18
+      },
+      "end": {
+        "line": 34,
         "col": 34
       },
       "type": "element",
@@ -1691,54 +1187,6 @@ Third child `string`
         "col": 42
       },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1811,6 +1259,18 @@ Third child `greeting`
     {
       "start": {
         "line": 34,
+        "col": 25
+      },
+      "end": {
+        "line": 34,
+        "col": 33
+      },
+      "type": "string",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 34,
         "col": 18
       },
       "end": {
@@ -1830,54 +1290,6 @@ Third child `greeting`
         "col": 42
       },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
@@ -1950,6 +1362,18 @@ Third child `null`
     {
       "start": {
         "line": 34,
+        "col": 37
+      },
+      "end": {
+        "line": 34,
+        "col": 41
+      },
+      "type": "element",
+      "tail": "no"
+    },
+    {
+      "start": {
+        "line": 34,
         "col": 4
       },
       "end": {
@@ -1957,54 +1381,6 @@ Third child `null`
         "col": 42
       },
       "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
       "tail": "no"
     },
     {
