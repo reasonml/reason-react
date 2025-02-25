@@ -39,7 +39,7 @@
     (>= 3.0.0)
     (and
      (= 5.0.0-52)
-     :with-dev-setup)))
+     :with-test)))
   (reason-react-ppx
    (= :version))
   (reason
@@ -64,11 +64,7 @@
   (reason
    (>= 3.12.0))
   (ppxlib
-   (or
-    (>= 0.33.0)
-    (and
-     (= 0.33.0)
-     :with-dev-setup)))
+   (>= 0.33.0))
   (merlin :with-test)
   (ocamlformat
    (and
