@@ -36,9 +36,10 @@
   ocaml
   (melange
    (or
-   (>= 3.0.0) (and
-    (= 5.0.0-52)
-    :with-dev-setup)))
+    (>= 3.0.0)
+    (and
+     (= 5.0.0-52)
+     :with-dev-setup)))
   (reason-react-ppx
    (= :version))
   (reason
@@ -63,7 +64,11 @@
   (reason
    (>= 3.12.0))
   (ppxlib
-   (>= 0.33.0))
+   (or
+    (>= 0.33.0)
+    (and
+     (= 0.33.0)
+     :with-dev-setup)))
   (merlin :with-test)
   (ocamlformat
    (and
