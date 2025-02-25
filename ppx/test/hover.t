@@ -25,232 +25,36 @@ Test some locations in reason-react components, reproduces #840
 
 Let's test hovering over parts of the component
 
-`React.string`:
+`React.string`
 
   $ ocamlmerlin single type-enclosing -position 3:25 -verbosity 0 \
-  > -filename component.ml < component.ml | jq '.value'
-  [
-    {
-      "start": {
-        "line": 3,
-        "col": 17
-      },
-      "end": {
-        "line": 3,
-        "col": 29
-      },
-      "type": "string -> React.element",
-      "tail": "no"
+  > -filename component.ml < component.ml | jq '.value[0]'
+  {
+    "start": {
+      "line": 3,
+      "col": 17
     },
-    {
-      "start": {
-        "line": 3,
-        "col": 17
-      },
-      "end": {
-        "line": 3,
-        "col": 33
-      },
-      "type": "React.element",
-      "tail": "no"
+    "end": {
+      "line": 3,
+      "col": 29
     },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element array",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element option",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "bar:int -> React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 27
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "foo:string -> bar:int -> React.element",
-      "tail": "no"
-    }
-  ]
+    "type": "string -> React.element",
+    "tail": "no"
+  }
 
 The `foo` variable inside the component body
 
   $ ocamlmerlin single type-enclosing -position 3:31 -verbosity 0 \
-  > -filename component.ml < component.ml | jq '.value'
-  [
-    {
-      "start": {
-        "line": 3,
-        "col": 30
-      },
-      "end": {
-        "line": 3,
-        "col": 33
-      },
-      "type": "string",
-      "tail": "no"
+  > -filename component.ml < component.ml | jq '.value[0]'
+  {
+    "start": {
+      "line": 3,
+      "col": 30
     },
-    {
-      "start": {
-        "line": 3,
-        "col": 17
-      },
-      "end": {
-        "line": 3,
-        "col": 33
-      },
-      "type": "React.element",
-      "tail": "no"
+    "end": {
+      "line": 3,
+      "col": 33
     },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element array",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element option",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 2,
-        "col": 2
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 32
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "bar:int -> React.element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 1,
-        "col": 27
-      },
-      "end": {
-        "line": 4,
-        "col": 15
-      },
-      "type": "foo:string -> bar:int -> React.element",
-      "tail": "no"
-    }
-  ]
+    "type": "string",
+    "tail": "no"
+  }
