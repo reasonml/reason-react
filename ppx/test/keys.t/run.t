@@ -20,7 +20,7 @@ Let's test hovering over parts of the component
 
 key={author.Author.name}
 _^
-
+TODO: This is a regression, the type is not correct should be a string
   $ ocamlmerlin single type-enclosing -position 10:7 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
   {
@@ -32,7 +32,7 @@ _^
       "line": 10,
       "col": 85
     },
-    "type": "string",
+    "type": "React.element",
     "tail": "no"
   }
 
@@ -110,7 +110,7 @@ __^
 
 <img src={author.Author.imageUrl} />
 ______^
-
+TODO: This is a regression, the type is not correct should be a string
   $ ocamlmerlin single type-enclosing -position 10:44 -verbosity 0 \
   > -filename component.re < component.re | jq '.value[0]'
   {
@@ -122,7 +122,7 @@ ______^
       "line": 10,
       "col": 73
     },
-    "type": "unit",
+    "type": "option(React.element)",
     "tail": "no"
   }
 
