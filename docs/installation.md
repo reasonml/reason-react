@@ -6,7 +6,7 @@ ReasonReact is built to work with [Melange](https://melange.re/) and [Reason](ht
 
 If you want to build a new app or a new website with ReasonReact and Melange, we recommend to use a package manager such as [opam](https://opam.ocaml.org/) to download and install the required dependencies.
 
-There are other alternatives available, such as [esy](https://esy.sh/) or [nix](https://nixos.org/). See [Melange documentation](https://melange.re/v2.0.0/getting-started/#alternative-package-managers-experimental) for details.
+There are other alternatives available, such as [esy](https://esy.sh/) or [nix](https://nixos.org/). See [Melange documentation][melange-alternative-package-managers-experimental] for details.
 
 #### Requirements
 
@@ -17,11 +17,11 @@ There are other alternatives available, such as [esy](https://esy.sh/) or [nix](
 
 Melange is the toolchain that compiles Reason and OCaml to JavaScript. It integrates with dune to provide a seamless experience for building and running your project.
 
-Follow the getting started guide on [Melange's documentation](https://melange.re/v2.0.0/getting-started/) to continue.
+Follow the getting started guide on [Melange's documentation][melange-geting-started] to continue.
 
 ## Editor Setup
 
-Since Reason is an alternative syntax for OCaml, we integrate seamlessly into the official OCaml editor toolchain. Following the recommendation from [Melange's documentation](https://melange.re/v2.0.0/getting-started/#editor-integration).
+Since Reason is an alternative syntax for OCaml, we integrate seamlessly into the official OCaml editor toolchain. Following the recommendation from [Melange's documentation][melange-editor-integration].
 
 - For VSCode, we recommend using the [vscode-ocaml-platform](https://github.com/ocamllabs/vscode-ocaml-platform) plugin
 - For other editors (Emacs and Vim), we recommend using a language server client plugin of your choice, and pairing it with [ocaml-lsp](https://github.com/ocaml/ocaml-lsp).
@@ -90,3 +90,7 @@ All compiled code will live under `_build/default/{{target_name}}` folder with t
 
 ## Next steps
 Head to the [Intro example](intro-example.md) guide for a tour of the most important Reason React concepts you will encounter every day.
+
+[melange-alternative-package-managers-experimental]: https://melange.re/v4.0.0/getting-started/#alternative-package-managers-experimental
+[melange-geting-started]: https://melange.re/v4.0.0/getting-started/
+[melange-editor-integration]: https://melange.re/v4.0.0/getting-started/#editor-integration

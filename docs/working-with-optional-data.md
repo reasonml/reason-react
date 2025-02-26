@@ -2,7 +2,11 @@
 title: Working with Optional Data
 ---
 
-If you're coming from Javascript, optional data can be a real pain in the butt. ReasonML removes a *whole class* of `null` and `undefined` bugs which makes your code WAY safer and easier to write, but it takes some good examples to get you there :smile:
+If you're coming from JavaScript, optional data can be a real pain. ReasonML removes a *whole class* of `null` and `undefined` bugs which makes your code safer and easier to write, but it takes some good examples to get you there :smile:
+
+ReasonML uses the `option` type to represent optional data. As defined in the standard library [here](https://reasonml.github.io/api/Option.html).
+
+Here are a few examples of how to work with optional data in ReasonML, using the [Belt][melange-belt] library from `melange.belt`.
 
 ### Accessing Optional Nested Data
 
@@ -28,7 +32,7 @@ let label = selected->Belt.Option.mapWithDefault(
 
 What this is doing: "if selected exists, go look into `selected##name` otherwise return `Select a Color`".
 
-Read more about [`mapWithDefault`](https://reasonml.org/apis/javascript/latest/belt/option) here.
+Read more about [`mapWithDefault`][melange-belt-option-map-with-default] here.
 
 ### Something or Nothing
 
@@ -70,4 +74,8 @@ If you need to return null instead of a component:
 </div>;
 ```
 
-Read more about [`getWithDefault`](https://reasonml.org/apis/javascript/latest/belt/option) here.
+Read more about [`getWithDefault`][melange-belt-option-get-with-default] here.
+
+[melange-belt]: https://melange.re/v4.0.0/api/re/melange/Belt
+[melange-belt-option-get-with-default]: https://melange.re/v4.0.0/api/re/melange/Belt/Option/index.html#val-getWithDefault
+[melange-belt-option-map-with-default]: https://melange.re/v4.0.0/api/re/melange/Belt/Option/index.html#val-mapWithDefault

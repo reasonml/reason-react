@@ -27,7 +27,7 @@ Take a look at [reasonml/reason-react/releases/tag/0.12.0](https://github.com/re
 
 ## Updating to latest
 
-ReasonReact works best with Melange. [Get started here](https://melange.re/v2.0.0/getting-started/).
+ReasonReact works best with Melange. [Get started here](https://melange.re/v4.0.0/getting-started/).
 
 Next:
 
@@ -42,7 +42,7 @@ Next:
 
 - Remove any usage of `ReactDOM.props`
 - Bump React.js version to v17/v18 to use the new JSX transformation
-- We added `depexts` in opam for `react` and `react-dom` to ensure you have the correct versions installed from npm. [`depexts`](https://opam.ocaml.org/packages/opam-depext/) is the mechanism by opam to ensure the correct versions of external dependencies are present in your system. Learn more here on the Melange documentation page about [bindings and package management](https://melange.re/v2.0.0/package-management/#bindings-and-package-management):
+- We added `depexts` in opam for `react` and `react-dom` to ensure you have the correct versions installed from npm. [`depexts`](https://opam.ocaml.org/packages/opam-depext/) is the mechanism by opam to ensure the correct versions of external dependencies are present in your system. Learn more here on the Melange documentation page about [bindings and package management](https://melange.re/v4.0.0/package-management/#bindings-and-package-management):
 
   ```clojure
     depexts: [

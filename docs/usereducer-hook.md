@@ -1,37 +1,36 @@
 ---
-title: useReducer Hook
+title: useReducer
 ---
 
 [React.js docs for useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer)
 
->useReducer is usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks.
+> useReducer is usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks.
 
 ```reason
-/* we create a type for the action */
+/* we can create anything as the type for action, here we use a variant with 2 cases. */
 type action =
-  | Tick;
+  | Increment
+  | Decrement;
 
-/* and do the same for state */
-type state = {count: int};
+/* `state` could also be anything. In this case, we want an int */
+let reducer = (state, action) =>
+  switch (action) {
+  | Increment => state + 1
+  | Decrement => state - 1
+  };
 
 [@react.component]
-let make = () => {
-  let (state, dispatch) =
-    React.useReducer(
-      (state, action) =>
-        switch (action) {
-        | Tick => {count: state.count + 1}
-        },
-      {count: 0},
-    );
+  let make = (~initialValue=0) => {
+    let (state, dispatch) = React.useReducer(reducer, initialValue);
 
-  /* useEffect hook takes 0 arguments hence, useEffect0 */
-  React.useEffect0(() => {
-    let timerId = Js.Global.setInterval(() => dispatch(Tick), 1000);
-    Some(() => Js.Global.clearInterval(timerId));
-  });
-
-  /* ints need to be converted to strings, that are then consumed by React.string */
-  <div> {React.string(string_of_int(state.count))} </div>;
-};
+    <section>
+      <div className="value"> state->React.int </div>
+      <button onClick={_ => dispatch(Increment)}>
+        "Increment"->React.string
+      </button>
+      <button onClick={_ => dispatch(Decrement)}>
+        "Decrement"->React.string
+      </button>
+    </section>;
+  };
 ```
