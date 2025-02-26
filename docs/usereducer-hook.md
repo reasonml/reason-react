@@ -7,7 +7,7 @@ title: useReducer
 > useReducer is usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks.
 
 ```reason
-/* we create a type for the action, but action can be anything */
+/* we can create anything as the type for action, here we use a variant with 2 cases. */
 type action =
   | Increment
   | Decrement;
