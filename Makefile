@@ -58,10 +58,7 @@ format-check: ## Checks if format is correct
 
 .PHONY: install
 install: ## Update the package dependencies when new deps are added to dune-project
-	@opam install . --deps-only --with-test
-# --force is needed because we are installing react@19 while other dependencies
-# require react@18. It's a good workaround to bypass the npm validation error
-# and test the rc versions of React
+	@opam install . --deps-only --with-test --with-dev-setup
 	@npm install --force
 
 .PHONY: init

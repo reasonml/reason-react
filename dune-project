@@ -35,7 +35,11 @@
  (depends
   ocaml
   (melange
-   (>= 3.0.0))
+   (or
+    (>= 3.0.0)
+    (and
+     (= 5.0.0-52)
+     :with-test)))
   (reason-react-ppx
    (= :version))
   (reason
@@ -43,11 +47,11 @@
   (ocaml-lsp-server :with-dev-setup)
   (opam-check-npm-deps
    (and
-    (= 1.0.0)
+    (= 3.0.1)
     :with-dev-setup))
   (ocamlformat
    (and
-    (= 0.24.0)
+    (= 0.27.0)
     :with-dev-setup))))
 
 (package
@@ -64,5 +68,5 @@
   (merlin :with-test)
   (ocamlformat
    (and
-    (= 0.24.0)
+    (= 0.27.0)
     :with-dev-setup))))
