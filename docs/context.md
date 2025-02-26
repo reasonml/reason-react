@@ -31,7 +31,7 @@ module ContextProvider = {
 };
 ```
 
-That will give you a `ContextProvider` component you can use in your application later on, by wrapping any component with `ContextProvider`, to have access to the context value inside the component tree. To know more about Context, check the [official React documentation](https://legacy.reactjs.org/docs/context.html) and [when to use it](https://react.dev/learn/passing-data-deeply-with-context).
+That will give you a `ContextProvider` component you can use in your application later on, by wrapping any component with `ContextProvider`, to have access to the context value inside the component tree. To know more about Context, check the [createContext page of the React.js documentation](https://react.dev/reference/react/createContext) and [when to use it](https://react.dev/learn/passing-data-deeply-with-context).
 
 ```reason
 /** App.re */
