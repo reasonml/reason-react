@@ -32,7 +32,7 @@ let label = selected->Belt.Option.mapWithDefault(
 
 What this is doing: "if selected exists, go look into `selected##name` otherwise return `Select a Color`".
 
-Read more about [`mapWithDefault`](https://reasonml.org/apis/javascript/latest/belt/option) here.
+Read more about [`mapWithDefault`][melange-belt-option-map-with-default] here.
 
 ### Something or Nothing
 
@@ -78,3 +78,4 @@ Read more about [`getWithDefault`][melange-belt-option-get-with-default] here.
 
 [melange-belt]: https://melange.re/v4.0.0/api/re/melange/Belt
 [melange-belt-option-get-with-default]: https://melange.re/v4.0.0/api/re/melange/Belt/Option/index.html#val-getWithDefault
+[melange-belt-option-map-with-default]: https://melange.re/v4.0.0/api/re/melange/Belt/Option/index.html#val-mapWithDefault

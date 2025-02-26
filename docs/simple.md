@@ -74,7 +74,7 @@ let make = () => {
 
 ### A Component that Renders a List of Items
 
-This component uses [Belt](https://reasonml.org/apis/javascript/latest/belt), Reason's preferred Standard Library.
+This component uses [Belt][melange-belt], from [melange][melange-home].
 
 ```reason
 /* We define the type of the item (this is a record) */
@@ -96,3 +96,6 @@ let make = (~items) =>
     }
   </ul>;
 ```
+
+[melange-belt]: https://melange.re/v4.0.0/api/re/melange/Belt
+[melange-home]: https://melange.re/v4.0.0/
