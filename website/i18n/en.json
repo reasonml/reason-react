@@ -116,9 +116,6 @@
       "usereducer-hook": {
         "title": "useReducer"
       },
-      "usestate-event-value": {
-        "title": "Using Event Values With useState"
-      },
       "usestate-hook": {
         "title": "useState"
       },

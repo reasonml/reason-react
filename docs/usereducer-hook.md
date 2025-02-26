@@ -12,7 +12,7 @@ type action =
   | Increment
   | Decrement;
 
-/* similarly on 'state', it can be anything. In this case, it's an int */
+/* `state` could also be anything. In this case, we want an int */
 let reducer = (state, action) =>
   switch (action) {
   | Increment => state + 1
