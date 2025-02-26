@@ -21,2038 +21,288 @@ Let's test hovering over parts of the component
 `greeting` prop
 
   $ ocamlmerlin single type-enclosing -position 15:19 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 15,
-        "col": 13
-      },
-      "end": {
-        "line": 15,
-        "col": 21
-      },
-      "type": "string",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 15,
+      "col": 13
     },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "end": {
+      "line": 15,
+      "col": 21
+    },
+    "type": "string",
+    "tail": "no"
+  }
 
 `state` in `let (state, dispatch)`
 
   $ ocamlmerlin single type-enclosing -position 16:11 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 16,
-        "col": 7
-      },
-      "end": {
-        "line": 16,
-        "col": 12
-      },
-      "type": "state",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 16,
+      "col": 7
     },
-    {
-      "start": {
-        "line": 16,
-        "col": 6
-      },
-      "end": {
-        "line": 16,
-        "col": 23
-      },
-      "type": "(state, action => unit)",
-      "tail": "no"
+    "end": {
+      "line": 16,
+      "col": 12
     },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "state",
+    "tail": "no"
+  }
 
 `dispatch` in `let (state, dispatch)`
 
   $ ocamlmerlin single type-enclosing -position 16:19 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 16,
-        "col": 14
-      },
-      "end": {
-        "line": 16,
-        "col": 22
-      },
-      "type": "action => unit",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 16,
+      "col": 14
     },
-    {
-      "start": {
-        "line": 16,
-        "col": 6
-      },
-      "end": {
-        "line": 16,
-        "col": 23
-      },
-      "type": "(state, action => unit)",
-      "tail": "no"
+    "end": {
+      "line": 16,
+      "col": 22
     },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "action => unit",
+    "tail": "no"
+  }
 
 `message` in `let message`
 
   $ ocamlmerlin single type-enclosing -position 26:11 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 26,
-        "col": 6
-      },
-      "end": {
-        "line": 26,
-        "col": 13
-      },
-      "type": "string",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 26,
+      "col": 6
     },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 26,
+      "col": 13
     },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "string",
+    "tail": "no"
+  }
 
 Wrapping `div`
 
   $ ocamlmerlin single type-enclosing -position 29:5 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 29,
-        "col": 6
-      },
-      "type": "string",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 29,
+      "col": 2
     },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 29,
+      "col": 6
     },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "string",
+    "tail": "no"
+  }
 
 First child `button`
 
   $ ocamlmerlin single type-enclosing -position 30:9 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 11
-      },
-      "type": "string",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 30,
+      "col": 4
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 30,
+      "col": 11
     },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "string",
+    "tail": "no"
+  }
 
 First child `onClick` prop
 
   $ ocamlmerlin single type-enclosing -position 30:17 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 30,
+      "col": 4
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 30,
+      "col": 75
     },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "element",
+    "tail": "no"
+  }
 
 First child `onClick` callback argument (event)
 
   $ ocamlmerlin single type-enclosing -position 30:23 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 30,
-        "col": 20
-      },
-      "end": {
-        "line": 30,
-        "col": 46
-      },
-      "type": "Event.Mouse.t => unit",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 30,
+      "col": 20
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 20
-      },
-      "end": {
-        "line": 30,
-        "col": 46
-      },
-      "type": "option(Event.Mouse.t => unit)",
-      "tail": "no"
+    "end": {
+      "line": 30,
+      "col": 46
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "option(Event.Mouse.t => unit)",
+    "tail": "no"
+  }
 
 First child `onClick` prop `dispatch`
 
   $ ocamlmerlin single type-enclosing -position 30:30 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 30,
-        "col": 26
-      },
-      "end": {
-        "line": 30,
-        "col": 34
-      },
-      "type": "action => unit",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 30,
+      "col": 26
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 26
-      },
-      "end": {
-        "line": 30,
-        "col": 45
-      },
-      "type": "unit",
-      "tail": "no"
+    "end": {
+      "line": 30,
+      "col": 34
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 20
-      },
-      "end": {
-        "line": 30,
-        "col": 46
-      },
-      "type": "Event.Mouse.t => unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 20
-      },
-      "end": {
-        "line": 30,
-        "col": 46
-      },
-      "type": "option(Event.Mouse.t => unit)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "action => unit",
+    "tail": "no"
+  }
 
 First child `onClick` prop `Click`
 
   $ ocamlmerlin single type-enclosing -position 30:39 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 30,
-        "col": 35
-      },
-      "end": {
-        "line": 30,
-        "col": 40
-      },
-      "type": "((int)) => action",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 30,
+      "col": 35
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 35
-      },
-      "end": {
-        "line": 30,
-        "col": 44
-      },
-      "type": "action",
-      "tail": "no"
+    "end": {
+      "line": 30,
+      "col": 40
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 26
-      },
-      "end": {
-        "line": 30,
-        "col": 45
-      },
-      "type": "unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 20
-      },
-      "end": {
-        "line": 30,
-        "col": 46
-      },
-      "type": "Event.Mouse.t => unit",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 20
-      },
-      "end": {
-        "line": 30,
-        "col": 46
-      },
-      "type": "option(Event.Mouse.t => unit)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "((int)) => action",
+    "tail": "no"
+  }
 
 First child `string`
 
   $ ocamlmerlin single type-enclosing -position 30:53 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 30,
-        "col": 49
-      },
-      "end": {
-        "line": 30,
-        "col": 55
-      },
-      "type": "string => element",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 30,
+      "col": 49
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 48
-      },
-      "end": {
-        "line": 30,
-        "col": 65
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 30,
+      "col": 55
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 48
-      },
-      "end": {
-        "line": 30,
-        "col": 65
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "string => element",
+    "tail": "no"
+  }
 
 First child `message`
 
   $ ocamlmerlin single type-enclosing -position 30:62 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 30,
-        "col": 56
-      },
-      "end": {
-        "line": 30,
-        "col": 63
-      },
-      "type": "string",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 30,
+      "col": 56
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 48
-      },
-      "end": {
-        "line": 30,
-        "col": 65
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 30,
+      "col": 63
     },
-    {
-      "start": {
-        "line": 30,
-        "col": 48
-      },
-      "end": {
-        "line": 30,
-        "col": 65
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 30,
-        "col": 4
-      },
-      "end": {
-        "line": 30,
-        "col": 75
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "string",
+    "tail": "no"
+  }
 
 Third child `state`
 
   $ ocamlmerlin single type-enclosing -position 34:9 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 34,
-        "col": 5
-      },
-      "end": {
-        "line": 34,
-        "col": 10
-      },
-      "type": "state",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 34,
+      "col": 5
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 5
-      },
-      "end": {
-        "line": 34,
-        "col": 15
-      },
-      "type": "bool",
-      "tail": "no"
+    "end": {
+      "line": 34,
+      "col": 10
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 4
-      },
-      "end": {
-        "line": 34,
-        "col": 42
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "state",
+    "tail": "no"
+  }
 
 Third child `show` in `state.show`
 
   $ ocamlmerlin single type-enclosing -position 34:15 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 34,
-        "col": 11
-      },
-      "end": {
-        "line": 34,
-        "col": 15
-      },
-      "type": "bool",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 34,
+      "col": 11
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 5
-      },
-      "end": {
-        "line": 34,
-        "col": 15
-      },
-      "type": "bool",
-      "tail": "no"
+    "end": {
+      "line": 34,
+      "col": 15
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 4
-      },
-      "end": {
-        "line": 34,
-        "col": 42
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "bool",
+    "tail": "no"
+  }
 
 Third child `string`
 
   $ ocamlmerlin single type-enclosing -position 34:22 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 34,
-        "col": 18
-      },
-      "end": {
-        "line": 34,
-        "col": 24
-      },
-      "type": "string => element",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 34,
+      "col": 18
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 18
-      },
-      "end": {
-        "line": 34,
-        "col": 34
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 34,
+      "col": 24
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 4
-      },
-      "end": {
-        "line": 34,
-        "col": 42
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "string => element",
+    "tail": "no"
+  }
 
 Third child `greeting`
 
   $ ocamlmerlin single type-enclosing -position 34:30 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 34,
-        "col": 25
-      },
-      "end": {
-        "line": 34,
-        "col": 33
-      },
-      "type": "string",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 34,
+      "col": 25
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 18
-      },
-      "end": {
-        "line": 34,
-        "col": 34
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 34,
+      "col": 33
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 4
-      },
-      "end": {
-        "line": 34,
-        "col": 42
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "string",
+    "tail": "no"
+  }
 
 Third child `null`
 
   $ ocamlmerlin single type-enclosing -position 34:40 -verbosity 0 \
-  > -filename component.re < component.re | jq '.value'
-  [
-    {
-      "start": {
-        "line": 34,
-        "col": 37
-      },
-      "end": {
-        "line": 34,
-        "col": 41
-      },
-      "type": "element",
-      "tail": "no"
+  > -filename component.re < component.re | jq '.value[0]'
+  {
+    "start": {
+      "line": 34,
+      "col": 37
     },
-    {
-      "start": {
-        "line": 34,
-        "col": 4
-      },
-      "end": {
-        "line": 34,
-        "col": 42
-      },
-      "type": "element",
-      "tail": "no"
+    "end": {
+      "line": 34,
+      "col": 41
     },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "array(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "option(element)",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "ReactDOM.domProps",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 29,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 26,
-        "col": 2
-      },
-      "end": {
-        "line": 35,
-        "col": 9
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 26
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "element",
-      "tail": "no"
-    },
-    {
-      "start": {
-        "line": 15,
-        "col": 11
-      },
-      "end": {
-        "line": 36,
-        "col": 1
-      },
-      "type": "(~greeting: string) => element",
-      "tail": "no"
-    }
-  ]
+    "type": "element",
+    "tail": "no"
+  }

@@ -35,7 +35,11 @@
  (depends
   ocaml
   (melange
-   (>= 3.0.0))
+   (or
+    (>= 3.0.0)
+    (and
+     (= 5.0.0-52)
+     :with-test)))
   (reason-react-ppx
    (= :version))
   (reason
