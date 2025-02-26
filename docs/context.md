@@ -19,7 +19,7 @@ let make = React.Context.provider(themeContext);
 ```
 
 ```reason
-/** or inside a any other module */
+/** or inside any other module */
 
 // 1. The context itself
 let themeContext = React.createContext("light");
