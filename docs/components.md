@@ -2,7 +2,7 @@
 title: Components
 ---
 
-ReasonReact uses functions and [React Hooks](https://reactjs.org/docs/hooks-intro.html) to compose the component of your application. Let's look at how a component is written and then break down some of the things happening.
+ReasonReact uses functions and [React Hooks](https://reactjs.org/docs/hooks-intro.html) to compose your components of your application. Let's look at how a component is written and then break down some of the things happening.
 
 ```reason
 [@react.component]
@@ -20,7 +20,7 @@ let make = (~name) => {
 
 ## [@react.component]
 
-This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells ReasonReact that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JS object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
+This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells ReasonReact that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JavaScript object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
 
 ```reason
 [@mel.obj]
@@ -39,7 +39,7 @@ let make = (Props) => {
 };
 ```
 
-It has added a new function called `makeProps` which uses [`[@mel.obj]`](https://melange.re/v4.0.0/communicate-with-javascript#using-js-t-objects) to create your props object. This function gets compiled away by Melange and will be replaced by object literals when used.
+It has added a new function called `makeProps` which uses [mel-obj] to create your props object. This function gets compiled away by Melange and will be replaced by object literals when used.
 
 ### A note on `children`
 
@@ -113,7 +113,7 @@ Reason also always opts for the safest form of a given hook as well. So `React.u
 
 ## Hand-writing components
 
-You don't need to use the `[@react.component]` declaration to write components. Instead you can write a pair of `foo` and `fooProps` functions such that `type fooProps: 'a => props and foo: props => React.element` and these will always work as React components! This works with your own version of [`[@mel.obj]`](https://melange.re/v4.0.0/communicate-with-javascript#using-js-t-objects), [`[bs.deriving abstract]`](https://melange.re/v4.0.0/communicate-with-javascript#using-external-functions), or any other function that takes named args and returns a single props structure.
+You don't need to use the `[@react.component]` declaration to write components. Instead you can write a pair of `foo` and `fooProps` functions such that `type fooProps: 'a => props and foo: props => React.element` and these will always work as React components! This works with your own version of [`[@mel.obj]`][mel-obj], or any other function that takes labelled arguments and returns a single prop object.
 
 ## Interop
 
@@ -129,12 +129,10 @@ const MyComponent = require('./path/to/Component.js').make;
 
 ### Import from JS
 
-It also works seamlessly with [`[@genType]`](https://github.com/cristianoc/genType) annotations and can be integrated with safety into TypeScript and Flow applications.
-
-Using a component written in JS requires a single external to annotate the types it takes.
+Using a component written in JavaScript requires a single `external` to annotate the types it takes.
 
 ```reason
-[@mel.module "./path/to/Component.js"][@react.component]
+[@mel.module "./path/to/Component.js"] [@react.component]
 external make: (~name: string) => React.element = "default";
 ```
 
@@ -148,7 +146,7 @@ external makeProps: (~name: 'name, ~key: string=?, unit) => {. "name": 'name} = 
 external make: ({. "name": string}) => React.element = "default";
 ```
 
-**Note on `default`:** to understand what `default` means, see [the Melange docs on ES6](https://melange.re/v4.0.0/communicate-with-javascript#default-es6-values).
+**Note on `default`:** to understand what `default` means, see [the Melange docs on ES6][default-es6-values].
 
 ## Component Naming
 
@@ -173,3 +171,6 @@ module Nested = {
 ```
 
 If you need a dynamic name for higher-order components or you would like to set your own name you can use `React.setDisplayName(make, "NameThatShouldBeInDevTools");`.
+
+[mel-obj]: https://melange.re/v4.0.0/communicate-with-javascript#using-js-t-objects
+[default-es6-values]: https://melange.re/v4.0.0/communicate-with-javascript#default-es6-values

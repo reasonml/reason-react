@@ -6,7 +6,7 @@ If you're coming from JavaScript, optional data can be a real pain. ReasonML rem
 
 ReasonML uses the `option` type to represent optional data. As defined in the standard library [here](https://reasonml.github.io/api/Option.html).
 
-Here are a few examples of how to work with optional data in ReasonML, using the [Belt](https://melange.re/v4.0.0/api/re/melange/Belt) library from `melange.belt`.
+Here are a few examples of how to work with optional data in ReasonML, using the [Belt][melange-belt] library from `melange.belt`.
 
 ### Accessing Optional Nested Data
 
@@ -74,4 +74,7 @@ If you need to return null instead of a component:
 </div>;
 ```
 
-Read more about [`getWithDefault`](https://reasonml.org/apis/javascript/latest/belt/option) here.
+Read more about [`getWithDefault`][melange-belt-option-get-with-default] here.
+
+[melange-belt]: https://melange.re/v4.0.0/api/re/melange/Belt
+[melange-belt-option-get-with-default]: https://melange.re/v4.0.0/api/re/melange/Belt/Option/index.html#val-getWithDefault

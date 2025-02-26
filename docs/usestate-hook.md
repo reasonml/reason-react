@@ -111,3 +111,5 @@ let make = () => {
 The key is to extract the `value` from the `event` *before* we send it to
 `setName`. Even if React cleans up the event, we don't lose access to the
 value we need.
+
+[melange-url-docs]: https://melange.re/v4.0.0

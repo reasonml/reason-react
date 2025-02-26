@@ -23,8 +23,11 @@
       "context": {
         "title": "Context"
       },
+      "custom-hooks": {
+        "title": "Custom Hooks"
+      },
       "dom": {
-        "title": "Working with DOM"
+        "title": "ReactDOM"
       },
       "element-type-is-invalid": {
         "title": "Element Type is Invalid Runtime Error"
@@ -103,12 +106,6 @@
       },
       "testing": {
         "title": "Testing ReasonReact components"
-      },
-      "use-state-use-effect": {
-        "title": "useState, useEffect in a Form"
-      },
-      "usedebounce-custom-hook": {
-        "title": "Custom Hooks"
       },
       "useeffect-hook": {
         "title": "useEffect"
