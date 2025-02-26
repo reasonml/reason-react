@@ -1,10 +1,9 @@
 ---
-title: Testing ReasonReact components
+title: Testing components
 ---
 
-<!-- TODO: Fix this -->
-
 Even though types make your code safer, it doesn't remove the need for testing!
+
 If you want to test your ReasonReact components using your JavaScript testing stack, that's perfectly alright, but if you prefer to write them in Reason, here are some testing frameworks and bindings to make your life easier:
 
 ### Test framework
@@ -16,13 +15,17 @@ Pick the test framework you like the best (both use Jest under the hood):
 
 ### Test utilities
 
-We provide test utilities in the [`ReactTestUtils`](https://github.com/reasonml/reason-react/blob/main/src/ReactTestUtils.rei) module.
+We provide test utilities in the [`ReactDOMTestUtils`](https://github.com/reasonml/reason-react/blob/main/src/ReactDOMTestUtils.re) module.
 
-Here's what a test might look like:
+If you want to have a look at a real example, here's what a test might look like from reason-react's test suite [Hooks__test](https://github.com/reasonml/reason-react/blob/main/test/Hooks__test.re).
+
+Here's is a basic example of what a test might look like:
 
 ```reason
+open ReactDOMTestUtils;
 open TestFramework;
-open ReactTestUtils;
+// TestFramework isn't a real module, just an imaginary set of bindings
+// to a JavaScript testing framework
 
 describe("My basic test", ({test, beforeEach, afterEach}) => {
   // Here, we prepare an empty ref that will eventually be
@@ -37,10 +40,11 @@ describe("My basic test", ({test, beforeEach, afterEach}) => {
   test("can render DOM elements", ({expect}) => {
     // The following function gives us the div
     let container = getContainer(container);
+    let root = ReactDOM.Client.createRoot(container);
 
-    // Most of the ReactTestUtils API is there
+    // Most of the ReactDOMTestUtils API is there
     act(() => {
-      ReactDOMRe.render(<div> "Hello world!"->React.string </div>, container)
+      ReactDOM.Client.render(root, <div> "Hello world!"->React.string </div>);
     });
 
     expect.bool(
@@ -57,7 +61,7 @@ describe("My basic test", ({test, beforeEach, afterEach}) => {
 
 ### API
 
-#### `ReactTestUtils`
+#### `ReactDOMTestUtils`
 
 Directly from the [React test utilities](https://reactjs.org/docs/test-utils.html).
 
@@ -75,7 +79,7 @@ And utilities for setup and teardown:
 - `cleanupContainer`
 - `getContainer`
 
-#### `ReactTestUtils.Simulate`
+#### `ReactDOMTestUtils.Simulate`
 
 - `Simulate.click`
 - `Simulate.clickWithEvent`
@@ -89,9 +93,9 @@ And utilities for setup and teardown:
 - `Simulate.timeUpdate`
 - `Simulate.ended`
 
-If you feel like some are missing, you can easily adapt the bindings: [`ReactTestUtils`](https://github.com/reasonml/reason-react/blob/main/src/ReactTestUtils.rei) and make a PR!
+If you feel like some are missing, you can easily adapt the bindings: [`ReactDOMTestUtils`](https://github.com/reasonml/reason-react/blob/main/src/ReactDOMTestUtils.rei) and make a PR!
 
-#### `ReactTestUtils.DOM` convenience functions
+#### `ReactDOMTestUtils.DOM` convenience functions
 
 - `value`
 - `findBySelector`
