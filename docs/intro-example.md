@@ -37,7 +37,7 @@ if (root != null) {
 
 ### Using Greeting in an existing JavaScript/Typescript application
 
-It's easy to import a ReasonReact component into your existing app. After being transpiled to JS, all Reason components will have `.js` as extension by default and export a function component called `make`. You can change it with [module_systems](https://melange.re/v2.0.0/build-system/#commonjs-or-es6-modules) field inside a [`melange.emit` stanza](https://dune.readthedocs.io/en/stable/melange.html#melange-emit).
+It's easy to import a ReasonReact component into your existing app. After being transpiled to JS, all Reason components will have `.js` as extension by default and export a function component called `make`. You can change it with [module_systems](https://melange.re/v4.0.0/build-system/#commonjs-or-es6-modules) field inside a [`melange.emit` stanza](https://dune.readthedocs.io/en/stable/melange.html#melange-emit).
 
 ```js
 /* file: App.js */
