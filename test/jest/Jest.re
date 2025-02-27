@@ -22,6 +22,25 @@ let testAsync: (~timeout: int=?, string, (unit => unit) => unit) => unit =
   (~timeout=?, name, f) =>
     testAsyncU(name, callback => f(callback), timeout);
 
+external testPromiseU:
+  (
+    string,
+    (unit => Js.Promise.t(unit)) => Js.Promise.t(unit),
+    option(int)
+  ) =>
+  unit =
+  "test";
+
+let testPromise:
+  (
+    ~timeout: int=?,
+    string,
+    (unit => Js.Promise.t(unit)) => Js.Promise.t(unit)
+  ) =>
+  unit =
+  (~timeout=?, name, f) =>
+    testPromiseU(name, callback => f(callback), timeout);
+
 module Only = {
   [@mel.scope "describe"]
   external describeU: (string, (. unit) => unit) => unit = "only";

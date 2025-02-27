@@ -186,8 +186,9 @@ external useReducerWithMapState:
   ('state, 'action => unit) =
   "useReducer";
 
-/* This is used as return values  */
+/* This is used as return values */
 type callback('input, 'output) = 'input => 'output;
+type callbackAsync('input, 'output) = 'input => Js.Promise.t('output);
 
 [@mel.module "react"]
 external useSyncExternalStore:
@@ -572,9 +573,80 @@ external startTransition: ([@mel.uncurry] (unit => unit)) => unit =
 external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
+[@mel.module "react"]
+external act: (unit => unit) => Js.Promise.t(unit) = "act";
+[@mel.module "react"]
+external actAsync: (unit => Js.Promise.t(unit)) => Js.Promise.t(unit) =
+  "act";
+
 module Experimental: {
   /* This module is used to bind to APIs for future versions of React. There is no guarantee of backwards compatibility or stability. */
-  [@mel.module "react"] external use: Js.Promise.t('a) => 'a = "use";
+  [@mel.module "react"] external usePromise: Js.Promise.t('a) => 'a = "use";
+  [@mel.module "react"] external useContext: Context.t('a) => 'a = "use";
+
+  [@mel.module "react"]
+  external useOptimistic:
+    ('state, ('state, 'optimisticValue) => 'state) =>
+    ('state, 'optimisticValue => unit) =
+    "useOptimistic";
+
+  [@mel.module "react"]
+  external useTransitionAsync:
+    unit => (bool, callbackAsync(callbackAsync(unit, unit), unit)) =
+    "useTransition";
+
+  module FormData: {
+    /* This file is embeded since https://github.com/melange-re/melange/pull/1153 gets merged */
+
+    type t;
+    type file;
+    type blob;
+    type entryValue;
+
+    [@mel.new] external make: unit => t = "FormData";
+    [@mel.send.pipe: t] external append: (string, string) => unit = "append";
+    [@mel.send.pipe: t] external delete: string => unit = "delete";
+    [@mel.send.pipe: t] external get: string => option(entryValue) = "get";
+    [@mel.send.pipe: t]
+    external getAll: string => array(entryValue) = "getAll";
+    [@mel.send.pipe: t] external set: (string, string) => unit = "set";
+    [@mel.send.pipe: t] external has: string => bool = "has";
+    [@mel.send] external keys: t => Js.Iterator.t(string) = "keys";
+    [@mel.send] external values: t => Js.Iterator.t(entryValue) = "values";
+
+    [@mel.send.pipe: t]
+    external appendObject: (string, Js.t({..}), ~filename: string=?) => unit =
+      "append";
+
+    [@mel.send.pipe: t]
+    external appendBlob: (string, blob, ~filename: string=?) => unit =
+      "append";
+
+    [@mel.send.pipe: t]
+    external appendFile: (string, file, ~filename: string=?) => unit =
+      "append";
+
+    [@mel.send.pipe: t]
+    external setObject: (string, Js.t({..}), ~filename: string=?) => unit =
+      "set";
+
+    [@mel.send.pipe: t]
+    external setBlob: (string, blob, ~filename: string=?) => unit = "set";
+
+    [@mel.send.pipe: t]
+    external setFile: (string, file, ~filename: string=?) => unit = "set";
+
+    [@mel.send]
+    external entries: t => Js.Iterator.t((string, entryValue)) = "entries";
+  };
+
+  type formAction;
+
+  [@mel.module "react"]
+  external useActionState:
+    (('state, FormData.t) => unit, 'state, ~permalink: bool=?) =>
+    ('state, formAction, bool) =
+    "useActionState";
 };
 
 [@mel.set]

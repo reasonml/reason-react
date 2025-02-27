@@ -1,0 +1,7 @@
+(library
+ (name melange_testing_library_dom)
+ (wrapped false)
+ (modes melange)
+ (libraries melange.dom)
+ (preprocess
+  (pps melange.ppx)))
