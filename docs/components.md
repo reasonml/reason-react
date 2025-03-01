@@ -65,7 +65,7 @@ The component above could be called like this:
 </ComponentTakesChildren>
 ```
 
-## Rendering text, int, floats, arrays and null
+## Rendering text, int, floats, arrays, lists, and null
 
 In order for the compiler to understand that rendering a string of text or a number is intentional, you need to explicitely write it:
 
@@ -75,6 +75,7 @@ In order for the compiler to understand that rendering a string of text or a num
   {React.int(3)}
   {React.float(1.23)}
   {React.array([|<div key="0"/>, <span key="1" />|])}
+  {React.list([<div key="0"/>, <span key="1" />])}
   {React.null}
 </div>
 ```

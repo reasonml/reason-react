@@ -309,6 +309,7 @@ external float: float => element = "%identity";
 external int: int => element = "%identity";
 external string: string => element = "%identity";
 external array: array(element) => element = "%identity";
+let list: list(element) => element = xs => xs |> Array.of_list |> array;
 
 /* this function exists to prepare for making `component` abstract */
 external component: componentLike('props, element) => component('props) =
