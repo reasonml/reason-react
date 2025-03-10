@@ -59,7 +59,7 @@
   (reason
    (>= 3.12.0))
   (ppxlib
-   (and (>= 0.33.0) (< 0.36.0)))
+   (>= 0.36.0))
   (merlin :with-test)
   (ocamlformat
    (and
