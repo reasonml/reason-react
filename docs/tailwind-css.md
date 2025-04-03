@@ -2,7 +2,7 @@
 title: Styling: Tailwind CSS
 ---
 
-[Tailwind CSS](https://tailwindcss.com) is a new CSS framework that is rapidly
+[Tailwind CSS](https://tailwindcss.com) is a CSS framework that is rapidly
 growing in popularity. It's completely customizable and lightweight, making it
 a perfect companion to React. If you're not familiar with Tailwind, we recommend
 checking out [their docs](https://tailwindcss.com/#what-is-tailwind) for
@@ -40,43 +40,3 @@ let make = () =>
 which gives us the following UI:
 
 <img src="/reason-react/img/tailwind-example.png">
-
-## tailwind-ppx
-
-Often times when you're writing with Tailwind and ReasonReact, you may find
-yourself wondering why the UI isn't working like it should, only to find out you
-had a typo in a class name. For example,
-
-```reason
-<div className="flex flex-ro">
-  ...
-</div>
-```
-
-Wouldn't it be nice to get some validation _while_ you're writing the Tailwind
-classes? Better yet, how about preventing your code from even compiling if the
-classes aren't correct? Well, enter
-[`tailwind-ppx`](https://github.com/dylanirlbeck/tailwind-ppx): a compile-time
-validator for Tailwind CSS. Using this PPX, you can get immediate compiler
-errors if you happen to misspell class names, along with a nice suggestion of
-what you may have meant to write!
-
-```reason
-<div className=[%tw "flex flex-ro"]> /* ERROR: Class name not found: flex-ro. Did you mean flex-row? */
-  ...
-</div>
-```
-
-Moreover, in a large codebase where components may have many class names, you
-may find yourself duplicating some class names. `tailwind-ppx` solves this
-issue, too!
-
-```reason
-<div className=[%tw "flex flex-row mt-2 pb-3 flex"]> /* ERROR: Duplicate class name: flex */
-  ...
-</div>
-```
-
-Wrapping the class names in a PPX allows for some powerful integrations with
-Tailwind in addition to validation. For more information, check out
-`tailwind-ppx`'s [other features](https://github.com/dylanirlbeck/tailwind-ppx#features)

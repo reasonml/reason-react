@@ -1,22 +1,37 @@
 ---
-title: Context & Mixins
+title: Context
 ---
 
-## Context
-
 In order to use React's context, you need to create two things:
+
 1. The context itself
-2. A context provider component.
+2. A context provider component
 
 ```reason
-/** ContextProvider.re */
+/** as a separate file: ContextProvider.re */
+
+// 1. The context itself
 let themeContext = React.createContext("light");
 
+// 2. The provider
 include React.Context; // Adds the makeProps external
 let make = React.Context.provider(themeContext);
 ```
 
-That will give you a `ContextProvider` component you can use in your application later on. You'll do this like you'd normally would in any React application.
+```reason
+/** or inside any other module */
+
+// 1. The context itself
+let themeContext = React.createContext("light");
+
+// 2. The provider component
+module ContextProvider = {
+  include React.Context; // Adds the makeProps external
+  let make = React.Context.provider(themeContext);
+};
+```
+
+That will give you a `ContextProvider` component you can use in your application later on, by wrapping any component with `ContextProvider`, to have access to the context value inside the component tree. To know more about Context, check the [createContext page of the React.js documentation](https://react.dev/reference/react/createContext) and [when to use it](https://react.dev/learn/passing-data-deeply-with-context).
 
 ```reason
 /** App.re */
@@ -29,7 +44,7 @@ let make = () =>
   </div>
 ```
 
-Also, you can consume the context by using the `React.useContext` hook
+Then you can consume the context by using the `React.useContext` hook
 
 ```reason
 /** ComponentToConsumeTheContext.re */
@@ -43,7 +58,7 @@ let make = () => {
 
 ## Binding to an external Context
 
-Binding to a Context defined in a JS file holds no surprises. 
+Binding to a Context defined in a JavaScript file holds no surprises.
 
 ```js
 /** ComponentThatDefinesTheContext.js */
@@ -62,6 +77,3 @@ let make = () => {
   <h1>theme->React.string</h1>
 }
 ```
-
-## Mixins 
-ReasonReact doesn't support ReactJS mixins. Composing normal functions is a good alternative.
