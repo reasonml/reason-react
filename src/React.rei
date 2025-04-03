@@ -604,37 +604,47 @@ module Experimental: {
     type entryValue;
 
     [@mel.new] external make: unit => t = "FormData";
-    [@mel.send.pipe: t] external append: (string, string) => unit = "append";
-    [@mel.send.pipe: t] external delete: string => unit = "delete";
-    [@mel.send.pipe: t] external get: string => option(entryValue) = "get";
-    [@mel.send.pipe: t]
-    external getAll: string => array(entryValue) = "getAll";
-    [@mel.send.pipe: t] external set: (string, string) => unit = "set";
-    [@mel.send.pipe: t] external has: string => bool = "has";
+    [@mel.send]
+    external append: (string, string, [@mel.this] t) => unit = "append";
+    [@mel.send] external delete: (string, [@mel.this] t) => unit = "delete";
+    [@mel.send]
+    external get: (string, [@mel.this] t) => option(entryValue) = "get";
+    [@mel.send]
+    external getAll: (string, [@mel.this] t) => array(entryValue) = "getAll";
+    [@mel.send] external set: (string, string, [@mel.this] t) => unit = "set";
+    [@mel.send] external has: (string, [@mel.this] t) => bool = "has";
     [@mel.send] external keys: t => Js.Iterator.t(string) = "keys";
     [@mel.send] external values: t => Js.Iterator.t(entryValue) = "values";
 
-    [@mel.send.pipe: t]
-    external appendObject: (string, Js.t({..}), ~filename: string=?) => unit =
+    [@mel.send]
+    external appendObject:
+      (string, Js.t({..}), ~filename: string=?, [@mel.this] t) => unit =
       "append";
 
-    [@mel.send.pipe: t]
-    external appendBlob: (string, blob, ~filename: string=?) => unit =
+    [@mel.send]
+    external appendBlob:
+      (string, blob, ~filename: string=?, [@mel.this] t) => unit =
       "append";
 
-    [@mel.send.pipe: t]
-    external appendFile: (string, file, ~filename: string=?) => unit =
+    [@mel.send]
+    external appendFile:
+      (string, file, ~filename: string=?, [@mel.this] t) => unit =
       "append";
 
-    [@mel.send.pipe: t]
-    external setObject: (string, Js.t({..}), ~filename: string=?) => unit =
+    [@mel.send]
+    external setObject:
+      (string, Js.t({..}), ~filename: string=?, [@mel.this] t) => unit =
       "set";
 
-    [@mel.send.pipe: t]
-    external setBlob: (string, blob, ~filename: string=?) => unit = "set";
+    [@mel.send]
+    external setBlob:
+      (string, blob, ~filename: string=?, [@mel.this] t) => unit =
+      "set";
 
-    [@mel.send.pipe: t]
-    external setFile: (string, file, ~filename: string=?) => unit = "set";
+    [@mel.send]
+    external setFile:
+      (string, file, ~filename: string=?, [@mel.this] t) => unit =
+      "set";
 
     [@mel.send]
     external entries: t => Js.Iterator.t((string, entryValue)) = "entries";
