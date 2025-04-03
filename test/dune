@@ -3,6 +3,13 @@
  (target test)
  (module_systems
   (commonjs bs.js))
- (libraries reason-react reason-react.node jest melange.belt)
+ (libraries
+  reason-react
+  reason-react.node
+  jest
+  melange.belt
+  melange.dom
+  melange_testing_library_dom
+  melange_testing_library_react)
  (preprocess
   (pps melange.ppx reason-react-ppx)))
