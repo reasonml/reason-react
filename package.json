@@ -29,8 +29,8 @@
     "@testing-library/react": "^16.0.1",
     "http-server": "^14.1.1",
     "jest": "^26.0.1",
-    "react": "^19.1.0-canary-662957cc-20250221",
-    "react-dom": "^19.1.0-canary-662957cc-20250221"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "jest": {
     "moduleDirectories": [
