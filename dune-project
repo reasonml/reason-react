@@ -37,8 +37,9 @@
   (melange
    (or
     (>= 3.0.0)
-    (<= 5.1.0-53)
-    :with-test))
+    (and
+     (<= 5.1.0-53)
+     :with-test)))
   (reason-react-ppx
    (= :version))
   (reason
