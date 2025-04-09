@@ -905,7 +905,7 @@ module Experimental = {
   /* https://react.dev/reference/react/useOptimistic */
   [@mel.module "react"]
   external useOptimistic:
-    ('state, ('state, 'optimisticValue) => 'state) =>
+    ('state, [@mel.uncurry] (('state, 'optimisticValue) => 'state)) =>
     ('state, 'optimisticValue => unit) =
     "useOptimistic";
 
@@ -959,7 +959,12 @@ module Experimental = {
   /* https://react.dev/reference/react/useActionState */
   [@mel.module "react"]
   external useActionState:
-    (('state, FormData.t) => unit, 'state, ~permalink: bool=?) =>
+    (
+      [@mel.uncurry] (('state, FormData.t) => unit),
+      'state,
+      ~permalink: bool=?,
+      unit
+    ) =>
     ('state, formAction, bool) =
     "useActionState";
 };
