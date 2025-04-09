@@ -909,67 +909,12 @@ module Experimental = {
     ('state, 'optimisticValue => unit) =
     "useOptimistic";
 
-  module FormData = {
-    /* This file is embeded since https://github.com/melange-re/melange/pull/1153 gets merged */
-
-    type t;
-    type file;
-    type blob;
-    type entryValue;
-
-    [@mel.new] external make: unit => t = "FormData";
-    [@mel.send]
-    external append: (string, string, [@mel.this] t) => unit = "append";
-    [@mel.send] external delete: (string, [@mel.this] t) => unit = "delete";
-    [@mel.send]
-    external get: (string, [@mel.this] t) => option(entryValue) = "get";
-    [@mel.send]
-    external getAll: (string, [@mel.this] t) => array(entryValue) = "getAll";
-    [@mel.send] external set: (string, string, [@mel.this] t) => unit = "set";
-    [@mel.send] external has: (string, [@mel.this] t) => bool = "has";
-    [@mel.send] external keys: t => Js.Iterator.t(string) = "keys";
-    [@mel.send] external values: t => Js.Iterator.t(entryValue) = "values";
-
-    [@mel.send]
-    external appendObject:
-      (string, Js.t({..}), ~filename: string=?, [@mel.this] t) => unit =
-      "append";
-
-    [@mel.send]
-    external appendBlob:
-      (string, blob, ~filename: string=?, [@mel.this] t) => unit =
-      "append";
-
-    [@mel.send]
-    external appendFile:
-      (string, file, ~filename: string=?, [@mel.this] t) => unit =
-      "append";
-
-    [@mel.send]
-    external setObject:
-      (string, Js.t({..}), ~filename: string=?, [@mel.this] t) => unit =
-      "set";
-
-    [@mel.send]
-    external setBlob:
-      (string, blob, ~filename: string=?, [@mel.this] t) => unit =
-      "set";
-
-    [@mel.send]
-    external setFile:
-      (string, file, ~filename: string=?, [@mel.this] t) => unit =
-      "set";
-
-    [@mel.send]
-    external entries: t => Js.Iterator.t((string, entryValue)) = "entries";
-  };
-
   type formAction;
 
   /* https://react.dev/reference/react/useActionState */
   [@mel.module "react"]
   external useActionState:
-    (('state, FormData.t) => unit, 'state, ~permalink: bool=?) =>
+    (('state, Js.FormData.t) => unit, 'state, ~permalink: bool=?) =>
     ('state, formAction, bool) =
     "useActionState";
 };
