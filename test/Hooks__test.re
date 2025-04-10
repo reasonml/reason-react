@@ -49,6 +49,15 @@ let store = (initialState: 'a) => {
   };
 };
 
+module DummyStatefulAndUncurriedComponent = {
+  [@react.component]
+  let make = (~initialValue=0, ()) => {
+    let (value, setValue) = React.Uncurried.useState(() => initialValue);
+    let onClick = _ => setValue(. value => value + 1);
+    <button onClick> {React.int(value)} </button>;
+  };
+};
+
 module DummyStatefulComponent = {
   [@react.component]
   let make = (~initialValue=0, ()) => {
@@ -237,6 +246,15 @@ describe("Hooks", () => {
 
   test("can render react components", () => {
     let container = ReactTestingLibrary.render(<DummyStatefulComponent />);
+    let button = getByTag("button", container);
+    expect(DomTestingLibrary.getNodeText(button))->toBe("0");
+    FireEvent.click(button);
+    expect(DomTestingLibrary.getNodeText(button))->toBe("1");
+  });
+
+  test("can render react components with uncurried useState", () => {
+    let container =
+      ReactTestingLibrary.render(<DummyStatefulAndUncurriedComponent />);
     let button = getByTag("button", container);
     expect(DomTestingLibrary.getNodeText(button))->toBe("0");
     FireEvent.click(button);
