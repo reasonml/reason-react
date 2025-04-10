@@ -38,7 +38,7 @@
    (or
     (>= 3.0.0)
     (and
-     (= 5.0.0-52)
+     (<= 5.1.0-53)
      :with-test)))
   (reason-react-ppx
    (= :version))

@@ -1,14 +1,12 @@
 open Jest;
 
-module FormData = React.Experimental.FormData;
-
 type message = {
   text: string,
   sending: bool,
   key: int,
 };
 
-[@mel.send.pipe: Dom.element] external reset: unit = "reset";
+[@mel.send] external reset: Dom.element => unit = "reset";
 
 let (let.await) = (p, f) => Js.Promise.then_(f, p);
 
@@ -29,7 +27,7 @@ module Thread = {
       );
 
     let formAction = formData => {
-      let formMessage = FormData.get("message", formData);
+      let formMessage = Js.FormData.get(~name="message", formData);
       switch (formMessage) {
       | Some(entry) =>
         switch (Js.Types.classify(entry)) {
@@ -95,7 +93,7 @@ module App = {
       );
 
     let sendMessage = formData => {
-      let formMessage = FormData.get("message", formData);
+      let formMessage = Js.FormData.get(~name="message", formData);
       switch (formMessage) {
       | Some(message) =>
         let.await entry = deliverMessage(message);

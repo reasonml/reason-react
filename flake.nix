@@ -10,7 +10,7 @@
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (system:
         let
           pkgs = nixpkgs.legacyPackages.${system}.extend (self: super: {
-            ocamlPackages = super.ocaml-ng.ocamlPackages_5_2.overrideScope (oself: osuper: {
+            ocamlPackages = super.ocaml-ng.ocamlPackages_5_3.overrideScope (oself: osuper: {
               ppxlib = osuper.ppxlib.overrideAttrs (o: {
                 propagatedBuildInputs = o.propagatedBuildInputs ++ [ osuper.stdio ];
               });

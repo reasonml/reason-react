@@ -95,10 +95,12 @@ let act: (unit => unit) => unit;
 
 [@mel.get] external baseElement: renderResult => Dom.element = "baseElement";
 
-[@mel.send.pipe: renderResult] external unmount: unit => bool = "unmount";
+[@mel.send]
+external unmount: (unit, [@mel.this] renderResult) => bool = "unmount";
 
-[@mel.send.pipe: renderResult]
-external asFragment: unit => Dom.element = "asFragment";
+[@mel.send]
+external asFragment: (unit, [@mel.this] renderResult) => Dom.element =
+  "asFragment";
 
 // ByLabelText
 let getByLabelText:
@@ -684,8 +686,9 @@ let findAllByTestId:
   ) =>
   Js.Promise.t(array(Dom.element));
 
-[@mel.send.pipe: renderResult]
-external rerender: React.element => unit = "rerender";
+[@mel.send]
+external rerender: (React.element, [@mel.this] renderResult) => unit =
+  "rerender";
 
 let render:
   (
@@ -699,4 +702,4 @@ let render:
   renderResult;
 
 let debug:
-  (~el: Dom.element=?, ~maxLengthToPrint: int=?, renderResult) => unit;
+  (~el: Dom.element=?, ~maxLengthToPrint: int=?, unit, renderResult) => unit;

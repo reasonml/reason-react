@@ -2,6 +2,11 @@
 
 * BREAKING, ppx: Allow passing an array of custom children to a component
   without having to wrap in array literal ([@jchavarri in #748](https://github.com/reasonml/reason-react/pull/823))
+* FEAT: Support for React 19 [@davesnx in #846](https://github.com/reasonml/reason-react/pull/846)
+* FEAT: Improve useActionState and useOptimistic on React 19 [@davesnx in #867](https://github.com/reasonml/reason-react/pull/867)
+* DOCS: [@davesnx in #864](https://github.com/reasonml/reason-react/pull/864)
+* FEAT, ppx: Remove raise annotations and fix locations on errors [@davesnx in #863](https://github.com/reasonml/reason-react/pull/863)
+* INFRA: update setup-ocaml to v3 [@anmonteiro in #878](https://github.com/reasonml/reason-react/pull/878)
 
 # 0.15.0
 
@@ -16,6 +21,7 @@
   https://github.com/reasonml/reason-react/pull/847)
 * Fix: Remove "unique `key` prop" warnings from multi-child fragment elements
   (@jchavarri in https://github.com/reasonml/reason-react/pull/852)
+* fix: type of pipeable stream to allow objects with keys [@anmonteiro in #854](https://github.com/reasonml/reason-react/pull/854)
 
 # 0.14.1
 
