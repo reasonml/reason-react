@@ -487,10 +487,7 @@ let jsxExprAndChildren ~component_type ~loc ~ctxt mapper ~keyProps children =
          children *)
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxs") },
         None,
-        Some
-          (match component_type with
-          | Uppercase -> children
-          | Lowercase -> Binding.React.array ~loc children) )
+        Some (Binding.React.array ~loc children))
   | None, (label, key) :: _ ->
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),

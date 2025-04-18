@@ -4,7 +4,10 @@
   let upper_children_single = foo =>
     React.jsx(Upper.make, Upper.makeProps(~children=foo, ()));
   let upper_children_multiple = (foo, bar) =>
-    React.jsxs(Upper.make, Upper.makeProps(~children=[|foo, bar|], ()));
+    React.jsxs(
+      Upper.make,
+      Upper.makeProps(~children=React.array([|foo, bar|]), ()),
+    );
   let upper_children =
     React.jsx(
       Page.make,
