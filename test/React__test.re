@@ -470,4 +470,50 @@ describe("React", () => {
     let bar = getByRole("bar", container);
     expect(bar->innerHTML)->toBe("bar");
   });
+
+  test("Can render components with multiple children", () => {
+    module MyComponent = {
+      [@react.component]
+      let make = (~children) => {
+        <section role="container"> children </section>;
+      };
+    };
+
+    let container =
+      ReactTestingLibrary.render(
+        <MyComponent>
+          <div role="child1"> {React.string("child1")} </div>
+          <div role="child2"> {React.string("child2")} </div>
+        </MyComponent>,
+      );
+
+    let section = getByRole("container", container);
+    expect(section->tagName->Js.String.toLowerCase)->toBe("section");
+    
+    let child1 = getByRole("child1", container);
+    expect(child1->innerHTML)->toBe("child1");
+    
+    let child2 = getByRole("child2", container);
+    expect(child2->innerHTML)->toBe("child2");
+  });
+
+  test("Can render components with a single child", () => {
+    module MyComponent = {
+      [@react.component]
+      let make = (~children) => {
+        <section role="container"> children </section>;
+      };
+    };
+
+    let container =
+      ReactTestingLibrary.render(
+        <MyComponent> <div role="child"> {React.string("child")} </div> </MyComponent>,
+      );
+
+    let section = getByRole("container", container);
+    expect(section->tagName->Js.String.toLowerCase)->toBe("section");
+    
+    let child = getByRole("child", container);
+    expect(child->innerHTML)->toBe("child");
+  });
 });
