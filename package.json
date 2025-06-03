@@ -26,7 +26,7 @@
   "homepage": "https://reasonml.github.io/reason-react/",
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.0.1",
+    "@testing-library/react": "^16.3.0",
     "http-server": "^14.1.1",
     "jest": "^26.0.1",
     "react": "^19.1.0",
