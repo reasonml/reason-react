@@ -415,7 +415,9 @@ external useContext: Context.t('any) => 'any = "useContext";
 [@mel.module "react"] external useRef: 'value => ref('value) = "useRef";
 [@mel.module "react"] external useId: unit => string = "useId";
 
-[@mel.module "react"] external useDeferredValue: 'a => 'a = "useDeferredValue";
+[@mel.module "react"]
+external useDeferredValue: ('a, ~initialValue: 'a=?) => 'a =
+  "useDeferredValue";
 
 [@mel.module "react"]
 external useImperativeHandle0:
