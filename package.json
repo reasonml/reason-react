@@ -1,22 +1,7 @@
 {
   "name": "reason-react",
-  "version": "0.11.0",
-  "description": "React bindings for Reason",
-  "files": [
-    "dune",
-    "dune-project",
-    "README.md",
-    "HISTORY.md",
-    "LICENSE",
-    "src",
-    "ppx/src",
-    "reason-react-ppx.opam",
-    "reason-react.opam"
-  ],
-  "keywords": [
-    "reasonml",
-    "react"
-  ],
+  "version": "0.0.0",
+  "description": "This package.json is used to install node development dependencies",
   "author": "",
   "license": "MIT",
   "repository": {
