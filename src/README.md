@@ -1,4 +1,4 @@
-### Welcome to the source of ReasonReact
+### Welcome to the source of reason-react
 
 We want to expose the minimum amount of top-level modules possible, and at the same time want to map closely to the npm packages. So each module maps to a npm package, and each sub-module maps to a sub-module. For example: `react-dom` -> `ReactDOM` and `react-dom/server` -> `ReactDOMServer`.
 
@@ -18,4 +18,4 @@ Files overview:
 - `ReasonReactErrorBoundary`: component to catch errors within your component tree
 - `ReasonReactRouter`: a simple, yet fully featured router with minimal memory allocations
 
-Eventually `ReasonReactErrorBoundary` and `ReasonReactRouter` could live into their own packages, but for now they are part of ReasonReact (and we will keep them here for backwards compatibility).
+Eventually `ReasonReactErrorBoundary` and `ReasonReactRouter` could live into their own packages, but for now they are part of reason-react (and we will keep them here for backwards compatibility).

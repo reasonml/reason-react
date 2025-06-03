@@ -1,4 +1,4 @@
-# ReasonReact Documentation Website
+# reason-react Documentation Website
 
 This code is used to generate [https://reasonml.github.io/reason-react](https://reasonml.github.io/reason-react). It pulls in files from `../docs` and the current directory to generate the final static html files that's served on the site.
 

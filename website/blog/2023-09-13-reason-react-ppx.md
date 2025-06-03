@@ -2,7 +2,7 @@
 title: Support for the JSX transform under a new name `reason-react-ppx`
 ---
 
-Today, we're releasing ReasonReact 0.12! The most important changes are renaming the JSX transform PPX from `reactjs-jsx-ppx` to `reason-react-ppx`, along with many other improvements:
+Today, we're releasing reason-react 0.12! The most important changes are renaming the JSX transform PPX from `reactjs-jsx-ppx` to `reason-react-ppx`, along with many other improvements:
 
 - `reason-react-ppx` now emits the React 17 [JSX transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html).
 - Prop locations have been greatly improved, resulting in much better editor integration.
@@ -27,7 +27,7 @@ Take a look at [reasonml/reason-react/releases/tag/0.12.0](https://github.com/re
 
 ## Updating to latest
 
-ReasonReact works best with Melange. [Get started here](https://melange.re/v4.0.0/getting-started/).
+reason-react works best with Melange. [Get started here](https://melange.re/v4.0.0/getting-started/).
 
 Next:
 

@@ -2,9 +2,9 @@
 title: Installation
 ---
 
-ReasonReact is built to work with [Melange](https://melange.re/) and [Reason](https://reasonml.github.io/). This installation guide will help you get started.
+reason-react is built to work with [Melange](https://melange.re/) and [Reason](https://reasonml.github.io/). This installation guide will help you get started.
 
-If you want to build a new app or a new website with ReasonReact and Melange, we recommend to use a package manager such as [opam](https://opam.ocaml.org/) to download and install the required dependencies.
+If you want to build a new app or a new website with reason-react and Melange, we recommend to use a package manager such as [opam](https://opam.ocaml.org/) to download and install the required dependencies.
 
 There are other alternatives available, such as [esy](https://esy.sh/) or [nix](https://nixos.org/). See [Melange documentation][melange-alternative-package-managers-experimental] for details.
 
@@ -28,7 +28,7 @@ Since Reason is an alternative syntax for OCaml, we integrate seamlessly into th
 
 ### Using the template
 
-[Melange opam template](https://github.com/melange-re/melange-opam-template) comes with the minimum required to build a ReasonReact application with all dependencies up-to-date and ready.
+[Melange opam template](https://github.com/melange-re/melange-opam-template) comes with the minimum required to build a reason-react application with all dependencies up-to-date and ready.
 
 The `.re`/`.ml` files compile to straightforward `.js` files inside your `_build` folder. You can open `index.html` directly from the file system. No server needed! Change any file to see that page automatically refreshed.
 

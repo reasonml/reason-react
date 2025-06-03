@@ -2,7 +2,7 @@
 title: Router
 ---
 
-ReasonReact comes with a router! We've leveraged the language and library features in order to create a router that's:
+`reason-react` comes with a router! We've leveraged the language and library features in order to create a router that's:
 
 - The simplest, thinnest possible.
 - Easily pluggable anywhere into your existing code.
@@ -93,7 +93,7 @@ We might provide better facilities for typed routing + payload carrying in the f
 
 ## Design Decisions
 
-We always strive to lower the performance and learning overhead in ReasonReact, and our router design's no different. The entire implementation, barring browser features detection, is around 20 lines. The design might seem obvious in retrospect, but to arrive here, we had to dig back into ReactJS internals & future proposals to make sure we understood the state update mechanisms, the future context proposal, lifecycle ordering, etc. and reject some bad API designs along the way. It's nice to arrive at such an obvious solution!
+We always strive to lower the performance and learning overhead in `reason-react`, and our router design's no different. The entire implementation, barring browser features detection, is around 20 lines. The design might seem obvious in retrospect, but to arrive here, we had to dig back into ReactJS internals & future proposals to make sure we understood the state update mechanisms, the future context proposal, lifecycle ordering, etc. and reject some bad API designs along the way. It's nice to arrive at such an obvious solution!
 
 The API also doesn't dictate whether matching on a route should return a component, a state update, or a side-effect. Flexible enough to slip into existing apps.
 

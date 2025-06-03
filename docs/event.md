@@ -2,9 +2,9 @@
 title: Event
 ---
 
-ReasonReact events map cleanly to ReactJS [synthetic events](https://reactjs.org/docs/events.html). ReasonReact exposes a module called [`React.Event`](https://github.com/reasonml/reason-react/blob/main/src/React.rei#L1) to help you work with events.
+reason-react events map cleanly to ReactJS [synthetic events](https://reactjs.org/docs/events.html). reason-react exposes a module called [`React.Event`](https://github.com/reasonml/reason-react/blob/main/src/React.rei#L1) to help you work with events.
 
-React.Event module contains all event types as submodules, e.g. `React.Event.Form`, `React.Event.Mouse`, etc.
+`React.Event` module contains all event types as submodules, e.g. `React.Event.Form`, `React.Event.Mouse`, etc.
 
 You can access their properties using the `React.Event.{{EventName}}.{{property}}` method. For example, to access the `target` property of a `React.Event.Form.t` event, you would use `React.Event.Form.target`.
 
