@@ -1,5 +1,14 @@
 # Unreleased
 
+* FEATURE: add color to domProps (@tatchy in https://github.com/reasonml/reason-react/pull/871)
+* BREAKING: Support for React 19 (@davesnx in #846)
+* DOCS: Documentation updates for 0.16 (@davesnx in https://github.com/reasonml/reason-react/pull/864)
+* INFRA: Update deps (@johnhaley81 in https://github.com/reasonml/reason-react/pull/876)
+* INFRA: update setup-ocaml to v3 (@anmonteiro in https://github.com/reasonml/reason-react/pull/878)
+* FIX: Remove raise annotations and fix locations on errors (@davesnx https://github.com/reasonml/reason-react/pull/863)
+* FIX: type of pipeable stream to allow objects with keys (@anmonteiro in https://github.com/reasonml/reason-react/pull/854)
+* FEATURE: Add `preconnect`, `prefetchDNS`, `preinit`, `preinitModule`, `preload` and `preloadModule` in ReactDOM.Experimental (@r17x in https://github.com/reasonml/reason-react/pull/849)
+
 # 0.15.0
 
 * Add `isValidElement` (@r17x in
