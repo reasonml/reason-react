@@ -574,13 +574,21 @@ external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
 [@mel.module "react"]
+external useTransitionAsync:
+  unit => (bool, callbackAsync(callback(unit, unit), unit)) =
+  "useTransition";
+
+[@mel.module "react"]
 external act: (unit => unit) => Js.Promise.t(unit) = "act";
+
 [@mel.module "react"]
 external actAsync: (unit => Js.Promise.t(unit)) => Js.Promise.t(unit) =
   "act";
 
 module Experimental: {
   /* This module is used to bind to APIs for future versions of React. There is no guarantee of backwards compatibility or stability. */
+  external promise: Js.Promise.t(element) => element = "%identity";
+
   [@mel.module "react"] external usePromise: Js.Promise.t('a) => 'a = "use";
   [@mel.module "react"] external useContext: Context.t('a) => 'a = "use";
 
