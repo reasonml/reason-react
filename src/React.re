@@ -880,6 +880,11 @@ external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
 [@mel.module "react"]
+external useTransitionAsync:
+  unit => (bool, callbackAsync(callback(unit, unit), unit)) =
+  "useTransition";
+
+[@mel.module "react"]
 external startTransition: ([@mel.uncurry] (unit => unit)) => unit =
   "startTransition";
 
