@@ -8,6 +8,7 @@
 * FIX: Remove raise annotations and fix locations on errors (@davesnx https://github.com/reasonml/reason-react/pull/863)
 * FIX: type of pipeable stream to allow objects with keys (@anmonteiro in https://github.com/reasonml/reason-react/pull/854)
 * FEATURE: Add `preconnect`, `prefetchDNS`, `preinit`, `preinitModule`, `preload` and `preloadModule` in ReactDOM.Experimental (@r17x in https://github.com/reasonml/reason-react/pull/849)
+* BREAKING: Make lowerbound be Melange 5.1 (due to Js.FormData.t usage)
 
 # 0.15.0
 

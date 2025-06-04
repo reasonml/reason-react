@@ -34,8 +34,7 @@
   "reason-react helps you use Reason to build React components with deeply integrated, strong, static type safety.\n\nIt is designed and built by people using Reason and React in large, mission critical production React codebases.")
  (depends
   ocaml
-  (melange (>= 3.0.0))
-  (melange (and (= 5.0.0-52) :with-test))
+  (melange (<= 5.1.0))
   (reason-react-ppx
    (= :version))
   (reason
