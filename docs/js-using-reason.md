@@ -1,11 +1,11 @@
 ---
-title: ReactJS using ReasonReact
+title: ReactJS using reason-react
 ---
 
 `PageReason.re`:
 
 ```reason
-/* ReasonReact used by ReactJS */
+/* reason-react used by ReactJS */
 [@react.component]
 let make = (~message, ~extraGreeting=?) => {
   let greeting =

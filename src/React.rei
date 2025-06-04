@@ -670,7 +670,7 @@ external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
   "useDebugValue";
 
 module Event: {
-  /* This is the whole synthetic event system of ReactJS/ReasonReact. The first module `Synthetic` represents
+  /* This is the whole synthetic event system of reason-react. The first module `Synthetic` represents
      the generic synthetic event. The rest are the specific ones.
 
      In each module, the type `t` commonly means "the type of that module" (OCaml convention). In our case, e.g.

@@ -2,7 +2,7 @@
 title: ReactDOM
 ---
 
-ReasonReact's ReactDOM module is called `ReactDOM`. The module exposes helpers that work with familiar ReactJS idioms:
+reason-react's ReactDOM module is called `ReactDOM`. The module exposes helpers that work with familiar ReactJS idioms:
 
 - `ReactDOM.querySelector` : `string => option(Dom.element)`
 - `ReactDOM.Client.createRoot` : `Dom.element => Client.root`
@@ -47,7 +47,7 @@ switch (element) {
 
 ## ReactDOMServer
 
-ReasonReact's equivalent of `ReactDOMServer` from `react-dom/server` exposes
+reason-react's equivalent of `ReactDOMServer` from `react-dom/server` exposes
 
 - `renderToString` : `React.element => string`
 - `renderToStaticMarkup` : `React.element => string`

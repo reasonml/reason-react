@@ -2,7 +2,7 @@
 title: Components
 ---
 
-ReasonReact uses functions and [React Hooks](https://reactjs.org/docs/hooks-intro.html) to compose your components of your application. Let's look at how a component is written and then break down some of the things happening.
+reason-react uses functions and [React Hooks](https://reactjs.org/docs/hooks-intro.html) to compose your components of your application. Let's look at how a component is written and then break down some of the things happening.
 
 ```reason
 [@react.component]
@@ -20,7 +20,7 @@ let make = (~name) => {
 
 ## [@react.component]
 
-This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells ReasonReact that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JavaScript object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
+This snippet is doing quite a bit! The first thing you might notice is the decorator attribute above the definition. `[@react.component]` tells reason-react that you're writing a component with named args syntax (`~name`), but that you would like to compile it into a function that takes a JavaScript object as props which is how React works. Concretely, this attribute will generate code for you that looks like this:
 
 ```reason
 [@mel.obj]
@@ -81,7 +81,7 @@ In order for the compiler to understand that rendering a string of text or a num
 
 ## Hooks
 
-The next thing you might notice looking at this example is the use of hooks (`useState`). ReasonReact binds to [all of the hooks that React provides](https://reactjs.org/docs/hooks-intro.html) with only minor API differences. Please refer to their excellent documentation for more information on how hooks work and for best practices.
+The next thing you might notice looking at this example is the use of hooks (`useState`). reason-react binds to [all of the hooks that React provides](https://reactjs.org/docs/hooks-intro.html) with only minor API differences. Please refer to their excellent documentation for more information on how hooks work and for best practices.
 
 The differences that you'll notice are mostly around listing dependencies. In React they are passed as an array, however, as Reason does not allow elements of different types in an array, a tuple of varying length is needed as final argument to the hook. For a tuple of length `N` you would need to call `useEffectN`, as otherwise the argument would not type match given the function's type signature which would in turn require a tuple of length `N`.
 
@@ -109,7 +109,7 @@ useEffect1(effect, [|dep|])
 
 However, as the length of the array is not specified, you could pass an array of arbitrary length, including the empty array, `[||]`.
 
-Reason also always opts for the safest form of a given hook as well. So `React.useState` in JS can take an initial value or a function that returns an initial value. The former cannot be used safely in all situations, so ReasonReact only supports the second form which takes a function and uses the return.
+Reason also always opts for the safest form of a given hook as well. So `React.useState` in JS can take an initial value or a function that returns an initial value. The former cannot be used safely in all situations, so reason-react only supports the second form which takes a function and uses the return.
 
 ## Hand-writing components
 

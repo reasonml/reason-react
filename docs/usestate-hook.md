@@ -10,7 +10,7 @@ The setState function is used to update the state. It accepts a new state value 
 
 The `useState` hook takes a function that returns the initial state value and returns a tuple with the current state value and a function to update the state.
 
-ReasonReact exposes the `useState` hook with the initialiser function, not with the inmediate value.
+reason-react exposes the `useState` hook with the initialiser function, not with the inmediate value.
 
 ```reason
 let useState: (unit => 'state) => ('state, 'state => unit);
@@ -41,7 +41,7 @@ let make = (~initialCount) => {
 ## Using Event values with useState
 
 In ReactJS, it's common to update a component's state based on an event's
-value. Because ReasonReact's `useState` is slightly different than ReactJS,
+value. Because reason-react's `useState` is slightly different than ReactJS,
 directly translating JavaScript components to Reason can lead to a common bug.
 
 ```js
@@ -83,7 +83,7 @@ needed.
 
 This isn't actually any different than how events and `useState` hooks work in
 ReactJS when you choose to use a callback with `setName`. The only difference
-is that ReasonReact enforces that we always use callbacks.
+is that reason-react enforces that we always use callbacks.
 
 ## Solution
 

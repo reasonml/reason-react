@@ -117,7 +117,7 @@ const examples = [
 const reasonHighlightJs = require("reason-highlightjs");
 
 const siteConfig = {
-	title: "ReasonReact", // title for your website
+	title: "reason-react", // title for your website
 	tagline: "All your ReactJS knowledge, codified.",
 	organizationName: "reasonml",
 	url: "https://reasonml.github.io/reason-react" /* your github url */,

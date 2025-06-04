@@ -10,10 +10,10 @@ a gentle introduction before moving forward.
 
 ## Setting up Tailwind
 
-Now let's see how we can use Tailwind within ReasonReact and start building an
+Now let's see how we can use Tailwind within reason-react and start building an
 app!
 
-First, you'll need to create a new ReasonReact project -- we recommend [this
+First, you'll need to create a new reason-react project -- we recommend [this
 template](https://github.com/bodhish/create-reason-react-tailwind) (select the
 `tailwind-starter` option) which has Tailwind set up out of the box. Once you've
 installed the dependencies with `yarn install` or `npm install`, you should be

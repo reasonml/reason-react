@@ -2,7 +2,7 @@
 title: GraphQL & Apollo
 ---
 
-GraphQL and React play well together, and ReasonReact builds upon this
+GraphQL and React play well together, and reason-react builds upon this
 relationship. With
 [`graphql-ppx`](https://github.com/reasonml-community/graphql_ppx), you can get
 type-safe, compile-time validated GraphQL queries. This means that you don't
@@ -47,7 +47,7 @@ Say goodbye to runtime GraphQL errors!
 [Apollo Client](https://www.apollographql.com/docs/react/) is a well-known
 GraphQL client for React. Fortunately,
 [bindings](https://github.com/Astrocoders/reason-apollo-hooks) have been
-produced to allow us to use Apollo within ReasonReact.
+produced to allow us to use Apollo within reason-react.
 
 Let's see `graphql-ppx` and Apollo client in action. In the following example,
 we're going to query for the `name` of the `currentUser`, just like before.
