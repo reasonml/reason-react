@@ -1,8 +1,6 @@
 open DomTestingLibrary;
 
-module FireEvent = {
-  include FireEvent;
-};
+module FireEvent = FireEvent;
 
 type renderResult;
 type queries;
