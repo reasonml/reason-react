@@ -49,11 +49,20 @@ let store = (initialState: 'a) => {
   };
 };
 
-module DummyStatefulComponent = {
+module DummyStatefulAndUncurriedComponent = {
   [@react.component]
   let make = (~initialValue=0, ()) => {
     let (value, setValue) = React.Uncurried.useState(() => initialValue);
     let onClick = _ => setValue(. value => value + 1);
+    <button onClick> {React.int(value)} </button>;
+  };
+};
+
+module DummyStatefulComponent = {
+  [@react.component]
+  let make = (~initialValue=0, ()) => {
+    let (value, setValue) = React.useState(() => initialValue);
+    let onClick = _ => setValue(value => value + 1);
     <button onClick> {React.int(value)} </button>;
   };
 };
@@ -65,7 +74,7 @@ module DummyIncrementReducerComponent = {
   [@react.component]
   let make = (~initialValue=0) => {
     let (state, send) =
-      React.Uncurried.useReducer(
+      React.useReducer(
         (state, action) =>
           switch (action) {
           | Increment => state + 1
@@ -75,7 +84,7 @@ module DummyIncrementReducerComponent = {
 
     <section>
       <main> {React.int(state)} </main>
-      <button role="Increment" onClick={_ => {send(. Increment)}}>
+      <button role="Increment" onClick={_ => {send(Increment)}}>
         {React.string("Increment")}
       </button>
     </section>;
@@ -90,7 +99,7 @@ module DummyReducerComponent = {
   [@react.component]
   let make = (~initialValue=0) => {
     let (state, send) =
-      React.Uncurried.useReducer(
+      React.useReducer(
         (state, action) =>
           switch (action) {
           | Increment => state + 1
@@ -103,10 +112,10 @@ module DummyReducerComponent = {
 
     <>
       <main> {React.int(state)} </main>
-      <button role="Increment" onClick={_ => send(. Increment)}>
+      <button role="Increment" onClick={_ => send(Increment)}>
         {React.string("Increment")}
       </button>
-      <button role="Decrement" onClick={_ => send(. Decrement)}>
+      <button role="Decrement" onClick={_ => send(Decrement)}>
         {React.string("Decrement")}
       </button>
     </>;
@@ -121,7 +130,7 @@ module DummyReducerWithMapStateComponent = {
   [@react.component]
   let make = (~initialValue=0, ()) => {
     let (state, send) =
-      React.Uncurried.useReducerWithMapState(
+      React.useReducerWithMapState(
         (state, action) =>
           switch (action) {
           | Increment => state + 1
@@ -133,10 +142,10 @@ module DummyReducerWithMapStateComponent = {
 
     <section>
       <main role="Counter"> state->React.int </main>
-      <button role="Increment" onClick={_ => send(. Increment)}>
+      <button role="Increment" onClick={_ => send(Increment)}>
         {React.string("Increment")}
       </button>
-      <button role="Decrement" onClick={_ => send(. Decrement)}>
+      <button role="Decrement" onClick={_ => send(Decrement)}>
         {React.string("Decrement")}
       </button>
     </section>;
@@ -161,13 +170,13 @@ module WithEffect = {
 module RerenderOnEachClick = {
   [@react.component]
   let make = (~initialValue=0, ~maxValue=3, ~callback) => {
-    let (value, setValue) = React.Uncurried.useState(() => initialValue);
+    let (value, setValue) = React.useState(() => initialValue);
     let onClick = _ =>
       if (value < maxValue) {
-        setValue(. value => value + 1);
+        setValue(value => value + 1);
       } else {
         /* Fire a setState with the same value */
-        setValue(. value => value);
+        setValue(value => value);
       };
 
     <section>
@@ -237,6 +246,15 @@ describe("Hooks", () => {
 
   test("can render react components", () => {
     let container = ReactTestingLibrary.render(<DummyStatefulComponent />);
+    let button = getByTag("button", container);
+    expect(DomTestingLibrary.getNodeText(button))->toBe("0");
+    FireEvent.click(button);
+    expect(DomTestingLibrary.getNodeText(button))->toBe("1");
+  });
+
+  test("can render react components with uncurried useState", () => {
+    let container =
+      ReactTestingLibrary.render(<DummyStatefulAndUncurriedComponent />);
     let button = getByTag("button", container);
     expect(DomTestingLibrary.getNodeText(button))->toBe("0");
     FireEvent.click(button);
