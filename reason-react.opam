@@ -2,7 +2,7 @@
 opam-version: "2.0"
 synopsis: "Reason bindings for React.js"
 description: """
-ReasonReact helps you use Reason to build React components with deeply integrated, strong, static type safety.
+reason-react helps you use Reason to build React components with deeply integrated, strong, static type safety.
 
 It is designed and built by people using Reason and React in large, mission critical production React codebases."""
 maintainer: [
