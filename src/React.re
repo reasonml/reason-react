@@ -723,7 +723,9 @@ external useContext: Context.t('any) => 'any = "useContext";
 [@mel.module "react"] external useRef: 'value => ref('value) = "useRef";
 [@mel.module "react"] external useId: unit => string = "useId";
 
-[@mel.module "react"] external useDeferredValue: 'a => 'a = "useDeferredValue";
+[@mel.module "react"]
+external useDeferredValue: ('a, ~initialValue: 'a=?) => 'a =
+  "useDeferredValue";
 
 [@mel.module "react"]
 external useImperativeHandle0:
@@ -878,6 +880,11 @@ external useTransition: unit => (bool, callback(callback(unit, unit), unit)) =
   "useTransition";
 
 [@mel.module "react"]
+external useTransitionAsync:
+  unit => (bool, callbackAsync(callback(unit, unit), unit)) =
+  "useTransition";
+
+[@mel.module "react"]
 external startTransition: ([@mel.uncurry] (unit => unit)) => unit =
   "startTransition";
 
@@ -887,12 +894,15 @@ external useDebugValue: ('value, ~format: 'value => string=?, unit) => unit =
 
 [@mel.module "react"]
 external act: (unit => unit) => Js.Promise.t(unit) = "act";
+
 [@mel.module "react"]
 external actAsync: (unit => Js.Promise.t(unit)) => Js.Promise.t(unit) =
   "act";
 
 module Experimental = {
   /* This module is used to bind to APIs for future versions of React. There is no guarantee of backwards compatibility or stability. */
+  external promise: Js.Promise.t(element) => element = "%identity";
+
   /* https://react.dev/reference/react/use */
   [@mel.module "react"] external usePromise: Js.Promise.t('a) => 'a = "use";
   [@mel.module "react"] external useContext: Context.t('a) => 'a = "use";
