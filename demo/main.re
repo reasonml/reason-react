@@ -161,6 +161,59 @@ module UseReducerNoProblemo = {
   };
 };
 
+module FragmentsEverywhere = {
+  [@react.component]
+  let make = () => {
+    let items = ["Apple", "Banana", "Cherry", "Date"];
+    let numbers = [1, 2, 3, 4, 5];
+
+    <section>
+      <h3> {React.string("Fragments Everywhere")} </h3>
+      <React.Fragment>
+        <p> {React.string("This is inside a fragment")} </p>
+        <span> {React.string("Multiple elements together")} </span>
+        <small> {React.string("Without a wrapper div")} </small>
+      </React.Fragment>
+      <div>
+        <h4> {React.string("List of items with fragments:")} </h4>
+        {items
+         |> List.mapi((index, item) =>
+              <React.Fragment key={string_of_int(index)}>
+                <strong> {React.string(item)} </strong>
+                <span>
+                  {React.string(" - Item #" ++ string_of_int(index + 1))}
+                </span>
+                <br />
+              </React.Fragment>
+            )
+         |> Array.of_list
+         |> React.array}
+      </div>
+      <>
+        <hr />
+        <p> {React.string("Another fragment section")} </p>
+        <button> {React.string("Click me")} </button>
+        <em> {React.string("Emphasized text")} </em>
+      </>
+      <div>
+        <h4> {React.string("Numbers with fragments:")} </h4>
+        {numbers
+         |> List.mapi((index, num) =>
+              <React.Fragment key={string_of_int(num)}>
+                <div> {React.string("Number: " ++ string_of_int(num))} </div>
+                <small>
+                  {React.string("Square: " ++ string_of_int(num * num))}
+                </small>
+                <br />
+              </React.Fragment>
+            )
+         |> Array.of_list
+         |> React.array}
+      </div>
+    </section>;
+  };
+};
+
 module App = {
   [@react.component]
   let make = (~initialValue) => {
@@ -174,7 +227,8 @@ module App = {
       <RerenderOnEachClick key="rerender-on-each-click" value=0 callback />
       <WithLayoutEffect key="layout-effect" value callback />
       <WithRefAndEffect key="ref-and-effect" callback />
-      <UseReducerNoProblemo />
+      <UseReducerNoProblemo key="use-reducer-no-problemo" />
+      <FragmentsEverywhere key="fragments-everywhere" />
     </main>;
   };
 };
