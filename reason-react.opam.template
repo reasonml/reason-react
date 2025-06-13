@@ -1,4 +1,4 @@
 depexts: [
-  ["react"] {npm-version = "^18.0.0"}
-  ["react-dom"] {npm-version = "^18.0.0"}
+  ["react"] {npm-version = "^19.1.0"}
+  ["react-dom"] {npm-version = "^19.1.0"}
 ]

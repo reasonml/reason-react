@@ -2,7 +2,7 @@
 opam-version: "2.0"
 synopsis: "Reason bindings for React.js"
 description: """
-ReasonReact helps you use Reason to build React components with deeply integrated, strong, static type safety.
+reason-react helps you use Reason to build React components with deeply integrated, strong, static type safety.
 
 It is designed and built by people using Reason and React in large, mission critical production React codebases."""
 maintainer: [
@@ -19,7 +19,7 @@ bug-reports: "https://github.com/reasonml/reason-react/issues"
 depends: [
   "dune" {>= "3.9"}
   "ocaml"
-  "melange" {>= "3.0.0" | <= "5.1.0-53" & with-test}
+  "melange" {<= "5.1.0"}
   "reason-react-ppx" {= version}
   "reason" {>= "3.12.0"}
   "ocaml-lsp-server" {with-dev-setup}
@@ -43,6 +43,6 @@ build: [
 ]
 dev-repo: "git+https://github.com/reasonml/reason-react.git"
 depexts: [
-  ["react"] {npm-version = "^18.0.0"}
-  ["react-dom"] {npm-version = "^18.0.0"}
+  ["react"] {npm-version = "^19.1.0"}
+  ["react-dom"] {npm-version = "^19.1.0"}
 ]
