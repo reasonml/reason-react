@@ -11,8 +11,32 @@
         let
           pkgs = nixpkgs.legacyPackages.${system}.extend (self: super: {
             ocamlPackages = super.ocaml-ng.ocamlPackages_5_3.overrideScope (oself: osuper: {
-              ppxlib = osuper.ppxlib.overrideAttrs (o: {
-                propagatedBuildInputs = o.propagatedBuildInputs ++ [ osuper.stdio ];
+              pp = osuper.pp.overrideAttrs (_: {
+                doCheck = false;
+              });
+              reason = osuper.reason.overrideAttrs (_: {
+                src = builtins.fetchurl {
+                  url = "https://github.com/reasonml/reason/releases/download/3.16.0/reason-3.16.0.tbz";
+                  sha256 = "0kinqmc1al8n30f8mv7k9zyvkfsgbbn4pasq0s2jm3ilglxf9c27";
+                };
+                doCheck = false;
+                patches = [ ];
+              });
+              ppxlib = osuper.ppxlib.overrideAttrs (_: {
+                src = builtins.fetchurl {
+                  url = "https://github.com/ocaml-ppx/ppxlib/releases/download/0.36.0/ppxlib-0.36.0.tbz";
+                  sha256 = "0d54j19vi1khzmw0ffngs8xzjjq07n20q49h85hhhcf52k71pfjs";
+                };
+              });
+
+              melange = osuper.melange.overrideAttrs (_: {
+                src = super.fetchFromGitHub {
+                  owner = "melange-re";
+                  repo = "melange";
+                  rev = "70f9593acac50a60179ee963ae3dd57ec832e28c";
+                  hash = "sha256-+cfxb1yolkhCJicGK5a/r3moLQ3lyAgh37SmpzLTqu4=";
+                  fetchSubmodules = true;
+                };
               });
             });
           });
