@@ -1,6 +1,6 @@
 # Unreleased
 
-* FEATURE: add color to domProps (@tatchy in https://github.com/reasonml/reason-react/pull/871)
+* FEATURE: add color to domProps (@tatchi in https://github.com/reasonml/reason-react/pull/871)
 * BREAKING: Support for React 19 (@davesnx in #846)
 * DOCS: Documentation updates for 0.16 (@davesnx in https://github.com/reasonml/reason-react/pull/864)
 * INFRA: Update deps (@johnhaley81 in https://github.com/reasonml/reason-react/pull/876)
