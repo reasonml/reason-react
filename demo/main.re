@@ -198,7 +198,7 @@ module FragmentsEverywhere = {
       <div>
         <h4> {React.string("Numbers with fragments:")} </h4>
         {numbers
-         |> List.mapi((index, num) =>
+         |> List.map(num =>
               <React.Fragment key={string_of_int(num)}>
                 <div> {React.string("Number: " ++ string_of_int(num))} </div>
                 <small>
@@ -211,6 +211,13 @@ module FragmentsEverywhere = {
          |> React.array}
       </div>
     </section>;
+  };
+};
+
+module WithoutForward = {
+  [@react.component]
+  let make = (~ref=?) => {
+    <button ?ref className="FancyButton"> "Click me"->React.string </button>;
   };
 };
 
@@ -229,6 +236,7 @@ module App = {
       <WithRefAndEffect key="ref-and-effect" callback />
       <UseReducerNoProblemo key="use-reducer-no-problemo" />
       <FragmentsEverywhere key="fragments-everywhere" />
+      <WithoutForward key="without-forward" />
     </main>;
   };
 };
