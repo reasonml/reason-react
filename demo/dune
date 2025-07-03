@@ -1,6 +1,8 @@
 (melange.emit
  (target demo)
  (alias melange-app)
+ (enabled_if
+  (= %{profile} dev))
  (module_systems
   (es6 mjs))
  (libraries reason-react melange.belt melange.dom)
