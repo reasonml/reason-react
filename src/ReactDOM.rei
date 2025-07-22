@@ -472,6 +472,9 @@ external createPortal: (React.element, Dom.element) => React.element =
   "createPortal";
 
 [@mel.module "react-dom"]
+[@deprecated
+  "Use ReactDOM.Client.unmount instead. This function will be removed in the next release."
+]
 external unmountComponentAtNode: Dom.element => unit =
   "unmountComponentAtNode";
 

@@ -31,15 +31,10 @@
  (name reason-react)
  (synopsis "Reason bindings for React.js")
  (description
-  "ReasonReact helps you use Reason to build React components with deeply integrated, strong, static type safety.\n\nIt is designed and built by people using Reason and React in large, mission critical production React codebases.")
+  "reason-react helps you use Reason to build React components with deeply integrated, strong, static type safety.\n\nIt is designed and built by people using Reason and React in large, mission critical production React codebases.")
  (depends
   ocaml
-  (melange
-   (or
-    (>= 3.0.0)
-    (and
-     (<= 5.1.0-53)
-     :with-test)))
+  (melange (<= 5.1.0))
   (reason-react-ppx
    (= :version))
   (reason
@@ -57,7 +52,7 @@
 (package
  (name reason-react-ppx)
  (synopsis "React.js JSX PPX")
- (description "ReasonReact JSX PPX")
+ (description "reason-react JSX PPX")
  (depends
   (ocaml
    (>= 4.14))
