@@ -24,11 +24,10 @@
               });
               ppxlib = osuper.ppxlib.overrideAttrs (_: {
                 src = builtins.fetchurl {
-                  url = "https://github.com/ocaml-ppx/ppxlib/releases/download/0.36.0/ppxlib-0.36.0.tbz";
-                  sha256 = "0d54j19vi1khzmw0ffngs8xzjjq07n20q49h85hhhcf52k71pfjs";
+                  url = "https://github.com/ocaml-ppx/ppxlib/releases/download/0.36.1/ppxlib-0.36.1.tbz";
+                  sha256 = "1czgf474himz3wj3qqmy8zrsn0m40yj2z9imlhb491d1xv1vllk1";
                 };
               });
-
               melange = osuper.melange.overrideAttrs (_: {
                 src = super.fetchFromGitHub {
                   owner = "melange-re";
