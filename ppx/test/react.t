@@ -36,6 +36,7 @@ Demonstrate how to use the React JSX PPX
   'use strict';
   
   const Belt__Belt_List = require("melange.belt/belt_List.js");
+  const ReactDOM = require("reason-react/ReactDOM.js");
   const JsxRuntime = require("react/jsx-runtime");
   
   function X$App(Props) {
@@ -46,7 +47,7 @@ Demonstrate how to use the React JSX PPX
         tl: /* [] */ 0
       }
     }, (function (greeting) {
-      return JsxRuntime.jsx("h1", {
+      return ReactDOM.jsx("h1", {
         children: greeting
       });
     })));

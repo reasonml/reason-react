@@ -1632,6 +1632,9 @@ type domProps = {
   suppressContentEditableWarning: option(bool),
   [@mel.optional]
   suppressHydrationWarning: option(bool),
+  /* data attributes */
+  [@mel.optional]
+  dataAttrs: option(Js.Dict.t(string)),
 };
 
 // As we've removed `ReactDOMRe.createElement`, this enables patterns like
@@ -1648,16 +1651,52 @@ external createDOMElementVariadic:
   (string, ~props: domProps=?, array(React.element)) => React.element =
   "createElement";
 
+// Helper function to process dataAttrs
+let processDataAttrs = (props: domProps): domProps => {
+  switch (props.dataAttrs) {
+  | None => props  // Short circuit: if no data attributes provided, return props unchanged for better performance
+  | Some(_) =>
+    props
+    |> Obj.magic
+    |> Js.Dict.entries
+    |> Js.Array.reduce(
+         ~f=
+           acc =>
+             fun
+             | ("dataAttrs", dataAttrsDict) =>
+               dataAttrsDict
+               |> Obj.magic
+               |> Js.Dict.entries
+               |> Js.Array.reduce(
+                    ~f=(acc, (dataKey, dataValue)) => [("data-" ++ dataKey, dataValue |> Obj.magic: string), ...acc],
+                    ~init=acc,
+                  )
+             | (key, value) => [(key, value), ...acc],
+         ~init=[],
+       )
+    |> Js.Dict.fromList
+    |> Obj.magic
+  }
+};
+
+// JSX functions with dataAttrs processing
 [@mel.module "react/jsx-runtime"]
-external jsxKeyed: (string, domProps, ~key: string=?, unit) => React.element =
-  "jsx";
+external jsxKeyed: (string, domProps, ~key: string=?, unit) => React.element = "jsx";
+let jsxKeyed = (component: string, props: domProps, ~key=?, ()) => 
+  jsxKeyed(component, processDataAttrs(props), ~key?, ());
 
 [@mel.module "react/jsx-runtime"]
 external jsx: (string, domProps) => React.element = "jsx";
+let jsx = (component: string, props: domProps) => 
+  jsx(component, processDataAttrs(props));
 
 [@mel.module "react/jsx-runtime"]
 external jsxs: (string, domProps) => React.element = "jsxs";
+let jsxs = (component: string, props: domProps) => 
+  jsxs(component, processDataAttrs(props));
 
 [@mel.module "react/jsx-runtime"]
-external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element =
-  "jsxs";
+external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element = "jsxs";
+let jsxsKeyed = (component: string, props: domProps, ~key=?, ()) => 
+  jsxsKeyed(component, processDataAttrs(props), ~key?, ());
+

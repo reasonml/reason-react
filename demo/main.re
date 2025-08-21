@@ -221,6 +221,20 @@ module WithoutForward = {
   };
 };
 
+module DataAttrsDemo = {
+  [@react.component]
+  let make = () => {
+    let dataAttrs = [("testid", "demo-element"), ("component", "DataAttrsDemo")] |> Js.Dict.fromList;
+    
+    <section>
+      <h3> {React.string("DataAttrs Demo")} </h3>
+      <div dataAttrs>
+        {React.string("This div has data-testid='demo-element' and data-component='DataAttrsDemo'")}
+      </div>
+    </section>;
+  };
+};
+
 module App = {
   [@react.component]
   let make = (~initialValue) => {
@@ -237,6 +251,7 @@ module App = {
       <UseReducerNoProblemo key="use-reducer-no-problemo" />
       <FragmentsEverywhere key="fragments-everywhere" />
       <WithoutForward key="without-forward" />
+      <DataAttrsDemo key="data-attrs-demo" />
     </main>;
   };
 };

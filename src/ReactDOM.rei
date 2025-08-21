@@ -1714,7 +1714,10 @@ type domProps = {
   suppressContentEditableWarning: option(bool),
   [@mel.optional]
   suppressHydrationWarning: option(bool),
+  [@mel.optional]
+  dataAttrs: option(Js.Dict.t(string)),
 };
+
 
 // As we've removed `ReactDOMRe.createElement`, this enables patterns like
 // React.createElement(ReactDOM.stringToComponent(multiline ? "textarea" : "input"), ...)
@@ -1730,16 +1733,10 @@ external createDOMElementVariadic:
   (string, ~props: domProps=?, array(React.element)) => React.element =
   "createElement";
 
-[@mel.module "react/jsx-runtime"]
-external jsxKeyed: (string, domProps, ~key: string=?, unit) => React.element =
-  "jsx";
+let jsxKeyed: (string, domProps, ~key: string=?, unit) => React.element;
 
-[@mel.module "react/jsx-runtime"]
-external jsx: (string, domProps) => React.element = "jsx";
+let jsx: (string, domProps) => React.element;
 
-[@mel.module "react/jsx-runtime"]
-external jsxs: (string, domProps) => React.element = "jsxs";
+let jsxs: (string, domProps) => React.element;
 
-[@mel.module "react/jsx-runtime"]
-external jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element =
-  "jsxs";
+let jsxsKeyed: (string, domProps, ~key: string=?, unit) => React.element;

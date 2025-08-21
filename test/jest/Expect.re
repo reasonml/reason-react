@@ -23,7 +23,7 @@ external toHaveLength: (t(array('a)), 'a) => unit = "toHaveLength";
 [@mel.get]
 external rejects: t(Js.Promise.t('a)) => t(unit => 'a) = "rejects";
 
-[@mel.send] external toContain: (t(array('a)), 'a) => unit = "toContain";
+[@mel.send] external toContain: (t('container), 'item) => unit = "toContain";
 
 // This isn't a real string, but it can be used to construct a predicate on a string
 // expect("hello world")->toEqual(stringContaining("hello"));
