@@ -108,7 +108,7 @@ let constantString ~loc str =
 
 let safeTypeFromValue valueStr =
   match getLabel valueStr with
-  | Some valueStr when String.sub valueStr 0 1 = "_" -> ("T" ^ valueStr)
+  | Some valueStr when String.sub valueStr 0 1 = "_" -> "T" ^ valueStr
   | Some valueStr -> valueStr
   | None -> ""
 
@@ -229,8 +229,10 @@ let hasAttrOnBinding { pvb_attributes; _ } =
 let getFnName binding =
   match binding with
   | { pvb_pat = { ppat_desc = Ppat_var { txt; _ }; _ }; _ } -> txt
-  | { pvb_loc; _} ->
-      Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
+  | { pvb_loc; _ } ->
+      Location.raise_errorf ~loc:pvb_loc
+        "[@react.component] cannot be used with a destructured binding. Please \
+         use it on a `let make = ...` binding instead."
 
 let makeNewBinding binding expression newName =
   match binding with
@@ -243,7 +245,9 @@ let makeNewBinding binding expression newName =
         pvb_attributes = [ merlinFocus ];
       }
   | { pvb_loc; _ } ->
-      Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
+      Location.raise_errorf ~loc:pvb_loc
+        "[@react.component] cannot be used with a destructured binding. Please \
+         use it on a `let make = ...` binding instead."
 
 (* Lookup the value of `props` otherwise raise errorf *)
 let getPropsNameValue _acc (loc, expr) =
@@ -252,7 +256,9 @@ let getPropsNameValue _acc (loc, expr) =
       { pexp_desc = Pexp_ident { txt = Lident str; _ }; _ } ) ->
       { propsName = str }
   | { txt; loc }, _ ->
-      Location.raise_errorf ~loc "[@react.component] only accepts 'props' as a field, given: %s" (Longident.last_exn txt)
+      Location.raise_errorf ~loc
+        "[@react.component] only accepts 'props' as a field, given: %s"
+        (Longident.last_exn txt)
 
 (* Lookup the `props` record or string as part of [@react.component] and store
    the name for use when rewriting *)
@@ -261,22 +267,22 @@ let getPropsAttr payload =
   match payload with
   | Some
       (PStr
-        ({
-           pstr_desc =
-             Pstr_eval ({ pexp_desc = Pexp_record (recordFields, None); _ }, _);
-           _;
-         }
-        :: _rest)) ->
+         ({
+            pstr_desc =
+              Pstr_eval ({ pexp_desc = Pexp_record (recordFields, None); _ }, _);
+            _;
+          }
+         :: _rest)) ->
       List.fold_left getPropsNameValue defaultProps recordFields
   | Some
       (PStr
-        ({
-           pstr_desc =
-             Pstr_eval
-               ({ pexp_desc = Pexp_ident { txt = Lident "props"; _ }; _ }, _);
-           _;
-         }
-        :: _rest)) ->
+         ({
+            pstr_desc =
+              Pstr_eval
+                ({ pexp_desc = Pexp_ident { txt = Lident "props"; _ }; _ }, _);
+            _;
+          }
+         :: _rest)) ->
       { propsName = "props" }
   | Some (PStr ({ pstr_desc = Pstr_eval (_, _); pstr_loc; _ } :: _rest)) ->
       Location.raise_errorf ~loc:pstr_loc
@@ -487,7 +493,7 @@ let jsxExprAndChildren ~component_type ~loc ~ctxt mapper ~keyProps children =
          children *)
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxs") },
         None,
-        Some (Binding.React.array ~loc children))
+        Some (Binding.React.array ~loc children) )
   | None, (label, key) :: _ ->
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
@@ -645,7 +651,8 @@ let jsxMapper =
     match expr.pexp_desc with
     | Pexp_fun (Labelled "key", _, _, _) | Pexp_fun (Optional "key", _, _, _) ->
         Location.raise_errorf ~loc:expr.pexp_loc
-          ("~key cannot be accessed from the component props. Please set the key where the component is being used.")
+          "~key cannot be accessed from the component props. Please set the \
+           key where the component is being used."
     | Pexp_fun
         ( ((Optional label | Labelled label) as arg),
           default,

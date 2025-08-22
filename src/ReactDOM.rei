@@ -490,42 +490,47 @@ module Experimental: {
   type preloadOptions;
 
   [@mel.obj]
+  /* Its possible values are audio, document, embed, fetch, font, image, object, script, style, track, video, worker. */
   external preloadOptions:
-    /* Its possible values are audio, document, embed, fetch, font, image, object, script, style, track, video, worker. */
     (
       ~_as: [
-              | `audio
-              | `document
-              | `embed
-              | `fetch
-              | `font
-              | `image
-              | [@mel.as "object"] `object_
-              | `script
-              | `style
-              | `track
-              | `video
-              | `worker
-            ],
+        | `audio
+        | `document
+        | `embed
+        | `fetch
+        | `font
+        | `image
+        | [@mel.as "object"] `object_
+        | `script
+        | `style
+        | `track
+        | `video
+        | `worker
+      ],
       /*
           Suggests a relative priority for fetching the resource.
           The possible values are auto (the default), high, and low.
        */
-      ~fetchPriority: [ | `auto | `high | `low]=?,
+      ~fetchPriority:
+        [
+          | `auto
+          | `high
+          | `low
+        ]
+          =?,
       /*
           The Referrer header to send when fetching.
           Its possible values are no-referrer-when-downgrade (the default), no-referrer, origin, origin-when-cross-origin, and unsafe-url.
        */
-      ~referrerPolicy: [
-                         | [@mel.as "no-referrer"] `noReferrer
-                         | [@mel.as "no-referrer-when-downgrade"]
-                           `noReferrerWhenDowngrade
-                         | [@mel.as "origin"] `origin
-                         | [@mel.as "origin-when-cross-origin"]
-                           `originWhenCrossOrigin
-                         | [@mel.as "unsafe-url"] `unsafeUrl
-                       ]
-                         =?,
+      ~referrerPolicy:
+        [
+          | [@mel.as "no-referrer"] `noReferrer
+          | [@mel.as "no-referrer-when-downgrade"] `noReferrerWhenDowngrade
+          | [@mel.as "origin"] `origin
+          | [@mel.as "origin-when-cross-origin"] `originWhenCrossOrigin
+          | [@mel.as "unsafe-url"] `unsafeUrl
+        ]
+          =?,
       /*
           For use only with as: "image". Specifies the source set of the image.
           https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images
@@ -563,20 +568,38 @@ module Experimental: {
   type preinitOptions = {
     /* possible values: "script" or "style" */
     [@mel.as "as"]
-    _as: [ | `script | `style],
+    _as: [
+      | `script
+      | `style
+    ],
     /*
       Suggests a relative priority for fetching the resource.
       The possible values are auto (the default), high, and low.
      */
     [@mel.optional]
-    fetchPriority: option([ | `auto | `high | `low]),
+    fetchPriority:
+      option(
+        [
+          | `auto
+          | `high
+          | `low
+        ],
+      ),
     /*
       Required with Stylesheets (`style). Says where to insert the stylesheet relative to others.
       Stylesheets with higher precedence can override those with lower precedence.
       The possible values are reset, low, medium, high.
      */
     [@mel.optional]
-    precedence: option([ | `reset | `low | `medium | `high]),
+    precedence:
+      option(
+        [
+          | `reset
+          | `low
+          | `medium
+          | `high
+        ],
+      ),
     /*
         a required string. It must be "anonymous", "use-credentials", and "".
         https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin
