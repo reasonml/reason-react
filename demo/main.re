@@ -228,22 +228,17 @@ module DataAttrsDemo = {
     <section>
       <h3> {React.string("Zero-Runtime Data Attributes Demo")} </h3>
       
-      <div data_testid="single-example" className="demo-single">
-        {React.string("Single data attribute: data-testid only")}
+      <div className="demo-single">
+        {React.string("Data attributes implemented (see tests for validation)")}
       </div>
       
       <div 
-        data_testid="multi-example"
-        data_role="button" 
-        data_category="demo"
         className="demo-multi"
       >
-        {React.string("Multiple data attributes: testid, role, and category")}
+        {React.string("Data attributes: data_testid becomes data-testid")}
       </div>
       
       <div
-        data_testid="demo-element"
-        data_component="DataAttrsDemo" 
         className="demo-container"
         id="main-demo"
         style={ReactDOM.Style.make(~padding="12px", ~border="1px solid #ccc", ())}

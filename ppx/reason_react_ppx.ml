@@ -58,7 +58,8 @@ let isDataProp label =
 let transformToKebabCase name =
   if String.length name > 5 && String.sub name 0 5 = "data_" then
     let suffix = String.sub name 5 (String.length name - 5) in
-    "data-" ^ suffix
+    let kebabSuffix = String.map (function '_' -> '-' | c -> c) suffix in
+    "data-" ^ kebabSuffix
   else name
 
 let generateExternalName ~elementName ~props =
@@ -126,7 +127,7 @@ module Binding = struct
       if hasDataAttrs then
         let externalName = generateExternalName ~elementName ~props in
         
-        let args = props @ [(Nolabel, Builder.unit)] in
+        let args = props in
         
         (* Create external declaration only with labeled props ([@mel.obj] adds unit automatically) *)
         let labeledProps = List.filter (fun (label, _) -> match label with Nolabel -> false | _ -> true) props in
