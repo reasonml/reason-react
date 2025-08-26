@@ -46,10 +46,8 @@ let nolabel = Nolabel
 let labelled str = Labelled str
 let optional str = Optional str
 
-(* Module-level state for collecting external declarations *)
 let externalDeclarations = ref []
 
-(* Helper functions for data attributes *)
 let getLabelOrEmpty label = 
   match label with Optional str | Labelled str -> str | Nolabel -> ""
 
@@ -63,14 +61,12 @@ let transformToKebabCase name =
     "data-" ^ suffix
   else name
 
-(* Generate unique external function name *)
 let generateExternalName ~elementName ~props =
   let propNames = List.map (fun (label, _) -> getLabelOrEmpty label) props in
   let propString = String.concat "_" propNames in
   let hash = Digest.to_hex (Digest.string propString) in
   Printf.sprintf "makeProps_%s_%s" elementName (String.sub hash 0 8)
 
-(* Create [@mel.obj] attribute *)
 let createMelObjAttribute ~loc =
   {
     attr_name = { txt = "mel.obj"; loc };
@@ -78,7 +74,6 @@ let createMelObjAttribute ~loc =
     attr_loc = loc;
   }
 
-(* Create [@mel.as "data-*"] attribute *)
 let createMelAsAttribute ~loc jsName =
   {
     attr_name = { txt = "mel.as"; loc };
@@ -90,11 +85,9 @@ let createMelAsAttribute ~loc jsName =
     attr_loc = loc;
   }
 
-(* Build function type with proper arrows *)
 let rec buildArrowType ~loc props =
   match props with
   | [] -> 
-      (* Final unit -> 'a *)
       Builder.ptyp_arrow ~loc Nolabel 
         (Builder.ptyp_constr ~loc {txt = Lident "unit"; loc} [])
         (Builder.ptyp_var ~loc "a")
@@ -103,18 +96,14 @@ let rec buildArrowType ~loc props =
       let propName = getLabelOrEmpty label in
       let (finalLabel, propType') = 
         if isDataProp label then
-          (* Add [@mel.as "data-*"] attribute *)
           let jsName = transformToKebabCase propName in
           let melAsAttr = createMelAsAttribute ~loc jsName in
-          (* Ensure the argument is labeled, not nolabel *)
           (Labelled propName, {propType with ptyp_attributes = [melAsAttr]})
         else 
-          (* Ensure all props are labeled arguments in external functions *)
           (Labelled propName, propType)
       in
       Builder.ptyp_arrow ~loc finalLabel propType' (buildArrowType ~loc rest)
 
-(* Create external declaration AST *)
 let createExternalDeclaration ~name ~props ~loc =
   {
     pstr_desc = Pstr_primitive {
@@ -132,14 +121,11 @@ module Binding = struct
      Here we define the same APIs as the bindings but it generates Parsetree nodes *)
   module ReactDOM = struct
     let domProps ~applyLoc ~loc ?(elementName="element") props =
-      (* Check if any props have data attributes *)
       let hasDataAttrs = List.exists (fun (label, _) -> isDataProp label) props in
       
       if hasDataAttrs then
-        (* Generate external function approach for zero runtime overhead *)
         let externalName = generateExternalName ~elementName ~props in
         
-        (* Generate call to external function *)
         let args = props @ [(Nolabel, Builder.unit)] in
         
         (* Create external declaration only with labeled props ([@mel.obj] adds unit automatically) *)
@@ -1468,17 +1454,13 @@ let jsxMapper =
     [@@raises Invalid_argument]
 
     method! structure ctxt stru =
-      (* Clear any previous external declarations *)
       externalDeclarations := [];
       
-      (* Process the structure first *)
       let processedStru = super#structure ctxt (reactComponentTransform ~ctxt self stru) in
       
-      (* Get collected external declarations and clear state *)
       let externals = List.rev !externalDeclarations in
       externalDeclarations := [];
       
-      (* Inject external declarations at the beginning *)
       externals @ processedStru
     [@@raises Invalid_argument]
 

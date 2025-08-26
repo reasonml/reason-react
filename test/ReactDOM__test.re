@@ -148,7 +148,6 @@ describe("ReactDOM", () => {
     test(
       "should maintain compatibility with React.cloneElement data attributes",
       () => {
-      // Create element using JSX data attributes
       let element = <div data_testid="original" />;
       let html = ReactDOMServer.renderToString(element);
 
