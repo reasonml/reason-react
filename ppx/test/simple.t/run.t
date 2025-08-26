@@ -15,11 +15,6 @@ Test some locations in reason-react components
   > EOF
 
   $ dune build
-  File "component.re", line 6, characters 4-11:
-  6 |     <button onClick={_ => setValue(value => value + 1)}>
-          ^^^^^^^
-  Error: Uninterpreted extension 'mel.obj'.
-  [1]
 
 Let's test hovering over parts of the component
 
@@ -37,7 +32,7 @@ TODO: currently the tag returns a string, not a React.element or a function
       "line": 6,
       "col": 11
     },
-    "type": "ReactDOM.domProps",
+    "type": "string",
     "tail": "no"
   }
 
@@ -66,13 +61,13 @@ TODO: currently the prop returns a React.element, not a labelled argument
   {
     "start": {
       "line": 6,
-      "col": 4
+      "col": 20
     },
     "end": {
-      "line": 8,
-      "col": 14
+      "line": 6,
+      "col": 55
     },
-    "type": "React.element",
+    "type": "option(React.Event.Mouse.t => unit)",
     "tail": "no"
   }
 
@@ -168,13 +163,13 @@ TODO: currently the closing tag returns a unit, not a React.element or a functio
   > -filename component.re < component.re | jq '.value[0]'
   {
     "start": {
-      "line": 6,
+      "line": 8,
       "col": 4
     },
     "end": {
       "line": 8,
-      "col": 14
+      "col": 13
     },
-    "type": "React.element",
+    "type": "unit",
     "tail": "no"
   }

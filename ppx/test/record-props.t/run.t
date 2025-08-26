@@ -9,8 +9,8 @@ We need to output ML syntax here, otherwise refmt could not parse it.
       let make =
         ((fun ~lola ->
             ReactDOM.jsx "div"
-              ([%mel.obj
-                 { children = (React.string lola); nolabel = (); nolabel = () }]))
+              (((ReactDOM.domProps)[@merlin.hide ])
+                 ~children:(React.string lola) ()))
         [@warning "-16"])
       let make =
         let Output$Record_props (string : < lola: 'lola   >  Js.t) =

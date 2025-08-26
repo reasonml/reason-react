@@ -3,60 +3,50 @@
     [@bla]
     React.jsx(
       React.jsxFragment,
-      {
-        "children": React.array([|foo|]),
-        "nolabel": (),
-      },
+      ([@merlin.hide] ReactDOM.domProps)(~children=React.array([|foo|]), ()),
     );
   let just_one_child = foo =>
     React.jsx(
       React.jsxFragment,
-      {
-        "children": React.array([|bar|]),
-        "nolabel": (),
-      },
+      ([@merlin.hide] ReactDOM.domProps)(~children=React.array([|bar|]), ()),
     );
   let poly_children_fragment = (foo, bar) =>
     React.jsxs(
       React.jsxFragment,
-      {
-        "children": React.array([|foo, bar|]),
-        "nolabel": (),
-      },
+      ([@merlin.hide] ReactDOM.domProps)(
+        ~children=React.array([|foo, bar|]),
+        (),
+      ),
     );
   let nested_fragment = (foo, bar, baz) =>
     React.jsxs(
       React.jsxFragment,
-      {
-        "children":
+      ([@merlin.hide] ReactDOM.domProps)(
+        ~children=
           React.array([|
             foo,
             React.jsxs(
               React.jsxFragment,
-              {
-                "children": React.array([|bar, baz|]),
-                "nolabel": (),
-              },
+              ([@merlin.hide] ReactDOM.domProps)(
+                ~children=React.array([|bar, baz|]),
+                (),
+              ),
             ),
           |]),
-        "nolabel": (),
-      },
+        (),
+      ),
     );
   let nested_fragment_with_lower = foo =>
     React.jsx(
       React.jsxFragment,
-      {
-        "children":
+      ([@merlin.hide] ReactDOM.domProps)(
+        ~children=
           React.array([|
             ReactDOM.jsx(
               "div",
-              {
-                "children": foo,
-                "nolabel": (),
-                "nolabel": (),
-              },
+              ([@merlin.hide] ReactDOM.domProps)(~children=foo, ()),
             ),
           |]),
-        "nolabel": (),
-      },
+        (),
+      ),
     );

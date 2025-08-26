@@ -155,7 +155,7 @@ describe("ReactDOM", () => {
       let clonedElement =
         React.cloneElement(
           <div> "Hello"->React.string </div>,
-          {"data-testid": "cloned"},
+          [%mel.obj {"data-testid": "cloned"}],
         );
       let clonedHtml = ReactDOMServer.renderToString(clonedElement);
 

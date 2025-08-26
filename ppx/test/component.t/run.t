@@ -9,8 +9,8 @@ We need to output ML syntax here, otherwise refmt could not parse it.
       let make =
         ((fun ~lola ->
             ReactDOM.jsx "div"
-              ([%mel.obj
-                 { children = (React.string lola); nolabel = (); nolabel = () }]))
+              (((ReactDOM.domProps)[@merlin.hide ])
+                 ~children:(React.string lola) ()))
         [@warning "-16"])
       let make =
         let Output$React_component_with_props (Props : < lola: 'lola   >  Js.t)
@@ -28,23 +28,16 @@ We need to output ML syntax here, otherwise refmt could not parse it.
       let make =
         ((fun ?(name= "") ->
             React.jsxs React.jsxFragment
-              ([%mel.obj
-                 {
-                   children =
-                     (React.array
-                        [|(ReactDOM.jsx "div"
-                             ([%mel.obj
-                                {
-                                  children = (React.string ("First " ^ name));
-                                  nolabel = ();
-                                  nolabel = ()
-                                }]));(React.jsx Hello.make
-                                        (Hello.makeProps
-                                           ~children:(React.string
-                                                        ("2nd " ^ name))
-                                           ~one:"1" ()))|]);
-                   nolabel = ()
-                 }]))
+              (((ReactDOM.domProps)[@merlin.hide ])
+                 ~children:(React.array
+                              [|(ReactDOM.jsx "div"
+                                   (((ReactDOM.domProps)[@merlin.hide ])
+                                      ~children:(React.string ("First " ^ name))
+                                      ()));(React.jsx Hello.make
+                                              (Hello.makeProps
+                                                 ~children:(React.string
+                                                              ("2nd " ^ name))
+                                                 ~one:"1" ()))|]) ()))
         [@warning "-16"])
       let make =
         let Output$Upper_case_with_fragment_as_root
@@ -63,14 +56,8 @@ We need to output ML syntax here, otherwise refmt could not parse it.
         ((fun ~children ->
             ((fun ~buttonRef ->
                 ReactDOM.jsx "button"
-                  ([%mel.obj
-                     {
-                       children;
-                       ref = buttonRef;
-                       className = "FancyButton";
-                       nolabel = ();
-                       nolabel = ()
-                     }]))
+                  (((ReactDOM.domProps)[@merlin.hide ]) ~children
+                     ~ref:buttonRef ~className:"FancyButton" ()))
             [@warning "-16"]))
         [@warning "-16"])
       let make =
@@ -92,14 +79,8 @@ We need to output ML syntax here, otherwise refmt could not parse it.
         ((fun ~children ->
             ((fun ~ref ->
                 ReactDOM.jsx "button"
-                  ([%mel.obj
-                     {
-                       children;
-                       ref;
-                       className = "FancyButton";
-                       nolabel = ();
-                       nolabel = ()
-                     }]))
+                  (((ReactDOM.domProps)[@merlin.hide ]) ~children ~ref
+                     ~className:"FancyButton" ()))
             [@warning "-16"]))
         [@warning "-16"])
       let make =
@@ -121,14 +102,8 @@ We need to output ML syntax here, otherwise refmt could not parse it.
             ((fun ?isDisabled ->
                 let onClick event = Js.log event in
                 ReactDOM.jsx "button"
-                  ([%mel.obj
-                     {
-                       name;
-                       onClick;
-                       disabled = isDisabled;
-                       nolabel = ();
-                       nolabel = ()
-                     }]))
+                  (((ReactDOM.domProps)[@merlin.hide ]) ~name ~onClick
+                     ~disabled:isDisabled ()))
             [@warning "-16"]))
         [@warning "-16"])
       let make =
@@ -145,13 +120,9 @@ We need to output ML syntax here, otherwise refmt could not parse it.
       let make =
         ((fun ?(name= "joe") ->
             ReactDOM.jsx "div"
-              ([%mel.obj
-                 {
-                   children =
-                     ((Printf.sprintf "`name` is %s" name) |> React.string);
-                   nolabel = ();
-                   nolabel = ()
-                 }]))
+              (((ReactDOM.domProps)[@merlin.hide ])
+                 ~children:((Printf.sprintf "`name` is %s" name) |>
+                              React.string) ()))
         [@warning "-16"])
       let make =
         let Output$Children_as_string (Props : < name: 'name option   >  Js.t)
@@ -172,55 +143,42 @@ We need to output ML syntax here, otherwise refmt could not parse it.
         ((fun ~children ->
             ((fun ~moreProps ->
                 ReactDOM.jsxs "html"
-                  ([%mel.obj
-                     {
-                       children =
-                         (React.array
-                            [|(ReactDOM.jsx "head"
-                                 ([%mel.obj
-                                    {
-                                      children =
-                                        (ReactDOM.jsx "title"
-                                           ([%mel.obj
-                                              {
-                                                children =
-                                                  (React.string
-                                                     ("SSR React " ^ moreProps));
-                                                nolabel = ();
-                                                nolabel = ()
-                                              }]));
-                                      nolabel = ();
-                                      nolabel = ()
-                                    }]));(ReactDOM.jsxs "body"
-                                            ([%mel.obj
-                                               {
-                                                 children =
-                                                   (React.array
-                                                      [|(ReactDOM.jsx "div"
-                                                           ([%mel.obj
-                                                              {
-                                                                children;
-                                                                id = "root";
-                                                                nolabel = ();
-                                                                nolabel = ()
-                                                              }]));(ReactDOM.jsx
+                  (((ReactDOM.domProps)[@merlin.hide ])
+                     ~children:(React.array
+                                  [|(ReactDOM.jsx "head"
+                                       (((ReactDOM.domProps)[@merlin.hide ])
+                                          ~children:(ReactDOM.jsx "title"
+                                                       (((ReactDOM.domProps)
+                                                          [@merlin.hide ])
+                                                          ~children:(React.string
+                                                                      ("SSR React "
+                                                                      ^
+                                                                      moreProps))
+                                                          ())) ()));(ReactDOM.jsxs
+                                                                      "body"
+                                                                      (((ReactDOM.domProps)
+                                                                      [@merlin.hide
+                                                                      ])
+                                                                      ~children:(
+                                                                      React.array
+                                                                      [|(
+                                                                      ReactDOM.jsx
+                                                                      "div"
+                                                                      (((ReactDOM.domProps)
+                                                                      [@merlin.hide
+                                                                      ])
+                                                                      ~children
+                                                                      ~id:"root"
+                                                                      ()));(
+                                                                      ReactDOM.jsx
                                                                       "script"
-                                                                      (
-                                                                      [%mel.obj
-                                                                      {
-                                                                      src =
-                                                                      "/static/client.js";
-                                                                      nolabel =
-                                                                      ();
-                                                                      nolabel =
-                                                                      ()
-                                                                      }]))|]);
-                                                 nolabel = ();
-                                                 nolabel = ()
-                                               }]))|]);
-                       nolabel = ();
-                       nolabel = ()
-                     }]))
+                                                                      (((ReactDOM.domProps)
+                                                                      [@merlin.hide
+                                                                      ])
+                                                                      ~src:"/static/client.js"
+                                                                      ()))|])
+                                                                      ()))|])
+                     ()))
             [@warning "-16"]))
         [@warning "-16"])
       let make =
@@ -238,8 +196,8 @@ We need to output ML syntax here, otherwise refmt could not parse it.
       let make =
         ((fun ~children ->
             ReactDOM.jsx "div"
-              ([%mel.obj
-                 { children; ariaHidden = "true"; nolabel = (); nolabel = () }]))
+              (((ReactDOM.domProps)[@merlin.hide ]) ~children
+                 ~ariaHidden:"true" ()))
         [@warning "-16"])
       let make =
         let Output$Upper_with_aria (Props : < children: 'children   >  Js.t) =

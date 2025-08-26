@@ -15,11 +15,6 @@ Test some locations in reason-react components
   > EOF
 
   $ dune build
-  File "component.re", line 10, characters 2-5:
-  10 |   <tr key={author.Author.name}> <td> <img src={author.Author.imageUrl} /> </td> </tr>;
-         ^^^
-  Error: Uninterpreted extension 'mel.obj'.
-  [1]
 
 Let's test hovering over parts of the component
 
@@ -103,13 +98,13 @@ __^
   {
     "start": {
       "line": 10,
-      "col": 2
+      "col": 37
     },
     "end": {
       "line": 10,
-      "col": 85
+      "col": 41
     },
-    "type": "React.element",
+    "type": "string",
     "tail": "no"
   }
 
@@ -121,13 +116,13 @@ TODO: This is a regression, the type is not correct should be a string
   {
     "start": {
       "line": 10,
-      "col": 2
+      "col": 37
     },
     "end": {
       "line": 10,
-      "col": 85
+      "col": 73
     },
-    "type": "React.element",
+    "type": "option(React.element)",
     "tail": "no"
   }
 
@@ -139,13 +134,13 @@ _____________^
   {
     "start": {
       "line": 10,
-      "col": 2
+      "col": 47
     },
     "end": {
       "line": 10,
-      "col": 85
+      "col": 53
     },
-    "type": "React.element",
+    "type": "Author.t",
     "tail": "no"
   }
 
@@ -175,12 +170,12 @@ ___________________________^
   {
     "start": {
       "line": 10,
-      "col": 2
+      "col": 54
     },
     "end": {
       "line": 10,
-      "col": 85
+      "col": 69
     },
-    "type": "React.element",
+    "type": "string",
     "tail": "no"
   }
