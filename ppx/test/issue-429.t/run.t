@@ -15,6 +15,11 @@ Test some locations in reason-react components
   > EOF
 
   $ dune build
+  File "component.re", line 29, characters 2-6:
+  29 |   <div>
+         ^^^^
+  Error: Uninterpreted extension 'mel.obj'.
+  [1]
 
 Let's test hovering over parts of the component
 
@@ -31,7 +36,7 @@ Let's test hovering over parts of the component
       "line": 15,
       "col": 21
     },
-    "type": "string",
+    "type": "'a",
     "tail": "no"
   }
 
@@ -99,7 +104,7 @@ Wrapping `div`
       "line": 29,
       "col": 6
     },
-    "type": "string",
+    "type": "ReactDOM.domProps",
     "tail": "no"
   }
 
@@ -109,14 +114,14 @@ First child `button`
   > -filename component.re < component.re | jq '.value[0]'
   {
     "start": {
-      "line": 30,
-      "col": 4
+      "line": 29,
+      "col": 2
     },
     "end": {
-      "line": 30,
-      "col": 11
+      "line": 35,
+      "col": 9
     },
-    "type": "string",
+    "type": "element",
     "tail": "no"
   }
 
@@ -126,12 +131,12 @@ First child `onClick` prop
   > -filename component.re < component.re | jq '.value[0]'
   {
     "start": {
-      "line": 30,
-      "col": 4
+      "line": 29,
+      "col": 2
     },
     "end": {
-      "line": 30,
-      "col": 75
+      "line": 35,
+      "col": 9
     },
     "type": "element",
     "tail": "no"
@@ -143,14 +148,14 @@ First child `onClick` callback argument (event)
   > -filename component.re < component.re | jq '.value[0]'
   {
     "start": {
-      "line": 30,
-      "col": 20
+      "line": 29,
+      "col": 2
     },
     "end": {
-      "line": 30,
-      "col": 46
+      "line": 35,
+      "col": 9
     },
-    "type": "option(Event.Mouse.t => unit)",
+    "type": "element",
     "tail": "no"
   }
 
@@ -245,14 +250,14 @@ Third child `show` in `state.show`
   > -filename component.re < component.re | jq '.value[0]'
   {
     "start": {
-      "line": 34,
-      "col": 11
+      "line": 29,
+      "col": 2
     },
     "end": {
-      "line": 34,
-      "col": 15
+      "line": 35,
+      "col": 9
     },
-    "type": "bool",
+    "type": "element",
     "tail": "no"
   }
 
@@ -286,7 +291,7 @@ Third child `greeting`
       "line": 34,
       "col": 33
     },
-    "type": "string",
+    "type": "'a",
     "tail": "no"
   }
 

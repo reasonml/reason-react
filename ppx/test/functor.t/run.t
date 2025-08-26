@@ -12,7 +12,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
         ((fun ~a ->
             ((fun ~b ->
                 print_endline "This function should be named `Test$Func`" M.x;
-                ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ()))
+                ReactDOM.jsx "div" ([%mel.obj { nolabel = (); nolabel = () }]))
             [@warning "-16"]))
         [@warning "-16"])
       let make =

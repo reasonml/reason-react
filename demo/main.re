@@ -224,17 +224,57 @@ module WithoutForward = {
 module DataAttrsDemo = {
   [@react.component]
   let make = () => {
-    let dataAttrs =
-      [("testid", "demo-element"), ("component", "DataAttrsDemo")]
-      |> Js.Dict.fromList;
-
+    // Zero-runtime data attributes - transformed at compile-time
+    // data_testid becomes data-testid in the DOM
+    // Only works on DOM elements, not React components
     <section>
-      <h3> {React.string("DataAttrs Demo")} </h3>
-      <div dataAttrs>
-        {React.string(
-           "This div has data-testid='demo-element' and data-component='DataAttrsDemo'",
-         )}
+      <h3> {React.string("Zero-Runtime Data Attributes Demo")} </h3>
+      
+      // Single data attribute example
+      <div data_testid="single-example" className="demo-single">
+        {React.string("Single data attribute: data-testid only")}
       </div>
+      
+      // Multiple data attributes example  
+      <div 
+        data_testid="multi-example"
+        data_role="button" 
+        data_category="demo"
+        className="demo-multi"
+      >
+        {React.string("Multiple data attributes: testid, role, and category")}
+      </div>
+      
+      // Combined with other props example
+      <div
+        data_testid="demo-element"
+        data_component="DataAttrsDemo" 
+        className="demo-container"
+        id="main-demo"
+        style={ReactDOM.Style.make(~padding="12px", ~border="1px solid #ccc", ())}
+      >
+        {React.string("Zero-Runtime Data Attributes Demo - compile-time transformation")}
+      </div>
+      
+      // Comparison section showing the difference
+      <details className="demo-comparison">
+        <summary> {React.string("Old vs New Approach Comparison")} </summary>
+        <div className="comparison-content">
+          <h4> {React.string("Old Runtime Approach (removed):")} </h4>
+          <pre>
+            {React.string({j|let dataAttrs = [("testid", "demo")] |> Js.Dict.fromList;
+<div dataAttrs>...</div>  // Runtime dictionary creation|j})}
+          </pre>
+          
+          <h4> {React.string("New Compile-Time Approach:")} </h4>
+          <pre>
+            {React.string({j|<div data_testid="demo">...</div>  // Direct compile-time transformation
+// Generates: <div data-testid="demo">...</div>|j})}
+          </pre>
+          
+          <p> {React.string("Benefits: Zero runtime overhead, cleaner syntax, compile-time validation")} </p>
+        </div>
+      </details>
     </section>;
   };
 };

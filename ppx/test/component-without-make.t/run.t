@@ -4,7 +4,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
   module X_as_main_function =
     struct
       external xProps : ?key:string -> unit -> <  >  Js.t = ""[@@mel.obj ]
-      let x () = ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ())
+      let x () = ReactDOM.jsx "div" ([%mel.obj { nolabel = (); nolabel = () }])
       let x =
         let Output$X_as_main_function$x (Props : <  >  Js.t) = x () in
         Output$X_as_main_function$x
@@ -17,8 +17,8 @@ We need to output ML syntax here, otherwise refmt could not parse it.
       let createElement =
         ((fun ~lola ->
             ReactDOM.jsx "div"
-              (((ReactDOM.domProps)[@merlin.hide ])
-                 ~children:(React.string lola) ()))
+              ([%mel.obj
+                 { children = (React.string lola); nolabel = (); nolabel = () }]))
         [@warning "-16"])
       let createElement =
         let Output$Create_element_as_main_function$createElement

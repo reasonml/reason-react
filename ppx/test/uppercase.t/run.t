@@ -15,6 +15,11 @@ Test some locations in reason-react components
   > EOF
 
   $ dune build
+  File "component.re", line 4, characters 4-8:
+  4 |     <div>
+          ^^^^
+  Error: Uninterpreted extension 'mel.obj'.
+  [1]
 
 Let's test hovering over parts of the component
 
@@ -31,6 +36,6 @@ Let's test hovering over parts of the component
       "line": 14,
       "col": 15
     },
-    "type": "React.element",
+    "type": "'a",
     "tail": "no"
   }

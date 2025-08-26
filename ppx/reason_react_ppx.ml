@@ -46,15 +46,115 @@ let nolabel = Nolabel
 let labelled str = Labelled str
 let optional str = Optional str
 
+(* Module-level state for collecting external declarations *)
+let externalDeclarations = ref []
+
+(* Helper functions for data attributes *)
+let getLabelOrEmpty label = 
+  match label with Optional str | Labelled str -> str | Nolabel -> ""
+
+let isDataProp label =
+  let labelStr = getLabelOrEmpty label in
+  String.length labelStr >= 5 && String.sub labelStr 0 5 = "data_"
+
+let transformToKebabCase name =
+  if String.length name > 5 && String.sub name 0 5 = "data_" then
+    let suffix = String.sub name 5 (String.length name - 5) in
+    "data-" ^ suffix
+  else name
+
+(* Generate unique external function name *)
+let generateExternalName ~elementName ~props =
+  let propNames = List.map (fun (label, _) -> getLabelOrEmpty label) props in
+  let propString = String.concat "_" propNames in
+  let hash = Digest.to_hex (Digest.string propString) in
+  Printf.sprintf "makeProps_%s_%s" elementName (String.sub hash 0 8)
+
+(* Create [@mel.obj] attribute *)
+let createMelObjAttribute ~loc =
+  {
+    attr_name = { txt = "mel.obj"; loc };
+    attr_payload = PStr [];
+    attr_loc = loc;
+  }
+
+(* Create [@mel.as "data-*"] attribute *)
+let createMelAsAttribute ~loc jsName =
+  {
+    attr_name = { txt = "mel.as"; loc };
+    attr_payload = PStr [
+      Builder.pstr_eval ~loc 
+        (Builder.pexp_constant ~loc (Pconst_string (jsName, loc, None))) 
+        []
+    ];
+    attr_loc = loc;
+  }
+
+(* Build function type with proper arrows *)
+let rec buildArrowType ~loc props =
+  match props with
+  | [] -> 
+      (* Final unit -> 'a *)
+      Builder.ptyp_arrow ~loc Nolabel 
+        (Builder.ptyp_constr ~loc {txt = Lident "unit"; loc} [])
+        (Builder.ptyp_var ~loc "a")
+  | (label, _) :: rest ->
+      let propType = Builder.ptyp_constr ~loc {txt = Lident "string"; loc} [] in
+      let propName = getLabelOrEmpty label in
+      let (finalLabel, propType') = 
+        if isDataProp label then
+          (* Add [@mel.as "data-*"] attribute *)
+          let jsName = transformToKebabCase propName in
+          let melAsAttr = createMelAsAttribute ~loc jsName in
+          (* Ensure the argument is labeled, not nolabel *)
+          (Labelled propName, {propType with ptyp_attributes = [melAsAttr]})
+        else 
+          (* Ensure all props are labeled arguments in external functions *)
+          (Labelled propName, propType)
+      in
+      Builder.ptyp_arrow ~loc finalLabel propType' (buildArrowType ~loc rest)
+
+(* Create external declaration AST *)
+let createExternalDeclaration ~name ~props ~loc =
+  {
+    pstr_desc = Pstr_primitive {
+      pval_name = {txt = name; loc};
+      pval_type = buildArrowType ~loc props;
+      pval_prim = [""];  (* Empty string for [@mel.obj] *)
+      pval_attributes = [createMelObjAttribute ~loc];
+      pval_loc = loc;
+    };
+    pstr_loc = loc;
+  }
+
 module Binding = struct
   (* Binding is the interface that the ppx relies on to interact with the react bindings.
      Here we define the same APIs as the bindings but it generates Parsetree nodes *)
   module ReactDOM = struct
-    let domProps ~applyLoc ~loc props =
-      Builder.pexp_apply ~loc:applyLoc
-        (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
-           { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
-        props
+    let domProps ~applyLoc ~loc ?(elementName="element") props =
+      (* Check if any props have data attributes *)
+      let hasDataAttrs = List.exists (fun (label, _) -> isDataProp label) props in
+      
+      if hasDataAttrs then
+        (* Generate external function approach for zero runtime overhead *)
+        let externalName = generateExternalName ~elementName ~props in
+        
+        (* Generate call to external function *)
+        let args = props @ [(Nolabel, Builder.unit)] in
+        
+        (* Create external declaration only with labeled props ([@mel.obj] adds unit automatically) *)
+        let labeledProps = List.filter (fun (label, _) -> match label with Nolabel -> false | _ -> true) props in
+        let externalDecl = createExternalDeclaration ~name:externalName ~props:labeledProps ~loc in
+        externalDeclarations := externalDecl :: !externalDeclarations;
+        Builder.pexp_apply ~loc
+          (Builder.pexp_ident ~loc {txt = Lident externalName; loc})
+          args
+      else
+        (* Use standard domProps for backwards compatibility *)
+        Builder.pexp_apply ~loc:applyLoc
+          (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
+             { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
+          props
   end
 
   module React = struct
@@ -79,7 +179,7 @@ module Binding = struct
         [
           (nolabel, fragment);
           ( nolabel,
-            ReactDOM.domProps ~applyLoc:loc ~loc
+            ReactDOM.domProps ~applyLoc:loc ~loc ~elementName:"fragment"
               [ (labelled "children", children); (nolabel, Builder.unit) ] );
         ]
 
@@ -619,7 +719,7 @@ let jsxMapper =
     let component = (nolabel, componentNameExpr)
     and props =
       ( nolabel,
-        Binding.ReactDOM.domProps ~applyLoc:parentExpLoc ~loc:callerLoc props )
+        Binding.ReactDOM.domProps ~applyLoc:parentExpLoc ~loc:callerLoc ~elementName:id props )
     in
     let loc = parentExpLoc in
     let gloc = { loc with loc_ghost = true } in
@@ -1368,7 +1468,18 @@ let jsxMapper =
     [@@raises Invalid_argument]
 
     method! structure ctxt stru =
-      super#structure ctxt (reactComponentTransform ~ctxt self stru)
+      (* Clear any previous external declarations *)
+      externalDeclarations := [];
+      
+      (* Process the structure first *)
+      let processedStru = super#structure ctxt (reactComponentTransform ~ctxt self stru) in
+      
+      (* Get collected external declarations and clear state *)
+      let externals = List.rev !externalDeclarations in
+      externalDeclarations := [];
+      
+      (* Inject external declarations at the beginning *)
+      externals @ processedStru
     [@@raises Invalid_argument]
 
     method! expression ctxt expr =

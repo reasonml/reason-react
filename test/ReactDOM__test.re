@@ -13,17 +13,9 @@ module Stream = {
 };
 
 describe("ReactDOM", () => {
-  describe("dataAttrs support", () => {
-    test("jsx should render data-* attributes from dataAttrs", () => {
-      let props =
-        ReactDOM.domProps(
-          ~dataAttrs=
-            [("testid", "my-test"), ("custom", "value")] |> Js.Dict.fromList,
-          ~className="container",
-          (),
-        );
-
-      let element = ReactDOM.jsx("div", props);
+  describe("data attributes JSX support", () => {
+    test("jsx should render data-* attributes from JSX", () => {
+      let element = <div data_testid="my-test" data_custom="value" className="container" />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("data-testid=\"my-test\"");
@@ -32,14 +24,7 @@ describe("ReactDOM", () => {
     });
 
     test("should handle single data attribute", () => {
-      let element =
-        ReactDOM.jsx(
-          "div",
-          ReactDOM.domProps(
-            ~dataAttrs=Js.Dict.fromList([("testid", "foo")]),
-            (),
-          ),
-        );
+      let element = <div data_testid="foo" />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("data-testid=\"foo\"");
@@ -47,22 +32,13 @@ describe("ReactDOM", () => {
 
     test(
       "should handle multiple data attributes with various types of values", () => {
-      let element =
-        ReactDOM.jsx(
-          "button",
-          ReactDOM.domProps(
-            ~dataAttrs=
-              [
-                ("testid", "component-123"),
-                ("role", "button"),
-                ("index", "5"),
-                ("active", "true"),
-                ("disabled", "false"),
-              ]
-              |> Js.Dict.fromList,
-            (),
-          ),
-        );
+      let element = <button 
+        data_testid="component-123" 
+        data_role="button" 
+        data_index="5" 
+        data_active="true" 
+        data_disabled="false" 
+      />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("data-testid=\"component-123\"");
@@ -74,21 +50,13 @@ describe("ReactDOM", () => {
 
     test("should integrate with existing props like className and style", () => {
       let style = ReactDOM.Style.make(~color="red", ~fontSize="16px", ());
-      let element =
-        ReactDOM.jsx(
-          "div",
-          ReactDOM.domProps(
-            ~dataAttrs=
-              Js.Dict.fromList([
-                ("testid", "styled-component"),
-                ("theme", "dark"),
-              ]),
-            ~className="my-component active",
-            ~style,
-            ~id="unique-id",
-            (),
-          ),
-        );
+      let element = <div 
+        data_testid="styled-component" 
+        data_theme="dark" 
+        className="my-component active" 
+        style 
+        id="unique-id" 
+      />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("data-testid=\"styled-component\"");
@@ -99,25 +67,16 @@ describe("ReactDOM", () => {
       expect(html)->toContain("font-size:16px");
     });
 
-    test("should handle empty dataAttrs dictionary", () => {
-      let element =
-        ReactDOM.jsx(
-          "div",
-          ReactDOM.domProps(
-            ~dataAttrs=Js.Dict.empty(),
-            ~className="empty-data",
-            (),
-          ),
-        );
+    test("should handle no data attributes", () => {
+      let element = <div className="empty-data" />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("class=\"empty-data\"");
       expect(html)->not->toContain("data-");
     });
 
-    test("should handle None dataAttrs", () => {
-      let element =
-        ReactDOM.jsx("div", ReactDOM.domProps(~className="no-data", ()));
+    test("should handle elements with no data attributes", () => {
+      let element = <div className="no-data" />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("class=\"no-data\"");
@@ -125,21 +84,12 @@ describe("ReactDOM", () => {
     });
 
     test("should work with keyed elements", () => {
-      let element =
-        ReactDOM.jsxKeyed(
-          "li",
-          ReactDOM.domProps(
-            ~dataAttrs=
-              Js.Dict.fromList([
-                ("item-id", "123"),
-                ("category", "electronics"),
-              ]),
-            ~className="list-item",
-            (),
-          ),
-          ~key="item-123",
-          (),
-        );
+      let element = <li 
+        key="item-123" 
+        data_item_id="123" 
+        data_category="electronics" 
+        className="list-item" 
+      />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("data-item-id=\"123\"");
@@ -148,39 +98,22 @@ describe("ReactDOM", () => {
     });
 
     test("should handle special characters in keys and values", () => {
-      let element =
-        ReactDOM.jsx(
-          "div",
-          ReactDOM.domProps(
-            ~dataAttrs=
-              [
-                ("test-id", "value-with-hyphens"),
-                ("user_id", "user_123"),
-                ("config", "{\"theme\":\"dark\"}"),
-                ("url", "https://example.com/path?query=value&foo=bar"),
-              ]
-              |> Js.Dict.fromList,
-            (),
-          ),
-        );
+      let element = <div 
+        data_test_id="value-with-hyphens" 
+        data_user_id="user_123" 
+        data_config="{\"theme\":\"dark\"}" 
+        data_url="https://example.com/path?query=value&foo=bar" 
+      />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("data-test-id=\"value-with-hyphens\"");
-      expect(html)->toContain("data-user_id=\"user_123\"");
+      expect(html)->toContain("data-user-id=\"user_123\"");
       expect(html)->toContain("data-config");
       expect(html)->toContain("data-url");
     });
 
     test("should handle empty values", () => {
-      let element =
-        ReactDOM.jsx(
-          "div",
-          ReactDOM.domProps(
-            ~dataAttrs=
-              [("empty", ""), ("normal", "value")] |> Js.Dict.fromList,
-            (),
-          ),
-        );
+      let element = <div data_empty="" data_normal="value" />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("data-empty=\"\"");
@@ -188,18 +121,13 @@ describe("ReactDOM", () => {
     });
 
     test("should work with different HTML elements", () => {
-      let dataAttrs = [("component", "test")] |> Js.Dict.fromList;
-
-      let spanElement =
-        ReactDOM.jsx("span", ReactDOM.domProps(~dataAttrs, ()));
+      let spanElement = <span data_component="test" />;
       let spanHtml = ReactDOMServer.renderToString(spanElement);
 
-      let inputElement =
-        ReactDOM.jsx("input", ReactDOM.domProps(~dataAttrs, ()));
+      let inputElement = <input data_component="test" />;
       let inputHtml = ReactDOMServer.renderToString(inputElement);
 
-      let buttonElement =
-        ReactDOM.jsx("button", ReactDOM.domProps(~dataAttrs, ()));
+      let buttonElement = <button data_component="test" />;
       let buttonHtml = ReactDOMServer.renderToString(buttonElement);
 
       expect(spanHtml)->toContain("<span data-component=\"test\"></span>");
@@ -208,16 +136,7 @@ describe("ReactDOM", () => {
     });
 
     test("should preserve data-* attribute order consistency", () => {
-      let element =
-        ReactDOM.jsx(
-          "div",
-          ReactDOM.domProps(
-            ~dataAttrs=
-              [("alpha", "1"), ("beta", "2"), ("gamma", "3")]
-              |> Js.Dict.fromList,
-            (),
-          ),
-        );
+      let element = <div data_alpha="1" data_beta="2" data_gamma="3" />;
       let html = ReactDOMServer.renderToString(element);
 
       // All data attributes should be present
@@ -229,15 +148,8 @@ describe("ReactDOM", () => {
     test(
       "should maintain compatibility with React.cloneElement data attributes",
       () => {
-      // Create element using dataAttrs prop
-      let element =
-        ReactDOM.jsx(
-          "div",
-          ReactDOM.domProps(
-            ~dataAttrs=Js.Dict.fromList([("testid", "original")]),
-            (),
-          ),
-        );
+      // Create element using JSX data attributes
+      let element = <div data_testid="original" />;
       let html = ReactDOMServer.renderToString(element);
 
       // Should produce same result as cloneElement with data-* attributes
@@ -257,21 +169,12 @@ describe("ReactDOM", () => {
 
     test(
       "should handle data attributes with numeric and boolean-like values", () => {
-      let element =
-        ReactDOM.jsx(
-          "div",
-          ReactDOM.domProps(
-            ~dataAttrs=
-              [
-                ("count", "42"),
-                ("enabled", "true"),
-                ("disabled", "false"),
-                ("percentage", "95.5"),
-              ]
-              |> Js.Dict.fromList,
-            (),
-          ),
-        );
+      let element = <div 
+        data_count="42" 
+        data_enabled="true" 
+        data_disabled="false" 
+        data_percentage="95.5" 
+      />;
 
       let html = ReactDOMServer.renderToString(element);
 

@@ -22,6 +22,11 @@ Test some locations in reason-react components, reproduces #840
   >      () [@JSX])
   > EOF
   $ dune build @foo
+  File "component.ml", line 2, characters 3-6:
+  2 |   (div
+         ^^^
+  Error: Uninterpreted extension 'mel.obj'.
+  [1]
 
 Let's test hovering over parts of the component
 
@@ -55,6 +60,6 @@ The `foo` variable inside the component body
       "line": 3,
       "col": 33
     },
-    "type": "string",
+    "type": "'a",
     "tail": "no"
   }

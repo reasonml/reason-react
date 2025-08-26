@@ -15,10 +15,11 @@
         ~children=
           ReactDOM.jsx(
             "h1",
-            ([@merlin.hide] ReactDOM.domProps)(
-              ~children=React.string("Yep"),
-              (),
-            ),
+            {
+              "children": React.string("Yep"),
+              "nolabel": (),
+              "nolabel": (),
+            },
           ),
         ~moreProps="hgalo",
         (),
@@ -37,7 +38,11 @@
         ~children=
           ReactDOM.jsx(
             "div",
-            ([@merlin.hide] ReactDOM.domProps)(~children="hello", ()),
+            {
+              "children": "hello",
+              "nolabel": (),
+              "nolabel": (),
+            },
           ),
         ~booleanAttribute=true,
         ~stringAttribute="string",
@@ -51,7 +56,14 @@
     React.jsx(
       FancyButton.make,
       FancyButton.makeProps(
-        ~children=ReactDOM.jsx("div", ([@merlin.hide] ReactDOM.domProps)()),
+        ~children=
+          ReactDOM.jsx(
+            "div",
+            {
+              "nolabel": (),
+              "nolabel": (),
+            },
+          ),
         ~ref=buttonRef,
         (),
       ),
