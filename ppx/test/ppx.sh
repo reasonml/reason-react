@@ -13,7 +13,7 @@ if [ -z "$3" ]; then
 fi
 
 refmt --parse re --print ml "$3" > output.ml
-reason-react-ppx --impl output.ml -o temp.ml
+/home/me/external-repos/reason-react/_build/default/ppx/standalone.exe --impl output.ml -o temp.ml
 
 if [ "$2" == "ml" ]; then
   cat temp.ml

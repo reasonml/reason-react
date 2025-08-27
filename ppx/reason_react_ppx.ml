@@ -48,6 +48,13 @@ let optional str = Optional str
 
 let externalDeclarations = ref []
 
+let externalExists name declarations =
+  List.exists (fun decl ->
+    match decl.pstr_desc with
+    | Pstr_primitive { pval_name; _ } -> pval_name.txt = name
+    | _ -> false
+  ) declarations
+
 let getLabelOrEmpty label = 
   match label with Optional str | Labelled str -> str | Nolabel -> ""
 
@@ -132,7 +139,9 @@ module Binding = struct
         (* Create external declaration only with labeled props ([@mel.obj] adds unit automatically) *)
         let labeledProps = List.filter (fun (label, _) -> match label with Nolabel -> false | _ -> true) props in
         let externalDecl = createExternalDeclaration ~name:externalName ~props:labeledProps ~loc in
-        externalDeclarations := externalDecl :: !externalDeclarations;
+        (* Only add external if it doesn't already exist to prevent duplicates *)
+        if not (externalExists externalName !externalDeclarations) then
+          externalDeclarations := externalDecl :: !externalDeclarations;
         Builder.pexp_apply ~loc
           (Builder.pexp_ident ~loc {txt = Lident externalName; loc})
           args
