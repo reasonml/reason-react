@@ -221,6 +221,7 @@ module WithoutForward = {
   };
 };
 
+
 module DataAttrsDemo = {
   [@react.component]
   let make = () => {
@@ -233,7 +234,7 @@ module DataAttrsDemo = {
       </div>
       
       <div 
-        className="demo-multi"
+        className="demo-multi" data_testid="demo-multi" data_value="test"
       >
         {React.string("Data attributes: data_testid becomes data-testid")}
       </div>
@@ -266,6 +267,7 @@ module DataAttrsDemo = {
     </section>;
   };
 };
+
 
 module App = {
   [@react.component]
