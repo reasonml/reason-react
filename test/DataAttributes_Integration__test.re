@@ -1,23 +1,3 @@
-/* 
- * FAILING INTEGRATION TEST FILE: DataAttributes_Integration__test.re
- * 
- * PURPOSE: This test file verifies data attributes work in real React component integration scenarios.
- *          It tests realistic patterns developers use in production React applications.
- * 
- * EXPECTED FAILURE: "Error: Unbound value makeProps_*" compilation errors when running `make test`
- * because external declarations are missing for data attributes on JSX elements.
- * 
- * INTEGRATION COVERAGE:
- * - Real React components with hooks (useState, useEffect) using data attributes
- * - Data attribute deduplication when same attributes used multiple times  
- * - Different element types (div, span, button, input) within React components
- * - Data attributes mixed with regular props (className, style, onClick)
- * - Conditional rendering with data attributes based on component state
- * - Components that render lists with data attributes
- * - Nested components passing data attributes as props
- * - Component composition with data attributes
- */
-
 open Jest;
 open Expect;
 
@@ -31,14 +11,12 @@ describe("Data Attributes - React Component Integration", () => {
   
   describe("React Hooks Integration with Data Attributes", () => {
     
-    // CRITICAL: This test MUST fail with "Unbound value makeProps_div_*" compilation errors
     test("should integrate data attributes with useState hook", () => {
       module CounterWithDataAttrs = {
         [@react.component]
         let make = (~testId="counter") => {
           let (count, setCount) = React.useState(() => 0);
           
-          // EXPECTED FAILURE: Compilation error "Unbound value makeProps_div_[hash]"
           <div data_testid={testId} data_component="counter" data_count={string_of_int(count)}>
             <button 
               data_action="increment" 
@@ -60,7 +38,6 @@ describe("Data Attributes - React Component Integration", () => {
       
       let container = ReactTestingLibrary.render(<CounterWithDataAttrs />);
       
-      // Once PPX is fixed, these should find elements by data-testid
       let counterDiv = getByTestId("counter", container);
       let incrementBtn = getByTestId("increment-btn", container);
       let countDisplay = getByTestId("count-display", container);
@@ -78,13 +55,11 @@ describe("Data Attributes - React Component Integration", () => {
           let (data, setData) = React.useState(() => "");
           
           React.useEffect0(() => {
-            // Simulate async data loading
             setStatus(_ => "loaded");
             setData(_ => "Hello from effect!");
             None;
           });
           
-          // EXPECTED FAILURE: Multiple "Unbound value makeProps_*" errors for different elements
           <div data_testid="effect-component" data_status={status}>
             <div data_role="status" data_testid="status-display">
               {React.string(status)}
@@ -98,7 +73,6 @@ describe("Data Attributes - React Component Integration", () => {
       
       let container = ReactTestingLibrary.render(<EffectComponentWithDataAttrs />);
       
-      // Once PPX is fixed, these should work properly
       let component = getByTestId("effect-component", container);
       let statusDisplay = getByTestId("status-display", container);
       let dataDisplay = getByTestId("data-display", container);
@@ -115,8 +89,6 @@ describe("Data Attributes - React Component Integration", () => {
       module ComponentWithDuplicateDataAttrs = {
         [@react.component]
         let make = (~category="default") => {
-          // EXPECTED FAILURE: All these elements should cause "Unbound value makeProps_*" errors
-          // Testing deduplication: same data attribute structure should reuse external declarations
           <div data_testid="duplicate-test" data_category={category}>
             <div data_testid="item-1" data_category={category} data_index="1">
               {React.string("Item 1")}
@@ -133,7 +105,6 @@ describe("Data Attributes - React Component Integration", () => {
       
       let container = ReactTestingLibrary.render(<ComponentWithDuplicateDataAttrs category="test" />);
       
-      // Once PPX is fixed and deduplication works, these should all have correct attributes
       let mainDiv = getByTestId("duplicate-test", container);
       let item1 = getByTestId("item-1", container);
       let item2 = getByTestId("item-2", container);
@@ -155,7 +126,6 @@ describe("Data Attributes - React Component Integration", () => {
           let (inputValue, setInputValue) = React.useState(() => "");
           let (isSubmitted, setIsSubmitted) = React.useState(() => false);
           
-          // EXPECTED FAILURE: Each element type should cause different "Unbound value makeProps_*" errors
           <form data_testid={formId} data_component="multi-element-form">
             <div data_role="header" data_testid="form-header">
               <h2 data_element="heading" data_testid="form-title">
@@ -201,7 +171,6 @@ describe("Data Attributes - React Component Integration", () => {
       
       let container = ReactTestingLibrary.render(<MultiElementComponent />);
       
-      // Once PPX is fixed, all these different element types should work
       let form = getByTestId("test-form", container);
       let header = getByTestId("form-header", container);
       let title = getByTestId("form-title", container);
@@ -228,7 +197,6 @@ describe("Data Attributes - React Component Integration", () => {
         let make = (~theme="light") => {
           let (isActive, setIsActive) = React.useState(() => false);
           
-          // EXPECTED FAILURE: "Unbound value makeProps_div_*" errors for mixed prop usage
           <div 
             data_testid="styled-component"
             data_theme={theme}
@@ -278,7 +246,6 @@ describe("Data Attributes - React Component Integration", () => {
       
       let container = ReactTestingLibrary.render(<StyledComponentWithDataAttrs theme="dark" />);
       
-      // Once PPX is fixed, mixed props should work together
       let component = getByTestId("styled-component", container);
       let toggleBtn = getByTestId("toggle-btn", container);
       let statusText = getByTestId("status-text", container);
@@ -298,7 +265,6 @@ describe("Data Attributes - React Component Integration", () => {
           let (mode, setMode) = React.useState(() => "view");
           let (hasError, setHasError) = React.useState(() => false);
           
-          // EXPECTED FAILURE: Conditional rendering should cause compilation errors
           <div data_testid="conditional-component" data_mode={mode}>
             {switch (mode) {
              | "view" =>
@@ -359,7 +325,6 @@ describe("Data Attributes - React Component Integration", () => {
       
       let container = ReactTestingLibrary.render(<ConditionalComponent />);
       
-      // Once PPX is fixed, conditional rendering should work
       let component = getByTestId("conditional-component", container);
       let viewMode = getByTestId("view-mode", container);
       let editBtn = getByTestId("edit-btn", container);
@@ -378,7 +343,6 @@ describe("Data Attributes - React Component Integration", () => {
         let make = (~items=[|"apple", "banana", "cherry"|]) => {
           let (selectedIndex, setSelectedIndex) = React.useState(() => (-1));
           
-          // EXPECTED FAILURE: List mapping with data attributes should cause compilation errors
           <div data_testid="list-component" data_count={string_of_int(Array.length(items))}>
             <ul data_role="list" data_testid="item-list">
               {React.array(
@@ -421,7 +385,6 @@ describe("Data Attributes - React Component Integration", () => {
       
       let container = ReactTestingLibrary.render(<ListComponent />);
       
-      // Once PPX is fixed, list rendering should work properly
       let listComponent = getByTestId("list-component", container);
       let itemList = getByTestId("item-list", container);
       let item0 = getByTestId("item-0", container);
@@ -441,7 +404,6 @@ describe("Data Attributes - React Component Integration", () => {
       module ChildComponent = {
         [@react.component]
         let make = (~title, ~content, ~testId) => {
-          // EXPECTED FAILURE: Child component compilation errors
           <div data_testid={testId} data_component="child" data_title={title}>
             <h3 data_element="child-title" data_testid={testId ++ "-title"}>
               {React.string(title)}
@@ -458,7 +420,6 @@ describe("Data Attributes - React Component Integration", () => {
         let make = () => {
           let (activeChild, setActiveChild) = React.useState(() => "child1");
           
-          // EXPECTED FAILURE: Parent component with nested children compilation errors  
           <div data_testid="parent-component" data_component="parent" data_active={activeChild}>
             <header data_role="parent-header" data_testid="parent-header">
               <h1 data_element="parent-title">
@@ -508,7 +469,6 @@ describe("Data Attributes - React Component Integration", () => {
       
       let container = ReactTestingLibrary.render(<ParentComponent />);
       
-      // Once PPX is fixed, nested component composition should work
       let parentComponent = getByTestId("parent-component", container);
       let parentHeader = getByTestId("parent-header", container);
       let childNav = getByTestId("child-nav", container);
@@ -542,7 +502,6 @@ describe("Data Attributes - React Component Integration", () => {
           let (sortBy, setSortBy) = React.useState(() => "name");
           
           React.useEffect0(() => {
-            // Simulate async completion
             finish();
             None;
           });
@@ -555,7 +514,6 @@ describe("Data Attributes - React Component Integration", () => {
             };
           });
           
-          // EXPECTED FAILURE: Complex real-world component should cause multiple compilation errors
           <div data_testid="dashboard" data_component="user-dashboard" data_filter={filter} data_sort={sortBy}>
             <header data_role="dashboard-header" data_testid="dashboard-header">
               <h1 data_element="dashboard-title">
@@ -682,7 +640,6 @@ describe("Data Attributes - React Component Integration", () => {
         };
       };
       
-      // This will fail to compile until PPX external declarations are fixed
       let _container = ReactTestingLibrary.render(<ComplexDashboard />);
       ();
     });

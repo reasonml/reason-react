@@ -1464,20 +1464,15 @@ let jsxMapper =
     [@@raises Invalid_argument]
 
     method! structure ctxt stru =
-      (* Store existing externals from any parent context *)
       let parentExternals = !externalDeclarations in
       externalDeclarations := [];
       
-      (* Process the structure, collecting React component externals *)
       let processedStru = super#structure ctxt (reactComponentTransform ~ctxt self stru) in
       
-      (* Collect externals from both React components and DOM elements *)
       let allExternals = List.rev !externalDeclarations in
       
-      (* Restore parent externals and add our collected externals *)
       externalDeclarations := allExternals @ parentExternals;
       
-      (* Inject externals at the beginning of this structure *)
       allExternals @ processedStru
     [@@raises Invalid_argument]
 
