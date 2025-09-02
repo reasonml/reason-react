@@ -226,7 +226,7 @@ module DataAttrsDemo = {
   [@react.component]
   let make = () => {
     <section>
-      <h3> {React.string("Data Attributes Demo - PPX Fix Working!")} </h3>
+      <h3> {React.string("Zero-Runtime Data Attributes Demo")} </h3>
       
       <p> {React.string("SUCCESS: The PPX deduplication fix allows data attributes to work in nested modules!")} </p>
       
@@ -245,7 +245,7 @@ module DataAttrsDemo = {
         data_component="nested-module-demo"
         style={ReactDOM.Style.make(~padding="12px", ~border="1px solid #ccc", ())}
       >
-        {React.string("Complex props + data attributes - all working in nested module!")}
+        {React.string("Zero-Runtime Data Attributes Demo - compile-time transformation")}
       </div>
       
       <button data_action="click" data_category="demo" onClick={_ => Js.log("Data attributes on button work!")}>
@@ -269,12 +269,9 @@ module DataAttrsDemo = {
 };|j})}
           </pre>
           
-          <h4> {React.string("After Fix (Compiles successfully):")} </h4>
+          <h4> {React.string("New Compile-Time Approach:")} </h4>
           <pre>
-            {React.string({j|// PPX deduplication fix allows this to work
-module DataAttrsDemo = {
-  <div data_testid="demo">...</div>  // Success!
-};|j})}
+            {React.string({j|<div data_testid="demo">...</div>|j})}
           </pre>
           
           <div data_benefits="list">

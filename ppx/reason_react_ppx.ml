@@ -100,8 +100,23 @@ let rec buildArrowType ~loc props =
         (Builder.ptyp_constr ~loc {txt = Lident "unit"; loc} [])
         (Builder.ptyp_var ~loc "a")
   | (label, _) :: rest ->
-      let propType = Builder.ptyp_constr ~loc {txt = Lident "string"; loc} [] in
       let propName = getLabelOrEmpty label in
+      let propType = 
+        if propName = "children" then
+          Builder.ptyp_constr ~loc {txt = Ldot (Lident "React", "element"); loc} []
+        else if propName = "style" then
+          Builder.ptyp_constr ~loc {txt = Ldot (Ldot (Lident "ReactDOM", "Style"), "t"); loc} []
+        else if propName = "onClick" then
+          Builder.ptyp_arrow ~loc Nolabel 
+            (Builder.ptyp_var ~loc "event")
+            (Builder.ptyp_constr ~loc {txt = Lident "unit"; loc} [])
+        else if propName = "onChange" then
+          Builder.ptyp_arrow ~loc Nolabel 
+            (Builder.ptyp_var ~loc "event")
+            (Builder.ptyp_constr ~loc {txt = Lident "unit"; loc} [])
+        else
+          Builder.ptyp_constr ~loc {txt = Lident "string"; loc} [] 
+      in
       let (finalLabel, propType') = 
         if isDataProp label then
           let jsName = transformToKebabCase propName in
@@ -134,8 +149,6 @@ module Binding = struct
       if hasDataAttrs then
         let externalName = generateExternalName ~elementName ~props in
         
-        let args = props in
-        
         (* Create external declaration only with labeled props ([@mel.obj] adds unit automatically) *)
         let labeledProps = List.filter (fun (label, _) -> match label with Nolabel -> false | _ -> true) props in
         let externalDecl = createExternalDeclaration ~name:externalName ~props:labeledProps ~loc in
@@ -144,7 +157,7 @@ module Binding = struct
           externalDeclarations := externalDecl :: !externalDeclarations;
         Builder.pexp_apply ~loc
           (Builder.pexp_ident ~loc {txt = Lident externalName; loc})
-          args
+          (labeledProps @ [(Nolabel, Builder.pexp_construct ~loc {txt = Lident "()"; loc} None)])
       else
         (* Use standard domProps for backwards compatibility *)
         Builder.pexp_apply ~loc:applyLoc

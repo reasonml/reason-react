@@ -1,6 +1,8 @@
 open Jest;
 open Expect;
 
+external getAttribute: (Dom.element, string) => option(string) = "getAttribute";
+
 describe("PPX External Declaration Generation", () => {
   describe("External declarations for data attributes", () => {
     
@@ -70,23 +72,22 @@ describe("PPX External Declaration Generation", () => {
       expect(Js.typeof(_element3))->toBe("object");
     });
     
-    testAsync("should fail compilation for async components with data attributes", finish => {
+    test("should render component with data attributes correctly", () => {
       module RenderTest = {
         [@react.component]
         let make = () => {
-          React.useEffect0(() => {
-            finish();
-            None;
-          });
-          
           <div data_testid="render-integration" data_framework="reason-react">
             {React.string("Integration test")}
           </div>;
         };
       };
       
-      let _component = <RenderTest />;
-      ();
+      let container = ReactTestingLibrary.render(<RenderTest />);
+      let element = ReactTestingLibrary.getByTestId(~matcher=`Str("render-integration"), container);
+      
+      expect(element->getAttribute("data-testid"))->toEqual(Some("render-integration"));
+      expect(element->getAttribute("data-framework"))->toEqual(Some("reason-react"));
+      expect(DomTestingLibrary.getNodeText(element))->toBe("Integration test");
     });
   });
 });
