@@ -226,73 +226,62 @@ module DataAttrsDemo = {
   [@react.component]
   let make = () => {
     <section>
-      <h3> {React.string("Zero-Runtime Data Attributes Demo")} </h3>
+      <h3> {React.string("Data Attributes Demo")} </h3>
       
-      <p> {React.string("SUCCESS: The PPX deduplication fix allows data attributes to work in nested modules!")} </p>
+      <p> {React.string("Demonstrating common use cases for HTML data attributes with ReasonReact")} </p>
       
-      <div className="demo-single" data_testid="single-demo">
-        {React.string("Single data attribute: data_testid compiles successfully")}
+      <div className="demo-testing" data_testid="test-automation">
+        <h4> {React.string("Testing & QA")} </h4>
+        <button data_testid="submit-btn" data_cy="submit" onClick={_ => Js.log("Form submitted")}>
+          {React.string("Submit Form")}
+        </button>
+        <input data_testid="email-input" data_cy="email" placeholder="Enter email" />
       </div>
       
-      <div className="demo-multi" data_testid="demo-multi" data_value="test" data_role="button">
-        {React.string("Multiple data attributes: data_testid + data_value + data_role")}
+      <div className="demo-analytics" data_analytics="user-engagement">
+        <h4> {React.string("Analytics & Tracking")} </h4>
+        <button data_action="click" data_category="engagement" data_label="cta-button" onClick={_ => Js.log("Tracked click")}>
+          {React.string("Call to Action")}
+        </button>
+        <a href="#" data_track="external-link" data_destination="docs">
+          {React.string("External Documentation")}
+        </a>
       </div>
       
-      <div
-        className="demo-container"
-        id="main-demo"
-        data_testid="main-demo"
-        data_component="nested-module-demo"
-        style={ReactDOM.Style.make(~padding="12px", ~border="1px solid #ccc", ())}
-      >
-        {React.string("Zero-Runtime Data Attributes Demo - compile-time transformation")}
-      </div>
-      
-      <button data_action="click" data_category="demo" onClick={_ => Js.log("Data attributes on button work!")}>
-        {React.string("Button with data attributes")}
-      </button>
-      
-      <input data_field="user-input" data_validation="required" placeholder="Input with data attributes" />
-      
-      <span data_component="text" data_variant="primary">
-        {React.string("Span element with data attributes")}
-      </span>
-      
-      <details className="demo-comparison" data_testid="comparison">
-        <summary data_trigger="expand"> {React.string("Before vs After PPX Fix")} </summary>
-        <div className="comparison-content" data_content="details">
-          <h4> {React.string("Before Fix (Failed to compile):")} </h4>
-          <pre>
-            {React.string({j|// This would fail with "Unbound value makeProps_div_*" errors
-module DataAttrsDemo = {
-  <div data_testid="demo">...</div>  // Compilation error
-};|j})}
-          </pre>
-          
-          <h4> {React.string("New Compile-Time Approach:")} </h4>
-          <pre>
-            {React.string({j|<div data_testid="demo">...</div>|j})}
-          </pre>
-          
-          <div data_benefits="list">
-            <h5> {React.string("Key Benefits:")} </h5>
-            <ul>
-              <li data_benefit="compile-time">{React.string("Zero runtime overhead - compile-time transformation")}</li>
-              <li data_benefit="clean-syntax">{React.string("Clean JSX syntax with data_ prefix")}</li>
-              <li data_benefit="nested-modules">{React.string("Works in nested modules without PPX conflicts")}</li>
-              <li data_benefit="requirement">{React.string("Satisfies the DO NOT DO THE WORKAROUND requirement")}</li>
-            </ul>
-          </div>
+      <div className="demo-state" data_theme="dark" data_variant="compact">
+        <h4> {React.string("Component State")} </h4>
+        <div data_status="active" data_priority="high">
+          {React.string("High Priority Task")}
         </div>
-      </details>
+        <span data_badge="new" data_count="5">
+          {React.string("Notifications")}
+        </span>
+      </div>
       
-      <div data_demo="footer" className="demo-footer">
-        <p> {React.string("Evidence: test/DataAttributes_Demo__test.re compiles without errors, proving the fix works!")} </p>
+      <div className="demo-a11y">
+        <h4> {React.string("Accessibility Support")} </h4>
+        <button data_tooltip="Save your current progress" data_placement="top">
+          {React.string("Save")}
+        </button>
+        <div data_role="alert" data_level="error">
+          {React.string("Please fix validation errors")}
+        </div>
+      </div>
+      
+      <div 
+        className="demo-complex"
+        data_testid="user-card"
+        data_analytics="profile-view"
+        data_theme="light"
+        data_status="premium"
+        style={ReactDOM.Style.make(~padding="16px", ~border="2px solid #0066cc", ())}
+      >
+        <h4> {React.string("Complex Example")} </h4>
+        <p> {React.string("Multiple data attributes working together for testing, analytics, theming, and state management.")} </p>
       </div>
     </section>;
   };
 };
-
 
 module App = {
   [@react.component]
