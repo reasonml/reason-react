@@ -221,33 +221,43 @@ module WithoutForward = {
   };
 };
 
-
 module DataAttrsDemo = {
   [@react.component]
   let make = () => {
     <section>
       <h3> {React.string("Data Attributes Demo")} </h3>
-      
-      <p> {React.string("Demonstrating common use cases for HTML data attributes with ReasonReact")} </p>
-      
+      <p>
+        {React.string(
+           "Demonstrating common use cases for HTML data attributes with ReasonReact",
+         )}
+      </p>
       <div className="demo-testing" data_testid="test-automation">
         <h4> {React.string("Testing & QA")} </h4>
-        <button data_testid="submit-btn" data_cy="submit" onClick={_ => Js.log("Form submitted")}>
+        <button
+          data_testid="submit-btn"
+          data_cy="submit"
+          onClick={_ => Js.log("Form submitted")}>
           {React.string("Submit Form")}
         </button>
-        <input data_testid="email-input" data_cy="email" placeholder="Enter email" />
+        <input
+          data_testid="email-input"
+          data_cy="email"
+          placeholder="Enter email"
+        />
       </div>
-      
       <div className="demo-analytics" data_analytics="user-engagement">
         <h4> {React.string("Analytics & Tracking")} </h4>
-        <button data_action="click" data_category="engagement" data_label="cta-button" onClick={_ => Js.log("Tracked click")}>
+        <button
+          data_action="click"
+          data_category="engagement"
+          data_label="cta-button"
+          onClick={_ => Js.log("Tracked click")}>
           {React.string("Call to Action")}
         </button>
         <a href="#" data_track="external-link" data_destination="docs">
           {React.string("External Documentation")}
         </a>
       </div>
-      
       <div className="demo-state" data_theme="dark" data_variant="compact">
         <h4> {React.string("Component State")} </h4>
         <div data_status="active" data_priority="high">
@@ -257,7 +267,6 @@ module DataAttrsDemo = {
           {React.string("Notifications")}
         </span>
       </div>
-      
       <div className="demo-a11y">
         <h4> {React.string("Accessibility Support")} </h4>
         <button data_tooltip="Save your current progress" data_placement="top">
@@ -267,17 +276,23 @@ module DataAttrsDemo = {
           {React.string("Please fix validation errors")}
         </div>
       </div>
-      
-      <div 
+      <div
         className="demo-complex"
         data_testid="user-card"
         data_analytics="profile-view"
         data_theme="light"
         data_status="premium"
-        style={ReactDOM.Style.make(~padding="16px", ~border="2px solid #0066cc", ())}
-      >
+        style={ReactDOM.Style.make(
+          ~padding="16px",
+          ~border="2px solid #0066cc",
+          (),
+        )}>
         <h4> {React.string("Complex Example")} </h4>
-        <p> {React.string("Multiple data attributes working together for testing, analytics, theming, and state management.")} </p>
+        <p>
+          {React.string(
+             "Multiple data attributes working together for testing, analytics, theming, and state management.",
+           )}
+        </p>
       </div>
     </section>;
   };

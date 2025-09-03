@@ -64,10 +64,13 @@ describe("ReactDOM", () => {
       let element = <div data_complex_name_with_underscores="value" />;
       let html = ReactDOMServer.renderToString(element);
 
-      expect(html)->toContain("data-complex-name-with-underscores=\"value\"");
+      expect(html)
+      ->toContain("data-complex-name-with-underscores=\"value\"");
     });
 
-    test("jsx should work with multiple separate elements having data attributes", () => {
+    test(
+      "jsx should work with multiple separate elements having data attributes",
+      () => {
       let parentElement = <div data_parent="outer" />;
       let childElement = <span data_child="inner" />;
       let parentHtml = ReactDOMServer.renderToString(parentElement);
@@ -109,7 +112,8 @@ describe("ReactDOM", () => {
     });
 
     test("jsx should handle many data attributes on single element", () => {
-      let element = <div data_a="1" data_b="2" data_c="3" data_d="4" data_e="5" />;
+      let element =
+        <div data_a="1" data_b="2" data_c="3" data_d="4" data_e="5" />;
       let html = ReactDOMServer.renderToString(element);
 
       expect(html)->toContain("data-a=\"1\"");

@@ -45,17 +45,17 @@ let merlinFocus =
 let nolabel = Nolabel
 let labelled str = Labelled str
 let optional str = Optional str
-
 let externalDeclarations = ref []
 
 let externalExists name declarations =
-  List.exists (fun decl ->
-    match decl.pstr_desc with
-    | Pstr_primitive { pval_name; _ } -> pval_name.txt = name
-    | _ -> false
-  ) declarations
+  List.exists
+    (fun decl ->
+      match decl.pstr_desc with
+      | Pstr_primitive { pval_name; _ } -> pval_name.txt = name
+      | _ -> false)
+    declarations
 
-let getLabelOrEmpty label = 
+let getLabelOrEmpty label =
   match label with Optional str | Labelled str -> str | Nolabel -> ""
 
 let isDataProp label =
@@ -85,71 +85,80 @@ let createMelObjAttribute ~loc =
 let createMelAsAttribute ~loc jsName =
   {
     attr_name = { txt = "mel.as"; loc };
-    attr_payload = PStr [
-      Builder.pstr_eval ~loc 
-        (Builder.pexp_constant ~loc (Pconst_string (jsName, loc, None))) 
-        []
-    ];
+    attr_payload =
+      PStr
+        [
+          Builder.pstr_eval ~loc
+            (Builder.pexp_constant ~loc (Pconst_string (jsName, loc, None)))
+            [];
+        ];
     attr_loc = loc;
   }
 
 let createWarningSuppressionAttribute ~loc =
   {
     attr_name = { txt = "warning"; loc };
-    attr_payload = PStr [
-      Builder.pstr_eval ~loc 
-        (Builder.pexp_constant ~loc (Pconst_string ("-32", loc, None))) 
-        []
-    ];
+    attr_payload =
+      PStr
+        [
+          Builder.pstr_eval ~loc
+            (Builder.pexp_constant ~loc (Pconst_string ("-32", loc, None)))
+            [];
+        ];
     attr_loc = loc;
   }
 
 let rec buildArrowType ~loc props =
   match props with
-  | [] -> 
-      Builder.ptyp_arrow ~loc Nolabel 
-        (Builder.ptyp_constr ~loc {txt = Lident "unit"; loc} [])
+  | [] ->
+      Builder.ptyp_arrow ~loc Nolabel
+        (Builder.ptyp_constr ~loc { txt = Lident "unit"; loc } [])
         (Builder.ptyp_var ~loc "a")
   | (label, _) :: rest ->
       let propName = getLabelOrEmpty label in
-      let propType = 
+      let propType =
         if propName = "children" then
-          Builder.ptyp_constr ~loc {txt = Ldot (Lident "React", "element"); loc} []
+          Builder.ptyp_constr ~loc
+            { txt = Ldot (Lident "React", "element"); loc }
+            []
         else if propName = "style" then
-          Builder.ptyp_constr ~loc {txt = Ldot (Ldot (Lident "ReactDOM", "Style"), "t"); loc} []
+          Builder.ptyp_constr ~loc
+            { txt = Ldot (Ldot (Lident "ReactDOM", "Style"), "t"); loc }
+            []
         else if propName = "onClick" then
-          Builder.ptyp_arrow ~loc Nolabel 
+          Builder.ptyp_arrow ~loc Nolabel
             (Builder.ptyp_var ~loc "event")
-            (Builder.ptyp_constr ~loc {txt = Lident "unit"; loc} [])
+            (Builder.ptyp_constr ~loc { txt = Lident "unit"; loc } [])
         else if propName = "onChange" then
-          Builder.ptyp_arrow ~loc Nolabel 
+          Builder.ptyp_arrow ~loc Nolabel
             (Builder.ptyp_var ~loc "event")
-            (Builder.ptyp_constr ~loc {txt = Lident "unit"; loc} [])
-        else
-          Builder.ptyp_constr ~loc {txt = Lident "string"; loc} [] 
+            (Builder.ptyp_constr ~loc { txt = Lident "unit"; loc } [])
+        else Builder.ptyp_constr ~loc { txt = Lident "string"; loc } []
       in
-      let (finalLabel, propType') = 
+      let finalLabel, propType' =
         if isDataProp label then
           let jsName = transformToKebabCase propName in
           let melAsAttr = createMelAsAttribute ~loc jsName in
-          (Labelled propName, {propType with ptyp_attributes = [melAsAttr]})
-        else 
-          (Labelled propName, propType)
+          (Labelled propName, { propType with ptyp_attributes = [ melAsAttr ] })
+        else (Labelled propName, propType)
       in
       Builder.ptyp_arrow ~loc finalLabel propType' (buildArrowType ~loc rest)
 
 let createExternalDeclaration ~name ~props ~loc =
   {
-    pstr_desc = Pstr_primitive {
-      pval_name = {txt = name; loc};
-      pval_type = buildArrowType ~loc props;
-      pval_prim = [""];  (* Empty string for [@mel.obj] *)
-      pval_attributes = [
-        createMelObjAttribute ~loc;
-        createWarningSuppressionAttribute ~loc;
-      ];
-      pval_loc = loc;
-    };
+    pstr_desc =
+      Pstr_primitive
+        {
+          pval_name = { txt = name; loc };
+          pval_type = buildArrowType ~loc props;
+          pval_prim = [ "" ];
+          (* Empty string for [@mel.obj] *)
+          pval_attributes =
+            [
+              createMelObjAttribute ~loc; createWarningSuppressionAttribute ~loc;
+            ];
+          pval_loc = loc;
+        };
     pstr_loc = loc;
   }
 
@@ -157,21 +166,33 @@ module Binding = struct
   (* Binding is the interface that the ppx relies on to interact with the react bindings.
      Here we define the same APIs as the bindings but it generates Parsetree nodes *)
   module ReactDOM = struct
-    let domProps ~applyLoc ~loc ?(elementName="element") props =
-      let hasDataAttrs = List.exists (fun (label, _) -> isDataProp label) props in
-      
-      if hasDataAttrs then
+    let domProps ~applyLoc ~loc ?(elementName = "element") props =
+      let hasDataAttrs =
+        List.exists (fun (label, _) -> isDataProp label) props
+      in
+
+      if hasDataAttrs then (
         let externalName = generateExternalName ~elementName ~props in
-        
+
         (* Create external declaration only with labeled props ([@mel.obj] adds unit automatically) *)
-        let labeledProps = List.filter (fun (label, _) -> match label with Nolabel -> false | _ -> true) props in
-        let externalDecl = createExternalDeclaration ~name:externalName ~props:labeledProps ~loc in
+        let labeledProps =
+          List.filter
+            (fun (label, _) -> match label with Nolabel -> false | _ -> true)
+            props
+        in
+        let externalDecl =
+          createExternalDeclaration ~name:externalName ~props:labeledProps ~loc
+        in
         (* Only add external if it doesn't already exist to prevent duplicates *)
         if not (externalExists externalName !externalDeclarations) then
           externalDeclarations := externalDecl :: !externalDeclarations;
         Builder.pexp_apply ~loc
-          (Builder.pexp_ident ~loc {txt = Lident externalName; loc})
-          (labeledProps @ [(Nolabel, Builder.pexp_construct ~loc {txt = Lident "()"; loc} None)])
+          (Builder.pexp_ident ~loc { txt = Lident externalName; loc })
+          (labeledProps
+          @ [
+              ( Nolabel,
+                Builder.pexp_construct ~loc { txt = Lident "()"; loc } None );
+            ]))
       else
         (* Use standard domProps for backwards compatibility *)
         Builder.pexp_apply ~loc:applyLoc
@@ -742,7 +763,8 @@ let jsxMapper =
     let component = (nolabel, componentNameExpr)
     and props =
       ( nolabel,
-        Binding.ReactDOM.domProps ~applyLoc:parentExpLoc ~loc:callerLoc ~elementName:id props )
+        Binding.ReactDOM.domProps ~applyLoc:parentExpLoc ~loc:callerLoc
+          ~elementName:id props )
     in
     let loc = parentExpLoc in
     let gloc = { loc with loc_ghost = true } in
@@ -1493,13 +1515,15 @@ let jsxMapper =
     method! structure ctxt stru =
       let parentExternals = !externalDeclarations in
       externalDeclarations := [];
-      
-      let processedStru = super#structure ctxt (reactComponentTransform ~ctxt self stru) in
-      
+
+      let processedStru =
+        super#structure ctxt (reactComponentTransform ~ctxt self stru)
+      in
+
       let allExternals = List.rev !externalDeclarations in
-      
+
       externalDeclarations := allExternals @ parentExternals;
-      
+
       allExternals @ processedStru
     [@@raises Invalid_argument]
 
