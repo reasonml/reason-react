@@ -7,6 +7,8 @@ let getByTestId = (testId, container) => {
   ReactTestingLibrary.getByTestId(~matcher=`Str(testId), container);
 };
 
+type requestStatus = Loading | Success(string) | Error(string);
+
 describe("Data Attributes - Client Side Compilation", () => {
   describe("PPX should generate valid client-side React component code", () => {
     
@@ -155,6 +157,126 @@ describe("Data Attributes - Client Side Compilation", () => {
       expect(element->getAttribute("data-testid"))->toEqual(Some("client-render-test"));
       expect(element->getAttribute("data-framework"))->toEqual(Some("reason-react"));
       expect(DomTestingLibrary.getNodeText(element))->toBe("Client-side rendering test");
+    });
+  });
+  
+  describe("Data attributes with dynamic values", () => {
+    
+    test("should work with variable assignments", () => {
+      let testId = "dynamic-test-id";
+      let category = "user-action";
+      let priority = "high";
+      
+      let container = ReactTestingLibrary.render(
+        <div data_testid={testId} data_category={category} data_priority={priority}>
+          {React.string("Dynamic values test")}
+        </div>
+      );
+      let element = getByTestId("dynamic-test-id", container);
+      
+      expect(element->getAttribute("data-testid"))->toEqual(Some("dynamic-test-id"));
+      expect(element->getAttribute("data-category"))->toEqual(Some("user-action"));
+      expect(element->getAttribute("data-priority"))->toEqual(Some("high"));
+    });
+    
+    test("should work with expressions and string concatenation", () => {
+      let userId = "123";
+      let prefix = "user";
+      let suffix = "profile";
+      let isActive = true;
+      
+      let container = ReactTestingLibrary.render(
+        <div 
+          data_testid={prefix ++ "-" ++ userId ++ "-" ++ suffix}
+          data_status={isActive ? "active" : "inactive"}
+          data_count={string_of_int(42)}
+        >
+          {React.string("Expression values test")}
+        </div>
+      );
+      let element = getByTestId("user-123-profile", container);
+      
+      expect(element->getAttribute("data-testid"))->toEqual(Some("user-123-profile"));
+      expect(element->getAttribute("data-status"))->toEqual(Some("active"));
+      expect(element->getAttribute("data-count"))->toEqual(Some("42"));
+    });
+    
+    test("should work with conditional values", () => {
+      let hasValue = true;
+      let isEmpty = false;
+      let conditionalValue = "conditional-data";
+      
+      let container = ReactTestingLibrary.render(
+        <div 
+          data_testid="conditional-test"
+          data_has_value={hasValue ? "true" : "false"}
+          data_is_empty={isEmpty ? "true" : "false"} 
+          data_conditional={hasValue ? conditionalValue : "empty"}
+        >
+          {React.string("Conditional values test")}
+        </div>
+      );
+      let element = getByTestId("conditional-test", container);
+      
+      expect(element->getAttribute("data-has-value"))->toEqual(Some("true"));
+      expect(element->getAttribute("data-is-empty"))->toEqual(Some("false"));
+      expect(element->getAttribute("data-conditional"))->toEqual(Some("conditional-data"));
+    });
+    
+    test("should work with function results and complex expressions", () => {
+      let getEnvironment = () => "development";
+      let calculateScore = (a, b) => string_of_int(a + b);
+      let items = [1, 2, 3];
+      
+      let container = ReactTestingLibrary.render(
+        <div 
+          data_testid="complex-expressions"
+          data_env={getEnvironment()}
+          data_score={calculateScore(15, 27)}
+          data_length={string_of_int(List.length(items))}
+          data_first_item={string_of_int(List.hd(items))}
+        >
+          {React.string("Complex expressions test")}
+        </div>
+      );
+      let element = getByTestId("complex-expressions", container);
+      
+      expect(element->getAttribute("data-env"))->toEqual(Some("development"));
+      expect(element->getAttribute("data-score"))->toEqual(Some("42"));
+      expect(element->getAttribute("data-length"))->toEqual(Some("3"));
+      expect(element->getAttribute("data-first-item"))->toEqual(Some("1"));
+    });
+    
+    test("should work with pattern matching results", () => {
+      let currentStatus = Success("Data loaded");
+      
+      let getStatusString = (status: requestStatus) =>
+        switch (status) {
+        | Loading => "loading"
+        | Success(_) => "success" 
+        | Error(_) => "error"
+        };
+        
+      let getStatusMessage = (status: requestStatus) =>
+        switch (status) {
+        | Loading => "Please wait..."
+        | Success(msg) => msg
+        | Error(err) => "Error: " ++ err
+        };
+      
+      let container = ReactTestingLibrary.render(
+        <div 
+          data_testid="pattern-matching"
+          data_status={getStatusString(currentStatus)}
+          data_message={getStatusMessage(currentStatus)}
+        >
+          {React.string("Pattern matching test")}
+        </div>
+      );
+      let element = getByTestId("pattern-matching", container);
+      
+      expect(element->getAttribute("data-status"))->toEqual(Some("success"));
+      expect(element->getAttribute("data-message"))->toEqual(Some("Data loaded"));
     });
   });
 });
