@@ -221,6 +221,83 @@ module WithoutForward = {
   };
 };
 
+module DataAttrsDemo = {
+  [@react.component]
+  let make = () => {
+    <section>
+      <h3> {React.string("Data Attributes Demo")} </h3>
+      <p>
+        {React.string(
+           "Demonstrating common use cases for HTML data attributes with ReasonReact",
+         )}
+      </p>
+      <div className="demo-testing" data_testid="test-automation">
+        <h4> {React.string("Testing & QA")} </h4>
+        <button
+          data_testid="submit-btn"
+          data_cy="submit"
+          onClick={_ => Js.log("Form submitted")}>
+          {React.string("Submit Form")}
+        </button>
+        <input
+          data_testid="email-input"
+          data_cy="email"
+          placeholder="Enter email"
+        />
+      </div>
+      <div className="demo-analytics" data_analytics="user-engagement">
+        <h4> {React.string("Analytics & Tracking")} </h4>
+        <button
+          data_action="click"
+          data_category="engagement"
+          data_label="cta-button"
+          onClick={_ => Js.log("Tracked click")}>
+          {React.string("Call to Action")}
+        </button>
+        <a href="#" data_track="external-link" data_destination="docs">
+          {React.string("External Documentation")}
+        </a>
+      </div>
+      <div className="demo-state" data_theme="dark" data_variant="compact">
+        <h4> {React.string("Component State")} </h4>
+        <div data_status="active" data_priority="high">
+          {React.string("High Priority Task")}
+        </div>
+        <span data_badge="new" data_count="5">
+          {React.string("Notifications")}
+        </span>
+      </div>
+      <div className="demo-a11y">
+        <h4> {React.string("Accessibility Support")} </h4>
+        <button data_tooltip="Save your current progress" data_placement="top">
+          {React.string("Save")}
+        </button>
+        <div data_role="alert" data_level="error">
+          {React.string("Please fix validation errors")}
+        </div>
+      </div>
+      <div
+        className="demo-complex"
+        data_testid="user-card"
+        data_analytics="profile-view"
+        data_theme="light"
+        data_status="premium"
+        style={ReactDOM.Style.make(
+          ~padding="16px",
+          ~border="2px solid #0066cc",
+          (),
+        )}>
+        <h4> {React.string("Complex Example")} </h4>
+        <p>
+          {React.string(
+             "Multiple data attributes working together for testing, analytics, theming, and state management.",
+           )}
+        </p>
+      </div>
+    </section>;
+  };
+};
+
 module App = {
   [@react.component]
   let make = (~initialValue) => {
@@ -237,6 +314,7 @@ module App = {
       <UseReducerNoProblemo key="use-reducer-no-problemo" />
       <FragmentsEverywhere key="fragments-everywhere" />
       <WithoutForward key="without-forward" />
+      <DataAttrsDemo key="data-attrs-demo" />
     </main>;
   };
 };
