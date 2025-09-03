@@ -2,7 +2,7 @@
  (package reason-react-ppx)
  (deps
   (package reason-react)
-  /home/me/external-repos/reason-react/_build/default/ppx/standalone.exe
+  %{bin:reason-react-ppx}
   %{bin:refmt}
   %{bin:dune}
   %{bin:jq}
