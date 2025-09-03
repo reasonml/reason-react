@@ -93,6 +93,17 @@ let createMelAsAttribute ~loc jsName =
     attr_loc = loc;
   }
 
+let createWarningSuppressionAttribute ~loc =
+  {
+    attr_name = { txt = "warning"; loc };
+    attr_payload = PStr [
+      Builder.pstr_eval ~loc 
+        (Builder.pexp_constant ~loc (Pconst_string ("-32", loc, None))) 
+        []
+    ];
+    attr_loc = loc;
+  }
+
 let rec buildArrowType ~loc props =
   match props with
   | [] -> 
@@ -133,7 +144,10 @@ let createExternalDeclaration ~name ~props ~loc =
       pval_name = {txt = name; loc};
       pval_type = buildArrowType ~loc props;
       pval_prim = [""];  (* Empty string for [@mel.obj] *)
-      pval_attributes = [createMelObjAttribute ~loc];
+      pval_attributes = [
+        createMelObjAttribute ~loc;
+        createWarningSuppressionAttribute ~loc;
+      ];
       pval_loc = loc;
     };
     pstr_loc = loc;
