@@ -194,7 +194,7 @@ module Binding = struct
                 Builder.pexp_construct ~loc { txt = Lident "()"; loc } None );
             ]))
       else
-        (* Use standard domProps for backwards compatibility *)
+        (* Use standard domProps if we don't have to inject data attrs *)
         Builder.pexp_apply ~loc:applyLoc
           (Builder.pexp_ident ~loc:applyLoc ~attrs:merlinHideAttrs
              { loc; txt = Ldot (Lident "ReactDOM", "domProps") })
