@@ -1,6 +1,7 @@
 open Jest;
 open Expect;
 
+[@mel.send]
 external getAttribute: (Dom.element, string) => option(string) = "getAttribute";
 
 let getByTestId = (testId, container) => {
