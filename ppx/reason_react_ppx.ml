@@ -155,7 +155,9 @@ let createExternalDeclaration ~name ~props ~loc =
           (* Empty string for [@mel.obj] *)
           pval_attributes =
             [
-              createMelObjAttribute ~loc; createWarningSuppressionAttribute ~loc;
+              createMelObjAttribute ~loc; 
+              createWarningSuppressionAttribute ~loc;
+              List.hd merlinHideAttrs;
             ];
           pval_loc = loc;
         };
@@ -187,7 +189,8 @@ module Binding = struct
         if not (externalExists externalName !externalDeclarations) then
           externalDeclarations := externalDecl :: !externalDeclarations;
         Builder.pexp_apply ~loc
-          (Builder.pexp_ident ~loc { txt = Lident externalName; loc })
+          (Builder.pexp_ident ~loc ~attrs:merlinHideAttrs 
+             { txt = Lident externalName; loc })
           (labeledProps
           @ [
               ( Nolabel,
