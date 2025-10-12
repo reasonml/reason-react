@@ -459,6 +459,28 @@ module Suspense = {
     "Suspense";
 };
 
+module Activity =  {
+  type mode =
+    | [@mel.as "visible"] Visible
+    | [@mel.as "hidden"] Hidden;
+  [@mel.obj]
+  external makeProps:
+    (~children: element=?, ~mode: mode=?, unit) =>
+    {
+      .
+      "children": option(element),
+      "mode": option(mode),
+    };
+  [@mel.module "react"]
+  external make:
+    component({
+      .
+      "children": option(element),
+      "mode": option(mode),
+    }) =
+    "Activity";
+};
+
 [@mel.set]
 external setDisplayName: (component('props), string) => unit = "displayName";
 
