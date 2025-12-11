@@ -13,11 +13,11 @@ jobs:
         working-directory: ./website
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
 
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v5
       with:
-        node-version: 16
+        node-version: 24
         cache: 'npm'
 
     - name: Install dependencies
