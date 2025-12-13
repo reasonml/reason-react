@@ -108,7 +108,7 @@ let constantString ~loc str =
 
 let safeTypeFromValue valueStr =
   match getLabel valueStr with
-  | Some valueStr when String.sub valueStr 0 1 = "_" -> ("T" ^ valueStr)
+  | Some valueStr when String.sub valueStr 0 1 = "_" -> "T" ^ valueStr
   | Some valueStr -> valueStr
   | None -> ""
 
@@ -229,8 +229,10 @@ let hasAttrOnBinding { pvb_attributes; _ } =
 let getFnName binding =
   match binding with
   | { pvb_pat = { ppat_desc = Ppat_var { txt; _ }; _ }; _ } -> txt
-  | { pvb_loc; _} ->
-      Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
+  | { pvb_loc; _ } ->
+      Location.raise_errorf ~loc:pvb_loc
+        "[@react.component] cannot be used with a destructured binding. Please \
+         use it on a `let make = ...` binding instead."
 
 let makeNewBinding binding expression newName =
   match binding with
@@ -243,7 +245,9 @@ let makeNewBinding binding expression newName =
         pvb_attributes = [ merlinFocus ];
       }
   | { pvb_loc; _ } ->
-      Location.raise_errorf ~loc:pvb_loc "[@react.component] cannot be used with a destructured binding. Please use it on a `let make = ...` binding instead."
+      Location.raise_errorf ~loc:pvb_loc
+        "[@react.component] cannot be used with a destructured binding. Please \
+         use it on a `let make = ...` binding instead."
 
 (* Lookup the value of `props` otherwise raise errorf *)
 let getPropsNameValue _acc (loc, expr) =
@@ -252,7 +256,9 @@ let getPropsNameValue _acc (loc, expr) =
       { pexp_desc = Pexp_ident { txt = Lident str; _ }; _ } ) ->
       { propsName = str }
   | { txt; loc }, _ ->
-      Location.raise_errorf ~loc "[@react.component] only accepts 'props' as a field, given: %s" (Longident.last_exn txt)
+      Location.raise_errorf ~loc
+        "[@react.component] only accepts 'props' as a field, given: %s"
+        (Longident.last_exn txt)
 
 (* Lookup the `props` record or string as part of [@react.component] and store
    the name for use when rewriting *)
@@ -261,22 +267,22 @@ let getPropsAttr payload =
   match payload with
   | Some
       (PStr
-        ({
-           pstr_desc =
-             Pstr_eval ({ pexp_desc = Pexp_record (recordFields, None); _ }, _);
-           _;
-         }
-        :: _rest)) ->
+         ({
+            pstr_desc =
+              Pstr_eval ({ pexp_desc = Pexp_record (recordFields, None); _ }, _);
+            _;
+          }
+         :: _rest)) ->
       List.fold_left getPropsNameValue defaultProps recordFields
   | Some
       (PStr
-        ({
-           pstr_desc =
-             Pstr_eval
-               ({ pexp_desc = Pexp_ident { txt = Lident "props"; _ }; _ }, _);
-           _;
-         }
-        :: _rest)) ->
+         ({
+            pstr_desc =
+              Pstr_eval
+                ({ pexp_desc = Pexp_ident { txt = Lident "props"; _ }; _ }, _);
+            _;
+          }
+         :: _rest)) ->
       { propsName = "props" }
   | Some (PStr ({ pstr_desc = Pstr_eval (_, _); pstr_loc; _ } :: _rest)) ->
       Location.raise_errorf ~loc:pstr_loc
@@ -575,6 +581,7 @@ let jsxMapper =
               pvb_expr = mapper#expression ctxt key;
               pvb_attributes = [];
               pvb_loc = loc;
+              pvb_constraint = None (* TODO(anmonteiro): check constraint *);
             };
           ]
           (Builder.pexp_apply ~loc:parentExpLoc ~attrs jsxExpr
@@ -628,6 +635,7 @@ let jsxMapper =
               pvb_expr = mapper#expression ctxt key;
               pvb_attributes = [];
               pvb_loc = loc;
+              pvb_constraint = None (* TODO(anmonteiro): check constraint *);
             };
           ]
           (Builder.pexp_apply ~loc ~attrs jsxExpr
@@ -640,58 +648,79 @@ let jsxMapper =
     | None -> Builder.pexp_apply ~loc ~attrs jsxExpr [ component; props ]
   in
 
-  let rec recursivelyTransformNamedArgsForMake ~ctxt mapper expr list =
-    let expr = mapper#expression ctxt expr in
-    match expr.pexp_desc with
-    | Pexp_fun (Labelled "key", _, _, _) | Pexp_fun (Optional "key", _, _, _) ->
-        Location.raise_errorf ~loc:expr.pexp_loc
-          ("~key cannot be accessed from the component props. Please set the key where the component is being used.")
-    | Pexp_fun
-        ( ((Optional label | Labelled label) as arg),
-          default,
-          pattern,
-          expression ) ->
-        let alias =
-          match pattern with
-          | { ppat_desc = Ppat_alias (_, { txt; _ }) | Ppat_var { txt; _ }; _ }
-            ->
-              txt
-          | { ppat_desc = Ppat_any; _ } -> "_"
-          | _ -> label
-        in
-        let type_ =
-          match pattern with
-          | { ppat_desc = Ppat_constraint (_, type_); _ } -> Some type_
-          | _ -> None
-        in
-
-        recursivelyTransformNamedArgsForMake ~ctxt mapper expression
-          ((arg, default, pattern, alias, pattern.ppat_loc, type_) :: list)
-    | Pexp_fun
-        ( Nolabel,
-          _,
-          {
-            ppat_desc = Ppat_construct ({ txt = Lident "()"; _ }, _) | Ppat_any;
-            _;
-          },
-          _expression ) ->
-        (list, None)
-    | Pexp_fun
-        ( Nolabel,
-          _,
-          {
-            ppat_desc =
-              ( Ppat_var { txt; _ }
-              | Ppat_constraint ({ ppat_desc = Ppat_var { txt; _ }; _ }, _) );
-            _;
-          },
-          _expression ) ->
-        (list, Some txt)
-    | Pexp_fun (Nolabel, _, pattern, _expression) ->
-        Location.raise_errorf ~loc:pattern.ppat_loc
-          "reason-react-ppx: react.component refs only support plain arguments \
-           and type annotations."
-    | _ -> (list, None)
+  let recursivelyTransformNamedArgsForMake ~ctxt mapper expr =
+    let rec process_pexp_fun_args acc ~ctxt mapper params expr =
+      match params with
+      | [] -> (acc, None)
+      | { pparam_desc = Pparam_newtype _; _ } :: params ->
+          (* TODO(anmonteiro): do we need to handle `Pparam_newtype`? *)
+          process_pexp_fun_args acc ~ctxt mapper params expr
+      | { pparam_desc = Pparam_val (arg_label, default, arg); _ } :: params -> (
+          match (arg_label, default, arg) with
+          | (Labelled "key" | Optional "key"), _, _ ->
+              Location.raise_errorf ~loc:expr.pexp_loc
+                "~key cannot be accessed from the component props. Please set \
+                 the key where the component is being used."
+          | ((Optional label | Labelled label) as arg_label), default, arg ->
+              let alias =
+                match arg with
+                | {
+                 ppat_desc = Ppat_alias (_, { txt; _ }) | Ppat_var { txt; _ };
+                 _;
+                } ->
+                    txt
+                | { ppat_desc = Ppat_any; _ } -> "_"
+                | _ -> label
+              in
+              let type_ =
+                match arg with
+                | { ppat_desc = Ppat_constraint (_, type_); _ } -> Some type_
+                | _ -> None
+              in
+              let acc =
+                (arg_label, default, arg, alias, arg.ppat_loc, type_) :: acc
+              in
+              process_pexp_fun_args acc ~ctxt mapper params expr
+          | ( Nolabel,
+              _,
+              {
+                ppat_desc =
+                  Ppat_construct ({ txt = Lident "()"; _ }, _) | Ppat_any;
+                _;
+              } ) -> (
+              match params with
+              | _ :: _ ->
+                  assert false
+                  (* TODO(anmonteiro): forward ref as the non-last arg? *)
+              | [] -> (acc, None))
+          | ( Nolabel,
+              _,
+              {
+                ppat_desc =
+                  ( Ppat_var { txt; _ }
+                  | Ppat_constraint ({ ppat_desc = Ppat_var { txt; _ }; _ }, _)
+                    );
+                _;
+              } ) -> (
+              match params with
+              | _ :: _ ->
+                  assert false
+                  (* TODO(anmonteiro): forward ref as the non-last arg? *)
+              | [] -> (acc, Some txt))
+          | Nolabel, _, arg ->
+              Location.raise_errorf ~loc:arg.ppat_loc
+                "reason-react-ppx: react.component refs only support plain \
+                 arguments and type annotations.")
+    and process_pexp_fun acc ~ctxt mapper expr =
+      let expr = mapper#expression ctxt expr in
+      match expr.pexp_desc with
+      | Pexp_function (params, _, Pfunction_body body) -> (
+          match process_pexp_fun_args acc ~ctxt mapper params body with
+          | new_init, None -> process_pexp_fun new_init ~ctxt mapper body
+          | (_, Some _) as ret -> ret)
+      | _ -> (acc, None)
+    in
+    process_pexp_fun [] ~ctxt mapper expr
   in
 
   let argToType types (name, default, _noLabelName, _alias, loc, type_) =
@@ -850,7 +879,7 @@ let jsxMapper =
               let rec spelunkForFunExpression expression =
                 match expression with
                 (* let make = (~prop) => ... *)
-                | { pexp_desc = Pexp_fun _; _ } -> expression
+                | { pexp_desc = Pexp_function _; _ } -> expression
                 (* let make = {let foo = bar in (~prop) => ...} *)
                 | {
                  pexp_desc = Pexp_let (_recursive, _vbs, returnExpression);
@@ -913,71 +942,71 @@ let jsxMapper =
               in
               (* TODO: there is a long-tail of unsupported features inside of
                  blocks - Pexp_letmodule , Pexp_letexception , Pexp_ifthenelse *)
+              let rec hasFinalUnit =
+                let rec inner params =
+                  match params with
+                  | [] -> false
+                  | { pparam_desc = Pparam_newtype _; _ } :: params
+                  | {
+                      pparam_desc = Pparam_val ((Labelled _ | Optional _), _, _);
+                      _;
+                    }
+                    :: params ->
+                      inner params
+                  | [
+                   {
+                     pparam_desc =
+                       Pparam_val
+                         ( Nolabel,
+                           _,
+                           {
+                             ppat_desc =
+                               ( Ppat_construct ({ txt = Lident "()"; _ }, _)
+                               | Ppat_any );
+                             _;
+                           } );
+                     _;
+                   };
+                  ] ->
+                      true
+                  | { pparam_desc = Pparam_val (Nolabel, _, arg); _ } :: _ ->
+                      if hasApplication.contents then false
+                      else
+                        Location.raise_errorf ~loc:arg.ppat_loc
+                          "reason-react-ppx: props need to be labelled \
+                           arguments.\n\
+                          \  If you are working with refs be sure to wrap with \
+                           React.forwardRef.\n\
+                          \  If your component doesn't have any props, use () \
+                           (unit) or _ (wildcard) instead of a name."
+                in
+                fun params body ->
+                  match body.pexp_desc with
+                  | Pexp_function (params', _, Pfunction_body body) ->
+                      (not (inner params)) && hasFinalUnit params' body
+                  | _ -> inner params
+              in
               let rec spelunkForFunExpression expression =
                 match expression with
                 (* let make = (~prop) => ... with no final unit *)
-                | {
-                 pexp_desc =
-                   Pexp_fun
-                     ( ((Labelled _ | Optional _) as label),
-                       default,
-                       pattern,
-                       ({ pexp_desc = Pexp_fun _; _ } as internalExpression) );
-                 _;
-                } ->
-                    let wrap, hasUnit, exp =
-                      spelunkForFunExpression internalExpression
-                    in
-                    ( wrap,
-                      hasUnit,
-                      unerasableIgnoreExp
-                        {
-                          expression with
-                          pexp_desc = Pexp_fun (label, default, pattern, exp);
-                        } )
                 (* let make = (()) => ... *)
                 (* let make = (_) => ... *)
-                | {
-                 pexp_desc =
-                   Pexp_fun
-                     ( Nolabel,
-                       _default,
-                       {
-                         ppat_desc =
-                           ( Ppat_construct ({ txt = Lident "()"; _ }, _)
-                           | Ppat_any );
-                         _;
-                       },
-                       _internalExpression );
-                 _;
-                } ->
-                    ((fun a -> a), true, expression)
                 (* let make = (~prop) => ... *)
-                | {
-                 pexp_desc =
-                   Pexp_fun
-                     ( (Labelled _ | Optional _),
-                       _default,
-                       _pattern,
-                       _internalExpression );
-                 _;
-                } ->
-                    ((fun a -> a), false, unerasableIgnoreExp expression)
                 (* let make = (prop) => ... *)
                 | {
                  pexp_desc =
-                   Pexp_fun (_nolabel, _default, pattern, _internalExpression);
+                   Pexp_function (params, constraint_, Pfunction_body body);
                  _;
                 } ->
-                    if hasApplication.contents then
-                      ((fun a -> a), false, unerasableIgnoreExp expression)
-                    else
-                      Location.raise_errorf ~loc:pattern.ppat_loc
-                        "reason-react-ppx: props need to be labelled arguments.\n\
-                        \  If you are working with refs be sure to wrap with \
-                         React.forwardRef.\n\
-                        \  If your component doesn't have any props, use () \
-                         (unit) or _ (wildcard) instead of a name."
+                    ( (fun a -> a),
+                      hasFinalUnit params body,
+                      unerasableIgnoreExp
+                        {
+                          expression with
+                          pexp_desc =
+                            Pexp_function
+                              (params, constraint_, Pfunction_body body);
+                        } )
                 (* let make = {let foo = bar in (~prop) => ...} *)
                 | {
                  pexp_desc = Pexp_let (recursive, vbs, internalExpression);
@@ -1047,7 +1076,6 @@ let jsxMapper =
             let namedArgList, forwardRef =
               recursivelyTransformNamedArgsForMake ~ctxt mapper
                 (modifiedBindingOld binding)
-                []
             in
             let namedArgListWithKeyAndRef =
               ( optional "key",
@@ -1133,20 +1161,9 @@ let jsxMapper =
             let innerExpressionWithRef =
               match forwardRef with
               | Some txt ->
-                  {
-                    innerExpression with
-                    pexp_desc =
-                      Pexp_fun
-                        ( nolabel,
-                          None,
-                          {
-                            ppat_desc = Ppat_var { txt; loc = gloc };
-                            ppat_loc = gloc;
-                            ppat_loc_stack = [];
-                            ppat_attributes = [];
-                          },
-                          innerExpression );
-                  }
+                  Builder.pexp_fun ~loc:innerExpression.pexp_loc nolabel None
+                    (Builder.ppat_var ~loc:gloc { txt; loc = gloc })
+                    innerExpression
               | None -> innerExpression
             in
             let fullExpression =

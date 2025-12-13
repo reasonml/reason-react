@@ -10,11 +10,7 @@
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (system:
         let
           pkgs = nixpkgs.legacyPackages.${system}.extend (self: super: {
-            ocamlPackages = super.ocaml-ng.ocamlPackages_5_3.overrideScope (oself: osuper: {
-              ppxlib = osuper.ppxlib.overrideAttrs (o: {
-                propagatedBuildInputs = o.propagatedBuildInputs ++ [ osuper.stdio ];
-              });
-            });
+            ocamlPackages = super.ocaml-ng.ocamlPackages_5_3;
           });
         in
         f pkgs);
@@ -89,7 +85,7 @@
                 ]);
               propagatedBuildInputs = with pkgs.ocamlPackages; [ merlin ];
             };
-          packages = self.packages.${pkgs.system};
+          packages = self.packages.${pkgs.stdenv.hostPlatform.system};
         in
         {
           default = makeDevShell { inherit packages; };
