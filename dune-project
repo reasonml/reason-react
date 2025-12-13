@@ -42,7 +42,7 @@
   (ocaml-lsp-server :with-dev-setup)
   (opam-check-npm-deps
    (and
-    (>= 4.0.0)
+    :dev
     :with-dev-setup))
   (ocamlformat
    (and
