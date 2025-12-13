@@ -23,7 +23,7 @@ depends: [
   "reason-react-ppx" {= version}
   "reason" {>= "3.12.0"}
   "ocaml-lsp-server" {with-dev-setup}
-  "opam-check-npm-deps" {= "3.0.1" & with-dev-setup}
+  "opam-check-npm-deps" {>= "4.0.0" & with-dev-setup}
   "ocamlformat" {= "0.27.0" & with-dev-setup}
   "odoc" {with-doc}
 ]

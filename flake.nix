@@ -85,7 +85,7 @@
                 ]);
               propagatedBuildInputs = with pkgs.ocamlPackages; [ merlin ];
             };
-          packages = self.packages.${pkgs.system};
+          packages = self.packages.${pkgs.stdenv.hostPlatform.system};
         in
         {
           default = makeDevShell { inherit packages; };
