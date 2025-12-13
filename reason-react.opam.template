@@ -3,6 +3,6 @@ depexts: [
   ["react-dom"] {npm-version = "^19.1.0"}
 ]
 pin-depends: [
-  [ "opam-check-npm-deps.dev" "git+https://github.com/ahrefs/opam-check-npm-deps.git#23270f9574c5866dae2c3948d58d929ce6ea2118"]
+  [ "opam-check-npm-deps.dev" "git+https://github.com/ahrefs/opam-check-npm-deps.git#12e63761842c71dc3a688257f7827580ebe2b7f1"]
 ]
 
