@@ -24,18 +24,18 @@ jobs:
           # disabling this for now
 
         ocaml-compiler:
-          - 5.2.0
+          - ocaml-base-compiler.5.2.0
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Load opam cache when not Windows
         if: runner.os != 'Windows'
         id: opam-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ~/.opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
@@ -43,13 +43,13 @@ jobs:
       - name: Load opam cache when Windows
         if: runner.os == 'Windows'
         id: opam-cache-windows
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: _opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
       - name: Use OCaml ${{ matrix.ocaml-compiler }}
-        uses: ocaml/setup-ocaml@v3.3.5
+        uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           dune-cache: true
@@ -72,14 +72,14 @@ jobs:
         run: make jest
 
       - name: Save cache when not Windows
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         if: steps.opam-cache.outputs.cache-hit != 'true' && runner.os != 'Windows'
         with:
           path: ~/.opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
       - name: Save cache when Windows
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         if: steps.opam-cache-windows.outputs.cache-hit != 'true' && runner.os == 'Windows'
         with:
           path: _opam
