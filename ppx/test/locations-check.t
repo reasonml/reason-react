@@ -11,7 +11,7 @@ With no annotations (ppx does nothing)
   > EOF
 
   $ reason-react-ppx -check -locations-check input.ml
-  let make ~foo  ~bar  =
+  let make ~foo ~bar =
     div ~children:[React.string foo; (bar |> string_of_int) |> React.string] ()
 
 With JSX annotation

@@ -41,17 +41,17 @@
   module MyPropIsOptionBool = {
     [@mel.obj]
     external makeProps:
-      (~myProp: bool=?, ~key: string=?, unit) => {. "myProp": option(bool)};
+      (~myProp: bool=?, ~key: string=?, unit) => {. "myProp": option(bool) };
     external make:
-      React.componentLike({. "myProp": option(bool)}, React.element) =
+      React.componentLike({. "myProp": option(bool) }, React.element) =
       "A";
   };
   module MyPropIsOptionOptionBool = {
     [@mel.obj]
     external makeProps:
       (~myProp: option(bool)=?, ~key: string=?, unit) =>
-      {. "myProp": option(option(bool))};
+      {. "myProp": option(option(bool)) };
     external make:
-      React.componentLike({. "myProp": option(option(bool))}, React.element) =
+      React.componentLike({. "myProp": option(option(bool)) }, React.element) =
       "B";
   };

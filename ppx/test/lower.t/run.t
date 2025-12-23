@@ -14,7 +14,7 @@
     ReactDOM.jsx(
       "div",
       ([@merlin.hide] ReactDOM.domProps)(
-        ~dangerouslySetInnerHTML={"__html": text},
+        ~dangerouslySetInnerHTML={ "__html": text },
         (),
       ),
     );

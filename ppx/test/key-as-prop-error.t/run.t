@@ -15,8 +15,8 @@ Test some locations in reason-react components
   > EOF
 
   $ dune build
-  File "component.re", line 2, characters 11-51:
+  File "component.re", line 2, characters 21-51:
   2 | let make = (~key) => <div> key->React.string </div>;
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   Error: ~key cannot be accessed from the component props. Please set the key where the component is being used.
   [1]

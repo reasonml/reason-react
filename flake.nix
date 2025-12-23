@@ -10,11 +10,7 @@
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (system:
         let
           pkgs = nixpkgs.legacyPackages.${system}.extend (self: super: {
-            ocamlPackages = super.ocaml-ng.ocamlPackages_5_3.overrideScope (oself: osuper: {
-              ppxlib = osuper.ppxlib.overrideAttrs (o: {
-                propagatedBuildInputs = o.propagatedBuildInputs ++ [ osuper.stdio ];
-              });
-            });
+            ocamlPackages = super.ocaml-ng.ocamlPackages_5_2;
           });
         in
         f pkgs);
@@ -23,7 +19,7 @@
       packages = forAllSystems (pkgs:
         let
           inherit (pkgs.ocamlPackages)
-            buildDunePackage melange merlin ppxlib reason;
+            buildDunePackage melange merlin ppxlib_gt_0_37 reason;
           packages = rec {
             reason-react-ppx = buildDunePackage {
               pname = "reason-react-ppx";
@@ -44,7 +40,7 @@
               # Due to a Reason version mismatch, the generated OCaml PPX diff
               # looks different
               doCheck = false;
-              propagatedBuildInputs = [ ppxlib ];
+              propagatedBuildInputs = [ ppxlib_gt_0_37 ];
             };
 
             reason-react = buildDunePackage {
@@ -76,7 +72,7 @@
         let
           makeDevShell = { packages, release-mode ? false }:
             pkgs.mkShell {
-              # dontDetectOcamlConflicts = true;
+              dontDetectOcamlConflicts = true;
               inputsFrom = pkgs.lib.attrValues packages;
               nativeBuildInputs =
                 with pkgs.ocamlPackages; [ ocamlformat pkgs.nodejs_latest ]
@@ -89,7 +85,7 @@
                 ]);
               propagatedBuildInputs = with pkgs.ocamlPackages; [ merlin ];
             };
-          packages = self.packages.${pkgs.system};
+          packages = self.packages.${pkgs.stdenv.hostPlatform.system};
         in
         {
           default = makeDevShell { inherit packages; };

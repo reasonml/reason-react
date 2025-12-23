@@ -54,11 +54,10 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           ""[@@mel.obj ]
       let make =
         ((fun ~children ->
-            ((fun ~buttonRef ->
-                ReactDOM.jsx "button"
-                  (((ReactDOM.domProps)[@merlin.hide ]) ~children
-                     ~ref:buttonRef ~className:"FancyButton" ()))
-            [@warning "-16"]))
+            fun ~buttonRef ->
+              ReactDOM.jsx "button"
+                (((ReactDOM.domProps)[@merlin.hide ]) ~children ~ref:buttonRef
+                   ~className:"FancyButton" ()))
         [@warning "-16"])
       let make =
         React.forwardRef
@@ -77,11 +76,10 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           = ""[@@mel.obj ]
       let make =
         ((fun ~children ->
-            ((fun ~ref ->
-                ReactDOM.jsx "button"
-                  (((ReactDOM.domProps)[@merlin.hide ]) ~children ~ref
-                     ~className:"FancyButton" ()))
-            [@warning "-16"]))
+            fun ~ref ->
+              ReactDOM.jsx "button"
+                (((ReactDOM.domProps)[@merlin.hide ]) ~children ~ref
+                   ~className:"FancyButton" ()))
         [@warning "-16"])
       let make =
         let Output$Ref_as_prop
@@ -99,12 +97,11 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           = ""[@@mel.obj ]
       let make =
         ((fun ~name ->
-            ((fun ?isDisabled ->
-                let onClick event = Js.log event in
-                ReactDOM.jsx "button"
-                  (((ReactDOM.domProps)[@merlin.hide ]) ~name ~onClick
-                     ~disabled:isDisabled ()))
-            [@warning "-16"]))
+            fun ?isDisabled ->
+              let onClick event = Js.log event in
+              ReactDOM.jsx "button"
+                (((ReactDOM.domProps)[@merlin.hide ]) ~name ~onClick
+                   ~disabled:isDisabled ()))
         [@warning "-16"])
       let make =
         let Output$Onclick_handler_button
@@ -141,22 +138,22 @@ We need to output ML syntax here, otherwise refmt could not parse it.
           ""[@@mel.obj ]
       let make =
         ((fun ~children ->
-            ((fun ~moreProps ->
-                ReactDOM.jsxs "html"
-                  (((ReactDOM.domProps)[@merlin.hide ])
-                     ~children:(React.array
-                                  [|(ReactDOM.jsx "head"
-                                       (((ReactDOM.domProps)[@merlin.hide ])
-                                          ~children:(ReactDOM.jsx "title"
-                                                       (((ReactDOM.domProps)
-                                                          [@merlin.hide ])
-                                                          ~children:(React.string
-                                                                      ("SSR React "
+            fun ~moreProps ->
+              ReactDOM.jsxs "html"
+                (((ReactDOM.domProps)[@merlin.hide ])
+                   ~children:(React.array
+                                [|(ReactDOM.jsx "head"
+                                     (((ReactDOM.domProps)[@merlin.hide ])
+                                        ~children:(ReactDOM.jsx "title"
+                                                     (((ReactDOM.domProps)
+                                                        [@merlin.hide ])
+                                                        ~children:(React.string
+                                                                     ("SSR React "
                                                                       ^
                                                                       moreProps))
-                                                          ())) ()));(ReactDOM.jsxs
-                                                                      "body"
-                                                                      (((ReactDOM.domProps)
+                                                        ())) ()));(ReactDOM.jsxs
+                                                                     "body"
+                                                                     (((ReactDOM.domProps)
                                                                       [@merlin.hide
                                                                       ])
                                                                       ~children:(
@@ -178,8 +175,7 @@ We need to output ML syntax here, otherwise refmt could not parse it.
                                                                       ~src:"/static/client.js"
                                                                       ()))|])
                                                                       ()))|])
-                     ()))
-            [@warning "-16"]))
+                   ()))
         [@warning "-16"])
       let make =
         let Output$Uppercase_with_SSR_components
