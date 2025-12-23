@@ -10,7 +10,7 @@
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (system:
         let
           pkgs = nixpkgs.legacyPackages.${system}.extend (self: super: {
-            ocamlPackages = super.ocaml-ng.ocamlPackages_5_3;
+            ocamlPackages = super.ocaml-ng.ocamlPackages_5_2;
           });
         in
         f pkgs);
