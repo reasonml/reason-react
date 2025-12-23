@@ -1,5 +1,9 @@
 # Unreleased
 
+* Upgrade `ppxlib` lower bound to `0.36` (@anmonteiro in https://github.com/reasonml/reason-react/pull/883)
+
+# 0.16.0
+
 * FEATURE: add color to domProps (@tatchi in https://github.com/reasonml/reason-react/pull/871)
 * BREAKING: Support for React 19 (@davesnx in #846)
 * DOCS: Documentation updates for 0.16 (@davesnx in https://github.com/reasonml/reason-react/pull/864)
