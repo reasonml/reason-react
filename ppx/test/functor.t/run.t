@@ -10,10 +10,9 @@ We need to output ML syntax here, otherwise refmt could not parse it.
       [@@mel.obj ]
       let make =
         ((fun ~a ->
-            ((fun ~b ->
-                print_endline "This function should be named `Test$Func`" M.x;
-                ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ()))
-            [@warning "-16"]))
+            fun ~b ->
+              print_endline "This function should be named `Test$Func`" M.x;
+              ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ()))
         [@warning "-16"])
       let make =
         let Output$Func (Props : < a: 'a  ;b: 'b   >  Js.t) =

@@ -4,7 +4,10 @@ We need to output ML syntax here, otherwise refmt could not parse it.
   module X_as_main_function =
     struct
       external xProps : ?key:string -> unit -> <  >  Js.t = ""[@@mel.obj ]
-      let x () = ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ())
+      let x =
+        ((fun () ->
+            ReactDOM.jsx "div" (((ReactDOM.domProps)[@merlin.hide ]) ()))
+        [@warning "-16"])
       let x =
         let Output$X_as_main_function$x (Props : <  >  Js.t) = x () in
         Output$X_as_main_function$x
@@ -44,9 +47,11 @@ We need to output ML syntax here, otherwise refmt could not parse it.
   module Valid_case =
     struct
       external makeProps : ?key:string -> unit -> <  >  Js.t = ""[@@mel.obj ]
-      let make () =
-        React.jsx Component_with_x_as_main_function.x
-          (Component_with_x_as_main_function.xProps ())
+      let make =
+        ((fun () ->
+            React.jsx Component_with_x_as_main_function.x
+              (Component_with_x_as_main_function.xProps ()))
+        [@warning "-16"])
       let make =
         let Output$Valid_case (Props : <  >  Js.t) = make () in
         Output$Valid_case
