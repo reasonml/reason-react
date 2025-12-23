@@ -493,7 +493,7 @@ let jsxExprAndChildren ~component_type ~loc ~ctxt mapper ~keyProps children =
          children *)
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxs") },
         None,
-        Some (Binding.React.array ~loc children))
+        Some (Binding.React.array ~loc children) )
   | None, (label, key) :: _ ->
       ( Builder.pexp_ident ~loc { loc; txt = Ldot (ident, "jsxKeyed") },
         Some (label, key),
@@ -527,10 +527,10 @@ let jsxMapper =
     in
     let propsArg =
       (match childrenProp with
-      | Some childrenProp -> (labelled "children", childrenProp) :: otherProps
-      | None -> otherProps)
+        | Some childrenProp -> (labelled "children", childrenProp) :: otherProps
+        | None -> otherProps)
       |> List.map (fun (label, expression) ->
-             (label, mapper#expression ctxt expression))
+          (label, mapper#expression ctxt expression))
     in
     let isCap str =
       match String.length str with
@@ -611,11 +611,11 @@ let jsxMapper =
     in
     let props =
       (match childrenProp with
-      | Some childrenProp ->
-          (labelled "children", childrenProp) :: nonChildrenProps
-      | None -> nonChildrenProps)
+        | Some childrenProp ->
+            (labelled "children", childrenProp) :: nonChildrenProps
+        | None -> nonChildrenProps)
       |> List.map (fun (label, expression) ->
-             (label, mapper#expression ctxt expression))
+          (label, mapper#expression ctxt expression))
     in
     let component = (nolabel, componentNameExpr)
     and props =

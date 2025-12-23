@@ -484,30 +484,35 @@ module Experimental = {
   external preloadOptions:
     (
       ~_as: [
-              | `audio
-              | `document
-              | `embed
-              | `fetch
-              | `font
-              | `image
-              | [@mel.as "object"] `object_
-              | `script
-              | `style
-              | `track
-              | `video
-              | `worker
-            ],
-      ~fetchPriority: [ | `auto | `high | `low]=?,
-      ~referrerPolicy: [
-                         | [@mel.as "no-referrer"] `noReferrer
-                         | [@mel.as "no-referrer-when-downgrade"]
-                           `noReferrerWhenDowngrade
-                         | [@mel.as "origin"] `origin
-                         | [@mel.as "origin-when-cross-origin"]
-                           `originWhenCrossOrigin
-                         | [@mel.as "unsafe-url"] `unsafeUrl
-                       ]
-                         =?,
+        | `audio
+        | `document
+        | `embed
+        | `fetch
+        | `font
+        | `image
+        | [@mel.as "object"] `object_
+        | `script
+        | `style
+        | `track
+        | `video
+        | `worker
+      ],
+      ~fetchPriority:
+        [
+          | `auto
+          | `high
+          | `low
+        ]
+          =?,
+      ~referrerPolicy:
+        [
+          | [@mel.as "no-referrer"] `noReferrer
+          | [@mel.as "no-referrer-when-downgrade"] `noReferrerWhenDowngrade
+          | [@mel.as "origin"] `origin
+          | [@mel.as "origin-when-cross-origin"] `originWhenCrossOrigin
+          | [@mel.as "unsafe-url"] `unsafeUrl
+        ]
+          =?,
       ~imageSrcSet: string=?,
       ~imageSizes: string=?,
       ~crossOrigin: string=?,
@@ -520,11 +525,29 @@ module Experimental = {
   [@deriving jsProperties]
   type preinitOptions = {
     [@mel.as "as"]
-    _as: [ | `script | `style],
+    _as: [
+      | `script
+      | `style
+    ],
     [@mel.optional]
-    fetchPriority: option([ | `auto | `high | `low]),
+    fetchPriority:
+      option(
+        [
+          | `auto
+          | `high
+          | `low
+        ],
+      ),
     [@mel.optional]
-    precedence: option([ | `reset | `low | `medium | `high]),
+    precedence:
+      option(
+        [
+          | `reset
+          | `low
+          | `medium
+          | `high
+        ],
+      ),
     [@mel.optional]
     crossOrigin: option(string),
     [@mel.optional]
