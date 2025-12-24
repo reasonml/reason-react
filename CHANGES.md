@@ -1,4 +1,4 @@
-# Unreleased
+# 0.17.0
 
 * Upgrade `ppxlib` lower bound to `0.36` (@anmonteiro in https://github.com/reasonml/reason-react/pull/883)
 
