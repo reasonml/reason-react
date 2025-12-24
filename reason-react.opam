@@ -24,7 +24,7 @@ depends: [
   "reason" {>= "3.12.0"}
   "ocaml-lsp-server" {with-dev-setup}
   "opam-check-npm-deps" {dev & with-dev-setup}
-  "ocamlformat" {= "0.27.0" & with-dev-setup}
+  "ocamlformat" {= "0.28.1" & with-dev-setup}
   "odoc" {with-doc}
 ]
 build: [
@@ -47,5 +47,5 @@ depexts: [
   ["react-dom"] {npm-version = "^19.1.0"}
 ]
 pin-depends: [
-  [ "opam-check-npm-deps.dev" "git+https://github.com/ahrefs/opam-check-npm-deps.git#5e036d2314fc7c0259626dbb352c04ce6442f739"]
+  [ "opam-check-npm-deps.dev" "git+https://github.com/ahrefs/opam-check-npm-deps.git#4.1.0"]
 ]
