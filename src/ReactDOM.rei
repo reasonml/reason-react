@@ -928,6 +928,8 @@ type domProps = {
   [@mel.optional]
   list: option(string),
   [@mel.optional]
+  loading: option(string), /* "eager", "lazy" */
+  [@mel.optional]
   loop: option(bool),
   [@mel.optional]
   low: option(int),
