@@ -7,5 +7,4 @@
   %{bin:jq}
   %{bin:ocamlmerlin}
   %{bin:bash}
-  %{bin:/usr/bin/env}
   ppx.sh))
