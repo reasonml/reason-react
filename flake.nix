@@ -52,9 +52,12 @@
                   ];
                 };
 
-              # Due to a Reason version mismatch, the generated OCaml PPX diff
-              # looks different
-              doCheck = false;
+              doCheck = true;
+              nativeCheckInputs = [
+                reason
+                merlin
+                pkgs.jq
+              ];
               propagatedBuildInputs = [ ppxlib_gt_0_37 ];
             };
 
@@ -81,6 +84,8 @@
               nativeBuildInputs = [
                 melange
                 reason
+                merlin
+                pkgs.jq
               ];
               propagatedBuildInputs = [
                 melange
