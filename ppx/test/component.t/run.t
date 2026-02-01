@@ -1,6 +1,6 @@
 Since we generate invalid syntax for the argument of the make fn `(Props : <>)`
 We need to output ML syntax here, otherwise refmt could not parse it.
-  $ ../ppx.sh --output ml input.re
+  $ bash ../ppx.sh --output ml input.re
   module React_component_with_props =
     struct
       external makeProps :

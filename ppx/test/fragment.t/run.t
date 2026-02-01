@@ -1,4 +1,4 @@
-  $ ../ppx.sh --output re input.re
+  $ bash ../ppx.sh --output re input.re
   let fragment = foo =>
     [@bla]
     React.jsx(

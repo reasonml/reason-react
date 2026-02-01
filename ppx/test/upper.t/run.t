@@ -1,4 +1,4 @@
-  $ ../ppx.sh --output re input.re
+  $ bash ../ppx.sh --output re input.re
   let upper = React.jsx(Upper.make, Upper.makeProps());
   let upper_prop = React.jsx(Upper.make, Upper.makeProps(~count, ()));
   let upper_children_single = foo =>

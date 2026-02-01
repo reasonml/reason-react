@@ -1,4 +1,4 @@
-  $ ../ppx.sh --output re input.re
+  $ bash ../ppx.sh --output re input.re
   module External = {
     [@mel.obj]
     external componentProps:
