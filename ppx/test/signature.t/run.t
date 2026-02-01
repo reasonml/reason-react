@@ -1,4 +1,4 @@
-  $ bash ../ppx.sh --output re input.re
+  $ ../ppx.sh --output re input.re
   module Example = {
     [@mel.obj]
     external makeProps:

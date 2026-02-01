@@ -1,4 +1,4 @@
-  $ bash ../ppx.sh --output ml input.re
+  $ ../ppx.sh --output ml input.re
   module Greeting :
     sig
       external makeProps :
