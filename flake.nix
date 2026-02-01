@@ -101,7 +101,6 @@
               release-mode ? false,
             }:
             pkgs.mkShell {
-              dontDetectOcamlConflicts = true;
               inputsFrom = pkgs.lib.attrValues packages;
               nativeBuildInputs =
                 with pkgs.ocamlPackages;
