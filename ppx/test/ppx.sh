@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -e
+set -eo pipefail
 
 function usage() {
   echo "Usage: $(basename "$0") --output re [file.re]"

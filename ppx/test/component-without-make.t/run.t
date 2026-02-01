@@ -1,6 +1,6 @@
 Since we generate invalid syntax for the argument of the make fn `(Props : <>)`
 We need to output ML syntax here, otherwise refmt could not parse it.
-  $ bash ../ppx.sh --output ml input.re
+  $ ../run-ppx.sh --output ml input.re
   module X_as_main_function =
     struct
       external xProps : ?key:string -> unit -> <  >  Js.t = ""[@@mel.obj ]

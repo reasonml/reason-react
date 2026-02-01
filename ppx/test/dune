@@ -7,4 +7,5 @@
   %{bin:jq}
   %{bin:ocamlmerlin}
   %{bin:bash}
-  ppx.sh))
+  ppx.sh
+  run-ppx.sh))
