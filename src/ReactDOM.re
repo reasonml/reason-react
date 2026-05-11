@@ -1075,7 +1075,7 @@ type domProps = {
   [@mel.optional]
   onEmptied: option(React.Event.Media.t => unit),
   [@mel.optional]
-  onEncrypetd: option(React.Event.Media.t => unit),
+  onEncrypted: option(React.Event.Media.t => unit),
   [@mel.optional]
   onEnded: option(React.Event.Media.t => unit),
   [@mel.optional]
