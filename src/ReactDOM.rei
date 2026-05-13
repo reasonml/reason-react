@@ -1344,8 +1344,6 @@ type domProps = {
   [@mel.optional]
   fontWeight: option(string),
   [@mel.optional]
-  fomat: option(string),
-  [@mel.optional]
   from: option(string),
   [@mel.optional]
   fx: option(string),
