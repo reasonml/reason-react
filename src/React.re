@@ -440,6 +440,32 @@ module StrictMode = {
   external make: component({. "children": element}) = "StrictMode";
 };
 
+module Profiler = {
+  type phase =
+    | [@mel.as "mount"] Mount
+    | [@mel.as "update"] Update
+    | [@mel.as "nested-update"] NestedUpdate;
+  type onRender = (string, phase, float, float, float, float) => unit;
+  [@mel.obj]
+  external makeProps:
+    (~children: element=?, ~id: string, ~onRender: onRender, unit) =>
+    {
+      .
+      "children": option(element),
+      "id": string,
+      "onRender": onRender,
+    };
+  [@mel.module "react"]
+  external make:
+    component({
+      .
+      "children": option(element),
+      "id": string,
+      "onRender": onRender,
+    }) =
+    "Profiler";
+};
+
 module Suspense = {
   [@mel.obj]
   external makeProps:
