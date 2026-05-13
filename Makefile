@@ -58,12 +58,12 @@ format-check: ## Checks if format is correct
 
 .PHONY: install
 install: ## Update the package dependencies when new deps are added to dune-project
-	@opam install . --deps-only --with-test --with-dev-setup
+	@opam install . --deps-only --with-test --with-dev-setup -y
 	@npm install --force
 
 .PHONY: init
 create-switch: ## Create a local opam switch
-	@opam switch create . 5.2.0 --no-install
+	@opam switch create . 5.2.0 --no-install -y
 
 .PHONY: init
 init: create-switch install ## Create a local opam switch, install deps
