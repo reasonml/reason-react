@@ -1,0 +1,43 @@
+let first = <div className="first" dataFoo="one" />;
+let second = <div id="second" dataBar="two" dataTestId="three" />;
+let onlyData = <div dataFoo="one" />;
+let ordinaryData = <object data="file" datatype="text" dataTestId="object" />;
+
+let optional = (~className=?, ~dataFoo=?, ()) => <div ?className ?dataFoo />;
+
+let renamed =
+  <div
+    dataTestId="aliases"
+    ariaLabel="label"
+    ariaActivedescendant="descendant"
+    as_="button"
+    begin_="0"
+    end_="1"
+    in_="source"
+    open_=true
+    to_="target"
+    type_="button"
+  />;
+
+let withChildren =
+  <div key="parent" dataTestId="parent">
+    <span dataFoo="child" />
+    <span />
+  </div>;
+
+let withRefAndEvent = (elementRef, handleClick) =>
+  <button ref=elementRef onClick=handleClick dataTestId="button" />;
+
+let optionalKey = (~key=?, ()) => <div ?key dataFoo="keyed" />;
+
+module Component = {
+  [@react.component]
+  let make = (~dataFoo) => <div dataFoo />;
+};
+
+let component = <Component dataFoo="component" />;
+
+external next: string => string = "next";
+let effects = <div className={next("class")} dataFoo={next("data")} />;
+
+let ordinary = <div className="unchanged" />;
