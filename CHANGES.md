@@ -1,5 +1,6 @@
 # 0.17.0
 
+* Support custom `data-*` attributes in DOM JSX, including optional string values (@anmonteiro in https://github.com/reasonml/reason-react/pull/933)
 * Upgrade `ppxlib` lower bound to `0.36` (@anmonteiro in https://github.com/reasonml/reason-react/pull/883)
 * Remove `fomat` from ReactDOM's props (@davesnx in https://github.com/reasonml/reason-react/pull/929)
 * Fix typo on `onEncrypted` (@davesnx in https://github.com/reasonml/reason-react/pull/930)
