@@ -1,0 +1,72 @@
+let first = <div className="first" dataFoo="one" />;
+let second = <div id="second" dataBar="two" dataTestId="three" />;
+let onlyData = <div dataFoo="one" />;
+let svg = <svg dataFoo="value" />;
+let ordinaryData = <object data="file" datatype="text" dataTestId="object" />;
+
+let optional = (~className=?, ~dataFoo=?, ()) => <div ?className ?dataFoo />;
+
+let renamed =
+  <div
+    dataTestId="aliases"
+    ariaLabel="label"
+    ariaActivedescendant="descendant"
+    as_="button"
+    begin_="0"
+    end_="1"
+    in_="source"
+    open_=true
+    to_="target"
+    type_="button"
+  />;
+
+let withChildren =
+  <div key="parent" dataTestId="parent">
+    <span dataFoo="child" />
+    <span />
+  </div>;
+
+let withRefAndEvent = (elementRef, handleClick) =>
+  <button ref=elementRef onClick=handleClick dataTestId="button" />;
+
+let optionalKey = (~key=?, ()) => <div ?key dataFoo="keyed" />;
+
+module Component = {
+  [@react.component]
+  let make = (~dataFoo) => <div dataFoo />;
+};
+
+let component = <Component dataFoo="component" />;
+
+external next: string => string = "next";
+let effects = <div className={next("class")} dataFoo={next("data")} />;
+
+let ordinary = <div className="unchanged" />;
+
+let names =
+  <div
+    dataFoo="plain"
+    dataFoo__bar="double"
+    dataFoo___="trailing"
+    dataFoo_bar="single"
+    dataURL="acronym"
+    dataVersion2="digit"
+  />;
+
+module ShadowedTypes = {
+  type string = int;
+  type unit = int;
+
+  let element = <div dataFoo="value" />;
+  let optional = (~dataFoo=?, ()) => <div ?dataFoo />;
+};
+
+module IntegerComponent = {
+  [@react.component]
+  let make = (~dataFoo: int) => <div dataFoo={string_of_int(dataFoo)} />;
+};
+
+let integerComponent = <IntegerComponent dataFoo=42 />;
+
+external nextUnit: unit => unit = "nextUnit";
+let effectfulUnit = [@JSX] div(~dataFoo="unit", nextUnit());

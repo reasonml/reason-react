@@ -27,6 +27,21 @@ let make = (~name) => <h1> {React.string("Hello " ++ name)} </h1>
 
 See all of our examples [here](https://reasonml.github.io/reason-react/docs/en/simple). For a full application, check out [reason-react-hacker-news](https://github.com/reasonml-community/reason-react-hacker-news).
 
+DOM elements accept custom data attributes in camelCase:
+
+```reason
+<div className="item" dataTestId="item" dataState="ready" />
+```
+
+This produces `data-test-id` and `data-state` attributes. Values are strings;
+optional attributes such as `<div dataState=?state />` are omitted when `state`
+is `None`. Ordinary props retain their existing type checks. Data props on
+user-defined components keep their declared names and types.
+
+Each uppercase ASCII letter adds a hyphen and becomes lowercase; digits and
+underscores are preserved. For example, `dataVersion2` becomes `data-version2`
+and `dataFoo__bar` becomes `data-foo__bar`.
+
 <!-- ## Getting Started -->
 
 ## Using Your Favorite Javascript Libraries
