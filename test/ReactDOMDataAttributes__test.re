@@ -5,21 +5,13 @@ open Jest.Expect;
 external getAttribute: (Dom.element, string) => Js.nullable(string) =
   "getAttribute";
 
-/* Exercise React's data attribute behavior through the existing cloning API.
-   The JSX implementation can use the same assertions once it accepts data props. */
 describe("ReactDOM data attributes", () => {
-  test("renders data attributes alongside ordinary props", () => {
+  test("renders arbitrary camelCase names alongside ordinary props", () => {
     let html =
       ReactDOMServer.renderToStaticMarkup(
-        React.cloneElement(
-          <div className="example">
-            {React.cloneElement(<span />, { "data-foo-bar": "second" })}
-          </div>,
-          {
-            "data-test-id": "first",
-            "data-version2": "v2",
-          },
-        ),
+        <div className="example" dataTestId="first" dataVersion2="v2">
+          <span dataFooBar="second" />
+        </div>,
       );
     expect(html)
     ->toBe(
@@ -29,25 +21,14 @@ describe("ReactDOM data attributes", () => {
 
   test("omits absent optional attributes", () => {
     let render = dataFoo =>
-      ReactDOMServer.renderToStaticMarkup(
-        React.cloneElement(
-          <div />,
-          { "data-foo": Js.Undefined.fromOption(dataFoo) },
-        ),
-      );
+      ReactDOMServer.renderToStaticMarkup(<div ?dataFoo />);
     expect(render(None))->toBe("<div></div>");
     expect(render(Some("value")))->toBe("<div data-foo=\"value\"></div>");
   });
 
   test("updates and removes data attributes on the same DOM node", () => {
     let element = (value, state) =>
-      React.cloneElement(
-        <button />,
-        {
-          "data-value": value,
-          "data-state": Js.Undefined.fromOption(state),
-        },
-      );
+      <button dataValue=value dataState=?state />;
     let container = ReactTestingLibrary.render(element("first", None));
     let button =
       ReactTestingLibrary.getByRole(~matcher=`Str("button"), container);
@@ -79,15 +60,9 @@ describe("ReactDOM data attributes", () => {
     let dataState = Some("ready");
     let html =
       ReactDOMServer.renderToStaticMarkup(
-        React.cloneElement(
-          <svg viewBox="0 0 10 10">
-            {React.cloneElement(
-               <path strokeWidth="2" />,
-               { "data-version2": "v2" },
-             )}
-          </svg>,
-          { "data-state": Js.Undefined.fromOption(dataState) },
-        ),
+        <svg viewBox="0 0 10 10" ?dataState>
+          <path strokeWidth="2" dataVersion2="v2" />
+        </svg>,
       );
     expect(html)
     ->toBe(
@@ -98,15 +73,7 @@ describe("ReactDOM data attributes", () => {
   test("preserves underscores in data attribute names", () => {
     let html =
       ReactDOMServer.renderToStaticMarkup(
-        React.cloneElement(
-          <div />,
-          /* Dictionary keys bypass Melange's object-label name mangling. */
-          Js.Dict.fromArray([|
-            ("data-foo", "plain"),
-            ("data-foo__bar", "double"),
-            ("data-foo___", "trailing"),
-          |]),
-        ),
+        <div dataFoo="plain" dataFoo__bar="double" dataFoo___="trailing" />,
       );
     expect(html)
     ->toBe(
@@ -117,10 +84,7 @@ describe("ReactDOM data attributes", () => {
   test("preserves ordinary property renaming", () => {
     let container =
       ReactTestingLibrary.render(
-        React.cloneElement(
-          <button type_="button" ariaLabel="label" />,
-          { "data-foo": "value" },
-        ),
+        <button type_="button" ariaLabel="label" dataFoo="value" />,
       );
     let button =
       ReactTestingLibrary.getByRole(~matcher=`Str("button"), container);
@@ -137,10 +101,9 @@ describe("ReactDOM data attributes", () => {
       value;
     };
     let element =
-      React.cloneElement(
-        <div className={next("class")}> {next("child")->React.string} </div>,
-        { "data-foo": next("data") },
-      );
+      <div className={next("class")} dataFoo={next("data")}>
+        {next("child")->React.string}
+      </div>;
     expect(evaluations.contents)->toBe(3);
     expect(ReactDOMServer.renderToStaticMarkup(element))
     ->toBe("<div class=\"class\" data-foo=\"data\">child</div>");
@@ -155,10 +118,7 @@ describe("ReactDOM data attributes", () => {
         present ? Some(value) : None;
       };
       let element =
-        React.cloneElement(
-          <div className=?{next("class")} />,
-          { "data-foo": next("data")->Js.Undefined.fromOption },
-        );
+        <div className=?{next("class")} dataFoo=?{next("data")} />;
       expect(evaluations.contents)->toBe(2);
       let html = ReactDOMServer.renderToStaticMarkup(element);
       expect(evaluations.contents)->toBe(2);

@@ -620,7 +620,10 @@ let jsxMapper =
     let component = (nolabel, componentNameExpr)
     and props =
       ( nolabel,
-        Binding.ReactDOM.domProps ~applyLoc:parentExpLoc ~loc:callerLoc props )
+        Dom_props.make ~loc:parentExpLoc
+          ~dom_props:
+            (Binding.ReactDOM.domProps ~applyLoc:parentExpLoc ~loc:callerLoc)
+          props )
     in
     let loc = parentExpLoc in
     let gloc = { loc with loc_ghost = true } in
