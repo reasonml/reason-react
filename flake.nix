@@ -15,7 +15,7 @@
           let
             pkgs = nixpkgs.legacyPackages.${system}.extend (
               self: super: {
-                ocamlPackages = super.ocaml-ng.ocamlPackages_5_4;
+                ocamlPackages = super.ocaml-ng.ocamlPackages_5_5;
               }
             );
           in
@@ -30,7 +30,7 @@
             buildDunePackage
             melange
             merlin
-            ppxlib_gt_0_37
+            ppxlib
             reason
             ;
           packages = rec {
@@ -58,7 +58,7 @@
                 merlin
                 pkgs.jq
               ];
-              propagatedBuildInputs = [ ppxlib_gt_0_37 ];
+              propagatedBuildInputs = [ ppxlib ];
             };
 
             reason-react = buildDunePackage {

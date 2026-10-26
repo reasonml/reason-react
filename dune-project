@@ -40,10 +40,6 @@
   (reason
    (>= 3.12.0))
   (ocaml-lsp-server :with-dev-setup)
-  (opam-check-npm-deps
-   (and
-    :dev
-    :with-dev-setup))
   (ocamlformat
    (and
     (= 0.28.1)

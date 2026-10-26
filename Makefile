@@ -1,4 +1,5 @@
 DUNE = opam exec -- dune
+OCAML_VERSION ?= 5.5.2
 
 .PHONY: help
 help: ## Print this help message
@@ -59,11 +60,11 @@ format-check: ## Checks if format is correct
 .PHONY: install
 install: ## Update the package dependencies when new deps are added to dune-project
 	@opam install . --deps-only --with-test --with-dev-setup -y
-	@npm install --force
+	@npm ci
 
-.PHONY: init
+.PHONY: create-switch
 create-switch: ## Create a local opam switch
-	@opam switch create . 5.2.0 --no-install -y
+	@opam switch create . $(OCAML_VERSION) --no-install -y
 
 .PHONY: init
 init: create-switch install ## Create a local opam switch, install deps
