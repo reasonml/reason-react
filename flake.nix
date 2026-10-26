@@ -30,7 +30,7 @@
             buildDunePackage
             melange
             merlin
-            ppxlib
+            ppxlib_gt_0_37
             reason
             ;
           packages = rec {
@@ -58,7 +58,7 @@
                 merlin
                 pkgs.jq
               ];
-              propagatedBuildInputs = [ ppxlib ];
+              propagatedBuildInputs = [ ppxlib_gt_0_37 ];
             };
 
             reason-react = buildDunePackage {
