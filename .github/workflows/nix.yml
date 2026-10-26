@@ -19,5 +19,6 @@ jobs:
         extra_nix_config: |
           extra-substituters = https://anmonteiro.nix-cache.workers.dev
           extra-trusted-public-keys = ocaml.nix-cache.com-1:/xI2h2+56rwFfKyyFVbkJSeGqSIYMC/Je+7XXqGKDIY=
-    - name: "Build and test with OCaml 5.5"
-      run: nix build --no-link .#reason-react-ppx .#reason-react
+    - name: "Run Nix tests"
+      run: nix build .#reason-react-ppx .#reason-react
+
