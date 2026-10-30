@@ -128,4 +128,14 @@ describe("ReactDOM data attributes", () => {
     expect(render(true))
     ->toBe("<div class=\"class\" data-foo=\"data\"></div>");
   });
+
+  test("evaluates the final unit argument once", () => {
+    let evaluations = ref(0);
+    let nextUnit = () => incr(evaluations);
+    let element = [@JSX] div(~dataFoo="value", nextUnit());
+    expect(evaluations.contents)->toBe(1);
+    expect(ReactDOMServer.renderToStaticMarkup(element))
+    ->toBe("<div data-foo=\"value\"></div>");
+    expect(evaluations.contents)->toBe(1);
+  });
 });

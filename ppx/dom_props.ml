@@ -1,7 +1,7 @@
 open Ppxlib
 open Ast_builder.Default
 
-let attribute ~loc name payload =
+let attribute ~loc ?(payload = PStr []) name =
   attribute ~loc ~name:{ txt = name; loc } ~payload
 
 let data_attribute name =
@@ -39,7 +39,7 @@ let label_name = function
   | Nolabel -> ""
 
 let ignored_type ~loc typ =
-  { typ with ptyp_attributes = [ attribute ~loc "mel.ignore" (PStr []) ] }
+  { typ with ptyp_attributes = [ attribute ~loc "mel.ignore" ] }
 
 (* [mel.obj] requires a literal [unit] type for unlabelled arguments. Use an
    ignored labelled argument so the type can be qualified against shadowing. *)
@@ -47,7 +47,6 @@ let make_label = function Nolabel -> Labelled "__jsx_unit" | label -> label
 
 type prop = {
   label : arg_label;
-  expression : expression;
   variable : string;
   typ : core_type;
   data_name : string option;
@@ -71,7 +70,7 @@ let make ~loc ~dom_props args =
     let string_type = stdlib_type "String" in
     let props_type =
       ptyp_constr ~loc:ghost_loc
-        { txt = Ldot (Lident "ReactDOM", "domProps"); loc }
+        { txt = Ldot (Lident "ReactDOM", "domProps"); loc = ghost_loc }
         []
     in
     let data_names = Hashtbl.create 8 in
@@ -93,7 +92,7 @@ let make ~loc ~dom_props args =
             | _, Some _ -> string_type
             | _, None -> ptyp_var ~loc:ghost_loc variable
           in
-          { label; expression; variable; typ; data_name })
+          { label; variable; typ; data_name })
         args
     in
     let ordinary_props =
@@ -111,34 +110,19 @@ let make ~loc ~dom_props args =
     in
     let check_args =
       List.map
-        (fun { label; expression; variable; _ } ->
-          let loc = { expression.pexp_loc with loc_ghost = true } in
-          let arg =
-            match label with
-            | Nolabel -> pexp_construct ~loc { txt = Lident "()"; loc } None
-            | Labelled _ | Optional _ ->
-                pexp_ident ~loc { txt = Lident variable; loc }
-          in
-          (label, arg))
+        (fun { label; variable; _ } -> (label, evar ~loc:ghost_loc variable))
         ordinary_props
     in
     let check =
       List.fold_right
         (fun { label; variable; _ } body ->
-          let pattern =
-            match label with
-            | Nolabel ->
-                ppat_construct ~loc:ghost_loc { txt = Lident "()"; loc } None
-            | Labelled _ | Optional _ ->
-                ppat_var ~loc:ghost_loc { txt = variable; loc = ghost_loc }
-          in
-          pexp_fun ~loc:ghost_loc label None pattern body)
+          pexp_fun ~loc:ghost_loc label None (pvar ~loc:ghost_loc variable) body)
         ordinary_props (dom_props check_args)
     in
     let check =
       {
         check with
-        pexp_attributes = [ attribute ~loc:ghost_loc "merlin.hide" (PStr []) ];
+        pexp_attributes = [ attribute ~loc:ghost_loc "merlin.hide" ];
       }
     in
     let make_type =
@@ -151,26 +135,25 @@ let make ~loc ~dom_props args =
             | Some name -> Some (name ^ "__")
             | None -> js_name (label_name label)
           in
-          let typ =
+          let attributes =
             match (label, name) with
-            | Nolabel, _ -> ignored_type ~loc:ghost_loc typ
-            | _, None -> typ
+            | Nolabel, _ -> [ attribute ~loc:ghost_loc "mel.ignore" ]
+            | _, None -> []
             | _, Some name ->
-                {
-                  typ with
-                  ptyp_attributes =
-                    [
-                      attribute ~loc:ghost_loc "mel.as"
-                        (PStr
-                           [
-                             pstr_eval ~loc:ghost_loc
-                               (estring ~loc:ghost_loc name)
-                               [];
-                           ]);
-                    ];
-                }
+                [
+                  attribute ~loc:ghost_loc "mel.as"
+                    ~payload:
+                      (PStr
+                         [
+                           pstr_eval ~loc:ghost_loc
+                             (estring ~loc:ghost_loc name)
+                             [];
+                         ]);
+                ]
           in
-          ptyp_arrow ~loc:ghost_loc (make_label label) typ result)
+          ptyp_arrow ~loc:ghost_loc (make_label label)
+            { typ with ptyp_attributes = attributes }
+            result)
         props props_type
     in
     let make_type =
@@ -182,10 +165,7 @@ let make ~loc ~dom_props args =
         ~type_:make_type ~prim:[ "" ]
     in
     let make =
-      {
-        make with
-        pval_attributes = [ attribute ~loc:ghost_loc "mel.obj" (PStr []) ];
-      }
+      { make with pval_attributes = [ attribute ~loc:ghost_loc "mel.obj" ] }
     in
     let module_name = gen_symbol ~prefix:"Jsx_props" () in
     let module_ =
