@@ -1,0 +1,45 @@
+let first = <div className="first" />;
+let second = <div id="second" />;
+let ordinaryData = <object data="file" datatype="text" />;
+
+let optional = (~className=?, ()) => <div ?className />;
+
+let renamed =
+  <div
+    ariaLabel="label"
+    ariaActivedescendant="descendant"
+    as_="button"
+    begin_="0"
+    end_="1"
+    in_="source"
+    open_=true
+    to_="target"
+    type_="button"
+  />;
+
+let withChildren = <div key="parent"> <span /> <span /> </div>;
+
+let withRefAndEvent = (elementRef, handleClick) =>
+  <button ref=elementRef onClick=handleClick />;
+
+let optionalKey = (~key=?, ()) => <div ?key />;
+
+module Component = {
+  [@react.component]
+  let make = (~dataFoo) => <div> dataFoo->React.string </div>;
+};
+
+let component = <Component dataFoo="component" />;
+
+module IntegerComponent = {
+  [@react.component]
+  let make = (~dataFoo: int) => <div> dataFoo->React.int </div>;
+};
+
+let integerComponent = <IntegerComponent dataFoo=42 />;
+
+external next: string => string = "next";
+let effects = <div className={next("class")} id={next("id")} />;
+
+external nextUnit: unit => unit = "nextUnit";
+let effectfulUnit = [@JSX] div(~className="unit", nextUnit());
