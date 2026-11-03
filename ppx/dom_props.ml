@@ -22,164 +22,150 @@ let data_attribute name =
     Some (Buffer.contents buffer))
   else None
 
-(* These are the [mel.as] conventions used by ReactDOM.domProps. Ordinary
-   React prop names, such as className and onClick, keep their spelling. *)
-let js_name name =
-  match name with
-  | "as_" | "begin_" | "end_" | "in_" | "open_" | "to_" | "type_" ->
-      Some (String.sub name 0 (String.length name - 1))
-  | _ when String.length name > 4 && String.sub name 0 4 = "aria" ->
-      Some
-        ("aria-"
-        ^ String.lowercase_ascii (String.sub name 4 (String.length name - 4)))
-  | _ -> None
-
 let label_name = function
   | Labelled name | Optional name -> name
   | Nolabel -> ""
 
-let ignored_type ~loc typ =
-  { typ with ptyp_attributes = [ attribute ~loc "mel.ignore" ] }
-
-(* [mel.obj] requires a literal [unit] type for unlabelled arguments. Use an
-   ignored labelled argument so the type can be qualified against shadowing. *)
-let make_label = function Nolabel -> Labelled "__jsx_unit" | label -> label
-
-type prop = {
-  label : arg_label;
-  variable : string;
-  typ : core_type;
-  data_name : string option;
-}
-
 let make ~loc ~dom_props args =
-  if
-    not
-      (List.exists
-         (fun (label, _) -> Option.is_some (data_attribute (label_name label)))
-         args)
-  then dom_props args
-  else
-    let ghost_loc = { loc with loc_ghost = true } in
-    let stdlib_type name =
-      ptyp_constr ~loc:ghost_loc
-        { txt = Ldot (Ldot (Lident "Stdlib", name), "t"); loc = ghost_loc }
-        []
-    in
-    let unit_type = stdlib_type "Unit" in
-    let string_type = stdlib_type "String" in
-    let props_type =
-      ptyp_constr ~loc:ghost_loc
-        { txt = Ldot (Lident "ReactDOM", "domProps"); loc = ghost_loc }
-        []
-    in
-    let data_names = Hashtbl.create 8 in
-    let props =
-      List.mapi
-        (fun index (label, expression) ->
-          let variable = "prop" ^ string_of_int index in
-          let data_name = data_attribute (label_name label) in
-          Option.iter
-            (fun name ->
-              if Hashtbl.mem data_names name then
-                Location.raise_errorf ~loc:expression.pexp_loc
-                  "JSX: duplicate data attribute %S" name;
-              Hashtbl.add data_names name ())
-            data_name;
-          let typ =
-            match (label, data_name) with
-            | Nolabel, _ -> unit_type
-            | _, Some _ -> string_type
-            | _, None -> ptyp_var ~loc:ghost_loc variable
-          in
-          { label; variable; typ; data_name })
-        args
-    in
-    let ordinary_props =
-      List.filter (fun prop -> prop.data_name = None) props
-    in
-    let arrow { label; typ; _ } result =
-      ptyp_arrow ~loc:ghost_loc label typ result
-    in
-    (* The shared type variables connect each supplied prop to the corresponding
-       argument of ReactDOM.domProps. Melange erases this pure callback after
-       OCaml has checked both its labels and its types. *)
-    let check_type =
-      ignored_type ~loc:ghost_loc
-        (List.fold_right arrow ordinary_props props_type)
-    in
-    let check_args =
-      List.map
-        (fun { label; variable; _ } -> (label, evar ~loc:ghost_loc variable))
-        ordinary_props
-    in
-    let check =
-      List.fold_right
-        (fun { label; variable; _ } body ->
-          pexp_fun ~loc:ghost_loc label None (pvar ~loc:ghost_loc variable) body)
-        ordinary_props (dom_props check_args)
-    in
-    let check =
-      {
-        check with
-        pexp_attributes = [ attribute ~loc:ghost_loc "merlin.hide" ];
-      }
-    in
-    let make_type =
-      List.fold_right
-        (fun { label; typ; data_name; _ } result ->
-          let name =
-            match data_name with
-            (* Melange strips the last [__suffix], even in [mel.as]. An empty
-               suffix preserves any double underscores in the attribute. *)
-            | Some name -> Some (name ^ "__")
-            | None -> js_name (label_name label)
-          in
-          let attributes =
-            match (label, name) with
-            | Nolabel, _ -> [ attribute ~loc:ghost_loc "mel.ignore" ]
-            | _, None -> []
-            | _, Some name ->
-                [
-                  attribute ~loc:ghost_loc "mel.as"
-                    ~payload:
-                      (PStr
-                         [
-                           pstr_eval ~loc:ghost_loc
-                             (estring ~loc:ghost_loc name)
-                             [];
-                         ]);
-                ]
-          in
-          ptyp_arrow ~loc:ghost_loc (make_label label)
-            { typ with ptyp_attributes = attributes }
-            result)
-        props props_type
-    in
-    let make_type =
-      ptyp_arrow ~loc:ghost_loc (Labelled "check") check_type make_type
-    in
-    let make =
-      value_description ~loc:ghost_loc
-        ~name:{ txt = "make"; loc = ghost_loc }
-        ~type_:make_type ~prim:[ "" ]
-    in
-    let make =
-      { make with pval_attributes = [ attribute ~loc:ghost_loc "mel.obj" ] }
-    in
-    let module_name = gen_symbol ~prefix:"Jsx_props" () in
-    let module_ =
-      pmod_structure ~loc:ghost_loc [ pstr_primitive ~loc:ghost_loc make ]
-    in
-    let call =
-      pexp_apply ~loc
-        (pexp_ident ~loc:ghost_loc
-           { txt = Ldot (Lident module_name, "make"); loc = ghost_loc })
-        ((Labelled "check", check)
-        :: List.map
-             (fun (label, expression) -> (make_label label, expression))
-             args)
-    in
-    pexp_letmodule ~loc:ghost_loc
-      { txt = Some module_name; loc = ghost_loc }
-      module_ call
+  let ordinary, data =
+    List.partition
+      (fun (label, _) -> Option.is_none (data_attribute (label_name label)))
+      args
+  in
+  match data with
+  | [] -> dom_props args
+  | _ ->
+      let ghost_loc = { loc with loc_ghost = true } in
+      (* Generated helpers must not compete with the original prop expressions
+         when Merlin chooses the node at the cursor. *)
+      let synthetic_loc = Location.none in
+      let stdlib_type name =
+        ptyp_constr ~loc:synthetic_loc
+          {
+            txt = Ldot (Ldot (Lident "Stdlib", name), "t");
+            loc = synthetic_loc;
+          }
+          []
+      in
+      let unit_type = stdlib_type "Unit" in
+      let string_type = stdlib_type "String" in
+      let props_type =
+        ptyp_constr ~loc:synthetic_loc
+          { txt = Ldot (Lident "ReactDOM", "domProps"); loc = synthetic_loc }
+          []
+      in
+      let set_type =
+        List.fold_right
+          (ptyp_arrow ~loc:synthetic_loc Nolabel)
+          [ props_type; string_type; string_type ]
+          unit_type
+      in
+      let set =
+        value_description ~loc:synthetic_loc
+          ~name:{ txt = "set"; loc = synthetic_loc }
+          ~type_:set_type ~prim:[ "" ]
+      in
+      let set =
+        {
+          set with
+          pval_attributes = [ attribute ~loc:synthetic_loc "mel.set_index" ];
+        }
+      in
+      let module_name = gen_symbol ~prefix:"Jsx_data" () in
+      let props_name = gen_symbol ~prefix:"jsx_props" () in
+      let module_ =
+        pmod_structure ~loc:synthetic_loc
+          [ pstr_primitive ~loc:synthetic_loc set ]
+      in
+      let set_value ~loc name value =
+        let setter =
+          pexp_ident ~loc:synthetic_loc
+            { txt = Ldot (Lident module_name, "set"); loc = synthetic_loc }
+        in
+        pexp_apply ~loc setter
+          [
+            (Nolabel, evar ~loc:synthetic_loc props_name);
+            (Nolabel, estring ~loc:synthetic_loc name);
+            (Nolabel, value);
+          ]
+      in
+      let names = Hashtbl.create 8 in
+      let operations =
+        List.map
+          (fun (label, expression) ->
+            let name = Option.get (data_attribute (label_name label)) in
+            let loc = expression.pexp_loc in
+            if Hashtbl.mem names name then
+              Location.raise_errorf ~loc "JSX: duplicate data attribute %S" name;
+            Hashtbl.add names name ();
+            match label with
+            | Labelled _ -> set_value ~loc name expression
+            | Optional _ ->
+                let option_type =
+                  ptyp_constr ~loc:synthetic_loc
+                    {
+                      txt = Ldot (Ldot (Lident "Stdlib", "Option"), "t");
+                      loc = synthetic_loc;
+                    }
+                    [ string_type ]
+                in
+                let value_name = gen_symbol ~prefix:"jsx_data" () in
+                pexp_match ~loc
+                  (pexp_constraint ~loc expression option_type)
+                  [
+                    case
+                      ~lhs:
+                        (ppat_construct ~loc:synthetic_loc
+                           {
+                             txt =
+                               Ldot (Ldot (Lident "Stdlib", "Option"), "None");
+                             loc = synthetic_loc;
+                           }
+                           None)
+                      ~guard:None ~rhs:(eunit ~loc:synthetic_loc);
+                    case
+                      ~lhs:
+                        (ppat_construct ~loc:synthetic_loc
+                           {
+                             txt =
+                               Ldot (Ldot (Lident "Stdlib", "Option"), "Some");
+                             loc = synthetic_loc;
+                           }
+                           (Some (pvar ~loc:synthetic_loc value_name)))
+                      ~guard:None
+                      ~rhs:
+                        (set_value ~loc:synthetic_loc name
+                           (evar ~loc:synthetic_loc value_name));
+                  ]
+            | Nolabel -> assert false)
+          data
+      in
+      let body =
+        List.fold_right
+          (fun operation body ->
+            (* Keep the assignments within the data values' source range so
+               completion between props reaches the [domProps] application. *)
+            let loc = operation.pexp_loc in
+            let loc =
+              if body.pexp_loc = synthetic_loc then loc
+              else { loc with loc_end = body.pexp_loc.loc_end }
+            in
+            pexp_sequence ~loc operation body)
+          operations
+          (evar ~loc:synthetic_loc props_name)
+      in
+      (* Keep ordinary props and their locations in the real [domProps] call.
+         This preserves its typing, name conversions, and Merlin completions.
+         Data values are then evaluated once and assigned to that fresh object. *)
+      let body =
+        pexp_let ~loc:ghost_loc Nonrecursive
+          [
+            value_binding ~loc:ghost_loc
+              ~pat:(pvar ~loc:synthetic_loc props_name)
+              ~expr:(dom_props ordinary);
+          ]
+          body
+      in
+      pexp_letmodule ~loc:ghost_loc
+        { txt = Some module_name; loc = synthetic_loc }
+        module_ body

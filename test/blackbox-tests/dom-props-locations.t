@@ -71,4 +71,4 @@ without a data attribute.
   > let element = <div clasName="oops" dataFoo="x" />;
   > EOF
   $ errors
-  [{"start":{"line":1,"col":28},"end":{"line":1,"col":34},"message":"This argument cannot be applied with label ~clasName"},{"start":{"line":1,"col":43},"end":{"line":1,"col":46},"message":"This argument cannot be applied with label ~dataFoo"}]
+  [{"start":{"line":1,"col":28},"end":{"line":1,"col":34},"message":"This argument cannot be applied with label ~clasName"}]
