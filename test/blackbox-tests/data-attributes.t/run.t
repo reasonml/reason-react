@@ -1,5 +1,5 @@
-DOM data attributes are added to a fresh ReactDOM.domProps object, preserving
-ordinary prop checking and name conversions.
+DOM data attributes use a constructor for each JSX occurrence, with ordinary
+props checked against ReactDOM.domProps and no runtime validation callback.
 
   $ cat > dune-project <<EOF
   > (lang dune 3.8)
@@ -26,84 +26,84 @@ ordinary prop checking and name conversions.
   const Caml_option = require("melange.js/caml_option.js");
   const JsxRuntime = require("react/jsx-runtime");
   
-  const jsx_props__002_ = {
-    className: "first"
-  };
+  const first = JsxRuntime.jsx("div", {
+    className: "first",
+    "data-foo": "one"
+  });
   
-  const first = JsxRuntime.jsx("div", (jsx_props__002_["data-foo"] = "one", jsx_props__002_));
+  const second = JsxRuntime.jsx("div", {
+    id: "second",
+    "data-bar": "two",
+    "data-test-id": "three"
+  });
   
-  const jsx_props__004_ = {
-    id: "second"
-  };
+  const onlyData = JsxRuntime.jsx("div", {
+    "data-foo": "one"
+  });
   
-  const second = JsxRuntime.jsx("div", (jsx_props__004_["data-bar"] = "two", jsx_props__004_["data-test-id"] = "three", jsx_props__004_));
+  const svg = JsxRuntime.jsx("svg", {
+    "data-foo": "value"
+  });
   
-  const jsx_props__006_ = {};
-  
-  const onlyData = JsxRuntime.jsx("div", (jsx_props__006_["data-foo"] = "one", jsx_props__006_));
-  
-  const jsx_props__008_ = {};
-  
-  const svg = JsxRuntime.jsx("svg", (jsx_props__008_["data-foo"] = "value", jsx_props__008_));
-  
-  const jsx_props__010_ = {
+  const ordinaryData = JsxRuntime.jsx("object", {
     data: "file",
-    datatype: "text"
-  };
-  
-  const ordinaryData = JsxRuntime.jsx("object", (jsx_props__010_["data-test-id"] = "object", jsx_props__010_));
+    datatype: "text",
+    "data-test-id": "object"
+  });
   
   function optional(className, dataFoo, param) {
     let tmp = {};
     if (className !== undefined) {
       tmp.className = Caml_option.valFromOption(className);
     }
-    const jsx_props__012_ = tmp;
-    return JsxRuntime.jsx("div", (dataFoo !== undefined ? (jsx_props__012_["data-foo"] = dataFoo) : undefined, jsx_props__012_));
+    if (dataFoo !== undefined) {
+      tmp["data-foo"] = Caml_option.valFromOption(dataFoo);
+    }
+    return JsxRuntime.jsx("div", tmp);
   }
   
-  const jsx_props__015_ = {
-    "aria-activedescendant": "descendant",
+  const renamed = JsxRuntime.jsx("div", {
+    "data-test-id": "aliases",
     "aria-label": "label",
+    "aria-activedescendant": "descendant",
     as: "button",
-    open: true,
-    type: "button",
     begin: "0",
     end: "1",
     in: "source",
-    to: "target"
-  };
+    open: true,
+    to: "target",
+    type: "button"
+  });
   
-  const renamed = JsxRuntime.jsx("div", (jsx_props__015_["data-test-id"] = "aliases", jsx_props__015_));
-  
-  const jsx_props__017_ = {};
-  
-  const jsx_props__019_ = {
+  const withChildren = JsxRuntime.jsxs("div", {
     children: [
-      JsxRuntime.jsx("span", (jsx_props__017_["data-foo"] = "child", jsx_props__017_)),
+      JsxRuntime.jsx("span", {
+        "data-foo": "child"
+      }),
       JsxRuntime.jsx("span", {})
-    ]
-  };
-  
-  const withChildren = JsxRuntime.jsxs("div", (jsx_props__019_["data-test-id"] = "parent", jsx_props__019_), "parent");
+    ],
+    "data-test-id": "parent"
+  }, "parent");
   
   function withRefAndEvent(elementRef, handleClick) {
-    const jsx_props__021_ = {
+    return JsxRuntime.jsx("button", {
       ref: elementRef,
-      onClick: handleClick
-    };
-    return JsxRuntime.jsx("button", (jsx_props__021_["data-test-id"] = "button", jsx_props__021_));
+      onClick: handleClick,
+      "data-test-id": "button"
+    });
   }
   
   function optionalKey(key, param) {
-    const jsx_props__023_ = {};
-    return JsxRuntime.jsx("div", (jsx_props__023_["data-foo"] = "keyed", jsx_props__023_), key !== undefined ? Caml_option.valFromOption(key) : undefined);
+    return JsxRuntime.jsx("div", {
+      "data-foo": "keyed"
+    }, key !== undefined ? Caml_option.valFromOption(key) : undefined);
   }
   
   function Input$Component(Props) {
     let dataFoo = Props.dataFoo;
-    const jsx_props__027_ = {};
-    return JsxRuntime.jsx("div", (jsx_props__027_["data-foo"] = dataFoo, jsx_props__027_));
+    return JsxRuntime.jsx("div", {
+      "data-foo": dataFoo
+    });
   }
   
   const Component = {
@@ -114,27 +114,34 @@ ordinary prop checking and name conversions.
     dataFoo: "component"
   });
   
-  const jsx_props__029_ = {
-    className: next("class")
-  };
-  
-  const effects = JsxRuntime.jsx("div", (jsx_props__029_["data-foo"] = next("data"), jsx_props__029_));
+  const effects = JsxRuntime.jsx("div", {
+    className: next("class"),
+    "data-foo": next("data")
+  });
   
   const ordinary = JsxRuntime.jsx("div", {
     className: "unchanged"
   });
   
-  const jsx_props__031_ = {};
+  const names = JsxRuntime.jsx("div", {
+    "data-foo": "plain",
+    "data-foo__bar": "double",
+    "data-foo___": "trailing",
+    "data-foo_bar": "single",
+    "data-u-r-l": "acronym",
+    "data-version2": "digit"
+  });
   
-  const names = JsxRuntime.jsx("div", (jsx_props__031_["data-foo"] = "plain", jsx_props__031_["data-foo__bar"] = "double", jsx_props__031_["data-foo___"] = "trailing", jsx_props__031_["data-foo_bar"] = "single", jsx_props__031_["data-u-r-l"] = "acronym", jsx_props__031_["data-version2"] = "digit", jsx_props__031_));
-  
-  const jsx_props__033_ = {};
-  
-  const element = JsxRuntime.jsx("div", (jsx_props__033_["data-foo"] = "value", jsx_props__033_));
+  const element = JsxRuntime.jsx("div", {
+    "data-foo": "value"
+  });
   
   function optional$1(dataFoo, param) {
-    const jsx_props__035_ = {};
-    return JsxRuntime.jsx("div", (dataFoo !== undefined ? (jsx_props__035_["data-foo"] = dataFoo) : undefined, jsx_props__035_));
+    let tmp = {};
+    if (dataFoo !== undefined) {
+      tmp["data-foo"] = Caml_option.valFromOption(dataFoo);
+    }
+    return JsxRuntime.jsx("div", tmp);
   }
   
   const ShadowedTypes = {
@@ -144,8 +151,9 @@ ordinary prop checking and name conversions.
   
   function Input$IntegerComponent(Props) {
     let dataFoo = Props.dataFoo;
-    const jsx_props__040_ = {};
-    return JsxRuntime.jsx("div", (jsx_props__040_["data-foo"] = String(dataFoo), jsx_props__040_));
+    return JsxRuntime.jsx("div", {
+      "data-foo": String(dataFoo)
+    });
   }
   
   const IntegerComponent = {
@@ -156,9 +164,9 @@ ordinary prop checking and name conversions.
     dataFoo: 42
   });
   
-  const jsx_props__042_ = (nextUnit(), {});
-  
-  const effectfulUnit = JsxRuntime.jsx("div", (jsx_props__042_["data-foo"] = "unit", jsx_props__042_));
+  const effectfulUnit = JsxRuntime.jsx("div", (nextUnit(), {
+    "data-foo": "unit"
+  }));
   
   module.exports = {
     first,

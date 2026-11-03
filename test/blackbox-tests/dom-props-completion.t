@@ -83,3 +83,26 @@ Completion also works between data attributes, before any ordinary prop is set.
   > EOF
   $ complete 3:5 cla
   ["?className","?id","?onClick","?style"]
+
+Nested JSX keeps its own completion context, including inside ordinary prop
+expressions.
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div dataFoo="outer">
+  >     <button className="a" dataBar="inner"
+  >       onC />
+  >   </div>;
+  > EOF
+  $ complete 4:9 onC
+  ["?id","?onClick","?style"]
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div title={ReactDOMServer.renderToStaticMarkup(
+  >     <button className="a" dataBar="inner"
+  >       onC />
+  >   )} dataFoo="outer" />;
+  > EOF
+  $ complete 4:9 onC
+  ["?id","?onClick","?style"]
