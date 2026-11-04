@@ -18,7 +18,7 @@ required and optional data attributes, renamed props, expressions, and nested JS
                          Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ])
                ->
                className:'prop__001_ ->
-                 dataTestId:((Stdlib.String.t)[@mel.as "data-test-id__"]) ->
+                 dataTestId:((Stdlib.String.t)[@mel.as "data-test-id"]) ->
                    onClick:'prop__003_ ->
                      __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
                        ReactDOM.domProps = ""[@@mel.obj ]
@@ -47,7 +47,7 @@ required and optional data attributes, renamed props, expressions, and nested JS
                            Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ])
                    ->
                    ?className:'prop__006_ ->
-                     ?dataFoo:((Stdlib.String.t)[@mel.as "data-foo__"]) ->
+                     ?dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
                        __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
                          ReactDOM.domProps = ""[@@mel.obj ]
              end in
@@ -72,7 +72,7 @@ required and optional data attributes, renamed props, expressions, and nested JS
                ->
                type_:(('prop__010_)[@mel.as "type"]) ->
                  ariaLabel:(('prop__011_)[@mel.as "aria-label"]) ->
-                   dataFoo__bar:((Stdlib.String.t)[@mel.as "data-foo__bar__"])
+                   dataFoo__bar:((Stdlib.String.t)[@mel.as "data-foo-_-_bar"])
                      ->
                      __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
                        ReactDOM.domProps = ""[@@mel.obj ]
@@ -96,7 +96,7 @@ required and optional data attributes, renamed props, expressions, and nested JS
                        Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ])
                ->
                className:'prop__015_ ->
-                 dataFoo:((Stdlib.String.t)[@mel.as "data-foo__"]) ->
+                 dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
                    __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
                      ReactDOM.domProps = ""[@@mel.obj ]
          end in
@@ -118,7 +118,7 @@ required and optional data attributes, renamed props, expressions, and nested JS
              check:((children:'prop__022_ -> Stdlib.Unit.t -> ReactDOM.domProps)
                [@mel.ignore ]) ->
                children:'prop__022_ ->
-                 dataFoo:((Stdlib.String.t)[@mel.as "data-foo__"]) ->
+                 dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
                    __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
                      ReactDOM.domProps = ""[@@mel.obj ]
          end in
@@ -137,8 +137,7 @@ required and optional data attributes, renamed props, expressions, and nested JS
                              external make :
                                check:((Stdlib.Unit.t -> ReactDOM.domProps)
                                  [@mel.ignore ]) ->
-                                 dataBar:((Stdlib.String.t)[@mel.as
-                                                             "data-bar__"])
+                                 dataBar:((Stdlib.String.t)[@mel.as "data-bar"])
                                    ->
                                    __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ])
                                      -> ReactDOM.domProps = ""[@@mel.obj ]

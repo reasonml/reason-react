@@ -125,11 +125,15 @@ props checked against ReactDOM.domProps and no runtime validation callback.
   
   const names = JsxRuntime.jsx("div", {
     "data-foo": "plain",
-    "data-foo__bar": "double",
-    "data-foo___": "trailing",
-    "data-foo_bar": "single",
+    "data-foo-_-_bar": "double",
+    "data-foo-_-_-_": "trailing",
+    "data-foo-_bar": "single",
     "data-u-r-l": "acronym",
-    "data-version2": "digit"
+    "data-version-2": "digit",
+    "data-version-2-0": "digits",
+    "data-2": "leading digit",
+    "data-_foo": "leading underscore",
+    datafoo: "lowercase"
   });
   
   const element = JsxRuntime.jsx("div", {

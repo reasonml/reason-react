@@ -51,6 +51,10 @@ let names =
     dataFoo_bar="single"
     dataURL="acronym"
     dataVersion2="digit"
+    dataVersion20="digits"
+    data2="leading digit"
+    data_foo="leading underscore"
+    datafoo="lowercase"
   />;
 
 module ShadowedTypes = {

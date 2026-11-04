@@ -15,7 +15,7 @@ describe("ReactDOM data attributes", () => {
       );
     expect(html)
     ->toBe(
-        "<div class=\"example\" data-test-id=\"first\" data-version2=\"v2\"><span data-foo-bar=\"second\"></span></div>",
+        "<div class=\"example\" data-test-id=\"first\" data-version-2=\"v2\"><span data-foo-bar=\"second\"></span></div>",
       );
   });
 
@@ -66,19 +66,36 @@ describe("ReactDOM data attributes", () => {
       );
     expect(html)
     ->toBe(
-        "<svg viewBox=\"0 0 10 10\" data-state=\"ready\"><path stroke-width=\"2\" data-version2=\"v2\"></path></svg>",
+        "<svg viewBox=\"0 0 10 10\" data-state=\"ready\"><path stroke-width=\"2\" data-version-2=\"v2\"></path></svg>",
       );
   });
 
-  test("preserves underscores in data attribute names", () => {
+  test("matches server-reason-react data attribute names", () => {
     let html =
       ReactDOMServer.renderToStaticMarkup(
-        <div dataFoo="plain" dataFoo__bar="double" dataFoo___="trailing" />,
+        <div
+          dataFoo="plain"
+          dataFoo__bar="double"
+          dataFoo___="trailing"
+          dataVersion20="digits"
+          dataURL="acronym"
+          data2="leading digit"
+          data_foo="leading underscore"
+          datafoo="lowercase"
+        />,
       );
     expect(html)
     ->toBe(
-        "<div data-foo=\"plain\" data-foo__bar=\"double\" data-foo___=\"trailing\"></div>",
+        "<div data-foo=\"plain\" data-foo-_-_bar=\"double\" data-foo-_-_-_=\"trailing\" data-version-2-0=\"digits\" data-u-r-l=\"acronym\" data-2=\"leading digit\" data-_foo=\"leading underscore\" datafoo=\"lowercase\"></div>",
       );
+  });
+
+  test("uses server-compatible names for optional data attributes", () => {
+    let render = (dataVersion2, data_foo) =>
+      ReactDOMServer.renderToStaticMarkup(<div ?dataVersion2 ?data_foo />);
+    expect(render(None, None))->toBe("<div></div>");
+    expect(render(Some("v2"), Some("value")))
+    ->toBe("<div data-version-2=\"v2\" data-_foo=\"value\"></div>");
   });
 
   test("preserves ordinary property renaming", () => {
