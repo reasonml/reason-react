@@ -38,9 +38,11 @@ optional attributes such as `<div dataState=?state />` are omitted when `state`
 is `None`. Ordinary props retain their existing type checks. Data props on
 user-defined components keep their declared names and types.
 
-Each uppercase ASCII letter adds a hyphen and becomes lowercase; digits and
-underscores are preserved. For example, `dataVersion2` becomes `data-version2`
-and `dataFoo__bar` becomes `data-foo__bar`.
+Names follow server-reason-react's conversion: each character other than a
+lowercase ASCII letter gains a preceding hyphen, and uppercase ASCII letters
+become lowercase. For example, `dataVersion2` becomes `data-version-2` and
+`dataFoo__bar` becomes `data-foo-_-_bar`. Any prop beginning with `data` is
+accepted; the standard `data` and `datatype` props keep their existing meanings.
 
 <!-- ## Getting Started -->
 

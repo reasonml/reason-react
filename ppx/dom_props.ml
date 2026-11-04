@@ -5,19 +5,18 @@ let attribute ~loc ?(payload = PStr []) name =
   attribute ~loc ~name:{ txt = name; loc } ~payload
 
 let data_attribute name =
+  (* Keep the standard [data] and [datatype] props on the ordinary DOM path.
+     Other data-prefixed names follow server-reason-react's conversion, which
+     inserts a hyphen before digits and underscores as well as uppercase letters. *)
   if
-    String.length name > 4
-    && String.sub name 0 4 = "data"
-    && name.[4] >= 'A'
-    && name.[4] <= 'Z'
+    String.starts_with ~prefix:"data" name
+    && name <> "data" && name <> "datatype"
   then (
     let buffer = Buffer.create (String.length name + 4) in
     String.iter
-      (function
-        | 'A' .. 'Z' as c ->
-            Buffer.add_char buffer '-';
-            Buffer.add_char buffer (Char.lowercase_ascii c)
-        | c -> Buffer.add_char buffer c)
+      (fun c ->
+        if Char.uppercase_ascii c = c then Buffer.add_char buffer '-';
+        Buffer.add_char buffer (Char.lowercase_ascii c))
       name;
     Some (Buffer.contents buffer))
   else None
@@ -177,9 +176,7 @@ let make ~loc ~dom_props args =
         (fun { label; typ; data_name; _ } result ->
           let name =
             match data_name with
-            (* Melange strips the last [__suffix], even in [mel.as]. An empty
-               suffix preserves any double underscores in the attribute. *)
-            | Some name -> Some (name ^ "__")
+            | Some _ as name -> name
             | None -> js_name (label_name label)
           in
           let attributes =
