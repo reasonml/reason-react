@@ -26,9 +26,9 @@ Build a valid component to initialize the Merlin configuration.
 Query completion before the closing tag, checking representative ordinary props.
 
   $ complete () {
-  >   ocamlmerlin single complete-prefix -position 3:2 -prefix "" \
+  >   ocamlmerlin single complete-prefix -position "${1:-3:2}" -prefix "${2:-}" \
   >     -filename component.re < component.re |
-  >     jq -c '[.value.context[1].labels[].name | select(. == "?id" or . == "?onClick" or . == "?style")] | sort'
+  >     jq -c '[.value.context[1].labels[].name | select(. == "?id" or . == "?onClick" or . == "?style" or . == "?className" or startswith("~"))] | sort'
   > }
   $ complete
   ["?id","?onClick","?style"]
@@ -53,4 +53,56 @@ The same holds for an optional data attribute.
   >   />;
   > EOF
   $ complete
+  ["?id","?onClick","?style"]
+
+Partially typed names still complete ordinary props. Already supplied props and
+generated helper arguments must not appear in the suggestions.
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div className="a" dataVersion2="v2"
+  >   onC />;
+  > EOF
+  $ complete 3:5 onC
+  ["?id","?onClick","?style"]
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div className="a" dataVersion2=?Some("v2")
+  >   onC />;
+  > EOF
+  $ complete 3:5 onC
+  ["?id","?onClick","?style"]
+
+Completion also works between data attributes, before any ordinary prop is set.
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div dataFoo="first"
+  >   cla dataBar="last" />;
+  > EOF
+  $ complete 3:5 cla
+  ["?className","?id","?onClick","?style"]
+
+Nested JSX keeps its own completion context, including inside ordinary prop
+expressions.
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div dataFoo="outer">
+  >     <button className="a" dataBar="inner"
+  >       onC />
+  >   </div>;
+  > EOF
+  $ complete 4:9 onC
+  ["?id","?onClick","?style"]
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div title={ReactDOMServer.renderToStaticMarkup(
+  >     <button className="a" dataBar="inner"
+  >       onC />
+  >   )} dataFoo="outer" />;
+  > EOF
+  $ complete 4:9 onC
   ["?id","?onClick","?style"]
