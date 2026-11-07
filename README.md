@@ -38,11 +38,14 @@ optional attributes such as `<div dataState=?state />` are omitted when `state`
 is `None`. Ordinary props retain their existing type checks. Data props on
 user-defined components keep their declared names and types.
 
-Names follow server-reason-react's conversion: each character other than a
-lowercase ASCII letter gains a preceding hyphen, and uppercase ASCII letters
-become lowercase. For example, `dataVersion2` becomes `data-version-2` and
-`dataFoo__bar` becomes `data-foo-_-_bar`. Any prop beginning with `data` is
-accepted; the standard `data` and `datatype` props keep their existing meanings.
+Names follow [server-reason-react's conversion](https://github.com/ml-in-barcelona/server-reason-react/pull/412):
+underscores become hyphens, uppercase letters become lowercase, and word
+boundaries gain a hyphen. Acronyms stay together and digits stay attached to the
+preceding word: `dataURLPath` becomes `data-url-path`, `dataVersion2` becomes
+`data-version2`, and `dataFoo__bar` becomes `data-foo--bar`. Any prop beginning
+with `data` is accepted; the standard `data` and `datatype` props keep their
+existing meanings. Props that produce the same attribute name, such as
+`dataFoo` and `data_foo`, cannot be used on the same element.
 
 <!-- ## Getting Started -->
 

@@ -72,8 +72,7 @@ required and optional data attributes, renamed props, expressions, and nested JS
                ->
                type_:(('prop__010_)[@mel.as "type"]) ->
                  ariaLabel:(('prop__011_)[@mel.as "aria-label"]) ->
-                   dataFoo__bar:((Stdlib.String.t)[@mel.as "data-foo-_-_bar"])
-                     ->
+                   dataFoo__bar:((Stdlib.String.t)[@mel.as "data-foo--bar"]) ->
                      __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
                        ReactDOM.domProps = ""[@@mel.obj ]
          end in

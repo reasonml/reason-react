@@ -6,17 +6,29 @@ let attribute ~loc ?(payload = PStr []) name =
 
 let data_attribute name =
   (* Keep the standard [data] and [datatype] props on the ordinary DOM path.
-     Other data-prefixed names follow server-reason-react's conversion, which
-     inserts a hyphen before digits and underscores as well as uppercase letters. *)
+     Other data-prefixed names follow server-reason-react's conversion. *)
   if
     String.starts_with ~prefix:"data" name
     && name <> "data" && name <> "datatype"
   then (
-    let buffer = Buffer.create (String.length name + 4) in
-    String.iter
-      (fun c ->
-        if Char.uppercase_ascii c = c then Buffer.add_char buffer '-';
-        Buffer.add_char buffer (Char.lowercase_ascii c))
+    let len = String.length name in
+    let is_upper c = c >= 'A' && c <= 'Z' in
+    let is_lower c = c >= 'a' && c <= 'z' in
+    let buffer = Buffer.create (len + 4) in
+    String.iteri
+      (fun i c ->
+        if c = '_' then Buffer.add_char buffer '-'
+        else if is_upper c then (
+          let prev = if i > 0 then Some name.[i - 1] else None in
+          let next_is_lower = i + 1 < len && is_lower name.[i + 1] in
+          let starts_word =
+            match prev with
+            | None | Some '_' -> false
+            | Some p -> (not (is_upper p)) || next_is_lower
+          in
+          if starts_word then Buffer.add_char buffer '-';
+          Buffer.add_char buffer (Char.lowercase_ascii c))
+        else Buffer.add_char buffer c)
       name;
     Some (Buffer.contents buffer))
   else None

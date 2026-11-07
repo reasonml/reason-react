@@ -15,7 +15,7 @@ describe("ReactDOM data attributes", () => {
       );
     expect(html)
     ->toBe(
-        "<div class=\"example\" data-test-id=\"first\" data-version-2=\"v2\"><span data-foo-bar=\"second\"></span></div>",
+        "<div class=\"example\" data-test-id=\"first\" data-version2=\"v2\"><span data-foo-bar=\"second\"></span></div>",
       );
   });
 
@@ -66,7 +66,7 @@ describe("ReactDOM data attributes", () => {
       );
     expect(html)
     ->toBe(
-        "<svg viewBox=\"0 0 10 10\" data-state=\"ready\"><path stroke-width=\"2\" data-version-2=\"v2\"></path></svg>",
+        "<svg viewBox=\"0 0 10 10\" data-state=\"ready\"><path stroke-width=\"2\" data-version2=\"v2\"></path></svg>",
       );
   });
 
@@ -77,16 +77,34 @@ describe("ReactDOM data attributes", () => {
           dataFoo="plain"
           dataFoo__bar="double"
           dataFoo___="trailing"
+          dataFoo_bar="single"
           dataVersion20="digits"
           dataURL="acronym"
+          dataURLPath="acronym then word"
           data2="leading digit"
-          data_foo="leading underscore"
           datafoo="lowercase"
         />,
       );
     expect(html)
     ->toBe(
-        "<div data-foo=\"plain\" data-foo-_-_bar=\"double\" data-foo-_-_-_=\"trailing\" data-version-2-0=\"digits\" data-u-r-l=\"acronym\" data-2=\"leading digit\" data-_foo=\"leading underscore\" datafoo=\"lowercase\"></div>",
+        "<div data-foo=\"plain\" data-foo--bar=\"double\" data-foo---=\"trailing\" data-foo-bar=\"single\" data-version20=\"digits\" data-url=\"acronym\" data-url-path=\"acronym then word\" data2=\"leading digit\" datafoo=\"lowercase\"></div>",
+      );
+  });
+
+  test("converts underscores and acronym word boundaries", () => {
+    let html =
+      ReactDOMServer.renderToStaticMarkup(
+        <div
+          data_foo="leading underscore"
+          dataFoo_Bar="underscore then uppercase"
+          data_API_KEY="uppercase words"
+          dataURL2Path="digit then uppercase"
+          dataXMLHttpRequest="acronym then lowercase"
+        />,
+      );
+    expect(html)
+    ->toBe(
+        "<div data-foo=\"leading underscore\" data-foo-bar=\"underscore then uppercase\" data-api-key=\"uppercase words\" data-url2-path=\"digit then uppercase\" data-xml-http-request=\"acronym then lowercase\"></div>",
       );
   });
 
@@ -95,7 +113,7 @@ describe("ReactDOM data attributes", () => {
       ReactDOMServer.renderToStaticMarkup(<div ?dataVersion2 ?data_foo />);
     expect(render(None, None))->toBe("<div></div>");
     expect(render(Some("v2"), Some("value")))
-    ->toBe("<div data-version-2=\"v2\" data-_foo=\"value\"></div>");
+    ->toBe("<div data-version2=\"v2\" data-foo=\"value\"></div>");
   });
 
   test("preserves ordinary property renaming", () => {

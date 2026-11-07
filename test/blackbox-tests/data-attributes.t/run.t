@@ -125,15 +125,23 @@ props checked against ReactDOM.domProps and no runtime validation callback.
   
   const names = JsxRuntime.jsx("div", {
     "data-foo": "plain",
-    "data-foo-_-_bar": "double",
-    "data-foo-_-_-_": "trailing",
-    "data-foo-_bar": "single",
-    "data-u-r-l": "acronym",
-    "data-version-2": "digit",
-    "data-version-2-0": "digits",
-    "data-2": "leading digit",
-    "data-_foo": "leading underscore",
+    "data-foo--bar": "double",
+    "data-foo---": "trailing",
+    "data-foo-bar": "single",
+    "data-url": "acronym",
+    "data-url-path": "acronym then word",
+    "data-version2": "digit",
+    "data-version20": "digits",
+    data2: "leading digit",
     datafoo: "lowercase"
+  });
+  
+  const underscoreNames = JsxRuntime.jsx("div", {
+    "data-foo": "leading underscore",
+    "data-foo-bar": "underscore then uppercase",
+    "data-api-key": "uppercase words",
+    "data-url2-path": "digit then uppercase",
+    "data-xml-http-request": "acronym then lowercase"
   });
   
   const element = JsxRuntime.jsx("div", {
@@ -188,6 +196,7 @@ props checked against ReactDOM.domProps and no runtime validation callback.
     effects,
     ordinary,
     names,
+    underscoreNames,
     ShadowedTypes,
     IntegerComponent,
     integerComponent,
@@ -278,6 +287,49 @@ Data attribute names must be unique, including optional arguments.
   1 | let render = (~dataFoo=?, ()) => <div ?dataFoo dataFoo="second" />;
                                                              ^^^^^^^^
   Error: JSX: duplicate data attribute "data-foo"
+  [1]
+
+Distinct prop spellings cannot produce the same attribute, including when one
+of the attributes is optional.
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo="first" data_foo="second" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 44-52:
+  1 | let element = <div dataFoo="first" data_foo="second" />;
+                                                  ^^^^^^^^
+  Error: JSX: duplicate data attribute "data-foo"
+  [1]
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo_bar="first" dataFoo_Bar="second" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 51-59:
+  1 | let element = <div dataFoo_bar="first" dataFoo_Bar="second" />;
+                                                         ^^^^^^^^
+  Error: JSX: duplicate data attribute "data-foo-bar"
+  [1]
+
+  $ cat > input.re <<EOF
+  > let element = <div dataURL="first" dataUrl="second" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 43-51:
+  1 | let element = <div dataURL="first" dataUrl="second" />;
+                                                 ^^^^^^^^
+  Error: JSX: duplicate data attribute "data-url"
+  [1]
+
+  $ cat > input.re <<EOF
+  > let render = (~dataUrl=?, ()) => <div ?dataUrl dataURL="second" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 55-63:
+  1 | let render = (~dataUrl=?, ()) => <div ?dataUrl dataURL="second" />;
+                                                             ^^^^^^^^
+  Error: JSX: duplicate data attribute "data-url"
   [1]
 
 Shadowing string must not change the type of a data attribute.

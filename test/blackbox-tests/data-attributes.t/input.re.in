@@ -50,11 +50,20 @@ let names =
     dataFoo___="trailing"
     dataFoo_bar="single"
     dataURL="acronym"
+    dataURLPath="acronym then word"
     dataVersion2="digit"
     dataVersion20="digits"
     data2="leading digit"
-    data_foo="leading underscore"
     datafoo="lowercase"
+  />;
+
+let underscoreNames =
+  <div
+    data_foo="leading underscore"
+    dataFoo_Bar="underscore then uppercase"
+    data_API_KEY="uppercase words"
+    dataURL2Path="digit then uppercase"
+    dataXMLHttpRequest="acronym then lowercase"
   />;
 
 module ShadowedTypes = {
