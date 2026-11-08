@@ -180,6 +180,71 @@ props checked against ReactDOM.domProps and no runtime validation callback.
     "data-foo": "unit"
   }));
   
+  const repeatedData = JsxRuntime.jsx("div", {
+    "data-foo": "first"
+  });
+  
+  const aliasedData = JsxRuntime.jsx("div", {
+    className: "aliases",
+    "data-foo": "first",
+    "data-foo-bar": "word",
+    "data-url": "url"
+  });
+  
+  function optionalAliases(first, second) {
+    let tmp = {};
+    const tmp$1 = first !== undefined ? first : second;
+    if (tmp$1 !== undefined) {
+      tmp["data-foo"] = Caml_option.valFromOption(tmp$1);
+    }
+    return JsxRuntime.jsx("div", tmp);
+  }
+  
+  function requiredThenOptional(second) {
+    return JsxRuntime.jsx("div", {
+      "data-foo": "first"
+    });
+  }
+  
+  function optionalThenRequired(first) {
+    return JsxRuntime.jsx("div", {
+      "data-foo": first !== undefined ? first : "fallback"
+    });
+  }
+  
+  function optionalFallback(first, second) {
+    return JsxRuntime.jsx("div", {
+      "data-url": first !== undefined ? first : (
+          second !== undefined ? second : "fallback"
+        )
+    });
+  }
+  
+  const _dataFoo__138_ = next("first");
+  
+  const collisionEffects = JsxRuntime.jsx("div", (next("second"), {
+    className: next("class"),
+    "data-foo": _dataFoo__138_
+  }));
+  
+  const element$1 = JsxRuntime.jsx("div", {
+    "data-foo": "first"
+  });
+  
+  function optional$2(first, second) {
+    let tmp = {};
+    const tmp$1 = first !== undefined ? first : second;
+    if (tmp$1 !== undefined) {
+      tmp["data-foo"] = Caml_option.valFromOption(tmp$1);
+    }
+    return JsxRuntime.jsx("div", tmp);
+  }
+  
+  const ShadowedCollisionTypes = {
+    element: element$1,
+    optional: optional$2
+  };
+  
   module.exports = {
     first,
     second,
@@ -201,6 +266,14 @@ props checked against ReactDOM.domProps and no runtime validation callback.
     IntegerComponent,
     integerComponent,
     effectfulUnit,
+    repeatedData,
+    aliasedData,
+    optionalAliases,
+    requiredThenOptional,
+    optionalThenRequired,
+    optionalFallback,
+    collisionEffects,
+    ShadowedCollisionTypes,
   }
   /* first Not a pure module */
 
@@ -267,69 +340,39 @@ constructor's list of valid props is long.
   $ tail -n 1 error.log
   This argument cannot be applied with label ~clasName
 
-Data attribute names must be unique, including optional arguments.
+Discarded values of colliding data props are still type-checked.
 
   $ cat > input.re <<EOF
-  > let element = <div dataFoo="first" dataFoo="second" />;
+  > let element = <div dataFoo="first" data_foo=42 />;
   > EOF
   $ dune build @mel
-  File "input.re", line 1, characters 43-51:
-  1 | let element = <div dataFoo="first" dataFoo="second" />;
-                                                 ^^^^^^^^
-  Error: JSX: duplicate data attribute "data-foo"
+  File "input.re", line 1, characters 44-46:
+  1 | let element = <div dataFoo="first" data_foo=42 />;
+                                                  ^^
+  Error: The constant 42 has type int but an expression was expected of type
+           string
   [1]
 
   $ cat > input.re <<EOF
-  > let render = (~dataFoo=?, ()) => <div ?dataFoo dataFoo="second" />;
+  > let element = <div dataFoo="first" data_foo=?Some(42) />;
   > EOF
   $ dune build @mel
-  File "input.re", line 1, characters 55-63:
-  1 | let render = (~dataFoo=?, ()) => <div ?dataFoo dataFoo="second" />;
-                                                             ^^^^^^^^
-  Error: JSX: duplicate data attribute "data-foo"
-  [1]
-
-Distinct prop spellings cannot produce the same attribute, including when one
-of the attributes is optional.
-
-  $ cat > input.re <<EOF
-  > let element = <div dataFoo="first" data_foo="second" />;
-  > EOF
-  $ dune build @mel
-  File "input.re", line 1, characters 44-52:
-  1 | let element = <div dataFoo="first" data_foo="second" />;
-                                                  ^^^^^^^^
-  Error: JSX: duplicate data attribute "data-foo"
+  File "input.re", line 1, characters 50-52:
+  1 | let element = <div dataFoo="first" data_foo=?Some(42) />;
+                                                        ^^
+  Error: The constant 42 has type int but an expression was expected of type
+           string
   [1]
 
   $ cat > input.re <<EOF
-  > let element = <div dataFoo_bar="first" dataFoo_Bar="second" />;
+  > let element = <div dataFoo="first" dataFoo=42 />;
   > EOF
   $ dune build @mel
-  File "input.re", line 1, characters 51-59:
-  1 | let element = <div dataFoo_bar="first" dataFoo_Bar="second" />;
-                                                         ^^^^^^^^
-  Error: JSX: duplicate data attribute "data-foo-bar"
-  [1]
-
-  $ cat > input.re <<EOF
-  > let element = <div dataURL="first" dataUrl="second" />;
-  > EOF
-  $ dune build @mel
-  File "input.re", line 1, characters 43-51:
-  1 | let element = <div dataURL="first" dataUrl="second" />;
-                                                 ^^^^^^^^
-  Error: JSX: duplicate data attribute "data-url"
-  [1]
-
-  $ cat > input.re <<EOF
-  > let render = (~dataUrl=?, ()) => <div ?dataUrl dataURL="second" />;
-  > EOF
-  $ dune build @mel
-  File "input.re", line 1, characters 55-63:
-  1 | let render = (~dataUrl=?, ()) => <div ?dataUrl dataURL="second" />;
-                                                             ^^^^^^^^
-  Error: JSX: duplicate data attribute "data-url"
+  File "input.re", line 1, characters 43-45:
+  1 | let element = <div dataFoo="first" dataFoo=42 />;
+                                                 ^^
+  Error: The constant 42 has type int but an expression was expected of type
+           string
   [1]
 
 Shadowing string must not change the type of a data attribute.

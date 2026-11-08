@@ -83,3 +83,39 @@ let integerComponent = <IntegerComponent dataFoo=42 />;
 
 external nextUnit: unit => unit = "nextUnit";
 let effectfulUnit = [@JSX] div(~dataFoo="unit", nextUnit());
+
+let repeatedData = <div dataFoo="first" dataFoo="second" />;
+let aliasedData =
+  <div
+    className="aliases"
+    dataFoo="first"
+    data_foo="second"
+    dataFoo_bar="word"
+    dataFoo_Bar="other word"
+    dataURL="url"
+    dataUrl="other url"
+  />;
+
+let optionalAliases = (first, second) =>
+  <div dataFoo=?first data_foo=?second />;
+let requiredThenOptional = second => <div dataFoo="first" data_foo=?second />;
+let optionalThenRequired = first => <div dataFoo=?first data_foo="fallback" />;
+let optionalFallback = (first, second) =>
+  <div dataURL=?first dataUrl=?second data_URL="fallback" />;
+
+let collisionEffects =
+  <div
+    className={next("class")}
+    dataFoo={next("first")}
+    data_foo=?Some(next("second"))
+  />;
+
+module ShadowedCollisionTypes = {
+  type string = int;
+  type option('a) =
+    | None
+    | Some('a);
+
+  let element = <div dataFoo="first" data_foo="second" />;
+  let optional = (first, second) => <div dataFoo=?first data_foo=?second />;
+};

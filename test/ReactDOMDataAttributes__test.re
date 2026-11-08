@@ -129,6 +129,97 @@ describe("ReactDOM data attributes", () => {
     expect(attribute("data-foo"))->toEqual(Some("value"));
   });
 
+  test("accepts repeated data prop labels", () => {
+    let element = <div dataFoo="first" dataFoo="second" />;
+    expect(ReactDOMServer.renderToStaticMarkup(element))
+    ->toBe("<div data-foo=\"first\"></div>");
+  });
+
+  test("matches parsed server HTML for colliding names", () => {
+    let serverHtml =
+      "<button data-foo=\"first\" data-foo=\"second\" data-foo-bar=\"word\" data-foo-bar=\"other word\" data-url=\"url\" data-url=\"other url\">server</button>";
+    let server =
+      ReactTestingLibrary.render(
+        <div dangerouslySetInnerHTML={{"__html": serverHtml}} />,
+      );
+    let client =
+      ReactTestingLibrary.render(
+        <button
+          dataFoo="first"
+          data_foo="second"
+          dataFoo_bar="word"
+          dataFoo_Bar="other word"
+          dataURL="url"
+          dataUrl="other url">
+          {React.string("client")}
+        </button>,
+      );
+    let button = (text, container) =>
+      ReactTestingLibrary.getByText(~matcher=`Str(text), container);
+    List.iter(
+      name =>
+        expect(getAttribute(button("client", client), name))
+        ->toEqual(getAttribute(button("server", server), name)),
+      ["data-foo", "data-foo-bar", "data-url"],
+    );
+  });
+
+  test("keeps the first present optional alias", () => {
+    let render = (first, second) =>
+      ReactDOMServer.renderToStaticMarkup(
+        <div dataFoo=?first data_foo=?second />,
+      );
+    expect(render(None, None))->toBe("<div></div>");
+    expect(render(Some("first"), None))
+    ->toBe("<div data-foo=\"first\"></div>");
+    expect(render(None, Some("second")))
+    ->toBe("<div data-foo=\"second\"></div>");
+    expect(render(Some("first"), Some("second")))
+    ->toBe("<div data-foo=\"first\"></div>");
+    expect(render(Some(""), Some("second")))
+    ->toBe("<div data-foo=\"\"></div>");
+  });
+
+  test("keeps a required value before an optional alias", () => {
+    let render = second =>
+      ReactDOMServer.renderToStaticMarkup(
+        <div dataFoo="first" data_foo=?second />,
+      );
+    expect(render(None))->toBe("<div data-foo=\"first\"></div>");
+    expect(render(Some("second")))->toBe("<div data-foo=\"first\"></div>");
+  });
+
+  test("falls through absent aliases to a required value", () => {
+    let render = (first, second) =>
+      ReactDOMServer.renderToStaticMarkup(
+        <div dataURL=?first dataUrl=?second data_URL="fallback" />,
+      );
+    expect(render(None, None))->toBe("<div data-url=\"fallback\"></div>");
+    expect(render(Some("first"), Some("second")))
+    ->toBe("<div data-url=\"first\"></div>");
+    expect(render(None, Some("second")))
+    ->toBe("<div data-url=\"second\"></div>");
+  });
+
+  test("evaluates colliding prop expressions once even when discarded", () => {
+    let evaluations = ref(0);
+    let next = value => {
+      incr(evaluations);
+      value;
+    };
+    let element =
+      <div
+        className={next("class")}
+        dataFoo={next("first")}
+        data_foo=?Some(next("second"))>
+        {next("child")->React.string}
+      </div>;
+    expect(evaluations.contents)->toBe(4);
+    expect(ReactDOMServer.renderToStaticMarkup(element))
+    ->toBe("<div class=\"class\" data-foo=\"first\">child</div>");
+    expect(evaluations.contents)->toBe(4);
+  });
+
   test("evaluates each prop expression once", () => {
     let evaluations = ref(0);
     let next = value => {

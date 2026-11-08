@@ -106,3 +106,21 @@ expressions.
   > EOF
   $ complete 4:9 onC
   ["?id","?onClick","?style"]
+
+Colliding data names retain ordinary prop completion.
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div className="a" dataFoo="first" data_foo="second"
+  >   onC />;
+  > EOF
+  $ complete 3:5 onC
+  ["?id","?onClick","?style"]
+
+  $ cat > component.re <<EOF
+  > let element =
+  >   <div className="a" dataFoo=?Some("first") data_foo=?None
+  >   onC />;
+  > EOF
+  $ complete 3:5 onC
+  ["?id","?onClick","?style"]

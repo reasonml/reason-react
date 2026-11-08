@@ -44,8 +44,9 @@ boundaries gain a hyphen. Acronyms stay together and digits stay attached to the
 preceding word: `dataURLPath` becomes `data-url-path`, `dataVersion2` becomes
 `data-version2`, and `dataFoo__bar` becomes `data-foo--bar`. Any prop beginning
 with `data` is accepted; the standard `data` and `datatype` props keep their
-existing meanings. Props that produce the same attribute name, such as
-`dataFoo` and `data_foo`, cannot be used on the same element.
+existing meanings. When props such as `dataFoo` and `data_foo` produce the same
+attribute name, the first present value wins, matching parsed server HTML.
+Absent optional values are skipped, and every prop expression is evaluated once.
 
 <!-- ## Getting Started -->
 
