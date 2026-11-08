@@ -84,38 +84,32 @@ let integerComponent = <IntegerComponent dataFoo=42 />;
 external nextUnit: unit => unit = "nextUnit";
 let effectfulUnit = [@JSX] div(~dataFoo="unit", nextUnit());
 
-let repeatedData = <div dataFoo="first" dataFoo="second" />;
-let aliasedData =
+let distinctNames =
   <div
-    className="aliases"
-    dataFoo="first"
-    data_foo="second"
-    dataFoo_bar="word"
-    dataFoo_Bar="other word"
-    dataURL="url"
-    dataUrl="other url"
+    className="distinct"
+    dataFoo="camelCase"
+    data_foo="underscore"
+    dataFooBar="words"
+    dataFoo_bar="underscored words"
   />;
 
-let optionalAliases = (first, second) =>
+let optionalDistinctNames = (first, second) =>
   <div dataFoo=?first data_foo=?second />;
+let optionalUnderscores = (~dataFoo__bar=?, ~dataFoo___=?, ()) =>
+  <div ?dataFoo__bar ?dataFoo___ />;
 let requiredThenOptional = second => <div dataFoo="first" data_foo=?second />;
-let optionalThenRequired = first => <div dataFoo=?first data_foo="fallback" />;
-let optionalFallback = (first, second) =>
-  <div dataURL=?first dataUrl=?second data_URL="fallback" />;
+let optionalThenRequired = first => <div dataFoo=?first data_foo="second" />;
 
-let collisionEffects =
+let distinctEffects =
   <div
     className={next("class")}
     dataFoo={next("first")}
     data_foo=?Some(next("second"))
   />;
 
-module ShadowedCollisionTypes = {
-  type string = int;
-  type option('a) =
-    | None
-    | Some('a);
-
-  let element = <div dataFoo="first" data_foo="second" />;
-  let optional = (first, second) => <div dataFoo=?first data_foo=?second />;
+module ComponentAliases = {
+  [@react.component]
+  let make = (~dataURL, ~dataUrl) => <div title={dataURL ++ dataUrl} />;
 };
+
+let componentAliases = <ComponentAliases dataURL="first" dataUrl="second" />;

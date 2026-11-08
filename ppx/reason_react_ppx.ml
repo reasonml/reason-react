@@ -620,7 +620,7 @@ let jsxMapper =
     let component = (nolabel, componentNameExpr)
     and props =
       ( nolabel,
-        Dom_props.make ~loc:parentExpLoc
+        Dom_props.make ~loc:parentExpLoc ~tag_name:id
           ~dom_props:
             (Binding.ReactDOM.domProps ~applyLoc:parentExpLoc ~loc:callerLoc)
           props )

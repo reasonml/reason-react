@@ -1,5 +1,4 @@
-let aliases = <div dataFoo="first" data_foo="second" />;
-let repeated = <div dataFoo="first" dataFoo="second" />;
+let distinct = <div dataFoo="first" data_foo="second" />;
 
 let optional = (first, second) => <div dataFoo=?first data_foo=?second />;
 let optionalFirst = first => <div dataFoo=?first data_foo="fallback" />;
@@ -9,7 +8,7 @@ let effects =
   <div
     className={next("class")}
     dataURL={next("first")}
-    dataUrl={next("second")}
+    data_URL={next("second")}
   />;
 
 let serverNames =
@@ -20,10 +19,11 @@ let serverNames =
     dataFoo_bar="single"
     dataURL="acronym"
     dataURLPath="acronym then word"
-    dataFoo_Bar="underscore then uppercase"
     dataVersion2="digit"
     dataVersion20="digits"
     data2="leading digit"
     data_foo="leading underscore"
     datafoo="lowercase"
   />;
+
+let underscoreThenUppercase = <div dataFoo_Bar="underscore then uppercase" />;

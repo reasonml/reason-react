@@ -17,7 +17,7 @@ let data_attribute name =
     let buffer = Buffer.create (len + 4) in
     String.iteri
       (fun i c ->
-        if c = '_' then Buffer.add_char buffer '-'
+        if c = '_' then Buffer.add_char buffer '_'
         else if is_upper c then (
           let prev = if i > 0 then Some name.[i - 1] else None in
           let next_is_lower = i + 1 < len && is_lower name.[i + 1] in
@@ -45,101 +45,38 @@ let js_name name =
         ^ String.lowercase_ascii (String.sub name 4 (String.length name - 4)))
   | _ -> None
 
+let mel_obj_name name =
+  let rec has_double_underscore i =
+    i + 1 < String.length name
+    && ((name.[i] = '_' && name.[i + 1] = '_') || has_double_underscore (i + 1))
+  in
+  (* [mel.obj] strips the last [__] suffix even after [mel.as]. Append a suffix
+     of our own so underscores in the actual attribute name remain intact. *)
+  if has_double_underscore 0 then name ^ "__" else name
+
 let label_name = function
   | Labelled name | Optional name -> name
   | Nolabel -> ""
 
-let merge_data_attributes ~loc ~string_type args =
-  let counts = Hashtbl.create 8 in
+let reject_colliding_data_attributes ~tag_name args =
+  let seen = Hashtbl.create 8 in
   List.iter
-    (fun (label, _) ->
+    (fun (label, expression) ->
+      let jsx_name = label_name label in
       Option.iter
         (fun name ->
-          let count = Option.value ~default:0 (Hashtbl.find_opt counts name) in
-          Hashtbl.replace counts name (count + 1))
-        (data_attribute (label_name label)))
-    args;
-  let bindings = ref [] in
-  let groups = Hashtbl.create 8 in
-  let synthetic_loc = Location.none in
-  let args =
-    List.map
-      (fun ((label, expression) as arg) ->
-        match data_attribute (label_name label) with
-        | Some name when Hashtbl.find counts name > 1 ->
-            let variable = gen_symbol ~prefix:("_" ^ label_name label) () in
-            let typ =
-              match label with
-              | Optional _ ->
-                  ptyp_constr ~loc
-                    { txt = Ldot (Ldot (Lident "Stdlib", "Option"), "t"); loc }
-                    [ string_type ]
-              | _ -> string_type
-            in
-            let pat =
-              ppat_constraint ~loc:synthetic_loc
-                (pvar ~loc:synthetic_loc variable)
-                typ
-            in
-            (* Merlin needs the source range to descend into the bound value. *)
-            bindings :=
-              value_binding ~loc:expression.pexp_loc ~pat ~expr:expression
-              :: !bindings;
-            let arg = (label, evar ~loc:synthetic_loc variable) in
-            let group =
-              Option.value ~default:[] (Hashtbl.find_opt groups name)
-            in
-            Hashtbl.replace groups name (arg :: group);
-            arg
-        | _ -> arg)
-      args
-  in
-  let rec first_present = function
-    | [] -> assert false
-    | (Labelled _, expression) :: _ -> (false, expression)
-    | [ (Optional _, expression) ] -> (true, expression)
-    | (Optional _, expression) :: rest ->
-        let optional, fallback = first_present rest in
-        let variable = gen_symbol ~prefix:"_data" () in
-        let present, value =
-          if optional then (ppat_any ~loc:synthetic_loc, expression)
-          else
-            (pvar ~loc:synthetic_loc variable, evar ~loc:synthetic_loc variable)
-        in
-        let constructor name pattern =
-          ppat_construct ~loc:synthetic_loc
-            {
-              txt = Ldot (Ldot (Lident "Stdlib", "Option"), name);
-              loc = synthetic_loc;
-            }
-            pattern
-        in
-        ( optional,
-          pexp_match ~loc:synthetic_loc expression
-            [
-              case ~lhs:(constructor "None" None) ~guard:None ~rhs:fallback;
-              case
-                ~lhs:(constructor "Some" (Some present))
-                ~guard:None ~rhs:value;
-            ] )
-    | (Nolabel, _) :: _ -> assert false
-  in
-  let args =
-    List.filter_map
-      (fun ((label, _) as arg) ->
-        match data_attribute (label_name label) with
-        | Some name when Hashtbl.find counts name > 1 ->
-            Option.map
-              (fun group ->
-                Hashtbl.remove groups name;
-                let optional, value = first_present (List.rev group) in
-                let name = label_name label in
-                ((if optional then Optional name else Labelled name), value))
-              (Hashtbl.find_opt groups name)
-        | _ -> Some arg)
-      args
-  in
-  (args, List.rev !bindings)
+          match Hashtbl.find_opt seen name with
+          | None -> Hashtbl.add seen name jsx_name
+          | Some first when String.equal first jsx_name ->
+              Location.raise_errorf ~loc:expression.pexp_loc
+                "JSX: the prop %s appears more than once on <%s>" jsx_name
+                tag_name
+          | Some first ->
+              Location.raise_errorf ~loc:expression.pexp_loc
+                "JSX: %s and %s both render as the attribute %s" jsx_name first
+                name)
+        (data_attribute jsx_name))
+    args
 
 let ignored_type ~loc typ =
   { typ with ptyp_attributes = [ attribute ~loc "mel.ignore" ] }
@@ -156,7 +93,7 @@ type prop = {
   expression : expression;
 }
 
-let make ~loc ~dom_props args =
+let make ~loc ~tag_name ~dom_props args =
   if
     not
       (List.exists
@@ -164,11 +101,12 @@ let make ~loc ~dom_props args =
          args)
   then dom_props args
   else
+    let () = reject_colliding_data_attributes ~tag_name args in
     let ghost_loc = { loc with loc_ghost = true } in
     let synthetic_loc = Location.none in
-    let stdlib_type ?(loc = ghost_loc) name =
-      ptyp_constr ~loc
-        { txt = Ldot (Ldot (Lident "Stdlib", name), "t"); loc }
+    let stdlib_type name =
+      ptyp_constr ~loc:ghost_loc
+        { txt = Ldot (Ldot (Lident "Stdlib", name), "t"); loc = ghost_loc }
         []
     in
     let unit_type = stdlib_type "Unit" in
@@ -177,14 +115,6 @@ let make ~loc ~dom_props args =
       ptyp_constr ~loc:ghost_loc
         { txt = Ldot (Lident "ReactDOM", "domProps"); loc = ghost_loc }
         []
-    in
-    (* The server emits duplicate attributes, and HTML parsing keeps the first
-       present value. Bind every colliding value before choosing one so discarded
-       props still retain their type checks and side effects. *)
-    let args, bindings =
-      merge_data_attributes ~loc:synthetic_loc
-        ~string_type:(stdlib_type ~loc:synthetic_loc "String")
-        args
     in
     let props =
       List.map
@@ -294,7 +224,7 @@ let make ~loc ~dom_props args =
                       (PStr
                          [
                            pstr_eval ~loc:ghost_loc
-                             (estring ~loc:ghost_loc name)
+                             (estring ~loc:ghost_loc (mel_obj_name name))
                              [];
                          ]);
                 ]
@@ -344,12 +274,6 @@ let make ~loc ~dom_props args =
                (make_label label, expression))
              args)
     in
-    let result =
-      pexp_letmodule ~loc:ghost_loc
-        { txt = Some module_name; loc = ghost_loc }
-        module_ call
-    in
-    List.fold_right
-      (fun binding body ->
-        pexp_let ~loc:ghost_loc Nonrecursive [ binding ] body)
-      bindings result
+    pexp_letmodule ~loc:ghost_loc
+      { txt = Some module_name; loc = ghost_loc }
+      module_ call

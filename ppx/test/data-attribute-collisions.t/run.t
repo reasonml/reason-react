@@ -1,146 +1,115 @@
-Snapshot DOM JSX with repeated data props and names that normalize to the same
-attribute in server-reason-react#412. Run only the JSX PPX so this baseline can
-capture the expansion before data attribute type-checking is supported.
+Snapshot distinct data names and reject repeated or aliased names, following
+server-reason-react#420. This exercises the JSX PPX before type-checking.
 
   $ ../ppx.sh --output ml input.re
-  let aliases =
+  let distinct =
     ReactDOM.jsx "div"
-      (let _dataFoo__001_ : Stdlib.String.t = "first" in
-       let _data_foo__002_ : Stdlib.String.t = "second" in
-       let module Jsx_props__005_ =
+      (let module Jsx_props__004_ =
          struct
            external make :
              check:((Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ]) ->
                dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
-                 __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
-                   ReactDOM.domProps = ""[@@mel.obj ]
+                 data_foo:((Stdlib.String.t)[@mel.as "data_foo"]) ->
+                   __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
+                     ReactDOM.domProps = ""[@@mel.obj ]
          end in
-         Jsx_props__005_.make
-           ~check:(fun prop__004_ ->
-                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__004_)
+         Jsx_props__004_.make
+           ~check:(fun prop__003_ ->
+                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__003_)
                        [@merlin.hide ]) in
-                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__004_)
-                       [@merlin.hide ])) ~dataFoo:_dataFoo__001_ ~__jsx_unit:())
-  let repeated =
-    ReactDOM.jsx "div"
-      (let _dataFoo__006_ : Stdlib.String.t = "first" in
-       let _dataFoo__007_ : Stdlib.String.t = "second" in
-       let module Jsx_props__010_ =
-         struct
-           external make :
-             check:((Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ]) ->
-               dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
-                 __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
-                   ReactDOM.domProps = ""[@@mel.obj ]
-         end in
-         Jsx_props__010_.make
-           ~check:(fun prop__009_ ->
-                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__009_)
-                       [@merlin.hide ]) in
-                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__009_)
-                       [@merlin.hide ])) ~dataFoo:_dataFoo__006_ ~__jsx_unit:())
+                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__003_)
+                       [@merlin.hide ])) ~dataFoo:"first" ~data_foo:"second"
+           ~__jsx_unit:())
   let optional first =
     fun second ->
       ReactDOM.jsx "div"
-        (let _dataFoo__011_ : Stdlib.String.t Stdlib.Option.t = first in
-         let _data_foo__012_ : Stdlib.String.t Stdlib.Option.t = second in
-         let module Jsx_props__016_ =
+        (let module Jsx_props__008_ =
            struct
              external make :
                check:((Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ]) ->
                  ?dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
-                   __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
-                     ReactDOM.domProps = ""[@@mel.obj ]
+                   ?data_foo:((Stdlib.String.t)[@mel.as "data_foo"]) ->
+                     __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
+                       ReactDOM.domProps = ""[@@mel.obj ]
            end in
-           Jsx_props__016_.make
-             ~check:(fun prop__015_ ->
+           Jsx_props__008_.make
+             ~check:(fun prop__007_ ->
                        let _ =
-                         ((((ReactDOM.domProps)[@merlin.hide ]) prop__015_)
+                         ((((ReactDOM.domProps)[@merlin.hide ]) prop__007_)
                          [@merlin.hide ]) in
-                       ((ReactDOM.domProps)[@merlin.hide ]) ((prop__015_)
-                         [@merlin.hide ]))
-             ?dataFoo:(match _dataFoo__011_ with
-                       | Stdlib.Option.None -> _data_foo__012_
-                       | Stdlib.Option.Some _ -> _dataFoo__011_) ~__jsx_unit:())
+                       ((ReactDOM.domProps)[@merlin.hide ]) ((prop__007_)
+                         [@merlin.hide ])) ?dataFoo:first ?data_foo:second
+             ~__jsx_unit:())
   let optionalFirst first =
     ReactDOM.jsx "div"
-      (let _dataFoo__017_ : Stdlib.String.t Stdlib.Option.t = first in
-       let _data_foo__018_ : Stdlib.String.t = "fallback" in
-       let module Jsx_props__022_ =
+      (let module Jsx_props__012_ =
          struct
            external make :
              check:((Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ]) ->
-               dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
-                 __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
-                   ReactDOM.domProps = ""[@@mel.obj ]
+               ?dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
+                 data_foo:((Stdlib.String.t)[@mel.as "data_foo"]) ->
+                   __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
+                     ReactDOM.domProps = ""[@@mel.obj ]
          end in
-         Jsx_props__022_.make
-           ~check:(fun prop__021_ ->
-                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__021_)
+         Jsx_props__012_.make
+           ~check:(fun prop__011_ ->
+                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__011_)
                        [@merlin.hide ]) in
-                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__021_)
-                       [@merlin.hide ]))
-           ~dataFoo:(match _dataFoo__017_ with
-                     | Stdlib.Option.None -> _data_foo__018_
-                     | Stdlib.Option.Some _data__019_ -> _data__019_)
+                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__011_)
+                       [@merlin.hide ])) ?dataFoo:first ~data_foo:"fallback"
            ~__jsx_unit:())
   let requiredFirst second =
     ReactDOM.jsx "div"
-      (let _dataFoo__023_ : Stdlib.String.t = "first" in
-       let _data_foo__024_ : Stdlib.String.t Stdlib.Option.t = second in
-       let module Jsx_props__027_ =
+      (let module Jsx_props__016_ =
          struct
            external make :
              check:((Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ]) ->
                dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
-                 __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
-                   ReactDOM.domProps = ""[@@mel.obj ]
-         end in
-         Jsx_props__027_.make
-           ~check:(fun prop__026_ ->
-                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__026_)
-                       [@merlin.hide ]) in
-                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__026_)
-                       [@merlin.hide ])) ~dataFoo:_dataFoo__023_ ~__jsx_unit:())
-  let effects =
-    ReactDOM.jsx "div"
-      (let _dataURL__028_ : Stdlib.String.t = next "first" in
-       let _dataUrl__029_ : Stdlib.String.t = next "second" in
-       let module Jsx_props__033_ =
-         struct
-           external make :
-             check:((className:'prop__030_ ->
-                       Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ])
-               ->
-               className:'prop__030_ ->
-                 dataURL:((Stdlib.String.t)[@mel.as "data-url"]) ->
+                 ?data_foo:((Stdlib.String.t)[@mel.as "data_foo"]) ->
                    __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
                      ReactDOM.domProps = ""[@@mel.obj ]
          end in
-         Jsx_props__033_.make
-           ~check:(fun ~className:prop__030_ prop__032_ ->
+         Jsx_props__016_.make
+           ~check:(fun prop__015_ ->
+                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__015_)
+                       [@merlin.hide ]) in
+                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__015_)
+                       [@merlin.hide ])) ~dataFoo:"first" ?data_foo:second
+           ~__jsx_unit:())
+  let effects =
+    ReactDOM.jsx "div"
+      (let module Jsx_props__021_ =
+         struct
+           external make :
+             check:((className:'prop__017_ ->
+                       Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ])
+               ->
+               className:'prop__017_ ->
+                 dataURL:((Stdlib.String.t)[@mel.as "data-url"]) ->
+                   data_URL:((Stdlib.String.t)[@mel.as "data_url"]) ->
+                     __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
+                       ReactDOM.domProps = ""[@@mel.obj ]
+         end in
+         Jsx_props__021_.make
+           ~check:(fun ~className:prop__017_ prop__020_ ->
                      let _ =
                        ((((ReactDOM.domProps)[@merlin.hide ])
-                           ~className:prop__030_ prop__032_)
+                           ~className:prop__017_ prop__020_)
                        [@merlin.hide ]) in
                      ((ReactDOM.domProps)[@merlin.hide ])
-                       ~className:((prop__030_)[@merlin.hide ]) ((prop__032_)
+                       ~className:((prop__017_)[@merlin.hide ]) ((prop__020_)
                        [@merlin.hide ])) ~className:(next "class")
-           ~dataURL:_dataURL__028_ ~__jsx_unit:())
+           ~dataURL:(next "first") ~data_URL:(next "second") ~__jsx_unit:())
   let serverNames =
     ReactDOM.jsx "div"
-      (let _dataFoo__034_ : Stdlib.String.t = "plain" in
-       let _dataFoo_bar__035_ : Stdlib.String.t = "single" in
-       let _dataFoo_Bar__036_ : Stdlib.String.t = "underscore then uppercase" in
-       let _data_foo__037_ : Stdlib.String.t = "leading underscore" in
-       let module Jsx_props__049_ =
+      (let module Jsx_props__034_ =
          struct
            external make :
              check:((Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ]) ->
                dataFoo:((Stdlib.String.t)[@mel.as "data-foo"]) ->
-                 dataFoo__bar:((Stdlib.String.t)[@mel.as "data-foo--bar"]) ->
-                   dataFoo___:((Stdlib.String.t)[@mel.as "data-foo---"]) ->
-                     dataFoo_bar:((Stdlib.String.t)[@mel.as "data-foo-bar"]) ->
+                 dataFoo__bar:((Stdlib.String.t)[@mel.as "data-foo__bar__"]) ->
+                   dataFoo___:((Stdlib.String.t)[@mel.as "data-foo_____"]) ->
+                     dataFoo_bar:((Stdlib.String.t)[@mel.as "data-foo_bar"]) ->
                        dataURL:((Stdlib.String.t)[@mel.as "data-url"]) ->
                          dataURLPath:((Stdlib.String.t)[@mel.as
                                                          "data-url-path"])
@@ -152,19 +121,59 @@ capture the expansion before data attribute type-checking is supported.
                                                                "data-version20"])
                                ->
                                data2:((Stdlib.String.t)[@mel.as "data2"]) ->
-                                 datafoo:((Stdlib.String.t)[@mel.as "datafoo"])
+                                 data_foo:((Stdlib.String.t)[@mel.as
+                                                              "data_foo"])
                                    ->
-                                   __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ])
-                                     -> ReactDOM.domProps = ""[@@mel.obj ]
+                                   datafoo:((Stdlib.String.t)[@mel.as
+                                                               "datafoo"])
+                                     ->
+                                     __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ])
+                                       -> ReactDOM.domProps = ""[@@mel.obj ]
          end in
-         Jsx_props__049_.make
-           ~check:(fun prop__048_ ->
-                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__048_)
+         Jsx_props__034_.make
+           ~check:(fun prop__033_ ->
+                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__033_)
                        [@merlin.hide ]) in
-                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__048_)
-                       [@merlin.hide ])) ~dataFoo:_dataFoo__034_
-           ~dataFoo__bar:"double" ~dataFoo___:"trailing"
-           ~dataFoo_bar:_dataFoo_bar__035_ ~dataURL:"acronym"
-           ~dataURLPath:"acronym then word" ~dataVersion2:"digit"
-           ~dataVersion20:"digits" ~data2:"leading digit" ~datafoo:"lowercase"
-           ~__jsx_unit:())
+                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__033_)
+                       [@merlin.hide ])) ~dataFoo:"plain"
+           ~dataFoo__bar:"double" ~dataFoo___:"trailing" ~dataFoo_bar:"single"
+           ~dataURL:"acronym" ~dataURLPath:"acronym then word"
+           ~dataVersion2:"digit" ~dataVersion20:"digits" ~data2:"leading digit"
+           ~data_foo:"leading underscore" ~datafoo:"lowercase" ~__jsx_unit:())
+  let underscoreThenUppercase =
+    ReactDOM.jsx "div"
+      (let module Jsx_props__037_ =
+         struct
+           external make :
+             check:((Stdlib.Unit.t -> ReactDOM.domProps)[@mel.ignore ]) ->
+               dataFoo_Bar:((Stdlib.String.t)[@mel.as "data-foo_bar"]) ->
+                 __jsx_unit:((Stdlib.Unit.t)[@mel.ignore ]) ->
+                   ReactDOM.domProps = ""[@@mel.obj ]
+         end in
+         Jsx_props__037_.make
+           ~check:(fun prop__036_ ->
+                     let _ = ((((ReactDOM.domProps)[@merlin.hide ]) prop__036_)
+                       [@merlin.hide ]) in
+                     ((ReactDOM.domProps)[@merlin.hide ]) ((prop__036_)
+                       [@merlin.hide ]))
+           ~dataFoo_Bar:"underscore then uppercase" ~__jsx_unit:())
+
+  $ cat > repeated.re <<EOF
+  > let element = <div dataFoo="a" dataFoo="b" />;
+  > EOF
+  $ ../ppx.sh --output ml repeated.re
+  File "output.ml", line 1, characters 42-45:
+  1 | let element = ((div ~dataFoo:"a" ~dataFoo:"b" ~children:[] ())[@JSX ])
+                                                ^^^
+  Error: JSX: the prop dataFoo appears more than once on <div>
+  [1]
+
+  $ cat > aliases.re <<EOF
+  > let element = <div dataURL="a" dataUrl=?None />;
+  > EOF
+  $ ../ppx.sh --output ml aliases.re
+  File "output.ml", line 1, characters 42-46:
+  1 | let element = ((div ~dataURL:"a" ?dataUrl:None ~children:[] ())[@JSX ])
+                                                ^^^^
+  Error: JSX: dataUrl and dataURL both render as the attribute data-url
+  [1]

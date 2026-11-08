@@ -125,9 +125,9 @@ props checked against ReactDOM.domProps and no runtime validation callback.
   
   const names = JsxRuntime.jsx("div", {
     "data-foo": "plain",
-    "data-foo--bar": "double",
-    "data-foo---": "trailing",
-    "data-foo-bar": "single",
+    "data-foo__bar": "double",
+    "data-foo___": "trailing",
+    "data-foo_bar": "single",
     "data-url": "acronym",
     "data-url-path": "acronym then word",
     "data-version2": "digit",
@@ -137,9 +137,9 @@ props checked against ReactDOM.domProps and no runtime validation callback.
   });
   
   const underscoreNames = JsxRuntime.jsx("div", {
-    "data-foo": "leading underscore",
-    "data-foo-bar": "underscore then uppercase",
-    "data-api-key": "uppercase words",
+    data_foo: "leading underscore",
+    "data-foo_bar": "underscore then uppercase",
+    data_api_key: "uppercase words",
     "data-url2-path": "digit then uppercase",
     "data-xml-http-request": "acronym then lowercase"
   });
@@ -180,70 +180,78 @@ props checked against ReactDOM.domProps and no runtime validation callback.
     "data-foo": "unit"
   }));
   
-  const repeatedData = JsxRuntime.jsx("div", {
-    "data-foo": "first"
+  const distinctNames = JsxRuntime.jsx("div", {
+    className: "distinct",
+    "data-foo": "camelCase",
+    data_foo: "underscore",
+    "data-foo-bar": "words",
+    "data-foo_bar": "underscored words"
   });
   
-  const aliasedData = JsxRuntime.jsx("div", {
-    className: "aliases",
-    "data-foo": "first",
-    "data-foo-bar": "word",
-    "data-url": "url"
-  });
-  
-  function optionalAliases(first, second) {
+  function optionalDistinctNames(first, second) {
     let tmp = {};
-    const tmp$1 = first !== undefined ? first : second;
-    if (tmp$1 !== undefined) {
-      tmp["data-foo"] = Caml_option.valFromOption(tmp$1);
+    if (first !== undefined) {
+      tmp["data-foo"] = Caml_option.valFromOption(first);
+    }
+    if (second !== undefined) {
+      tmp.data_foo = Caml_option.valFromOption(second);
+    }
+    return JsxRuntime.jsx("div", tmp);
+  }
+  
+  function optionalUnderscores(dataFoo__bar, dataFoo___, param) {
+    let tmp = {};
+    if (dataFoo__bar !== undefined) {
+      tmp["data-foo__bar"] = Caml_option.valFromOption(dataFoo__bar);
+    }
+    if (dataFoo___ !== undefined) {
+      tmp["data-foo___"] = Caml_option.valFromOption(dataFoo___);
     }
     return JsxRuntime.jsx("div", tmp);
   }
   
   function requiredThenOptional(second) {
-    return JsxRuntime.jsx("div", {
+    let tmp = {
       "data-foo": "first"
-    });
-  }
-  
-  function optionalThenRequired(first) {
-    return JsxRuntime.jsx("div", {
-      "data-foo": first !== undefined ? first : "fallback"
-    });
-  }
-  
-  function optionalFallback(first, second) {
-    return JsxRuntime.jsx("div", {
-      "data-url": first !== undefined ? first : (
-          second !== undefined ? second : "fallback"
-        )
-    });
-  }
-  
-  const _dataFoo__138_ = next("first");
-  
-  const collisionEffects = JsxRuntime.jsx("div", (next("second"), {
-    className: next("class"),
-    "data-foo": _dataFoo__138_
-  }));
-  
-  const element$1 = JsxRuntime.jsx("div", {
-    "data-foo": "first"
-  });
-  
-  function optional$2(first, second) {
-    let tmp = {};
-    const tmp$1 = first !== undefined ? first : second;
-    if (tmp$1 !== undefined) {
-      tmp["data-foo"] = Caml_option.valFromOption(tmp$1);
+    };
+    if (second !== undefined) {
+      tmp.data_foo = Caml_option.valFromOption(second);
     }
     return JsxRuntime.jsx("div", tmp);
   }
   
-  const ShadowedCollisionTypes = {
-    element: element$1,
-    optional: optional$2
+  function optionalThenRequired(first) {
+    let tmp = {
+      data_foo: "second"
+    };
+    if (first !== undefined) {
+      tmp["data-foo"] = Caml_option.valFromOption(first);
+    }
+    return JsxRuntime.jsx("div", tmp);
+  }
+  
+  const distinctEffects = JsxRuntime.jsx("div", {
+    className: next("class"),
+    "data-foo": next("first"),
+    data_foo: next("second")
+  });
+  
+  function Input$ComponentAliases(Props) {
+    let dataURL = Props.dataURL;
+    let dataUrl = Props.dataUrl;
+    return JsxRuntime.jsx("div", {
+      title: dataURL + dataUrl
+    });
+  }
+  
+  const ComponentAliases = {
+    make: Input$ComponentAliases
   };
+  
+  const componentAliases = JsxRuntime.jsx(Input$ComponentAliases, {
+    dataURL: "first",
+    dataUrl: "second"
+  });
   
   module.exports = {
     first,
@@ -266,14 +274,14 @@ props checked against ReactDOM.domProps and no runtime validation callback.
     IntegerComponent,
     integerComponent,
     effectfulUnit,
-    repeatedData,
-    aliasedData,
-    optionalAliases,
+    distinctNames,
+    optionalDistinctNames,
+    optionalUnderscores,
     requiredThenOptional,
     optionalThenRequired,
-    optionalFallback,
-    collisionEffects,
-    ShadowedCollisionTypes,
+    distinctEffects,
+    ComponentAliases,
+    componentAliases,
   }
   /* first Not a pure module */
 
@@ -340,7 +348,7 @@ constructor's list of valid props is long.
   $ tail -n 1 error.log
   This argument cannot be applied with label ~clasName
 
-Discarded values of colliding data props are still type-checked.
+Underscored names remain distinct and their values are checked as strings.
 
   $ cat > input.re <<EOF
   > let element = <div dataFoo="first" data_foo=42 />;
@@ -364,15 +372,100 @@ Discarded values of colliding data props are still type-checked.
            string
   [1]
 
+Repeated labels are rejected.
+
   $ cat > input.re <<EOF
-  > let element = <div dataFoo="first" dataFoo=42 />;
+  > let element = <div dataFoo="a" dataFoo="b" />;
   > EOF
   $ dune build @mel
-  File "input.re", line 1, characters 43-45:
-  1 | let element = <div dataFoo="first" dataFoo=42 />;
-                                                 ^^
-  Error: The constant 42 has type int but an expression was expected of type
-           string
+  File "input.re", line 1, characters 39-42:
+  1 | let element = <div dataFoo="a" dataFoo="b" />;
+                                             ^^^
+  Error: JSX: the prop dataFoo appears more than once on <div>
+  [1]
+
+Optional props collide even when absent.
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo="a" dataFoo=?None />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 40-44:
+  1 | let element = <div dataFoo="a" dataFoo=?None />;
+                                              ^^^^
+  Error: JSX: the prop dataFoo appears more than once on <div>
+  [1]
+
+The check also handles optional props before required ones.
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo=?None dataFoo="b" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 41-44:
+  1 | let element = <div dataFoo=?None dataFoo="b" />;
+                                               ^^^
+  Error: JSX: the prop dataFoo appears more than once on <div>
+  [1]
+
+Two absent optional props still collide.
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo=?None dataFoo=?None />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 42-46:
+  1 | let element = <div dataFoo=?None dataFoo=?None />;
+                                                ^^^^
+  Error: JSX: the prop dataFoo appears more than once on <div>
+  [1]
+
+Acronym aliases are compared after name conversion.
+
+  $ cat > input.re <<EOF
+  > let element = <div dataURL="a" dataUrl="b" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 39-42:
+  1 | let element = <div dataURL="a" dataUrl="b" />;
+                                             ^^^
+  Error: JSX: dataUrl and dataURL both render as the attribute data-url
+  [1]
+
+An uppercase letter after an underscore does not add a word boundary.
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo_bar="a" dataFoo_Bar=?None />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 48-52:
+  1 | let element = <div dataFoo_bar="a" dataFoo_Bar=?None />;
+                                                      ^^^^
+  Error: JSX: dataFoo_Bar and dataFoo_bar both render as the attribute data-foo_bar
+  [1]
+
+Collisions in names with repeated underscores are rejected too.
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo__bar="a" dataFoo__Bar=?None />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 50-54:
+  1 | let element = <div dataFoo__bar="a" dataFoo__Bar=?None />;
+                                                        ^^^^
+  Error: JSX: dataFoo__Bar and dataFoo__bar both render as the attribute data-foo__bar
+  [1]
+
+Collision checks also apply to SVG elements.
+
+  $ cat > input.re <<EOF
+  > let element = <svg dataUrl=?None dataURL="b" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 41-44:
+  1 | let element = <svg dataUrl=?None dataURL="b" />;
+                                               ^^^
+  Error: JSX: dataURL and dataUrl both render as the attribute data-url
   [1]
 
 Shadowing string must not change the type of a data attribute.

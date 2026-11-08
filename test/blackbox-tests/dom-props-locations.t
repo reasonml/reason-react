@@ -73,7 +73,7 @@ without a data attribute.
   $ errors
   [{"start":{"line":1,"col":28},"end":{"line":1,"col":34},"message":"This argument cannot be applied with label ~clasName"}]
 
-Both retained and discarded data values keep their original types and bindings.
+Distinct underscored data values keep their original types and bindings.
 
   $ cat > component.re <<EOF
   > let className = "example";

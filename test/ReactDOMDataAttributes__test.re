@@ -87,11 +87,11 @@ describe("ReactDOM data attributes", () => {
       );
     expect(html)
     ->toBe(
-        "<div data-foo=\"plain\" data-foo--bar=\"double\" data-foo---=\"trailing\" data-foo-bar=\"single\" data-version20=\"digits\" data-url=\"acronym\" data-url-path=\"acronym then word\" data2=\"leading digit\" datafoo=\"lowercase\"></div>",
+        "<div data-foo=\"plain\" data-foo__bar=\"double\" data-foo___=\"trailing\" data-foo_bar=\"single\" data-version20=\"digits\" data-url=\"acronym\" data-url-path=\"acronym then word\" data2=\"leading digit\" datafoo=\"lowercase\"></div>",
       );
   });
 
-  test("converts underscores and acronym word boundaries", () => {
+  test("preserves underscores and converts acronym word boundaries", () => {
     let html =
       ReactDOMServer.renderToStaticMarkup(
         <div
@@ -104,7 +104,7 @@ describe("ReactDOM data attributes", () => {
       );
     expect(html)
     ->toBe(
-        "<div data-foo=\"leading underscore\" data-foo-bar=\"underscore then uppercase\" data-api-key=\"uppercase words\" data-url2-path=\"digit then uppercase\" data-xml-http-request=\"acronym then lowercase\"></div>",
+        "<div data_foo=\"leading underscore\" data-foo_bar=\"underscore then uppercase\" data_api_key=\"uppercase words\" data-url2-path=\"digit then uppercase\" data-xml-http-request=\"acronym then lowercase\"></div>",
       );
   });
 
@@ -113,7 +113,15 @@ describe("ReactDOM data attributes", () => {
       ReactDOMServer.renderToStaticMarkup(<div ?dataVersion2 ?data_foo />);
     expect(render(None, None))->toBe("<div></div>");
     expect(render(Some("v2"), Some("value")))
-    ->toBe("<div data-version2=\"v2\" data-foo=\"value\"></div>");
+    ->toBe("<div data-version2=\"v2\" data_foo=\"value\"></div>");
+  });
+
+  test("preserves repeated underscores in optional data attributes", () => {
+    let render = (dataFoo__bar, dataFoo___) =>
+      ReactDOMServer.renderToStaticMarkup(<div ?dataFoo__bar ?dataFoo___ />);
+    expect(render(None, None))->toBe("<div></div>");
+    expect(render(Some("double"), Some("trailing")))
+    ->toBe("<div data-foo__bar=\"double\" data-foo___=\"trailing\"></div>");
   });
 
   test("preserves ordinary property renaming", () => {
@@ -129,42 +137,26 @@ describe("ReactDOM data attributes", () => {
     expect(attribute("data-foo"))->toEqual(Some("value"));
   });
 
-  test("accepts repeated data prop labels", () => {
-    let element = <div dataFoo="first" dataFoo="second" />;
-    expect(ReactDOMServer.renderToStaticMarkup(element))
-    ->toBe("<div data-foo=\"first\"></div>");
-  });
-
-  test("matches parsed server HTML for colliding names", () => {
-    let serverHtml =
-      "<button data-foo=\"first\" data-foo=\"second\" data-foo-bar=\"word\" data-foo-bar=\"other word\" data-url=\"url\" data-url=\"other url\">server</button>";
-    let server =
-      ReactTestingLibrary.render(
-        <div dangerouslySetInnerHTML={{"__html": serverHtml}} />,
-      );
-    let client =
+  test("keeps underscored names distinct from camelCase names", () => {
+    let container =
       ReactTestingLibrary.render(
         <button
-          dataFoo="first"
-          data_foo="second"
-          dataFoo_bar="word"
-          dataFoo_Bar="other word"
-          dataURL="url"
-          dataUrl="other url">
-          {React.string("client")}
-        </button>,
+          dataFoo="camelCase"
+          data_foo="underscore"
+          dataFooBar="words"
+          dataFoo_bar="underscored words"
+        />,
       );
-    let button = (text, container) =>
-      ReactTestingLibrary.getByText(~matcher=`Str(text), container);
-    List.iter(
-      name =>
-        expect(getAttribute(button("client", client), name))
-        ->toEqual(getAttribute(button("server", server), name)),
-      ["data-foo", "data-foo-bar", "data-url"],
-    );
+    let button =
+      ReactTestingLibrary.getByRole(~matcher=`Str("button"), container);
+    let attribute = name => getAttribute(button, name)->Js.Nullable.toOption;
+    expect(attribute("data-foo"))->toEqual(Some("camelCase"));
+    expect(attribute("data_foo"))->toEqual(Some("underscore"));
+    expect(attribute("data-foo-bar"))->toEqual(Some("words"));
+    expect(attribute("data-foo_bar"))->toEqual(Some("underscored words"));
   });
 
-  test("keeps the first present optional alias", () => {
+  test("handles distinct optional names independently", () => {
     let render = (first, second) =>
       ReactDOMServer.renderToStaticMarkup(
         <div dataFoo=?first data_foo=?second />,
@@ -173,35 +165,14 @@ describe("ReactDOM data attributes", () => {
     expect(render(Some("first"), None))
     ->toBe("<div data-foo=\"first\"></div>");
     expect(render(None, Some("second")))
-    ->toBe("<div data-foo=\"second\"></div>");
+    ->toBe("<div data_foo=\"second\"></div>");
     expect(render(Some("first"), Some("second")))
-    ->toBe("<div data-foo=\"first\"></div>");
+    ->toBe("<div data-foo=\"first\" data_foo=\"second\"></div>");
     expect(render(Some(""), Some("second")))
-    ->toBe("<div data-foo=\"\"></div>");
+    ->toBe("<div data-foo=\"\" data_foo=\"second\"></div>");
   });
 
-  test("keeps a required value before an optional alias", () => {
-    let render = second =>
-      ReactDOMServer.renderToStaticMarkup(
-        <div dataFoo="first" data_foo=?second />,
-      );
-    expect(render(None))->toBe("<div data-foo=\"first\"></div>");
-    expect(render(Some("second")))->toBe("<div data-foo=\"first\"></div>");
-  });
-
-  test("falls through absent aliases to a required value", () => {
-    let render = (first, second) =>
-      ReactDOMServer.renderToStaticMarkup(
-        <div dataURL=?first dataUrl=?second data_URL="fallback" />,
-      );
-    expect(render(None, None))->toBe("<div data-url=\"fallback\"></div>");
-    expect(render(Some("first"), Some("second")))
-    ->toBe("<div data-url=\"first\"></div>");
-    expect(render(None, Some("second")))
-    ->toBe("<div data-url=\"second\"></div>");
-  });
-
-  test("evaluates colliding prop expressions once even when discarded", () => {
+  test("evaluates distinct data prop expressions once", () => {
     let evaluations = ref(0);
     let next = value => {
       incr(evaluations);
@@ -216,7 +187,7 @@ describe("ReactDOM data attributes", () => {
       </div>;
     expect(evaluations.contents)->toBe(4);
     expect(ReactDOMServer.renderToStaticMarkup(element))
-    ->toBe("<div class=\"class\" data-foo=\"first\">child</div>");
+    ->toBe("<div class=\"class\" data-foo=\"first\" data_foo=\"second\">child</div>");
     expect(evaluations.contents)->toBe(4);
   });
 

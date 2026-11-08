@@ -107,7 +107,7 @@ expressions.
   $ complete 4:9 onC
   ["?id","?onClick","?style"]
 
-Colliding data names retain ordinary prop completion.
+Distinct underscored data names retain ordinary prop completion.
 
   $ cat > component.re <<EOF
   > let element =
