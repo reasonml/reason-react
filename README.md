@@ -27,29 +27,6 @@ let make = (~name) => <h1> {React.string("Hello " ++ name)} </h1>
 
 See all of our examples [here](https://reasonml.github.io/reason-react/docs/en/simple). For a full application, check out [reason-react-hacker-news](https://github.com/reasonml-community/reason-react-hacker-news).
 
-DOM elements accept custom data attributes in camelCase:
-
-```reason
-<div className="item" dataTestId="item" dataState="ready" />
-```
-
-This produces `data-test-id` and `data-state` attributes. Values are strings;
-optional attributes such as `<div dataState=?state />` are omitted when `state`
-is `None`. Ordinary props retain their existing type checks. Data props on
-user-defined components keep their declared names and types.
-
-Names follow [server-reason-react's conversion](https://github.com/ml-in-barcelona/server-reason-react/pull/420):
-underscores are preserved, uppercase letters become lowercase, and word
-boundaries gain a hyphen. Acronyms stay together and digits stay attached to the
-preceding word: `dataURLPath` becomes `data-url-path`, `dataVersion2` becomes
-`data-version2`, and `dataFoo__bar` becomes `data-foo__bar`. Any prop beginning
-with `data` is accepted; the standard `data` and `datatype` props keep their
-existing meanings. Repeated props and names that produce the same attribute,
-such as `dataURL` and `dataUrl`, are rejected at compile time, even when one is
-optional and absent. `dataFoo` and `data_foo` remain distinct attributes.
-Names containing apostrophes are rejected because React cannot render them as
-DOM attributes.
-
 <!-- ## Getting Started -->
 
 ## Using Your Favorite Javascript Libraries
