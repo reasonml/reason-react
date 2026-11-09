@@ -53,6 +53,9 @@ Which compiles to
 React.createElement('div', {})
 ```
 
+DOM elements also support custom [`data-*` attributes](adding-data-props.md),
+written as camelCase props such as `dataTestId`.
+
 ## Capitalized
 
 ```reason
