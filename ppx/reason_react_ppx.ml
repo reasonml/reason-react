@@ -526,11 +526,16 @@ let jsxMapper =
       reactJsxExprAndChildren ~loc:parentExpLoc ~ctxt ~keyProps mapper children
     in
     let propsArg =
-      (match childrenProp with
-        | Some childrenProp -> (labelled "children", childrenProp) :: otherProps
-        | None -> otherProps)
-      |> List.map (fun (label, expression) ->
-          (label, mapper#expression ctxt expression))
+      let otherProps =
+        List.map
+          (fun (label, expression) ->
+            (label, mapper#expression ctxt expression))
+          otherProps
+      in
+      (* [reactJsxExprAndChildren] has already transformed the children. *)
+      match childrenProp with
+      | Some childrenProp -> (labelled "children", childrenProp) :: otherProps
+      | None -> otherProps
     in
     let isCap str =
       match String.length str with
@@ -610,12 +615,17 @@ let jsxMapper =
         children
     in
     let props =
-      (match childrenProp with
-        | Some childrenProp ->
-            (labelled "children", childrenProp) :: nonChildrenProps
-        | None -> nonChildrenProps)
-      |> List.map (fun (label, expression) ->
-          (label, mapper#expression ctxt expression))
+      let nonChildrenProps =
+        List.map
+          (fun (label, expression) ->
+            (label, mapper#expression ctxt expression))
+          nonChildrenProps
+      in
+      (* Avoid walking the already transformed children at every parent. *)
+      match childrenProp with
+      | Some childrenProp ->
+          (labelled "children", childrenProp) :: nonChildrenProps
+      | None -> nonChildrenProps
     in
     let component = (nolabel, componentNameExpr)
     and props =
