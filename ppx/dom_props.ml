@@ -58,13 +58,17 @@ let label_name = function
   | Labelled name | Optional name -> name
   | Nolabel -> ""
 
-let reject_colliding_data_attributes ~tag_name args =
+let validate_data_attributes ~tag_name args =
   let seen = Hashtbl.create 8 in
   List.iter
     (fun (label, expression) ->
       let jsx_name = label_name label in
       Option.iter
         (fun name ->
+          if String.contains name '\'' then
+            Location.raise_errorf ~loc:expression.pexp_loc
+              "JSX: %s renders as the invalid DOM attribute name %S" jsx_name
+              name;
           match Hashtbl.find_opt seen name with
           | None -> Hashtbl.add seen name jsx_name
           | Some first when String.equal first jsx_name ->
@@ -101,7 +105,7 @@ let make ~loc ~tag_name ~dom_props args =
          args)
   then dom_props args
   else
-    let () = reject_colliding_data_attributes ~tag_name args in
+    let () = validate_data_attributes ~tag_name args in
     let ghost_loc = { loc with loc_ghost = true } in
     let synthetic_loc = Location.none in
     let stdlib_type name =
@@ -151,6 +155,17 @@ let make ~loc ~tag_name ~dom_props args =
       | Pexp_ident _ -> true
       | _ -> false
     in
+    let editor_attributes =
+      (* Report diagnostics on the original expression only. The copy exists
+         solely to give Merlin the ordinary DOM constructor's context. *)
+      List.map
+        (fun (name, flags) ->
+          attribute ~loc:ghost_loc name
+            ~payload:
+              (PStr
+                 [ pstr_eval ~loc:ghost_loc (estring ~loc:ghost_loc flags) [] ]))
+        [ ("alert", "-all"); ("warning", "-a") ]
+    in
     let check_args =
       List.map
         (fun { label; variable; expression; _ } ->
@@ -173,7 +188,8 @@ let make ~loc ~tag_name ~dom_props args =
                 expression with
                 pexp_attributes =
                   attribute ~loc:expression.pexp_loc "merlin.focus"
-                  :: expression.pexp_attributes;
+                  :: expression.pexp_attributes
+                  @ editor_attributes;
               }
             else
               let expr = evar ~loc:expression.pexp_loc variable in

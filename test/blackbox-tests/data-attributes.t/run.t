@@ -372,6 +372,28 @@ Underscored names remain distinct and their values are checked as strings.
            string
   [1]
 
+Attribute names must be valid even when the prop is optional and absent.
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo'="quote" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 28-35:
+  1 | let element = <div dataFoo'="quote" />;
+                                  ^^^^^^^
+  Error: JSX: dataFoo' renders as the invalid DOM attribute name "data-foo'"
+  [1]
+
+  $ cat > input.re <<EOF
+  > let element = <div dataFoo'=?None />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 29-33:
+  1 | let element = <div dataFoo'=?None />;
+                                   ^^^^
+  Error: JSX: dataFoo' renders as the invalid DOM attribute name "data-foo'"
+  [1]
+
 Repeated labels are rejected.
 
   $ cat > input.re <<EOF
@@ -517,3 +539,44 @@ Optional ordinary props, event handlers, and refs retain their types.
   Error: The constant 42 has type int but an expression was expected of type
            ReactDOM.domRef
   [1]
+
+Diagnostics on ordinary prop identifiers are reported once, including optional
+props, even though Merlin needs a copy for completion.
+
+  $ cat > legacy.re <<EOF
+  > let value = "legacy";
+  > let optional = Some(value);
+  > EOF
+  $ cat > legacy.rei <<EOF
+  > [@deprecated "use newName"] let value: string;
+  > [@deprecated "use newName"] let optional: option(string);
+  > EOF
+  $ cat > input.re <<EOF
+  > let ordinary = <div className=Legacy.value />;
+  > let withData = <div className=Legacy.value dataFoo="x" />;
+  > let optional = <div className=?Legacy.optional dataFoo="x" />;
+  > EOF
+  $ dune build @mel
+  File "input.re", line 1, characters 30-42:
+  1 | let ordinary = <div className=Legacy.value />;
+                                    ^^^^^^^^^^^^
+  Error (alert deprecated): Melange.Legacy.value
+  use newName
+  
+  File "input.re", line 2, characters 30-42:
+  2 | let withData = <div className=Legacy.value dataFoo="x" />;
+                                    ^^^^^^^^^^^^
+  Error (alert deprecated): Melange.Legacy.value
+  use newName
+  
+  File "input.re", line 3, characters 31-46:
+  3 | let optional = <div className=?Legacy.optional dataFoo="x" />;
+                                     ^^^^^^^^^^^^^^^
+  Error (alert deprecated): Melange.Legacy.optional
+  use newName
+  [1]
+
+Merlin also reports each use once at the source expression.
+
+  $ ocamlmerlin single errors -filename input.re < input.re | jq -c '[.value[] | {start, end, message: (.message | split("\n") | last)}]'
+  [{"start":{"line":1,"col":30},"end":{"line":1,"col":42},"message":"use newName"},{"start":{"line":2,"col":30},"end":{"line":2,"col":42},"message":"use newName"},{"start":{"line":3,"col":31},"end":{"line":3,"col":46},"message":"use newName"}]

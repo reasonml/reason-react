@@ -47,6 +47,8 @@ with `data` is accepted; the standard `data` and `datatype` props keep their
 existing meanings. Repeated props and names that produce the same attribute,
 such as `dataURL` and `dataUrl`, are rejected at compile time, even when one is
 optional and absent. `dataFoo` and `data_foo` remain distinct attributes.
+Names containing apostrophes are rejected because React cannot render them as
+DOM attributes.
 
 <!-- ## Getting Started -->
 

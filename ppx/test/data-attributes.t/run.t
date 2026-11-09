@@ -30,7 +30,8 @@ required and optional data attributes, renamed props, expressions, and nested JS
                            ~className:prop__001_ ~onClick:prop__003_ prop__004_)
                        [@merlin.hide ]) in
                      ((ReactDOM.domProps)[@merlin.hide ])
-                       ~className:((className)[@merlin.focus ])
+                       ~className:((className)
+                       [@merlin.focus ][@alert "-all"][@warning "-a"])
                        ~onClick:((prop__003_)[@merlin.hide ]) ((prop__004_)
                        [@merlin.hide ])) ~className:((className)
            [@merlin.hide ]) ~dataTestId
@@ -58,7 +59,8 @@ required and optional data attributes, renamed props, expressions, and nested JS
                                ?className:prop__006_ prop__008_)
                            [@merlin.hide ]) in
                          ((ReactDOM.domProps)[@merlin.hide ])
-                           ?className:((className)[@merlin.focus ])
+                           ?className:((className)
+                           [@merlin.focus ][@alert "-all"][@warning "-a"])
                            ((prop__008_)[@merlin.hide ]))
                ?className:((className)[@merlin.hide ]) ?dataFoo ~__jsx_unit:())
   let renamed =
