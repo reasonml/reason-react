@@ -1,0 +1,115 @@
+let first = <div className="first" dataFoo="one" />;
+let second = <div id="second" dataBar="two" dataTestId="three" />;
+let onlyData = <div dataFoo="one" />;
+let svg = <svg dataFoo="value" />;
+let ordinaryData = <object data="file" datatype="text" dataTestId="object" />;
+
+let optional = (~className=?, ~dataFoo=?, ()) => <div ?className ?dataFoo />;
+
+let renamed =
+  <div
+    dataTestId="aliases"
+    ariaLabel="label"
+    ariaActivedescendant="descendant"
+    as_="button"
+    begin_="0"
+    end_="1"
+    in_="source"
+    open_=true
+    to_="target"
+    type_="button"
+  />;
+
+let withChildren =
+  <div key="parent" dataTestId="parent">
+    <span dataFoo="child" />
+    <span />
+  </div>;
+
+let withRefAndEvent = (elementRef, handleClick) =>
+  <button ref=elementRef onClick=handleClick dataTestId="button" />;
+
+let optionalKey = (~key=?, ()) => <div ?key dataFoo="keyed" />;
+
+module Component = {
+  [@react.component]
+  let make = (~dataFoo) => <div dataFoo />;
+};
+
+let component = <Component dataFoo="component" />;
+
+external next: string => string = "next";
+let effects = <div className={next("class")} dataFoo={next("data")} />;
+
+let ordinary = <div className="unchanged" />;
+
+let names =
+  <div
+    dataFoo="plain"
+    dataFoo__bar="double"
+    dataFoo___="trailing"
+    dataFoo_bar="single"
+    dataURL="acronym"
+    dataURLPath="acronym then word"
+    dataVersion2="digit"
+    dataVersion20="digits"
+    data2="leading digit"
+    datafoo="lowercase"
+  />;
+
+let underscoreNames =
+  <div
+    data_foo="leading underscore"
+    dataFoo_Bar="underscore then uppercase"
+    data_API_KEY="uppercase words"
+    dataURL2Path="digit then uppercase"
+    dataXMLHttpRequest="acronym then lowercase"
+  />;
+
+module ShadowedTypes = {
+  type string = int;
+  type unit = int;
+
+  let element = <div dataFoo="value" />;
+  let optional = (~dataFoo=?, ()) => <div ?dataFoo />;
+};
+
+module IntegerComponent = {
+  [@react.component]
+  let make = (~dataFoo: int) => <div dataFoo={string_of_int(dataFoo)} />;
+};
+
+let integerComponent = <IntegerComponent dataFoo=42 />;
+
+external nextUnit: unit => unit = "nextUnit";
+let effectfulUnit = [@JSX] div(~dataFoo="unit", nextUnit());
+
+let distinctNames =
+  <div
+    className="distinct"
+    dataFoo="camelCase"
+    data_foo="underscore"
+    dataFooBar="words"
+    dataFoo_bar="underscored words"
+  />;
+
+let optionalDistinctNames = (first, second) =>
+  <div dataFoo=?first data_foo=?second />;
+let optionalUnderscores = (~dataFoo__bar=?, ~dataFoo___=?, ()) =>
+  <div ?dataFoo__bar ?dataFoo___ />;
+let requiredThenOptional = second => <div dataFoo="first" data_foo=?second />;
+let optionalThenRequired = first => <div dataFoo=?first data_foo="second" />;
+
+let distinctEffects =
+  <div
+    className={next("class")}
+    dataFoo={next("first")}
+    data_foo=?Some(next("second"))
+  />;
+
+module ComponentAliases = {
+  [@react.component]
+  let make = (~dataURL, ~dataUrl) => <div title={dataURL ++ dataUrl} />;
+};
+
+let componentAliases = <ComponentAliases dataURL="first" dataUrl="second" />;

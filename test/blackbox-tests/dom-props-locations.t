@@ -40,7 +40,7 @@ arguments. Go-to-definition still resolves their original bindings.
   > }
   $ locate () {
   >   ocamlmerlin single locate -position "$1" -look-for ml \
-  >     -filename component.re < component.re | jq -c '.value.pos'
+  >     -filename component.re < component.re | jq -c '.value | if type == "object" then .pos else . end'
   > }
   $ hover 4:12
   {"start":{"line":4,"col":10},"end":{"line":4,"col":19},"type":"string"}
@@ -71,4 +71,28 @@ without a data attribute.
   > let element = <div clasName="oops" dataFoo="x" />;
   > EOF
   $ errors
-  [{"start":{"line":1,"col":28},"end":{"line":1,"col":34},"message":"This argument cannot be applied with label ~clasName"},{"start":{"line":1,"col":43},"end":{"line":1,"col":46},"message":"This argument cannot be applied with label ~dataFoo"}]
+  [{"start":{"line":1,"col":28},"end":{"line":1,"col":34},"message":"This argument cannot be applied with label ~clasName"}]
+
+Distinct underscored data values keep their original types and bindings.
+
+  $ cat > component.re <<EOF
+  > let className = "example";
+  > let first = "one";
+  > let second = Some("two");
+  > let element =
+  >   <button className dataFoo=first data_foo=?second />;
+  > EOF
+  $ hover 5:12
+  {"start":{"line":5,"col":10},"end":{"line":5,"col":19},"type":"string"}
+  $ locate 5:12
+  {"line":1,"col":4}
+  $ hover 5:30
+  {"start":{"line":5,"col":28},"end":{"line":5,"col":33},"type":"string"}
+  $ locate 5:30
+  {"line":2,"col":4}
+  $ hover 5:46
+  {"start":{"line":5,"col":44},"end":{"line":5,"col":50},"type":"option(string)"}
+  $ locate 5:46
+  {"line":3,"col":4}
+  $ errors
+  []
