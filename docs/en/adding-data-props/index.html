@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Adding data-* attributes · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Reason doesn&#x27;t support using props with dashes right now, ie: `data-id` or `data-whatever`. You can overcome this by creating a `Spread` component:"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Adding data-* attributes · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/"/><meta property="og:description" content="Reason doesn&#x27;t support using props with dashes right now, ie: `data-id` or `data-whatever`. You can overcome this by creating a `Spread` component:"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><script src="/reason-react/js/scrollSpy.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/><script src="/reason-react/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/en"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/en/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/en/playground" target="_self">Try</a></li><li class="siteNavGroupActive"><a href="/reason-react/docs/en/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/en/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/adding-data-props">日本語</a></li><li><a href="/reason-react/docs/es-ES/adding-data-props">Español</a></li><li><a href="/reason-react/docs/fr/adding-data-props">Français</a></li><li><a href="/reason-react/docs/ko/adding-data-props">한국어</a></li><li><a href="/reason-react/docs/pt-BR/adding-data-props">Português (Brasil)</a></li><li><a href="/reason-react/docs/ru/adding-data-props">Русский</a></li><li><a href="/reason-react/docs/zh-CN/adding-data-props">中文</a></li><li><a href="/reason-react/docs/zh-Hant/adding-data-props">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Adding data-* attributes · ReasonReact</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="DOM JSX accepts custom data attributes as camelCase props:"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Adding data-* attributes · ReasonReact"/><meta property="og:type" content="website"/><meta property="og:url" content="https://reasonml.github.io/reason-react/reason-react/"/><meta property="og:description" content="DOM JSX accepts custom data attributes as camelCase props:"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/reason-react/img/reason-react-favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"/><link rel="alternate" type="application/atom+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/atom.xml" title="ReasonReact Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://reasonml.github.io/reason-react/reason-react/blog/feed.xml" title="ReasonReact Blog RSS Feed"/><script type="text/javascript" src="/reason-react/js/pjax-api.min.js"></script><script src="/reason-react/js/scrollSpy.js"></script><link rel="stylesheet" href="/reason-react/css/main.css"/><script src="/reason-react/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/reason-react/en"><img class="logo" src="/reason-react/img/reason-react-white.svg" alt="ReasonReact"/><h2 class="headerTitleWithLogo">ReasonReact</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/reason-react/docs/en/installation" target="_self">Docs</a></li><li class=""><a href="/reason-react/docs/en/playground" target="_self">Try</a></li><li class="siteNavGroupActive"><a href="/reason-react/docs/en/simple" target="_self">Examples</a></li><li class=""><a href="/reason-react/docs/en/community" target="_self">Community</a></li><li class=""><a href="/reason-react/blog/" target="_self">Blog</a></li><span><li><a id="languages-menu" href="#"><img class="languages-icon" src="/reason-react/img/language.svg" alt="Languages icon"/>English</a><div id="languages-dropdown" class="hide"><ul id="languages-dropdown-items"><li><a href="/reason-react/docs/ja/adding-data-props">日本語</a></li><li><a href="/reason-react/docs/es-ES/adding-data-props">Español</a></li><li><a href="/reason-react/docs/fr/adding-data-props">Français</a></li><li><a href="/reason-react/docs/ko/adding-data-props">한국어</a></li><li><a href="/reason-react/docs/pt-BR/adding-data-props">Português (Brasil)</a></li><li><a href="/reason-react/docs/ru/adding-data-props">Русский</a></li><li><a href="/reason-react/docs/zh-CN/adding-data-props">中文</a></li><li><a href="/reason-react/docs/zh-Hant/adding-data-props">繁體中文</a></li><li><a href="https://crowdin.com/project/reason-react" target="_blank" rel="noreferrer noopener">Help Translate</a></li></ul></div></li><script>
         const languagesMenuItem = document.getElementById("languages-menu");
         const languagesDropDown = document.getElementById("languages-dropdown");
         languagesMenuItem.addEventListener("click", function(event) {
@@ -66,20 +66,76 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/main/docs/adding-data-props.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Adding data-* attributes</h1></header><article><div><span><p>Reason doesn't support using props with dashes right now, ie: <code>data-id</code> or <code>data-whatever</code>. You can overcome this by creating a <code>Spread</code> component:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-comment">/* Spread.re */</span>
-<span class="hljs-attribute">[@react.component]</span>
-<span class="hljs-keyword">let</span> make = (~props, ~children) =&gt; <span class="hljs-module-identifier">React</span>.cloneElement(children, props);
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/reasonml/reason-react/tree/main/docs/adding-data-props.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Adding data-* attributes</h1></header><article><div><span><p>DOM JSX accepts custom data attributes as camelCase props:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> element = &lt;div className=<span class="hljs-string">"item"</span> dataTestId=<span class="hljs-string">"item-42"</span> dataState=<span class="hljs-string">"ready"</span> /&gt;;
 </code></pre>
-<p>Using Spread:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-attribute">[@react.component]</span>
-<span class="hljs-keyword">let</span> make = () =&gt;
-  &lt;<span class="hljs-module-identifier">Spread</span> props={<span class="hljs-string">"data-cy"</span>: name}&gt;
-    <span class="hljs-comment">/* This div will now have the `data-cy` attribute in the DOM! */</span>
-    &lt;div /&gt;
-  &lt;/<span class="hljs-module-identifier">Spread</span>&gt;;
+<p>The rendered element has <code>data-test-id=&quot;item-42&quot;</code> and <code>data-state=&quot;ready&quot;</code>.
+This works on both HTML and SVG elements.</p>
+<h2><a class="anchor" aria-hidden="true" id="values"></a><a href="#values" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Values</h2>
+<p>Data attribute values have type <code>string</code>. They can be literals or expressions:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> itemId = <span class="hljs-number">42</span>;
+<span class="hljs-keyword">let</span> element = &lt;div dataItemId={<span class="hljs-module-identifier">Int</span>.to_string(itemId)} /&gt;;
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/en/simple"><span class="arrow-prev">← </span><span>A List of Simple Examples</span></a><a class="docs-next button" href="/reason-react/docs/en/working-with-optional-data"><span>Working with Optional Data</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
+<p>Pass an <code>option(string)</code> with <code>=?</code> to make an attribute optional. <code>Some(value)</code>
+sets the attribute, and <code>None</code> omits it:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">let</span> render = (state: option(string)) =&gt; &lt;div dataState=?state /&gt;;
+
+<span class="hljs-keyword">let</span> ready = render(<span class="hljs-constructor">Some</span>(<span class="hljs-string">"ready"</span>));
+<span class="hljs-keyword">let</span> absent = render(<span class="hljs-constructor">None</span>);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="attribute-names"></a><a href="#attribute-names" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Attribute names</h2>
+<p>Uppercase letters become lowercase, with hyphens at word boundaries. Acronyms
+stay together, digits stay attached to the preceding word, and underscores are
+preserved:</p>
+<table>
+<thead>
+<tr><th>JSX prop</th><th>DOM attribute</th></tr>
+</thead>
+<tbody>
+<tr><td><code>dataTestId</code></td><td><code>data-test-id</code></td></tr>
+<tr><td><code>dataURLPath</code></td><td><code>data-url-path</code></td></tr>
+<tr><td><code>dataVersion2</code></td><td><code>data-version2</code></td></tr>
+<tr><td><code>dataFoo_bar</code></td><td><code>data-foo_bar</code></td></tr>
+<tr><td><code>dataFoo_Bar</code></td><td><code>data-foo_bar</code></td></tr>
+<tr><td><code>dataFoo__bar</code></td><td><code>data-foo__bar</code></td></tr>
+<tr><td><code>dataFoo___</code></td><td><code>data-foo___</code></td></tr>
+<tr><td><code>data_foo</code></td><td><code>data_foo</code></td></tr>
+<tr><td><code>datafoo</code></td><td><code>datafoo</code></td></tr>
+</tbody>
+</table>
+<p>The standard <code>data</code> and <code>datatype</code> props keep their existing meanings. Other
+props beginning with <code>data</code> follow the conversion above.</p>
+<p>Names containing apostrophes are rejected at compile time because they are
+invalid DOM attribute names, even when an optional value is <code>None</code>:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-comment">/* Rejected: data-foo' is an invalid attribute name. */</span>
+<span class="hljs-keyword">let</span> element = &lt;div dataFoo'=?<span class="hljs-constructor">None</span> /&gt;;
+</code></pre>
+<p>Apostrophes in attribute values, such as <code>dataLabel=&quot;it's ready&quot;</code>, are allowed.</p>
+<p>Each resulting data attribute name can occur only once on an element.
+Repeating a prop or using two props that produce the same name is a compile-time
+error, even when an optional value is <code>None</code>:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-comment">/* Rejected: both props render as data-url. */</span>
+<span class="hljs-keyword">let</span> element = &lt;div dataURL=<span class="hljs-string">"first"</span> dataUrl=?<span class="hljs-constructor">None</span> /&gt;;
+
+<span class="hljs-comment">/* Rejected: both props render as data-foo_bar. */</span>
+<span class="hljs-keyword">let</span> element = &lt;div dataFoo_bar=<span class="hljs-string">"first"</span> dataFoo_Bar=?<span class="hljs-constructor">None</span> /&gt;;
+</code></pre>
+<p><code>dataFoo</code> and <code>data_foo</code> are distinct: they produce <code>data-foo</code> and <code>data_foo</code>.</p>
+<p>These conversion and validation rules for custom data attribute names also
+apply in <a href="https://github.com/ml-in-barcelona/server-reason-react">server-reason-react</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="component-props"></a><a href="#component-props" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Component props</h2>
+<p>The name conversion applies to DOM elements. Props on your own components keep
+their declared names and types. Convert values when forwarding them to the DOM:</p>
+<pre><code class="hljs css language-reason"><span class="hljs-keyword">module</span> <span class="hljs-module-identifier">Item</span> = {
+  <span class="hljs-attribute">[@react.component]</span>
+  <span class="hljs-keyword">let</span> make = (~dataId: int) =&gt; &lt;div dataId={<span class="hljs-module-identifier">Int</span>.to_string(dataId)} /&gt;;
+};
+
+<span class="hljs-keyword">let</span> element = &lt;<span class="hljs-module-identifier">Item</span> dataId=<span class="hljs-number">42</span> /&gt;;
+</code></pre>
+<p>Ordinary DOM props such as <code>className</code>, <code>onClick</code>, and <code>ref</code> retain their usual
+type checks when used alongside data attributes.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/en/simple"><span class="arrow-prev">← </span><span>A List of Simple Examples</span></a><a class="docs-next button" href="/reason-react/docs/en/working-with-optional-data"><span>Working with Optional Data</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#values">Values</a></li><li><a href="#attribute-names">Attribute names</a></li><li><a href="#component-props">Component props</a></li></ul></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
             '.mainContainer, .docsNavContainer .toc .navWrapper, .onPageNav',
