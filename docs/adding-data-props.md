@@ -44,23 +44,39 @@ preserved:
 | `dataFoo_bar` | `data-foo_bar` |
 | `dataFoo_Bar` | `data-foo_bar` |
 | `dataFoo__bar` | `data-foo__bar` |
+| `dataFoo___` | `data-foo___` |
 | `data_foo` | `data_foo` |
 | `datafoo` | `datafoo` |
 
 The standard `data` and `datatype` props keep their existing meanings. Other
-props beginning with `data` follow the conversion above. Names containing
-apostrophes are rejected because they are invalid DOM attribute names.
+props beginning with `data` follow the conversion above.
 
-Each attribute name can occur only once on an element. Repeating a prop or
-using two props that produce the same name is a compile-time error, even when
-an optional value is `None`:
+Names containing apostrophes are rejected at compile time because they are
+invalid DOM attribute names, even when an optional value is `None`:
+
+```reason
+/* Rejected: data-foo' is an invalid attribute name. */
+let element = <div dataFoo'=?None />;
+```
+
+Apostrophes in attribute values, such as `dataLabel="it's ready"`, are allowed.
+
+Each resulting data attribute name can occur only once on an element.
+Repeating a prop or using two props that produce the same name is a compile-time
+error, even when an optional value is `None`:
 
 ```reason
 /* Rejected: both props render as data-url. */
 let element = <div dataURL="first" dataUrl=?None />;
+
+/* Rejected: both props render as data-foo_bar. */
+let element = <div dataFoo_bar="first" dataFoo_Bar=?None />;
 ```
 
 `dataFoo` and `data_foo` are distinct: they produce `data-foo` and `data_foo`.
+
+These conversion and validation rules for custom data attribute names also
+apply in [server-reason-react](https://github.com/ml-in-barcelona/server-reason-react).
 
 ## Component props
 
