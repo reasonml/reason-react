@@ -2,21 +2,95 @@
 title: Adding data-* attributes
 ---
 
-Reason doesn't support using props with dashes right now, ie: `data-id` or `data-whatever`. You can overcome this by creating a `Spread` component:
+DOM JSX accepts custom data attributes as camelCase props:
 
 ```reason
-/* Spread.re */
-[@react.component]
-let make = (~props, ~children) => React.cloneElement(children, props);
+let element = <div className="item" dataTestId="item-42" dataState="ready" />;
 ```
 
-Using Spread:
+The rendered element has `data-test-id="item-42"` and `data-state="ready"`.
+This works on both HTML and SVG elements.
+
+## Values
+
+Data attribute values have type `string`. They can be literals or expressions:
 
 ```reason
-[@react.component]
-let make = () =>
-  <Spread props={"data-cy": name}>
-    /* This div will now have the `data-cy` attribute in the DOM! */
-    <div />
-  </Spread>;
+let itemId = 42;
+let element = <div dataItemId={Int.to_string(itemId)} />;
 ```
+
+Pass an `option(string)` with `=?` to make an attribute optional. `Some(value)`
+sets the attribute, and `None` omits it:
+
+```reason
+let render = (state: option(string)) => <div dataState=?state />;
+
+let ready = render(Some("ready"));
+let absent = render(None);
+```
+
+## Attribute names
+
+Uppercase letters become lowercase, with hyphens at word boundaries. Acronyms
+stay together, digits stay attached to the preceding word, and underscores are
+preserved:
+
+| JSX prop | DOM attribute |
+| --- | --- |
+| `dataTestId` | `data-test-id` |
+| `dataURLPath` | `data-url-path` |
+| `dataVersion2` | `data-version2` |
+| `dataFoo_bar` | `data-foo_bar` |
+| `dataFoo_Bar` | `data-foo_bar` |
+| `dataFoo__bar` | `data-foo__bar` |
+| `dataFoo___` | `data-foo___` |
+| `data_foo` | `data_foo` |
+| `datafoo` | `datafoo` |
+
+The standard `data` and `datatype` props keep their existing meanings. Other
+props beginning with `data` follow the conversion above.
+
+Names containing apostrophes are rejected at compile time because they are
+invalid DOM attribute names, even when an optional value is `None`:
+
+```reason
+/* Rejected: data-foo' is an invalid attribute name. */
+let element = <div dataFoo'=?None />;
+```
+
+Apostrophes in attribute values, such as `dataLabel="it's ready"`, are allowed.
+
+Each resulting data attribute name can occur only once on an element.
+Repeating a prop or using two props that produce the same name is a compile-time
+error, even when an optional value is `None`:
+
+```reason
+/* Rejected: both props render as data-url. */
+let element = <div dataURL="first" dataUrl=?None />;
+
+/* Rejected: both props render as data-foo_bar. */
+let element = <div dataFoo_bar="first" dataFoo_Bar=?None />;
+```
+
+`dataFoo` and `data_foo` are distinct: they produce `data-foo` and `data_foo`.
+
+These conversion and validation rules for custom data attribute names also
+apply in [server-reason-react](https://github.com/ml-in-barcelona/server-reason-react).
+
+## Component props
+
+The name conversion applies to DOM elements. Props on your own components keep
+their declared names and types. Convert values when forwarding them to the DOM:
+
+```reason
+module Item = {
+  [@react.component]
+  let make = (~dataId: int) => <div dataId={Int.to_string(dataId)} />;
+};
+
+let element = <Item dataId=42 />;
+```
+
+Ordinary DOM props such as `className`, `onClick`, and `ref` retain their usual
+type checks when used alongside data attributes.
