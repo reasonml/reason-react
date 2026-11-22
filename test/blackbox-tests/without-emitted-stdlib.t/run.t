@@ -20,3 +20,7 @@ library. A consumer should only need ReasonReact and the Melange JavaScript runt
   File "_none_", line 1:
   Error: Stdlib__Array not found, it means either the module does not exist or it is a namespace
   [1]
+
+Stdlib must not be pulled in through a transitive library dependency either.
+
+  $ test ! -d _build/default/output/node_modules/melange
