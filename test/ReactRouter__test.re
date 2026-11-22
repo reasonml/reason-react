@@ -25,4 +25,25 @@ describe("it allows to create url from string", () => {
 
     expect(generated == expected)->toBe(true);
   });
+
+  test("it preserves path order and skips empty segments", () => {
+    let generated =
+      dangerouslyGetInitialUrl(
+        ~serverUrlString="//first///second/third//?q=term",
+        (),
+      );
+
+    expect(generated.path)->toEqual(["first", "second", "third"]);
+    expect(generated.search)->toBe("q=term");
+  });
+
+  test("it supports empty and root paths", () => {
+    List.iter(
+      serverUrlString => {
+        let generated = dangerouslyGetInitialUrl(~serverUrlString, ());
+        expect(generated.path)->toEqual([]);
+      },
+      ["", "/", "///"],
+    )
+  });
 });
