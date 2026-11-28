@@ -130,7 +130,7 @@ let findByPlaceholderText = (text, container) =>
   ReactTestingLibrary.findByPlaceholderText(~matcher=`Str(text), container);
 
 describe("Form with useOptimistic", () => {
-  testPromise("should render the form", finish => {
+  testPromise("should render the form", () => {
     let container = ReactTestingLibrary.render(<App />);
 
     ReactTestingLibrary.actAsync(() => {
@@ -151,7 +151,7 @@ describe("Form with useOptimistic", () => {
       FireEvent.click(button);
       let.await _newMessage = findByString("Let's go!", container);
       /* If the promise resolve, means the node is found in the DOM */
-      finish();
+      Js.Promise.resolve();
     });
   })
 });
