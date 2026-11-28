@@ -5,8 +5,8 @@
         <link>https://reasonml.github.io/reason-react/reason-react/blog</link>
         <description>The best place to stay up-to-date with the latest ReasonReact news and events.</description>
         <lastBuildDate>Wed, 13 Sep 2023 06:00:00 GMT</lastBuildDate>
-        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
-        <generator>Feed for Node.js</generator>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
         <image>
             <title>ReasonReact Blog</title>
             <url>https://reasonml.github.io/reason-react/reason-react/img/reason-react-white.svg</url>
