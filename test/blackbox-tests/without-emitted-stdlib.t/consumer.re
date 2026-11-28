@@ -6,6 +6,4 @@ module App = {
 let url =
   ReasonReactRouter.dangerouslyGetInitialUrl(~serverUrlString="/foo/bar", ());
 
-let findText = ReactDOMTestUtils.DOM.findBySelectorAndTextContent;
-let findPartialText = ReactDOMTestUtils.DOM.findBySelectorAndPartialTextContent;
 let renderToPipeableStream = ReactDOMServerNode.renderToPipeableStream;
