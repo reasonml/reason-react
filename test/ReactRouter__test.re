@@ -46,4 +46,20 @@ describe("it allows to create url from string", () => {
       ["", "/", "///"],
     )
   });
+
+  test("it ignores trailing slashes without changing the search", () => {
+    List.iter(
+      ((serverUrlString, search)) => {
+        let generated = dangerouslyGetInitialUrl(~serverUrlString, ());
+        expect(generated.path)->toEqual(["foo", "bar"]);
+        expect(generated.search)->toBe(search);
+      },
+      [
+        ("/foo/bar/", ""),
+        ("/foo/bar///", ""),
+        ("/foo/bar/?redirect=/next/", "redirect=/next/"),
+        ("/foo/bar///?redirect=/next/", "redirect=/next/"),
+      ],
+    )
+  });
 });

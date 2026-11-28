@@ -84,12 +84,6 @@ let pathParse = str =>
   | raw =>
     /* remove the preceeding /, which every pathname seems to have */
     let raw = Js.String.slice(~start=1, raw);
-    /* remove the trailing /, which some pathnames might have. Ugh */
-    let raw =
-      switch (Js.String.slice(~start=-1, raw)) {
-      | "/" => Js.String.slice(~start=0, ~end_=-1, raw)
-      | _ => raw
-      };
     /* remove search portion if present in string */
     let raw =
       switch (Js.String.split(~sep="?", ~limit=2, raw)) {
@@ -98,8 +92,14 @@ let pathParse = str =>
       };
 
     Js.String.split(~sep="/", raw)
-    ->Js.Array.filter(~f=item => item !== "")
-    ->Js.Array.reduceRight(~f=(res, item) => [item, ...res], ~init=[]);
+    ->Js.Array.reduceRight(
+        ~f=(res, item) =>
+          switch (item) {
+          | "" => res
+          | _ => [item, ...res]
+          },
+        ~init=[],
+      );
   };
 let path = (~serverUrlString=?, ()) =>
   switch (serverUrlString, window()) {
