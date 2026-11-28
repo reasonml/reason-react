@@ -1,5 +1,8 @@
 # Unreleased
 
+* BREAKING: Remove the deprecated `ReactDOMTestUtils` module. Use `React.act` and
+  `React.actAsync`, `melange-testing-library`, and `melange-webapi` instead
+  (@anmonteiro in [#976](https://github.com/reasonml/reason-react/pull/976)).
 * BREAKING: Remove the deprecated `ReactDOMTestUtils.prepareContainer`,
   `cleanupContainer`, and `getContainer` helpers. Use `melange-testing-library`
   for test setup and cleanup (@anmonteiro in

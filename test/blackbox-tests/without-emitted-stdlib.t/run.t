@@ -1,4 +1,4 @@
-Use the router, DOM test helpers, and Node bindings without emitting the standard
+Use the router and Node bindings without emitting the standard
 library. A consumer should only need ReasonReact and the Melange JavaScript runtime.
 
   $ cat > dune-project <<EOF
@@ -11,15 +11,12 @@ library. A consumer should only need ReasonReact and the Melange JavaScript runt
   >  (target output)
   >  (alias mel)
   >  (emit_stdlib false)
-  >  (compile_flags :standard -nopervasives -nostdlib -alert -deprecated)
+  >  (compile_flags :standard -nopervasives -nostdlib)
   >  (libraries reason-react reason-react.node)
   >  (preprocess (pps melange.ppx reason-react-ppx)))
   > EOF
 
   $ dune build --display quiet @mel
-  File "_none_", line 1:
-  Error: Stdlib__Array not found, it means either the module does not exist or it is a namespace
-  [1]
 
 Stdlib must not be pulled in through a transitive library dependency either.
 

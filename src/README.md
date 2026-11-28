@@ -12,7 +12,6 @@ Files overview:
 - `ReactDOM`: bindings to ReactDOM
   - `ReactDOM.Style`: bindings to create `style` objects
 - `ReactDOMServer`: bindings to ReactDOMServer
-- `ReactDOMTestUtils`: helpers for testing your components
 
 ## Extra (not part of react)
 - `ReasonReactErrorBoundary`: component to catch errors within your component tree

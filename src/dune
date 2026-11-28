@@ -8,7 +8,6 @@
   React
   ReactDOM
   ReactDOMServer
-  ReactDOMTestUtils
   ReasonReactRouter
   ReasonReactErrorBoundary)
  (preprocess
