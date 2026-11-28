@@ -66,7 +66,8 @@ external getAttribute: (Dom.element, string) => option(string) =
 [@mel.set] external setTitle: (Dom.element, string) => unit = "title";
 [@mel.get] external getTitle: Dom.element => string = "title";
 
-let (let.await) = (p, f) => Js.Promise.then_(f, p);
+let (let.await) = (p, f) =>
+  Js.Promise.then_(f, Js.Promise.then_(_ => p, Js.Promise.resolve()));
 
 external createElement: string => Dom.element = "document.createElement";
 [@mel.send]
@@ -279,7 +280,7 @@ describe("React", () => {
     };
   };
 
-  testPromise("act", finish => {
+  testPromise("act", () => {
     /* This test doesn't use ReactTestingLibrary to test the act API, and the code comes from
        https://react.dev/reference/react/act example */
 
@@ -320,10 +321,10 @@ describe("React", () => {
     let title = getTitle(document);
     expect(title)->toBe("You clicked 1 times");
 
-    finish();
+    Js.Promise.resolve();
   });
 
-  testPromise("actAsync", finish => {
+  testPromise("actAsync", () => {
     /* This test doesn't use ReactTestingLibrary to test the act API, and the code comes from
        https://react.dev/reference/react/act example */
 
@@ -367,7 +368,7 @@ describe("React", () => {
     let title = getTitle(document);
     expect(title)->toBe("You clicked 1 times");
 
-    finish();
+    Js.Promise.resolve();
   });
 
   test("ErrorBoundary + Suspense", () => {
