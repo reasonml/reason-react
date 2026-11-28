@@ -75,45 +75,8 @@
 <li><a href="https://github.com/glennsl/bs-jest">bs-jest</a></li>
 </ul>
 <h3><a class="anchor" aria-hidden="true" id="test-utilities"></a><a href="#test-utilities" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Test utilities</h3>
-<p>We provide test utilities in the <a href="https://github.com/reasonml/reason-react/blob/main/src/ReactDOMTestUtils.re"><code>ReactDOMTestUtils</code></a> module.</p>
-<p>If you want to have a look at a real example, here's what a test might look like from reason-react's test suite <a href="https://github.com/reasonml/reason-react/blob/main/test/Hooks__test.re">Hooks__test</a>.</p>
-<p>Here's is a basic example of what a test might look like:</p>
-<pre><code class="hljs css language-reason"><span class="hljs-keyword">open</span> <span class="hljs-module-identifier">ReactDOMTestUtils</span>;
-<span class="hljs-keyword">open</span> <span class="hljs-module-identifier">TestFramework</span>;
-<span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">TestFramework</span> isn't a real <span class="hljs-keyword">module</span>, just an imaginary set <span class="hljs-keyword">of</span> bindings
-<span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-keyword">to</span> a <span class="hljs-constructor">JavaScript</span> testing framework
-
-describe(<span class="hljs-string">"My basic test"</span>, ({test, beforeEach, afterEach}) =&gt; {
-  <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">Here</span>, we prepare an empty ref that will eventually be
-  <span class="hljs-operator">/</span><span class="hljs-operator">/</span> the root node <span class="hljs-keyword">for</span> our test
-  <span class="hljs-keyword">let</span> container = ref(<span class="hljs-constructor">None</span>);
-
-  <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">Before</span> each test, creates a <span class="hljs-keyword">new</span> div root
-  beforeEach(prepareContainer(container));
-  <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">After</span> each test, removes the div
-  afterEach(cleanupContainer(container));
-
-  test(<span class="hljs-string">"can render DOM elements"</span>, ({expect}) =&gt; {
-    <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">The</span> following <span class="hljs-keyword">function</span> gives us the div
-    <span class="hljs-keyword">let</span> container = getContainer(container);
-    <span class="hljs-keyword">let</span> root = <span class="hljs-module-identifier">ReactDOM</span>.<span class="hljs-module-identifier">Client</span>.createRoot(container);
-
-    <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">Most</span> <span class="hljs-keyword">of</span> the <span class="hljs-constructor">ReactDOMTestUtils</span> <span class="hljs-constructor">API</span> is there
-    act(() =&gt; {
-      <span class="hljs-module-identifier">ReactDOM</span>.<span class="hljs-module-identifier">Client</span>.render(root, &lt;div&gt; <span class="hljs-string">"Hello world!"</span><span class="hljs-operator">-&gt;</span><span class="hljs-module-identifier">React</span>.string &lt;/div&gt;);
-    });
-
-    expect.bool(
-      container
-      <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-constructor">We</span> also provide some basic <span class="hljs-constructor">DOM</span> querying utilities
-      <span class="hljs-operator">/</span><span class="hljs-operator">/</span> <span class="hljs-keyword">to</span> ease your tests
-      <span class="hljs-operator">-&gt;</span><span class="hljs-module-identifier">DOM</span>.findBySelectorAndTextContent(<span class="hljs-string">"div"</span>, <span class="hljs-string">"Hello world!"</span>)
-      <span class="hljs-operator">-&gt;</span><span class="hljs-module-identifier">Option</span>.isSome,
-    ).
-      toBeTrue();
-  });
-});
-</code></pre>
+<p>The <code>ReactDOMTestUtils</code> module is deprecated. Prefer <code>melange-testing-library</code> for rendering, querying, and cleaning up components in tests, and <code>React.act</code> or <code>React.actAsync</code> when testing React updates directly.</p>
+<p>The deprecated <code>prepareContainer</code>, <code>cleanupContainer</code>, and <code>getContainer</code> helpers have been removed. See <a href="https://github.com/reasonml/reason-react/blob/main/test/Hooks__test.re">Hooks__test</a> for examples of test setup using testing-library bindings.</p>
 <h3><a class="anchor" aria-hidden="true" id="api"></a><a href="#api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>API</h3>
 <h4><a class="anchor" aria-hidden="true" id="reactdomtestutils"></a><a href="#reactdomtestutils" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>ReactDOMTestUtils</code></h4>
 <p>Directly from the <a href="https://reactjs.org/docs/test-utils.html">React test utilities</a>.</p>
@@ -125,12 +88,6 @@ describe(<span class="hljs-string">"My basic test"</span>, ({test, beforeEach, a
 <li><code>isDOMComponent</code></li>
 <li><code>isCompositeComponent</code></li>
 <li><code>isCompositeComponentWithType</code></li>
-</ul>
-<p>And utilities for setup and teardown:</p>
-<ul>
-<li><code>prepareContainer</code></li>
-<li><code>cleanupContainer</code></li>
-<li><code>getContainer</code></li>
 </ul>
 <h4><a class="anchor" aria-hidden="true" id="reactdomtestutilssimulate"></a><a href="#reactdomtestutilssimulate" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>ReactDOMTestUtils.Simulate</code></h4>
 <ul>
