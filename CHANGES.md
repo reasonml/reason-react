@@ -1,3 +1,10 @@
+# Unreleased
+
+* BREAKING: Remove the deprecated `ReactDOMTestUtils.prepareContainer`,
+  `cleanupContainer`, and `getContainer` helpers. Use `melange-testing-library`
+  for test setup and cleanup (@anmonteiro in
+  [#975](https://github.com/reasonml/reason-react/pull/975)).
+
 # 0.17.0
 
 * Support custom `data-*` attributes in DOM JSX, including optional string values (@anmonteiro in https://github.com/reasonml/reason-react/pull/933)
