@@ -130,16 +130,3 @@ module DOM: {
       (Dom.element, string, string) => option(Dom.element)
     );
 };
-
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
-]
-let prepareContainer: (Stdlib.ref(option(Dom.element)), unit) => unit;
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
-]
-let cleanupContainer: (Stdlib.ref(option(Dom.element)), unit) => unit;
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
-]
-let getContainer: Stdlib.ref(option(Dom.element)) => Dom.element;

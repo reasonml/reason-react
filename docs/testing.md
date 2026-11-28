@@ -15,49 +15,9 @@ Pick the test framework you like the best (both use Jest under the hood):
 
 ### Test utilities
 
-We provide test utilities in the [`ReactDOMTestUtils`](https://github.com/reasonml/reason-react/blob/main/src/ReactDOMTestUtils.re) module.
+The `ReactDOMTestUtils` module is deprecated. Prefer `melange-testing-library` for rendering, querying, and cleaning up components in tests, and `React.act` or `React.actAsync` when testing React updates directly.
 
-If you want to have a look at a real example, here's what a test might look like from reason-react's test suite [Hooks__test](https://github.com/reasonml/reason-react/blob/main/test/Hooks__test.re).
-
-Here's is a basic example of what a test might look like:
-
-```reason
-open ReactDOMTestUtils;
-open TestFramework;
-// TestFramework isn't a real module, just an imaginary set of bindings
-// to a JavaScript testing framework
-
-describe("My basic test", ({test, beforeEach, afterEach}) => {
-  // Here, we prepare an empty ref that will eventually be
-  // the root node for our test
-  let container = ref(None);
-
-  // Before each test, creates a new div root
-  beforeEach(prepareContainer(container));
-  // After each test, removes the div
-  afterEach(cleanupContainer(container));
-
-  test("can render DOM elements", ({expect}) => {
-    // The following function gives us the div
-    let container = getContainer(container);
-    let root = ReactDOM.Client.createRoot(container);
-
-    // Most of the ReactDOMTestUtils API is there
-    act(() => {
-      ReactDOM.Client.render(root, <div> "Hello world!"->React.string </div>);
-    });
-
-    expect.bool(
-      container
-      // We also provide some basic DOM querying utilities
-      // to ease your tests
-      ->DOM.findBySelectorAndTextContent("div", "Hello world!")
-      ->Option.isSome,
-    ).
-      toBeTrue();
-  });
-});
-```
+The deprecated `prepareContainer`, `cleanupContainer`, and `getContainer` helpers have been removed. See [Hooks__test](https://github.com/reasonml/reason-react/blob/main/test/Hooks__test.re) for examples of test setup using testing-library bindings.
 
 ### API
 
@@ -72,12 +32,6 @@ Directly from the [React test utilities](https://reactjs.org/docs/test-utils.htm
 - `isDOMComponent`
 - `isCompositeComponent`
 - `isCompositeComponentWithType`
-
-And utilities for setup and teardown:
-
-- `prepareContainer`
-- `cleanupContainer`
-- `getContainer`
 
 #### `ReactDOMTestUtils.Simulate`
 

@@ -138,8 +138,6 @@ module Simulate = {
   external focus: Dom.element => unit = "focus";
 };
 
-external document: Dom.document = "document";
-
 [@mel.return nullable] [@mel.send]
 external querySelector: (Dom.element, string) => option(Dom.element) =
   "querySelector";
@@ -150,19 +148,6 @@ external querySelectorAll:
   "querySelectorAll";
 
 [@mel.get] external textContent: Dom.element => string = "textContent";
-
-[@mel.return nullable] [@mel.get]
-external body: Dom.document => option(Dom.element) = "body";
-
-[@mel.send]
-external createElement: (Dom.document, string) => Dom.element =
-  "createElement";
-
-[@mel.send] external remove: Dom.element => unit = "remove";
-
-[@mel.send]
-external appendChild: (Dom.element, Dom.element) => Dom.element =
-  "appendChild";
 
 let querySelectorAll = (element, string) => {
   Js.Array.from(querySelectorAll(element, string));
@@ -203,29 +188,4 @@ module DOM = {
     |> Array.find_opt(node =>
          Js.String.includes(~search=content, node->textContent)
        );
-};
-
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
-]
-let prepareContainer = (container: ref(option(Dom.element)), ()) => {
-  let containerElement = document->createElement("div");
-  let _: option(_) =
-    Option.map(body => body->appendChild(containerElement), document->body);
-  container := Some(containerElement);
-};
-
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
-]
-let cleanupContainer = (container: ref(option(Dom.element)), ()) => {
-  let _: option(_) = Option.map(remove, container^);
-  container := None;
-};
-
-[@deprecated
-  "ReactDOMTestUtils is deprecated, and will be removed in next version. Please use melange-testing-library instead."
-]
-let getContainer = container => {
-  container.contents->Option.get;
 };
