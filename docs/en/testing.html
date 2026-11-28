@@ -75,43 +75,8 @@
 <li><a href="https://github.com/glennsl/bs-jest">bs-jest</a></li>
 </ul>
 <h3><a class="anchor" aria-hidden="true" id="test-utilities"></a><a href="#test-utilities" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Test utilities</h3>
-<p>The <code>ReactDOMTestUtils</code> module is deprecated. Prefer <code>melange-testing-library</code> for rendering, querying, and cleaning up components in tests, and <code>React.act</code> or <code>React.actAsync</code> when testing React updates directly.</p>
-<p>The deprecated <code>prepareContainer</code>, <code>cleanupContainer</code>, and <code>getContainer</code> helpers have been removed. See <a href="https://github.com/reasonml/reason-react/blob/main/test/Hooks__test.re">Hooks__test</a> for examples of test setup using testing-library bindings.</p>
-<h3><a class="anchor" aria-hidden="true" id="api"></a><a href="#api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>API</h3>
-<h4><a class="anchor" aria-hidden="true" id="reactdomtestutils"></a><a href="#reactdomtestutils" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>ReactDOMTestUtils</code></h4>
-<p>Directly from the <a href="https://reactjs.org/docs/test-utils.html">React test utilities</a>.</p>
-<ul>
-<li><code>act</code></li>
-<li><code>actAsync</code> (let's your return a promise)</li>
-<li><code>isElement</code></li>
-<li><code>isElementOfType</code></li>
-<li><code>isDOMComponent</code></li>
-<li><code>isCompositeComponent</code></li>
-<li><code>isCompositeComponentWithType</code></li>
-</ul>
-<h4><a class="anchor" aria-hidden="true" id="reactdomtestutilssimulate"></a><a href="#reactdomtestutilssimulate" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>ReactDOMTestUtils.Simulate</code></h4>
-<ul>
-<li><code>Simulate.click</code></li>
-<li><code>Simulate.clickWithEvent</code></li>
-<li><code>Simulate.change</code></li>
-<li><code>Simulate.changeWithEvent</code></li>
-<li><code>Simulate.changeWithValue</code></li>
-<li><code>Simulate.changeWithChecked</code></li>
-<li><code>Simulate.focus</code></li>
-<li><code>Simulate.blur</code></li>
-<li><code>Simulate.canPlay</code></li>
-<li><code>Simulate.timeUpdate</code></li>
-<li><code>Simulate.ended</code></li>
-</ul>
-<p>If you feel like some are missing, you can easily adapt the bindings: <a href="https://github.com/reasonml/reason-react/blob/main/src/ReactDOMTestUtils.rei"><code>ReactDOMTestUtils</code></a> and make a PR!</p>
-<h4><a class="anchor" aria-hidden="true" id="reactdomtestutilsdom-convenience-functions"></a><a href="#reactdomtestutilsdom-convenience-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>ReactDOMTestUtils.DOM</code> convenience functions</h4>
-<ul>
-<li><code>value</code></li>
-<li><code>findBySelector</code></li>
-<li><code>findByAllSelector</code></li>
-<li><code>findBySelectorAndTextContent</code></li>
-<li><code>findBySelectorAndPartialTextContent</code></li>
-</ul>
+<p>The deprecated <code>ReactDOMTestUtils</code> module has been removed. Use <code>React.act</code> or <code>React.actAsync</code> when testing React updates, <code>melange-testing-library</code> for rendering, querying, and cleaning up components in tests, and <code>melange-webapi</code> for direct DOM access.</p>
+<p>See <a href="https://github.com/reasonml/reason-react/blob/main/test/Hooks__test.re">Hooks__test</a> for examples of test setup using testing-library bindings.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/reason-react/docs/en/refs"><span class="arrow-prev">← </span><span>Refs in React</span></a><a class="docs-next button" href="/reason-react/docs/en/usestate-hook"><span class="function-name-prevnext">useState</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><span><script src="/reason-react/js/redirectBlog.js"></script><script>window.foo = new Pjax({
           areas: [
             // try to use the first query.
