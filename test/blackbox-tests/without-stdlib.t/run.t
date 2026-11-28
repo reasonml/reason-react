@@ -13,6 +13,3 @@ disabled, reproducing the missing Stdlib in a clean vendored Melange build.
   > EOF
 
   $ dune build --display quiet -j 1 @install
-  File "command line", line 1:
-  Error: Unbound module Stdlib
-  [1]

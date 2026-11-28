@@ -13,6 +13,7 @@
  (preprocess
   (pps melange.ppx reason-react-ppx))
  (libraries melange.dom melange.js)
+ (flags :standard -nopervasives -nostdlib)
  (modes melange))
 
 (library
@@ -20,6 +21,7 @@
  (public_name reason-react.node)
  (modules ReactDOMServerNode)
  (libraries react)
+ (flags :standard -nopervasives -nostdlib)
  (preprocess
   (pps melange.ppx))
  (modes melange))

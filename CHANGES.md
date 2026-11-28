@@ -1,5 +1,7 @@
 # Unreleased
 
+* Compile the runtime bindings without the OCaml standard library (@anmonteiro in
+  [#948](https://github.com/reasonml/reason-react/pull/948)).
 * BREAKING: Remove the deprecated `ReactDOMTestUtils` module. Use `React.act` and
   `React.actAsync`, `melange-testing-library`, and `melange-webapi` instead
   (@anmonteiro in [#976](https://github.com/reasonml/reason-react/pull/976)).
